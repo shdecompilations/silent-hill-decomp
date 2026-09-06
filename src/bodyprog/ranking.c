@@ -708,20 +708,20 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         {
             Gfx_StringPositionSet(160, 198);
 
-            g_SysWork.enableHighResGlyphs = true;
+            g_SysWork.enableHalfHeightGlyphs = true;
 
             for (i = 0; i < temp_v1; i++)
             {
                 Gfx_StringDraw(D_8002B4C0[26], 1);
             }
 
-            g_SysWork.enableHighResGlyphs = false;
+            g_SysWork.enableHalfHeightGlyphs = false;
         }
         else if (temp_v1 == 0 && temp_a0 != 0)
         {
             Gfx_StringPositionSet(160, 292);
 
-            g_SysWork.enableHighResGlyphs = false;
+            g_SysWork.enableHalfHeightGlyphs = false;
 
             for (i = 0; i < temp_a0; i++)
             {
@@ -730,7 +730,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
         }
         else
         {
-            g_SysWork.enableHighResGlyphs = true;
+            g_SysWork.enableHalfHeightGlyphs = true;
             Gfx_StringPositionSet(160, 194);
 
             for (i = 0; i < temp_v1; i++)
@@ -738,7 +738,7 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
                 Gfx_StringDraw(D_8002B4C0[26], 20);
             }
 
-            g_SysWork.enableHighResGlyphs = false;
+            g_SysWork.enableHalfHeightGlyphs = false;
             Gfx_StringPositionSet(160, 300);
 
             for (i = 0; i < temp_a0; i++)

@@ -17,7 +17,7 @@ typedef struct _Savegame
     /* 0xA8     */ s8              locationId;                  /** `e_SaveLocationId` */
     /* 0xA9     */ u8              paperMapIdx;                 /** `e_PaperMapIdx` | Index of the paper map displayed when opening the map screen. */
     /* 0xAA     */ u8              equippedWeapon;              /** `e_InvItemId` | Affects the visible player weapon model. */
-    /* 0xAB     */ u8              inventorySlotCount;          /** Item slots. */
+    /* 0xAB     */ u8              invSlotCount;                /** Item slots. */
     /* 0xAC     */ u32             itemToggleFlags;             /** `e_ItemToggleFlags` */
     /* 0xB0     */ s32             mapEnemyStates[45];          /** Flags indicating the enemy states in a given map.
                                                                  * All set to 1 by default. As soon as they are killed (not just stunned),

@@ -974,7 +974,7 @@ func_800549A0                                = 0x800564A8; // type:func
 func_80054A04                                = 0x8005650C; // type:func
 Gfx_PickupItemAnimate                        = 0x800565E0; // type:func
 Inventory_AddSpecialItem                     = 0x800567B4; // type:func
-Items_AmmoReloadCalculation                  = 0x80056AC8; // type:func
+Items_AmmoReloadCompute                      = 0x80056AC8; // type:func
 
 //------------------------------------------------------------------------
 //--- PA: 0x031FD0   VA: 0x80056B30   subsegment: c, gfx/bodyprog_80055028

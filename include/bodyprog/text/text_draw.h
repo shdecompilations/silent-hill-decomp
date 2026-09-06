@@ -7,7 +7,7 @@
 #define MAP_MSG_CODE_COLOR         'C' /** Set color. */
 #define MAP_MSG_CODE_DISPLAY_ALL   'D' /** Display message instantly with no rollout. */
 #define MAP_MSG_CODE_END           'E' /** End message. */
-#define MAP_MSG_CODE_HIGH_RES      'H' /** High-resolution glyph drawing. */
+#define MAP_MSG_CODE_HALF_HEIGHT   'H' /** Half-height glyphs. */
 #define MAP_MSG_CODE_JUMP          'J' /** Jump timer. */
 #define MAP_MSG_CODE_LINE_POSITION 'L' /** Set next line position. */
 #define MAP_MSG_CODE_MIDDLE        'M' /** Align center. */

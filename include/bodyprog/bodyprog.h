@@ -1290,9 +1290,9 @@ bool WorldMap_SubcellVisibleCheck(s_IpdModelBuffer* modelBuf, q7_8 subcellX, q7_
 
 void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-s_AnimInfo* func_80044918(s_ModelAnim* anim);
-
 void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
+
+s_AnimInfo* func_80044918(s_ModelAnim* anim);
 
 void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -1389,7 +1389,7 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 /** Does something with skeleton bones. `arg0` is a struct pointer. */
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
-void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 clutY, s_FsImageDesc* images);
+void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneCoords, q3_12 arg4, u16 clutY, s_FsImageDesc* images);
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s8 weaponAttack);
@@ -1413,12 +1413,13 @@ void func_80054A04(u8 arg0);
 
 bool Gfx_PickupItemAnimate(u8 itemId);
 
-/** @brief Calculates the ammo needed to reload the equipped gun.
- * @param `currentAmmo` pointer to the variable holding the current amount of loaded ammunition of the equipped weapon.
- * @param `availableAmmo` pointer to the variable holding the current amount of available ammunition for the equipped weapon.
- * @param `gunIdx` Index of the gun being reloaded. `e_EquippedWeaponId`.
+/** @brief Computes the ammo needed to reload the equipped gun.
+ *
+ * @param currentAmmo Current amount of loaded ammunition.
+ * @param availableAmmo Ammount of available ammunition.
+ * @param gunIdx Index of the gun being reloaded ()`e_EquippedWeaponId`).
  */
-void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
+void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
 void WorldEnv_Init(void);
 
@@ -2096,7 +2097,7 @@ void WorldGfx_CharaModelProcessAllLoads(void);
 
 void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
-void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 paletteIdx);
+void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 otShift, q3_12 timer, s32 paletteIdx);
 
 /** @brief Handles a mesh swap for a Harry character.
  *

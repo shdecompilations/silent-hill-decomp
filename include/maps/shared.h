@@ -31,7 +31,7 @@ typedef struct
  */
 typedef struct _SfxVolume
 {
-    u16 id_0;
+    u16 id;
     union
     {
         u8  val8;

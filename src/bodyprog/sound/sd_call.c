@@ -1681,7 +1681,7 @@ static void Sd_KdtLoad_LoadCheck(void) // 0x80048498
     g_Sd_AudioWork.cdErrorCount++;
 }
 
-/** @note In Jan 16 Demo and the Nov 24, 98 Preview, all these functions also nullsub.
+/** @note All these functions are also nullsub in the Jan 16 Demo, Nov 24 Demo, and 98 Preview,.
  * Additionally, `func_800485C0` doesn't exist in the Jan 16 Demo.
  */
 

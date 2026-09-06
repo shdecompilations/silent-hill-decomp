@@ -56,16 +56,16 @@ typedef struct _SD_VAB_H
 
 typedef struct _VAB_H
 {
-    s16       vab_id_0;
-    SD_VAB_H* vh_addr_4;
-    s32       vh_size_8;
-    u8*       vb_addr_C;
-    s32       vb_start_addr_10;
-    s32       vb_size_14;
-    s8        mvol_18; // These `s8`s are `u8` in `soundcd.irx`.
-    s8        mvoll_19;
-    s8        mvolr_1A;
-    s8        mpan_1B;
+    /* 0x0  */ s16       vab_id;
+    /* 0x4  */ SD_VAB_H* vh_addr_4;
+    /* 0x8  */ s32       vh_size_8;
+    /* 0xC  */ u8*       vb_addr_C;
+    /* 0x10 */ s32       vb_start_addr_10;
+    /* 0x14 */ s32       vb_size_14;
+    /* 0x18 */ s8        mvol_18; // These `s8`s are `u8` in `soundcd.irx`.
+    /* 0x19 */ s8        mvoll_19;
+    /* 0x1A */ s8        mvolr_1A;
+    /* 0x1B */ s8        mpan_1B;
 } VAB_H;
 STATIC_ASSERT_SIZEOF(VAB_H, 28);
 
@@ -209,7 +209,7 @@ STATIC_ASSERT_SIZEOF(MIDI, 92);
 
 typedef struct _PORT
 {
-    u8  vc_0; // `soundcd.irx` has `vab_id_0` here, and `vc_1` after, but the reads/writes to +0x1 in soundcd are to +0x0 in SH, so this is likely `vc`.
+    u8  vc_0; // `soundcd.irx` has `vab_id` here, and `vc_1` after, but the reads/writes to +0x1 in soundcd are to +0x0 in SH, so this is likely `vc`.
     u8  field_1;
     u8  prog_2;
     u8  midi_ch_3;

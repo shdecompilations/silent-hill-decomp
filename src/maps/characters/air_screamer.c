@@ -102,7 +102,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
                        AirScreamerFlag_3 |
                        AirScreamerFlag_4 |
                        AirScreamerFlag_5);
-            Sd_SfxStop(sharedData_800CAA98_0_s01.sfxVolumes_CE8[2].id_0);
+            Sd_SfxStop(sharedData_800CAA98_0_s01.sfxVolumes_CE8[2].id);
         }
 
         // Run through flags defining which SFX to play.
@@ -111,7 +111,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
         {
             if (flags & (1 << i))
             {
-                Sfx_WithFlagsPlay(data->sfxVolumes_CE8[i].id_0, &airScreamer->position, data->sfxVolumes_CE8[i].volume_2.val8, SfxFlag_None);
+                Sfx_WithFlagsPlay(data->sfxVolumes_CE8[i].id, &airScreamer->position, data->sfxVolumes_CE8[i].volume_2.val8, SfxFlag_None);
             }
         }
     }

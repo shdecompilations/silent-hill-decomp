@@ -352,10 +352,11 @@ STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 /** @brief Map effects info. */
 typedef struct _MapEffectsInfo
 {
-    /* 0x0  */ union {
-                  s32 field_0; // Flags?
-                  u8  field_00[4];
-              } field_0;
+    /* 0x0  */ union
+               {
+                   s32 field_0; // Flags?
+                   u8  field_00[4];
+               } field_0;
     /* 0x4  */ q3_12   field_4; // Alpha.
     /* 0x6  */ q3_12   field_6; // World tint color intensity.
     /* 0x8  */ q3_12   worldTintR;
@@ -370,7 +371,7 @@ typedef struct _MapEffectsInfo
     /* 0x1D */ CVECTOR worldTint;              /** Subtractive. */
     /* 0x21 */ CVECTOR field_21;               // Particle effect related. Only the first value affects snow transparency.
     /* 0x25 */ CVECTOR field_25;
-               // 3 byte of padding.
+               // 3 bytes of padding.
 } s_MapEffectsInfo;
 STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 
@@ -386,21 +387,21 @@ STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 // Current enviroment effects information.
 typedef struct
 {
-    /* 0x0   */ s32             primitiveType; /** `e_PrimitiveType` */
-    /* 0x4   */ s8*             field_4;       /** Points to different types of data depending on `field_0`. */
-    /* 0x8   */ q19_12          field_8;
-    /* 0xC   */ q19_12          field_C;
-    /* 0x10  */ s32             field_10;
-    /* 0x14  */ u8              field_14;                /** `bool` */
-    /* 0x15  */ u8              isFlashlightOn;          /** `bool` */
-    /* 0x16  */ u8              isFlashlightUnavailable; /** `bool` */
+    /* 0x0   */ s32          primitiveType; /** `e_PrimitiveType` */
+    /* 0x4   */ s8*          field_4;       /** Points to different types of data depending on `field_0`. */
+    /* 0x8   */ q19_12       field_8;
+    /* 0xC   */ q19_12       field_C;
+    /* 0x10  */ s32          field_10;
+    /* 0x14  */ u8           field_14;                /** `bool` */
+    /* 0x15  */ u8           isFlashlightOn;          /** `bool` */
+    /* 0x16  */ u8           isFlashlightUnavailable; /** `bool` */
                 // 1 byte of padding.
-    /* 0x18  */ q3_12           flashlightIntensity;
-                // 2 byte of padding.
-    /* 0x1C  */ s_StructUnk3    field_1C[2];
-    /* 0x84  */ s_StructUnk3    field_84[2];
-    /* 0xEC  */ s_StructUnk3    field_EC[2];
-    /* 0x154 */ s_StructUnk3    field_154;
+    /* 0x18  */ q3_12        flashlightIntensity;
+                // 2 bytes of padding.
+    /* 0x1C  */ s_StructUnk3 field_1C[2];
+    /* 0x84  */ s_StructUnk3 field_84[2];
+    /* 0xEC  */ s_StructUnk3 field_EC[2];
+    /* 0x154 */ s_StructUnk3 field_154;
 } s_SysWork_2388;
 STATIC_ASSERT_SIZEOF(s_SysWork_2388, 392);
 
@@ -425,13 +426,13 @@ typedef struct _SysWork
     /* 0x890    */ GsCOORDINATE2    playerBoneCoords[HarryBone_Count];
     /* 0xE30    */ GsCOORDINATE2    unkCoords_E30[5];                       // Might be part of previous array for 5 extra coords which go unused.
     /* 0xFC0    */ GsCOORDINATE2    npcBoneCoordBuffer[NPC_BONE_COUNT_MAX]; /** Contiguous NPC bone coord buffer. */
-    /* 0x2280   */ s8               npcFlagId;                             // 1-based NPC ID for `npcFlags`.
+    /* 0x2280   */ s8               npcFlagId;                              // 1-based NPC ID for `npcFlags`.
     /* 0x2281   */ s8               loadingScreenIdx;
     /* 0x2282   */ s8               areaTransitionFlags;                /** `e_AreaTransitionFlags` */
     /* 0x2283   */ s8               sfxPairIdx;                         /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x2284   */ u16              charaGroupFlags[CHARA_GROUP_COUNT]; /** `e_CharaGroupFlags` */
                                                                         // Enabling a flag for Larval Stalkers causes them to die.
-    /* 0x228C   */ s32              field_228C[1]; // Spawn flags for enemy characters?
+    /* 0x228C   */ s32              field_228C[1];  // Spawn flags for enemy characters?
     /* 0x2290   */ s32              npcFlags;       // Flags related to NPCs. Each bit corresponds to an `npcs` array entry.
     /* 0x2294   */ s8               unused_2294[4]; /** @unused */
     /* 0x2298   */ e_ProcessFlags   processFlags;
@@ -446,16 +447,16 @@ typedef struct _SysWork
     /* 0x234B+0 */ u8               field_234B_0 : 4; /** `bool` | Related to particles. Used to trigger SFX? */
     /* 0x234B+4 */ u8               field_234B_4 : 4; // Related to particles.
     /* 0x234C   */ q19_12           mapMsgTimer;
-    /* 0x2350+0 */ u8               enableHighResGlyphs : 4; /** `bool` */
-    /* 0x2350+4 */ u8               silentYesSelection  : 4; /** `bool` */
-    /* 0x2351+0 */ u32              invItemSelectedIdx  : 8;
-    /* 0x2352+0 */ u32              invItemLoadFlags    : 8; /** `e_InvItemLoadFlags` */
-    /* 0x2353   */ s8               targetNpcIdx;            /** Index of the NPC in `npcs` being targeted by the player. */
+    /* 0x2350+0 */ u8               enableHalfHeightGlyphs : 4; /** `bool` */
+    /* 0x2350+4 */ u8               silentYesSelection     : 4; /** `bool` */
+    /* 0x2351+0 */ u32              invItemSelectedIdx     : 8;
+    /* 0x2352+0 */ u32              invItemLoadFlags       : 8; /** `e_InvItemLoadFlags` */
+    /* 0x2353   */ s8               targetNpcIdx;               /** Index of the NPC in `npcs` being targeted by the player. */
     /* 0x2354   */ s8               npcIdxs[CHARA_GROUP_COUNT];
     /* 0x2358   */ u8               enablePlayerMatchAnim; /** `bool` | Activates the animation performed by Harry when lighting a match at the beginning of the game. */
     /* 0x2359   */ s8               unused_2359;           /** @unused */
     /* 0x235A   */ u8               playerStopFlags;       /** `e_PlayerStopFlags` */
-                // 1 byte of padding.
+                   // 1 byte of padding.
     /* 0x235C   */ GsCOORDINATE2*   lightBoneCoord;
     /* 0x2360   */ VECTOR3          lightPosition;      // } Often set to DMS cutscene data.
     /* 0x236C   */ GsCOORDINATE2*   lensFlareBoneCoord; // }
@@ -469,7 +470,7 @@ typedef struct _SysWork
     /* 0x2388   */ s_SysWork_2388   field_2388;
     /* 0x2510   */ s32              field_2510;
     /* 0x2514   */ s_SysWork_2514   field_2514;
-    /* 0x254C   */ s8               field_254C[508]; /** Used through indirect pointer calls. Tied to `libkpad`.*/
+    /* 0x254C   */ s8               field_254C[508];                  /** Used through indirect pointer calls. Tied to `libkpad`.*/
     /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT]; // Last index value is not a layer, but some sort of timer. See `Bgm_LayersUpdate`.
                    // 2 bytes of padding.
     /* 0x275C   */ q23_8            field_275C; // } SFX volumes?

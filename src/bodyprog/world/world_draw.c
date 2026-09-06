@@ -1229,7 +1229,7 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
     }
 }
 
-void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, q3_12 timer, s32 paletteIdx) // 0x8003DA9C
+void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 otShift, q3_12 timer, s32 paletteIdx) // 0x8003DA9C
 {
     CVECTOR tintColor = { 0 };
     s16     clutY;
@@ -1260,7 +1260,7 @@ void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 arg2, 
                       g_WorldEnvWork.screenBrightness);
     }
 
-    func_80045534(&g_WorldGfxWork.registeredCharaModels[charaId]->skeleton, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
+    func_80045534(&g_WorldGfxWork.registeredCharaModels[charaId]->skeleton, &g_OrderingTable0[g_ActiveBufferIdx], otShift,
                   boneCoords, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), clutY, CHARA_FILE_INFOS[charaId].field_8);
 
     if (timer != Q12(0.0f))

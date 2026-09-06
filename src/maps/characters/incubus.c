@@ -128,7 +128,7 @@ void func_800DDB3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords)
 
 void func_800DDB68(s_SubCharacter* incubus, s32 soundIdx) // 0x800DDB68
 {
-    Sfx_WithFlagsPlay(D_800EC8C8[soundIdx].id_0, &incubus->position, D_800EC8C8[soundIdx].volume_2.val16, SfxFlag_None);
+    Sfx_WithFlagsPlay(D_800EC8C8[soundIdx].id, &incubus->position, D_800EC8C8[soundIdx].volume_2.val16, SfxFlag_None);
 }
 
 s32 func_800DDBA4(s32 idx) // 0x800DDBA4

@@ -1736,7 +1736,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx)
 {
-    Sfx_WithFlagsPlay(D_800DB1F8[soundIdx].id_0, &chara->position, D_800DB1F8[soundIdx].volume_2.val16, SfxFlag_None);
+    Sfx_WithFlagsPlay(D_800DB1F8[soundIdx].id, &chara->position, D_800DB1F8[soundIdx].volume_2.val16, SfxFlag_None);
 }
 
 u32 func_800D3B1C(void) // 0x800D3B1C

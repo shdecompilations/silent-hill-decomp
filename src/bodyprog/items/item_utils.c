@@ -147,7 +147,7 @@ bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328
     hasHuntingRifle = false;
     hasShotgun      = false;
 
-    for (; (itemId = g_SavegamePtr->items[itemIdx].id_0) != InvItemId_Unequipped; itemIdx++)
+    for (; (itemId = g_SavegamePtr->items[itemIdx].id) != InvItemId_Unequipped; itemIdx++)
     {
         if (itemId == InvItemId_HuntingRifle)
         {
@@ -173,7 +173,7 @@ bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328
 
         if (itemId == InvItemId_Handgun || itemId == InvItemId_HandgunBullets)
         {
-            if (g_SavegamePtr->items[itemIdx].count_1 != 0)
+            if (g_SavegamePtr->items[itemIdx].count != 0)
             {
                 return true;
             }
@@ -185,7 +185,7 @@ bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328
         {
             case InvItemId_HuntingRifle:
             case InvItemId_Shotgun:
-                if (g_SavegamePtr->items[itemIdx].count_1 != 0)
+                if (g_SavegamePtr->items[itemIdx].count != 0)
                 {
                     return true;
                 }
@@ -194,7 +194,7 @@ bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328
             case InvItemId_RifleShells:
                 if (hasHuntingRifle)
                 {
-                    if (g_SavegamePtr->items[itemIdx].count_1 != 0)
+                    if (g_SavegamePtr->items[itemIdx].count != 0)
                     {
                         return true;
                     }
@@ -204,7 +204,7 @@ bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328
             case InvItemId_ShotgunShells:
                 if (hasShotgun)
                 {
-                    if (g_SavegamePtr->items[itemIdx].count_1 != 0)
+                    if (g_SavegamePtr->items[itemIdx].count != 0)
                     {
                         return true;
                     }
@@ -223,7 +223,7 @@ s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
     for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
     {
         // Already in inventory, can't add new one.
-        if (g_SavegamePtr->items[i].id_0 == InvItemId_HyperBlaster)
+        if (g_SavegamePtr->items[i].id == InvItemId_HyperBlaster)
         {
             return NO_VALUE;
         }

@@ -602,13 +602,13 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
             {
                 continue;
             }
-                if (g_SavegamePtr->items[D_800C3E18[i]].id_0 == (u8)InvItemId_Empty)
+                if (g_SavegamePtr->items[D_800C3E18[i]].id == (u8)InvItemId_Empty)
                 {
                     continue;
                 }
 
-            g_Items_Transforms[i].rotate.vx = INV_ITEM_ROTATIONS[g_SavegamePtr->items[D_800C3E18[i]].id_0 - 32].vx;
-            g_Items_Transforms[i].rotate.vz = INV_ITEM_ROTATIONS[g_SavegamePtr->items[D_800C3E18[i]].id_0 - 32].vy;
+            g_Items_Transforms[i].rotate.vx = INV_ITEM_ROTATIONS[g_SavegamePtr->items[D_800C3E18[i]].id - 32].vx;
+            g_Items_Transforms[i].rotate.vz = INV_ITEM_ROTATIONS[g_SavegamePtr->items[D_800C3E18[i]].id - 32].vy;
 
             ItemScreen_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
             func_800548D8(i);
@@ -618,11 +618,11 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
         }
 
         // Equipped item.
-        if (g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id_0 != (u8)InvItemId_Empty && 
+        if (g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id != (u8)InvItemId_Empty && 
             g_Inventory_EquippedItemIdx != NO_VALUE)
         {
-            g_Items_Transforms[7].rotate.vx = INV_ITEM_ROTATIONS[g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
-            g_Items_Transforms[7].rotate.vz = INV_ITEM_ROTATIONS[g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
+            g_Items_Transforms[7].rotate.vx = INV_ITEM_ROTATIONS[g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id - 32].vx;
+            g_Items_Transforms[7].rotate.vz = INV_ITEM_ROTATIONS[g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id - 32].vy;
 
             ItemScreen_ItemRotate(&g_Items_Coords[7].param->rotate, &g_Items_Coords[7]);
             func_800548D8(7);
@@ -1431,8 +1431,8 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             break;
     }
 
-    if (D_800AE185 != INV_ITEM_GROUP(g_SavegamePtr->items[idx].id_0) - 1 ||
-        D_800AE186 != INV_ITEM_GROUP_ID(g_SavegamePtr->items[idx].id_0))
+    if (D_800AE185 != INV_ITEM_GROUP(g_SavegamePtr->items[idx].id) - 1 ||
+        D_800AE186 != INV_ITEM_GROUP_ID(g_SavegamePtr->items[idx].id))
     {
         SysWork_StateStepSet(1, 0);
         g_Inventory_ItemNameTimer        = 0;
@@ -1444,7 +1444,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 
     if (idx != NO_VALUE && *selectedItemId != 2 && *selectedItemId != 3 && *selectedItemId != 4)
     {
-        for (i = 0; i < g_SavegamePtr->inventorySlotCount; i++)
+        for (i = 0; i < g_SavegamePtr->invSlotCount; i++)
         {
             if (i == idx)
             {
@@ -1458,7 +1458,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                 }
 
                 Gfx_StringDrawInt(2, i + 1);
-                i = g_SavegamePtr->inventorySlotCount;
+                i = g_SavegamePtr->invSlotCount;
             }
         }
     }
@@ -1469,11 +1469,11 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         Gfx_StringPositionSet(122, 30);
         Gfx_StringDraw(D_80027F94[0], 10);
 
-        for (i = 0; i < g_SavegamePtr->inventorySlotCount; i++)
+        for (i = 0; i < g_SavegamePtr->invSlotCount; i++)
         {
-            if (g_Inventory_EquippedItem == g_SavegamePtr->items[i].id_0)
+            if (g_Inventory_EquippedItem == g_SavegamePtr->items[i].id)
             {
-                if (g_SavegamePtr->items[i].count_1 >= 10)
+                if (g_SavegamePtr->items[i].count >= 10)
                 {
                     Gfx_StringPositionSet(178, 30);
                 }
@@ -1481,7 +1481,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                 {
                     Gfx_StringPositionSet(188, 30);
                 }
-                Gfx_StringDrawInt(2, g_SavegamePtr->items[i].count_1);
+                Gfx_StringDrawInt(2, g_SavegamePtr->items[i].count);
             }
         }
     }
@@ -1489,12 +1489,12 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
     temp = *selectedItemId;
 
     if (temp < 0 || (temp >= 2 && (*selectedItemId >= 9 || temp < 5)) ||
-        g_SavegamePtr->items[idx].id_0 == (u8)InvItemId_Empty)
+        g_SavegamePtr->items[idx].id == (u8)InvItemId_Empty)
     {
         return;
     }
 
-    switch (g_SavegamePtr->items[idx].id_0)
+    switch (g_SavegamePtr->items[idx].id)
     {
         case InvItemId_Flashlight:
             Gfx_StringPositionSet(stringPos.vx, stringPos.vy);
@@ -1549,13 +1549,13 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         case InvItemId_ShotgunShells:
             Gfx_StringPositionSet(stringPos.vx, stringPos.vy);
             Gfx_StringDraw(D_80027F94[0], 10);
-            if (g_SavegamePtr->items[idx].id_0 != (u8)InvItemId_Empty)
+            if (g_SavegamePtr->items[idx].id != (u8)InvItemId_Empty)
             {
-                if (g_SavegamePtr->items[idx].count_1 >= 100)
+                if (g_SavegamePtr->items[idx].count >= 100)
                 {
                     Gfx_StringPositionSet(260, 200);
                 }
-                else if (g_SavegamePtr->items[idx].count_1 >= 10)
+                else if (g_SavegamePtr->items[idx].count >= 10)
                 {
                     Gfx_StringPositionSet(270, 200);
                 }
@@ -1563,22 +1563,22 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                 {
                     Gfx_StringPositionSet(280, 200);
                 }
-                Gfx_StringDrawInt(3, g_SavegamePtr->items[idx].count_1);
+                Gfx_StringDrawInt(3, g_SavegamePtr->items[idx].count);
             }
             break;
     }
 
     Gfx_StringColorSet(StringColorId_White);
 
-    D_800AE185 = INV_ITEM_GROUP(g_SavegamePtr->items[idx].id_0) - 1;
-    D_800AE186 = INV_ITEM_GROUP_ID(g_SavegamePtr->items[idx].id_0);
+    D_800AE185 = INV_ITEM_GROUP(g_SavegamePtr->items[idx].id) - 1;
+    D_800AE186 = INV_ITEM_GROUP_ID(g_SavegamePtr->items[idx].id);
 
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
             g_Inventory_ItemNameTimer++;
             Gfx_StringPositionSet(68, 200);
-            if (Gfx_StringDraw(INV_ITEM_NAMES[g_SavegamePtr->items[idx].id_0 - 32], g_Inventory_ItemNameTimer) == true)
+            if (Gfx_StringDraw(INV_ITEM_NAMES[g_SavegamePtr->items[idx].id - 32], g_Inventory_ItemNameTimer) == true)
             {
                 g_Inventory_ItemNameTimer   = 100;
                 SysWork_StateStepIncrement(1);
@@ -1588,7 +1588,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         case 1:
             g_Inventory_DescriptionRollTimer += 2;
             Gfx_StringPositionSet(68, 200);
-            Gfx_StringDraw(INV_ITEM_NAMES[g_SavegamePtr->items[idx].id_0 - 32], 100);
+            Gfx_StringDraw(INV_ITEM_NAMES[g_SavegamePtr->items[idx].id - 32], 100);
 
             if (idx == g_Inventory_SelectedItemIdx)
             {
@@ -1597,7 +1597,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 
             Gfx_StringPositionSet(30, 232);
 
-            if (Gfx_StringDraw(g_ItemDescriptions[g_SavegamePtr->items[idx].id_0 - 32], g_Inventory_DescriptionRollTimer) == true)
+            if (Gfx_StringDraw(g_ItemDescriptions[g_SavegamePtr->items[idx].id - 32], g_Inventory_DescriptionRollTimer) == true)
             {
                 g_Inventory_DescriptionRollTimer = 100;
                 SysWork_StateStepIncrement(1);
@@ -1608,13 +1608,13 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         case 3:
         case 4:
             Gfx_StringPositionSet(68, 200);
-            Gfx_StringDraw(INV_ITEM_NAMES[g_SavegamePtr->items[idx].id_0 - 32], 100);
+            Gfx_StringDraw(INV_ITEM_NAMES[g_SavegamePtr->items[idx].id - 32], 100);
             Gfx_StringPositionSet(30, 232);
 
             switch (g_SysWork.sysStateSteps[1])
             {
                 case 2:
-                    Gfx_StringDraw(g_ItemDescriptions[g_SavegamePtr->items[idx].id_0 - 32], 100);
+                    Gfx_StringDraw(g_ItemDescriptions[g_SavegamePtr->items[idx].id - 32], 100);
                     break;
 
                 case 3:
@@ -1803,9 +1803,9 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
 
 void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 {
-    s32          sp10;
-    s32          sp14;
-    s32          temp_a0_8;
+    s32          curWeaponAmmo;
+    s32          totalWeaponAmmo;
+    s32          someCount;
     s32          temp_hi;
     s32          temp_ret;
     s32          temp_ret_2;
@@ -1853,15 +1853,15 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                         }
                         else
                         {
-                            if (ABS(D_800C3E18[i] - g_SysWork.invItemSelectedIdx) >= (g_SavegamePtr->inventorySlotCount >> 1))
+                            if (ABS(D_800C3E18[i] - g_SysWork.invItemSelectedIdx) >= (g_SavegamePtr->invSlotCount >> 1))
                             {
                                 if (g_SysWork.invItemSelectedIdx < D_800C3E18[i])
                                 {
-                                    var_s3 = (D_800C3E18[i] - g_SysWork.invItemSelectedIdx) - g_SavegamePtr->inventorySlotCount;
+                                    var_s3 = (D_800C3E18[i] - g_SysWork.invItemSelectedIdx) - g_SavegamePtr->invSlotCount;
                                 }
                                 else
                                 {
-                                    var_s3 = g_SavegamePtr->inventorySlotCount - (g_SysWork.invItemSelectedIdx - D_800C3E18[i]);
+                                    var_s3 = g_SavegamePtr->invSlotCount - (g_SysWork.invItemSelectedIdx - D_800C3E18[i]);
                                 }
                             }
                             else
@@ -1886,7 +1886,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 g_Inventory_ScrollTransitionTimer++;
 
                 if ((g_SysWork.invItemSelectedIdx == (g_Inventory_SelectedItemIdx + 1)) ||
-                    ((g_Inventory_SelectedItemIdx - g_SysWork.invItemSelectedIdx) == (g_SavegamePtr->inventorySlotCount - 1)))
+                    ((g_Inventory_SelectedItemIdx - g_SysWork.invItemSelectedIdx) == (g_SavegamePtr->invSlotCount - 1)))
                 {
                     g_Inventory_ScrollTransitionTimer = -g_Inventory_ScrollTransitionTimer;
                 }
@@ -1901,7 +1901,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 {
                     if (D_800C3E18[i] != NO_VALUE)
                     {
-                        if (ABS(D_800C3E18[i] - g_Inventory_SelectedItemIdx) >= g_SavegamePtr->inventorySlotCount >> 1)
+                        if (ABS(D_800C3E18[i] - g_Inventory_SelectedItemIdx) >= g_SavegamePtr->invSlotCount >> 1)
                         {
                             if (D_800C3E18[i] == g_Inventory_SelectedItemIdx)
                             {
@@ -1909,11 +1909,11 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                             }
                             else if (g_Inventory_SelectedItemIdx < D_800C3E18[i])
                             {
-                                var_s3 = (D_800C3E18[i] - g_Inventory_SelectedItemIdx) - g_SavegamePtr->inventorySlotCount;
+                                var_s3 = (D_800C3E18[i] - g_Inventory_SelectedItemIdx) - g_SavegamePtr->invSlotCount;
                             }
                             else
                             {
-                                var_s3 = g_SavegamePtr->inventorySlotCount - (g_Inventory_SelectedItemIdx - D_800C3E18[i]);
+                                var_s3 = g_SavegamePtr->invSlotCount - (g_Inventory_SelectedItemIdx - D_800C3E18[i]);
                             }
                         }
                         else
@@ -1966,13 +1966,13 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
         case 5: // Equip weapon.
             if (g_Inventory_ScrollTransitionTimer == 0)
             {
-                g_SysWork.playerCombat.weaponAttack       = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 + 0x80; // TODO: Use macro.
+                g_SysWork.playerCombat.weaponAttack       = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id + InvItemId_KitchenKnife;
                 g_SysWork.playerCombat.weaponInventoryIdx = g_SysWork.invItemSelectedIdx & 0xFF;
                 D_800C3E18[7]                             = g_SysWork.invItemSelectedIdx;
 
                 for (k = 0; k < INV_ITEM_COUNT_MAX; k++)
                 {
-                    if (g_SavegamePtr->items[D_800C3E18[7]].id_0 == g_Item_MapLoadableItems[k])
+                    if (g_SavegamePtr->items[D_800C3E18[7]].id == g_Item_MapLoadableItems[k])
                     {
                         Gfx_Items_Display((s_TmdFile*)FS_BUFFER_8, 7, k);
                         func_8005487C(7);
@@ -1980,16 +1980,16 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     }
                 }
 
-                if (INV_ITEM_GROUP(g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id_0) == InvItemGroup_GunWeapons)
+                if (INV_ITEM_GROUP(g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id) == InvItemGroup_GunWeapons)
                 {
-                    g_SysWork.playerCombat.currentWeaponAmmo = g_SavegamePtr->items[g_Inventory_EquippedItemIdx].count_1;
+                    g_SysWork.playerCombat.currentWeaponAmmo = g_SavegamePtr->items[g_Inventory_EquippedItemIdx].count;
                     g_SysWork.playerCombat.totalWeaponAmmo   = 0;
 
-                    for (i = 0; i < g_SavegamePtr->inventorySlotCount; i++)
+                    for (i = 0; i < g_SavegamePtr->invSlotCount; i++)
                     {
-                        if (g_SavegamePtr->items[i].id_0 == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id_0))
+                        if (g_SavegamePtr->items[i].id == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[g_Inventory_EquippedItemIdx].id))
                         {
-                            g_SysWork.playerCombat.totalWeaponAmmo = g_SavegamePtr->items[i].count_1;
+                            g_SysWork.playerCombat.totalWeaponAmmo = g_SavegamePtr->items[i].count;
                         }
                     }
                 }
@@ -2003,10 +2003,10 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
             if (g_Inventory_ScrollTransitionTimer == 9)
             {
-                g_Inventory_EquippedItem                  = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0;
+                g_Inventory_EquippedItem                  = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id;
                 g_SavegamePtr->equippedWeapon             = g_Inventory_EquippedItem;
                 g_Inventory_ScrollTransitionTimer         = 0;
-                g_SysWork.playerCombat.weaponAttack       = g_Inventory_EquippedItem + 0x80; // TODO: Use macro.
+                g_SysWork.playerCombat.weaponAttack       = g_Inventory_EquippedItem + InvItemId_KitchenKnife;
                 g_SysWork.playerCombat.weaponInventoryIdx = g_SysWork.invItemSelectedIdx;
 
                 *selectedItemId              = 0;
@@ -2071,36 +2071,36 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
         case 7: // Reload equipped weapon.
             if (g_Inventory_ScrollTransitionTimer == 0)
             {
-                D_800C3BAC = NO_VALUE;
-                sp10       = g_SysWork.playerCombat.currentWeaponAmmo;
-                sp14       = g_SysWork.playerCombat.totalWeaponAmmo;
+                D_800C3BAC      = NO_VALUE;
+                curWeaponAmmo   = g_SysWork.playerCombat.currentWeaponAmmo;
+                totalWeaponAmmo = g_SysWork.playerCombat.totalWeaponAmmo;
 
-                Items_AmmoReloadCalculation(&sp10, &sp14, g_SysWork.playerCombat.weaponAttack);
+                Items_AmmoReloadCompute(&curWeaponAmmo, &totalWeaponAmmo, g_SysWork.playerCombat.weaponAttack);
 
-                g_SysWork.playerCombat.totalWeaponAmmo                                  = sp14;
-                g_SysWork.playerCombat.currentWeaponAmmo                                = sp10;
-                g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].count_1 = sp10;
+                g_SysWork.playerCombat.totalWeaponAmmo                                = totalWeaponAmmo;
+                g_SysWork.playerCombat.currentWeaponAmmo                              = curWeaponAmmo;
+                g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].count = curWeaponAmmo;
 
-                for (j = 0; j < g_SavegamePtr->inventorySlotCount; j++)
+                for (j = 0; j < g_SavegamePtr->invSlotCount; j++)
                 {
-                    if (g_SavegamePtr->items[j].id_0 == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].id_0))
+                    if (g_SavegamePtr->items[j].id == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].id))
                     {
-                        g_SavegamePtr->items[j].count_1 = g_SysWork.playerCombat.totalWeaponAmmo;
+                        g_SavegamePtr->items[j].count = g_SysWork.playerCombat.totalWeaponAmmo;
                         D_800C3BAC                        = j;
-                        j                                 = g_SavegamePtr->inventorySlotCount;
+                        j                                 = g_SavegamePtr->invSlotCount;
                     }
                 }
             }
 
-            if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 == 0 &&
-                INV_ITEM_GROUP(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0) == InvItemGroup_GunAmmo)
+            if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count == 0 &&
+                INV_ITEM_GROUP(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id) == InvItemGroup_GunAmmo)
             {
                 g_Inventory_ScrollTransitionTimer++;
                 *selectedItemId = 0;
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 = InvItemId_Empty;
+                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id = InvItemId_Empty;
 
                     ptr = &g_GameWork;
                     do
@@ -2127,7 +2127,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     }
                 }
             }
-            else if (g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx + 1].count_1 == 0 &&
+            else if (g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx + 1].count == 0 &&
                      D_800C3BAC != NO_VALUE)
             {
                 *selectedItemId = 0;
@@ -2135,7 +2135,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx + 1].id_0 = InvItemId_Empty;
+                    g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx + 1].id = InvItemId_Empty;
                     g_Inventory_ScrollTransitionTimer = 0;
 
                     func_8004EF48();
@@ -2182,69 +2182,69 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
             {
                 D_800C3BAC = NO_VALUE;
 
-                if (INV_ITEM_GROUP(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0) == InvItemGroup_GunAmmo)
+                if (INV_ITEM_GROUP(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id) == InvItemGroup_GunAmmo)
                 {
-                    for (l = 0; l < g_SavegamePtr->inventorySlotCount; l++)
+                    for (l = 0; l < g_SavegamePtr->invSlotCount; l++)
                     {
-                        if (g_SavegamePtr->items[l].id_0 == INV_AMMO_WEAPON_ID(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0))
+                        if (g_SavegamePtr->items[l].id == INV_AMMO_WEAPON_ID(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id))
                         {
-                            temp_a0_8 = g_Items_GunsMaxLoadAmmo[g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 - 0xA0] - g_SavegamePtr->items[l].count_1;
-
-                            if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 >= temp_a0_8)
+                            someCount = g_Items_GunsMaxLoadAmmo[g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id - 160] -
+                                        g_SavegamePtr->items[l].count;
+                            if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count >= someCount)
                             {
-                                g_SavegamePtr->items[l].count_1                            += temp_a0_8;
-                                g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 -= temp_a0_8;
+                                g_SavegamePtr->items[l].count                            += someCount;
+                                g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count -= someCount;
                             }
                             else
                             {
-                                g_SavegamePtr->items[l].count_1                           += g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1;
-                                g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 = 0;
+                                g_SavegamePtr->items[l].count                           += g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count;
+                                g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count = 0;
                             }
 
-                            if (g_SavegamePtr->items[l].id_0 == (g_SysWork.playerCombat.weaponAttack + 0x80))
+                            if (g_SavegamePtr->items[l].id == (g_SysWork.playerCombat.weaponAttack + InvItemId_KitchenKnife))
                             {
-                                g_SysWork.playerCombat.currentWeaponAmmo = g_SavegamePtr->items[l].count_1;
-                                g_SysWork.playerCombat.totalWeaponAmmo   = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1;
+                                g_SysWork.playerCombat.currentWeaponAmmo = g_SavegamePtr->items[l].count;
+                                g_SysWork.playerCombat.totalWeaponAmmo   = g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count;
                             }
                         }
                     }
                 }
                 else
                 {
-                    for (l = 0; l < g_SavegamePtr->inventorySlotCount; l++)
+                    for (l = 0; l < g_SavegamePtr->invSlotCount; l++)
                     {
-                        if (g_SavegamePtr->items[l].id_0 == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0))
+                        if (g_SavegamePtr->items[l].id == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id))
                         {
                             D_800C3BAC = l;
 
-                            temp_a0_8 = g_Items_GunsMaxLoadAmmo[g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 - 0x80] - g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1;
-
-                            if (g_SavegamePtr->items[l].count_1 >= temp_a0_8)
+                            someCount = g_Items_GunsMaxLoadAmmo[g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id - 128] -
+                                        g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count;
+                            if (g_SavegamePtr->items[l].count >= someCount)
                             {
-                                g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 += temp_a0_8;
-                                g_SavegamePtr->items[l].count_1                            -= temp_a0_8;
+                                g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count += someCount;
+                                g_SavegamePtr->items[l].count                            -= someCount;
                             }
                             else
                             {
                                 var_t3                                                      = l;
-                                g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 += g_SavegamePtr->items[l].count_1;
-                                g_SavegamePtr->items[l].count_1                             = 0;
+                                g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count += g_SavegamePtr->items[l].count;
+                                g_SavegamePtr->items[l].count                             = 0;
                             }
                         }
                     }
                 }
             }
 
-            if ((g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 == 0 &&
-                 INV_ITEM_GROUP(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0) == InvItemGroup_GunAmmo) ||
-                var_t3 >= 0 && g_SavegamePtr->items[var_t3].count_1 == 0)
+            if ((g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count == 0 &&
+                 INV_ITEM_GROUP(g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id) == InvItemGroup_GunAmmo) ||
+                var_t3 >= 0 && g_SavegamePtr->items[var_t3].count == 0)
             {
                 g_Inventory_ScrollTransitionTimer++;
                 *selectedItemId = 0;
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 = InvItemId_Empty;
+                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id = InvItemId_Empty;
                     ptr2                                                    = &g_GameWork;
 
                     do
@@ -2271,14 +2271,14 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     }
                 }
             }
-            else if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx + 1].count_1 == 0 && D_800C3BAC != NO_VALUE)
+            else if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx + 1].count == 0 && D_800C3BAC != NO_VALUE)
             {
                 *selectedItemId = 0;
                 g_Inventory_ScrollTransitionTimer++;
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx + 1].id_0 = InvItemId_Empty;
+                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx + 1].id = InvItemId_Empty;
                     g_Inventory_ScrollTransitionTimer = 0;
 
                     func_8004EF48();
@@ -2322,12 +2322,12 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
         case 9: // Apply health.
             if (g_Inventory_ScrollTransitionTimer == 0)
             {
-                switch (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0)
+                switch (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id)
                 {
                     case InvItemId_HealthDrink:
                     case InvItemId_FirstAidKit:
                     case InvItemId_Ampoule:
-                        switch (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0)
+                        switch (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id)
                         {
                             case InvItemId_FirstAidKit:
                                 g_SysWork.playerWork.player.health += Q12(80.0f);
@@ -2345,18 +2345,18 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                         Sd_SfxPlay(Sfx_Unk1325, Q8(-0.25f), Q8(0.25f));
                         g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, Q12(0.0f), Q12(100.0f));
-                        g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1--;
+                        g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count--;
                         break;
                 }
             }
 
-            if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 == 0)
+            if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count == 0)
             {
                 g_Inventory_ScrollTransitionTimer++;
 
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 = InvItemId_Empty;
+                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id = InvItemId_Empty;
 
                     g_Inventory_ScrollTransitionTimer = 0;
 
@@ -2400,20 +2400,20 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
         case 11:
             if (g_Inventory_ScrollTransitionTimer == 0 &&
-                ((g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id_0 >= InvItemId_LobbyKey &&
-                  g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id_0 <  InvItemId_KitchenKnife) ||
-                 g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id_0 == InvItemId_GasolineTank))
+                ((g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id >= InvItemId_LobbyKey &&
+                  g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id <  InvItemId_KitchenKnife) ||
+                 g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].id == InvItemId_GasolineTank))
             {
-                g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].count_1 = 0;
+                g_SavegamePtr->items[(u8)g_SysWork.invItemSelectedIdx].count = 0;
             }
 
             g_Inventory_ScrollTransitionTimer++;
 
-            if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count_1 == 0)
+            if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].count == 0)
             {
                 if (g_Inventory_ScrollTransitionTimer == 9)
                 {
-                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id_0 = 0xFF;
+                    g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id = 0xFF;
                     g_Inventory_ScrollTransitionTimer                       = 0;
                     *selectedItemId                                         = 0;
                     D_800AE188                                              = 0;
@@ -2426,7 +2426,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     {
                         if (D_800C3E18[i] == g_SysWork.invItemSelectedIdx)
                         {
-                            g_SavegamePtr->items[D_800C3E18[i]].id_0 = InvItemId_Empty;
+                            g_SavegamePtr->items[D_800C3E18[i]].id = InvItemId_Empty;
 
                             i = 7;
                         }
@@ -2532,7 +2532,7 @@ void func_800539A4(s32 scrollDirection, s32 arg1) // 0x800539A4
     }
 
     var_a3_2 = (scrollDirection != 0) ? LEFT_SCROLL : RIGHT_SCROLL;
-    var_a3_2 = (arg1 + var_a3_2 + g_SavegamePtr->inventorySlotCount) % g_SavegamePtr->inventorySlotCount;
+    var_a3_2 = (arg1 + var_a3_2 + g_SavegamePtr->invSlotCount) % g_SavegamePtr->invSlotCount;
 
     for (i = 0; i < 7; i++)
     {
@@ -2545,11 +2545,11 @@ void func_800539A4(s32 scrollDirection, s32 arg1) // 0x800539A4
 
     sp10[var_s0] = arg1;
 
-    if (g_SavegamePtr->items[arg1].id_0 != (u8)InvItemId_Empty)
+    if (g_SavegamePtr->items[arg1].id != (u8)InvItemId_Empty)
     {
         for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
         {
-            if (g_SavegamePtr->items[arg1].id_0 == g_Item_MapLoadableItems[i])
+            if (g_SavegamePtr->items[arg1].id == g_Item_MapLoadableItems[i])
             {
                 Gfx_Items_Display(FS_BUFFER_8, var_s0, i);
                 func_8005487C(var_s0);
@@ -2876,23 +2876,23 @@ void GameFs_UniqueItemModelLoad(u8 itemId) // 0x80053B08
 
 void GameFs_Tim00TIMLoad(void) // 0x80053dA0
 {
-    if (g_SysWork.invItemLoadFlags & InvItemLoadFlag_Tex0)
+    if (g_SysWork.invItemLoadFlags & InvItemLoadFlag_Texture0)
     {
         return;
     }
 
     Fs_QueueStartReadTim(FILE_ITEM_TIM00_TIM, FS_BUFFER_1, &g_FirstAidKitItemTextureImg);
-    g_SysWork.invItemLoadFlags |= InvItemLoadFlag_Tex0;
+    g_SysWork.invItemLoadFlags |= InvItemLoadFlag_Texture0;
 }
 
 void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
 {
-    #define flags g_SysWork.invItemLoadFlags
+    #define loadFlags g_SysWork.invItemLoadFlags
 
-    if (!(flags & InvItemLoadFlag_Model))
+    if (!(loadFlags & InvItemLoadFlag_Model))
     {
         Fs_QueueStartReadTim(FILE_ITEM_TIM07_TIM, FS_BUFFER_1, &D_800A9074);
-        flags |= InvItemLoadFlag_Model;
+        loadFlags |= InvItemLoadFlag_Model;
     }
 
     switch (mapId)
@@ -2902,10 +2902,10 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapIdx_MAP1_S02:
         case MapIdx_MAP1_S03:
         case MapIdx_MAP1_S05:
-            if (!(flags & InvItemLoadFlag_Tex1))
+            if (!(loadFlags & InvItemLoadFlag_Texture1))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM01_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
-                flags = (flags & (InvItemLoadFlag_Tex0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Tex1;
+                loadFlags = (loadFlags & (InvItemLoadFlag_Texture0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Texture1;
             }
             break;
 
@@ -2921,10 +2921,10 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapIdx_MAP4_S02:
         case MapIdx_MAP4_S03:
         case MapIdx_MAP4_S05:
-            if (!(flags & InvItemLoadFlag_Tex2))
+            if (!(loadFlags & InvItemLoadFlag_Texture2))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM02_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
-                flags = (flags & (InvItemLoadFlag_Tex0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Tex2;
+                loadFlags = (loadFlags & (InvItemLoadFlag_Texture0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Texture2;
             }
             break;
 
@@ -2936,10 +2936,10 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapIdx_MAP3_S05:
         case MapIdx_MAP3_S06:
         case MapIdx_MAP4_S04:
-            if (!(flags & InvItemLoadFlag_Tex3))
+            if (!(loadFlags & InvItemLoadFlag_Texture3))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM03_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
-                flags = (flags & (InvItemLoadFlag_Tex0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Tex3;
+                loadFlags = (loadFlags & (InvItemLoadFlag_Texture0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Texture3;
             }
             break;
 
@@ -2952,36 +2952,36 @@ void GameFs_MapItemsModelLoad(u32 mapId) // 0x80053DFC
         case MapIdx_MAP6_S02:
         case MapIdx_MAP6_S03:
         case MapIdx_MAP6_S04:
-            if (!(flags & InvItemLoadFlag_Tex4))
+            if (!(loadFlags & InvItemLoadFlag_Texture4))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM04_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
-                flags = (flags & (InvItemLoadFlag_Tex0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Tex4;
+                loadFlags = (loadFlags & (InvItemLoadFlag_Texture0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Texture4;
             }
             break;
 
         case MapIdx_MAP7_S00:
         case MapIdx_MAP7_S01:
-            if (!(flags & InvItemLoadFlag_Tex5))
+            if (!(loadFlags & InvItemLoadFlag_Texture5))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM05_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
-                flags = (flags & (InvItemLoadFlag_Tex0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Tex5;
+                loadFlags = (loadFlags & (InvItemLoadFlag_Texture0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Texture5;
             }
             break;
 
         case MapIdx_MAP7_S02:
         case MapIdx_MAP7_S03:
-            if (!(flags & InvItemLoadFlag_Tex6))
+            if (!(loadFlags & InvItemLoadFlag_Texture6))
             {
                 Fs_QueueStartReadTim(FILE_ITEM_TIM06_TIM, FS_BUFFER_1, &g_InventoryKeyItemTextureImg);
-                flags = (flags & (InvItemLoadFlag_Tex0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Tex6;
+                loadFlags = (loadFlags & (InvItemLoadFlag_Texture0 | InvItemLoadFlag_Model)) | InvItemLoadFlag_Texture6;
             }
             break;
 
-        case 0:
+        case MapIdx_MAP0_S00:
             break;
     }
 
-    #undef flags
+    #undef loadFlags
 }
 
 void GameFs_MapItemsTextureLoad(s32 mapId) // 0x80054024
@@ -3057,22 +3057,21 @@ void func_800540A4(s8 arg0) // 0x800540A4
 
     if (g_SysWork.playerCombat.weaponInventoryIdx != NO_VALUE)
     {
-        g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].count_1 = g_SysWork.playerCombat.currentWeaponAmmo;
+        g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].count = g_SysWork.playerCombat.currentWeaponAmmo;
     }
 
-    for (i = 0; i < g_SavegamePtr->inventorySlotCount; i++)
+    for (i = 0; i < g_SavegamePtr->invSlotCount; i++)
     {
-        if (INV_ITEM_GROUP(g_SavegamePtr->items[i].id_0) == InvItemGroup_GunAmmo &&
-            g_SavegamePtr->items[i].id_0 == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].id_0))
+        if (INV_ITEM_GROUP(g_SavegamePtr->items[i].id) == InvItemGroup_GunAmmo &&
+            g_SavegamePtr->items[i].id == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].id))
         {
-            g_SavegamePtr->items[i].count_1 = g_SysWork.playerCombat.totalWeaponAmmo;
-
-            if (!g_SavegamePtr->items[i].count_1)
+            g_SavegamePtr->items[i].count = g_SysWork.playerCombat.totalWeaponAmmo;
+            if (g_SavegamePtr->items[i].count == 0)
             {
-                g_SavegamePtr->items[i].id_0 = InvItemId_Empty;
+                g_SavegamePtr->items[i].id = InvItemId_Empty;
             }
 
-            g_SavegamePtr->inventorySlotCount = func_8004F190(g_SavegamePtr);
+            g_SavegamePtr->invSlotCount = func_8004F190(g_SavegamePtr);
             break;
         }
     }
@@ -3123,22 +3122,23 @@ void Gfx_Items_Draw(void) // 0x80054200
 
     GameFs_TmdDataAlloc(FS_BUFFER_8);
 
-    temp_s5 = (g_SysWork.invItemSelectedIdx - 3 + g_SavegamePtr->inventorySlotCount) % g_SavegamePtr->inventorySlotCount;
+    temp_s5 = (g_SysWork.invItemSelectedIdx - 3 + g_SavegamePtr->invSlotCount) % g_SavegamePtr->invSlotCount;
 
-    if (g_GameWork.gameStateSteps[1] < 21) // If screen is inventory
+    // Sscreen is inventory.
+    if (g_GameWork.gameStateSteps[1] < 21)
     {
         for (invItemsIdx = 0; invItemsIdx < 7; invItemsIdx++)
         {
-            D_800C3E18[invItemsIdx] = (temp_s5 + invItemsIdx) % g_SavegamePtr->inventorySlotCount;
+            D_800C3E18[invItemsIdx] = (temp_s5 + invItemsIdx) % g_SavegamePtr->invSlotCount;
 
-            if (g_SavegamePtr->items[D_800C3E18[invItemsIdx]].id_0 == (u8)InvItemId_Empty)
+            if (g_SavegamePtr->items[D_800C3E18[invItemsIdx]].id == (u8)InvItemId_Empty)
             {
                 continue;
             }
 
             for (saveItemsIdx = 0; saveItemsIdx < INV_ITEM_COUNT_MAX; saveItemsIdx++)
             {
-                if (g_SavegamePtr->items[D_800C3E18[invItemsIdx]].id_0 == g_Item_MapLoadableItems[saveItemsIdx])
+                if (g_SavegamePtr->items[D_800C3E18[invItemsIdx]].id == g_Item_MapLoadableItems[saveItemsIdx])
                 {
                     Gfx_Items_Display(FS_BUFFER_8, invItemsIdx, saveItemsIdx);
                     func_8005487C(invItemsIdx);
@@ -3150,13 +3150,13 @@ void Gfx_Items_Draw(void) // 0x80054200
 
         g_Inventory_EquippedItem = g_SavegamePtr->equippedWeapon;
 
-        for (i = 0; i < g_SavegamePtr->inventorySlotCount; i++)
+        for (i = 0; i < g_SavegamePtr->invSlotCount; i++)
         {
-            if (g_SavegamePtr->items[i].id_0 == g_Inventory_EquippedItem)
+            if (g_SavegamePtr->items[i].id == g_Inventory_EquippedItem)
             {
                 D_800C3E18[7] = i;
 
-                i = g_SavegamePtr->inventorySlotCount;
+                i = g_SavegamePtr->invSlotCount;
             }
         }
 
@@ -3576,14 +3576,15 @@ void Inventory_AddSpecialItem(u8 itemId, u8 itemCount) // 0x80054CAC
             break;
     }
 
-    g_SavegamePtr->items[g_SavegamePtr->inventorySlotCount].id_0    = itemId;
-    g_SavegamePtr->items[g_SavegamePtr->inventorySlotCount].count_1 = itemCount;
-    g_SavegamePtr->inventorySlotCount                                 = func_8004F190(g_SavegamePtr);
+    g_SavegamePtr->items[g_SavegamePtr->invSlotCount].id    = itemId;
+    g_SavegamePtr->items[g_SavegamePtr->invSlotCount].count = itemCount;
+    g_SavegamePtr->invSlotCount                             = func_8004F190(g_SavegamePtr);
 }
 
-void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx) // 0x80054FC0
+void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx) // 0x80054FC0
 {
     s32 missingAmmo;
+
     missingAmmo = g_Items_GunsMaxLoadAmmo[gunIdx] - *currentAmmo;
     if (missingAmmo == 0)
     {
@@ -3604,7 +3605,7 @@ void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx
     }
 }
 
-// Likely the first pad is supposed to be generated in the file linking while the second being inserted at
+// Likely the first pad is supposed to be generated during file linking, while the second is inserted at
 // `bodyprog_80055028.c` directly.
 const s32 rodataPad_80028524 = 0;
 const s32 rodataPad_80028528 = 0;

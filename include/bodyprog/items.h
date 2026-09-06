@@ -12,15 +12,15 @@
 /** @brief Inventory item model load flags. */
 typedef enum _InvItemLoadFlags
 {
-    InvItemLoadFlag_None  = 0,
-    InvItemLoadFlag_Tex0  = 1 << 0,
-    InvItemLoadFlag_Tex1  = 1 << 1,
-    InvItemLoadFlag_Tex2  = 1 << 2,
-    InvItemLoadFlag_Tex3  = 1 << 3,
-    InvItemLoadFlag_Tex4  = 1 << 4,
-    InvItemLoadFlag_Tex5  = 1 << 5,
-    InvItemLoadFlag_Tex6  = 1 << 6,
-    InvItemLoadFlag_Model = 1 << 7
+    InvItemLoadFlag_None     = 0,
+    InvItemLoadFlag_Texture0 = 1 << 0,
+    InvItemLoadFlag_Texture1 = 1 << 1,
+    InvItemLoadFlag_Texture2 = 1 << 2,
+    InvItemLoadFlag_Texture3 = 1 << 3,
+    InvItemLoadFlag_Texture4 = 1 << 4,
+    InvItemLoadFlag_Texture5 = 1 << 5,
+    InvItemLoadFlag_Texture6 = 1 << 6,
+    InvItemLoadFlag_Model    = 1 << 7
 } e_InvItemLoadFlags;
 
 /** @brief Inventory command IDs. */
@@ -232,10 +232,10 @@ typedef enum _ItemToggleFlags
 /** @brief Inventory item entry. */
 typedef struct _InventoryItem
 {
-    /* 0x0 */ u8 id_0;      /** `e_InvItemId` */
-    /* 0x1 */ u8 count_1;
-    /* 0x2 */ u8 command_2; /** `e_InvCmdId` */
-    /* 0x3 */ u8 field_3;   // Some sort of index?
+    /* 0x0 */ u8 id;      /** `e_InvItemId` */
+    /* 0x1 */ u8 count;
+    /* 0x2 */ u8 command; /** `e_InvCmdId` */
+    /* 0x3 */ u8 field_3; // Some sort of index?
 } s_InventoryItem;
 STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
 

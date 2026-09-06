@@ -321,7 +321,7 @@ void SdWorkInit(void) // 0x8009F400
 
     for (i = 0; i < SD_VAB_SLOTS; i++)
     {
-        vab_h[i].vab_id_0      = NO_VALUE;
+        vab_h[i].vab_id      = NO_VALUE;
         vab_h[i].mvoll_19      = 0x7F;
         vab_h[i].mvolr_1A      = 0x7F;
         vab_h[i].mpan_1B       = 0x40;
@@ -422,7 +422,7 @@ void SdEnd(void) // 0x8009F5C0
 
     for (i = 0; i < SD_VAB_SLOTS; i++)
     {
-        if (vab_h[i].vab_id_0 >= 0)
+        if (vab_h[i].vab_id >= 0)
         {
             SdSpuFree(vab_h[i].vb_start_addr_10);
         }
@@ -528,7 +528,7 @@ s16 SdVabOpenHead(u8* addr, s16 vabid) // 0x8009F79C
     {
         while (true)
         {
-            if (vab_h[i].vab_id_0 == -1)
+            if (vab_h[i].vab_id == -1)
             {
                 break;
             }
@@ -545,7 +545,7 @@ s16 SdVabOpenHead(u8* addr, s16 vabid) // 0x8009F79C
     {
         i = vabid;
 
-        if (vab_h[i].vab_id_0 != -1)
+        if (vab_h[i].vab_id != -1)
         {
             SdSpuFree(vab_h[i].vb_start_addr_10);
         }
@@ -554,7 +554,7 @@ s16 SdVabOpenHead(u8* addr, s16 vabid) // 0x8009F79C
     p        = &vab_h[i];
     sd_vab_h = (VabHdr*)addr;
 
-    p->vab_id_0         = i;
+    p->vab_id         = i;
     p->vh_addr_4        = (SD_VAB_H*)sd_vab_h;
     p->vh_size_8        = 0xA20 + (sd_vab_h->ps * 0x200);
     p->vb_size_14       = sd_vab_h->fsize - p->vh_size_8;
@@ -591,7 +591,7 @@ s16 SdVabOpenHeadSticky(u8* addr, s16 vabid, s32 sbaddr) // 0x8009F91C
     {
         while (true)
         {
-            if (vab_h[i].vab_id_0 == -1)
+            if (vab_h[i].vab_id == -1)
             {
                 break;
             }
@@ -612,7 +612,7 @@ s16 SdVabOpenHeadSticky(u8* addr, s16 vabid, s32 sbaddr) // 0x8009F91C
             return -1;
         }
 
-        if (vab_h[i].vab_id_0 != -1)
+        if (vab_h[i].vab_id != -1)
         {
             SdSpuFree(vab_h[i].vb_start_addr_10);
         }
@@ -620,7 +620,7 @@ s16 SdVabOpenHeadSticky(u8* addr, s16 vabid, s32 sbaddr) // 0x8009F91C
 
     p = &vab_h[i];
 
-    p->vab_id_0         = i;
+    p->vab_id         = i;
     p->vh_addr_4        = (SD_VAB_H*)addr;
     p->vh_size_8        = 0xA20 + (sd_vab_h->ps * 0x200);
     p->vb_start_addr_10 = sbaddr;
@@ -655,7 +655,7 @@ s16 SdVabFakeHead(u8* addr, s16 vabid, u32 sbaddr) // 0x8009FAC0
     {
         while (true)
         {
-            if (vab_h[i].vab_id_0 == -1)
+            if (vab_h[i].vab_id == -1)
             {
                 break;
             }
@@ -676,7 +676,7 @@ s16 SdVabFakeHead(u8* addr, s16 vabid, u32 sbaddr) // 0x8009FAC0
     p        = &vab_h[i];
     sd_vab_h = (VabHdr*)addr;
 
-    p->vab_id_0         = i;
+    p->vab_id         = i;
     p->vh_addr_4        = (SD_VAB_H*)sd_vab_h;
     p->vh_size_8        = 0xA20 + (sd_vab_h->ps * 0x200);
     p->vb_size_14       = sd_vab_h->fsize - p->vh_size_8;
@@ -699,7 +699,7 @@ s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
     {
         while (true)
         {
-            if (vab_h[i].vab_id_0 == -1)
+            if (vab_h[i].vab_id == -1)
             {
                 break;
             }
@@ -715,7 +715,7 @@ s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
     else
     {
         i = vabid;
-        if (vab_h[i].vab_id_0 != -1)
+        if (vab_h[i].vab_id != -1)
         {
             SdSpuFree(vab_h[i].vb_start_addr_10);
         }
@@ -723,7 +723,7 @@ s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
 
     p             = &vab_h[i];
     p->vb_size_14 = sbsize;
-    p->vab_id_0   = i;
+    p->vab_id   = i;
     p->vh_addr_4  = (SD_VAB_H*)addr;
     p->vh_size_8  = sbsize;
     p->mvol_18    = 127;
@@ -757,7 +757,7 @@ s16 SdVabTransBody(u8* addr, s16 vabid) // 0x8009FD38
         return -1;
     }
 
-    vab_h_id = vab_h[vabid].vab_id_0;
+    vab_h_id = vab_h[vabid].vab_id;
     if (vab_h_id >= 0 && vab_h_id == vabid)
     {
         SpuSetTransferStartAddr(vab_h[vabid].vb_start_addr_10);
@@ -781,7 +781,7 @@ s16 SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid) // 0x8009FDDC
         return -1;
     }
 
-    vab_h_id = vab_h[vabid].vab_id_0;
+    vab_h_id = vab_h[vabid].vab_id;
     retval   = -1;
 
     if (vab_h_id >= 0 && vab_h_id == vabid)
@@ -821,10 +821,10 @@ s16 SdVabTransCompleted(s16 immediateFlag) // 0x8009FEC4
 
 void SdVabClose(s16 vab_id) // 0x8009FF00
 {
-    if (vab_h[vab_id].vab_id_0 != -1)
+    if (vab_h[vab_id].vab_id != -1)
     {
         SdSpuFree(vab_h[vab_id].vb_start_addr_10);
-        vab_h[vab_id].vab_id_0 = -1;
+        vab_h[vab_id].vab_id = -1;
     }
 }
 
@@ -1199,7 +1199,7 @@ s32 SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr) // 0x800A0A40
     u8* src;
     u32 i;
 
-    if (vab_h[vabId].vab_id_0 == -1)
+    if (vab_h[vabId].vab_id == -1)
     {
         return -1;
     }

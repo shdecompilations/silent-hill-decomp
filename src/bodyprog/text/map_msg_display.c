@@ -273,9 +273,9 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         return MapMsgState_Idle;
     }
 
-    g_SysWork.isMgsStringSet      = false;
-    g_SysWork.enableHighResGlyphs = false;
-    displayLength                 = 0;
+    g_SysWork.isMgsStringSet         = false;
+    g_SysWork.enableHalfHeightGlyphs = false;
+    displayLength                    = 0;
 
     if (g_SysWork.bgmStatusFlags & BgmStatusFlag_VoiceDialog)
     {

@@ -236,7 +236,7 @@ typedef struct
 typedef struct _VabPlayingInfo
 {
     /* 0x0 */ u8  voiceIdx; /** Index of audio at PSX's "Voice" channels. */
-    /* 0x1 */ s8  __pad;
+    /* 0x1 */ s8  __pad_1;
     /* 0x2 */ s16 typeIdx; /** `e_AudioType` */
     /* 0x4 */ s16 progIdx;
     /* 0x6 */ s16 toneIdx;
@@ -252,7 +252,7 @@ typedef struct _VabPlayingInfo
 typedef struct _VabInfo
 {
     /* 0x0 */ u8  audioVabIdx; /** Index of audio inside VAB files. */
-    /* 0x1 */ s8  __pad;
+    /* 0x1 */ s8  __pad_1;
     /* 0x2 */ u16 vabProgIdx;  /** See `TYPE_AND_PROG_SFX`. */
     /* 0x4 */ u8  noteIdx;
     /* 0x5 */ s8  volumeMin;   /** Minimun volume required to play the audio. */
@@ -274,7 +274,7 @@ STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 typedef struct _AudioItemData
 {
     /* 0x0 */ s8  typeIdx;       /** See `e_AudioType`. */
-    /* 0x1 */ s8  __pad;
+    /* 0x1 */ s8  __pad_1;
     /* 0x2 */ u16 vagDataOffset; /** Offset of VAG data in VAB files. */
     /* 0x4 */ u32 fileSize;      /** VAB/KDT file size. */
     /* 0x8 */ s32 fileOffset;    /** VAB/KDT audio offset in the file container. */
@@ -354,7 +354,7 @@ extern s16                        g_AudioPlayingPitchList[24];
 extern s_Sd_AudioWork             g_Sd_AudioWork;
 extern s_AudioStreamingStates     g_Sd_AudioStreamingStates;
 extern s32                        __pad_bss_800C1674;
-extern s_ChannelsVolumeController gSDVolConfig;
+extern s_ChannelsVolumeController gSDVolConfig; /** Original name. */
 extern s_XaAudioPlayTracking      g_Sd_XaAudioPlayTracking;
 extern s32                        __pad_bss_800C1694;
 extern s_VabPlayingInfo           g_Sd_VabPlayingInfo;
@@ -376,8 +376,7 @@ extern u8                         g_Sd_CurrentTask;
 // FUNCTIONS
 // ==========
 
-/** @brief Passes a task to the sound driver.
- * Plays SFX among other things.
+/** @brief Passes a task to the sound driver, playing SFX among other things.
  * Scratch: https://decomp.me/scratch/IniqJ
  *
  * @note Name from retrieved debug symbols.
@@ -402,7 +401,7 @@ void SD_Call(u32 task);
  */
 u8 Sd_AudioStreamingCheck(void);
 
-/** @brief Gets task index for current MIDI preset.
+/** @brief Gets the task index for current MIDI preset.
  * Scratch: https://decomp.me/scratch/ZiViR
  *
  * @return Task index for current MIDI preset.
@@ -427,7 +426,7 @@ void SD_BranchCTRL(u16 task);
  */
 void Sd_AudioSystemSet(u8 isStereo);
 
-/** @brief Initalize the entire audio system.
+/** @brief Initalizes the entire audio system.
  *
  * @note Name from retrieved debug symbols.
  * In `International Rally Championship` can be found name as name
@@ -439,7 +438,7 @@ void Sd_AudioSystemSet(u8 isStereo);
  */
 void SD_Init(void);
 
-/** @brief Initalize game audio system structs.
+/** @brief Initalizes game audio system structs.
  *
  * @note Name from retrieved debug symbols.
  * Between IRC and TM ~FWY~ this function shares more similarity with IRC's
@@ -449,7 +448,7 @@ void SD_Init(void);
  */
 void SD_InitStruct(void);
 
-/** @unused Stop main audio system. */
+/** @brief @unused Stops the main audio system. */
 void Sd_AudioStop(void);
 
 /** @brief Plays audio.
@@ -486,10 +485,10 @@ void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch);
 /** @brief Stops the last VAB audio data playback. */
 void Sd_LastSfxStop(void);
 
-/** @brief Stops specified VAB audio data playback. */
+/** @brief Stops a specified VAB audio data playback. */
 void Sd_SfxStop(u16 sfxId);
 
-/** @brief Stops specified VAB audio data playback according to an SFX ID. */
+/** @brief Stops a specified VAB audio data playback according to an SFX ID. */
 void Sd_SfxStopStep(u16 sfxId);
 
 /** @brief Stops all VAB audio data playback. */

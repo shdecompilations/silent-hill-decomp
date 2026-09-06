@@ -134,7 +134,7 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
     glyphColor = STRING_COLORS[g_StringColorId];
     ot         = &g_OtTags0[g_ActiveBufferIdx][g_StringLayerIdx];
 
-    if (!g_SysWork.enableHighResGlyphs)
+    if (!g_SysWork.enableHalfHeightGlyphs)
     {
         packet = GsOUT_PACKET_P;
     }
@@ -177,7 +177,7 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
             sizeCpy--;
 
             // Draw glyph sprite.
-            if (g_SysWork.enableHighResGlyphs)
+            if (g_SysWork.enableHalfHeightGlyphs)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -252,7 +252,7 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
         strCpy++;
     }
 
-    if (!g_SysWork.enableHighResGlyphs)
+    if (!g_SysWork.enableHalfHeightGlyphs)
     {
         GsOUT_PACKET_P = packet;
     }
@@ -339,8 +339,8 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
 
                         break;
 
-                    case MAP_MSG_CODE_HIGH_RES:
-                        g_SysWork.enableHighResGlyphs = true;
+                    case MAP_MSG_CODE_HALF_HEIGHT:
+                        g_SysWork.enableHalfHeightGlyphs = true;
                         break;
                 }
 
@@ -406,7 +406,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
     color               = STRING_COLORS[g_StringColorId];
     g_StringPosition.vx = -(g_MapMsg_Widths[0] >> 1);
 
-    if (!g_SysWork.enableHighResGlyphs)
+    if (!g_SysWork.enableHalfHeightGlyphs)
     {
         packet = GsOUT_PACKET_P;
     }
@@ -593,8 +593,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
                         lineIdx    = FONT_12X16_LINE_COUNT_MAX;
                         break;
 
-                    case MAP_MSG_CODE_HIGH_RES:
-                        g_SysWork.enableHighResGlyphs = true;
+                    case MAP_MSG_CODE_HALF_HEIGHT:
+                        g_SysWork.enableHalfHeightGlyphs = true;
                         break;
             }
 
@@ -611,7 +611,8 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
         default:
             displayLength--;
 
-            if (g_SysWork.enableHighResGlyphs)
+            // Half-height.
+            if (g_SysWork.enableHalfHeightGlyphs)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -629,8 +630,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
                 glyphPosX += charWidth;
 
                 temp_a0 = (idx % FONT_12X16_ATLAS_COLUMN_COUNT) * FONT_12X16_GLYPH_SIZE_X;
-
-                *((u32*)&glyphPoly->u0) = temp_a0 + 0xF000 + (0x7FD3 << 16);                                                     // `u0`, `v0`, `clut`.
+                *((u32*)&glyphPoly->u0) = temp_a0 + 0xF000 + (0x7FD3 << 16);                                                   // `u0`, `v0`, `clut`.
                 *((u32*)&glyphPoly->u1) = temp_a0 + (((((idx / FONT_12X16_ATLAS_COLUMN_COUNT) & 0xF) | 0x10) << 16) | 0xFF00); // `u1`, `v1`, `page`.
                 *((u16*)&glyphPoly->u2) = temp_a0 - 0xFF4;
                 *((u16*)&glyphPoly->u3) = temp_a0 - 244;
@@ -638,6 +638,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
                 addPrim(ot, glyphPoly);
                 GsOUT_PACKET_P = (PACKET*)glyphPoly + sizeof(POLY_FT4);
             }
+            // Full-height.
             else
             {
                 temp_a0_2 = (u16)glyphPosX;
@@ -667,7 +668,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
             // Stop drawing if length exceeded.
             if (displayLength <= 0)
             {
-                if (!g_SysWork.enableHighResGlyphs)
+                if (!g_SysWork.enableHalfHeightGlyphs)
                 {
                     GsOUT_PACKET_P = packet;
                 }
@@ -677,7 +678,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
         }
     }
 
-    if (!g_SysWork.enableHighResGlyphs)
+    if (!g_SysWork.enableHalfHeightGlyphs)
     {
         GsOUT_PACKET_P = packet;
     }
@@ -699,12 +700,12 @@ void func_8004B658(void) // 0x8004B658
 
 void Gfx_MapMsg_Reset(void) // 0x8004B684
 {
-    g_MapMsg_WidthIdx               = 1;
-    g_MapMsg_ActiveLine.unused      = 0;
-    g_MapMsg_ActiveLine.positionIdx = 1;
-    g_StringPositionX1              = -120;
-    g_StringColorId                 = StringColorId_White;
-    g_SysWork.enableHighResGlyphs   = false;
+    g_MapMsg_WidthIdx                = 1;
+    g_MapMsg_ActiveLine.unused       = 0;
+    g_MapMsg_ActiveLine.positionIdx  = 1;
+    g_StringPositionX1               = -120;
+    g_StringColorId                  = StringColorId_White;
+    g_SysWork.enableHalfHeightGlyphs = false;
 }
 
 void Gfx_GlyphSprite_PositionSet(s16 x, s16 y) // 0x8004B6D4
@@ -712,7 +713,7 @@ void Gfx_GlyphSprite_PositionSet(s16 x, s16 y) // 0x8004B6D4
     if (x != NO_VALUE)
     {
         g_MapMsg_GlyphSprite.x = x + (-g_GameWork.gsScreenWidth / 2);
-        g_GlyphSpritePositionX             = g_MapMsg_GlyphSprite.x;
+        g_GlyphSpritePositionX = g_MapMsg_GlyphSprite.x;
     }
 
     if (y != NO_VALUE)
@@ -867,7 +868,7 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     if (isNegative)
     {
         str--;
-        *str          = '-';
+        *str                    = '-';
         g_MapMsg_GlyphSprite.x -= GLYPH_SIZE_X;
     }
 
@@ -879,4 +880,4 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     #undef ATLAS_COLUMN_COUNT
 }
 
-const s32 unused_Rodata_80025E88 = 0xC9457F00; // @unused
+const s32 unused_Rodata_80025E88 = 0xC9457F00; /** @unused */

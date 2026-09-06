@@ -135,7 +135,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
     glyphColor = STRING_COLORS[g_StringColorId];
     ot         = &g_OtTags0[g_ActiveBufferIdx][g_StringLayerIdx];
 
-    if (!g_SysWork.enableHighResGlyphs)
+    if (!g_SysWork.enableHalfHeightGlyphs)
     {
         packet = GsOUT_PACKET_P;
     }
@@ -178,7 +178,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
             sizeCpy--;
 
             // Draw glyph sprite.
-            if (g_SysWork.enableHighResGlyphs)
+            if (g_SysWork.enableHalfHeightGlyphs)
             {
                 glyphPoly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -253,7 +253,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A61C
         strCpy++;
     }
 
-    if (!g_SysWork.enableHighResGlyphs)
+    if (!g_SysWork.enableHalfHeightGlyphs)
     {
         GsOUT_PACKET_P = packet;
     }
@@ -463,7 +463,7 @@ void Gfx_MapMsg_Reset(void) // 0x8004AEA8
     D_800C5E10.vy = 0x4C;
     D_800C5E14 = -0x78;
     D_800AF83C = StringColorId_White;
-    g_SysWork.enableHighResGlyphs = 0;
+    g_SysWork.enableHalfHeightGlyphs = 0;
 }
 
 void func_8004AF14(s32 x, s32 y) // 0x8004AF14
@@ -623,8 +623,8 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004AF5C
                             }
                             break;
 
-                        case MAP_MSG_CODE_HIGH_RES:
-                            g_SysWork.enableHighResGlyphs = true;
+                        case MAP_MSG_CODE_HALF_HEIGHT:
+                            g_SysWork.enableHalfHeightGlyphs = true;
                             break;
 
                         case MAP_MSG_CODE_SELECT:

@@ -3022,7 +3022,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     if (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                     {
                         playerCombat.currentWeaponAmmo--;
-                        g_SavegamePtr->items[playerCombat.weaponInventoryIdx].count_1--;
+                        g_SavegamePtr->items[playerCombat.weaponInventoryIdx].count--;
 
                         Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
                     }
@@ -4111,20 +4111,20 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     currentAmmoVar = playerCombat.currentWeaponAmmo;
                     totalAmmoVar   = playerCombat.totalWeaponAmmo;
 
-                    Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, playerCombat.weaponAttack);
+                    Items_AmmoReloadCompute(&currentAmmoVar, &totalAmmoVar, playerCombat.weaponAttack);
 
                     playerCombat.currentWeaponAmmo = currentAmmoVar;
                     playerCombat.totalWeaponAmmo   = totalAmmoVar;
 
                     for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
                     {
-                        if (g_SavegamePtr->items[i].id_0 == (playerCombat.weaponAttack + InvItemId_KitchenKnife))
+                        if (g_SavegamePtr->items[i].id == (playerCombat.weaponAttack + InvItemId_KitchenKnife))
                         {
-                            g_SavegamePtr->items[i].count_1 = playerCombat.currentWeaponAmmo;
+                            g_SavegamePtr->items[i].count = playerCombat.currentWeaponAmmo;
                         }
-                        if (g_SavegamePtr->items[i].id_0 == (playerCombat.weaponAttack + InvItemId_Handgun))
+                        if (g_SavegamePtr->items[i].id == (playerCombat.weaponAttack + InvItemId_Handgun))
                         {
-                            g_SavegamePtr->items[i].count_1 = playerCombat.totalWeaponAmmo;
+                            g_SavegamePtr->items[i].count = playerCombat.totalWeaponAmmo;
                         }
                     }
                 }
@@ -4219,7 +4219,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                             currentAmmoVar = playerCombat.currentWeaponAmmo;
                             totalAmmoVar   = playerCombat.totalWeaponAmmo;
 
-                            Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, playerCombat.weaponAttack);
+                            Items_AmmoReloadCompute(&currentAmmoVar, &totalAmmoVar, playerCombat.weaponAttack);
 
                             playerCombat.currentWeaponAmmo = currentAmmoVar;
                             playerCombat.totalWeaponAmmo   = totalAmmoVar;
@@ -4230,13 +4230,13 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     {
                         for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
                         {
-                            if (g_SavegamePtr->items[i].id_0 == (playerCombat.weaponAttack + InvItemId_KitchenKnife))
+                            if (g_SavegamePtr->items[i].id == (playerCombat.weaponAttack + InvItemId_KitchenKnife))
                             {
-                                g_SavegamePtr->items[i].count_1 = playerCombat.currentWeaponAmmo;
+                                g_SavegamePtr->items[i].count = playerCombat.currentWeaponAmmo;
                             }
-                            if (g_SavegamePtr->items[i].id_0 == (playerCombat.weaponAttack + InvItemId_Handgun))
+                            if (g_SavegamePtr->items[i].id == (playerCombat.weaponAttack + InvItemId_Handgun))
                             {
-                                g_SavegamePtr->items[i].count_1 = playerCombat.totalWeaponAmmo;
+                                g_SavegamePtr->items[i].count = playerCombat.totalWeaponAmmo;
                             }
                         }
                     }
@@ -7987,12 +7987,12 @@ void Game_SavegameResetPlayer(void) // 0x8007E530
 
     s32 i;
 
-    g_SavegamePtr->inventorySlotCount = DEFAULT_INV_SLOT_COUNT;
+    g_SavegamePtr->invSlotCount = DEFAULT_INV_SLOT_COUNT;
 
     for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
     {
-        g_SavegamePtr->items[i].id_0    = NO_VALUE;
-        g_SavegamePtr->items[i].count_1 = 0;
+        g_SavegamePtr->items[i].id    = NO_VALUE;
+        g_SavegamePtr->items[i].count = 0;
     }
 
     g_SavegamePtr->playerHealth      = Q12(100.0f);
@@ -8039,10 +8039,10 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     // Assign weapon that the player was holding when saving.
     if (itemGroupId == InvItemGroup_MeleeWeapons || itemGroupId == InvItemGroup_GunWeapons)
     {
-        for (i = 0; g_SavegamePtr->items[i].id_0 != g_SavegamePtr->equippedWeapon && i < INV_ITEM_COUNT_MAX; i++);
+        for (i = 0; g_SavegamePtr->items[i].id != g_SavegamePtr->equippedWeapon && i < INV_ITEM_COUNT_MAX; i++);
 
         playerCombat.weaponAttack       = g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife;
-        playerCombat.currentWeaponAmmo  = g_SavegamePtr->items[i].count_1;
+        playerCombat.currentWeaponAmmo  = g_SavegamePtr->items[i].count;
         playerCombat.weaponInventoryIdx = i;
 
         if (itemGroupId == InvItemGroup_MeleeWeapons)
@@ -8052,7 +8052,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
         else
         {
             for (i = 0;
-                 g_SavegamePtr->items[i].id_0 != (g_SavegamePtr->equippedWeapon + InvItemId_HealthDrink) && i < INV_ITEM_COUNT_MAX;
+                 g_SavegamePtr->items[i].id != (g_SavegamePtr->equippedWeapon + InvItemId_HealthDrink) && i < INV_ITEM_COUNT_MAX;
                  i++);
 
             if (i == INV_ITEM_COUNT_MAX)
@@ -8061,7 +8061,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
             }
             else
             {
-                playerCombat.totalWeaponAmmo = (s8)g_SavegamePtr->items[i].count_1;
+                playerCombat.totalWeaponAmmo = (s8)g_SavegamePtr->items[i].count;
             }
         }
     }
@@ -8097,7 +8097,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     g_Player_LastWeaponSelected = NO_VALUE;
     g_GameWork.mapAnimIdx       = NO_VALUE;
 
-    g_SavegamePtr->inventorySlotCount  = CLAMP(g_SavegamePtr->inventorySlotCount, INV_ITEM_COUNT_MAX / 5, INV_ITEM_COUNT_MAX);
+    g_SavegamePtr->invSlotCount  = CLAMP(g_SavegamePtr->invSlotCount, INV_ITEM_COUNT_MAX / 5, INV_ITEM_COUNT_MAX);
     g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, 1, Q12(100.0f));
 }
 
