@@ -39,6 +39,17 @@ s_AnimInfo HARRY_M0S00_ANIM_INFOS[] = {
     {}
 };
 
+s_AnimInfo CHERYL_ANIM_INFOS[8] = {
+  { Anim_BlendLinear,  ANIM_STATUS(0,  false), false, ANIM_STATUS(0, false),  { Q12(0.0f) },  NO_VALUE, 0  }, 
+  { Anim_PlaybackLoop, ANIM_STATUS(0,  true),  false, NO_VALUE,               { Q12(30.0f) }, NO_VALUE, 1  }, 
+  { Anim_BlendLinear,  ANIM_STATUS(1,  false), false, ANIM_STATUS(1, true),   { Q12(5.0f) },  NO_VALUE, 0  }, 
+  { Anim_PlaybackLoop, ANIM_STATUS(1,  true),  false, NO_VALUE,               { Q12(5.0f) },  0,        5  }, 
+  { Anim_BlendLinear,  ANIM_STATUS(2,  false), false, ANIM_STATUS(2, true),   { Q12(5.0f) },  NO_VALUE, 6  }, 
+  { Anim_PlaybackLoop, ANIM_STATUS(2,  true),  false, NO_VALUE,               { Q12(30.0f) }, 6,        32 }, 
+  { Anim_BlendLinear,  ANIM_STATUS(3,  false), false, ANIM_STATUS(3, true),   { Q12(5.0f) },  NO_VALUE, 34 }, 
+  { Anim_PlaybackLoop, ANIM_STATUS(3,  true),  false, NO_VALUE,               { Q12(30.0f) }, 34,       55 }
+};
+
 // Not sure if the `time field` (3rd) is actually time.
 // These numbers produce very small and non-round values.
 // I also seen some code read this field and add very small numbers like 4 or 32.
