@@ -20,20 +20,19 @@ void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) //
     DrawSync(SyncMode_Wait);
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/screen/screen_draw", Screen_Refresh);
-#else
 void Screen_Refresh(s32 screenWidth, bool isInterlaced) // 0x800323C8
 {
     DrawSync(SyncMode_Wait);
+
+#if VERSION_REGION_IS(PAL)
+    Screen_RectInterlacedClear(0, 1, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+#else
     Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-    Screen_Init(screenWidth, isInterlaced);
-}
 #endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/screen/screen_draw", Screen_Init);
-#else
+    Screen_Init(screenWidth, isInterlaced);
+}
+
 void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
 {
     g_GameWork.gsScreenWidth  = screenWidth;
@@ -41,26 +40,32 @@ void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
 
     DrawSync(SyncMode_Wait);
     GsInitGraph2(g_GameWork.gsScreenWidth, g_GameWork.gsScreenHeight, isInterlaced | (1 << 2), 1, 0);
+
+#if VERSION_REGION_IS(PAL)
+    GsDefDispBuff2(0, 0, 0, isInterlaced ? 0 : 256);
+#else
     GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
+#endif
 
     GsDISPENV.screen.h =
     GsDRAWENV.clip.h   = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
 
     GsInit3D();
     Screen_XyPositionSet(g_GameWorkConst->config.screenPositionX, g_GameWorkConst->config.screenPositionY);
+
+#if VERSION_REGION_IS(PAL)
+    VSync(SyncMode_Wait);
+#endif
+    
     GsSwapDispBuff();
     GsSwapDispBuff();
 }
-#endif
 
 void Screen_XyPositionSet(s32 x, s32 y) // 0x800324F4
 {
     Screen_DisplayEnvXySet(&GsDISPENV, x, y);
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/screen/screen_draw", Screen_DisplayEnvXySet);
-#else
 void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
 {
     #define RANGE_X 11
@@ -73,9 +78,13 @@ void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
     g_GameWorkConst->config.screenPositionY = y;
 
     displayEnv->screen.x = g_GameWorkConst->config.screenPositionX;
+
+#if VERSION_REGION_IS(PAL)
+    displayEnv->screen.y = g_GameWorkConst->config.screenPositionY + (RANGE_Y * 2);
+#else
     displayEnv->screen.y = g_GameWorkConst->config.screenPositionY + RANGE_Y;
+#endif
     
     #undef RANGE_X
     #undef RANGE_Y
 }
-#endif

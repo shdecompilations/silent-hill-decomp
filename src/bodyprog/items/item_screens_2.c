@@ -65,9 +65,6 @@ static const s8 D_80025EB0[] = {
     0,  0,  0,  0
 };
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", GameState_ItemScreens_Update);
-#else
 void GameState_ItemScreens_Update(void) // 0x8004C9B0
 {
     Gfx_StringColorSet(StringColorId_White);
@@ -112,7 +109,12 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             func_8004C7E4();
 #endif
 
+#if VERSION_REGION_IS(PAL)
+            Screen_RectInterlacedClear(0, 1, SCREEN_WIDTH, 510, 0u, 0u, 0u);
+#else
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, 448, 0u, 0u, 0u);
+#endif
+            
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks = 1;
@@ -273,7 +275,13 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
 #if VERSION_REGION_IS(NTSCJ)
             func_8004C7E4();
 #endif
+
+#if VERSION_REGION_IS(PAL)
+            Screen_RectInterlacedClear(0, 1, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+#else
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+#endif
+
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks                  = 1;
@@ -383,7 +391,6 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
         Gfx_Results_Save();
     }
 }
-#endif
 
 #if VERSION_IS(EUR)
 INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026B58);
@@ -1809,20 +1816,6 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
     return j;
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026E08);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026E2C);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026E54);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026E7C);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026EA8);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026ED4);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026EFC);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026F2C);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026F50);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026F7C);
-INCLUDE_RODATA("bodyprog/nonmatchings/items/item_screens_2", D_80026FA0);
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_2", Inventory_UnavailableMapTextDraw);
-#else
 void Inventory_UnavailableMapTextDraw(s32 strIdx) // 0x8004F57C
 {
 #if VERSION_REGION_IS(NTSCJ)
@@ -1860,19 +1853,52 @@ void Inventory_UnavailableMapTextDraw(s32 strIdx) // 0x8004F57C
     {
         Gfx_Primitive2dTextureSet(192, 0, 6, 1);
     }
+
+    return;
+#elif VERSION_REGION_IS(PAL)
+    char* STRS[5][2] =
+    {
+        {
+        "Too_dark_to_look\nat_the_map_here.",
+        "I_don't_have_the_map\nfor_this_place.",
+        },
+        {
+        "Zu dunkel, um hier\ndie Karte zu lesen.",
+        "Ich habe keine Landkarte\nvon diesem Ort.",
+        },
+        {
+        "Trop sombre pour consulter\nma carte ici.",
+        "Je n'ai pas la carte\npour cet endroit.",
+        },
+        {
+        "No hay suficiente luz\nPara ver el mapa aquí.",
+        "No tengo ningún mapa de\neste lugar.",
+        },
+        {
+        "E' troppo buio per vedere\nla cartina qui.",
+        "Non ho la cartina di\nquesta zona.",
+        }
+    };
 #else
     char* STRS[2] =
     {
         "Too_dark_to_look_at\n\t\tthe_map_here.",
         "I_don't_have_the_map\n\t\tfor_this_place."
     };
+#endif
 
+#if !VERSION_REGION_IS(NTSCJ)
     Gfx_StringPositionSet(30, 232);
     Gfx_StringColorSet(StringColorId_White);
+
+#if VERSION_REGION_IS(PAL)
+    Gfx_StringDraw(STRS[g_GameWork.config.palLanguageId][strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
+#else
     Gfx_StringDraw(STRS[strIdx], DEFAULT_MAP_MESSAGE_LENGTH);
 #endif
-}
+
 #endif
+}
 
 void Inventory_DirectionalInputSet(void) // 0x8004F5DC
 {

@@ -737,7 +737,7 @@ endef
 $(foreach lang,$(PAL_LANGUAGES),$(eval $(call make_lang_rules,$(lang))))
 
 $(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i
-	$(PYTHON) $(TOOLS_DIR)/iconv_sjis_wrapper.py -f UTF-8 -t $(if $(findstring /src/maps/,$@),$(MAP_TEXT_ENCODING),SHIFT-JIS) $< -o $@
+	$(PYTHON) $(TOOLS_DIR)/iconv_sjis_wrapper.py -f UTF-8 -t $(if $(findstring /src/maps/,$@),$(MAP_TEXT_ENCODING),$(if $(findstring item_screens_2,$@),$(MAP_TEXT_ENCODING),SHIFT-JIS)) $< -o $@
 
 # Switch compiler to 2.7.2-cdk / 2.7.2-970404 for `libkpad` code.
 $(BUILD_DIR)/src/bodyprog/libkpad/%.c.s: CC := $(CC272)
