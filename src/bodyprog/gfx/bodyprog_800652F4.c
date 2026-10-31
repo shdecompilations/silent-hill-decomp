@@ -246,9 +246,6 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
     GsOUT_PACKET_P = (PACKET*)ptr->field_0;
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_800652F4", func_80066184);
-#else
 void func_80066184(void) // 0x80066184
 {
     s32              i;
@@ -329,7 +326,12 @@ void func_80066184(void) // 0x80066184
     poly  = ptr->field_0 + 1;
     *poly = *ptr->field_0;
 
+#if VERSION_REGION_IS(PAL)
+    *(u32*)&ptr->field_0->u0 = 0x6C3A0000;
+#else
     *(u32*)&ptr->field_0->u0 = 0xE0000;
+#endif
+    
     *(u32*)&ptr->field_0->u1 = 0x2D003F;
     *(u16*)&ptr->field_0->u2 = 0x3F00;
     *(u16*)&ptr->field_0->u3 = 0x3F3F;
@@ -338,7 +340,11 @@ void func_80066184(void) // 0x80066184
 
     ptr->field_0++;
 
+#if VERSION_REGION_IS(PAL)
+    *(u32*)&ptr->field_0->u0 = 0x6C3A0000;
+#else
     *(u32*)&ptr->field_0->u0 = 0xE0000;
+#endif
     *(u32*)&ptr->field_0->u1 = 0x4D003F;
     *(u16*)&ptr->field_0->u2 = 0x3F00;
     *(u16*)&ptr->field_0->u3 = 0x3F3F;
@@ -368,4 +374,3 @@ void func_80066184(void) // 0x80066184
 
     GsOUT_PACKET_P = (PACKET*)++ptr->field_0;
 }
-#endif

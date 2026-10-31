@@ -58,11 +58,6 @@ void GameFs_FlameGfxLoad(void) // 0x8003E710
 }
 
 // Attach the lighter effect at the beginning of the game.
-#if VERSION_IS(EUR)
-// @hack Statics of the included function below, remove once decompiled.
-u32 D_800A9FB0_0 __asm__("D_800A9FB0.0") = 0;
-INCLUDE_ASM("bodyprog/nonmatchings/world/world_effects", func_8003E740);
-#else
 void func_8003E740(void) // 0x8003E740
 {
     DVECTOR   sp10;
@@ -131,8 +126,14 @@ void func_8003E740(void) // 0x8003E740
         }
 
         setRGB0(poly, D_800A9FB0 + 48, D_800A9FB0 + 48, D_800A9FB0 + 48);
+
+#if VERSION_REGION_IS(PAL)
+        poly->tpage = 45;
+        poly->clut  = 4148;
+#else
         poly->tpage = 44;
         poly->clut  = 4146;
+#endif
 
         var_a0 = &D_800BCDE8[idx++];
 
@@ -174,10 +175,17 @@ void func_8003E740(void) // 0x8003E740
         poly->x3 = sp10.vx + sp58.vx;
         poly->y3 = sp10.vy + sp58.vy;
 
+#if VERSION_REGION_IS(PAL)
+        poly->u0 = 0;
+        poly->u1 = 63;
+        poly->u2 = 0;
+        poly->u3 = 63;
+#else
         poly->u0 = 128;
         poly->u1 = 191;
         poly->u2 = 128;
         poly->u3 = 191;
+#endif
 
         poly->v0 = 0;
         poly->v1 = 0;
@@ -188,7 +196,6 @@ void func_8003E740(void) // 0x8003E740
         GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_FT4);
     }
 }
-#endif
 
 void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
 {
