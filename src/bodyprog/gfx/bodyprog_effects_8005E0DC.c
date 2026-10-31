@@ -2605,9 +2605,6 @@ void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 angle) // 0x80064F04
     }
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", func_80064FC0);
-#else
 bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
 {
     s_func_80064FC0* ptr;
@@ -2643,7 +2640,11 @@ bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
 
     setSemiTrans((*polys), true);
 
+#if VERSION_REGION_IS(PAL)
+    *(u32*)&(*polys)->u0 = 0x7DBB0000;
+#else
     *(u32*)&(*polys)->u0 = 0x018C0000;
+#endif
     *(u32*)&(*polys)->u1 = 0x2C003F;
     *(u16*)&(*polys)->u2 = 0x3F00;
     *(u16*)&(*polys)->u3 = 0x3F3F;
@@ -2653,4 +2654,3 @@ bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
     *polys += 1;
     return true;
 }
-#endif

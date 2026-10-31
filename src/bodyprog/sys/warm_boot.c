@@ -84,15 +84,18 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
     #undef WARM_BOOT_COMBO_PRESS_ALT
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/sys/warm_boot", Game_WarmBoot);
-#else
 void Game_WarmBoot(void) // 0x80034264
 {
     e_GameState prevState;
 
     DrawSync(SyncMode_Wait);
+
+#if VERSION_REGION_IS(PAL)
+    Screen_RectInterlacedClear(0, 0, 512, 511, 0, 0, 0);
+#else
     Screen_RectInterlacedClear(0, 32, 512, 448, 0, 0, 0);
+#endif
+
     func_800892A4(4);
     func_80089128();
     SD_Call(19);
@@ -139,4 +142,3 @@ void Game_WarmBoot(void) // 0x80034264
     ScreenFade_Start(true, true, false);
     g_ScreenFadeTimestep = Q12(0.0f);
 }
-#endif
