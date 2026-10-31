@@ -374,11 +374,9 @@ void GameBoot_WorldInit(void) // 0x80035178
 }
 
 #if VERSION_IS(EUR)
-extern s32 D_800A956C[];
-
-s32 func_80034A98(s32 mapIdx)
+e_FsFile GameBoot_MapFileIdGet(s32 mapIdx) // 0x80034A98
 {
-    return D_800A956C[g_GameWorkConst->config.palLanguageId] + mapIdx;
+    return g_MapLanguageBaseIds[g_GameWorkConst->config.palLanguageId] + mapIdx;
 }
 #endif
 
@@ -387,8 +385,8 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     e_FsFile fileIdx = FILE_VIN_MAP0_S00_BIN + mapIdx;
     
 #if VERSION_REGION_IS(PAL)
-    fileIdx = func_80034A98(mapIdx);
-    func_80034B44();
+    fileIdx = GameBoot_MapFileIdGet(mapIdx);
+    GameBoot_ItemLangLoad();
 #endif
     
     Fs_QueueStartRead(fileIdx, g_OvlDynamic);
@@ -408,14 +406,12 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
 }
 
 #if VERSION_IS(EUR)
-extern void* D_80010008; // TODO: Oddly low memory address inside `main`, is this meant to be one of our named syms?
-extern s32 D_800A9580[];
-
-void func_80034B44(void)
+void GameBoot_ItemLangLoad(void) // 0x80034B44
 {
-    if (g_GameWork.field_5E0 != g_GameWork.config.palLanguageId + 1) {
-        g_GameWork.field_5E0 = g_GameWork.config.palLanguageId + 1;
-        Fs_QueueStartRead(D_800A9580[g_GameWork.config.palLanguageId], D_80010008);
+    if (g_GameWork.loadedPalItemLang != g_GameWork.config.palLanguageId + 1)
+    {
+        g_GameWork.loadedPalItemLang = g_GameWork.config.palLanguageId + 1;
+        Fs_QueueStartRead(g_ItemLanguageFileIds[g_GameWork.config.palLanguageId], g_OvlItemLang);
     }
 }
 #endif

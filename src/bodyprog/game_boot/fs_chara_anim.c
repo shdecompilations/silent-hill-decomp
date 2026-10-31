@@ -43,9 +43,23 @@ s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT] = {
 };
 
 #if VERSION_IS(EUR)
-    // File index tables? TODO: change to `e_FsFile` enum
-    s32 D_800A956C[5] = { 0x7FF, 0x831, 0x85F, 0x88D, 0x8BB };
-    s32 D_800A9580[5] = { 0x7FA, 0x7FC, 0x7FB, 0x7FE, 0x7FD };
+    // File index tables, TODO: Should probably live in game_boot.c next to code that uses them?
+    e_FsFile g_MapLanguageBaseIds[5] =
+    {
+        FILE_VIN_MAP0_S00_BIN,
+        FILE_VIN2_MAP0_S10_BIN,
+        FILE_VIN3_MAP0_S20_BIN,
+        FILE_VIN4_MAP0_S30_BIN,
+        FILE_VIN5_MAP0_S40_BIN
+    };
+    e_FsFile g_ItemLanguageFileIds[5] =
+    {
+        FILE_VIN_ITEM_ENG_BIN,
+        FILE_VIN_ITEM_GER_BIN,
+        FILE_VIN_ITEM_FRN_BIN,
+        FILE_VIN_ITEM_SPN_BIN,
+        FILE_VIN_ITEM_ITL_BIN
+    };
 #endif
 
 s_AnimInfo D_800A998C = {

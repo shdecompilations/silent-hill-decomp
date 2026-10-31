@@ -260,7 +260,7 @@ typedef struct _GameWork
     /* 0x5BC */ s8                 unused_5BC[28];    // @unused Debug data?
 #else
     /* 0x5BC */ s8                 unused_5BC[36];
-    /* 0x5E0 */ s8                 field_5E0; // PAL language related.
+    /* 0x5E0 */ s8                 loadedPalItemLang; // Language index of the loaded item language overlay, +1 of the actual language ID so the default 0 is treated as not loaded.
     /* 0x5E1 */ s8                 __pad_5E1[3];
 #endif
 } s_GameWork;
@@ -482,8 +482,11 @@ typedef struct _SysWork
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 
-extern void* g_OvlBodyprog;
 extern void* g_OvlDynamic;
+extern void* g_OvlBodyprog;
+#if VERSION_REGION_IS(PAL)
+extern void* g_OvlItemLang;
+#endif
 
 extern s_SysWork         g_SysWork;
 extern s_GameWork        g_GameWork;

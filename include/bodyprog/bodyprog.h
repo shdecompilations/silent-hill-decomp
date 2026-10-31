@@ -644,6 +644,11 @@ extern s32 D_800A9A28;
 /** Loaded NPC types in memory and their `g_CharaModelAnimsData` indices. */
 extern s8 g_CharaAnimDataIdxs[Chara_Count];
 
+#if VERSION_REGION_IS(PAL)
+    extern e_FsFile g_MapLanguageBaseIds[];
+    extern e_FsFile g_ItemLanguageFileIds[];
+#endif
+
 extern s32 D_800A9EB0;
 
 extern s_FsImageDesc D_800A9EB4;

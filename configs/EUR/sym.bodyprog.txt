@@ -342,7 +342,9 @@ GameBoot_NpcInit                             = 0x80034794; // type:func
 GameBoot_InGameInit                          = 0x80034834; // type:func
 GameBoot_SavegameInitialize                  = 0x80034938; // type:func
 GameBoot_WorldInit                           = 0x800349F4; // type:func
+GameBoot_MapFileIdGet                        = 0x80034A98; // type:func
 GameBoot_MapLoad                             = 0x80034AC0; // type:func
+GameBoot_ItemLangLoad                        = 0x80034B44; // type:func
 
 //--------------------------------------------------------------------------
 //--- PA: 0x00F514   VA: 0x80034BA4   subsegment: c, game_boot/fs_chara_anim
@@ -2919,6 +2921,8 @@ g_AmbientVabTaskLoad                         = 0x800A948C; // type:u16 size:0x50
 //------------------------------------------------------------------------------
 g_CharaAnimDataIdxs                          = 0x800A94DC;
 g_CharaModelAnimsData                        = 0x800A950C;
+g_MapLanguageBaseIds                         = 0x800A957C; // size:0x14
+g_ItemLanguageFileIds                        = 0x800A9580; // size:0x14
 D_800A998C                                   = 0x800A9594; // type:AnimInfo size:0x10
 
 //------------------------------------------------------------------------
@@ -3493,7 +3497,7 @@ g_SysWork                                    = 0x800B95B0; // type:SysWork size:
 g_GameWork                                   = 0x800BBD18; // type:GameWork size:0x5E4
 
 //---------------------------------------------------
-//--- PA: 0x096C64   VA: 0x800BC2F4   subsegment: bss
+//--- PA: 0x096C70   VA: 0x800BC300   subsegment: bss
 //---------------------------------------------------
 g_ScreenFade_Status                          = 0x800BC300;
 

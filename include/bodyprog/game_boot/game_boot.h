@@ -22,8 +22,18 @@ void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty);
 /** @brief Initializes the playable character data and world data. */
 void GameBoot_WorldInit(void);
 
+#if VERSION_REGION_IS(PAL)
+    /** @brief Returns the language-specific map overlay ID for a given map index. */
+    e_FsFile GameBoot_MapFileIdGet(s32 mapIdx);
+#endif
+
 /** Loads a map file into `g_OvlDynamic`. */
 void GameBoot_MapLoad(s32 mapIdx);
+
+#if VERSION_REGION_IS(PAL)
+    /** @brief Loads an item language overlay if the loaded overlay doesn't match current language ID. */
+    void GameBoot_ItemLangLoad(void);
+#endif
 
 /** @brief Sets general environmental effects such as lighting, fog, and screen effects.
  *
