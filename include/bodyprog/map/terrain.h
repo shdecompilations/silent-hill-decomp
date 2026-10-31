@@ -73,7 +73,7 @@ STATIC_ASSERT_SIZEOF(s_ChunkTextures, 328);
 /** @brief Global PLM model. */
 typedef struct _GlobalPlm
 {
-    /* 0x0 */ s_LmHeader* lmHdr;
+    /* 0x0 */ s_LmHeader* lmHdr; // TODO: Should be an array according to `WorldMap_ChunkPropertiesSet` call?
     /* 0x4 */ s32         fileIdx;
     /* 0x8 */ s32         queueIdx;
 } s_GlobalPlm;

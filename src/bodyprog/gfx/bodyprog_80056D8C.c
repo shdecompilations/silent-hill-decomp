@@ -227,6 +227,7 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX*
     gte_lddqa(g_WorldEnvWork.light.field_0);
     gte_lddqb_0();
 
+    // Run through meshes.
     for (curMeshHdr = modelHdr->meshHdrs; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
     {
         if (vertOffset != 0 || normalOffset != 0)

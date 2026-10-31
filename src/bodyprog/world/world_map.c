@@ -1155,6 +1155,7 @@ void WorldMap_ChunkPropertiesSet(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 l
     WorldMap_ChunkHeaderPtrsInit(ipdHdr);
     Collision_ChunkHeaderPtrsInit(&ipdHdr->collisionData);
     Lm_HeaderPtrsInit(ipdHdr->lmHdr);
+
     func_8008E4EC(ipdHdr->lmHdr);
     WorldMap_ChunkMaterialsLoad(ipdHdr, fullPageActiveTexs, halfPageActiveTexs, fileIdx);
     Lm_MaterialFlagsApply(ipdHdr->lmHdr);
@@ -1163,8 +1164,8 @@ void WorldMap_ChunkPropertiesSet(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 l
 }
 
 void WorldMap_ChunkMaterialsLoad(s_IpdHeader* ipdHdr,
-                                s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
-                                e_FsFile fileIdx) // 0x80043C7C
+                                 s_ActiveChunkTextures* fullPageActiveTexs, s_ActiveChunkTextures* halfPageActiveTexs,
+                                 e_FsFile fileIdx) // 0x80043C7C
 {
     if (!ipdHdr->isLoaded)
     {
@@ -1226,6 +1227,7 @@ void WorldMap_ChunkHeaderPtrsInit(s_IpdHeader* ipdHdr) // 0x80043DA4
     ipdHdr->modelBuffers = (u8*)ipdHdr->modelBuffers + (u32)ipdHdr;
     ipdHdr->modelOrder   = (u8*)ipdHdr->modelOrder   + (u32)ipdHdr;
 
+    // Run through model buffers.
     for (curModelBuf = &ipdHdr->modelBuffers[0];
          curModelBuf < &ipdHdr->modelBuffers[ipdHdr->modelBufferCount];
          curModelBuf++)
@@ -1242,7 +1244,8 @@ void WorldMap_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32
     s32             j;
     s_IpdModelInfo* curModelInfo;
 
-    for (i = 0; i < ipdHdr->modelCount; i++)
+    // Run through model infos.
+    for (i = 0; i < ipdHdr->modelInfoCount; i++)
     {
         curModelInfo = &ipdHdr->modelInfos[i];
 
@@ -1287,17 +1290,17 @@ void WorldMap_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ip
     s_IpdModelBuffer*   curModelBuffer;
     s_IpdModelInstance* curModelInst;
 
+    // Run through model buffers.
     for (curModelBuffer = ipdHdr->modelBuffers;
          curModelBuffer < &ipdHdr->modelBuffers[ipdHdr->modelBufferCount];
          curModelBuffer++)
     {
+        // Run through model instances.
         for (curModelInst = &curModelBuffer->modelInstances[0];
              curModelInst < &curModelBuffer->modelInstances[curModelBuffer->modelInstanceCount];
              curModelInst++)
         {
-            // TODO: `curModelInst` originally stores model idx. Replace that with pointer to the model's `modelHdr`.
-            s32 modelIdx           = (s32)curModelInst->modelHdr;
-            curModelInst->modelHdr = ipdModelInfos[modelIdx].modelHdr;
+            curModelInst->modelHdr = ipdModelInfos[(s32)curModelInst->modelHdr].modelHdr;
         }
     }
 }
@@ -1329,9 +1332,9 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
     s32                     subchunkZ;
     s32                     subchunkX;
     s32                     i;
-    s_IpdModelBuffer*       modelBuffer;
+    s_IpdModelBuffer*       curModelBuffer;
     s_IpdModelInstance*     curModelInst;
-    u8*                     temp_fp;
+    u8*                     modelOrderIdxs;
     s_IpdBillboardInstance* curBillboardInst;
 
     // Convert position to geometry space.
@@ -1356,41 +1359,44 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
     modelCoord.super = NULL;
 
     // Run through model buffers.
-    temp_fp = &ipdHdr->textureCount + (subchunkZ * 10) + (subchunkX * 2);
-    for (i = temp_fp[0]; i < (temp_fp[1] + temp_fp[0]); i++)
+    // `* 10` * stride: a row is 5 subchunks, or 5 * 2 values per row.
+    // `* 2`: two values per subchunk, start index and count of models to draw.
+    modelOrderIdxs = (&ipdHdr->textureCount + (subchunkZ * 10)) + (subchunkX * 2);
+    for (i = modelOrderIdxs[0]; i < (modelOrderIdxs[1] + modelOrderIdxs[0]); i++)
     {
-        modelBuffer = &ipdHdr->modelBuffers[ipdHdr->modelOrder[i]];
+        curModelBuffer = &ipdHdr->modelBuffers[ipdHdr->modelOrder[i]];
 
         // Check if model is visible.
-        if (!WorldMap_SubchunkVisibleCheck(modelBuffer,
+        if (!WorldMap_SubchunkVisibleCheck(curModelBuffer,
                                            curPosX - chunkEdgeX, cutPosZ - chunkEdgeZ, chunkEdgeX, chunkEdgeZ))
         {
             continue;
         }
 
         // Run through model instances.
-        for (curModelInst = modelBuffer->modelInstances;
-             curModelInst < &modelBuffer->modelInstances[modelBuffer->modelInstanceCount];
+        for (curModelInst = curModelBuffer->modelInstances;
+             curModelInst < &curModelBuffer->modelInstances[curModelBuffer->modelInstanceCount];
              curModelInst++)
         {
+            // Check if model is valid.
             modelInfo.modelHdr = curModelInst->modelHdr;
-            if (modelInfo.modelHdr != NULL)
+            if (modelInfo.modelHdr == NULL)
             {
-                // Set model matrix.
-                modelCoord.workm = curModelInst->mat;
-
-                // Offset model on XZ plane.
-                modelCoord.workm.t[0] += chunkEdgeX;
-                modelCoord.workm.t[2] += chunkEdgeZ;
-
-                Vw_CoordToWorldAndViewMatrices(&modelCoord, &worldMat, &viewMat);
-                func_80057090(&modelInfo, ot, otShift, &viewMat, &worldMat, 0);
+                continue;
             }
+
+            // Set model matrix.
+            modelCoord.workm       = curModelInst->transformMat;
+            modelCoord.workm.t[0] += chunkEdgeX;
+            modelCoord.workm.t[2] += chunkEdgeZ;
+
+            Vw_CoordToWorldAndViewMatrices(&modelCoord, &worldMat, &viewMat);
+            func_80057090(&modelInfo, ot, otShift, &viewMat, &worldMat, 0);
         }
 
         // Run through billboard sprite instances.
-        for (curBillboardInst = &modelBuffer->billboardInstances[0];
-             curBillboardInst < &modelBuffer->billboardInstances[modelBuffer->billboardInstanceCount];
+        for (curBillboardInst = &curModelBuffer->billboardInstances[0];
+             curBillboardInst < &curModelBuffer->billboardInstances[curModelBuffer->billboardInstanceCount];
              curBillboardInst++)
         {
             switch (curBillboardInst->idx)

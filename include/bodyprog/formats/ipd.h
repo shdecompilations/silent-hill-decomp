@@ -49,7 +49,7 @@ typedef struct _IpdSurface
     /* 0xA    */ q7_8     slopeGradientZ;
 } s_IpdSurface;
 
-/** @brief IPD collision polygon shape composed of up to 2 surfaces split by a line. */
+/** @brief IPD collision polygon shape, composed of up to 2 surfaces split by a line. */
 typedef struct _IpdPolygon
 {
     /* 0x0+0  */ q7_8 offsetX            : 14;
@@ -83,8 +83,8 @@ typedef struct _IpdShapeAlloc
 /** @brief IPD collision data. */
 typedef struct _IpdCollisionData
 {
-    /* 0x0    */ q23_8            positionX;
-    /* 0x4    */ q23_8            positionZ;
+    /* 0x0    */ q23_8            positionX;                   /** } World position. */
+    /* 0x4    */ q23_8            positionZ;                   /** } */
     /* 0x8+0  */ u32              polygonSplitVertexCount : 8; /** `polygonSplitVertices` array size. */
     /* 0x8+8  */ u32              polygonSurfaceCount     : 8; /** `polygonSurfaces` array size. */
     /* 0x8+16 */ u32              polygonCount            : 8; /** `polygons` array size. */
@@ -101,7 +101,7 @@ typedef struct _IpdCollisionData
     /* 0x26   */ u16              surfaceLutSize;              /** `surfaceLut` array size. */
     /* 0x28   */ u8*              shapeLut;                    /** Indices into `polygons` + `cylinders`. */
     /* 0x2C   */ u8*              surfaceLut;                  /** Indices into `polygonSurfaces`. */
-    /* 0x30   */ u8               shapePassCounter;            /** Active shape pass. Stamps below this value, i.e. from an older pass, are "unvisited". */
+    /* 0x30   */ u8               shapePassCounter;            /** Active shape pass. Stamps below this value, i.e. from a previous pass, mark unprocessed shapes. */
     /* 0x31   */ s8               __pad_31[3];
     /* 0x34   */ u8               shapePassStampBuffer[256];   /** Tracks visited shapes per query pass. */
 } s_IpdCollisionData;
@@ -109,20 +109,28 @@ typedef struct _IpdCollisionData
 /** @brief IPD model info. */
 typedef struct _IpdModelInfo
 {
-    /* 0x0 */ u8             isGlobalPlm; /** `true` if loaded from `*_GLB.PLM` file, otherwise loaded from inside `IPD` itself. */ 
+    /* 0x0 */ u8             isGlobalPlm; /** `true` if loaded from `BG/*_GLB.PLM` file, otherwise loaded from IPD itself. */ 
     /* 0x1 */ s8             __pad_1[3];
     /* 0x4 */ u_Filename     name;
     /* 0xC */ s_ModelHeader* modelHdr;
 } s_IpdModelInfo;
 
-/** @brief IPD transformed model instance. TODO: Unsure. */
+/** @brief IPD transformed model instance. */
 typedef struct _IpdModelInstance
 {
     /* 0x0 */ s_ModelHeader* modelHdr;
-    /* 0x4 */ MATRIX         mat;      // TODO: Base transform matrix?
+    /* 0x4 */ MATRIX         transformMat; /** Translation is relative to the chunk. */
 } s_IpdModelInstance;
 
-// TODO: Name uncertain. Used as 2D visibility AABB, but sizes are weirdly inconsistent.
+/** @brief IPD transformed billboard sprite instance. */
+typedef struct _IpdBillboardInstance
+{
+    /* 0x0 */ SVECTOR3 offset; /** Q7.8 | Offset in chunk. */
+    /* 0x6 */ s8       idx;    // Index of drawable billboard in memory? Seems each IPD can only have 2 unique billboards.
+    /* 0x8 */ s8       __pad_8;
+} s_IpdBillboardInstance;
+
+// TODO: Name uncertain. Used as (relative?) 2D visibility AABB, but sizes are weirdly inconsistent. What are they encompassing?
 typedef struct _SubchunkRange
 {
     /* 0x0 */ q7_8 minX;
@@ -131,15 +139,8 @@ typedef struct _SubchunkRange
     /* 0x6 */ q7_8 maxZ;
 } s_SubchunkRange;
 
-/** @brief IPD billboard sprite instance. */
-typedef struct _IpdBillboardInstance
-{
-    SVECTOR3 offset;
-    s8      idx;
-            // 1 byte of padding.
-} s_IpdBillboardInstance;
-
-/** @brief IPD model buffer. */
+// Just props?
+/** @brief IPD model buffer of multiple models and billboards. */
 typedef struct _IpdModelBuffer
 {
     /* 0x0  */ u8                      modelInstanceCount;     /** `modelInstances` array size. */
@@ -159,21 +160,21 @@ typedef struct _IpdModelBuffer
 typedef struct _IpdHeader
 {
     /* 0x0  */ u8                 magic;
-    /* 0x1  */ u8                 isLoaded; /** `bool` */
-    /* 0x3  */ s8                 chunkX;   /** } Position in chunk grid. */
-    /* 0x3  */ s8                 chunkZ;   /** } */
+    /* 0x1  */ u8                 isLoaded;         /** `bool` */
+    /* 0x3  */ s8                 chunkX;           /** } Position in chunk grid. */
+    /* 0x3  */ s8                 chunkZ;           /** } */
     /* 0x4  */ s_LmHeader*        lmHdr;
-    /* 0x8  */ u8                 modelCount;
-    /* 0x9  */ u8                 modelBufferCount;
-    /* 0xA  */ u8                 modelOrderCount;
+    /* 0x8  */ u8                 modelInfoCount;   /** `modelInfos` array size. */
+    /* 0x9  */ u8                 modelBufferCount; /** `modelBuffers` array size. */
+    /* 0xA  */ u8                 modelOrderSize;   /** `modelOrder` array size. */
     /* 0xB  */ s8                 __pad_B[9];
-    /* 0x14 */ s_IpdModelInfo*    modelInfos;
-    /* 0x18 */ s_IpdModelBuffer*  modelBuffers;
+    /* 0x14 */ s_IpdModelInfo*    modelInfos;   // Unique models.
+    /* 0x18 */ s_IpdModelBuffer*  modelBuffers; // Chunk geom groups?
     /* 0x1C */ u8                 textureCount; // TODO: Should it be `u32`? Referenced once, likely not texture count.
                                                 // "`u8` - Relative pointer to textures list"
                                                 // "`u32` - Relative pointer to object order"
-    /* 0x1D */ s8                 unk_1D[51];   // TODO: Actual texture data array?
-    /* 0x50 */ u8*                modelOrder;
+    /* 0x1D */ s8                 unk_1D[51];   // TODO: Actual texture data array? Does this contain billboards?
+    /* 0x50 */ u8*                modelOrder;   /** Indices into `modelBuffers`. */
     /* 0x54 */ s_IpdCollisionData collisionData;
 } s_IpdHeader;
 

@@ -110,13 +110,14 @@ bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* i
 {
     s_Material* curMat;
 
+    // Run through materials.
     for (curMat = &lmHdr->materials[0];
          curMat < &lmHdr->materials[lmHdr->materialCount];
          curMat++)
     {
         if (!COMPARE_FILENAMES(&curMat->name, fileName))
         {
-            curMat->field_C = 1;
+            curMat->field_C = true;
             Material_FsImageApply(curMat, image, blendMode);
             return true;
         }
@@ -181,7 +182,7 @@ void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveChunkTextures* active
 
     for (curMat = &lmHdr->materials[0]; curMat < &lmHdr->materials[lmHdr->materialCount]; curMat++)
     {
-        if (curMat->field_C == 0 && curMat->texture == NULL &&
+        if (!curMat->field_C && curMat->texture == NULL &&
             (filterFunc == NULL || filterFunc(curMat)))
         {
             curMat->texture = Texture_Get(curMat, activeTexs, FS_BUFFER_9, fileIdx, blendMode);
@@ -202,9 +203,10 @@ bool Lm_IsTextureLoaded(s_LmHeader* lmHdr) // 0x80056888
         return false;
     }
 
+    // Run through materials.
     for (curMat = &lmHdr->materials[0]; curMat < &lmHdr->materials[lmHdr->materialCount]; curMat++)
     {
-        if (curMat->field_C != 0)
+        if (curMat->field_C)
         {
             continue;
         }

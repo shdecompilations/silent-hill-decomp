@@ -10,24 +10,24 @@
 /** @brief LM file material. */
 typedef struct _Material
 {
-    /* 0x0  */ u_Filename name;
+    /* 0x0  */ u_Filename name; // Texture name?
     /* 0x8  */ s_Texture* texture;
-    /* 0xC  */ u8         field_C;
-    /* 0xD  */ u8         unk_D[1];
-    /* 0xE  */ u8         field_E;
+    /* 0xC  */ u8         field_C; /** `bool` | Loaded/applied flag? Marks as having image t-page and blend mode set. */
+    /* 0xD  */ s8         __pad_D;
+    /* 0xE  */ u8         field_E; // Packed t-page, blend mode data..
     /* 0xF  */ u8         field_F;
-    /* 0x10 */ u16        field_10;
+    /* 0x10 */ u16        field_10; // Packed CLUT position?
     /* 0x12 */ u16        field_12;
                union
                {
                    u8  u8[2];
                    u16 u16;
-    /* 0x14 */ } field_14;
+    /* 0x14 */ } field_14; // UV
                union
                {
                    u8  u8[2];
                    u16 u16;
-    /* 0x16 */ } field_16;
+    /* 0x16 */ } field_16; // UV. Min or max, not sure.
 } s_Material;
 STATIC_ASSERT_SIZEOF(s_Material, 24);
 

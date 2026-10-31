@@ -409,9 +409,9 @@ void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* boneCoords, MATRIX* viewMat) // 0x
     Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &worldMat, viewMat);
 }
 
-void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* boneCoord, MATRIX* worldMat, MATRIX* viewMat) // 0x80049B6C
+void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* boneCoords, MATRIX* worldMat, MATRIX* viewMat) // 0x80049B6C
 {
-    Vw_CoordHierarchyMatrixCompute(boneCoord, worldMat);
+    Vw_CoordHierarchyMatrixCompute(boneCoords, worldMat);
     worldMat->t[0] -= D_800C3868.t[0];
     worldMat->t[1] -= D_800C3868.t[1];
     worldMat->t[2] -= D_800C3868.t[2];

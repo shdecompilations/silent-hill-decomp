@@ -30,7 +30,7 @@ instances:
     pos: header.model_infos_offset
     type: model_info
     repeat: expr
-    repeat-expr: header.model_count
+    repeat-expr: header.model_info_count
 
   model_buffers:
     pos: header.model_buffers_offset
@@ -39,7 +39,7 @@ instances:
     repeat-expr: header.model_buffer_count
 
   model_order:
-    pos: header.model_order
+    pos: header.model_order_offset
     type: u1
     repeat: expr
     repeat-expr: header.model_order_size
@@ -66,7 +66,7 @@ types:
       - id: lm_header_offset
         type: u4
 
-      - id: model_count
+      - id: model_info_count
         type: u1
 
       - id: model_buffer_count
@@ -90,7 +90,7 @@ types:
         size: 51
         doc: TODO Actual texture data array?
 
-      - id: model_order
+      - id: model_order_offset
         type: u4
 
     instances:
@@ -108,8 +108,11 @@ types:
         type: strz
         size: 8
 
-      - id: model_header_offset
+      - id: model_header
         type: u4
+        doc: "Always 0 in files. The engine loads it by name from
+              global PLM headers if `is_global_plm` is `true`,
+              otherwise from the IPD's LM header."
 
   model_buffer:
     seq:
@@ -177,16 +180,16 @@ types:
     types:
       model_instance:
         seq:
-          - id: model_header_offset
+          - id: model_info_idx
             type: u4
-    
+            doc: Becomes `model_header` from `model_info` when loaded.
+
           - id: transform
             type: matrix
-    
+
         instances:
-          model_headers:
-            type: model_header(model_header_offset)
-            doc: TODO Doesn't reveal correct data.
+          model_info:
+            value: _root.model_infos[model_info_idx]
 
       billboard_instance:
         seq:
@@ -314,39 +317,6 @@ types:
         type: normal
         repeat: expr
         repeat-expr: normal_count
-
-  material:
-    seq:
-      - id: name
-        type: strz
-        size: 8
-
-      - id: offset_texture
-        type: u4
-
-      - id: field_c
-        type: u1
-
-      - id: unk_d
-        type: u1
-
-      - id: field_e
-        type: u1
-
-      - id: field_f
-        type: u1
-
-      - id: field_10
-        type: u2
-
-      - id: field_12
-        type: u2
-
-      - id: field_14
-        type: u2
-
-      - id: field_16
-        type: u2
 
   primitive:
     seq:
