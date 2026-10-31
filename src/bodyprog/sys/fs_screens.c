@@ -8,31 +8,23 @@
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/sys/fs_screens", GameFs_TitleGfxSeek);
-#else
 void GameFs_TitleGfxSeek(void) // 0x80032BD0
 {
-#if VERSION_REGION_IS(NTSC)
-    Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
-#elif VERSION_REGION_IS(NTSCJ)
+#if VERSION_REGION_IS(NTSCJ)
     Fs_QueueStartSeek(FILE_TIM_TITLE_TIM);
+#else
+    Fs_QueueStartSeek(FILE_TIM_TITLE_E_TIM);
 #endif
 }
-#endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/sys/fs_screens", GameFs_TitleGfxLoad);
-#else
 void GameFs_TitleGfxLoad(void) // 0x80032BF0
 {
-#if VERSION_REGION_IS(NTSC)
-    Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &g_TitleImg);
-#elif VERSION_REGION_IS(NTSCJ)
+#if VERSION_REGION_IS(NTSCJ)
     Fs_QueueStartReadTim(FILE_TIM_TITLE_TIM, FS_BUFFER_3, &g_TitleImg);
+#else
+    Fs_QueueStartReadTim(FILE_TIM_TITLE_E_TIM, FS_BUFFER_3, &g_TitleImg);
 #endif
 }
-#endif
 
 void GameFs_StreamBinSeek(void) // 0x80032C20
 {
