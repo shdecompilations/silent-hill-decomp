@@ -3490,12 +3490,11 @@ g_ActiveBufferIdx                            = 0x800B95A8;
 //--- PA: 0x093F20   VA: 0x800B95B0   subsegment: .bss, sys/syswork_globals
 //-------------------------------------------------------------------------
 g_SysWork                                    = 0x800B95B0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
-g_GameWork                                   = 0x800BBD18; // type:GameWork size:0x5D8
+g_GameWork                                   = 0x800BBD18; // type:GameWork size:0x5E4
 
 //---------------------------------------------------
 //--- PA: 0x096C64   VA: 0x800BC2F4   subsegment: bss
 //---------------------------------------------------
-D_800BCD00                                   = 0x800BC2F4;
 g_ScreenFade_Status                          = 0x800BC300;
 
 //-------------------------------------------------------------------

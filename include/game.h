@@ -256,9 +256,19 @@ typedef struct _GameWork
     /* 0x5B2 */ s8                 bgmIdx;            /** `BgmCmd` | Currently player background music track. */
     /* 0x5B4 */ s8                 ambientIdx;        /** Index of `g_AmbientVabTaskLoad`. */
     /* 0x5B4 */ s_AnalogController rawController;
+#if !VERSION_REGION_IS(PAL)
     /* 0x5BC */ s8                 unused_5BC[28];    // @unused Debug data?
+#else
+    /* 0x5BC */ s8                 unused_5BC[36];
+    /* 0x5E0 */ s8                 field_5E0; // PAL language related.
+    /* 0x5E1 */ s8                 __pad_5E1[3];
+#endif
 } s_GameWork;
-STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
+#if !VERSION_REGION_IS(PAL)
+    STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
+#else
+    STATIC_ASSERT_SIZEOF(s_GameWork, 1508);
+#endif
 
 /** @brief Extra player character info. */
 typedef struct _PlayerExtra

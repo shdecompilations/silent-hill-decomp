@@ -950,7 +950,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 #elif VERSION_REGION_IS(NTSCJ)
             Fs_QueueStartReadTim(FILE_TIM_TIPS_J01_TIM + tipIdx, FS_BUFFER_1, &TIP_IMG);
 #elif VERSION_REGION_IS(PAL)
-            Fs_QueueStartReadTim(((s8)g_GameWorkConst->config.palLanguageId * TIP_COUNT) + FILE_TIM_TIPS_E01_TIM + tipIdx, FS_BUFFER_1, &TIP_IMG);
+            Fs_QueueStartReadTim((g_GameWorkConst->config.palLanguageId * TIP_COUNT) + FILE_TIM_TIPS_E01_TIM + tipIdx, FS_BUFFER_1, &TIP_IMG);
 #endif
             SysWork_StateStepIncrement(0);
 

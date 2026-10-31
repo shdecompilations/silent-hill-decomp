@@ -524,7 +524,7 @@ segments:
                         # this will remain undefined. Maybe worth addding it with `NON_MATCHING`
                         # mark in order to allow anybody to use it.
       - [0x93F20, .bss, sys/syswork_globals]
-      - [0x96C64,  bss]
+      - [0x96C70,  bss]
       - [0x96C74,  pad] # Garbage.
       - [0x96C78, .bss, sys/memcard_2]
       - [0x96CA1]

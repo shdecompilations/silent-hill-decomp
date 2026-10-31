@@ -374,15 +374,24 @@ void GameBoot_WorldInit(void) // 0x80035178
 }
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/game_boot/game_boot", func_80034A98);
+extern s32 D_800A956C[];
+
+s32 func_80034A98(s32 mapIdx)
+{
+    return D_800A956C[g_GameWorkConst->config.palLanguageId] + mapIdx;
+}
 #endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/game_boot/game_boot", GameBoot_MapLoad);
-#else
 void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
 {
-    Fs_QueueStartRead(FILE_VIN_MAP0_S00_BIN + mapIdx, g_OvlDynamic);
+    e_FsFile fileIdx = FILE_VIN_MAP0_S00_BIN + mapIdx;
+    
+#if VERSION_REGION_IS(PAL)
+    fileIdx = func_80034A98(mapIdx);
+    func_80034B44();
+#endif
+    
+    Fs_QueueStartRead(fileIdx, g_OvlDynamic);
     Map_EffectTexturesLoad(mapIdx);
     GameFs_PlayerMapAnimLoad(mapIdx);
 
@@ -397,8 +406,16 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     }
     Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat.weaponAttack);
 }
-#endif
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/game_boot/game_boot", func_80034B44);
+extern void* D_80010008; // TODO: Oddly low memory address inside `main`, is this meant to be one of our named syms?
+extern s32 D_800A9580[];
+
+void func_80034B44(void)
+{
+    if (g_GameWork.field_5E0 != g_GameWork.config.palLanguageId + 1) {
+        g_GameWork.field_5E0 = g_GameWork.config.palLanguageId + 1;
+        Fs_QueueStartRead(D_800A9580[g_GameWork.config.palLanguageId], D_80010008);
+    }
+}
 #endif

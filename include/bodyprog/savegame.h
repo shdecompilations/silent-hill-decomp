@@ -132,8 +132,9 @@ typedef struct _OptionsConfig
     /* 0x2C */ s8                 extraAutoAiming;     /** `bool` | On: `false`, Off: `true`, default: On. */
     /* 0x2D */ s8                 extraBulletAdjust;   /** x1-x6: Range [0, 5], default: x1. */
     /* 0x2E */ u16                seenGameOverTips[1]; /** Bitfield tracking seen game-over tips. Each bit corresponds to a tip index (0–14), set bits indicate seen tips. Resets after picking all 15. */
-    /* 0x30 */ s8                 unk_30[4];
-    /* 0x34 */ u32                palLanguageId;       /** TODO: Gets read as `s8` in `SysState_GameOver_Update`, but that breaks matches in other functions if changed (alignment of whole struct changes if not u32..) */
+    /* 0x30 */ s32                unk_30[1];           /** Unknown purpose, needs to be `s32` for proper struct alignment. */
+    /* 0x34 */ s8                 palLanguageId;
+    /* 0x35 */ s8                 __pad_35[3];
 } s_OptionsConfig;
 STATIC_ASSERT_SIZEOF(s_OptionsConfig, 56);
 
