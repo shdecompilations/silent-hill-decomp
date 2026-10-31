@@ -4037,3 +4037,5 @@ sd_timer_event                               = 0x800C80E8;
 //-------------------------------------------------------------------
 smf_song                                     = 0x800C80F0;
 g_MapOverlayHdr                              = 0x800CB374; // type:MapOverlayHeader size:0x84C - size incomplete
+D_800FE5F8                                   = 0x800FE5F8; // ignore:True - Fixes fake missmatch in `Demo_Update`.
+hack_D_800FE5FC_fix                          = 0x800FE5FC; // ignore:true - Part of temp memory block at 800FDE00, has to be unsymbolized for C to match.
