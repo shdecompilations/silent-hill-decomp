@@ -71,7 +71,7 @@ GsOT g_OrderingTable2[2] = {
 q19_12 g_DeltaTimeRaw    = TIMESTEP_60_FPS;
 s32    g_IntervalVBlanks = 1;
 
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
 // PAL image layout: different VRAM positions, and no separate death tip image.
 s_FsImageDesc g_Font16AtlasImg             = { { 0,   12  }, 0,    0,   1088, 511 };
 s_FsImageDesc g_KonamiLogoImg              = { { 0,   14  }, 0,    0,   1104, 511 };

@@ -666,9 +666,6 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
 }
 #endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/items/item_screens_3", func_8004FB0C);
-#else
 void func_8004FB0C(void) // 0x8004FB0C
 {
     GsOT*    ot;
@@ -679,16 +676,23 @@ void func_8004FB0C(void) // 0x8004FB0C
 
     setPolyF4(poly);
     setRGB0(poly, 0, 0, 0);
+#if VERSION_REGION_IS(PAL)
+    setXY4(poly,
+           -160, -256,
+           -160, -253,
+            160, -256,
+            160, -253);
+#else
     setXY4(poly,
            -160, -224,
            -160, -222,
             160, -224,
             160, -222);
+#endif
     addPrim(ot->org, poly);
 
     GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_F4);
 }
-#endif
 
 /** Draws many 2D menu elements.
  * The background behind the text in the upper

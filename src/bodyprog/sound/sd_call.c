@@ -943,7 +943,7 @@ static void Sd_XaAudioPlay(void) // 0x80046E00
 
             g_Sd_XaAudioPlayTracking.xaAudioLength = gSDXATable[xaAudioIdx].audioLength + 32;
             
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
             g_Sd_XaAudioPlayTracking.xaAudioLength = (g_Sd_XaAudioPlayTracking.xaAudioLength * 5) / 6;
 #endif
 
@@ -1051,7 +1051,7 @@ static void Sd_XaPreLoadAudio(void) // 0x80047308
 
             g_Sd_XaAudioPlayTracking.xaAudioLength = gSDXATable[xaAudioIdx].audioLength + 32;
             
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
             g_Sd_XaAudioPlayTracking.xaAudioLength = (g_Sd_XaAudioPlayTracking.xaAudioLength * 5) / 6;
 #endif
 

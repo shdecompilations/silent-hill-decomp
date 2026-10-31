@@ -42,7 +42,7 @@ s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT] = {
     }
 };
 
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
     // File index tables, TODO: Should probably live in game_boot.c next to code that uses them?
     e_FsFile g_MapLanguageBaseIds[5] =
     {

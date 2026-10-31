@@ -208,7 +208,7 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
         {
             if (interlacingEnabled)
             {
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
                 texOffsetY   = (i == 0) ? 1 : 0;
 #else
                 texOffsetY   = (i == 0) ? 32 : 0;
@@ -218,7 +218,7 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
             }
             else
             {
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
                 texOffsetY   = 0;
                 offsetY      = -127;
 #else

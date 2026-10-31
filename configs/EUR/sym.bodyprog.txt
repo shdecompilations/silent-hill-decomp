@@ -3633,6 +3633,7 @@ g_MapMsg_WidthIdx                            = 0x800C2EAC;
 g_MapMsg_Widths                              = 0x800C2EB8; // type:s32
 g_MapMsg_GlyphSprite                         = 0x800C2EE8;
 g_GlyphSpritePositionX                       = 0x800C2F0C;
+D_800C391E                                   = 0x800C2F0E; // type:s16
 D_800C3920                                   = 0x800C2F10;
 
 //----------------------------------------------------------------------------

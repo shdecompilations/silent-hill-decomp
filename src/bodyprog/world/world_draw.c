@@ -80,7 +80,7 @@ s_BoneNode* WorldGfx_CharaModelBoneNodesGet(e_CharaId charaId)
 
 void GameFs_BgEtcGfxLoad(void)
 {
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
     static s_FsImageDesc IMAGE = { .tPage = { 0, 12 }, .clutX = 944, .clutY = 496 };
 #else
     static s_FsImageDesc IMAGE = { .tPage = { 0, 12 }, .clutX = 192 };

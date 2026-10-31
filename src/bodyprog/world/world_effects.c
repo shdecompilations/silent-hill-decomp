@@ -36,7 +36,7 @@ static s_MapEnvPresetIdxs D_800A9FA4 = { 5, 5  };
 
 void GameFs_FlameGfxLoad(void) // 0x8003E710
 {
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
     static s_FsImageDesc IMG_FLAME = {
         .tPage = { 0, 13 },
         .u     = 0,

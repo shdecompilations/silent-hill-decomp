@@ -373,7 +373,7 @@ void GameBoot_WorldInit(void) // 0x80035178
     #undef ANIMS_DATA_BUFFER_SIZE
 }
 
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
 e_FsFile GameBoot_MapFileIdGet(s32 mapIdx) // 0x80034A98
 {
     return g_MapLanguageBaseIds[g_GameWorkConst->config.palLanguageId] + mapIdx;
@@ -405,7 +405,7 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
     Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat.weaponAttack);
 }
 
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
 void GameBoot_ItemLangLoad(void) // 0x80034B44
 {
     if (g_GameWork.loadedPalItemLang != g_GameWork.config.palLanguageId + 1)

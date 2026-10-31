@@ -63,7 +63,7 @@ char* g_CommonWorldObjectNames[8] = {
 };
 
 /** @note Related to images display. */
-#if !VERSION_IS(EUR)
+#if !VERSION_REGION_IS(PAL)
 s_FsImageDesc D_800A9A04             = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
 #endif
 bool          g_IsLoadingFinished             = false;

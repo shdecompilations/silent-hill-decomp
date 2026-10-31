@@ -19,7 +19,7 @@ s32 g_ItemScreen_GeomOffsetY;
 
 // In USA, this function is called at the start of `MainLoop`.
 // NTSC-J splits this function into 3 and moves calls into the `HP_SAFE1` overlay.
-#if VERSION_IS(USA) || VERSION_IS(EUR)
+#if VERSION_REGION_IS(NTSC) || VERSION_REGION_IS(PAL)
 void ItemScreen_TmdGsFCallInit(void) // 0x8004BB10
 {
     // Based on `libgs.h` `jt_init4` function?
