@@ -68,8 +68,8 @@ typedef struct _DmsHeader
     /* 0x0  */ u8            isLoaded;            /** `bool` */
     /* 0x1  */ u8            characterEntryCount; /** `characters` array size. */
     /* 0x2  */ u8            segmentCount;        /** `segments` array size. */
-    /* 0x3  */ u8            field_3;             /** @unused Usually 0, but sometimes filled in. Possibly junk padding data. */
-    /* 0x4  */ u32           field_4;             /** @unused Unknown, correlates with DMS file size. */
+    /* 0x3  */ u8            unused_3;            /** @unused Usually 0, but sometimes filled in. Possibly junk padding data. */
+    /* 0x4  */ u32           unused_4;            /** @unused Unknown, correlates with DMS file size. */
     /* 0x8  */ s_DmsSegment* segments;
     /* 0xC  */ VECTOR3       origin;              /** Q23.8 | Cutscene origin added to relative character or camera positions. */
     /* 0x18 */ s_DmsEntry*   characterEntries;

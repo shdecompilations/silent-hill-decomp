@@ -37,11 +37,13 @@ types:
       - id: segment_count
         type: u1
 
-      - id: field_3
+      - id: unused_3
         type: u1
+        doc: Usually 0, but sometimes filled in. Possibly junk padding data.
 
-      - id: field_4
+      - id: unused_4
         type: u4
+        doc: Unknown, correlates with DMS file size.
 
       - id: segments_offset
         type: u4
