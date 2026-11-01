@@ -35,31 +35,15 @@ s8             g_MapMsg_SelectCancelIdx;
     #define Gfx_StringColorSet Gfx_StringColorSet_JP
 #endif
 
-#if VERSION_IS(EUR)
-// @hack Statics of the included function below, remove once decompiled.
-// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
-static inline void Gfx_MapMsg_Draw_Statics(void)
-{
-    static s32  rolloutState __asm__("stateMachineIdx1");
-    static s32  menuSelection __asm__("stateMachineIdx2");
-    static s32  displayLength __asm__("msgDisplayLength");
-    static s32  activeMapMsgIdx __asm__("msgIdx");
-    static s32  displayLengthInc __asm__("msgDisplayInc");
-    static bool loadAudio __asm__("D_800BC364");
-
-    (void)rolloutState;
-    (void)menuSelection;
-    (void)displayLength;
-    (void)activeMapMsgIdx;
-    (void)displayLengthInc;
-    (void)loadAudio;
-}
-INCLUDE_ASM("bodyprog/nonmatchings/text/map_msg_display", Gfx_MapMsg_Draw);
-#else
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {
-    #define ROLLOUT_ADVANCE 2
     #define FINISH_MAP_MSG  0xFF
+    
+#if VERSION_REGION_IS(PAL)
+    #define ROLLOUT_ADVANCE 0
+#else
+    #define ROLLOUT_ADVANCE 2
+#endif
 
     s32         curRolloutState;
     bool        skip;
@@ -147,11 +131,21 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             }
 
             Gfx_StringColorSet(StringColorId_White);
-#if VERSION_REGION_IS(NTSC)
+
+#if VERSION_REGION_IS(NTSC) || VERSION_REGION_IS(PAL)
             Gfx_StringPositionSet(SCREEN_WIDTH / 8, (SCREEN_HEIGHT / 3) * 2);
 #endif
 
+#if VERSION_REGION_IS(PAL)
+            displayLengthInc += g_DeltaTimeRaw;
+            if (displayLength != 400)
+            {
+                displayLength = Q12_MULT(displayLengthInc, 60);
+            }
+#else
             displayLength += displayLengthInc;
+#endif
+
             displayLength  = CLAMP(displayLength, 0, MAP_MESSAGE_DISPLAY_ALL_LENGTH);
 
             if (g_MapMsg_AudioType != MapMsgAudioType_None && g_SysWork.mapMsgTimer > Q12(0.0f))
@@ -234,6 +228,9 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         break;
                     }
 
+#if VERSION_REGION_IS(PAL)
+                    displayLengthInc = 0;
+#endif
                     g_MapMsg_CurrentIdx++;
                     g_SysWork.mapMsgTimer = g_MapMsg_Select.maxIdx;
 
@@ -309,7 +306,6 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     #undef FINISH_MAP_MSG
 }
-#endif
 
 s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* displayLength) // 0x80036B5C
 {

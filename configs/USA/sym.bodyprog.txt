@@ -3132,11 +3132,11 @@ g_Bgm_LayersUpdated                          = 0x800BCD5C;
 //--------------------------------------------------------------------------
 //--- PA: 0x098200   VA: 0x800BCD60   subsegment: .bss, text/map_msg_display
 //--------------------------------------------------------------------------
-stateMachineIdx1                             = 0x800BCD60; // type:s32
-stateMachineIdx2                             = 0x800BCD64; // type:s32
-msgDisplayLength                             = 0x800BCD68; // type:s32
-msgIdx                                       = 0x800BCD6C; // type:s32
-msgDisplayInc                                = 0x800BCD70; // type:s32
+rolloutState.52                              = 0x800BCD60; // type:s32
+menuSelection.53                             = 0x800BCD64; // type:s32
+displayLength.54                             = 0x800BCD68; // type:s32
+activeMapMsgIdx.55                           = 0x800BCD6C; // type:s32
+displayLengthInc.56                          = 0x800BCD70; // type:s32
 g_MapMsg_Select                              = 0x800BCD78; // type:MapMsgSelect size:2
 g_MapMsg_AudioType                           = 0x800BCD7A; // type:u8
 g_MapMsg_SelectCancelIdx                     = 0x800BCD7B; // type:s8
