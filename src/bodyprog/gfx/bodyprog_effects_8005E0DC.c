@@ -105,28 +105,21 @@ s_800C4418     D_800C4418;
 // ENVIRONMENT EFFECTS HANDLING
 // ========================================
 
-#if VERSION_IS(EUR)
-// @hack Statics of the included function below, remove once decompiled.
-// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
-static inline void Map_EffectTexturesLoad_Statics(void)
-{
-    static u16 loadedEffectTextureFlags __asm__("loadedEffectTextureFlags");
-    static s16 __pad_bss_800C38CA[7] __asm__("__pad_bss_800C38CA");
-
-    (void)loadedEffectTextureFlags;
-    (void)__pad_bss_800C38CA;
-}
-INCLUDE_ASM("bodyprog/nonmatchings/gfx/bodyprog_effects_8005E0DC", Map_EffectTexturesLoad);
-#else
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {
+#if VERSION_REGION_IS(PAL)
+    #define CLUT_BASE 0x1B0
+#else
+    #define CLUT_BASE 0
+#endif
+
     s32        i;
     s32        effectTexFlags;
     static u16 loadedEffectTextureFlags;
     static s16 __pad_bss_800C42DA[7];
 
     D_800A908C.v     = 0;
-    D_800A908C.clutY = 0;
+    D_800A908C.clutY = CLUT_BASE;
     D_800A9094.v     = 128;
 
     // Get effect texture flags.
@@ -224,7 +217,7 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 
             case EffectTextureFlag_Ef:
                 D_800A908C.v     = 64;
-                D_800A908C.clutY = 4;
+                D_800A908C.clutY = CLUT_BASE + 4;
                 Fs_QueueStartReadTim(FILE_TIM_EF_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_EF_TIM), 0x800), &D_800A908C);
                 break;
 
@@ -237,8 +230,9 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
                 break;
         }
     }
+
+    #undef CLUT_BASE
 }
-#endif
 
 void func_8005E414(s32 orgIdx) // 0x8005E414
 {

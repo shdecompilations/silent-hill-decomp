@@ -84,9 +84,6 @@ void func_8005B55C(GsCOORDINATE2* viewCoord) // 0x8005B55C
     }
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/gfx/billboard_draw", Gfx_BillboardDraw);
-#else
 void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 otShift) // 0x8005B62C
 {
     MATRIX            worldToScreenMat;
@@ -267,7 +264,11 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
         if (temp_v0_2 > 32 && temp_a0 < sp494)
         {
             s32 tPage = 44;
+#if VERSION_REGION_IS(PAL)
+            s32 clut  = 0x7cbb;
+#else
             s32 clut  = 140;
+#endif
             temp_lo_2 = Q12(sp498) / temp_a0;
 
             *(s32*)&poly_gt4->r0 = *(s32*)&colors[0];
@@ -340,7 +341,6 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
 
     GsOUT_PACKET_P = poly_gt4;
 }
-#endif
 
 // ========================================
 // UNUSED

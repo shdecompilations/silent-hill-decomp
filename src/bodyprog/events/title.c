@@ -50,13 +50,6 @@ s8* D_800BCDE0;
 // CORE
 // ========================================
 
-#if VERSION_IS(EUR)
-// @hack Statics of the included function below, remove once decompiled.
-s32 g_MainMenu_NewGameSelectedDifficultyIdx = 1;
-s32 g_MemCard_PrevSavegameCount             = 0;
-INCLUDE_RODATA("bodyprog/nonmatchings/events/title", D_80025FB0);
-INCLUDE_ASM("bodyprog/nonmatchings/events/title", GameState_MainMenu_Update);
-#else
 void GameState_MainMenu_Update(void) // 0x8003AB28
 {
     #define MAIN_MENU_GAME_STATE_COUNT 5
@@ -105,7 +98,11 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             g_GameWork.background2dColor.g = 0;
             g_GameWork.background2dColor.b = 0;
 
+#if VERSION_REGION_IS(PAL)
+            Screen_RectInterlacedClear(0, 1, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+#else
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
+#endif
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks    = 1;
@@ -361,7 +358,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         switch (g_GameWork.gameStateSteps[0])
         {
             case 1:
-                if (g_SysWork.gameStateStepCounter > SECONDS_60_FPS(29))
+                if (g_SysWork.gameStateStepCounter > SECONDS_TO_FRAMES(29))
                 {
                     GameFs_StreamBinLoad();
                     g_GameWork.gameStateSteps[0]++;
@@ -399,16 +396,18 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     }
     else
     {
-        *(s32*)0x1F800000 = 0x200000;
-        *(s32*)0x1F800004 = 0x01C00140;
-        ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
+#if VERSION_REGION_IS(PAL)
+        setRECTFast((RECT*)PSX_SCRATCH, 0, 1, 320, 510);
+#else
+        setRECTFast((RECT*)PSX_SCRATCH, 0, 32, 320, 448);
+#endif
+        ClearImage2((RECT*)PSX_SCRATCH, 0u, 0u, 0u);
         Screen_Init(SCREEN_WIDTH, false);
         return;
     }
 
     #undef MAIN_MENU_GAME_STATE_COUNT
 }
-#endif
 
 void MainMenu_SelectedOptionIdxReset(void) // 0x8003B550
 {
