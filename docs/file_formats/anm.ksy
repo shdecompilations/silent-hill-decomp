@@ -3,6 +3,7 @@ meta:
   title: Silent Hill (PSX) Animation Format
   file-extension: anm
   endian: le
+  bit-endian: le
   encoding: ASCII
 
 doc: |

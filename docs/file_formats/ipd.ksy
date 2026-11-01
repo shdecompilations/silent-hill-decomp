@@ -3,6 +3,7 @@ meta:
   title: Silent Hill 1 Map Model Format
   file-extension: ipd
   endian: le
+  bit-endian: le
   encoding: ASCII
   imports:
     - lm
@@ -99,7 +100,7 @@ types:
 
   model_info:
     seq:
-      - id: is_global_plm
+      - id: is_external
         type: u1
 
       - size: 3
@@ -111,7 +112,7 @@ types:
       - id: model_header
         type: u4
         doc: "Always 0 in files. The engine loads it by name from
-              global PLM headers if `is_global_plm` is `true`,
+              global PLM headers if `is_external` is `true`,
               otherwise from the IPD's LM header."
 
   model_buffer:
@@ -131,21 +132,17 @@ types:
         type: s2
         doc: Q7.8.
 
-
       - id: max_x
         type: s2
         doc: Q7.8.
-
 
       - id: min_z
         type: s2
         doc: Q7.8.
 
-
       - id: max_z
         type: s2
         doc: Q7.8.
-
 
       - id: model_instances_offset
         type: u4
@@ -197,7 +194,7 @@ types:
             type: svector_3
 
           - id: idx
-            type: s2
+            type: s1
 
           - size: 1
 
@@ -206,15 +203,15 @@ types:
           - id: min_x
             type: s2
             doc: Q7.8.
-    
+
           - id: max_x
             type: s2
             doc: Q7.8.
-    
+
           - id: min_z
             type: s2
             doc: Q7.8.
-    
+
           - id: max_z
             type: s2
             doc: Q7.8.
@@ -483,96 +480,96 @@ types:
         seq:
           - id: offset
             type: svector_3
-    
+
           - id: floor_type
             type: b5
-    
+
           - id: disable_height
             type: b3
-    
+
           - id: field_6_8
             type: b3
-    
+
           - id: trigger_flag_idx
             type: b4
-    
+
           - id: slope_gradient_x
             type: s2
             doc: Q7.8.
-    
+
           - id: slope_gradient_z
             type: s2
             doc: Q7.8.
-    
+
         instances:
           slope_gradient_x_flt:
             value: slope_gradient_x / (1 << 8).as<f4>
-    
+
           slope_gradient_z_flt:
             value: slope_gradient_z / (1 << 8).as<f4>
-    
+
       polygon:
         seq:
           - id: offset_x
             type: b14
             doc: Q7.8.
-    
+
           - id: trigger_flag_idx_low
             type: b2
-    
+
           - id: offset_y
             type: b14
             doc: Q7.8.
-    
+
           - id: trigger_flag_idx_high
             type: b2
-    
+
           - id: offset_z
             type: s2
             doc: Q7.8.
-    
+
           - id: split_vertex_idx_0
             type: u1
-    
+
           - id: split_vertex_idx_1
             type: u1
-    
+
           - id: surface_idx_0
             type: u1
-    
+
           - id: surface_idx_1
             type: u1
-    
+
           - size: 2
-    
+
         instances:
           offset_x_flt:
             value: offset_x / (1 << 8).as<f4>
-    
+
           offset_y_flt:
             value: offset_y / (1 << 8).as<f4>
-    
+
           offset_z_flt:
             value: offset_z / (1 << 8).as<f4>
-    
+
           trigger_flags:
             value: (trigger_flag_idx_low << 2) | trigger_flag_idx_high
-    
+
       cylinder:
         seq:
           - id: floor_type
             type: b5
-    
+
           - id: disable_height
             type: b3
-    
+
           - id: trigger_flag_idx
             type: b4
-    
+
           - id: offset
             type: svector_3
             doc: Q7.8.
-    
+
           - id: radius
             type: u2
             doc: Q7.8.
@@ -581,7 +578,7 @@ types:
         seq:
           - id: polygon_lut_idx
             type: s2
-    
+
           - id: surface_lut_idx
             type: s2
 

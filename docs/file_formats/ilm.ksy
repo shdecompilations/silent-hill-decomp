@@ -3,6 +3,7 @@ meta:
   title: Silent Hill (PSX) Skeletal Character Model Format
   file-extension: ilm
   endian: le
+  bit-endian: le
   encoding: ASCII
   imports:
     - lm

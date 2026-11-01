@@ -1238,7 +1238,7 @@ void WorldMap_ChunkHeaderPtrsInit(s_IpdHeader* ipdHdr) // 0x80043DA4
     }
 }
 
-void WorldMap_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount) // 0x80043E50
+void WorldMap_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** externalLmHdrs, s32 externalLmHdrCount) // 0x80043E50
 {
     s32             i;
     s32             j;
@@ -1249,15 +1249,16 @@ void WorldMap_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32
     {
         curModelInfo = &ipdHdr->modelInfos[i];
 
-        if (!curModelInfo->isGlobalPlm)
+        if (!curModelInfo->isExternal)
         {
             curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->name, ipdHdr->lmHdr);
         }
         else
         {
-            for (j = 0; j < lmHdrCount; j++)
+            // Run through external LM headers.
+            for (j = 0; j < externalLmHdrCount; j++)
             {
-                curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->name, lmHdrs[j]);
+                curModelInfo->modelHdr = LmHeader_ModelHeaderSearch(&curModelInfo->name, externalLmHdrs[j]);
                 if (curModelInfo->modelHdr != NULL)
                 {
                     break;
@@ -1270,15 +1271,18 @@ void WorldMap_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32
 s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHdr) // 0x80043F2C
 {
     s32            i;
-    s_ModelHeader* modelHeader;
+    s_ModelHeader* curModelHdr;
 
-    modelHeader = lmHdr->modelHdrs;
+    curModelHdr = lmHdr->modelHdrs;
 
-    for (i = 0; i < lmHdr->modelCount; i++, modelHeader++)
+    // Find matching name.
+    for (i = 0;
+         i < lmHdr->modelCount;
+         i++, curModelHdr++)
     {
-        if (!COMPARE_FILENAMES(modelName, &modelHeader->name))
+        if (!COMPARE_FILENAMES(modelName, &curModelHdr->name))
         {
-            return modelHeader;
+            return curModelHdr;
         }
     }
 

@@ -3,6 +3,7 @@ meta:
   title: Silent Hill (PSX) Demo State Format
   file-extension: dat
   endian: le
+  bit-endian: le
   encoding: ASCII
 
 doc: |

@@ -2,6 +2,7 @@ meta:
   id: lm
   title: Silent Hill 1 Model Format
   endian: le
+  bit-endian: le
   encoding: ASCII
 
 doc: |

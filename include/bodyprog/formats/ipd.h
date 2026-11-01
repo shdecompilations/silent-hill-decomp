@@ -109,7 +109,7 @@ typedef struct _IpdCollisionData
 /** @brief IPD model info. */
 typedef struct _IpdModelInfo
 {
-    /* 0x0 */ u8             isGlobalPlm; /** `true` if loaded from `BG/*_GLB.PLM` file, otherwise loaded from IPD itself. */ 
+    /* 0x0 */ u8             isExternal; /** `true` if loaded from `BG/*_GLB.PLM` file, otherwise from `s_IpdHeader::lmHdr`. */ 
     /* 0x1 */ s8             __pad_1[3];
     /* 0x4 */ u_Filename     name;
     /* 0xC */ s_ModelHeader* modelHdr;

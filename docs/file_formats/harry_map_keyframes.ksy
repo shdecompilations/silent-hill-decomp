@@ -2,6 +2,7 @@ meta:
   id: harry_map_keyframes
   title: Silent Hill (PSX) Harry Animation Keyframe Block
   endian: le
+  bit-endian: le
   encoding: ASCII
 
 doc: |

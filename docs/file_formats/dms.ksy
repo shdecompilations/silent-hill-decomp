@@ -3,6 +3,7 @@ meta:
   title: Silent Hill (PSX) Cutscene Format
   file-extension: dms
   endian: le
+  bit-endian: le
   encoding: ASCII
 
 doc: |

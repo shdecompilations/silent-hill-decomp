@@ -3,6 +3,7 @@ meta:
   title: Silent Hill (PSX) Global Map Prop Model Format
   file-extension: plm
   endian: le
+  bit-endian: le
   encoding: ASCII
   imports:
     - lm

@@ -1298,7 +1298,7 @@ bool LmFilter_IsHalfPage(s_Material* mat);
 void WorldMap_ChunkHeaderPtrsInit(s_IpdHeader* ipdHdr);
 
 /** @brief Assigns `s_ModelHeader` pointers to models in `s_IpdHeader` by searching the given `s_LmHeader` array. */
-void WorldMap_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** lmHdrs, s32 lmHdrCount);
+void WorldMap_ModelLinkObjectLists(s_IpdHeader* ipdHdr, s_LmHeader** externalLmHdrs, s32 externalLmHdrCount);
 
 /** @brief Searches `s_LmHeader` for objects with the given `objName`. */
 s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmHdr);
