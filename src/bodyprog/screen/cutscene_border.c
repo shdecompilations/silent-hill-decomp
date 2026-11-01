@@ -25,11 +25,13 @@ static DR_MODE D_800A8E98[] = {
     #define BORDER_TOP_INNER_Y     -96
     #define BORDER_BOTTOM_OUTER_Y  128
     #define BORDER_BOTTOM_INNER_Y  97
+    #define VC_SCR_Y_BASE          SCREEN_HEIGHT
 #else
     #define BORDER_TOP_OUTER_Y     -112
     #define BORDER_TOP_INNER_Y     -96
     #define BORDER_BOTTOM_OUTER_Y  112
     #define BORDER_BOTTOM_INNER_Y  96
+    #define VC_SCR_Y_BASE          g_GameWork.gsScreenHeight
 #endif
 
 // TODO: Make a macro?
@@ -86,10 +88,6 @@ static q19_12 g_Screen_BlackBorderShade = Q12(0.0f);
 // CUTSCENE BORDERS
 // ========================================
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/matchings/screen/cutscene_border", Screen_BlackBorderDraw);
-INCLUDE_ASM("bodyprog/nonmatchings/screen/cutscene_border", Screen_CutsceneCameraStateUpdate);
-#else
 void Screen_CutsceneCameraStateUpdate(void)
 {
     static void Screen_BlackBorderDraw(POLY_G4* poly, q19_12 color)
@@ -191,7 +189,6 @@ void Screen_CutsceneCameraStateUpdate(void)
 
     if (!(g_SysWork.sysFlags & SysFlag_CutsceneActive))
     {
-        vcChangeProjectionValue(g_GameWork.gsScreenHeight + Q12_MULT(377 - g_GameWork.gsScreenHeight, g_Screen_BlackBorderShade));
+        vcChangeProjectionValue(VC_SCR_Y_BASE + Q12_MULT(377 - VC_SCR_Y_BASE, g_Screen_BlackBorderShade));
     }
 }
-#endif

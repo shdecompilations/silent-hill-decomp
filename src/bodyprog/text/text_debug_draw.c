@@ -36,9 +36,6 @@ void Text_Debug_PositionSet(s16 x, s16 y) // 0x80031EFC
     }
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_debug_draw", Text_Debug_Draw);
-#else
 void Text_Debug_Draw(char* str) // 0x80031F40
 {
     #define GLYPH_SIZE_X 8
@@ -78,7 +75,11 @@ void Text_Debug_Draw(char* str) // 0x80031F40
                 setXY0Fast(glyphSprt, posX, posY);
 
                 charIdx = (char)toupper(charCode) - '*';
+#if VERSION_REGION_IS(PAL)
+                SET_SPRT_U_V_CLUT(glyphSprt, charIdx, 0x3FF2); // TODO: Demagic CLUT arg.
+#else
                 SET_SPRT_U_V_CLUT(glyphSprt, charIdx, 0x7FD2); // TODO: Demagic CLUT arg.
+#endif
 
             case 95:
             case 32:
@@ -104,13 +105,17 @@ void Text_Debug_Draw(char* str) // 0x80031F40
     Math_SetDVectorFast(&g_Text_Debug_PositionSet1, posX, posY);
     tPage = (DR_TPAGE*)packet;
 
+#if VERSION_REGION_IS(PAL)
+    setDrawTPage(tPage, 0, 1, getTPageN(0, 0, 12, 0));
+#else
     setDrawTPage(tPage, 0, 1, getTPageN(0, 0, 4, 1));
+#endif
+    
     addPrim(ot, tPage);
 
     packet        += sizeof(DR_TPAGE);
     GsOUT_PACKET_P = packet;
 }
-#endif
 
 char* Text_Debug_IntToString(s32 lengthMin, s32 val) // 0x80032154
 {

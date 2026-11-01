@@ -94,19 +94,12 @@ void GameFs_BgItemLoad(void)
     g_WorldGfxWork.itemLmQueueIdx = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfxWork.itemLmHdr);
 }
 
-#if VERSION_IS(EUR)
-// @hack Statics of the included function below, remove once decompiled.
-s_FsImageDesc IMAGE_ETC __asm__("IMAGE_ETC.87") = {
-    .tPage = { 0, 12 },
-    .u     = 32,
-    .v     = 64,
-    .clutX = 944,
-    .clutY = 496
-};
-INCLUDE_ASM("bodyprog/nonmatchings/world/world_draw", GameFs_CommonItemsTextureLoad);
-#else
 static void GameFs_CommonItemsTextureLoad(void)
 {
+#if VERSION_REGION_IS(PAL)
+    extern s_FsImageDesc g_FirstAidKitItemTextureImg;
+    #define IMAGE_TIM00 g_FirstAidKitItemTextureImg
+#else
     static s_FsImageDesc IMAGE_TIM = {
         .tPage = { 0, 15 },
         .u     = 0,
@@ -114,13 +107,22 @@ static void GameFs_CommonItemsTextureLoad(void)
         .clutX = 176,
         .clutY = 0
     };
+    #define IMAGE_TIM00 IMAGE_TIM
+#endif
 
     static s_FsImageDesc IMAGE_ETC = {
         .tPage = { 0, 12 },
+#if VERSION_REGION_IS(PAL)
+        .u     = 32,
+        .v     = 64,
+        .clutX = 944,
+        .clutY = 496
+#else
         .u     = 0,
         .v     = 192,
         .clutX = 192,
         .clutY = 0
+#endif
     };
 
     s_LmHeader* itemLmHdr;
@@ -133,11 +135,12 @@ static void GameFs_CommonItemsTextureLoad(void)
     }
 
     Lm_HeaderPtrsInit(&g_WorldGfxWork.itemLmHdr);
-    Lm_MaterialFsImageApply1(&g_WorldGfxWork.itemLmHdr, "TIM00", &IMAGE_TIM, 1);
+    Lm_MaterialFsImageApply1(&g_WorldGfxWork.itemLmHdr, "TIM00", &IMAGE_TIM00, 1);
     Lm_MaterialFsImageApply1(&g_WorldGfxWork.itemLmHdr, "BG_ETC", &IMAGE_ETC, 1);
     Lm_MaterialFlagsApply(&g_WorldGfxWork.itemLmHdr);
+
+    #undef IMAGE_TIM00
 }
-#endif
 
 s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
 {
