@@ -89,7 +89,7 @@ types:
 
     instances:
       body:
-        pos: body_offset
+        pos: _root.base_offset + body_offset
         type: mesh_body
 
   mesh_body:
@@ -121,27 +121,27 @@ types:
 
     instances:
       primitives:
-        pos: primitives_offset
+        pos: _root.base_offset + primitives_offset
         type: primitive
         repeat: expr
         repeat-expr: primitive_count
 
       vertex_xy:
-        pos: positions_xy_offset
+        pos: _root.base_offset + positions_xy_offset
         type: xy_pair
         repeat: expr
         repeat-expr: position_count
         doc: Q8.7.
 
       vertex_z:
-        pos: positions_z_offset
+        pos: _root.base_offset + positions_z_offset
         type: s2
         repeat: expr
         repeat-expr: position_count
         doc: Q8.7.
 
       normals:
-        pos: normals_offset
+        pos: _root.base_offset + normals_offset
         type: svector
         repeat: expr
         repeat-expr: normal_count
