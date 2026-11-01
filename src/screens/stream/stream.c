@@ -14,6 +14,16 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
+// Margin above and below the movie, PAL has 288 lines to center it in instead of 240.
+#if VERSION_REGION_IS(PAL)
+    #define SCREEN_MARGIN_Y 16
+#else
+    #define SCREEN_MARGIN_Y 8
+#endif
+
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/stream/nonmatchings/stream", GameState_MovieIntroFadeIn_Update);
+#else
 void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 {
     switch (g_GameWork.gameStateSteps[0])
@@ -50,6 +60,7 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 
     Screen_BackgroundImgDraw(g_MemCardWarningImg);
 }
+#endif
 
 void GameState_MovieIntro_Update(void) // 0x801E279C
 {
@@ -125,8 +136,8 @@ s32 max_frame = 0; // 0x801E3F40
 s32 frame_cnt = 0; // 0x801E3F44
 
 DISPENV disp = {
-    { 0, 256, SCREEN_WIDTH, SCREEN_HEIGHT }, // `disp`
-    { 0, 8,   256,          208           }, // `screen`
+    { 0, 256,             SCREEN_WIDTH, SCREEN_HEIGHT }, // `disp`
+    { 0, SCREEN_MARGIN_Y, 256,          208           }, // `screen`
     false,                                   // `isinter`
     true,                                    // `isrgb24`
     0,                                       // `pad0`
@@ -150,6 +161,9 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
     GsSwapDispBuff();
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/stream/nonmatchings/stream", movie_main);
+#else
 void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 {
     #define SEARCH_COUNT_MAX 10000
@@ -254,6 +268,7 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 
     #undef SEARCH_COUNT_MAX
 }
+#endif
 
 void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
 {

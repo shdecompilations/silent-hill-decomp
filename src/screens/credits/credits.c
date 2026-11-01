@@ -21,38 +21,38 @@ s_801E5558 D_801E5558[6] = {
     /** `GameEnding_0`, never used? */
     {
         .xaSfxId     = Sfx_XaAudio725,
-        .scrollDelay = 0,
-        .field_4     = 8700,
+        .scrollDelay = SECONDS_TO_FRAMES(0),
+        .field_4     = SECONDS_TO_FRAMES(145),
     },
     /** `GameEnding_GoodPlus` */
     {
         .xaSfxId     = Sfx_XaAudio723,
-        .scrollDelay = -2400,
-        .field_4     = 8400,
+        .scrollDelay = -SECONDS_TO_FRAMES(40),
+        .field_4     = SECONDS_TO_FRAMES(140),
     },
     /** `GameEnding_Good` */
     {
         .xaSfxId     = Sfx_XaAudio724,
-        .scrollDelay = -900,
-        .field_4     = 8700,
+        .scrollDelay = -SECONDS_TO_FRAMES(15),
+        .field_4     = SECONDS_TO_FRAMES(145),
     },
     /** `GameEnding_BadPlus` */
     {
         .xaSfxId     = Sfx_XaAudio725,
-        .scrollDelay = -180,
-        .field_4     = 8520,
+        .scrollDelay = -SECONDS_TO_FRAMES(3),
+        .field_4     = SECONDS_TO_FRAMES(142),
     },
     /** `GameEnding_Bad` */
     {
         .xaSfxId     = Sfx_XaAudio726,
-        .scrollDelay = -180,
-        .field_4     = 8820,
+        .scrollDelay = -SECONDS_TO_FRAMES(3),
+        .field_4     = SECONDS_TO_FRAMES(147),
     },
     /** `GameEnding_Ufo`, never used? */
     {
         .xaSfxId     = Sfx_XaAudio726,
-        .scrollDelay = -120,
-        .field_4     = 8400
+        .scrollDelay = -SECONDS_TO_FRAMES(2),
+        .field_4     = SECONDS_TO_FRAMES(140)
     }
 };
 
@@ -159,6 +159,9 @@ void GameState_Credits_Update(void) // 0x801E3094
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/credits/nonmatchings/credits", func_801E3124);
+#else
 bool func_801E3124(void) // 0x801E3124
 {
     switch (g_GameWork.gameStateSteps[1])
@@ -231,7 +234,11 @@ bool func_801E3124(void) // 0x801E3124
 
     return false;
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/credits/nonmatchings/credits", func_801E3304);
+#else
 bool func_801E3304(void) // 0x801E3304
 {
     if (g_GameWork.gameStatePrev == GameState_InGame)
@@ -263,7 +270,11 @@ bool func_801E3304(void) // 0x801E3304
 
     return false;
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/credits/nonmatchings/credits", func_801E342C);
+#else
 bool func_801E342C(void) // 0x801E342C
 {
     s32   temp;
@@ -343,6 +354,7 @@ bool func_801E342C(void) // 0x801E342C
 
     return false;
 }
+#endif
 
 #include "stringtable.h"
 
@@ -541,6 +553,9 @@ void func_801E386C(void) // 0x801E386C
     D_801E5E80 = 0x10000 / D_801E5E7C;
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/credits/nonmatchings/credits", func_801E3970);
+#else
 bool func_801E3970(void) // 0x801E3970
 {
     bool   showKcet;
@@ -689,6 +704,7 @@ bool func_801E3970(void) // 0x801E3970
 
     return isFinished;
 }
+#endif
 
 void func_801E3DD0(void) // 0x801E3DD0
 {

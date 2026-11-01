@@ -53,7 +53,18 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0x82C, asm, credits]
-      - [0x2F60, data]
+      # .rodata section
+      - [0x0, pad]
+      - [0x8, .rodata, credits]
+
+      # .text section
+      - [0x82C, c, credits]
+
+      # .data section
+      - [0x2F60, .data, credits]
+
+  # Random garbage data at end, define as bin file to make Splat ignore it.
+  - name: footer_data
+    type: bin
+    start: 0x3A18
   - [0x3B00]

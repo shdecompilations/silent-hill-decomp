@@ -2,83 +2,13 @@
 
 
 //================================================
-//=== .rodata section
-//================================================
-
-
-//------------------------------------------------------
-//--- PA: 0x000000   VA: 0x801E2600   subsegment: rodata
-//------------------------------------------------------
-D_801E26CC                                      = 0x801E26D0;
-D_801E26E0                                      = 0x801E26E4;
-D_801E26F0                                      = 0x801E26F4;
-D_801E26FC                                      = 0x801E2700;
-D_801E270C                                      = 0x801E2710;
-D_801E271C                                      = 0x801E2720;
-D_801E273C                                      = 0x801E2740;
-D_801E2748                                      = 0x801E274C;
-D_801E2754                                      = 0x801E2758;
-D_801E2764                                      = 0x801E2768;
-D_801E2784                                      = 0x801E2788;
-D_801E2794                                      = 0x801E2798;
-D_801E279C                                      = 0x801E27A0;
-D_801E27B0                                      = 0x801E27B4;
-D_801E27C4                                      = 0x801E27C8;
-D_801E27D4                                      = 0x801E27D8;
-D_801E27E0                                      = 0x801E27E4;
-D_801E27EC                                      = 0x801E27F0;
-D_801E27F4                                      = 0x801E27F8;
-D_801E2800                                      = 0x801E2804;
-D_801E280C                                      = 0x801E2820;
-D_801E2830                                      = 0x801E2844;
-D_801E2838                                      = 0x801E284C;
-D_801E2848                                      = 0x801E285C;
-D_801E2858                                      = 0x801E286C;
-D_801E2864                                      = 0x801E2878;
-D_801E2874                                      = 0x801E2888;
-D_801E2884                                      = 0x801E2898;
-D_801E2944                                      = 0x801E2958;
-D_801E2A04                                      = 0x801E2A18;
-D_801E2A0C                                      = 0x801E2A20;
-D_801E2A14                                      = 0x801E2A28;
-D_801E2A1C                                      = 0x801E2A30;
-D_801E2A24                                      = 0x801E2A38;
-D_801E2A2C                                      = 0x801E2A40;
-D_801E2A34                                      = 0x801E2A48;
-D_801E2A38                                      = 0x801E2A4C;
-D_801E2A40                                      = 0x801E2A54;
-D_801E2A44                                      = 0x801E2A58;
-D_801E2A48                                      = 0x801E2A5C;
-D_801E2A54                                      = 0x801E2A68;
-D_801E2A58                                      = 0x801E2A6C;
-D_801E2A5C                                      = 0x801E2A70;
-D_801E2A60                                      = 0x801E2A74;
-D_801E2A64                                      = 0x801E2A78;
-D_801E2A68                                      = 0x801E2A7C;
-D_801E2A6C                                      = 0x801E2A80;
-D_801E2AD8                                      = 0x801E2AF0;
-D_801E2B50                                      = 0x801E2B68;
-D_801E2BC8                                      = 0x801E2C10;
-D_801E2BD0                                      = 0x801E2C18;
-OPTION_VALUE_STRINGS                            = 0x801E2C4C;
-D_801E2BDC                                      = 0x801E2C74;
-D_801E2BEC                                      = 0x801E2C84;
-D_801E2C1C                                      = 0x801E2CB4;
-D_801E2C4C                                      = 0x801E2CE4;
-D_801E2C74                                      = 0x801E2D4C;
-D_801E2C8C                                      = 0x801E2D64;
-D_801E2CC0                                      = 0x801E2D98;
-
-
-
-//================================================
 //=== .text section
 //================================================
 
 
-//------------------------------------------------------------
-//--- PA: 0x00081C   VA: 0x801E2E1C   subsegment: asm, options
-//------------------------------------------------------------
+//----------------------------------------------------------
+//--- PA: 0x00081C   VA: 0x801E2E1C   subsegment: c, options
+//----------------------------------------------------------
 GameState_Options_Update                        = 0x801E2E1C; // type:func
 Options_ExtraOptionsMenu_Control                = 0x801E3278; // type:func
 Options_MainOptionsMenu_Control                 = 0x801E385C; // type:func
@@ -86,7 +16,7 @@ Options_MainOptionsMenu_BgmVolumeBarDraw        = 0x801E4158; // type:func
 Options_MainOptionsMenu_SfxVolumeBarDraw        = 0x801E4180; // type:func
 Options_MainOptionsMenu_VolumeBarDraw           = 0x801E41A8; // type:func
 Options_ExtraOptionsMenu_EntryStringsDraw       = 0x801E435C; // type:func
-Options_MainOptionsMenu_EntryStringsDraw        = 0x801E44DC; // type:func allow_duplicated:True
+Options_MainOptionsMenu_EntryStringsDraw        = 0x801E44DC; // type:func allow_duplicated:True - overlays share vram, same address as `DCC_DVLC` (stream)
 Options_ExtraOptionsMenu_SelectionHighlightDraw = 0x801E4688; // type:func
 Options_MainOptionsMenu_SelectionHighlightDraw  = 0x801E4964; // type:func
 Options_Menu_BackgroundDraw                     = 0x801E4C34; // type:func
@@ -113,19 +43,30 @@ Options_ControllerMenu_ButtonIconsDraw          = 0x801E741C; // type:func
 //================================================
 
 
-//----------------------------------------------------
-//--- PA: 0x004FA4   VA: 0x801E75A4   subsegment: data
-//----------------------------------------------------
-g_MainOptionsMenu_SelectedEntry                 = 0x801E75A4; // allow_duplicated:True
-g_ExtraOptionsMenu_SelectedEntry                = 0x801E75A8; // allow_duplicated:True
+//--------------------------------------------------------------
+//--- PA: 0x004FA4   VA: 0x801E75A4   subsegment: .data, options
+//--------------------------------------------------------------
+g_MainOptionsMenu_SelectedEntry                 = 0x801E75A4; // allow_duplicated:True - overlays share vram, same address as `g_SaveScreen_IsFormatting` (saveload)
+g_ExtraOptionsMenu_SelectedEntry                = 0x801E75A8; // allow_duplicated:True - overlays share vram, same address as `g_SaveScreen_IsNewSaveSelected` (saveload)
 g_MainOptionsMenu_PrevSelectedEntry             = 0x801E75AC; // allow_duplicated:True - overlays share vram, same address as `GameState_AutoLoadSavegame_Update` (saveload)
 g_ExtraOptionsMenu_PrevSelectedEntry            = 0x801E75B0;
 g_ScreenPosMenu_InvertBackgroundFade            = 0x801E75B4;
 g_ControllerMenu_IsOnActionsPane                = 0x801E75B8;
 controllerMenu_SelectionHighlightDrawModes      = 0x801E75BC;
-controllerMenu_SelectionHighlightQuads          = 0x801E75D4; // allow_duplicated:True
+controllerMenu_SelectionHighlightQuads          = 0x801E75D4; // allow_duplicated:True - overlays share vram, same address as `D_801E756C` (saveload)
 CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS      = 0x801E761C;
 CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS      = 0x801E762C; // allow_duplicated:True - overlays share vram, same address as `SaveScreen_AutoLoad_SelectSave` (saveload)
+
+
+
+//================================================
+//=== .bss section
+//================================================
+
+
+//-------------------------------------------------------------
+//--- PA: 0x005064   VA: 0x801E7664   subsegment: .bss, options
+//-------------------------------------------------------------
 extraOptions_SelectionHighlightFrom_Unused      = 0x801E7664;
 extraOptions_SelectionHighlightTo_Unused        = 0x801E7668;
 mainOptions_SelectionHighlightFrom_Unused       = 0x801E766C;
@@ -139,6 +80,7 @@ screenPosMenu_PositionX                         = 0x801E7688;
 screenPosMenu_PositionY                         = 0x801E768A;
 controllerMenu_SelectedEntries                  = 0x801E768C;
 g_Options_SelectionHighlightTimer               = 0x801E7694;
-g_ExtraOptionsMenu_EntryCount                   = 0x801E7698;
-g_ExtraOptionsMenu_SelectedBloodColorEntry      = 0x801E769C;
-g_ExtraOptionsMenu_BulletMultMax                = 0x801E76A0;
+g_Options_IsLanguageSelectable                  = 0x801E7698; // type:s32
+g_ExtraOptionsMenu_EntryCount                   = 0x801E769C;
+g_ExtraOptionsMenu_SelectedBloodColorEntry      = 0x801E76A0;
+g_ExtraOptionsMenu_BulletMultMax                = 0x801E76A4;

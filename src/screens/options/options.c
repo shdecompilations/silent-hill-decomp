@@ -20,11 +20,16 @@
 INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2600);
 #endif
 
-// Japanese releases draw the main and extra option menus 20 pixels higher.
+// Japanese releases draw the main and extra option menus 20 pixels higher, PAL only moves the main menu up by 8.
 #if VERSION_REGION_IS(NTSCJ)
-    #define MENU_SHIFT_Y -20
+    #define MENU_SHIFT_Y       -20
+    #define EXTRA_MENU_SHIFT_Y -20
+#elif VERSION_REGION_IS(PAL)
+    #define MENU_SHIFT_Y       -8
+    #define EXTRA_MENU_SHIFT_Y 0
 #else
-    #define MENU_SHIFT_Y 0
+    #define MENU_SHIFT_Y       0
+    #define EXTRA_MENU_SHIFT_Y 0
 #endif
 
 #define LINE_CURSOR_TIMER_MAX          8
@@ -47,6 +52,11 @@ bool g_ControllerMenu_IsOnActionsPane     = false;
 /** @brief Tracks movement time of the cursor highlight. */
 static s32 g_Options_SelectionHighlightTimer;
 
+#if VERSION_REGION_IS(PAL)
+/** @brief Whether the language entry in the main options menu can be used, only when the menu was opened from the main menu. */
+static bool g_Options_IsLanguageSelectable;
+#endif
+
 /** @brief Number of options to show in the extra options screen. Shows extra unlockable settings if they are unlocked. */
 static s32 g_ExtraOptionsMenu_EntryCount;
 
@@ -54,10 +64,17 @@ static s32 g_ExtraOptionsMenu_SelectedBloodColorEntry;
 
 static s32 g_ExtraOptionsMenu_BulletMultMax;
 
+#if VERSION_REGION_IS(PAL)
+static s32 __pad_bss_801E76A8[2];
+#endif
+
 // ========================================
 // MAIN AND EXTRA OPTION SCREEN
 // ========================================
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/options/nonmatchings/options", GameState_Options_Update);
+#else
 void GameState_Options_Update(void) // 0x801E2D44
 {
     s32 unlockedOptFlags;
@@ -282,6 +299,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
     }
 }
+#endif
 
 void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 {
@@ -484,6 +502,9 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_Control);
+#else
 void Options_MainOptionsMenu_Control(void) // 0x801E3770
 {
     #define SOUND_VOL_STEP 8
@@ -733,6 +754,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     #undef BRIGHTNESS_IMG_FILE
     #undef SOUND_VOL_STEP
 }
+#endif
 
 void Options_MainOptionsMenu_BgmVolumeBarDraw(void) // 0x801E3F68
 {
@@ -744,6 +766,9 @@ void Options_MainOptionsMenu_SfxVolumeBarDraw(void) // 0x801E3F90
     Options_MainOptionsMenu_VolumeBarDraw(true, g_GameWork.config.volumeSe);
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_VolumeBarDraw);
+#else
 void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
 {
     #define STR_OFFSET_Y 16
@@ -815,13 +840,20 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
     #undef NOTCH_SIZE_X
     #undef NOTCH_COUNT
 }
+#endif
 
 void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
 {
     #define LINE_BASE_X   (SCREEN_WIDTH / 5)
-    #define LINE_BASE_Y   (64 + MENU_SHIFT_Y)
+    #define LINE_BASE_Y   (64 + EXTRA_MENU_SHIFT_Y)
     #define LINE_OFFSET_X 16
     #define LINE_OFFSET_Y 16
+
+#if VERSION_REGION_IS(PAL)
+    #define UNUSED_LINE_BASE_Y 56
+#else
+    #define UNUSED_LINE_BASE_Y LINE_BASE_Y
+#endif
 
     s32            i;
     static DVECTOR selectionHighlightFromUnused;
@@ -854,8 +886,8 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     {
         selectionHighlightFromUnused.vx = LINE_BASE_X - LINE_OFFSET_X;
         selectionHighlightToUnused.vx   = LINE_BASE_X;
-        selectionHighlightFromUnused.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y) + LINE_BASE_Y;
-        selectionHighlightToUnused.vy   = ((u16)g_MainOptionsMenu_SelectedEntry     * LINE_OFFSET_Y) + LINE_BASE_Y;
+        selectionHighlightFromUnused.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y) + UNUSED_LINE_BASE_Y;
+        selectionHighlightToUnused.vy   = ((u16)g_MainOptionsMenu_SelectedEntry     * LINE_OFFSET_Y) + UNUSED_LINE_BASE_Y;
     }
     Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
@@ -877,8 +909,34 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     #undef LINE_BASE_Y
     #undef LINE_OFFSET_X
     #undef LINE_OFFSET_Y
+    #undef UNUSED_LINE_BASE_Y
 }
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
+static inline void Options_MainOptionsMenu_EntryStringsDraw_Statics(void)
+{
+    static DVECTOR mainOptions_SelectionHighlightFrom_Unused __asm__("mainOptions_SelectionHighlightFrom_Unused");
+    static DVECTOR mainOptions_SelectionHighlightTo_Unused __asm__("mainOptions_SelectionHighlightTo_Unused");
+
+    (void)mainOptions_SelectionHighlightFrom_Unused;
+    (void)mainOptions_SelectionHighlightTo_Unused;
+}
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2788);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2798);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27A0);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27B4);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27C8);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27D8);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27E4);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27F0);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27F8);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2804);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2810);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E281C);
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_EntryStringsDraw);
+#else
 void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 {
     #define LINE_BASE_X   64
@@ -945,6 +1003,7 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     #undef LINE_OFFSET_X
     #undef LINE_OFFSET_Y
 }
+#endif
 
 void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 {
@@ -954,7 +1013,7 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     #define LINE_OFFSET_X      16
     #define LINE_OFFSET_Y      16
     #define HIGHLIGHT_OFFSET_X -121
-    #define HIGHLIGHT_OFFSET_Y (50 - MENU_SHIFT_Y)
+    #define HIGHLIGHT_OFFSET_Y (50 - EXTRA_MENU_SHIFT_Y)
 
     s32            i;
     s32            j;
@@ -1061,6 +1120,22 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     #undef HIGHLIGHT_OFFSET_Y
 }
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
+static inline void Options_MainOptionsMenu_SelectionHighlightDraw_Statics(void)
+{
+    static DVECTOR mainOptions_SelectionHighlightFrom __asm__("mainOptions_SelectionHighlightFrom");
+    static DVECTOR mainOptions_SelectionHighlightTo __asm__("mainOptions_SelectionHighlightTo");
+
+    (void)mainOptions_SelectionHighlightFrom;
+    (void)mainOptions_SelectionHighlightTo;
+}
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E286C);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2878);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2888);
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_SelectionHighlightDraw);
+#else
 void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
 {
     #define LINE_OFFSET_Y      16
@@ -1173,7 +1248,11 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     #undef HIGHLIGHT_OFFSET_X
     #undef HIGHLIGHT_OFFSET_Y
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_Menu_BackgroundDraw);
+#else
 void Options_Menu_BackgroundDraw(void) // 0x801E49F0
 {
     s32      y0;
@@ -1214,10 +1293,34 @@ void Options_Menu_BackgroundDraw(void) // 0x801E49F0
 
     Gfx_Primitive2dTextureSet(0, 0, 2037, 6);
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2898);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2958);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A18);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A20);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A28);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A30);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A38);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A40);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A48);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A4C);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A54);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A58);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A5C);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A68);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A6C);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A70);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A74);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A78);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A7C);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A80);
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_ExtraOptionsMenu_ConfigDraw);
+#else
 void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
 {
-    #define STR_BASE_Y   (64 + MENU_SHIFT_Y)
+    #define STR_BASE_Y   (64 + EXTRA_MENU_SHIFT_Y)
     #define STR_OFFSET_Y 16
 
 #if VERSION_REGION_IS(NTSCJ)
@@ -1429,7 +1532,21 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
     #undef STR_BASE_Y
     #undef STR_OFFSET_Y
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2AF0);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2B80);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C10);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C18);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C24);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C2C);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C34);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C3C);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C44);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C4C);
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_ConfigDraw);
+#else
 void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 {
 #if VERSION_REGION_IS(NTSCJ)
@@ -1552,11 +1669,27 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         }
     }
 }
+#endif
 
 // ========================================
 // SCREEN POSITION OPTION SCREEN
 // ========================================
 
+#if VERSION_IS(EUR)
+// @hack Statics of the included function below, remove once decompiled.
+// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
+static inline void Options_ScreenPosMenu_Control_Statics(void)
+{
+    static s32 screenPosMenu_BackgroundFade __asm__("screenPosMenu_BackgroundFade");
+    static s16 screenPosMenu_PositionX __asm__("screenPosMenu_PositionX");
+    static s16 screenPosMenu_PositionY __asm__("screenPosMenu_PositionY");
+
+    (void)screenPosMenu_BackgroundFade;
+    (void)screenPosMenu_PositionX;
+    (void)screenPosMenu_PositionY;
+}
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_ScreenPosMenu_Control);
+#else
 void Options_ScreenPosMenu_Control(void) // 0x801E53A0
 {
     #define OPT_SCREEN_POS_X_RANGE 11
@@ -1746,6 +1879,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     #undef OPT_SCREEN_POS_Y_RANGE
     #undef BG_FADE_STEP
 }
+#endif
 
 void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
 {
@@ -1868,6 +2002,9 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
 // BRIGHTNESS OPTION SCREEN
 // ========================================
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_BrightnessMenu_Control);
+#else
 void Options_BrightnessMenu_Control(void) // 0x801E6018
 {
     // Handle menu state.
@@ -1949,7 +2086,11 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
     Options_BrightnessMenu_ArrowsDraw();
     Options_BrightnessMenu_ConfigDraw();
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_BrightnessMenu_ConfigDraw);
+#else
 void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
 {
     const char* LEVEL_STR = "LEVEL_________";
@@ -1959,7 +2100,13 @@ void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
     Gfx_StringDraw(LEVEL_STR, 20);
     Gfx_StringDrawInt(1, g_GameWork.config.brightness);
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2D4C);
+INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2D64);
+INCLUDE_ASM("screens/options/nonmatchings/options", Options_BrightnessMenu_ArrowsDraw);
+#else
 void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
 {
     const s_Triangle2d FRONT_ARROWS[] = {
@@ -2003,6 +2150,7 @@ void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
         Options_Selection_ArrowDraw(&BORDER_ARROWS[i], false, false);
     }
 }
+#endif
 
 // ========================================
 // DRAW OPTIONS FEATURES SCREEN

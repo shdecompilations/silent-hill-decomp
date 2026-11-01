@@ -284,7 +284,11 @@ char* g_CreditList[] = {
     D_801E558C,
     D_801E558C,
     D_801E558C,
+#if VERSION_REGION_IS(PAL)
+    "\xD0\xF0" "Translation Staffs\xD8",
+#else
     "\xD0\xF0" "English Staffs\xD8",
+#endif
     D_801E558C,
     D_801E558C,
     D_801E558C,

@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/EUR/screens/stream
   src_path: src/screens/stream
+  o_path: ../../lib
   asset_path: asm/EUR/screens/stream
   build_path: build/EUR
 
@@ -53,7 +54,31 @@ segments:
     align: 4
     subalign: 4
     subsegments:
+      # .rodata section
       - [0x0, rodata]
-      - [0x34, asm, stream]
-      - [0x193C, data]
+      - [0x4, o, libpress/libpress, .rdata]
+
+      # .text section
+      - [0x54, c, stream]
+      - [0xECC, o, libds/dscb]
+      - [0xF2C, o, libpress/libpress]
+      - [0x15BC, o, libpress/vlc]
+
+      # .data section
+      - [0x193C, .data, stream]
+      - [0x195C, o, libpress/libpress, .data]
+      - [0x1AAC, o, libpress/vlc, .data]
+      - [0x1ADC, o, libpress/table, .data]
+      - [0x12ADC, pad] # Garbage padding data.
+
+      # .bss section
+      - [0x12AE0, .bss, stream]
+      - [0x12AE4, pad] # Garbage padding data.
+      - [0x12AE8, o, libds/dscb, .bss]
+
+  # Random garbage data at end, overlaps into .bss causing issues, define as seperate segment
+  - name: footer_data
+    type: bin
+    start: 0x12AF4
+
   - [0x12B00]

@@ -6,9 +6,9 @@
 //================================================
 
 
-//-------------------------------------------------------------
-//--- PA: 0x00078C   VA: 0x801E2D8C   subsegment: asm, saveload
-//-------------------------------------------------------------
+//-----------------------------------------------------------
+//--- PA: 0x00078C   VA: 0x801E2D8C   subsegment: c, saveload
+//-----------------------------------------------------------
 SaveScreen_ScreenInfoClear          = 0x801E2D8C; // type:func
 SaveScreen_SlotStrAndBottomRectDraw = 0x801E2EBC; // type:func
 SaveScreen_SelectedElementIdxUpdate = 0x801E2F90; // type:func
@@ -49,9 +49,9 @@ SaveScreen_AutoLoad_SelectSave      = 0x801E73E4; // type:func allow_duplicated:
 //================================================
 
 
-//----------------------------------------------------
-//--- PA: 0x004F10   VA: 0x801E7510   subsegment: data
-//----------------------------------------------------
+//---------------------------------------------------------------
+//--- PA: 0x004F10   VA: 0x801E7510   subsegment: .data, saveload
+//---------------------------------------------------------------
 g_Savegame_SaveLocationNames        = 0x801E7510;
 g_SaveScreen_OverwriteActive        = 0x801E7574;
 g_SaveScreen_MemCardStateDisplay    = 0x801E7578;
@@ -60,13 +60,24 @@ D_801E7518                          = 0x801E7580;
 g_SaveScreen_State                  = 0x801E7584; // type:s32
 g_SaveScreen_MemCardStateTextTimer  = 0x801E7588;
 g_GameState_SaveScreen_Funcs        = 0x801E758C;
-g_SaveScreen_IsFormatting           = 0x801E75A4; // allow_duplicated:True
-g_SaveScreen_IsNewSaveSelected      = 0x801E75A8; // allow_duplicated:True
-g_GameState_AutoLoadSavegame_Funcs  = 0x801E75AC; // allow_duplicated:True
+g_SaveScreen_IsFormatting           = 0x801E75A4; // allow_duplicated:True - overlays share vram, same address as `g_MainOptionsMenu_SelectedEntry` (options)
+g_SaveScreen_IsNewSaveSelected      = 0x801E75A8; // allow_duplicated:True - overlays share vram, same address as `g_ExtraOptionsMenu_SelectedEntry` (options)
+g_GameState_AutoLoadSavegame_Funcs  = 0x801E75AC; // allow_duplicated:True - overlays share vram, same address as `g_MainOptionsMenu_PrevSelectedEntry` (options)
+
+
+
+//================================================
+//=== .bss section
+//================================================
+
+
+//--------------------------------------------------------------
+//--- PA: 0x004FBC   VA: 0x801E75BC   subsegment: .bss, saveload
+//--------------------------------------------------------------
 isSaveWriteOptionSelected           = 0x801E75C4;
 D_801E7560                          = 0x801E75C8;
 D_801E7564                          = 0x801E75CC;
-D_801E756C                          = 0x801E75D4; // allow_duplicated:True
+D_801E756C                          = 0x801E75D4; // allow_duplicated:True - overlays share vram, same address as `controllerMenu_SelectionHighlightQuads` (options)
 g_SaveScreen_HiddenSaves            = 0x801E75D8;
 D_801E7574                          = 0x801E75DC;
 g_SaveScreen_VisualElementIdx       = 0x801E75E0;

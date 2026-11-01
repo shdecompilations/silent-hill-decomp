@@ -6,9 +6,9 @@
 //================================================
 
 
-//-----------------------------------------------------------
-//--- PA: 0x000034   VA: 0x801E2634   subsegment: asm, stream
-//-----------------------------------------------------------
+//---------------------------------------------------------
+//--- PA: 0x000054   VA: 0x801E2654   subsegment: c, stream
+//---------------------------------------------------------
 GameState_MovieIntroFadeIn_Update    = 0x801E2654; // type:func
 GameState_MovieIntro_Update          = 0x801E279C; // type:func
 GameState_MovieOpening_Update        = 0x801E2838; // type:func
@@ -24,10 +24,18 @@ strKickCD                            = 0x801E31CC; // type:func
 strNextVlc                           = 0x801E3298; // type:func
 strNext                              = 0x801E331C; // type:func
 strSync                              = 0x801E3438; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x000ECC   VA: 0x801E34CC   subsegment: o, libds/dscb
+//-------------------------------------------------------------
 DsSyncCallback                       = 0x801E34CC; // type:func
 DsReadyCallback                      = 0x801E34E0; // type:func
 DsStartCallback                      = 0x801E34F4; // type:func
 DsDataCallback                       = 0x801E3508; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x000F2C   VA: 0x801E352C   subsegment: o, libpress/libpress
+//--------------------------------------------------------------------
 DecDCTReset                          = 0x801E352C; // type:func
 DecDCTGetEnv                         = 0x801E3560; // type:func
 DecDCTPutEnv                         = 0x801E35EC; // type:func
@@ -45,6 +53,10 @@ MDEC_in_sync                         = 0x801E39F8; // type:func
 MDEC_out_sync                        = 0x801E3A8C; // type:func
 MDEC_status                          = 0x801E3B20; // type:func
 timeout                              = 0x801E3B38; // type:func
+
+//---------------------------------------------------------------
+//--- PA: 0x0015BC   VA: 0x801E3BBC   subsegment: o, libpress/vlc
+//---------------------------------------------------------------
 DecDCTvlcSize                        = 0x801E3BBC; // type:func
 DecDCTvlc                            = 0x801E3BEC; // type:func
 
@@ -55,16 +67,35 @@ DecDCTvlc                            = 0x801E3BEC; // type:func
 //================================================
 
 
-//----------------------------------------------------
-//--- PA: 0x00193C   VA: 0x801E3F3C   subsegment: data
-//----------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x00193C   VA: 0x801E3F3C   subsegment: .data, stream
+//-------------------------------------------------------------
 g_Debug_MoviePlayerIdx               = 0x801E3F3C; // type:s32
 max_frame                            = 0x801E3F40;
 frame_cnt                            = 0x801E3F44;
 disp                                 = 0x801E3F48;
+
+//------------------------------------------------------------------------
+//--- PA: 0x001ADC   VA: 0x801E40DC   subsegment: o, libpress/table, .data
+//------------------------------------------------------------------------
 DCL_DVLC                             = 0x801E40DC;
-DCC_DVLC                             = 0x801E44DC; // allow_duplicated:True
+DCC_DVLC                             = 0x801E44DC; // allow_duplicated:True - overlays share vram, same address as `Options_MainOptionsMenu_EntryStringsDraw` (options)
 CF_DVLC                              = 0x801E48DC;
 CF2_DVLC                             = 0x801F48DC;
+
+
+
+//================================================
+//=== .bss section
+//================================================
+
+
+//------------------------------------------------------------
+//--- PA: 0x012AE0   VA: 0x801F50E0   subsegment: .bss, stream
+//------------------------------------------------------------
 m                                    = 0x801F50E0;
+
+//-------------------------------------------------------------------
+//--- PA: 0x012AE8   VA: 0x801F50E8   subsegment: o, libds/dscb, .bss
+//-------------------------------------------------------------------
 GlobalCallback                       = 0x801F50E8;

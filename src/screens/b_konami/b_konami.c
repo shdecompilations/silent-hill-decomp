@@ -15,6 +15,10 @@
 #include "screens/b_konami/lzss.h"
 #include "screens/stream/stream.h"
 
+#if VERSION_IS(EUR)
+INCLUDE_RODATA("screens/b_konami/nonmatchings/b_konami", D_800CB378);
+INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KonamiLogo_Update);
+#else
 void GameState_KonamiLogo_Update(void) // 0x800C95AC
 {
     while (g_GameWork.gameState == GameState_KonamiLogo)
@@ -84,7 +88,11 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
         GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBufferIdx]);
     }
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KcetLogo_MemCardCheck);
+#else
 s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 {
     s32 saveEntryTypeSlot1;
@@ -129,7 +137,13 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 
     return KcetLogoStateStep_NoSavegame;
 }
+#endif
 
+#if VERSION_IS(EUR)
+// @hack Static of the included function below, remove once decompiled.
+static u8 nextGameState = GameState_Init;
+INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KcetLogo_Update);
+#else
 void GameState_KcetLogo_Update(void) // 0x800C99A4
 {
     static u8 nextGameState = GameState_Init; // 0x800CA4F0
@@ -350,7 +364,9 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
         GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBufferIdx]);
     }
 }
+#endif
 
+#if !VERSION_IS(EUR)
 void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
 {
     DR_TPAGE* tPage;
@@ -376,7 +392,11 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
 
     GsOUT_PACKET_P = (u8*)prim + 28;
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", BootScreen_KonamiScreenDraw);
+#else
 void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 {
     s32*  ptr;
@@ -410,7 +430,11 @@ void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 
     GsOUT_PACKET_P = (PACKET*)&tile[1];
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", BootScreen_KcetScreenDraw);
+#else
 void BootScreen_KcetScreenDraw(void) // 0x800CA120
 {
     u32* ptr;
@@ -427,3 +451,4 @@ void BootScreen_KcetScreenDraw(void) // 0x800CA120
     setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
+#endif

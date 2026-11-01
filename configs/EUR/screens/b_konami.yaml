@@ -54,7 +54,24 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0x34, asm, b_konami]
-      - [0xE54, data]
+      # .rodata section
+      - [0x0, pad]
+      - [0x8, .rodata, b_konami]
+      - [0x28, pad]
+      - [0x2C, .rodata, lzss]
+
+      # .text section
+      - [0x34, c, b_konami]
+      - [0xB98, c, lzss]
+
+      # .data section
+      - [0xE54, .data, b_konami]
+      - [0xE58, .data, lzss]
+      - [0xE5C, pad]
+      - [0xE60, .bss, lzss]
+
+  # Random garbage data at end, define as bin file to make Splat ignore it.
+  - name: footer_data
+    type: bin
+    start: 0xE78
   - [0xF00]

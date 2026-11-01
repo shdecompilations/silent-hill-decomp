@@ -87,6 +87,11 @@ EUR_BODYPROG = [
     [0xA2A5C, b'\x24\x10\x50'],
 ]
 
+EUR_STREAM = [
+    [0x12ADC, b'\x06\x00\xF4\x03'],
+    [0x12AE4, b'\x06\x00\xF4\x03']
+]
+
 JAP0_STREAM = [
     [0x12B2C, b'\x56\x49\x45\x57']
 ]
@@ -282,6 +287,18 @@ MAP_PATCHES = {
 
 # Garbage bytes to patch into screen overlays, per version: { version: { screen: [[offset, bytes], ...] } }
 SCREEN_PATCHES = {
+    "EUR": {
+        "b_konami": [
+            [0xE55, b'\x5C\x63\x61']
+        ],
+        "options": [
+            [0x81A, b'\x0D\x0A']
+        ],
+        "credits": [
+            [0x822, b'\x31\x37\x00\x30\x28\x24\x00\x29\x0D\x0A'],
+            [0x387B, b'\x0A']
+        ]
+    },
     "JAP0": {
         "options": [
             [0xB62, b'\x68\x98']
@@ -301,7 +318,8 @@ SCREEN_PATCHES = {
 
 SCREEN_BIN_NAMES = {
     "options": "OPTION",
-    "credits": "STF_ROLL"
+    "credits": "STF_ROLL",
+    "b_konami": "B_KONAMI"
 }
 
 def apply_screen_patches(target):
@@ -309,7 +327,8 @@ def apply_screen_patches(target):
     for version, screens in SCREEN_PATCHES.items():
         if name not in screens:
             continue
-        path = f"build/{version}/out/VIN/{SCREEN_BIN_NAMES[name]}.BIN"
+        folder = "1ST" if name == "b_konami" else "VIN"
+        path = f"build/{version}/out/{folder}/{SCREEN_BIN_NAMES[name]}.BIN"
         if not os.path.isfile(path):
             continue
         with open(path, "r+b") as file:
@@ -361,14 +380,21 @@ if __name__ == "__main__":
     if sys.argv[1].startswith("screens/"):
         apply_screen_patches(sys.argv[1])
     match sys.argv[1]:
-        case "screens/stream" | "build/USA/out/VIN/STREAM.BIN" | "build/JAP0/out/VIN/STREAM.BIN" | "build/JAP1/out/VIN/STREAM.BIN" | "build/JAP2/out/VIN/STREAM.BIN":
+        case "screens/stream" | "build/USA/out/VIN/STREAM.BIN" | "build/EUR/out/VIN/STREAM.BIN" | "build/JAP0/out/VIN/STREAM.BIN" | "build/JAP1/out/VIN/STREAM.BIN" | "build/JAP2/out/VIN/STREAM.BIN":
             usaPath = "build/USA/out/VIN/STREAM.BIN"
+            eurPath = "build/EUR/out/VIN/STREAM.BIN"
             jap0Path = "build/JAP0/out/VIN/STREAM.BIN"
             jap1Path = "build/JAP1/out/VIN/STREAM.BIN"
             jap2Path = "build/JAP2/out/VIN/STREAM.BIN"
             if os.path.isfile(usaPath):
                 file = open(usaPath, "r+b")
                 for data in USA_STREAM:
+                    file.seek(data[0])
+                    file.write(data[1])
+                file.close()
+            if os.path.isfile(eurPath):
+                file = open(eurPath, "r+b")
+                for data in EUR_STREAM:
                     file.seek(data[0])
                     file.write(data[1])
                 file.close()

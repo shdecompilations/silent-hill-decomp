@@ -2393,6 +2393,9 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
     }
 }
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_FormatCard);
+#else
 void SaveScreen_FormatCard(void) // 0x801E69E8
 {
     #define STR_TIMER_MAX (TICKS_PER_SECOND / 2)
@@ -2431,7 +2434,11 @@ void SaveScreen_FormatCard(void) // 0x801E69E8
 
     #undef STR_TIMER_MAX
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_SaveGame);
+#else
 void SaveScreen_SaveGame(void) // 0x801E6B18
 {
     s_MemCard_SaveMetadata* saveEntry;
@@ -2500,7 +2507,11 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
             break;
     }
 }
+#endif
 
+#if VERSION_IS(EUR)
+INCLUDE_ASM("screens/saveload/nonmatchings/saveload", SaveScreen_LoadSave);
+#else
 void SaveScreen_LoadSave(void) // 0x801E6DB0
 {
     s32 memCardStateResult;
@@ -2554,6 +2565,7 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
             break;
     }
 }
+#endif
 
 void SaveScreen_Continue(void) // 0x801E6F38
 {
