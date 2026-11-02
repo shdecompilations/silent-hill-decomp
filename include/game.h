@@ -469,10 +469,10 @@ typedef struct _SysWork
     /* 0x2380   */ q19_12           cameraRadiusXz;
     /* 0x2384   */ q19_12           cameraY;
     /* 0x2388   */ s_SysWork_2388   field_2388;
-    /* 0x2510   */ s_KPad_Handler*  kpadHandlers_2510; // Head of the kpad handler list from `KPad_HandlerList_Init`.
-    /* 0x2514   */ s_KPadWork       kpad_2514;
-    /* 0x2534   */ s_KPad_Channel   kpadChannels_2534[2];
-    /* 0x2544   */ s_KPad_Effect    kpadEffects_2544[16];
+    /* 0x2510   */ s_KPad_Handler*  kpadHandlers; /** Head of the kpad handler list from `KPad_HandlerList_Init`. */
+    /* 0x2514   */ s_KPadWork       kpad;
+    /* 0x2534   */ s_KPad_Channel   kpadChannels[2];
+    /* 0x2544   */ s_KPad_Effect    kpadEffects[16];
     /* 0x2744   */ s8               unk_2744[4];
     /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT]; // Last index value is not a layer, but some sort of timer. See `Bgm_LayersUpdate`.
                    // 2 bytes of padding.

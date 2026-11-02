@@ -338,7 +338,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                 if (g_MainMenu_SelectedEntry == MainMenuEntry_Start)
                 {
-                    Chara_PositionSet(&g_MapOverlayHdr.mapPoints[0]);
+                    Game_PlayerMapPositionSet(&g_MapOverlayHdr.mapPoints[0]);
                 }
 
                 MemCard_SysDisable();

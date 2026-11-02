@@ -29,13 +29,12 @@
 u16 g_CollisionTriggerFlags;
 s_WorldGfxWork g_WorldGfxWork;
 
-
 s32 Map_TypeGet(void) // 0x8003BD2C
 {
     return g_WorldGfxWork.mapInfo - MAP_INFOS;
 }
 
-void Collision_FlagsLocationUpdate(const s_SubCharacter* chara) // 0x8003BD48
+void Collision_TriggerFlagsLocationUpdate(const s_SubCharacter* chara) // 0x8003BD48
 {
     u16 triggerFlags;
 
@@ -64,7 +63,7 @@ void Collision_FlagsLocationUpdate(const s_SubCharacter* chara) // 0x8003BD48
     Collision_TriggerFlagsSet(triggerFlags);
 }
 
-void Collision_FlagsUpdate(void) // 0x8003BE28
+void Collision_TriggerFlagsUpdate(void) // 0x8003BE28
 {
     Collision_TriggerFlagsSet(g_CollisionTriggerFlags);
 }

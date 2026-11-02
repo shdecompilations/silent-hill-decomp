@@ -163,6 +163,6 @@ void SaveScreen_WriteOptionsDraw(s32 stringIdx, bool optionSelected);
 /** @brief Updates the death load screen. */
 void GameState_AutoLoadSavegame_Update(void);
 
-void SaveScreen_AutoLoad_SelectSave(void);
+void SaveScreen_AutoLoadSaveSelect(void);
 
 #endif

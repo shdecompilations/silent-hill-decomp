@@ -16,6 +16,7 @@
 
 #define IPD_HEADER_MAGIC 20
 
+#define CELL_SIZE     2.0f  /** 2x2 meters. */
 #define CHUNK_SIZE    40.0f /** 40x40 meters. */
 #define SUBCHUNK_SIZE 8.0f  /** 8x8 meters. */
 
@@ -93,7 +94,7 @@ typedef struct _IpdCollisionData
     /* 0x10   */ s_IpdSurface*    polygonSurfaces;             /** Unique collision surfaces. */
     /* 0x14   */ s_IpdPolygon*    polygons;                    /** Unique collision polygons. */
     /* 0x18   */ s_IpdCylinder*   cylinders;                   /** Unique collision cylinders. */
-    /* 0x1C   */ q7_8             cellSize;                    /** `Q8(2.0f)` in most IPD files, sometimes `Q8(0.0f)`. */
+    /* 0x1C   */ q7_8             cellSize;                    /** `Q8(CELL_SIZE)` in most IPD files, sometimes `Q8(0.0f)`. */
     /* 0x1E   */ u8               cellCountX;                  /** 20 in most IPD files, sometimes 0. */
     /* 0x1F   */ u8               cellCountZ;                  /** 20 in most IPD files, sometimes 0. */
     /* 0x20   */ s_IpdShapeAlloc* shapeAllocs;                 /** Shape allocations per cell. Pairs of elements define index ranges. */

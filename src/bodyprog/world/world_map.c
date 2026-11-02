@@ -30,9 +30,9 @@ static u32 WorldMap_LoadStateGet(s32 queueIdx) // 0x80041ADC
     return WorldMapLoadState_Loaded;
 }
 
-/** @brief Gets the load state of an IPD file (Chunk) and their dependencies.
+/** @brief Gets the load status of an IPD or PLM file via `Fs_QueueIsEntryLoaded`.
  *
- * @param Chunk IPD file to check.
+ * @param chunk IPD file to check.
  * @return IPD file load state `(e_MapModelLoadState`).
  */
 static u32 WorldMap_ChunkLoadStateGet(s_MapChunk* chunk) // 0x80041B1C
@@ -40,7 +40,8 @@ static u32 WorldMap_ChunkLoadStateGet(s_MapChunk* chunk) // 0x80041B1C
     s32 loadState;
     s32 loadStateCpy;
 
-    loadStateCpy = loadState = WorldMap_LoadStateGet(chunk->queueIdx);
+    loadStateCpy =
+    loadState    = WorldMap_LoadStateGet(chunk->queueIdx);
 
     if (loadStateCpy == WorldMapLoadState_Unloaded)
     {
@@ -69,7 +70,8 @@ static u32 WorldMap_GlobalLmLoadStateGet(s_GlobalPlm* globalPlm) // 0x80041BA0
     s32 loadState;
     s32 loadStateCpy;
 
-    loadStateCpy = loadState = WorldMap_LoadStateGet(globalPlm->queueIdx);
+    loadStateCpy =
+    loadState    = WorldMap_LoadStateGet(globalPlm->queueIdx);
 
     if (loadStateCpy == WorldMapLoadState_Unloaded)
     {
@@ -158,7 +160,9 @@ void WorldMap_TexturesInit(void) // 0x80041D48
     Textures_ActiveTex_PutTextures(&g_WorldMapWork.chunkTextures.fullPage, g_WorldMapWork.chunkTextures.fullPageTextures, 8);
 
     // Run through texture pages.
-    for (i = 0, y = 26, j = 0; i < 2; i++, x += 16)
+    for (i = 0, y = 26, j = 0;
+         i < 2;
+         i++, x += 16)
     {
         Texture_Init(&g_WorldMapWork.chunkTextures.halfPageTextures[i], NULL, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
@@ -175,7 +179,7 @@ void WorldMap_TexturesInit(void) // 0x80041D48
 void WorldMap_CollisionDataReset(void) // 0x80041E98
 {
     bzero(&g_WorldMapWork.collisionData, sizeof(s_IpdCollisionData));
-    g_WorldMapWork.collisionData.cellSize = Q8(2.0f);
+    g_WorldMapWork.collisionData.cellSize = Q8(CELL_SIZE);
 }
 
 void WorldMap_ChunkSet(s16 ipdFileIdx, s32 chunkX, s32 chunkZ) // 0x80041ED0

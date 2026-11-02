@@ -674,7 +674,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
 void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 {
-    Chara_PositionSet(&g_MapPoint);
+    Game_PlayerMapPositionSet(&g_MapPoint);
 }
 
 void AreaLoad_TransitionSound(void) // 0x80039F54

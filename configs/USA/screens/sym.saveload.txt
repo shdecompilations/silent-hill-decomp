@@ -40,7 +40,7 @@ SaveScreen_ScreenDraw               = 0x801E70C8; // type:func
 SaveScreen_MemCardState             = 0x801E7244; // type:func
 SaveScreen_WriteOptionsDraw         = 0x801E72DC; // type:func
 GameState_AutoLoadSavegame_Update   = 0x801E72FC; // type:func allow_duplicated:True - overlays share vram, same address as `g_MainOptionsMenu_PrevSelectedEntry` (options)
-SaveScreen_AutoLoad_SelectSave      = 0x801E737C; // type:func allow_duplicated:True - overlays share vram, same address as `CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS` (options)
+SaveScreen_AutoLoadSaveSelect       = 0x801E737C; // type:func allow_duplicated:True - overlays share vram, same address as `CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS` (options)
 
 
 

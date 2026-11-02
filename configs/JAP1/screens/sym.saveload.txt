@@ -40,7 +40,7 @@ SaveScreen_ScreenDraw               = 0x801E7E00; // type:func
 SaveScreen_MemCardState             = 0x801E7F7C; // type:func
 SaveScreen_WriteOptionsDraw         = 0x801E8014; // type:func
 GameState_AutoLoadSavegame_Update   = 0x801E8034; // type:func
-SaveScreen_AutoLoad_SelectSave      = 0x801E80B4; // type:func
+SaveScreen_AutoLoadSaveSelect       = 0x801E80B4; // type:func
 
 
 

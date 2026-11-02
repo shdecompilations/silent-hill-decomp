@@ -8,7 +8,7 @@
 #include "bodyprog/events/player_pos_update.h"
 #include "bodyprog/math/math.h"
 
-void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
+void Game_PlayerMapPositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 {
     q19_12 headingAngle;
 

@@ -292,7 +292,7 @@ Sd_AmbientSfxSet                             = 0x80035AC8; // type:func
 //--- PA: 0x010FA4   VA: 0x80035B04   subsegment: c, game_boot/load_screen
 //------------------------------------------------------------------------
 Math_MatrixTransform                         = 0x80035B04; // type:func
-GameBoot_WolrdEnvInit                        = 0x80035B58; // type:func
+GameBoot_WorldEnvInit                        = 0x80035B58; // type:func
 GameBoot_LoadScreen_BackgroundImg            = 0x80035BBC; // type:func
 GameBoot_LoadScreen_PlayerRun                = 0x80035BE0; // type:func
 
@@ -328,7 +328,7 @@ Game_RadioSoundStop                          = 0x80037188; // type:func
 //---------------------------------------------------------------------------
 //--- PA: 0x012688   VA: 0x800371E8   subsegment: c, events/player_pos_update
 //---------------------------------------------------------------------------
-Chara_PositionSet                            = 0x800371E8; // type:func
+Game_PlayerMapPositionSet                    = 0x800371E8; // type:func
 Game_PlayerHeightUpdate                      = 0x80037334; // type:func
 
 //---------------------------------------------------------------------
@@ -396,8 +396,8 @@ MainMenu_FogUpdate                           = 0x8003BC8C; // type:func
 //--- PA: 0x0171CC   VA: 0x8003BD2C   subsegment: c, world/world_draw
 //-------------------------------------------------------------------
 Map_TypeGet                                  = 0x8003BD2C; // type:func
-Collision_FlagsLocationUpdate                = 0x8003BD48;
-Collision_FlagsUpdate                        = 0x8003BE28;
+Collision_TriggerFlagsLocationUpdate         = 0x8003BD48;
+Collision_TriggerFlagsUpdate                 = 0x8003BE28;
 WorldGfx_CharaModelBoneNodesGet              = 0x8003BE50; // type:func
 GameFs_BgEtcGfxLoad                          = 0x8003BE6C; // type:func
 GameFs_BgItemLoad                            = 0x8003BE9C; // type:func

@@ -29,7 +29,7 @@ static void Math_MatrixTransform(const VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2
     Math_RotMatrixZxyNegGte(rot, &boneCoords[0].coord);
 }
 
-void GameBoot_WolrdEnvInit(s32 unused) // 0x80035B58
+void GameBoot_WorldEnvInit(s32 unused) // 0x80035B58
 {
     WorldEnv_MapPresetSet(&g_MapOverlayHdr);
     g_MapOverlayHdr.particleEnviromentSet(g_MapOverlayHdr.field_17, g_MapOverlayHdr.field_16);

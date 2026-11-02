@@ -9,6 +9,7 @@
 #define HALF_PAGE_CHUNK_TEXTURE_COUNT_MAX 2
 #define FULL_PAGE_CHUNK_TEXTURE_COUNT_MAX 8
 
+/** @brief Map model load states. */
 typedef enum _MapModelLoadState
 {
     MapModelLoadState_Invalid   = 0,
@@ -78,7 +79,7 @@ typedef struct _GlobalPlm
     /* 0x8 */ s32         queueIdx;
 } s_GlobalPlm;
 
-/** @brief Map data and layout. */
+/** @brief World map workspace. */
 typedef struct _WorldMapWork
 {
     /* 0x0   */ s_IpdCollisionData collisionData; // Default chunk collision data?

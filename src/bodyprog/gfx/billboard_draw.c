@@ -265,7 +265,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
         {
             s32 tPage = 44;
 #if VERSION_REGION_IS(PAL)
-            s32 clut  = 0x7cbb;
+            s32 clut  = 0x7CBB;
 #else
             s32 clut  = 140;
 #endif

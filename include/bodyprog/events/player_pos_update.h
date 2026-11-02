@@ -1,12 +1,13 @@
 #ifndef _BODYPROG_EVENTS_PLAYERPOSUPDATE_H
 #define _BODYPROG_EVENTS_PLAYERPOSUPDATE_H
 
-/** @brief Set player position.
- * Used for setting the position of the player when transitioning in from rooms.
+/** @brief Sets the player position from a map point. Used when transitioning between rooms.
+ *
+ * @param mapPoint Reference map point.
  */
-void Chara_PositionSet(s_MapPoint2d* mapPoint);
+void Game_PlayerMapPositionSet(s_MapPoint2d* mapPoint);
 
-/** Finds the floor hight and warps the player to it? */
+/** @brief Snaps the player to the current floor and initializes world objects? */
 void Game_PlayerHeightUpdate(void);
 
 #endif

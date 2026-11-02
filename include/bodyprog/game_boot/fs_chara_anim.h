@@ -60,7 +60,7 @@ void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmH
  */
 void Fs_CharaAnimDataUpdate(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
-/** @brief Dynamically allocates where the next character animation data bone coords should be stored  in
+/** @brief Dynamically allocates where the next character animation data bone coords should be stored in
  * `g_SysWork.npcBoneCoordBuffer` based on the space consumed by the current character. */
 void Fs_CharaAnimBoneInfoSet(void);
 

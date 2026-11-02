@@ -371,7 +371,7 @@ Sd_AmbientSfxSet                             = 0x800353E0; // type:func
 //--- PA: 0x00FD8C   VA: 0x8003541C   subsegment: c, game_boot/load_screen
 //------------------------------------------------------------------------
 Math_MatrixTransform                         = 0x8003541C; // type:func
-GameBoot_WolrdEnvInit                        = 0x80035470; // type:func
+GameBoot_WorldEnvInit                        = 0x80035470; // type:func
 func_80035B98                                = 0x800354B0; // type:func
 GameBoot_LoadScreen_BackgroundImg            = 0x800354D4; // type:func
 GameBoot_LoadScreen_PlayerRun                = 0x800354F8; // type:func
@@ -418,7 +418,7 @@ Game_RadioSoundStop                          = 0x80036AD4; // type:func
 //---------------------------------------------------------------------------
 //--- PA: 0x0114A4   VA: 0x80036B34   subsegment: c, events/player_pos_update
 //---------------------------------------------------------------------------
-Chara_PositionSet                            = 0x80036B34; // type:func
+Game_PlayerMapPositionSet                    = 0x80036B34; // type:func
 Game_PlayerHeightUpdate                      = 0x80036C80; // type:func
 
 //---------------------------------------------------------------------
@@ -493,8 +493,8 @@ func_8003BCF4                                = 0x8003B73C; // type:func
 //--- PA: 0x0160E4   VA: 0x8003B774   subsegment: c, world/world_draw
 //-------------------------------------------------------------------
 Map_TypeGet                                  = 0x8003B774; // type:func
-Collision_FlagsLocationUpdate                = 0x8003B790;
-Collision_FlagsUpdate                        = 0x8003B870;
+Collision_TriggerFlagsLocationUpdate         = 0x8003B790;
+Collision_TriggerFlagsUpdate                 = 0x8003B870;
 WorldGfx_CharaModelBoneNodesGet              = 0x8003B898; // type:func
 GameFs_BgEtcGfxLoad                          = 0x8003B8B4; // type:func
 GameFs_BgItemLoad                            = 0x8003B8E4; // type:func

@@ -14,10 +14,6 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound/sound_system.h"
 
-// ========================================
-// INGAME INITIALIZATION PROCESS
-// ========================================
-
 void GameState_LoadScreen_Update(void)
 {
     #define LOAD_COUNT_MAX 20
@@ -293,7 +289,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 
     vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
     World_CollisionTriggersSet(&g_MapOverlayHdr);
-    GameBoot_WolrdEnvInit(0);
+    GameBoot_WorldEnvInit(0);
     WorldGfx_CharaModelProcessAllLoads();
     Game_FlashlightAttributesFix();
 

@@ -333,11 +333,11 @@ void Game_NpcUpdate(void) // 0x80038354
 
         Chara_Flag8Clear(curNpc);
         Chara_DamagedFlagUpdate(curNpc);
-        Collision_FlagsLocationUpdate(curNpc);
+        Collision_TriggerFlagsLocationUpdate(curNpc);
 
         g_MapOverlayHdr.charaUpdateFuncs[curNpc->model.charaId](curNpc, g_CharaModelAnimsData[animDataIdx].activeAnmHdr, boneCoords);
 
-        Collision_FlagsUpdate();
+        Collision_TriggerFlagsUpdate();
         func_80037E78(curNpc);
         func_8008A3AC(curNpc);
 

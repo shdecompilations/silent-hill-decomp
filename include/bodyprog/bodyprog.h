@@ -952,7 +952,7 @@ void SysState_Fmv_Update(void);
 
 s32 Map_TypeGet(void);
 
-void Collision_FlagsLocationUpdate(const s_SubCharacter* chara);
+void Collision_TriggerFlagsLocationUpdate(const s_SubCharacter* chara);
 
 /** @brief Frees a character model.
  *
@@ -1077,6 +1077,8 @@ void Math_RelativeRotationGet(q19_12* azimuthAngle, q19_12* altitudeAngle, const
 void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1, s32 screenDist);
 
 void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 angle1);
+
+// ===============================
 
 /** @brief Initializes map data and chunks.
  *

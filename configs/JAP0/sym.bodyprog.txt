@@ -398,7 +398,7 @@ Sd_AmbientSfxSet                             = 0x80035798; // type:func
 //--- PA: 0x010C74   VA: 0x800357D4   subsegment: c, game_boot/load_screen
 //------------------------------------------------------------------------
 Math_MatrixTransform                         = 0x800357D4; // type:func
-GameBoot_WolrdEnvInit                        = 0x80035828; // type:func
+GameBoot_WorldEnvInit                        = 0x80035828; // type:func
 func_80035B98                                = 0x80035868; // type:func
 GameBoot_LoadScreen_BackgroundImg            = 0x8003588C; // type:func
 GameBoot_LoadScreen_PlayerRun                = 0x800358B0; // type:func
@@ -445,7 +445,7 @@ Game_RadioSoundStop                          = 0x80036EBC; // type:func
 //---------------------------------------------------------------------------
 //--- PA: 0x0123BC   VA: 0x80036F1C   subsegment: c, events/player_pos_update
 //---------------------------------------------------------------------------
-Chara_PositionSet                            = 0x80036F1C; // type:func
+Game_PlayerMapPositionSet                    = 0x80036F1C; // type:func
 Game_PlayerHeightUpdate                      = 0x80037068; // type:func
 
 //---------------------------------------------------------------------
@@ -520,8 +520,8 @@ func_8003BCF4                                = 0x8003BA28; // type:func
 //--- PA: 0x016F00   VA: 0x8003BA60   subsegment: c, world/world_draw
 //-------------------------------------------------------------------
 Map_TypeGet                                  = 0x8003BA60; // type:func
-Collision_FlagsLocationUpdate                = 0x8003BA7C; // type:func
-Collision_FlagsUpdate                        = 0x8003BB5C; // type:func
+Collision_TriggerFlagsLocationUpdate         = 0x8003BA7C; // type:func
+Collision_TriggerFlagsUpdate                 = 0x8003BB5C; // type:func
 WorldGfx_CharaModelBoneNodesGet              = 0x8003BB84; // type:func
 GameFs_BgEtcGfxLoad                          = 0x8003BBA0; // type:func
 GameFs_BgItemLoad                            = 0x8003BBD0; // type:func

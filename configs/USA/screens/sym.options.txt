@@ -55,7 +55,7 @@ g_ControllerMenu_IsOnActionsPane                = 0x801E7308;
 controllerMenu_SelectionHighlightDrawModes      = 0x801E730C;
 controllerMenu_SelectionHighlightQuads          = 0x801E7324;
 CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS      = 0x801E736C;
-CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS      = 0x801E737C; // allow_duplicated:True - overlays share vram, same address as `SaveScreen_AutoLoad_SelectSave` (saveload)
+CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS      = 0x801E737C; // allow_duplicated:True - overlays share vram, same address as `SaveScreen_AutoLoadSaveSelect` (saveload)
 
 
 

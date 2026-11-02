@@ -183,7 +183,7 @@ bool g_SaveScreen_IsNewSaveSelected = false; // `false` - User has `New save` se
 // Only used in `GameState_AutoLoadSavegame_Update`.
 void (*g_GameState_AutoLoadSavegame_Funcs[])() = {
     SaveScreen_Init,
-    SaveScreen_AutoLoad_SelectSave,
+    SaveScreen_AutoLoadSaveSelect,
     SaveScreen_LoadSave,
     SaveScreen_Continue
 };
@@ -2702,7 +2702,7 @@ void GameState_AutoLoadSavegame_Update(void) // 0x801E72FC
     SaveScreen_ScreenDraw();
 }
 
-void SaveScreen_AutoLoad_SelectSave(void) // 0x801E737C
+void SaveScreen_AutoLoadSaveSelect(void) // 0x801E737C
 {
     // Return if memory cards not ready yet, will rerun on next tick.
     if (MemCard_ElementsUpdate() == false)

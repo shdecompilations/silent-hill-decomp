@@ -165,28 +165,28 @@ void func_800894DC(void);
 void func_80089500(void);
 
 /** Handles initial gamepad init. */
-bool func_80089524(s_KPadWork* arg0, s32 padInfoMode);
+bool func_80089524(s_KPadWork* kpadWork, s32 padInfoMode);
 
-s32 func_800895E4(s_KPadWork* arg0, s_VibScriptStep* arg1, u8 arg2);
+s32 func_800895E4(s_KPadWork* kpadWork, s_VibScriptStep* step, u8 arg2);
 
-bool func_80089644(s_KPadWork* arg0, s_KPad_Effect* arg1, s32 arg2, u32 arg3);
+bool func_80089644(s_KPadWork* kpadWork, s_KPad_Effect* effect, s32 arg2, u32 arg3);
 
-bool func_80089A30(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* arg2, u32* arg3);
+bool func_80089A30(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
-bool func_80089BB8(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* arg2, u32* arg3);
+bool func_80089BB8(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
-bool func_80089DF0(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* arg2, u32* arg3);
+bool func_80089DF0(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
-bool func_8008973C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* ptr, u32* arg3);
+bool func_8008973C(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
-void func_80089840(s_KPadWork* arg0);
+void func_80089840(s_KPadWork* kpadWork);
 
-void func_8008989C(s_KPadWork* arg0, u16 arg1, s32 (*arg2)(u16, s32));
+void func_8008989C(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32));
 
-void func_8008992C(s_KPadWork* arg0, u16 arg1, s32 (*arg2)(u16, s32));
+void func_8008992C(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32));
 
-void func_800899BC(s_KPadWork* arg0, s32 arg1);
+void func_800899BC(s_KPadWork* kpadWork, s32 arg1);
 
-bool func_80089D0C(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* arg2, u32* arg3);
+bool func_80089D0C(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
 #endif

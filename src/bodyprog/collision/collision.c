@@ -58,7 +58,7 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, const s_CollisionTrig
     g_ActiveCollisionTriggers.collisionTriggerCount = 0;
 
     // Run through triggers.
-    for (curTrigger = triggers; !curTrigger->isEndOfArray; curTrigger++)
+    for (curTrigger = &triggers[0]; !curTrigger->isEndOfArray; curTrigger++)
     {
         // Define AABB bounds.
         minX = FP_TO(curTrigger->positionX, Q12_SHIFT);
