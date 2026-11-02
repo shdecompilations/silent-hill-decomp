@@ -17,8 +17,34 @@ s16  D_800A8E5A                  = 3; // Unused.
 // 2D BACKGROUND IMAGE DRAWING
 // ========================================
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/screen/background_draw", func_80030BC4);
+// PAL versions relocate this to bodyprog, as a bodyprog func (`MainMenu_BackgroundDraw`) was updated to also require it.
+// Note: changes here should be copied over to b_konami version too.
+#if VERSION_REGION_IS(PAL)
+void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
+{
+    DR_TPAGE* tPage;
+    SPRT*     prim     = (SPRT*)GsOUT_PACKET_P;
+    u32       vramBase = image->tPage[1] + (u32)(vramX >> 8) + (((u32)(vramY >> 8)) << 4);
+    u32*      addr     = &g_OtTags0[g_ActiveBufferIdx][otz];
+
+    addPrimFast(addr, prim, 4);
+    setCodeWord(prim, PRIM_RECT | RECT_TEXTURE, 0x808080);
+    setWH(prim, w, h);
+
+    vramX = vramX & 0xFF;
+    vramY = vramY & 0xFF;
+
+    //setUV0AndClut(prim, vramX, vramY, image->clutX, image->clutY);
+    *(u32*)(&prim->u0) = vramX + (vramY << 8) + (((image->clutY << 6) | ((image->clutX >> 4) & 0x3F)) << 16);
+
+    setXY0Fast(prim, (u16)x, y);
+
+    tPage = (DR_TPAGE*)((u8*)prim + sizeof(SPRT));
+    setDrawTPage(tPage, 0, 1, getTPage(image->tPage[0], 0, (vramBase << 6), (((vramBase >> 4) & (1 << 0)) << 8)));
+    AddPrim(addr, tPage);
+
+    GsOUT_PACKET_P = (u8*)prim + 28;
+}
 #endif
 
 #if VERSION_IS(EUR)

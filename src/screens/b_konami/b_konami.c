@@ -366,7 +366,9 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 }
 #endif
 
-#if !VERSION_IS(EUR)
+// PAL versions relocate this to bodyprog, as a bodyprog func (`MainMenu_BackgroundDraw`) was updated to also require it.
+// Note: changes here should be copied over to bodyprog version too.
+#if !VERSION_REGION_IS(PAL)
 void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
 {
     DR_TPAGE* tPage;
