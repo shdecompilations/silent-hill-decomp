@@ -21,9 +21,6 @@
     #define SCREEN_MARGIN_Y 8
 #endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/stream/nonmatchings/stream", GameState_MovieIntroFadeIn_Update);
-#else
 void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 {
     switch (g_GameWork.gameStateSteps[0])
@@ -42,7 +39,7 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
             break;
 
         case 1:
-            if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_60_FPS(5))
+            if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_TO_FRAMES(5))
             {
                 ScreenFade_Start(false, false, false);
                 g_GameWork.gameStateSteps[0] = 2;
@@ -60,7 +57,6 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 
     Screen_BackgroundImgDraw(g_MemCardWarningImg);
 }
-#endif
 
 void GameState_MovieIntro_Update(void) // 0x801E279C
 {
