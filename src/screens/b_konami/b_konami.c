@@ -436,9 +436,6 @@ void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
     GsOUT_PACKET_P = (PACKET*)&tile[1];
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", BootScreen_KcetScreenDraw);
-#else
 void BootScreen_KcetScreenDraw(void) // 0x800CA120
 {
     u32* ptr;
@@ -451,8 +448,14 @@ void BootScreen_KcetScreenDraw(void) // 0x800CA120
     ptr = &g_OtTags0[g_ActiveBufferIdx][15];
     addPrimFast(ptr, (TILE*)GsOUT_PACKET_P, 3);
     setCodeWord((TILE*)GsOUT_PACKET_P, PRIM_RECT, 0xFFFFFF);
+
+#if VERSION_REGION_IS(PAL)
+    setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -FRAMEBUFFER_HEIGHT_PROGRESSIVE);
+    setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2);
+#else
     setXY0Fast((TILE*)GsOUT_PACKET_P, -SCREEN_WIDTH, -SCREEN_HEIGHT);
     setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
+#endif
+    
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
-#endif

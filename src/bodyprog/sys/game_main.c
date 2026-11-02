@@ -100,13 +100,11 @@ void GameState_Init_Update(void) // 0x80032D1C
             break;
 
         case 2:
-#if VERSION_REGION_IS(PAL)
-            // PAL removes `g_Font16AtlasImg`
-            Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
-#else
+#if !VERSION_REGION_IS(PAL) // PAL removed `g_Font16AtlasImg`
             Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &g_Font16AtlasImg);
-            Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
 #endif
+
+            Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
 
             ScreenFade_Start(true, false, false);
             g_GameWork.gameStateSteps[0]++;
