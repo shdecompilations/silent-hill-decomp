@@ -236,7 +236,7 @@ MemCard_DevicePathGenerate                   = 0x80030B7C; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x00B534   VA: 0x80030BC4   subsegment: c, screen/background_draw
 //-------------------------------------------------------------------------
-// Bodyprog symbols referenced by the main executable.
+BootScreen_ImageSegmentDraw                  = 0x80030BC4; // type:func - Symbol name has to match with the `b_konami` version of this func used in other releases.
 Screen_BackgroundImgDraw                     = 0x80030D10; // type:func
 Screen_BackgroundImgTransition               = 0x80031040; // type:func
 Screen_BackgroundImgDrawBlackFadeIn          = 0x80031320; // type:func
@@ -3560,7 +3560,6 @@ g_MapEventData                               = 0x800BC3C8; // type:u32
 //------------------------------------------------------------------
 D_800BCDE0                                   = 0x800BC3D0;
 
-BootScreen_ImageSegmentDraw = 0x80030BC4; // type:func - Symbol name has to match with the `b_konami` version of this func used in other releases.
 //-------------------------------------------------------------------------
 //--- PA: 0x096D48   VA: 0x800BC3D8   subsegment: .bss, world/world_effects
 //-------------------------------------------------------------------------

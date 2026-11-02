@@ -392,7 +392,7 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
     setDrawTPage(tPage, 0, 1, getTPage(image->tPage[0], 0, (vramBase << 6), (((vramBase >> 4) & (1 << 0)) << 8)));
     AddPrim(addr, tPage);
 
-    GsOUT_PACKET_P = (u8*)prim + 28;
+    GsOUT_PACKET_P = (u8*)tPage + sizeof(DR_TPAGE);
 }
 #endif
 
