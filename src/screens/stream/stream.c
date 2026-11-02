@@ -157,9 +157,6 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
     GsSwapDispBuff();
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/stream/nonmatchings/stream", movie_main);
-#else
 void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 {
     #define SEARCH_COUNT_MAX 10000
@@ -219,7 +216,13 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
     {
         disp.disp.y   = 256 - (m->dec.rectid * SCREEN_HEIGHT);
         disp.screen.x = g_GameWorkConst->config.screenPositionX;
+
+#if VERSION_REGION_IS(PAL)
+        disp.screen.y = (16 + ((255 - m->height) / 2)) + g_GameWorkConst->config.screenPositionY;
+#else
         disp.screen.y = (8 + ((224 - m->height) / 2)) + g_GameWorkConst->config.screenPositionY;
+#endif
+
         disp.disp.y   = (disp.disp.y   <  16) ? 16 : ((disp.disp.y > 256)   ? 256 : disp.disp.y);
         disp.screen.h = (disp.screen.h <= 0)  ? 1  : ((disp.screen.h > 208) ? 208 : disp.screen.h);
 
@@ -264,7 +267,6 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 
     #undef SEARCH_COUNT_MAX
 }
-#endif
 
 void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
 {
