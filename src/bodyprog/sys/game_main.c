@@ -100,7 +100,7 @@ void GameState_Init_Update(void) // 0x80032D1C
             break;
 
         case 2:
-#if !VERSION_REGION_IS(PAL) // PAL removed `g_Font16AtlasImg`
+#if !VERSION_REGION_IS(PAL) // PAL moved `g_Font16AtlasImg` read to b_konami instead.
             Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &g_Font16AtlasImg);
 #endif
 

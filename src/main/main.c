@@ -209,7 +209,7 @@ int main(void)
     Fs_DecryptOverlay(g_OvlDynamic, FS_BUFFER_1, Fs_GetFileSize(FILE_1ST_B_KONAMI_BIN));
 
     // Load `1ST/FONT8NOC.TIM` (8x8 font atlas).
-#if !VERSION_REGION_IS(PAL) // PAL skips this font load but keeps the wait below.
+#if !VERSION_REGION_IS(PAL) // PAL moves this font load to b_konami, but keeps the wait below.
     Fs_QueueStartReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER_1, &g_MainImg1);
 #endif
     while (Fs_QueueGetLength() > 0)

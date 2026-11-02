@@ -72,12 +72,11 @@ q19_12 g_DeltaTimeRaw    = TIMESTEP_60_FPS;
 s32    g_IntervalVBlanks = 1;
 
 #if VERSION_REGION_IS(PAL)
-// PAL image layout: different VRAM positions, and no separate death tip image.
-// TODO: `g_Font16AtlasImg` was removed which shifted things and broke the USA->EUR mappings here, needs rechecking.
+// PAL image layout: different VRAM positions, `g_Font16AtlasImg` moved, and no separate death tip image.
 s_FsImageDesc g_KonamiLogoImg              = { { 0,   12  }, 0,    0,   1088, 511 };
 s_FsImageDesc g_KcetLogoImg                = { { 0,   14  }, 0,    0,   1104, 511 };
-s_FsImageDesc D_800A8BE0                   = { { 0,   28  }, 0,    0,   1120, 511 };
-s_FsImageDesc g_MemCardWarningImg          = { { 0,   12  }, 0,    128, 816,  255 };
+s_FsImageDesc g_MemCardWarningImg          = { { 0,   28  }, 0,    0,   1120, 511 };
+s_FsImageDesc g_Font16AtlasImg             = { { 0,   12  }, 0,    128, 816,  255 };
 s_FsImageDesc g_TitleImg                   = { { 0,   14  }, 0,    0,   832,  511 };
 s_FsImageDesc g_PaperMapImg                = { { 1,   5   }, 0,    16,  1088, 511 };
 s_FsImageDesc g_PaperMapMarkingAtlasImg    = { { 0,   7   }, 32,   0,   480,  255 };

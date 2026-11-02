@@ -15,8 +15,12 @@
 #include "screens/b_konami/lzss.h"
 #include "screens/stream/stream.h"
 
+#if VERSION_REGION_IS(PAL) // TODO: move these to header.
+extern s_FsImageDesc g_MainImg1;
+extern s32 D_800A93B8;
+#endif
+
 #if VERSION_IS(EUR)
-INCLUDE_RODATA("screens/b_konami/nonmatchings/b_konami", D_800CB378);
 INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KonamiLogo_Update);
 #else
 void GameState_KonamiLogo_Update(void) // 0x800C95AC
@@ -139,11 +143,6 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 }
 #endif
 
-#if VERSION_IS(EUR)
-// @hack Static of the included function below, remove once decompiled.
-static u8 nextGameState = GameState_Init;
-INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KcetLogo_Update);
-#else
 void GameState_KcetLogo_Update(void) // 0x800C99A4
 {
     static u8 nextGameState = GameState_Init; // 0x800CA4F0
@@ -160,9 +159,16 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 ScreenFade_Start(true, true, false);
                 g_ScreenFadeTimestep = Q12(0.2f);
 
+#if VERSION_REGION_IS(PAL)
+                Fs_QueueStartReadTim(FILE_1ST_FONT8NOC_TIM, FS_BUFFER_1, &g_MainImg1);
+                Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &g_Font16AtlasImg);
+                GameFs_BgEtcGfxLoad();
+#else
                 GameFs_BgEtcGfxLoad();
                 Fs_QueueStartRead(FILE_BG_HP_SAFE1_BIN, FS_BUFFER_5);
                 Fs_QueueStartRead(FILE_BG_S__SAFE2_BIN, FS_BUFFER_6);
+#endif
+
                 g_GameWork.gameStateSteps[0]++;
                 break;
 
@@ -185,7 +191,6 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     // `HP_SAFE1` being a near-copy of `S__SAFE2` may be just to slightly confuse pirates.
                     //
                     // TODO:
-                    // - `CdDiskReady` and `CdGetDiskType` are part of `libcd/type.o`, not included in US release, need conversion from SDK libs.
                     // - Add `FS_BUFFER_` constants for the addresses used here.
 
                     while (CdDiskReady(false) != CdlComplete || CdGetDiskType() == CdlStatShellOpen)
@@ -271,6 +276,9 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                         case 1:
                             if (MemCard_LastMemCardResultGet() != MemCardWorkResult_Success)
                             {
+#if VERSION_REGION_IS(PAL)
+                                D_800A93B8 = g_GameWorkConst->config.palLanguageId;
+#endif
                                 Game_StateStepIncrement(1);
                             }
                             break;
@@ -302,7 +310,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 break;
 
             case KcetLogoStateStep_LogoDelay:
-                if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_60_FPS(3))
+                if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_TO_FRAMES(3))
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep = Q12(0.2f);
@@ -364,7 +372,6 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
         GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBufferIdx]);
     }
 }
-#endif
 
 // PAL versions relocate this to bodyprog, as a bodyprog func (`MainMenu_BackgroundDraw`) was updated to also require it.
 // Note: changes here should be copied over to bodyprog version too.
