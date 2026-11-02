@@ -396,9 +396,6 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
 }
 #endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", BootScreen_KonamiScreenDraw);
-#else
 void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 {
     s32*  ptr;
@@ -416,8 +413,14 @@ void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
     // Draw fading overlay tile.
     addPrimFast(ptr, tile, 3);
     setCodeWord(tile, PRIM_RECT, 0xFFFFFF);
+
+#if VERSION_REGION_IS(PAL)
+    setXY0Fast(tile, -SCREEN_WIDTH, -FRAMEBUFFER_HEIGHT_PROGRESSIVE);
+    setWH(tile, SCREEN_WIDTH * 2, FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2);
+#else
     setXY0Fast(tile, -SCREEN_WIDTH, -SCREEN_HEIGHT);
     setWH(tile, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
+#endif
 
 #if VERSION_REGION_IS(NTSCJ)
     // Draw unknown JPN0 tile.
@@ -432,7 +435,6 @@ void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 
     GsOUT_PACKET_P = (PACKET*)&tile[1];
 }
-#endif
 
 #if VERSION_IS(EUR)
 INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", BootScreen_KcetScreenDraw);

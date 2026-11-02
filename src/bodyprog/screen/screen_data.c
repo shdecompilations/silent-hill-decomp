@@ -73,8 +73,9 @@ s32    g_IntervalVBlanks = 1;
 
 #if VERSION_REGION_IS(PAL)
 // PAL image layout: different VRAM positions, and no separate death tip image.
-s_FsImageDesc g_Font16AtlasImg             = { { 0,   12  }, 0,    0,   1088, 511 };
-s_FsImageDesc g_KonamiLogoImg              = { { 0,   14  }, 0,    0,   1104, 511 };
+// TODO: `g_Font16AtlasImg` was removed which shifted things and broke the USA->EUR mappings here, needs rechecking.
+s_FsImageDesc g_KonamiLogoImg              = { { 0,   12  }, 0,    0,   1088, 511 };
+s_FsImageDesc D_800A8BD8                   = { { 0,   14  }, 0,    0,   1104, 511 };
 s_FsImageDesc g_KcetLogoImg                = { { 0,   28  }, 0,    0,   1120, 511 };
 s_FsImageDesc g_MemCardWarningImg          = { { 0,   12  }, 0,    128, 816,  255 };
 s_FsImageDesc g_TitleImg                   = { { 0,   14  }, 0,    0,   832,  511 };

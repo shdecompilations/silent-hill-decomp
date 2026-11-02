@@ -101,8 +101,8 @@ void GameState_Init_Update(void) // 0x80032D1C
 
         case 2:
 #if VERSION_REGION_IS(PAL)
-            // PAL reads Konami image into `g_Font16AtlasImg` instead of `g_KonamiLogoImg`?
-            Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_Font16AtlasImg);
+            // PAL removes `g_Font16AtlasImg`
+            Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
 #else
             Fs_QueueStartReadTim(FILE_1ST_FONT16_TIM, FS_BUFFER_1, &g_Font16AtlasImg);
             Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
