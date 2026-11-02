@@ -20,9 +20,6 @@ extern s_FsImageDesc g_MainImg1;
 extern s32 D_800A93B8;
 #endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KonamiLogo_Update);
-#else
 void GameState_KonamiLogo_Update(void) // 0x800C95AC
 {
     while (g_GameWork.gameState == GameState_KonamiLogo)
@@ -58,7 +55,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 break;
 
             case KonamiLogoStateStep_LogoDelay:
-                if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_60_FPS(3))
+                if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_TO_FRAMES(3))
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep         = Q12(0.2f);
@@ -92,11 +89,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
         GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBufferIdx]);
     }
 }
-#endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/b_konami/nonmatchings/b_konami", GameState_KcetLogo_MemCardCheck);
-#else
 s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 {
     s32 saveEntryTypeSlot1;
@@ -141,7 +134,6 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 
     return KcetLogoStateStep_NoSavegame;
 }
-#endif
 
 void GameState_KcetLogo_Update(void) // 0x800C99A4
 {
