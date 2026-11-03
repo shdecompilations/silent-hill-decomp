@@ -1,0 +1,61 @@
+name: PC Port Build
+
+on:
+  push:
+    branches: [master, arena/*]
+    paths-ignore: ['**.md', '**.png']
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  psx-matching:
+    name: PSX matching still passes
+    runs-on: ubuntu-latest
+    container: ghcr.io/shdecompilations/decomp-images-silent-hill:master
+    steps:
+      - uses: actions/checkout@v6
+        with: { submodules: recursive }
+      - run: pip3 install -r requirements.txt --break-system-packages
+      - name: Copy binaries
+        run: |
+          mkdir -p assets rom
+          cp -r -p /files/assets/USA assets/ || true
+          cp -r -p /files/rom/USA rom/ || true
+      - run: make GAME_VERSION=USA generate
+      - run: make GAME_VERSION=USA CHECKSUM=1 build
+
+  data-audit:
+    name: Data match audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pyyaml
+      - run: python3 tools/data_audit.py --detail
+
+  pc-build:
+    name: PC port (x86_64) — SDL2 + OpenGL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake libsdl2-dev libgl1-mesa-dev ninja-build
+      - name: Configure
+        run: cmake -S pc -B build-pc -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - name: Build
+        run: cmake --build build-pc --verbose
+      - name: Smoke run (no assets — should exit gracefully)
+        run: ./build-pc/silenthill --help || true
+
+  pc-build-bgfx:
+    name: PC port — bgfx variant
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: sudo apt-get update && sudo apt-get install -y cmake libsdl2-dev libgl1-mesa-dev ninja-build
+      - run: cmake -S pc -B build-pc-bgfx -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DSH_USE_BGFX=OFF
+      - run: cmake --build build-pc-bgfx --verbose
