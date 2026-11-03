@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version: { description: "Tag (e.g. v1.1.0)", required: false, default: "v1.1.0-dev" }
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            triple: linux-x86_64
+            cmake_args: -G Ninja
+          - os: windows-latest
+            triple: windows-x86_64
+            cmake_args: -G Ninja
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+        with: { submodules: recursive }
+
+      - name: Setup (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build libsdl2-dev libgl1-mesa-dev
+
+      - name: Setup (Windows)
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build PC + Launcher
+        run: |
+          cmake -S pc -B build-pc -DCMAKE_BUILD_TYPE=Release ${{ matrix.cmake_args }}
+          cmake --build build-pc --config Release
+          cmake -S pc/launcher -B build-launcher -DCMAKE_BUILD_TYPE=Release ${{ matrix.cmake_args }}
+          cmake --build build-launcher --config Release
+
+      - name: Package
+        shell: bash
+        run: |
+          VER=${{ github.ref_name }}
+          if [ -z "$VER" ] || [ "$VER" = "master" ]; then VER="${{ inputs.version }}"; fi
+          ./scripts/release.sh "$VER" || bash scripts/release.sh "$VER"
+          ls -lh dist/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: silenthill-${{ matrix.triple }}
+          path: dist/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: dist, merge-multiple: true }
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          body: |
+            PC recompilation — matching PSX binary, shiftable on host.
+            Requires retail copy you own (no data shipped). Run `silenthill-launcher` or `launcher/index.html`.
+            See `docs/PC_PORT.md` and `docs/DATA_MATCHING.md`.

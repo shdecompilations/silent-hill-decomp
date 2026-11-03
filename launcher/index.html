@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SILENT HILL — PC Recompilation Launcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Fog overlay -->
+    <div class="fog"></div>
+    <div class="noise"></div>
+    <div class="vignette"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo-mark">SH</div>
+            <div class="logo-text">
+                <h1>SILENT HILL</h1>
+                <p>DECOMPILATION // PC PORT</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <span class="version">v1.1.0 — USA build</span>
+            <span class="status-dot online" title="Assets verified"></span>
+            <span class="status-label">READY</span>
+        </div>
+    </header>
+
+    <!-- Layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <button class="nav-btn active" data-tab="play">
+                <span class="nav-icon">▶</span> Play
+            </button>
+            <button class="nav-btn" data-tab="assets">
+                <span class="nav-icon">◧</span> Assets
+                <span class="badge warn" id="assets-badge">!</span>
+            </button>
+            <button class="nav-btn" data-tab="settings">
+                <span class="nav-icon">⬢</span> Settings
+            </button>
+            <button class="nav-btn" data-tab="mods">
+                <span class="nav-icon">⬣</span> Mods
+                <span class="badge">3</span>
+            </button>
+            <button class="nav-btn" data-tab="tools">
+                <span class="nav-icon">⬔</span> Tools
+            </button>
+
+            <div class="sidebar-footer">
+                <div class="mini-card">
+                    <div class="mini-card-label">Matched Code</div>
+                    <div class="mini-card-value">87.4%</div>
+                    <div class="progress"><div class="progress-fill" style="width:87%"></div></div>
+                </div>
+                <div class="mini-card">
+                    <div class="mini-card-label">Matched Data</div>
+                    <div class="mini-card-value">66.1%</div>
+                    <div class="progress"><div class="progress-fill warn" style="width:66%"></div></div>
+                </div>
+                <div class="build-info">
+                    <code>8de3ffa • USA • 24ddbef</code><br>
+                    <code>clang 18 • SDL2 + GL</code>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main -->
+        <main class="main">
+            <!-- PLAY -->
+            <section class="tab active" id="tab-play">
+                <div class="hero">
+                    <div class="hero-art">
+                        <div class="hero-title">
+                            <span class="hero-over">KONAMI PRESENTS</span>
+                            <h2>SILENT HILL</h2>
+                            <p>The PC recompilation — <em>matching</em> PSX binary, <em>shiftable</em> on host.</p>
+                        </div>
+                        <div class="hero-actions">
+                            <button class="btn primary xl" id="btn-launch">
+                                <span class="btn-icon">▶</span> LAUNCH
+                                <span class="btn-sub">— boot to Konami logo</span>
+                            </button>
+                            <button class="btn ghost" id="btn-verify">Verify</button>
+                            <button class="btn ghost" id="btn-rebuild">Rebuild PSX</button>
+                        </div>
+                        <div class="hero-meta">
+                            <span>Renderer: <strong id="meta-renderer">OpenGL 3.3</strong></span>
+                            <span>•</span>
+                            <span>Resolution: <strong id="meta-res">1280×960 (4×)</strong></span>
+                            <span>•</span>
+                            <span>FPS: <strong>60</strong></span>
+                        </div>
+                    </div>
+                    <div class="hero-side">
+                        <div class="card">
+                            <h3>Quick launch</h3>
+                            <label>Version</label>
+                            <select id="sel-version" class="input">
+                                <option value="USA">USA — SLUS-00707 (1.1)</option>
+                                <option value="EUR">EUR — SLES-01514</option>
+                                <option value="JAP0">JAP0 — SLPM-86192</option>
+                                <option value="JAP1">JAP1 — SLPM-86498</option>
+                            </select>
+                            <label>Entry</label>
+                            <select id="sel-entry" class="input">
+                                <option value="boot">Boot → Konami logo → Menu</option>
+                                <option value="map0_s00">Map0_S00 — Old Silent Hill intro</option>
+                                <option value="map1_s00">Map1_S00 — School 1F</option>
+                                <option value="debug">Debug — Map select</option>
+                            </select>
+                            <label class="check"><input type="checkbox" id="chk-skip-intro" checked> Skip intro movies</label>
+                            <label class="check"><input type="checkbox" id="chk-shiftable"> Shiftable build (NON_MATCHING)</label>
+                        </div>
+                        <div class="log-card">
+                            <div class="log-head">Console <button class="btn tiny" id="btn-clear-log">clear</button></div>
+                            <pre id="log-output" class="log">> launcher ready
+> assets: rom/USA/SLUS_007.07 — found
+> assets: assets/USA/1ST/BODYPROG.BIN — found
+> assets: assets/USA/VIN/* — 43/43 present
+> gpu: SDL2 + OpenGL 3.3 — initialized
+> fs: extraction cache — valid
+> ready to launch
+</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>System check</h3>
+                        <ul class="checklist" id="checklist">
+                            <li class="ok"><span>●</span> Toolchain — clang 18 + mips-linux-gnu</li>
+                            <li class="ok"><span>●</span> ROM image — rom/USA/SLUS_007.07 (sha256 ok)</li>
+                            <li class="ok"><span>●</span> Extracted assets — 2074 files (silentassets)</li>
+                            <li class="warn"><span>●</span> Data match — 133 raw segments remain (maps 66%)</li>
+                            <li class="ok"><span>●</span> PSX checksum — 46/46 ok (CHECKSUM=1)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Recent builds</h3>
+                        <div class="build-list">
+                            <div class="build-row ok"><span class="build-name">USA — main</span><span class="build-time">12s ago</span><span class="build-badge ok">MATCH</span></div>
+                            <div class="build-row ok"><span class="build-name">BODYPROG.BIN</span><span class="build-time">12s ago</span><span class="build-badge ok">MATCH</span></div>
+                            <div class="build-row warn"><span class="build-name">MAP0_S00.BIN</span><span class="build-time">2m ago</span><span class="build-badge warn">3 raw</span></div>
+                            <div class="build-row ok"><span class="build-name">B_KONAMI.BIN</span><span class="build-time">5m ago</span><span class="build-badge ok">MATCH</span></div>
+                        </div>
+                        <button class="btn small ghost" id="btn-view-logs">View full log →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ASSETS -->
+            <section class="tab" id="tab-assets">
+                <div class="card">
+                    <h3>Game assets — retail disc required once</h3>
+                    <p class="muted">The decomp is <strong>not</strong> a port — it recompiles to a matching PSX binary. To run on PC we extract the original disc (`SILENT.`/`HILL.`) once, then load from <code>assets/USA/</code>. No disc needed at runtime.</p>
+                    
+                    <div class="asset-drop" id="asset-drop">
+                        <div class="asset-drop-icon">◧</div>
+                        <div class="asset-drop-text">
+                            <strong>Drop SLUS-00707.bin / .cue here</strong> — or click to browse<br>
+                            <span class="muted">Supports: USA 1.1 (preferred), JAP0/JAP1/EUR, OPM16 demo</span>
+                        </div>
+                        <input type="file" id="file-input" hidden accept=".bin,.cue,.iso,.img">
+                    </div>
+
+                    <div class="asset-progress" id="asset-progress" style="display:none">
+                        <div class="asset-progress-head">
+                            <span>Extracting — dumpsxiso + silentassets</span>
+                            <span id="asset-pct">0%</span>
+                        </div>
+                        <div class="progress big"><div class="progress-fill" id="asset-bar" style="width:0%"></div></div>
+                        <pre id="asset-log" class="log small">waiting…</pre>
+                    </div>
+
+                    <div class="asset-grid">
+                        <div class="asset-col">
+                            <h4>Required</h4>
+                            <ul class="filelist">
+                                <li class="ok"><span>●</span> SLUS_007.07 <code>rom/USA/</code></li>
+                                <li class="ok"><span>●</span> SILENT. + HILL. <code>rom/USA/</code></li>
+                                <li class="ok"><span>●</span> 1ST/BODYPROG.BIN <code>assets/USA/1ST/</code></li>
+                                <li class="ok"><span>●</span> VIN/MAP*_S*.BIN ×43 <code>assets/USA/VIN/</code></li>
+                                <li class="ok"><span>●</span> CHARA/*.ILM <code>assets/USA/CHARA/</code></li>
+                                <li class="ok"><span>●</span> BG/*.IPD + ANIM/*.ANM</li>
+                            </ul>
+                        </div>
+                        <div class="asset-col">
+                            <h4>Generated</h4>
+                            <ul class="filelist">
+                                <li class="ok"><span>●</span> filetable.c.USA.inc <code>src/main/</code></li>
+                                <li class="ok"><span>●</span> configs/USA/checksum.sha <code>46 hashes</code></li>
+                                <li class="ok"><span>●</span> linkers/USA/*.ld <code>43 overlays</code></li>
+                                <li class="warn"><span>●</span> expected/USA/ <code>objdiff baseline</code></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button class="btn" id="btn-extract">Extract now</button>
+                        <button class="btn ghost" id="btn-reset-assets">Reset extraction</button>
+                        <span class="muted">Takes ~15s on SSD — see <code>make extract GAME_VERSION=USA</code></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section class="tab" id="tab-settings">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Graphics</h3>
+                        <label>Renderer</label>
+                        <select id="set-renderer" class="input">
+                            <option value="gl">OpenGL 3.3 — SDL2 (default)</option>
+                            <option value="bgfx">bgfx — Vulkan / D3D12 / Metal</option>
+                        </select>
+                        <label>Internal resolution</label>
+                        <select id="set-scale" class="input">
+                            <option>320×240 — Native (1×)</option>
+                            <option>640×480 — 2×</option>
+                            <option selected>1280×960 — 4×</option>
+                            <option>1920×1440 — 6×</option>
+                            <option>Custom…</option>
+                        </select>
+                        <label class="check"><input type="checkbox" checked> VSync</label>
+                        <label class="check"><input type="checkbox" checked> Emulate PSX dithering</label>
+                        <label class="check"><input type="checkbox"> Widescreen culling fix (experimental)</label>
+                        <label class="check"><input type="checkbox" checked> Bilinear filter (TIM)</label>
+                    </div>
+                    <div class="card">
+                        <h3>Audio & Input</h3>
+                        <label>Audio backend</label>
+                        <select class="input"><option>SDL_mixer — VAB + KDT</option><option>miniaudio</option></select>
+                        <label>Master volume</label>
+                        <input type="range" min="0" max="128" value="100" class="range">
+                        <label>Controller</label>
+                        <select class="input"><option>Keyboard + Gamepad (auto)</option><option>Keyboard only</option><option>Gamepad only</option></select>
+                        <button class="btn small">Remap…</button>
+                        <span class="muted">WASD move, Space action, Esc pause, Q/E aim</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Build</h3>
+                    <div class="grid-3">
+                        <label>Game version <select class="input"><option>USA 1.1 — SLUS-00707</option><option>EUR — SLES-01514</option></select></label>
+                        <label>Build mode <select class="input"><option>Matching — CHECKSUM=1</option><option>Shiftable — NON_MATCHING=1</option><option>PC_PORT — native</option></select></label>
+                        <label>Jobs <input class="input" value="8"></label>
+                    </div>
+                    <label class="check"><input type="checkbox"> Use COMMON segment (required for some data order)</label>
+                    <label class="check"><input type="checkbox" checked> Parallel map builds</label>
+                </div>
+            </section>
+
+            <!-- MODS -->
+            <section class="tab" id="tab-mods">
+                <div class="card">
+                    <h3>Mods — load from <code>mods/</code> (PC shiftable only)</h3>
+                    <p class="muted">Mods require a shiftable build. Matching PSX build is for verification only — mods run on PC_PORT.</p>
+                    <div class="mod-list">
+                        <div class="mod-row">
+                            <span class="mod-toggle on"></span>
+                            <span class="mod-name">HD Textures — BG 2×</span>
+                            <span class="mod-author">by Vatuu</span>
+                            <span class="mod-badge ok">compat</span>
+                        </div>
+                        <div class="mod-row">
+                            <span class="mod-toggle off"></span>
+                            <span class="mod-name">60 FPS patch (field_2388)</span>
+                            <span class="mod-author">by community</span>
+                            <span class="mod-badge warn">needs shiftable</span>
+                        </div>
+                        <div class="mod-row">
+                            <span class="mod-toggle on"></span>
+                            <span class="mod-name">DualShock analog</span>
+                            <span class="mod-author">by emoose</span>
+                            <span class="mod-badge ok">compat</span>
+                        </div>
+                    </div>
+                    <button class="btn small ghost">Open mods folder</button>
+                </div>
+            </section>
+
+            <!-- TOOLS -->
+            <section class="tab" id="tab-tools">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Decomp tools</h3>
+                        <button class="btn small" data-tool="audit">Run data audit</button>
+                        <button class="btn small" data-tool="naming">Naming report</button>
+                        <button class="btn small" data-tool="check">Check PSX match</button>
+                        <button class="btn small" data-tool="make-shiftable">Make shiftable sweep</button>
+                        <pre class="log small" id="tool-log">› ready</pre>
+                    </div>
+                    <div class="card">
+                        <h3>Docs</h3>
+                        <ul class="linklist">
+                            <li><a href="#" data-doc="data">DATA_MATCHING.md</a> — raw → typed via bin2c</li>
+                            <li><a href="#" data-doc="pc">PC_PORT.md</a> — shiftable + overlay fixups</li>
+                            <li><a href="#" data-doc="org">Organization.md</a> — src/ layout</li>
+                            <li><a href="#" data-doc="file">File Formats.md</a> — ANM/IPD/KDT etc.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Quick commands</h3>
+                    <code class="cmd">make GAME_VERSION=USA generate && make GAME_VERSION=USA CHECKSUM=1 build</code>
+                    <code class="cmd">python3 tools/data_audit.py --detail</code>
+                    <code class="cmd">cmake -S pc -B build-pc && cmake --build build-pc -j</code>
+                    <code class="cmd">./build-pc/silenthill --assets assets/USA --rom rom/USA</code>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <span>This project is not affiliated with Konami. It requires a retail copy you own — no game data is shipped.</span>
+        <span>Built from <code>tmgaminghub-ctrl/silent-hill-decomp</code> • <a href="https://github.com/Vatuu/silent-hill-decomp" target="_blank">upstream Vatuu/silent-hill-decomp</a></span>
+    </footer>
+
+    <script src="src/app.js"></script>
+</body>
+</html>
