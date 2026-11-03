@@ -9,7 +9,10 @@ An in-progress decompilation of <i>Silent Hill</i> on the PlayStation 1.
 </div>
 
 > [!IMPORTANT]
-**PORT CONCERN** — This project itself **is not**, and **will not**, produce a port, to PC or any other platform. This is a **decompilation** of the original PlayStation 1 game code which can be compiled back to a binary identical to the original PS1 release. This codebase is **not** port-ready due to missing documentation and constant reorganization. This is a hobby project led by volunteered hands, so there is no rush.
+**FORK NOTE — PC Recompilation** — Upstream (`Vatuu/silent-hill-decomp`) is **not** a port and will not produce one. **This fork** (`tmgaminghub-ctrl/silent-hill-decomp`) keeps the matching PSX build byte-identical (`make CHECKSUM=1` still passes) and adds a **native PC recompilation** in [`pc/`](pc/README.md) — same `src/`/`include/` retargeted to x86_64 via SDL2 + OpenGL/bgfx with shiftable overlays. See [`docs/PC_PORT.md`](docs/PC_PORT.md).
+
+> [!NOTE]
+**PORT CONCERN (upstream)** — The original project is a decompilation of the PS1 game code that compiles back to a binary identical to the retail release. It is not port-ready upstream due to missing documentation and constant reorganization.
 
 > [!IMPORTANT]
 **AI CONCERN** — This project is human-driven. **No AI-generated code has knowingly been added into the decompilation**, instead being manually worked out by several contributors over the past few years.
@@ -402,8 +405,41 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
 </table>
 
 <div align="center">
-Progress bars powered by <a href="https://decomp.dev">decomp.dev</a>
+Progress bars powered by <a href="https://decomp.dev">decomp.dev</a> · local audit via <code>tools/data_audit.py</code>
 </div>
+
+### Data-Match Audit — `tools/data_audit.py` (2026-11-03)
+
+Matched **data** (% of `.data`/`.rodata` segments that are typed C, not raw `data`/`rodata` blobs in `configs/`):
+
+> `python3 tools/data_audit.py --detail` — raw = untyped YAML `data`/`rodata`, matched = `.data`/`.rodata` from `src/`
+
+| Category | Matched | Raw | Data-Match | Notes |
+|---|---:|---:|---:|---|
+| **main** (`SLUS_007.07`) | 5 | 0 | **100.0%** | Fully matched — `fileinfo`, `main`, `libsn` |
+| **bodyprog** (`BODYPROG.BIN`) | 81 | 9 | **90.0%** | 9 raw `rodata` pads (garbage at `0x138`, `0x694`, `0x6D4`, `0x3FDC`… in `tools/postbuild.py`) |
+| **screens** (`B_KONAMI`/`STREAM`/…) | 11 | 1 | **91.7%** | 1 raw `B_KONAMI` footer `0xF9C` bin |
+| **maps** (USA, 43 overlays) | 259 | 133 | **66.1%** | Every map `1 rodata` (jumptable @ `0x0`) + `2 data` raw (`0x1400C` collision + `0x1653C` blood/particle) |
+| **EUR maps** (5 langs × 43) | 60 | 276 | **17.9%** | Not yet ported via `tools/port_map.py` |
+
+<details><summary><strong>Per-map data-match (worst → best) — click to expand</strong></summary>
+
+| Map | Raw | Matched | % | Remaining raw segments |
+|---|---:|---:|---:|---|
+| `map1_s05` | 4 | 6 | **60.0%** | `rodata @0x0`, `rodata @0x1729`, `data @0xC27C`, `data @0xC704` |
+| `map3_s06` | 4 | 6 | **60.0%** | `rodata @0x0`, `rodata @0x1D65`, `data @0x86F8`, `data @0x9158` |
+| `map4_s05` | 4 | 6 | **60.0%** | `rodata @0x0`, `rodata @0x1729`, `data @0xE1EC`, `data @0xE7EC` |
+| `map5_s01` | 4 | 6 | **60.0%** | `rodata @0x0`, `rodata @0x3515`, `data @0x23F9C`, `data @0x26BE0` |
+| _38 others_ | 3 | 6–7 | **66.7–70.0%** | `rodata @0x0` + 2× `data` (`0x1400C`, `0x1653C` typical; see `--detail`) |
+| `map0_s01` | 3 | 7 | **70.0%** | Best — only 3 raw left |
+
+> Run `python3 tools/data_audit.py --detail` for full `0x…` offsets and
+> `python3 tools/data_audit.py --overlay map0_s00 --json` per-overlay.
+> Workflow: `tools/bin2c.py @tools/bin2c.cfg -b assets/USA/VIN/MAP*.BIN -o 0x1400C -t s_MapCollisionData` → move to `src/maps/*` → replace YAML `data` with `.data, <c_file>` → `make CHECKSUM=1`.
+
+</details>
+
+**PC port** keeps the matching build intact and adds shiftable overlays (`pc/include/pc/core/shiftable.h`, `pc/src/core/overlay.c` with `sh_overlay_fixup()`) so the above raw segments can be relocated via `sh_overlay_base()` instead of hardcoded `0x800C9578`. See [`pc/README.md`](pc/README.md) and [`docs/DATA_MATCHING.md`](docs/DATA_MATCHING.md).
 
 ## Contributing
 Contributions are welcome! Feel free to open a pull request. To help familiarize yourself with the setup and decompilation workflow for *Silent Hill*, refer to our [Wiki Page](/../../wiki/Home).
