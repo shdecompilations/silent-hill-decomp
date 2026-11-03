@@ -43,7 +43,11 @@ typedef enum _MainOptionsMenuEntry
     MainOptionsMenuEntry_BgmVolume      = 7,
     MainOptionsMenuEntry_SfxVolume      = 8,
 
-    MainOptionsMenuEntry_Count          = 9
+#if VERSION_REGION_IS(PAL)
+    MainOptionsMenuEntry_Language       = 9,
+#endif
+
+    MainOptionsMenuEntry_Count
 } e_MainOptionsMenuEntry;
 
 /** @brief Extra options menu entries. */

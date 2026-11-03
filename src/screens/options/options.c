@@ -16,6 +16,10 @@
 #include "screens/options.h"
 #include "screens/stream/stream.h"
 
+#if VERSION_REGION_IS(PAL)
+extern s32 D_800A93B8;
+#endif
+
 #if VERSION_REGION_IS(NTSCJ)
 INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2600);
 #endif
@@ -72,9 +76,6 @@ static s32 __pad_bss_801E76A8[2];
 // MAIN AND EXTRA OPTION SCREEN
 // ========================================
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/options/nonmatchings/options", GameState_Options_Update);
-#else
 void GameState_Options_Update(void) // 0x801E2D44
 {
     s32 unlockedOptFlags;
@@ -126,10 +127,10 @@ void GameState_Options_Update(void) // 0x801E2D44
 
             if (g_GameWork.gameStatePrev != GameState_InGame)
             {
-#if VERSION_REGION_IS(NTSCJ)
-                VSync(SyncMode_Wait3);
-#else
+#if VERSION_REGION_IS(USA)
                 VSync(SyncMode_Wait8);
+#else
+                VSync(SyncMode_Wait3);
 #endif
             }
 
@@ -150,6 +151,9 @@ void GameState_Options_Update(void) // 0x801E2D44
             g_ExtraOptionsMenu_SelectedEntry     = 0;
             g_ExtraOptionsMenu_PrevSelectedEntry = 0;
             g_Options_SelectionHighlightTimer    = 0;
+#if VERSION_REGION_IS(PAL)
+            g_Options_IsLanguageSelectable       = g_GameWork.gameStatePrev == GameState_MainMenu;
+#endif
             g_ExtraOptionsMenu_BulletMultMax     = 1;
             unlockedOptFlags                     = g_GameWork.config.extraOptionsEnabled;
 
@@ -299,7 +303,6 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
     }
 }
-#endif
 
 void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 {
@@ -502,9 +505,6 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
     }
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_Control);
-#else
 void Options_MainOptionsMenu_Control(void) // 0x801E3770
 {
     #define SOUND_VOL_STEP 8
@@ -567,6 +567,15 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
 
         g_Options_SelectionHighlightTimer = 0;
+
+#if VERSION_REGION_IS(PAL)
+        // Skip over the language entry when it can't be used.
+        if (!g_Options_IsLanguageSelectable && g_MainOptionsMenu_SelectedEntry == MainOptionsMenuEntry_Exit)
+        {
+            g_MainOptionsMenu_SelectedEntry = -1;
+        }
+#endif
+
         g_MainOptionsMenu_SelectedEntry   = (g_MainOptionsMenu_SelectedEntry + (MainOptionsMenuEntry_Count - 1)) % MainOptionsMenuEntry_Count;
     }
     if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
@@ -574,6 +583,14 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
 
         g_Options_SelectionHighlightTimer = 0;
+
+#if VERSION_REGION_IS(PAL)
+        if (!g_Options_IsLanguageSelectable && g_MainOptionsMenu_SelectedEntry == MainOptionsMenuEntry_SfxVolume)
+        {
+            g_MainOptionsMenu_SelectedEntry = MainOptionsMenuEntry_Language;
+        }
+#endif
+
         g_MainOptionsMenu_SelectedEntry   = (g_MainOptionsMenu_SelectedEntry + 1) % MainOptionsMenuEntry_Count;
     }
 
@@ -615,6 +632,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
+#if !VERSION_REGION_IS(PAL)
                 if (g_GameWork.gameStatePrev == GameState_MainMenu)
                 {
                     Fs_QueueStartReadTim(BRIGHTNESS_IMG_FILE, IMAGE_BUFFER_3, &g_BrightnessScreenImg0);
@@ -623,6 +641,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 {
                     Fs_QueueStartReadTim(BRIGHTNESS_IMG_FILE, IMAGE_BUFFER_3, &g_BrightnessScreenImg1);
                 }
+#endif
 
                 ScreenFade_Start(true, false, false);
                 Game_StateStepSet(0, OptionsMenuState_EnterBrightness);
@@ -720,14 +739,42 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             g_GameWork.config.volumeSe = vol;
             break;
 
+#if VERSION_REGION_IS(PAL)
+        case MainOptionsMenuEntry_Language:
+            if (g_Controller0->buttonFlags.clicked & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
+            {
+                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+
+                // Cycle through the 5 languages.
+                if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighRight)
+                {
+                    g_GameWork.config.palLanguageId++;
+                }
+                else
+                {
+                    g_GameWork.config.palLanguageId += 4;
+                }
+
+                g_GameWork.config.palLanguageId %= 5;
+                D_800A93B8                  = g_GameWork.config.palLanguageId;
+            }
+            break;
+#endif
+
         default:
             break;
     }
 
+#if VERSION_REGION_IS(PAL)
+    if (!(g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter) &&
+        (g_Controller0->buttonFlags.clicked & (ControllerFlag_L2 | ControllerFlag_R2 |
+                                               ControllerFlag_L1 | ControllerFlag_R1)))
+#else
     vol = 0;
 
     if (g_Controller0->buttonFlags.clicked & (ControllerFlag_L2 | ControllerFlag_R2 |
                                               ControllerFlag_L1 | ControllerFlag_R1))
+#endif
     {
         if (g_GameWork.gameStateSteps[0] == OptionsMenuState_EnterExtraOptions)
         {
@@ -754,7 +801,6 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     #undef BRIGHTNESS_IMG_FILE
     #undef SOUND_VOL_STEP
 }
-#endif
 
 void Options_MainOptionsMenu_BgmVolumeBarDraw(void) // 0x801E3F68
 {
@@ -912,31 +958,6 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     #undef UNUSED_LINE_BASE_Y
 }
 
-#if VERSION_IS(EUR)
-// @hack Statics of the included function below, remove once decompiled.
-// Declared inside an uncalled function so the compiler emits them here instead of at the end of the file.
-static inline void Options_MainOptionsMenu_EntryStringsDraw_Statics(void)
-{
-    static DVECTOR mainOptions_SelectionHighlightFrom_Unused __asm__("mainOptions_SelectionHighlightFrom_Unused");
-    static DVECTOR mainOptions_SelectionHighlightTo_Unused __asm__("mainOptions_SelectionHighlightTo_Unused");
-
-    (void)mainOptions_SelectionHighlightFrom_Unused;
-    (void)mainOptions_SelectionHighlightTo_Unused;
-}
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2788);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2798);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27A0);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27B4);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27C8);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27D8);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27E4);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27F0);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E27F8);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2804);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2810);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E281C);
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_EntryStringsDraw);
-#else
 void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
 {
     #define LINE_BASE_X   64
@@ -969,7 +990,10 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
         "Auto_Load",
         "Sound",
         "BGM_Volume",
-        "SE_Volume"
+        "SE_Volume",
+#if VERSION_REGION_IS(PAL)
+        "Language"
+#endif
     };
 
     // @unused Likely an older implementation for active highlight selection position reference setup found in `Options_MainOptionsMenu_SelectionHighlightDraw`.
@@ -993,8 +1017,20 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     {
         Gfx_StringPositionSet(LINE_BASE_X, LINE_BASE_Y + (i * LINE_OFFSET_Y));
         Gfx_StringLayerIdxSet(OPTIONS_ENTRY_STRING_LAYER_IDX);
+
+#if VERSION_REGION_IS(PAL)
+        if (i == MainOptionsMenuEntry_Language && !g_Options_IsLanguageSelectable)
+        {
+            Gfx_StringColorSet(StringColorId_LightGrey);
+        }
+#endif
+
         Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
+
+#if VERSION_REGION_IS(PAL)
+    Gfx_StringColorSet(StringColorId_White);
+#endif
 
     Gfx_StringLayerIdxReset();
 
@@ -1003,7 +1039,6 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     #undef LINE_OFFSET_X
     #undef LINE_OFFSET_Y
 }
-#endif
 
 void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 {

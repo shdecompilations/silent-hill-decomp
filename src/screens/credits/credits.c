@@ -159,9 +159,6 @@ void GameState_Credits_Update(void) // 0x801E3094
     }
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/credits/nonmatchings/credits", func_801E3124);
-#else
 bool func_801E3124(void) // 0x801E3124
 {
     switch (g_GameWork.gameStateSteps[1])
@@ -194,6 +191,16 @@ bool func_801E3124(void) // 0x801E3124
 
             switch (g_ScreenFade_Status)
             {
+#if VERSION_REGION_IS(PAL)
+                case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
+                    Screen_RectInterlacedClear(0, 0, 512, 510, 255, 255, 255);
+                    Screen_RectInterlacedClear(0, 510, 512, 2, 0, 0, 0);
+                    break;
+
+                case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
+                    Screen_RectInterlacedClear(0, 0, 512, 512, 0, 0, 0);
+                    break;
+#else
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
                     Screen_RectInterlacedClear(0, 32, 512, 448, 255, 255, 255);
                     break;
@@ -201,6 +208,7 @@ bool func_801E3124(void) // 0x801E3124
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
                     Screen_RectInterlacedClear(0, 32, 512, 448, 0, 0, 0);
                     break;
+#endif
             }
 
             g_GameWork.gameStateSteps[1]++;
@@ -210,7 +218,7 @@ bool func_801E3124(void) // 0x801E3124
             Screen_Init(512, true);
 
             g_IntervalVBlanks = 1;
-            D_801E5E74        = 60;
+            D_801E5E74        = SECONDS_TO_FRAMES(1);
             g_GameWork.gameStateSteps[1]++;
             break;
 
@@ -234,11 +242,7 @@ bool func_801E3124(void) // 0x801E3124
 
     return false;
 }
-#endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/credits/nonmatchings/credits", func_801E3304);
-#else
 bool func_801E3304(void) // 0x801E3304
 {
     if (g_GameWork.gameStatePrev == GameState_InGame)
@@ -256,7 +260,11 @@ bool func_801E3304(void) // 0x801E3304
         }
         else
         {
+#if VERSION_REGION_IS(PAL)
+            Screen_RectInterlacedClear(0, 1, 320, 510, 0, 0, 0);
+#else
             Screen_RectInterlacedClear(0, 32, 320, 448, 0, 0, 0);
+#endif
             LoadImage(&g_CreditsVramSaveRects[0], IMAGE_BUFFER_0);
             LoadImage(&g_CreditsVramSaveRects[1], IMAGE_BUFFER_1);
             DrawSync(SyncMode_Wait);
@@ -270,11 +278,7 @@ bool func_801E3304(void) // 0x801E3304
 
     return false;
 }
-#endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/credits/nonmatchings/credits", func_801E342C);
-#else
 bool func_801E342C(void) // 0x801E342C
 {
     s32   temp;
@@ -293,8 +297,13 @@ bool func_801E342C(void) // 0x801E342C
 
     addPrimFast(ot, tile, 3);
     setCodeWord(tile, PRIM_RECT, 0);
-    setXY0Fast(tile, -256, -224);
+#if VERSION_REGION_IS(PAL)
+    setXY0Fast(tile, -256, -256);
+    setWHFast(tile, 512, 4);
+#else
+    setXY0Fast(tile, -256, -FRAMEBUFFER_HEIGHT_PROGRESSIVE);
     setWHFast(tile, 512, 2);
+#endif
 
     GsOUT_PACKET_P += sizeof(TILE);
     temp = func_801E3684();
@@ -315,7 +324,7 @@ bool func_801E342C(void) // 0x801E342C
 
             g_ScreenFadeTimestep = Q12(1.0f);
             g_GameWork.gameStateSteps[1]++;
-            D_801E5E78 = 180;
+            D_801E5E78 = SECONDS_TO_FRAMES(3);
             break;
 
         case 1:
@@ -354,7 +363,6 @@ bool func_801E342C(void) // 0x801E342C
 
     return false;
 }
-#endif
 
 #include "stringtable.h"
 
@@ -553,9 +561,6 @@ void func_801E386C(void) // 0x801E386C
     D_801E5E80 = 0x10000 / D_801E5E7C;
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("screens/credits/nonmatchings/credits", func_801E3970);
-#else
 bool func_801E3970(void) // 0x801E3970
 {
     bool   showKcet;
@@ -653,29 +658,29 @@ bool func_801E3970(void) // 0x801E3970
         angle0 = angleInt;
 
         // Rotate.
-        if (angleInt < 120)
+        if (angleInt < SECONDS_TO_FRAMES(2)) // TODO: Called angle in this func but the values change based on 50/60Hz?
         {
-            angle0 = (angleInt * Q12(1.0f)) / 120;
+            angle0 = (angleInt * Q12(1.0f)) / SECONDS_TO_FRAMES(2);
             angle0 = Q12_MULT_PRECISE((Q12_ANGLE(360.0f) - angle0), Q12_ANGLE(77.3f));
             sin     = -Math_Sin(angle0);
             cos     = Math_Cos(angle0);
             func_8009185C(0, 0, 240, Q12(1.0f), 0, Q12(34.0f), Q12(240.0f), Q12(0.7f), cos, sin);
         }
         // Zoom in.
-        else if (angleInt < 180)
+        else if (angleInt < SECONDS_TO_FRAMES(3))
         {
-            angle0   = angleInt - 120;
-            angle0   = (angle0 * Q12(1.0f)) / 60;
+            angle0   = angleInt - SECONDS_TO_FRAMES(2);
+            angle0   = (angle0 * Q12(1.0f)) / SECONDS_TO_FRAMES(1);
             temp_v0_4 = Q12_MULT_PRECISE((Q12(1.0f) - angle0), Q12(30.0f)) + Q12(210.0f);
             func_8009185C(0, 0, 240, Q12(1.0f), 0, Q12(34.0f), temp_v0_4, Q12(0.7f), Q12(1.0f), 0);
         }
-        else if (angleInt >= 360)
+        else if (angleInt >= SECONDS_TO_FRAMES(6))
         {
             // Zoom out.
-            if (angleInt < 480)
+            if (angleInt < SECONDS_TO_FRAMES(8))
             {
-                angle0   = angleInt - 360;
-                angle0   = (angle0 * Q12(1.0f)) / 120;
+                angle0   = angleInt - SECONDS_TO_FRAMES(6);
+                angle0   = (angle0 * Q12(1.0f)) / SECONDS_TO_FRAMES(2);
                 temp_v0_4 = Q12_MULT_PRECISE((Q12(1.0f) - angle0), Q12(-3630.0f)) + Q12(3840.0f);
                 func_8009185C(0, 0, 240, Q12(1.0f), 0, Q12(34.0f), temp_v0_4, Q12(0.7f), Q12(1.0f), 0);
             }
@@ -704,7 +709,6 @@ bool func_801E3970(void) // 0x801E3970
 
     return isFinished;
 }
-#endif
 
 void func_801E3DD0(void) // 0x801E3DD0
 {
