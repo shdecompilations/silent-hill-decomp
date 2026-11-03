@@ -127,7 +127,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
             if (g_GameWork.gameStatePrev != GameState_InGame)
             {
-#if VERSION_REGION_IS(USA)
+#if VERSION_REGION_IS(NTSC)
                 VSync(SyncMode_Wait8);
 #else
                 VSync(SyncMode_Wait3);
