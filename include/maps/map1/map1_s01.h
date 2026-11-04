@@ -25,7 +25,7 @@
     #define MAP_MSG(idx) ((idx) >= 29 ? (idx) - 2 : (idx) >= 23 ? (idx) - 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern u8  D_800DC9FC;
 extern u16 D_800DCA04[42];

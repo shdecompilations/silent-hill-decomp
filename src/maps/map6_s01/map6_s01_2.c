@@ -7,25 +7,25 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map6/map6_s01.h"
-#include "maps/characters/cybil.h"
-#include "maps/characters/dahlia.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/cybil.h"
+#include "maps/common/characters/dahlia.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/unk_draw_m1s03.c"
+#include "../src/maps/common/unk_draw_m1s03.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/cybil.c"
-#include "../src/maps/characters/dahlia.c"
+#include "../src/maps/common/characters/cybil.c"
+#include "../src/maps/common/characters/dahlia.c"
 
-#include "../src/maps/chara_util.c" // 0x800D0358
+#include "../src/maps/common/chara_util.c" // 0x800D0358
 
-#include "../src/maps/map_util.c" // 0x800D0DD0
+#include "../src/maps/common/map_util.c" // 0x800D0DD0
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D0E78
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D0E78
 
 void Map_RoomBgmInit_CondTrue(void) // 0x800D0EAC
 {
@@ -39,16 +39,16 @@ void Map_RoomBgmInit_CondTrue(void) // 0x800D0EAC
     }
 }
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D0EF8
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D0EF8
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D118C
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D118C
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D1220
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D1220
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.0)\tCybil! ~E ",
     /* 16 */ "~J1(1.1)\tHarry! ",
@@ -235,7 +235,7 @@ void MapEvent_CommonItemTake(void) // 0x800D12B4
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D1340
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D1340
 
 void func_800D13D8(void) // 0x800D13D8
 {

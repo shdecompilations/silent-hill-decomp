@@ -10,11 +10,11 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map5/map5_s00.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/hanged_scratcher.h"
-#include "maps/characters/creeper.h"
-#include "maps/shared.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/hanged_scratcher.h"
+#include "maps/common/characters/creeper.h"
+#include "maps/common/shared.h"
 
 void func_800CB0D8(void) // 0x800CB0D8
 {
@@ -236,12 +236,12 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
     return true;
 }
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/hanged_scratcher.c" // 0x800CFC24
-#include "../src/maps/characters/creeper.c" // 0x800D387C
+#include "../src/maps/common/characters/hanged_scratcher.c" // 0x800CFC24
+#include "../src/maps/common/characters/creeper.c" // 0x800D387C
 
 void func_800D5B00(void) // 0x800D5B00
 {
@@ -607,7 +607,7 @@ void func_800D6490(VECTOR3* arg0) // 0x800D6490
     func_800D5B00();
 }
 
-#include "../src/maps/map_util.c" // 0x800D64F8
+#include "../src/maps/common/map_util.c" // 0x800D64F8
 
 void func_800D6790(void) // 0x800D6790
 {
@@ -638,7 +638,7 @@ void func_800D6888(void) // 0x800D6888
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tUsed_the_ ~C2 Sewer_key ~C7 . ~E ",
     /* 16 */ "\tUsed_the_ ~C2 Sewer_exit_key ~C7 . ~E ",

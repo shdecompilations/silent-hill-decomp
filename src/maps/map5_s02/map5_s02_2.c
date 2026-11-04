@@ -6,14 +6,14 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map5/map5_s02.h"
-#include "maps/characters/kaufmann.h"
+#include "maps/common/characters/kaufmann.h"
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
 
 // player.c and stalker.c must stay in the same TU because they share an
@@ -28,32 +28,32 @@
 // map5_s02 is currently the only map where this deduplication has been observed.
 // Other maps use separate per-character splits for now, as proper splits make handling
 // version differences easier. 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/stalker.c" // 0x800CDC08
+#include "../src/maps/common/characters/stalker.c" // 0x800CDC08
 
-#include "../src/maps/characters/kaufmann.c"
+#include "../src/maps/common/characters/kaufmann.c"
 
-#include "../src/maps/chara_util.c" // 0x800D3AFC
+#include "../src/maps/common/chara_util.c" // 0x800D3AFC
 
-#include "../src/maps/map_util.c" // 0x800D450C
+#include "../src/maps/common/map_util.c" // 0x800D450C
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D45B4
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D45B4
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D45E8
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D45E8
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D4664
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D4664
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D48F8
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D48F8
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D4990
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D4990
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D4A24
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D4A24
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(8.7)\t~E ",
     /* 16 */ "~J0(1.2)\tAre_you_OK? ~E ",

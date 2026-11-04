@@ -10,38 +10,38 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map4/map4_s05.h"
-#include "maps/particle.h"
-#include "maps/characters/floatstinger.h"
-#include "maps/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/floatstinger.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle_acid.c"
+#include "../src/maps/common/particles/particle_acid.c"
 
-#include "../src/maps/unk_draw_m1s03.c"
+#include "../src/maps/common/unk_draw_m1s03.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
 
 // TODO: Move floatstinger to separate split.
-#include "../src/maps/characters/floatstinger.c" // 0x800D16FC
+#include "../src/maps/common/characters/floatstinger.c" // 0x800D16FC
 
-#include "../src/maps/map_util.c" // 0x800D5AFC
+#include "../src/maps/common/map_util.c" // 0x800D5AFC
 
-#include "maps/shared/Map_RoomBgmInit_4_s02.h" // 0x800D5D08
+#include "maps/common/shared/Map_RoomBgmInit_4_s02.h" // 0x800D5D08
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D5FE4
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D5FE4
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D607C
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D607C
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D6110
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D6110
 
 void func_800D61A4(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.0)\tWhat? ~E ",
     /* 16 */ "~J0(2.5)\tThat_light!? ~E ",

@@ -8,25 +8,25 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map2/map2_s01.h"
-#include "maps/characters/dahlia.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/dahlia.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/dahlia.c"
+#include "../src/maps/common/characters/dahlia.c"
 
-#include "../src/maps/chara_util.c" // 0x800CDDA0
+#include "../src/maps/common/chara_util.c" // 0x800CDDA0
 
-#include "../src/maps/map_util.c" // 0x800CE7B0
+#include "../src/maps/common/map_util.c" // 0x800CE7B0
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CE858
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CE858
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800CE88C
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800CE88C
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CE908
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CE908
 
 void GameBoot_LoadScreen_StageString(void) {} // 0x800CEB94
 
@@ -64,7 +64,7 @@ void func_800CEC30(void) // 0x800CEC30
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J1(1.9)\tWere_you_ringing_that_bell? ",
     /* 16 */ "~J1(5.3)\tI've_been_expecting_you. ~N\n\t\t\tIt_was_foretold_by_Gyromancy. ",

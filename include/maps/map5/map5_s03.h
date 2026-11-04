@@ -32,7 +32,7 @@
     #define MAP_MSG(idx) ((idx) >= 58 ? (idx) - 2 : (idx) >= 20 ? (idx) - 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern s_Pose      g_WorldObjectPose_HealthDrink0;
 extern s_Pose      g_WorldObjectPose_ShotgunShells;

@@ -9,21 +9,21 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s06.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/split_head.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/split_head.h"
 
-#include "../src/maps/unk_draw_m1s05.c"
+#include "../src/maps/common/unk_draw_m1s05.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
 
 // TODO: Move this line into separate `Chara_SplitHead` split.
-#include "../src/maps/characters/split_head.c" // 0x800D02CC
+#include "../src/maps/common/characters/split_head.c" // 0x800D02CC
 
-#include "../src/maps/map_util.c" // 0x800D5350
+#include "../src/maps/common/map_util.c" // 0x800D5350
 
 void Map_RoomBgmInit(bool arg0) // 0x800D5400
 {
@@ -32,16 +32,16 @@ void Map_RoomBgmInit(bool arg0) // 0x800D5400
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D5450
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D5450
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D54E4
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D54E4
 
-#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800D5578
+#include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800D5578
 
 void func_800D560C(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.3)\t",
     /* 16 */ "~J2(1.5)\tWhat_was_that...? ~E ",

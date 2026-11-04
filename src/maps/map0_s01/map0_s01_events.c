@@ -8,7 +8,7 @@
 #include "maps/map0/map0_s01.h"
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(2.0)\tWas_I_dreaming?  ~E ",
     /* 16 */ "~J0(2.5)\tHow_do_you_feel? ~E ",

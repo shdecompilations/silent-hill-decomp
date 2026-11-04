@@ -9,34 +9,34 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map7/map7_s01.h"
-#include "maps/characters/bloody_lisa.h"
-#include "maps/characters/ghost_child_alessa.h"
-#include "maps/characters/lisa.h"
-#include "maps/characters/player.h"
-#include "maps/particle.h"
-#include "maps/characters/puppet_nurse.h"
+#include "maps/common/characters/bloody_lisa.h"
+#include "maps/common/characters/ghost_child_alessa.h"
+#include "maps/common/characters/lisa.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/puppet_nurse.h"
 
-#include "../src/maps/particles/particle_glass.c"
+#include "../src/maps/common/particles/particle_glass.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
 
 // player.c/puppet_nurse.c have some identical rodata which has to be deduplicated to match.
 // More info at `src/maps/map5_s02/characters.c` as that had the same issue.
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/unk_m3s03.c" // 0x800D16A4
+#include "../src/maps/common/unk_m3s03.c" // 0x800D16A4
 
-#include "../src/maps/characters/puppet_nurse.c"
+#include "../src/maps/common/characters/puppet_nurse.c"
 
-#include "../src/maps/characters/ghost_child_alessa.c"
-#include "../src/maps/characters/lisa.c"
-#include "../src/maps/characters/bloody_lisa.c"
+#include "../src/maps/common/characters/ghost_child_alessa.c"
+#include "../src/maps/common/characters/lisa.c"
+#include "../src/maps/common/characters/bloody_lisa.c"
 
-#include "../src/maps/chara_util.c" // 0x800D5CD8
+#include "../src/maps/common/chara_util.c" // 0x800D5CD8
 
-#include "../src/maps/map_util.c" // 0x800D6768
+#include "../src/maps/common/map_util.c" // 0x800D6768
 
 void func_800D6810(s32 arg0) // 0x800D6810
 {
@@ -81,14 +81,14 @@ void func_800D68F8(void) // 0x800D68F8
     Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
-#include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D6938
+#include "maps/common/shared/sharedFunc_800D0110_7_s00.h" // 0x800D6938
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D71C4
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D71C4
 
 const char* MAP_MESSAGES[] = {
-#include "maps/shared/map_msg_common.h"
+#include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(5.5)\t",
     /* 16 */ "~J0(2.8)\tDamn! ~N\n\t\t\tWhat's_that? ~E ",
@@ -1952,7 +1952,7 @@ void func_800DB3D0(void) // 0x800DB3D0
     }
 }
 
-#include "maps/shared/sharedFunc_800DB60C_7_s01.h" // 0x800DB60C
+#include "maps/common/shared/sharedFunc_800DB60C_7_s01.h" // 0x800DB60C
 
 void func_800DBDE0(void) // 0x800DBDE0
 {
@@ -2046,7 +2046,7 @@ void func_800DC080(void) // 0x800DC080
 
 const VECTOR3 sharedData_800CB094_3_s01 = { Q12(-100.9f), Q12(-2.0f), Q12(-60.9f) };
 
-#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800DC0AC
+#include "maps/common/shared/sharedFunc_800D15F0_3_s01.h" // 0x800DC0AC
 
 void func_800DCE20(void) // 0x800DCE20
 {

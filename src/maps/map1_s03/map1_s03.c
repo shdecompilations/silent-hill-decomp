@@ -12,13 +12,13 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s03.h"
-#include "maps/particle.h"
-#include "maps/characters/creeper.h"
-#include "maps/characters/locker_dead_body.h"
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/creeper.h"
+#include "maps/common/characters/locker_dead_body.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
 
-#include "../src/maps/particles/particle_water.c"
+#include "../src/maps/common/particles/particle_water.c"
 
 void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
 {
@@ -187,29 +187,29 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
     return true;
 }
 
-#include "../src/maps/unk_draw_m1s03.c"
+#include "../src/maps/common/unk_draw_m1s03.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/stalker.c" // 0x800D2DC0
-#include "../src/maps/characters/creeper.c" // 0x800D8010
+#include "../src/maps/common/characters/stalker.c" // 0x800D2DC0
+#include "../src/maps/common/characters/creeper.c" // 0x800D8010
 
 // TODO: Move to separate split.
-#include "../src/maps/characters/locker_dead_body.c" // 0x800DA284
+#include "../src/maps/common/characters/locker_dead_body.c" // 0x800DA284
 
-#include "../src/maps/map_util.c" // 0x800DA424
+#include "../src/maps/common/map_util.c" // 0x800DA424
 
-#include "maps/shared/Map_RoomBgmInit_1_s02.h" // 0x800DA4D4
+#include "maps/common/shared/Map_RoomBgmInit_1_s02.h" // 0x800DA4D4
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800DA638
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800DA638
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800DA6CC
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800DA6CC
 
-#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DA760
+#include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800DA760
 
 void MapEvent_LibraryReserveKeyUse(void) // 0x800DA7F4
 {
@@ -237,7 +237,7 @@ void MapEvent_ClassroomKeyUse(void) // 0x800DA8B0
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tWhat's_this? ~E ",
     /* 16 */ "\t[The_Monster_Lurks] ~N\n\tis_the_book's_title. ~E ",
@@ -1431,7 +1431,7 @@ void MapEvent_RubberBallUse(void) // 0x800DCB54
     }
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800DCD44
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800DCD44
 
 void func_800DCDDC(void) // 0x800DCDDC
 {

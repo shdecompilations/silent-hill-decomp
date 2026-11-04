@@ -10,22 +10,22 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s01.h"
-#include "maps/particle.h"
-#include "maps/characters/larval_stalker.h"
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/larval_stalker.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
 
-#include "../src/maps/unk_draw_m1s01.c"
+#include "../src/maps/common/unk_draw_m1s01.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/larval_stalker.c" // 0x800CE648
-#include "../src/maps/characters/stalker.c" // 0x800D1AF0
-#include "../src/maps/characters/cat.c" // 0x800D6D40
+#include "../src/maps/common/characters/larval_stalker.c" // 0x800CE648
+#include "../src/maps/common/characters/stalker.c" // 0x800D1AF0
+#include "../src/maps/common/characters/cat.c" // 0x800D6D40
 
-#include "../src/maps/map_util.c" // 0x800D6F34
+#include "../src/maps/common/map_util.c" // 0x800D6F34
 
 #define playerChara g_SysWork.playerWork.player
 
@@ -75,7 +75,7 @@ void MapEvent_DoorUnlocked(void) // 0x800D7180
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tStatue_of_an_old_man's_hand.",
     /* 16 */ "\tThe_fist_shut_tight, ~N\n\tas_if_never_to_let_go. ~E ",

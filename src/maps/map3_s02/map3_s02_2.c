@@ -5,37 +5,37 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map3/map3_s02.h"
-#include "maps/particle.h"
-#include "maps/characters/creeper.h"
-#include "maps/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/creeper.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/creeper.c" // 0x800CCA14
-#include "../src/maps/characters/alessa.c"
+#include "../src/maps/common/characters/creeper.c" // 0x800CCA14
+#include "../src/maps/common/characters/alessa.c"
 
-#include "../src/maps/chara_util.c" // 0x800CF404
+#include "../src/maps/common/chara_util.c" // 0x800CF404
 
-#include "../src/maps/map_util.c" // 0x800CFDD0
+#include "../src/maps/common/map_util.c" // 0x800CFDD0
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CFE78
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CFE78
 
-#include "maps/shared/Map_RoomBgmInit_3_s02_CondTrue.h" // 0x800CFEAC
+#include "maps/common/shared/Map_RoomBgmInit_3_s02_CondTrue.h" // 0x800CFEAC
 
-#include "maps/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800CFEEC
+#include "maps/common/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800CFEEC
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D0184
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D0184
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D0218
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D0218
 
 void func_800D02AC(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tNothing_happens_when_the ~N\n\televator_button_is_pressed. ~E ",
     /* 16 */ "\tIt's_locked! ~E "
@@ -128,7 +128,7 @@ void func_800D03FC(void) // 0x800D03FC
     }
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D0570
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D0570
 
 void func_800D0608(void) // 0x800D0608
 {

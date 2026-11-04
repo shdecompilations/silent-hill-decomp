@@ -6,31 +6,31 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map3/map3_s05.h"
-#include "maps/particle.h"
-#include "maps/characters/creeper.h"
-#include "maps/characters/player.h"
-#include "maps/characters/puppet_nurse.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/creeper.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/puppet_nurse.h"
 
-#include "../src/maps/unk_draw.c"
+#include "../src/maps/common/unk_draw.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
 // TODO: Move this line into separate `Chara_Creeper` split.
-#include "../src/maps/characters/creeper.c" // 0x800CFEAC
+#include "../src/maps/common/characters/creeper.c" // 0x800CFEAC
 
-#include "../src/maps/unk_m3s03.c" // 0x800D2120
+#include "../src/maps/common/unk_m3s03.c" // 0x800D2120
 
-#include "../src/maps/characters/puppet_nurse.c"
+#include "../src/maps/common/characters/puppet_nurse.c"
 
-#include "../src/maps/map_util.c" // 0x800D5434
+#include "../src/maps/common/map_util.c" // 0x800D5434
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D54DC
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D54DC
 
-#include "maps/shared/Map_RoomBgmInit_3_s02_CondTrue.h" // 0x800D5510
+#include "maps/common/shared/Map_RoomBgmInit_3_s02_CondTrue.h" // 0x800D5510
 
-#include "maps/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800D5550
+#include "maps/common/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800D5550
 
 void GameBoot_LoadScreen_StageString(void) {}
 
@@ -48,10 +48,10 @@ void func_800D57E8(void) // 0x800D57E8
     }
 }
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D58A0
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D58A0
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere_is_a_ ~C2 Video_tape ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "~C3\tAlessa ~E ",
@@ -921,7 +921,7 @@ const VECTOR3 sharedData_800CB088_3_s01 = { Q12(19.1f), Q12(-2.0f), Q12(59.1f) }
 
 const VECTOR3 sharedData_800CB094_3_s01 = { Q12(17.2f), Q12(-1.0f), Q12(59.1f) };
 
-#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D76D8
+#include "maps/common/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D76D8
 
 void Map_WorldObjectsInit(void) // 0x800D8424
 {

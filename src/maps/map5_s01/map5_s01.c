@@ -8,16 +8,16 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map5/map5_s01.h"
-#include "maps/particle.h"
-#include "maps/characters/air_screamer.h"
-#include "maps/characters/player.h"
-#include "maps/characters/romper.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/air_screamer.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/romper.h"
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
 #include "bodyprog/player/player.h"
-#include "maps/characters/groaner.h"
+#include "maps/common/characters/groaner.h"
 
-#include "../src/maps/unk_draw_m1s03.c"
+#include "../src/maps/common/unk_draw_m1s03.c"
 
 s16 func_800CD20C(void) // 0x800CD20C
 {
@@ -456,17 +456,17 @@ void func_800CE180(void) // 0x800CE180
     }
 }
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/air_screamer.c" // 0x800D225C
-#include "../src/maps/characters/groaner.c" // 0x800E3294
+#include "../src/maps/common/characters/air_screamer.c" // 0x800D225C
+#include "../src/maps/common/characters/groaner.c" // 0x800E3294
 
 // TODO: Move this line into separate `Chara_Romper` split.
-#include "../src/maps/characters/romper.c" // 0x800E786C
+#include "../src/maps/common/characters/romper.c" // 0x800E786C
 
-#include "../src/maps/map_util.c" // 0x800EB460
+#include "../src/maps/common/map_util.c" // 0x800EB460
 
 void func_800EB6B0(void) // 0x800EB6B0
 {
@@ -554,12 +554,12 @@ void func_800EB6B0(void) // 0x800EB6B0
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800EB87C
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800EB87C
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800EB910
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800EB910
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~H\tThere_is_a_ ~C5 Resort_area_map ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tNothing_unusual. ~E ",
@@ -861,7 +861,7 @@ void func_800EC2D8(void) // 0x800EC2D8
     Savegame_EventFlagSet(EventFlag_M5S01_KaufmannKeyUsed);
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800EC394
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800EC394
 
 void func_800EC42C(void) // 0x800EC42C
 {

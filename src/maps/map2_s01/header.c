@@ -1,10 +1,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/map2/map2_s01.h"
-#include "maps/particle.h"
-#include "maps/characters/dahlia.h"
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/dahlia.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
 
 extern s_AnimInfo      HARRY_M2S01_ANIM_INFOS[];
 

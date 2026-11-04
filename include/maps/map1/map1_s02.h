@@ -32,7 +32,7 @@
     #define MAP_MSG(idx) ((idx) >= 49 ? (idx) - 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern u16 D_800E1EDC;
 

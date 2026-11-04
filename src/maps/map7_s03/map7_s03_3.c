@@ -12,34 +12,34 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map7/map7_s03.h"
-#include "maps/characters/alessa.h"
-#include "maps/characters/bloody_incubator.h"
-#include "maps/characters/bloody_lisa.h"
-#include "maps/characters/cybil.h"
-#include "maps/characters/dahlia.h"
-#include "maps/characters/incubator.h"
-#include "maps/characters/incubus.h"
-#include "maps/characters/kaufmann.h"
-#include "maps/characters/unknown23.h"
+#include "maps/common/characters/alessa.h"
+#include "maps/common/characters/bloody_incubator.h"
+#include "maps/common/characters/bloody_lisa.h"
+#include "maps/common/characters/cybil.h"
+#include "maps/common/characters/dahlia.h"
+#include "maps/common/characters/incubator.h"
+#include "maps/common/characters/incubus.h"
+#include "maps/common/characters/kaufmann.h"
+#include "maps/common/characters/unknown23.h"
 #include "screens/credits/credits.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/cybil.c"
-#include "../src/maps/characters/dahlia.c"
-#include "../src/maps/characters/alessa.c"
-#include "../src/maps/characters/bloody_incubator.c"
-#include "../src/maps/characters/incubator.c"
-#include "../src/maps/characters/kaufmann.c"
-#include "../src/maps/characters/bloody_lisa.c"
+#include "../src/maps/common/characters/cybil.c"
+#include "../src/maps/common/characters/dahlia.c"
+#include "../src/maps/common/characters/alessa.c"
+#include "../src/maps/common/characters/bloody_incubator.c"
+#include "../src/maps/common/characters/incubator.c"
+#include "../src/maps/common/characters/kaufmann.c"
+#include "../src/maps/common/characters/bloody_lisa.c"
 
-#include "../src/maps/chara_util.c" // 0x800D5040
+#include "../src/maps/common/chara_util.c" // 0x800D5040
 
-#include "../src/maps/characters/little_incubus.c" // 0x800D5BC8
+#include "../src/maps/common/characters/little_incubus.c" // 0x800D5BC8
 
 void func_800D5D24(void) // 0x800D5D24
 {
@@ -2896,7 +2896,7 @@ void func_800DB288(void) // 0x800DB288
     }
 }
 
-#include "../src/maps/unk_m3s03.c" // 0x800DB338
+#include "../src/maps/common/unk_m3s03.c" // 0x800DB338
 
 void func_800DB608(void) // 0x800DB608
 {
@@ -4296,8 +4296,8 @@ void func_800DD8CC(VECTOR3* charaPos) // 0x800DD8CC
     func_800DD044();
 }
 
-#include "../src/maps/characters/incubus.c" // 0x800DD964
-#include "../src/maps/characters/unknown23.c" // 0x800DF1D4
+#include "../src/maps/common/characters/incubus.c" // 0x800DD964
+#include "../src/maps/common/characters/unknown23.c" // 0x800DF1D4
 
 extern u8 g_EndingIdx; /** `e_GameEnding` */
 
@@ -4314,7 +4314,7 @@ void func_800E0A34(void) // 0x800E0A34
     Fs_QueueStartReadTim(FILE_TIM_BOSEF00_TIM, FS_BUFFER_1, &tex);
 }
 
-#include "../src/maps/map_util.c" // 0x800E0A80
+#include "../src/maps/common/map_util.c" // 0x800E0A80
 
 void func_800E0B28(s32 arg0) // 0x800E0B28
 {
@@ -4359,7 +4359,7 @@ void func_800E0C10(void) // 0x800E0C10
     Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
-#include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800E0C50
+#include "maps/common/shared/sharedFunc_800D0110_7_s00.h" // 0x800E0C50
 
 void GameBoot_LoadScreen_StageString(void) {}
 
@@ -4485,7 +4485,7 @@ void func_800E17B8(s_800F4B40_1C* dest, s_800F4B40_1C* src) // 0x800E17B8
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J1(4.9)\tI_was_shocked_to_realize ~N\n\t\t\tthe_talisman_of_Metraton ~N\n\t\t\twas_being_used. ",
     /* 16 */ "~J1(4.0)\tIn_spite_of_the_lost_soul ~N\n\t\t\treturning_at_last, ",
@@ -5225,7 +5225,7 @@ void func_800E2C28(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, s32 zDepth,
     addPrim(ot, drMode);
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800E2DF8
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800E2DF8
 
 void Map_CutsceneObjectsUpdate(void) // 0x800E2E90
 {

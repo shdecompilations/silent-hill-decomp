@@ -17,7 +17,7 @@
     #define MAP_MSG(idx) ((idx) >= 17 ? (idx) - 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 void func_800CCB30(s32 arg0);
 

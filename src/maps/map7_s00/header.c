@@ -1,9 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/map7/map7_s00.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/lisa.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/lisa.h"
 
 extern s_AnimInfo HARRY_M7S00_ANIM_INFOS[];
 

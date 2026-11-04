@@ -13,33 +13,33 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map6/map6_s04.h"
-#include "maps/characters/alessa.h"
-#include "maps/characters/dahlia.h"
-#include "maps/characters/monster_cybil.h"
-#include "maps/particle.h"
-#include "maps/characters/larval_stalker.h"
-#include "maps/characters/stalker.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/alessa.h"
+#include "maps/common/characters/dahlia.h"
+#include "maps/common/characters/monster_cybil.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/larval_stalker.h"
+#include "maps/common/characters/stalker.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/unk_draw_m1s01.c"
+#include "../src/maps/common/unk_draw_m1s01.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/larval_stalker.c" // 0x800D00B8
-#include "../src/maps/characters/stalker.c" // 0x800D3560
-#include "../src/maps/characters/monster_cybil.c" // 0x800D87B0
-#include "../src/maps/characters/alessa.c"
-#include "../src/maps/characters/dahlia.c"
+#include "../src/maps/common/characters/larval_stalker.c" // 0x800D00B8
+#include "../src/maps/common/characters/stalker.c" // 0x800D3560
+#include "../src/maps/common/characters/monster_cybil.c" // 0x800D87B0
+#include "../src/maps/common/characters/alessa.c"
+#include "../src/maps/common/characters/dahlia.c"
 
-#include "../src/maps/chara_util.c" // 0x800DD5B8
+#include "../src/maps/common/chara_util.c" // 0x800DD5B8
 
 // TODO: Move to separate Flauros split.
-#include "../src/maps/characters/flauros.c" // 0x800DE0C4
+#include "../src/maps/common/characters/flauros.c" // 0x800DE0C4
 
 // TODO: Move to separate Parasite split.
-#include "../src/maps/characters/parasite.c" // 0x800DE1CC
+#include "../src/maps/common/characters/parasite.c" // 0x800DE1CC
 
 void func_800DE26C(void) {}
 
@@ -1576,18 +1576,18 @@ void func_800E10F8(void) // 0x800E10F8
     D_800ED58C = 0;
 }
 
-#include "../src/maps/map_util.c" // 0x800E1104
+#include "../src/maps/common/map_util.c" // 0x800E1104
 
-#include "maps/shared/Map_RoomBgmInit_6_s04.h" // 0x800E1258
+#include "maps/common/shared/Map_RoomBgmInit_6_s04.h" // 0x800E1258
 
-#include "maps/shared/Map_RoomBgmInit_6_s04_CondTrue.h" // 0x800E1290
+#include "maps/common/shared/Map_RoomBgmInit_6_s04_CondTrue.h" // 0x800E1290
 
-#include "maps/shared/Map_RoomBgmInit_6_s04_CondFalse.h" // 0x800E12D0
+#include "maps/common/shared/Map_RoomBgmInit_6_s04_CondFalse.h" // 0x800E12D0
 
 // TODO: Might be part of shared block above with `map6_s05::func_800CCBFC`
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800E1564
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800E1564
 
 void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x800E15FC
 {
@@ -1769,7 +1769,7 @@ void func_800E1CA0(void) // 0x800E1CA0
 void func_800E1D48(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E ",
     /* 16 */ "~J0(10)\t~E ",

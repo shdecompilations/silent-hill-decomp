@@ -1,10 +1,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/map2/map2_s00.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/air_screamer.h"
-#include "maps/characters/groaner.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/air_screamer.h"
+#include "maps/common/characters/groaner.h"
 
 extern s_AnimInfo HARRY_M2S00_ANIM_INFOS[];
 

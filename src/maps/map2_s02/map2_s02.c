@@ -4,34 +4,34 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/map2/map2_s02.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/romper.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/romper.h"
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
 #include "bodyprog/player/player.h"
-#include "maps/characters/air_screamer.h"
-#include "maps/characters/groaner.h"
+#include "maps/common/characters/air_screamer.h"
+#include "maps/common/characters/groaner.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/air_screamer.c" // 0x800D0728
-#include "../src/maps/characters/groaner.c" // 0x800E1760
+#include "../src/maps/common/characters/air_screamer.c" // 0x800D0728
+#include "../src/maps/common/characters/groaner.c" // 0x800E1760
 
 // TODO: Move this line into separate `Chara_Romper` split.
-#include "../src/maps/characters/romper.c" // 0x800E5D38
+#include "../src/maps/common/characters/romper.c" // 0x800E5D38
 
-#include "../src/maps/map_util.c" // 0x800E992C
+#include "../src/maps/common/map_util.c" // 0x800E992C
 
-#include "maps/shared/Map_RoomBgmInit_2_s02.h" // 0x800E9B38
+#include "maps/common/shared/Map_RoomBgmInit_2_s02.h" // 0x800E9B38
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800E9C2C
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800E9C2C
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800E9CC0
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800E9CC0
 
 void func_800E9D54(void) // 0x800E9D54
 {
@@ -43,7 +43,7 @@ void func_800E9D54(void) // 0x800E9D54
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tUsed_the_ ~C2 Antique_shop_key ~C7 . ~E ",
     /* 16 */ "~C3\tAlchemilla_Hospital ~E ",

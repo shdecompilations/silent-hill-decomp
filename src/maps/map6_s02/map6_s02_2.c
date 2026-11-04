@@ -13,22 +13,22 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map6/map6_s02.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/unk_draw_m1s03.c"
+#include "../src/maps/common/unk_draw_m1s03.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/alessa.c"
+#include "../src/maps/common/characters/alessa.c"
 
-#include "../src/maps/chara_util.c" // 0x800CDEB0
+#include "../src/maps/common/chara_util.c" // 0x800CDEB0
 
-#include "../src/maps/map_util.c" // 0x800CE87C
+#include "../src/maps/common/map_util.c" // 0x800CE87C
 
-#include "maps/shared/Map_RoomBgmInit_6_s00.h" // 0x800CEA88
+#include "maps/common/shared/Map_RoomBgmInit_6_s00.h" // 0x800CEA88
 
 void GameBoot_LoadScreen_StageString(void) {}
 
@@ -109,14 +109,14 @@ void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
     D_800D3C84 = cond;
 }
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800CEF88
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800CEF88
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800CF01C
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800CF01C
 
 void func_800CF0B0(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.0)\t...! ~E ",
     /* 16 */ "~J0(1.0)\tWait! ~E ",
@@ -368,7 +368,7 @@ void func_800CF0B8(void) // 0x800CF0B8
     }
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800CFB9C
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800CFB9C
 
 void func_800CFC34(void) // 0x800CFC34
 {

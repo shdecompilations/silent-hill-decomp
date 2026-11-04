@@ -18,7 +18,7 @@
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/vsync.h"
 #include "bodyprog/sys/joy.h"
-#include "maps/characters/harry.h"
+#include "maps/common/characters/harry.h"
 
 /** @brief Packs a weapon attack containing a weapon ID and attack input type.
  *

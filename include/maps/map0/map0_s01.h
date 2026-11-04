@@ -30,7 +30,7 @@
 #define MAP_FIELD_4C_COUNT 300
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern u16 g_Cutscene_MapMsgAudioCmds[];
 

@@ -10,33 +10,33 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map4/map4_s03.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/twinfeeler.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/twinfeeler.h"
 
-#include "../src/maps/particles/particle_acid.c"
+#include "../src/maps/common/particles/particle_acid.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/unk_m3s03.c" // 0x800D04BC
+#include "../src/maps/common/unk_m3s03.c" // 0x800D04BC
 
 // TODO: Move to separate `Chara_Twinfeeler` split.
-#include "../src/maps/characters/twinfeeler.c"     // 0x800D078C
+#include "../src/maps/common/characters/twinfeeler.c"     // 0x800D078C
 
-#include "../src/maps/map_util.c" // 0x800D606C
+#include "../src/maps/common/map_util.c" // 0x800D606C
 
-#include "maps/shared/Map_RoomBgmInit_4_s02.h" // 0x800D6278
+#include "maps/common/shared/Map_RoomBgmInit_4_s02.h" // 0x800D6278
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D6554
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D6554
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D65E8
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D65E8
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tDaddy...where_are_you...? ",
     /* 16 */ "~J0(1.0)\tCheryl! ~E  ",

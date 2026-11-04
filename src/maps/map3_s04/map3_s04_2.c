@@ -7,37 +7,37 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map3/map3_s04.h"
-#include "maps/characters/lisa.h"
+#include "maps/common/characters/lisa.h"
 #include "bodyprog/sound/sound_system.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/puppet_nurse.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/puppet_nurse.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/unk_m3s03.c" // 0x800CD574
+#include "../src/maps/common/unk_m3s03.c" // 0x800CD574
 
-#include "../src/maps/characters/puppet_nurse.c"
-#include "../src/maps/characters/lisa.c"
+#include "../src/maps/common/characters/puppet_nurse.c"
+#include "../src/maps/common/characters/lisa.c"
 
-#include "../src/maps/chara_util.c" // 0x800D1374
+#include "../src/maps/common/chara_util.c" // 0x800D1374
 
-#include "../src/maps/map_util.c" // 0x800D1D7C
+#include "../src/maps/common/map_util.c" // 0x800D1D7C
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1E24
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1E24
 
-#include "maps/shared/Map_RoomBgmInit_3_s02_CondTrue.h" // 0x800D1E58
+#include "maps/common/shared/Map_RoomBgmInit_3_s02_CondTrue.h" // 0x800D1E58
 
-#include "maps/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800D1E98
+#include "maps/common/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800D1E98
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D2130
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D2130
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J1(3.6)\tFinally. ~N\n\t\t\tSomeone_else_who's_OK. ",
     /* 16 */ "~J1(1.0)\tWho_are_you? ",
@@ -248,7 +248,7 @@ void func_800D250C(void) // 0x800D250C
     Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_WomensBathroomBroken);
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D25D0
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D25D0
 
 void func_800D2668(void) // 0x800D2668
 {
@@ -494,7 +494,7 @@ const VECTOR3 sharedData_800CB088_3_s01 = { Q12(19.1f), Q12(-2.0f), Q12(59.1f) }
 
 const VECTOR3 sharedData_800CB094_3_s01 = { Q12(17.2f), Q12(-1.0f), Q12(59.1f) };
 
-#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D2E84
+#include "maps/common/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D2E84
 
 void Map_WorldObjectsInit(void) // 0x800D3BD0
 {

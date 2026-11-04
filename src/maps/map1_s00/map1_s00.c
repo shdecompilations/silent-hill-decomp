@@ -9,19 +9,19 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s00.h"
-#include "maps/particle.h"
-#include "maps/characters/larval_stalker.h"
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/larval_stalker.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/larval_stalker.c" // 0x800CF050
-#include "../src/maps/characters/stalker.c" // 0x800D24F8
+#include "../src/maps/common/characters/larval_stalker.c" // 0x800CF050
+#include "../src/maps/common/characters/stalker.c" // 0x800D24F8
 
-#include "../src/maps/map_util.c" // 0x800D7748
+#include "../src/maps/common/map_util.c" // 0x800D7748
 
 #define playerChara g_SysWork.playerWork.player
 
@@ -54,14 +54,14 @@ void Map_RoomBgmInit(bool arg0) // 0x800D77F8
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D786C
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D786C
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D7900
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D7900
 
-#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800D7994
+#include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800D7994
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThe_tower_door_is_locked. ~E ",
     /* 16 */ "\tThe_hands_are_stopped_at_10:00. ~E ",

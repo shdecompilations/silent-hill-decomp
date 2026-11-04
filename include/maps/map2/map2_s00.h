@@ -29,7 +29,7 @@
     #define MAP_MSG(idx) ((idx) >= 53 ? (idx) - 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern u16 g_Cutscene_MapMsgAudioCmds[2]; // 0x800F1A10
 

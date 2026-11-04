@@ -1,9 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/map3/map3_s06.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/dahlia.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/dahlia.h"
 
 extern s_AnimInfo HARRY_M3S06_ANIM_INFOS[];
 

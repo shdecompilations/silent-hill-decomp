@@ -10,30 +10,30 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map2/map2_s00.h"
-#include "maps/particle.h"
-#include "maps/characters/air_screamer.h"
-#include "maps/characters/groaner.h"
-#include "maps/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/air_screamer.h"
+#include "maps/common/characters/groaner.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/air_screamer.c" // 0x800D1F40
-#include "../src/maps/characters/groaner.c" // 0x800E2F78
+#include "../src/maps/common/characters/air_screamer.c" // 0x800D1F40
+#include "../src/maps/common/characters/groaner.c" // 0x800E2F78
 
-#include "../src/maps/map_util.c" // 0x800E76B8
+#include "../src/maps/common/map_util.c" // 0x800E76B8
 
-#include "maps/shared/Map_RoomBgmInit_2_s00.h" // 0x800E7914
+#include "maps/common/shared/Map_RoomBgmInit_2_s00.h" // 0x800E7914
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800E7A24
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800E7A24
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800E7AB8
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800E7AB8
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere_is_a_ ~C2 Steel_pipe ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tWhere_could_Cheryl_have_gone? ",

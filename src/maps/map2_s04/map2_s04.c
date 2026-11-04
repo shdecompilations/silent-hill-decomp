@@ -4,29 +4,29 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/map2/map2_s04.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/map_util.c" // 0x800CCA88
+#include "../src/maps/common/map_util.c" // 0x800CCA88
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CCB30
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CCB30
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800CCB64
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800CCB64
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CCBE0
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CCBE0
 
 void GameBoot_LoadScreen_StageString(void) {} // 0x800CCE6C
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800CCE74
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800CCE74
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800CCF08
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800CCF08
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere's_a_memo_on_the_desk. ",
     /* 16 */ "~C3\tCoroner_Seals_called. ",

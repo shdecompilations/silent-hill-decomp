@@ -11,34 +11,34 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map6/map6_s00.h"
-#include "maps/particle.h"
-#include "maps/characters/air_screamer.h"
-#include "maps/characters/groaner.h"
-#include "maps/characters/player.h"
-#include "maps/characters/romper.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/air_screamer.h"
+#include "maps/common/characters/groaner.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/romper.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/air_screamer.c" // 0x800D18FC
+#include "../src/maps/common/characters/air_screamer.c" // 0x800D18FC
 
-#include "../src/maps/characters/groaner.c" // 0x800E2934
+#include "../src/maps/common/characters/groaner.c" // 0x800E2934
 
 
 // TODO: Move this line into separate `Chara_Romper` split.
-#include "../src/maps/characters/romper.c" // 0x800E6F0C
+#include "../src/maps/common/characters/romper.c" // 0x800E6F0C
 
-#include "../src/maps/map_util.c" // 0x800EAB00
+#include "../src/maps/common/map_util.c" // 0x800EAB00
 
-#include "maps/shared/Map_RoomBgmInit_6_s00.h" // 0x800EAD0C
+#include "maps/common/shared/Map_RoomBgmInit_6_s00.h" // 0x800EAD0C
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800EAFF8
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800EAFF8
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.5)\tWhat's_this! ~E ",
     /* 16 */ "~J0(0.1)\t~E ",

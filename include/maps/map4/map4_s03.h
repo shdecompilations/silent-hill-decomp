@@ -15,7 +15,7 @@
 #define MAP_FIELD_4C_COUNT        250
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 #define COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, n) \
 {                                                     \

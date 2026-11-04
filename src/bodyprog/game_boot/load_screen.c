@@ -10,7 +10,7 @@
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/view/vc_main.h"
 #include "bodyprog/math/math.h"
-#include "maps/characters/harry.h"
+#include "maps/common/characters/harry.h"
 
 /** @brief Updates the transformation of a character's root bone.
  * Only used for the player.

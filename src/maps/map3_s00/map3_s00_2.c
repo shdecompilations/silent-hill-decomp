@@ -5,31 +5,31 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map3/map3_s00.h"
-#include "maps/characters/kaufmann.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/kaufmann.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/kaufmann.c"
+#include "../src/maps/common/characters/kaufmann.c"
 
-#include "../src/maps/chara_util.c" // 0x800CFE84
+#include "../src/maps/common/chara_util.c" // 0x800CFE84
 
-#include "../src/maps/map_util.c" // 0x800D08A8
+#include "../src/maps/common/map_util.c" // 0x800D08A8
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D0960
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D0960
 
-#include "maps/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D0994
+#include "maps/common/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D0994
 
-#include "maps/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D0994
+#include "maps/common/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D0994
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D0B7C
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D0B7C
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D0C10
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D0C10
 
 void func_800D0CA4(void) {}
 
@@ -44,7 +44,7 @@ void MapEvent_PaperMapTake(void) // 0x800D0CD0
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.0)\tHold_it... ~E ",
     /* 16 */ "~J0(0.6)\t~E ",

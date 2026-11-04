@@ -6,36 +6,36 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map3/map3_s06.h"
-#include "maps/characters/dahlia.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/dahlia.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/dahlia.c"
+#include "../src/maps/common/characters/dahlia.c"
 
-#include "../src/maps/chara_util.c" // 0x800CFCD8
+#include "../src/maps/common/chara_util.c" // 0x800CFCD8
 
-#include "../src/maps/map_util.c" // 0x800D06E8
+#include "../src/maps/common/map_util.c" // 0x800D06E8
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D07A0
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D07A0
 
-#include "maps/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D07D4
+#include "maps/common/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D07D4
 
-#include "maps/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D0814
+#include "maps/common/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D0814
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D09BC
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D09BC
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D0A50
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D0A50
 
 void func_800D0AE4(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.5)\tWas_I_dreaming? ~E ",
     /* 16 */ "~J0(2.6)\tYou_were_too_late. ~E ",
@@ -123,7 +123,7 @@ void func_800D0B10(void) // 0x800D0B10
     Savegame_EventFlagSet(EventFlag_203);
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D0B7C
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D0B7C
 
 void func_800D0C14(void) // 0x800D0C14
 {

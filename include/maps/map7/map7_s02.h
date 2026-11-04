@@ -40,7 +40,7 @@
     #define MAP_MSG(idx) ((idx) >= 39 ? (idx) - 3 : (idx) >= 36 ? (idx) - 2 : (idx) >= 24 ? (idx) - 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 typedef struct
 {

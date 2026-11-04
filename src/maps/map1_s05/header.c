@@ -1,9 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/map1/map1_s05.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/split_head.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/split_head.h"
 
 extern s_AnimInfo HARRY_M1S05_ANIM_INFOS[];
 

@@ -9,34 +9,34 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map7/map7_s02.h"
-#include "maps/characters/bloody_lisa.h"
-#include "maps/characters/dahlia.h"
-#include "maps/characters/ghost_child_alessa.h"
-#include "maps/characters/ghost_doctor.h"
-#include "maps/characters/kaufmann.h"
-#include "maps/characters/lisa.h"
+#include "maps/common/characters/bloody_lisa.h"
+#include "maps/common/characters/dahlia.h"
+#include "maps/common/characters/ghost_child_alessa.h"
+#include "maps/common/characters/ghost_doctor.h"
+#include "maps/common/characters/kaufmann.h"
+#include "maps/common/characters/lisa.h"
 #include "inline_no_dmpsx.h"
-#include "maps/particle.h"
+#include "maps/common/particle.h"
 #include <psyq/gtemac.h>
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/stalker.c" // 0x800D06F8
-#include "../src/maps/characters/lisa.c"
-#include "../src/maps/characters/bloody_lisa.c"
-#include "../src/maps/characters/bloodsucker.c" // 0x800D6874
-#include "../src/maps/characters/dahlia.c"
-#include "../src/maps/characters/ghost_child_alessa.c"
-#include "../src/maps/characters/kaufmann.c"
-#include "../src/maps/characters/ghost_doctor.c"
+#include "../src/maps/common/characters/stalker.c" // 0x800D06F8
+#include "../src/maps/common/characters/lisa.c"
+#include "../src/maps/common/characters/bloody_lisa.c"
+#include "../src/maps/common/characters/bloodsucker.c" // 0x800D6874
+#include "../src/maps/common/characters/dahlia.c"
+#include "../src/maps/common/characters/ghost_child_alessa.c"
+#include "../src/maps/common/characters/kaufmann.c"
+#include "../src/maps/common/characters/ghost_doctor.c"
 
-#include "../src/maps/chara_util.c" // 0x800D8C74
+#include "../src/maps/common/chara_util.c" // 0x800D8C74
 
-#include "../src/maps/map_util.c" // 0x800D9754
+#include "../src/maps/common/map_util.c" // 0x800D9754
 
 static inline D_800E9ED8_Set(void)
 {
@@ -94,14 +94,14 @@ void func_800D98E4(void) // 0x800D98E4
     Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
-#include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D9924
+#include "maps/common/shared/sharedFunc_800D0110_7_s00.h" // 0x800D9924
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800DA1B0
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800DA1B0
 
 const char* MAP_MESSAGES[] = {
-#include "maps/shared/map_msg_common.h"
+#include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\t\tSame_thing... ~E ",
     /* 16 */ "~L4 ~C3 Investigation_stalled. ~N\n\t[PTV]_dealers_still_at_large. ~N\n\t~N\n\tSuspicious_deaths_continue. ~N\n\tLike_anti-drug_Mayor, ~N\n\tnarcotics_officer_dies_of ~N\n\tsudden_heart_failure_of ~N\n\tunknown_origin. ~E ",
@@ -739,11 +739,11 @@ void func_800DAA4C(void) // 0x800DAA4C
     }
 }
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800DB21C
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800DB21C
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800DB2B0
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800DB2B0
 
-#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DB344
+#include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800DB344
 
 void MapEvent_CommonItemTake(void) // 0x800DB3D8
 {
@@ -3058,7 +3058,7 @@ void func_800E1398(void) // 0x800E1398
     }
 }
 
-#include "maps/shared/sharedFunc_800DB60C_7_s01.h" // 0x800E15D4
+#include "maps/common/shared/sharedFunc_800DB60C_7_s01.h" // 0x800E15D4
 
 void func_800E1DAC(void) // 0x800E1DAC
 {
@@ -3147,7 +3147,7 @@ void func_800E1FF4(void) // 0x800E1FF4
 
 const VECTOR3 sharedData_800CB094_3_s01 = { Q12(-100.9f), Q12(-2.0f), Q12(-60.9f) };
 
-#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800E204C
+#include "maps/common/shared/sharedFunc_800D15F0_3_s01.h" // 0x800E204C
 
 void func_800E2DC0(void) // 0x800E2DC0
 {

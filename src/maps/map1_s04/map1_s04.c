@@ -4,18 +4,18 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s04.h"
-#include "maps/particle.h"
+#include "maps/common/particle.h"
 #include "inline_no_dmpsx.h"
 
 #include <psyq/gtemac.h>
 
-#include "maps/characters/player.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/map_util.c" // 0x800CC818
+#include "../src/maps/common/map_util.c" // 0x800CC818
 
 void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
 {
@@ -239,7 +239,7 @@ void Map_WorldObjectsUpdate(void) // 0x800CCE38
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tNO_STAGE! ~E "
 #elif VERSION_REGION_IS(NTSCJ)

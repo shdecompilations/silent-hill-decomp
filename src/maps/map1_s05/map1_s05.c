@@ -3,27 +3,27 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s05.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 #include "inline_no_dmpsx.h"
 
 #include <psyq/gtemac.h>
 
-#include "maps/characters/split_head.h"
+#include "maps/common/characters/split_head.h"
 
-#include "../src/maps/unk_draw.c"
+#include "../src/maps/common/unk_draw.c"
 
-#include "../src/maps/unk_draw_m1s05.c"
+#include "../src/maps/common/unk_draw_m1s05.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
 
 // TODO: Move this line into separate `Chara_SplitHead` split.
-#include "../src/maps/characters/split_head.c" // 0x800CF818
+#include "../src/maps/common/characters/split_head.c" // 0x800CF818
 
-#include "../src/maps/map_util.c" // 0x800D489C
+#include "../src/maps/common/map_util.c" // 0x800D489C
 
 void Map_RoomBgmInit(bool arg0) // 0x800D494C
 {
@@ -45,7 +45,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D494C
 void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 };
 
 void func_800D49AC(void) // 0x800D49AC

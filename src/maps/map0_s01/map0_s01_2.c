@@ -3,27 +3,27 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map0/map0_s01.h"
-#include "maps/characters/cybil.h"
-#include "maps/particle.h"
-#include "maps/characters/air_screamer.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/cybil.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/air_screamer.h"
+#include "maps/common/characters/player.h"
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
 
-#include "../src/maps/particles/particle_glass.c"
+#include "../src/maps/common/particles/particle_glass.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/air_screamer.c" // 0x800D2170
-#include "../src/maps/characters/cybil.c"
+#include "../src/maps/common/characters/air_screamer.c" // 0x800D2170
+#include "../src/maps/common/characters/cybil.c"
 
-#include "../src/maps/chara_util.c" // 0x800D9B0C
+#include "../src/maps/common/chara_util.c" // 0x800D9B0C
 
-#include "../src/maps/map_util.c" // 0x800DA51C
+#include "../src/maps/common/map_util.c" // 0x800DA51C
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800DA778
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800DA778
 
 void Map_RoomBgmInit_CondTrue(void) // 0x800DA7AC
 {
@@ -108,4 +108,4 @@ void GameBoot_LoadScreen_StageString(void) // 0x800DA8A4
     GameBoot_LoadScreen_BackgroundImg();
 }
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800DA8E8
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800DA8E8

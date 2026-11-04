@@ -7,19 +7,19 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map7/map7_s00.h"
-#include "maps/characters/lisa.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/lisa.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/lisa.c"
+#include "../src/maps/common/characters/lisa.c"
 
-#include "../src/maps/chara_util.c" // 0x800CF538
+#include "../src/maps/common/chara_util.c" // 0x800CF538
 
-#include "../src/maps/map_util.c" // 0x800CFF40
+#include "../src/maps/common/map_util.c" // 0x800CFF40
 
 void func_800CFFE8(s32 arg0) // 0x800CFFE8
 {
@@ -65,20 +65,20 @@ void func_800D00D0(void) // 0x800D00D0
     Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
 }
 
-#include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D0110
+#include "maps/common/shared/sharedFunc_800D0110_7_s00.h" // 0x800D0110
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D099C
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D099C
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D0A30
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D0A30
 
 void func_800D0AC4(void) {}
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D0ACC
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D0ACC
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.2)\t~E ",
     /* 16 */ "~J1(1.2)\tLisa? ",

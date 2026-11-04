@@ -14,12 +14,12 @@
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
-#include "maps/characters/cybil.h"
-#include "maps/characters/dahlia.h"
-#include "maps/characters/kaufmann.h"
-#include "maps/characters/puppet_nurse.h"
-#include "maps/characters/split_head.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/characters/cybil.h"
+#include "maps/common/characters/dahlia.h"
+#include "maps/common/characters/kaufmann.h"
+#include "maps/common/characters/puppet_nurse.h"
+#include "maps/common/characters/split_head.h"
+#include "maps/common/characters/stalker.h"
 
 #ifndef PAD_HACK_IGNORE
     const s32 __pad_rodata_80025524 = 0;

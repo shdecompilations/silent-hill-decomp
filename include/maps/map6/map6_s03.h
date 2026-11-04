@@ -8,7 +8,7 @@
 #define MAP_FIELD_4C_COUNT 300
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern s_Pose      g_CommonWorldObjectPoses[3]; // D_800DBEE4
 extern s_WorldObjectModel        g_WorldObject0[2];           // D_800DFE70

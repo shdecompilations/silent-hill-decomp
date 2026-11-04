@@ -29,7 +29,7 @@
     #define MAP_MSG(idx) ((idx) >= 25 ? (idx) + 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern SVECTOR D_800E1F74;
 extern u16     D_800E1F7C[];

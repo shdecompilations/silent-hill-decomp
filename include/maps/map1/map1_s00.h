@@ -20,7 +20,7 @@
     #define MAP_MSG(idx) ((idx) >= 28 ? (idx) - 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern u8 D_800DCC4C;
 

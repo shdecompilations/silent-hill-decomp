@@ -7,38 +7,38 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map5/map5_s03.h"
-#include "maps/characters/kaufmann.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/kaufmann.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/kaufmann.c"
+#include "../src/maps/common/characters/kaufmann.c"
 
-#include "../src/maps/chara_util.c" // 0x800D054C
+#include "../src/maps/common/chara_util.c" // 0x800D054C
 
-#include "../src/maps/map_util.c" // 0x800D0F5C
+#include "../src/maps/common/map_util.c" // 0x800D0F5C
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1004
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1004
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D1038
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D1038
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D10B4
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D10B4
 
 void GameBoot_LoadScreen_StageString(void) {} // 0x800D1340
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D1348
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D1348
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D13E0
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D13E0
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D1474
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D1474
 
-#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800D1508
+#include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800D1508
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tI've_got_a_ ~C2 Motorcycle_key ~C7 . ~E ",
     /* 16 */ "\tThere's_a_crack. ~E ",

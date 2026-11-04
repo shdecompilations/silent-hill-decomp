@@ -1,10 +1,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/map5/map5_s02.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/kaufmann.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/kaufmann.h"
+#include "maps/common/characters/stalker.h"
 
 extern s_AnimInfo HARRY_M5S02_ANIM_INFOS[];
 

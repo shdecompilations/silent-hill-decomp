@@ -27,7 +27,7 @@
     #define MAP_MSG(idx) ((idx) >= 39 ? (idx) - 1 : (idx))
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 extern u16 g_Cutscene_MapMsgAudioCmds[20];
 extern q19_12 g_Cutscene_Timer;

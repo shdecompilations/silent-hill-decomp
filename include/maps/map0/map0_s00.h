@@ -34,7 +34,7 @@
     #define MAP_MSG(idx) (idx)
 #endif
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 typedef struct
 {

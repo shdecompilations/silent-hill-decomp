@@ -5,34 +5,34 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map3/map3_s01.h"
-#include "maps/particle.h"
-#include "maps/characters/creeper.h"
-#include "maps/characters/player.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/creeper.h"
+#include "maps/common/characters/player.h"
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/creeper.c" // 0x800CEE4C
+#include "../src/maps/common/characters/creeper.c" // 0x800CEE4C
 
-#include "../src/maps/map_util.c" // 0x800D10C0
+#include "../src/maps/common/map_util.c" // 0x800D10C0
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1178
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1178
 
-#include "maps/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D11AC
+#include "maps/common/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D11AC
 
-#include "maps/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D11EC
+#include "maps/common/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D11EC
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800D1394
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D1394
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800D1428
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D1428
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThe_elevator_doesn't ~N\n\tappear_to_be_working. ~E ",
     /* 16 */ "\tA_glass_vial_lies_shattered. ",
@@ -131,7 +131,7 @@ const VECTOR3 sharedData_800CB094_3_s01 = { Q12(57.2f), Q12(-1.0f), Q12(19.1f) }
 
 const VECTOR3 sharedData_800CB0A0_3_s01 = { Q12(57.2f), Q12(-2.0f), Q12(19.1f) };
 
-#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D15F0
+#include "maps/common/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D15F0
 
 void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
 {

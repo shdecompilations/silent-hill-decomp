@@ -6,31 +6,31 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map4/map4_s01.h"
-#include "maps/characters/cybil.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
+#include "maps/common/characters/cybil.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
 
-#include "../src/maps/unk_draw.c"
+#include "../src/maps/common/unk_draw.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/cybil.c"
+#include "../src/maps/common/characters/cybil.c"
 
-#include "../src/maps/chara_util.c" // 0x800D10C0
+#include "../src/maps/common/chara_util.c" // 0x800D10C0
 
-#include "../src/maps/map_util.c" // 0x800D1AD0
+#include "../src/maps/common/map_util.c" // 0x800D1AD0
 
-#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1B78
+#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1B78
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D1BAC
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D1BAC
 
-#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D1C28
+#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D1C28
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/Event_CutsceneTimerAdvance.h" // 0x800D1EBC
+#include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D1EBC
 
 void MapEvent_DoorJammed(void) // 0x800D1F54
 {
@@ -42,7 +42,7 @@ void MapEvent_DoorJammed(void) // 0x800D1F54
 void func_800D1FE8(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15  */ "~J0(1.6)\tWhat's_this? ~E ",
     /* 16  */ "~J0(1.0)\tHarry! ",

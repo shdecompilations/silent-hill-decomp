@@ -4,6 +4,6 @@
 #define MAP_FIELD_4C_COUNT 100
 #define MAP_BLOOD_SPLAT_COUNT_MAX 50
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 #endif

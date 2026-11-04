@@ -19,7 +19,7 @@
 #define MAP_FIELD_4C_COUNT 200
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
-#include "maps/shared.h"
+#include "maps/common/shared.h"
 
 #define GET_PTR(p, i, j, k) (&(&((u32*)(p))[(k) << 8])[(i)])[(j) * 16]
 

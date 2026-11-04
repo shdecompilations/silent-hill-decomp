@@ -420,7 +420,7 @@ typedef struct _SpawnInfo
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);
 
-/** TODO: `g_MapOverlayHdr` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`.
+/** TODO: `g_MapOverlayHdr` is part of the map overlay BIN files. Maybe should be moved to `maps/common/shared.h`.
  * If field has a comment that lists only certain maps, it means all others set this field to 0.
  * func(?) means the signature is unknown and a default void() was selected for now.
  */

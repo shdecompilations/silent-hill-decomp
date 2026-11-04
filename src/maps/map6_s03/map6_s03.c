@@ -10,19 +10,19 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map6/map6_s03.h"
-#include "maps/particle.h"
-#include "maps/characters/hanged_scratcher.h"
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/hanged_scratcher.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/stalker.c" // 0x800CEFCC
-#include "../src/maps/characters/hanged_scratcher.c" // 0x800D4264
+#include "../src/maps/common/characters/stalker.c" // 0x800CEFCC
+#include "../src/maps/common/characters/hanged_scratcher.c" // 0x800D4264
 
-#include "../src/maps/map_util.c" // 0x800D7F14
+#include "../src/maps/common/map_util.c" // 0x800D7F14
 
 void func_800D7F98(void) // 0x800D7F98
 {
@@ -133,7 +133,7 @@ void func_800D7F98(void) // 0x800D7F98
 void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_amusement_park) ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E "

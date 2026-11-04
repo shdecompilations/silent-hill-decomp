@@ -6,7 +6,7 @@
 #include "maps/map0/map0_s02.h"
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere_is_a_ ~C2 Chain_saw ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tSome_oil_cans_are_on_the_shelf. ~E ",

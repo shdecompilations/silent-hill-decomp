@@ -5,24 +5,24 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map0/map0_s00.h"
-#include "maps/particle.h"
-#include "maps/characters/cheryl.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/cheryl.h"
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
-#include "maps/shared.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
+#include "maps/common/shared.h"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/stalker.c" // 0x800D2F08
-#include "../src/maps/characters/cheryl.c"
+#include "../src/maps/common/characters/stalker.c" // 0x800D2F08
+#include "../src/maps/common/characters/cheryl.c"
 
-#include "../src/maps/chara_util.c" // 0x800D88AC
+#include "../src/maps/common/chara_util.c" // 0x800D88AC
 
-#include "../src/maps/map_util.c" // 0x800D929C
+#include "../src/maps/common/map_util.c" // 0x800D929C
 
 void Map_RoomBgmInit(bool arg0) // 0x800D94F8
 {

@@ -1,10 +1,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/map3/map3_s02.h"
-#include "maps/particle.h"
-#include "maps/characters/player.h"
-#include "maps/characters/alessa.h"
-#include "maps/characters/creeper.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/alessa.h"
+#include "maps/common/characters/creeper.h"
 
 extern s_AnimInfo HARRY_M3S02_ANIM_INFOS[];
 

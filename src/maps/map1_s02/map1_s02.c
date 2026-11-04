@@ -9,36 +9,36 @@
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s02.h"
-#include "maps/particle.h"
-#include "maps/characters/creeper.h"
-#include "maps/characters/player.h"
-#include "maps/characters/stalker.h"
+#include "maps/common/particle.h"
+#include "maps/common/characters/creeper.h"
+#include "maps/common/characters/player.h"
+#include "maps/common/characters/stalker.h"
 
-#include "../src/maps/particles/particle_water.c"
+#include "../src/maps/common/particles/particle_water.c"
 
-#include "../src/maps/particles/particle.c"
+#include "../src/maps/common/particles/particle.c"
 
-#include "../src/maps/characters/player.c"
+#include "../src/maps/common/characters/player.c"
 
-#include "../src/maps/characters/stalker.c" // 0x800D2948
-#include "../src/maps/characters/creeper.c" // 0x800D7B98
+#include "../src/maps/common/characters/stalker.c" // 0x800D2948
+#include "../src/maps/common/characters/creeper.c" // 0x800D7B98
 
-#include "../src/maps/map_util.c" // 0x800D9E0C
+#include "../src/maps/common/map_util.c" // 0x800D9E0C
 
-#include "maps/shared/Map_RoomBgmInit_1_s02.h" // 0x800D9EBC
+#include "maps/common/shared/Map_RoomBgmInit_1_s02.h" // 0x800D9EBC
 
 void GameBoot_LoadScreen_StageString(void) {}
 
-#include "maps/shared/MapEvent_DoorJammed.h" // 0x800DA020
+#include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800DA020
 
-#include "maps/shared/MapEvent_DoorLocked.h" // 0x800DA0B4
+#include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800DA0B4
 
-#include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DA16C
+#include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800DA16C
 
 #define playerChara g_SysWork.playerWork.player.position
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.h"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.2)\tWhere_am_I? ~E ",
     /* 16 */ "~J0(2.0)\tHave_I_been_here_before? ~E ",
