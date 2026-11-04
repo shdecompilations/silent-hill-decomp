@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_EVENTS_BODYPROGDATA800A99B4_H
-#define _BODYPROG_EVENTS_BODYPROGDATA800A99B4_H
+#ifndef _BODYPROG_EVENTS_EVENTDATA_H
+#define _BODYPROG_EVENTS_EVENTDATA_H
 
 /** @brief SFX pair used for area transitions (e.g. door opening and closing). */
 typedef struct _AreaLoadSfx

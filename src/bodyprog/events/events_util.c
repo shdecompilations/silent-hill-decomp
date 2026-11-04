@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/events/bodyprog_data_800A99B4.h"
+#include "bodyprog/events/event_data.h"
 #include "bodyprog/events/events_util.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
@@ -708,7 +708,7 @@ void Event_CameraLookAtSet(VECTOR3* lookAt,
     }
 
     // Set camera flags and rotation target.
-    vcWorkSetFlags(0, VC_VISIBLE_CHARA_F);
+    vcWorkSetFlags(VC_NOFLAG, VC_VISIBLE_CHARA_F);
     vcUserWatchTarget(&lookAtTarget, &camLookAtMoveParams, warp);
 }
 

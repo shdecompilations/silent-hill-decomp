@@ -1339,7 +1339,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
             if (target->flags & CharaFlag_Unk2)
             {

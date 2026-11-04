@@ -38,6 +38,8 @@ void GameState_LoadScreen_Update(void)
 
 void GameBoot_InGameStartup(void)
 {
+    #define DEMO_LOAD_ATTEMPT_COUNT_MAX 5
+
     // Makes up to 5 attemps. If the load fails, the timer used to check if a demo should be triggered is restarted.
     static s32 demoLoadAttempCount;
 
@@ -89,7 +91,7 @@ void GameBoot_InGameStartup(void)
                 Demo_DemoDataRead();
 
                 demoLoadAttempCount++;
-                if (demoLoadAttempCount >= 5)
+                if (demoLoadAttempCount >= DEMO_LOAD_ATTEMPT_COUNT_MAX)
                 {
                     demoLoadAttempCount            = 0;
                     g_SysWork.gameStateStepCounter = 0;
@@ -226,6 +228,7 @@ void GameBoot_InGameStartup(void)
             break;
     }
 
+    #undef DEMO_LOAD_ATTEMPT_COUNT_MAX
     #undef playerChara
 }
 

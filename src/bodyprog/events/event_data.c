@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-#include "bodyprog/events/bodyprog_data_800A99B4.h"
+#include "bodyprog/events/event_data.h"
 
 const s32 __pad_rodata_800252B8 = 0;
 

@@ -6,7 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/events/bodyprog_data_800A99B4.h"
+#include "bodyprog/events/event_data.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
@@ -1138,7 +1138,7 @@ void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
 
     poly = GsOUT_PACKET_P;
 
-    // Iterate 3x2 grid of 128x128 VRAM tiles covering map image.
+    // Iterate 3x2 grid of 128x128 VRAM tiles covering paper map image.
     for (tileX = 0; tileX < 3; tileX++)
     {
         for (tileY = 0; tileY < 2; tileY++)
@@ -1219,7 +1219,7 @@ void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
     }
 
 #if VERSION_REGION_IS(PAL)
-    // Black bars covering the PAL screen area above and below the 480-line map image.
+    // Black bars covering the PAL screen area above and below the 480-line paper map image.
     tile = (TILE*)poly;
     setTile(tile);
     setXY0(tile, -(SCREEN_WIDTH / 2), -256);

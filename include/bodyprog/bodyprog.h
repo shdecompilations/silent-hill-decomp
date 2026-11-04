@@ -2,7 +2,7 @@
 #define _BODYPROG_BODYPROG_H
 
 #include "game.h"
-#include "bodyprog/bodyprog_80089090.h"
+#include "bodyprog/libkpad/vibration.h"
 #include "bodyprog/sound/sfx.h"
 #include "bodyprog/chara/anim.h"
 #include "bodyprog/collision/collision.h"

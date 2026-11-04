@@ -17,22 +17,22 @@ const RECT D_80028A20 = { SCREEN_WIDTH, 256, 192, SCREEN_HEIGHT };
 void func_80066D90(void) // 0x80066D90
 {
     s32       i;
-    DR_TPAGE* var1; // Guessed type.
-    TILE*     var2; // Guessed type.
+    DR_TPAGE* tPage; // TODO: Guessed type.
+    TILE*     tile;  // TODO: Guessed type.
 
     for (i = 0; i < 63; i++)
     {
-        var1 = PSX_SCRATCH;
-        setDrawTPage(var1, 0, 1, getTPageN(0, 2, 0, 0));
-        DrawPrim(var1);
+        tPage = PSX_SCRATCH;
+        setDrawTPage(tPage, 0, 1, getTPageN(0, 2, 0, 0));
+        DrawPrim(tPage);
 
-        var2 = PSX_SCRATCH;
-        setlen(var2, 3);
+        tile = PSX_SCRATCH;
+        setlen(tile, 3);
 
-        setRGBC0(var2, 8, 8, 8, PRIM_RECT | RECT_BLEND); // `setTile(); setSemiTrans();`
-        setXY0Fast(var2, -(SCREEN_WIDTH / 2), -FRAMEBUFFER_HEIGHT_PROGRESSIVE);
-        setWHFast(var2, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2);
-        DrawPrim(var2);
+        setRGBC0(tile, 8, 8, 8, PRIM_RECT | RECT_BLEND); // `setTile(); setSemiTrans();`
+        setXY0Fast(tile, -(SCREEN_WIDTH / 2), -FRAMEBUFFER_HEIGHT_PROGRESSIVE);
+        setWHFast(tile, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2);
+        DrawPrim(tile);
 
         Fs_QueueUpdate();
         VSync(SyncMode_Wait);

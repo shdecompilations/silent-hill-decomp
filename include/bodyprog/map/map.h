@@ -355,7 +355,8 @@ typedef struct
 } s_MapOverlayHdr_94;
 
 /** @brief Contains X/Z coordinates and optional 4 bytes of data.
- * Map headers include an array of these, into which `s_EventData` includes an index. */
+ * Map headers include an array of these, into which `s_EventData` includes an index.
+ */
 typedef struct _MapPoint2d
 {
     /* 0x0    */ q19_12 positionX;

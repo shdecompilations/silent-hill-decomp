@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_80089090_H
-#define _BODYPROG_80089090_H
+#ifndef _BODYPROG_LIBKPAD_VIBRATION_H
+#define _BODYPROG_LIBKPAD_VIBRATION_H
 
 // Vibration scripts:
 // - Started by index into `g_VibScript_Steps`. Start, Chain and Pulse steps allocate an effect in the libkpad effect list.
@@ -62,8 +62,7 @@ typedef enum _VibScriptCommand
     VibScriptCommand_RemoveById   = 7  // Removes effects with an id equal to `value_8`.
 } e_VibScriptCommand;
 
-/**
- * @brief One step of a vibration script. Scripts are chains of steps linked through `next_0`.
+/** @brief One step of a vibration script. Scripts are chains of steps linked through `next_0`.
  *
  * What the fields after `opcode_4` mean depends on the opcode, so each opcode has its own view in `data_4`.
  * `opcode_4` repeats in every view as the compiler needs it to be part of the structs for a match.

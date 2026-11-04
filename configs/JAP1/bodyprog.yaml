@@ -74,7 +74,7 @@ segments:
       - [0x6CC, rodata] # Garbage padding
       - [0x6D4, .rodata, text/bodyprog_8003652C]
       - [0x6F8, .rodata, text/map_msg_display]
-      - [0x750, .rodata, events/bodyprog_data_800A99B4]
+      - [0x750, .rodata, events/event_data]
       - [0x810, .rodata, events/game_sys_states]
       - [0x914, .rodata, events/title]
       - [0x9B8, rodata] # Garbage padding
@@ -90,13 +90,13 @@ segments:
       - [0x36F8, .rodata, gfx/bodyprog_80056D8C]
       - [0x3710, .rodata, gfx/texture_utils]
       - [0x3718, rodata]
-      - [0x3720, .rodata, bodyprog_npc_8005BF38]
+      - [0x3720, .rodata, chara/utils]
       - [0x3738, rodata]
-      - [0x3740, .rodata, gfx/bodyprog_effects_8005E0DC]
+      - [0x3740, .rodata, gfx/env_effects]
       - [0x3BE4, rodata] # Garbage padding
-      - [0x3BEC, .rodata, bodyprog_mapscreen_80066EB0]
+      - [0x3BEC, .rodata, paper_map/paper_map_image]
       - [0x3BF4, rodata] # Garbage padding
-      - [0x3BF8, .rodata, bodyprog_mapscreen_80066D90]
+      - [0x3BF8, .rodata, paper_map/paper_map]
       - [0x3D08, rodata]
       - [0x3D10, .rodata, collision/collision]
       - [0x3D60, .rodata, bodyprog_data_80028B94]
@@ -104,7 +104,7 @@ segments:
       - [0x5A1C, .rodata, view/vc_main]
       - [0x5CC8, .rodata, events/events_util]
       - [0x5DD0, .rodata, bodyprog_80089090]
-      - [0x6168, .rodata, bodyprog_combat_8008A058]
+      - [0x6168, .rodata, chara/combat]
       - [0x6480, .rodata, water]
       - [0x64A4, .rodata, demo]
       - [0x64C4, .rodata, ranking]
@@ -133,7 +133,7 @@ segments:
       - [auto,       c, sys/syswork_globals]
       - [auto,       c, sys/chara_data_info]
       - [auto,       c, sys/map_info]
-      - [auto,       c, events/bodyprog_data_800A99B4]
+      - [auto,       c, events/event_data]
       - [auto,       c, sound/sound_data] # Possibly `sd_dat.c` from SH2 symbols?
       - [auto,       c, bodyprog_data_80028B94]
       - [0x985C, c, memcard]
@@ -187,12 +187,12 @@ segments:
       - [0x38148, c, gfx/texture_utils]
       - [0x38504, c, gfx/billboard_draw]
       - [0x38EE0, c, bodyprog_math_8005BF38]
-      - [0x39778, c, bodyprog_npc_8005BF38]
+      - [0x39778, c, chara/utils]
       - [0x3A814, c, sound/sfx]
-      - [0x3B084, c, gfx/bodyprog_effects_8005E0DC]
+      - [0x3B084, c, gfx/env_effects]
       - [0x4229C, c, gfx/bodyprog_800652F4] # Dead code
-      - [0x43D38, c, bodyprog_mapscreen_80066EB0]
-      - [0x43E58, c, bodyprog_mapscreen_80066D90]
+      - [0x43D38, c, paper_map/paper_map_image]
+      - [0x43E58, c, paper_map/paper_map]
       - [0x4679C, c, collision/collision]
       - [0x4A8BC, c, collision/ray]
       - [0x4C200, c, collision/trigger]
@@ -204,8 +204,8 @@ segments:
       - [0x64E58, c, events/bgm_utils]             # }
       - [0x65168, c, events/events_2d_draw_utils]  # }
       - [0x65C2C, c, events/chara_spawn]           # }
-      - [0x66040, c, bodyprog_80089090] # Uses `s_KPadWork` which is mainly used for `libkpad`, possibly vibration?
-      - [0x67008, c, bodyprog_combat_8008A058]
+      - [0x66040, c, bodyprog_80089090]
+      - [0x67008, c, chara/combat]
       - [0x69950, c, dms]
       - [0x6A3CC, c, water]
       - [0x6BED0, c, demo]
@@ -397,7 +397,7 @@ segments:
       - [0x872FC, .data, events/bgm_update]
       - [0x8730C, .data, text/map_msg_display]
       - [0x87312, pad] # Garbage padding
-      - [0x87314, .data, events/bodyprog_data_800A99B4]
+      - [0x87314, .data, events/event_data]
       - [0x87380, .data, events/events_main]
       - [0x8738C, .data, events/game_sys_states]
       - [0x873D4, .data, events/title]
@@ -411,13 +411,13 @@ segments:
       - [0x8BB88, .data, gfx/billboard_draw]
       - [0x8BEA4, .data, bodyprog_math_8005BF38]
       - [0x8BEE8, .data, sound/sfx]
-      - [0x8BF2C, .data, gfx/bodyprog_effects_8005E0DC]
+      - [0x8BF2C, .data, gfx/env_effects]
       - [0x8C094, .data, gfx/bodyprog_800652F4]
-      - [0x8C0C4, .data, bodyprog_mapscreen_80066D90]
+      - [0x8C0C4, .data, paper_map/paper_map]
       - [0x8C860, .data, player_control]
       - [0x8D618, .data, view/vc_main]
       - [0x8D688, .data, bodyprog_80089090]
-      - [0x8D6A0, .data, bodyprog_combat_8008A058]
+      - [0x8D6A0, .data, chara/combat]
       - [0x8D6C0, .data, water]
       - [0x8D73C, .data, demo]
       - [0x8D778, .data, ranking]
@@ -503,9 +503,9 @@ segments:
       - [0xA1DB8, .bss, sound/sfx]
       - [0xA1DC8, bss] # Player related? - Dead code.
       - [0xA1DCC, pad] # Garbage.
-      - [0xA1DD0, .bss, gfx/bodyprog_effects_8005E0DC]
+      - [0xA1DD0, .bss, gfx/env_effects]
       - [0xA1F20, .bss, gfx/bodyprog_800652F4]
-      - [0xA1F40, .bss, bodyprog_mapscreen_80066D90]
+      - [0xA1F40, .bss, paper_map/paper_map]
       - [0xA1F4C, pad] # Garbage.
       - [0xA1F50, .bss, collision/collision]
       - [0xA1FC4, pad] # Garbage.
@@ -515,7 +515,7 @@ segments:
       - [0xA2124, pad] # Garbage.
       - [0xA2128, .bss, view/vc_main]
       - [0xA2138, .bss, events/events_util]
-      - [0xA2220, .bss, bodyprog_combat_8008A058]
+      - [0xA2220, .bss, chara/combat]
       - [0xA2310, .bss, water]
       - [0xA2338, .bss, demo]
       - [0xA2398, .bss, ranking]

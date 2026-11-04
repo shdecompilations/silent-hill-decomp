@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"
-#include "bodyprog/events/bodyprog_data_800A99B4.h"
+#include "bodyprog/events/event_data.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"

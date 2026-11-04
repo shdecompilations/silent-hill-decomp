@@ -32,7 +32,7 @@ typedef enum _CutsceneBorderState
 #define CutsceneBorder_FadeOutStart() \
     g_SysWork.cutsceneBorderState = CutsceneBorderState_FadeOutStart
 
-/** @brief 
+/** @brief Updates the cutscene border.
  *
  * Scratch: https://decomp.me/scratch/ztPzJ
  */
