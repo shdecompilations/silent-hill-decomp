@@ -914,8 +914,8 @@ void func_8008EF18(void) {} // 0x8008EF18
     const u_Filename D_8002B2CC = { { 'D', 'W', 'A', 'V', 'E', '\0', 0x08, 0x80 } };
     const s32        D_8002B2D4 = 0;
 #else
-INCLUDE_RODATA("bodyprog/nonmatchings/water", D_8002B2CC);
+INCLUDE_RODATA("bodyprog/nonmatchings/gfx/water", D_8002B2CC);
 #if VERSION_IS(EUR)
-INCLUDE_RODATA("bodyprog/nonmatchings/water", D_8002B2D4);
+INCLUDE_RODATA("bodyprog/nonmatchings/gfx/water", D_8002B2D4);
 #endif
 #endif
