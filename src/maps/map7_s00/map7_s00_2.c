@@ -11,7 +11,7 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -350,7 +350,7 @@ void func_800D0B64(void) // 0x800D0B64
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
 

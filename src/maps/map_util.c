@@ -32,18 +32,18 @@ s32 sharedFunc_800D929C_0_s00(void)
 })
 
 #ifdef MAP5_S01
-static inline u32 GetXIdx(q19_12 x, q19_12 z)
+static inline u32 GetXIdx(q19_12 posX, q19_12 posZ)
 {
-    if (CheckRange(x + Q12(38.5f), Q12(-16.5f), Q12(16.5f)) && z > Q12(-160.0f))
+    if (CheckRange(posX + Q12(38.5f), Q12(-16.5f), Q12(16.5f)) && posZ > Q12(-160.0f))
     {
-        if (z < Q12(-120.0f) || (z < Q12(-24.0f) && x < Q12(-32.0f)) ||
-            CheckRange(x + Q12(40.0f), Q12(-12.0f), Q12(12.0f)))
+        if (posZ < Q12(-120.0f) || (posZ < Q12(-24.0f) && posX < Q12(-32.0f)) ||
+            CheckRange(posX + Q12(40.0f), Q12(-12.0f), Q12(12.0f)))
         {
             return 1;
         }
     }
 
-    if (CheckRange(x + Q12(-38.0f), Q12(-6.0f), Q12(6.0f)) && z < Q12(-40.0f))
+    if (CheckRange(posX + Q12(-38.0f), Q12(-6.0f), Q12(6.0f)) && posZ < Q12(-40.0f))
     {
         return 2;
     }

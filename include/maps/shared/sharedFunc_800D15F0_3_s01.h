@@ -374,7 +374,7 @@ void sharedFunc_800D15F0_3_s01(void)
 
 #ifdef MAP3_S01
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
 #endif
             Sd_SfxStop(Sfx_Unk1499);

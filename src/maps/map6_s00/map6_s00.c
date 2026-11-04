@@ -17,7 +17,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/romper.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -383,7 +383,7 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
     WorldObject_PlacementInit(&g_WorldObject_DrClose, "DRCLOSE_", -189.5f, 0.0f, 132.5f);
 
     func_8008D448();
-    Game_FlashlightAttributesFix();
+    Game_FlashlightAttribsSet();
 
     g_SysWork.lightIntensity = Q12(1.0f);
 

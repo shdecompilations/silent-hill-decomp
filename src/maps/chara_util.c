@@ -1,9 +1,10 @@
+#include "inline_no_dmpsx.h"
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/particle.h"
-#include "inline_no_dmpsx.h"
 
 // TODO:
 // - Make this separate split in each map that uses it instead of `#include`.

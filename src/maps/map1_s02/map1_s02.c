@@ -14,9 +14,9 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "../src/maps/particle_water.c"
+#include "../src/maps/particles/particle_water.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

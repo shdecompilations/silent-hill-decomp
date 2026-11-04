@@ -16,9 +16,9 @@
 #include "maps/particle.h"
 #include "maps/characters/puppet_nurse.h"
 
-#include "../src/maps/particle_glass.c"
+#include "../src/maps/particles/particle_glass.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 
 // player.c/puppet_nurse.c have some identical rodata which has to be deduplicated to match.
@@ -497,7 +497,7 @@ void func_800D7A60(void) // 0x800D7A60
             D_800E1671 = 1;
 
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(0.8f);
 
@@ -576,7 +576,7 @@ void func_800D7A60(void) // 0x800D7A60
             Savegame_EventFlagSet(EventFlag_484);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
 

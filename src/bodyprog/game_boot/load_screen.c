@@ -77,7 +77,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         camLookAt.vz -= temp * 2;
 
         vcUserCamTarget(&camLookAt, NULL, true);
-        Game_SpotlightLoadScreenAttribsFix();
+        Game_SpotlightLoadScreenAttribsSet();
         Gfx_LoadScreenMapEffectsUpdate(0, 0);
 
         model->anim.flags                           |= AnimFlag_Visible;

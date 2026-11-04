@@ -11,7 +11,7 @@
 
 #include "maps/characters/player.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

@@ -9,7 +9,7 @@
 #include "maps/characters/creeper.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -311,7 +311,7 @@ void func_800D0608(void) // 0x800D0608
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
 
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity      = Q12(1.0f);
             CutsceneBorder_Reset();

@@ -14,11 +14,11 @@
 #include "maps/characters/floatstinger.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/particle_acid.c"
+#include "../src/maps/particles/particle_acid.c"
 
 #include "../src/maps/unk_draw_m1s03.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

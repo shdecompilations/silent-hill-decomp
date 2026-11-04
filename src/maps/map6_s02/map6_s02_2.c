@@ -18,7 +18,7 @@
 
 #include "../src/maps/unk_draw_m1s03.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

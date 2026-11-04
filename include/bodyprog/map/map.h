@@ -429,7 +429,7 @@ typedef struct _MapOverlayHdr
     /* 0x0   */ s_MapInfo*             mapInfo;
     /* 0x4   */ u8                     (*mapRoomIdxGet)(q19_12 posX, q19_12 posY); // Called by `Game_MapRoomIdxUpdate`.
     /* 0x8   */ s8                     unused_8;
-    /* 0xC   */ s32                    (*func_C)();
+    /* 0xC   */ s32                    (*func_C)(); /** @unused */
                 // 3 bytes of padding.
     /* 0x10  */ void                   (*bgmEvent)(bool);
     /* 0x14  */ s8                     bgmCmd;

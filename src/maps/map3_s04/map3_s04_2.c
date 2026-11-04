@@ -13,7 +13,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

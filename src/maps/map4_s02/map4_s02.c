@@ -12,7 +12,7 @@
 #include "maps/characters/groaner.h"
 #include "maps/characters/romper.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

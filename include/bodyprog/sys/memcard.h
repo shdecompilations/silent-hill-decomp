@@ -318,7 +318,7 @@ typedef struct _MemCard_SaveHeader
 #if !defined(M2CTX)
     /* 0x88 */ u8                     __pad[256 - sizeof(s32) - (sizeof(s_MemCard_SaveMetadata) * MEMCARD_SAVES_COUNT_MAX) - sizeof(s_Savegame_Footer)];
 #else
-    /* 0x88 */ u8                     __pad[0x74];
+    /* 0x88 */ u8                     __pad[116];
 #endif
     /* 0xFC */ s_Savegame_Footer      footer;
 } s_MemCard_SaveHeader;

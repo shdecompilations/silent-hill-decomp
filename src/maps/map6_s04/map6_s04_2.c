@@ -23,7 +23,7 @@
 
 #include "../src/maps/unk_draw_m1s01.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -2098,7 +2098,7 @@ void func_800E219C(void) // 0x800E219C
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
 
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
 
@@ -2287,7 +2287,7 @@ void func_800E2950(void) // 0x800E2950
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
             Savegame_EventFlagSet(EventFlag_445);
@@ -2401,7 +2401,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
 
             vcReturnPreAutoCamWork(true);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
             SD_Call(19);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
@@ -2677,7 +2677,7 @@ void func_800E3244(void) // 0x800E3244
             Chara_AnimReset(&g_SysWork.npcs[0], false);
             vcReturnPreAutoCamWork(true);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
 
@@ -3177,7 +3177,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             SD_Call(19);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
             g_SysWork.sysFlags      &= ~SysFlag_NoEnemySpawn;

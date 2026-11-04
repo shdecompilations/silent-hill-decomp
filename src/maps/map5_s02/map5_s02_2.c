@@ -13,7 +13,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 
 // player.c and stalker.c must stay in the same TU because they share an
@@ -815,7 +815,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Savegame_EventFlagSet(EventFlag_379);
             func_8008D448();
 
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);

@@ -11,7 +11,7 @@
 #include "maps/particle.h"
 #include "maps/characters/player.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -532,7 +532,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             Player_WeaponAttackRestore();
             func_8003D01C();
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
 
@@ -580,7 +580,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             g_Cutscene_Timer = NO_VALUE;
 
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
 

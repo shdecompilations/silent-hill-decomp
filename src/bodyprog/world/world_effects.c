@@ -197,7 +197,7 @@ void func_8003E740(void) // 0x8003E740
     }
 }
 
-void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
+void Game_SpotlightLoadScreenAttribsSet(void) // 0x8003EB54
 {
     g_SysWork.lightIntensity     = Q12(1.0f);
     g_SysWork.lightBoneCoord     = &g_SysWork.playerBoneCoords[HarryBone_Root];
@@ -207,7 +207,7 @@ void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
     Math_SVectorSet(&g_SysWork.lightRotation, Q12_ANGLE(10.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 }
 
-void Game_FlashlightAttributesFix(void) // 0x8003EBA0
+void Game_FlashlightAttribsSet(void) // 0x8003EBA0
 {
     g_SysWork.lightIntensity     = Q12(1.0f);
     g_SysWork.lightBoneCoord     = &g_SysWork.playerBoneCoords[HarryBone_Torso];

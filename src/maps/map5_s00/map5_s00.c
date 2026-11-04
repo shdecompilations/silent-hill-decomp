@@ -236,7 +236,7 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
     return true;
 }
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

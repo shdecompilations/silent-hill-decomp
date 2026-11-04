@@ -6,10 +6,10 @@ void Options_BrightnessMenu_LinesDraw(s32 brightness);
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad(void);
 
-void Game_SpotlightLoadScreenAttribsFix(void);
+void Game_SpotlightLoadScreenAttribsSet(void);
 
 /** @brief Adjust light point attributes to make it simile a flashlight. */
-void Game_FlashlightAttributesFix(void);
+void Game_FlashlightAttribsSet(void);
 
 /** @brief Determines what enviroment effects data from `MAP_EFFECTS_INFOS` will use based on
  * `s_MapOverlayHdr::field_16`.

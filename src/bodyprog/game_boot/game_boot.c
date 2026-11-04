@@ -294,7 +294,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
     World_CollisionTriggersSet(&g_MapOverlayHdr);
     GameBoot_WorldEnvInit(0);
     WorldGfx_CharaModelProcessAllLoads();
-    Game_FlashlightAttributesFix();
+    Game_FlashlightAttribsSet();
 
     g_MapOverlayHdr.particleSystemUpdate(0, mapOvlId, NO_VALUE);
 

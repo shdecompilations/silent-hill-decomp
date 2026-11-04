@@ -18,7 +18,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "../src/maps/particle_water.c"
+#include "../src/maps/particles/particle_water.c"
 
 void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
 {
@@ -189,7 +189,7 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
 
 #include "../src/maps/unk_draw_m1s03.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -843,7 +843,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
 
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             // Warp camera.
             Event_CameraPositionSet(NULL,

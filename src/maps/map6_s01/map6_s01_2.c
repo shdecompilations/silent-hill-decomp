@@ -14,7 +14,7 @@
 
 #include "../src/maps/unk_draw_m1s03.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -568,7 +568,7 @@ void func_800D13D8(void) // 0x800D13D8
             Game_TurnFlashlightOn();
             Gfx_MapEnvSet(7, 4);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
 

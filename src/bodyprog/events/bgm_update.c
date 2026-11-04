@@ -15,12 +15,14 @@
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
 
+/** Unused, dead code. Pointed to by `D_800A999C`. */
 extern const s8 D_80025234[];
 
 // ========================================
 // GLOBAL VARIABLES
 // ========================================
 
+/** Unused, dead code. Returned by `sharedFunc_800D929C_0_s00`. */
 u32 D_800A999C = &D_80025234;
 
 // ========================================
@@ -29,7 +31,7 @@ u32 D_800A999C = &D_80025234;
 
 static s32 g_Bgm_LayersUpdated;
 static s32 g_Bgm_ChannelSetProcessState = 0;
-static u8  g_Bgm_ChannelLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
+static u8  g_Bgm_ChannelLimits[8]       = { 128, 128, 128, 128, 128, 128, 128, 128 };
 
 // ========================================
 // MUSIC UPDATE

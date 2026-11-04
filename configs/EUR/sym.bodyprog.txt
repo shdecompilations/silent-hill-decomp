@@ -562,8 +562,8 @@ Options_BrightnessMenu_LinesDraw             = 0x8003E030;
 //----------------------------------------------------------------------
 GameFs_FlameGfxLoad                          = 0x8003E158; // type:func
 func_8003E740                                = 0x8003E188; // type:func
-Game_SpotlightLoadScreenAttribsFix           = 0x8003E594; // type:func
-Game_FlashlightAttributesFix                 = 0x8003E5E0; // type:func
+Game_SpotlightLoadScreenAttribsSet           = 0x8003E594; // type:func
+Game_FlashlightAttribsSet                 = 0x8003E5E0; // type:func
 WorldEnv_MapPresetSet                        = 0x8003E634; // type:func
 Game_TurnFlashlightOn                        = 0x8003E6FC; // type:func
 Game_TurnFlashlightOff                       = 0x8003E724; // type:func

@@ -456,7 +456,7 @@ void func_800CE180(void) // 0x800CE180
     }
 }
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

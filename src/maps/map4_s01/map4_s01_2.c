@@ -12,7 +12,7 @@
 
 #include "../src/maps/unk_draw.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -642,7 +642,7 @@ void func_800D2408(void) // 0x800D2408
             SD_Call(19);
             Savegame_EventFlagSet(EventFlag_303);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
             Savegame_EventFlagClear(EventFlag_313);
@@ -1270,7 +1270,7 @@ void func_800D4410(void) // 0x800D4410
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             Gfx_MapEnvSet(7, 4);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
             Game_TurnFlashlightOn();

@@ -21,7 +21,7 @@
 #include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -632,7 +632,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             D_800E9ECD = 1;
 
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(0.8f);
 
@@ -711,7 +711,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             Savegame_EventFlagSet(EventFlag_484);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
 
@@ -1729,7 +1729,7 @@ void func_800DD9E8(void) // 0x800DD9E8
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             func_8008D448();
 
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
             break;
     }
@@ -2091,7 +2091,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             vcReturnPreAutoCamWork(false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
             g_Cutscene_Timer         = NO_VALUE;
@@ -2260,7 +2260,7 @@ void func_800DF21C(void) // 0x800DF21C
             Anim_CharaTypeAnimInfoClear();
             func_8008D448();
 
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
 
             g_Cutscene_Timer = NO_VALUE;

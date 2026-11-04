@@ -10,9 +10,9 @@
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
 
-#include "../src/maps/particle_glass.c"
+#include "../src/maps/particles/particle_glass.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 

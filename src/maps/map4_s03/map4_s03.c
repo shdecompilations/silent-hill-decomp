@@ -14,9 +14,9 @@
 #include "maps/characters/player.h"
 #include "maps/characters/twinfeeler.h"
 
-#include "../src/maps/particle_acid.c"
+#include "../src/maps/particles/particle_acid.c"
 
-#include "../src/maps/particle.c"
+#include "../src/maps/particles/particle.c"
 
 #include "../src/maps/characters/player.c"
 
@@ -172,7 +172,7 @@ void func_800D6774(void) // 0x800D6774
         case 0:
             Player_ControlFreeze();
             func_8008D448();
-            Game_FlashlightAttributesFix();
+            Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
             Game_TurnFlashlightOn();
