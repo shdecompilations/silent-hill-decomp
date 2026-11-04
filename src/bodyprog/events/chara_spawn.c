@@ -11,7 +11,7 @@
 #include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 

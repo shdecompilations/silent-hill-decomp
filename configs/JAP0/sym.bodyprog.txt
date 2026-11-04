@@ -264,7 +264,7 @@ MemCard_State_FileReadWrite                  = 0x80030F48; // type:func
 MemCard_DevicePathGenerate                   = 0x8003118C; // type:func
 
 //-------------------------------------------------------------------------
-//--- PA: 0x00C674   VA: 0x800311D4   subsegment: c, screen/background_draw
+//--- PA: 0x00C674   VA: 0x800311D4   subsegment: c, screen/background
 //-------------------------------------------------------------------------
 Screen_BackgroundImgDraw                     = 0x800311D4; // type:func
 Screen_BackgroundImgTransition               = 0x800314B4; // type:func
@@ -280,7 +280,7 @@ Text_Debug_IntToString                       = 0x80031E3C; // type:func
 Text_Debug_DrawDecimal                       = 0x80031ED4; // type:func
 
 //---------------------------------------------------------------------
-//--- PA: 0x00D4E0   VA: 0x80032040   subsegment: c, screen/screen_draw
+//--- PA: 0x00D4E0   VA: 0x80032040   subsegment: c, screen/draw
 //---------------------------------------------------------------------
 Screen_RectInterlacedClear                   = 0x80032040; // type:func
 Screen_Refresh                               = 0x800320B0; // type:func
@@ -289,7 +289,7 @@ Screen_XyPositionSet                         = 0x800321DC; // type:func
 Screen_DisplayEnvXySet                       = 0x8003220C; // type:func
 
 //---------------------------------------------------------------------
-//--- PA: 0x00D72C   VA: 0x8003228C   subsegment: c, screen/screen_fade
+//--- PA: 0x00D72C   VA: 0x8003228C   subsegment: c, screen/fade
 //---------------------------------------------------------------------
 Screen_FadeDrawModeSet                       = 0x8003228C; // type:func
 Screen_FadeInProgressGet                     = 0x800322E0; // type:func
@@ -2778,12 +2778,12 @@ midi_smf_stat                                = 0x800AB09C; // type:func
 g_MemCard_SaveIconTim                        = 0x800AB134;  // size:0xC0
 
 //-----------------------------------------------------------------------------
-//--- PA: 0x086694   VA: 0x800AB1F4   subsegment: .data, screen/background_draw
+//--- PA: 0x086694   VA: 0x800AB1F4   subsegment: .data, screen/background
 //-----------------------------------------------------------------------------
 g_Screen_BackgroundImgGamma                  = 0x800AB1F4; // size:0x2
 
 //-------------------------------------------------------------------------
-//--- PA: 0x086698   VA: 0x800AB1F8   subsegment: .data, screen/screen_fade
+//--- PA: 0x086698   VA: 0x800AB1F8   subsegment: .data, screen/fade
 //-------------------------------------------------------------------------
 D_800A8E5C                                   = 0x800AB1F8;
 D_800A8E74                                   = 0x800AB210;
@@ -2797,7 +2797,7 @@ D_800A8EB0                                   = 0x800AB24C;
 g_Screen_BlackBorderShade                    = 0x800AB2DC;
 
 //-------------------------------------------------------------------------
-//--- PA: 0x086780   VA: 0x800AB2E0   subsegment: .data, screen/screen_data
+//--- PA: 0x086780   VA: 0x800AB2E0   subsegment: .data, screen/data
 //-------------------------------------------------------------------------
 vcNullRoadArray                              = 0x800AB2E0; // _VC_ROAD_DATA[2]
 g_OrderingTable0                             = 0x800AB310; // type:s8 size:0x28
@@ -3381,12 +3381,12 @@ g_Text_Debug_PositionSet0                    = 0x800B8150; // type:DVECTOR size:
 g_Text_Debug_PositionSet1                    = 0x800B8154; // type:DVECTOR size:4
 
 //------------------------------------------------------------------------
-//--- PA: 0x0935F8   VA: 0x800B8158   subsegment: .bss, screen/screen_fade
+//--- PA: 0x0935F8   VA: 0x800B8158   subsegment: .bss, screen/fade
 //------------------------------------------------------------------------
 D_800B5C28                                   = 0x800B8158;
 
 //------------------------------------------------------------------------
-//--- PA: 0x093600   VA: 0x800B8160   subsegment: .bss, screen/screen_data
+//--- PA: 0x093600   VA: 0x800B8160   subsegment: .bss, screen/data
 //------------------------------------------------------------------------
 g_ScreenFadeTimestep                         = 0x800B8160; // type:s32
 g_VBlanks                                    = 0x800B8164; // type:s32

@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/events/events_main.h"
-#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/data.h"
 #include "bodyprog/math/math.h"
 
 void Event_Update(bool disableButtonEvents) // 0x800373CC

@@ -2,7 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sound/sound_system.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/draw.h"
 
 void Settings_ScreenAndVolUpdate(void) // 0x800333CC
 {

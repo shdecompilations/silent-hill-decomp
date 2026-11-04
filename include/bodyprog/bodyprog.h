@@ -19,7 +19,7 @@
 #include "bodyprog/gfx/world_object.h"
 #include "bodyprog/map/map.h"
 #include "bodyprog/map/terrain.h"
-#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/data.h"
 #include "bodyprog/sound/sfx_id_enum.h"
 #include "bodyprog/text/map_msg.h"
 #include "bodyprog/view/vw_system.h"

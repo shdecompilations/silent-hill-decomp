@@ -6,7 +6,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/sys/joy.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/draw.h"
 #include "bodyprog/sys/game_main.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sound_system.h"

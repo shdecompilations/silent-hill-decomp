@@ -4,8 +4,8 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/data.h"
+#include "bodyprog/screen/draw.h"
 #include "bodyprog/view/vw_calc.h"
 #include "bodyprog/view/vw_system.h"
 #include "bodyprog/math/math.h"

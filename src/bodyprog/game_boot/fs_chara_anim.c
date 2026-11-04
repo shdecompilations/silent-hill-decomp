@@ -9,7 +9,7 @@
 #include "main/fsqueue.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/draw.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"

@@ -62,7 +62,7 @@ segments:
       - [0x0, .rodata, bodyprog]
       - [0x4, .rodata, sys/memcard]
       - [0x130, rodata] # Garbage padding (should start at 0x13A but causes mismatches)
-      - [0x13C, .rodata, screen/screen_fade]
+      - [0x13C, .rodata, screen/fade]
       - [0x17C, .rodata, screen/cutscene_border]
       - [0x1DC, .rodata, sys/syswork_globals]
       - [0x1F0, rodata]
@@ -130,7 +130,7 @@ segments:
 
       # data only files
       - [auto,       c, bodyprog]
-      - [auto,       c, screen/screen_data]
+      - [auto,       c, screen/data]
       - [auto,       c, sys/syswork_globals]
       - [auto,       c, sys/chara_data_info]
       - [auto,       c, sys/map_info]
@@ -138,10 +138,10 @@ segments:
       - [auto,       c, sound/sound_data] # Possibly `sd_dat.c` from SH2 symbols?
       - [auto,       c, bodyprog_data_80028B94]
       - [0x97F0, c, sys/memcard]
-      - [0xC674, c, screen/background_draw]
+      - [0xC674, c, screen/background]
       - [0xD084, c, text/text_debug_draw]
-      - [0xD4E0, c, screen/screen_draw]
-      - [0xD72C, c, screen/screen_fade]
+      - [0xD4E0, c, screen/draw]
+      - [0xD72C, c, screen/fade]
       - [0xDA24, c, screen/cutscene_border]
       - [0xDD08, c, sys/vsync]
       - [0xDD58, c, sys/fs_screens]
@@ -397,10 +397,10 @@ segments:
 
       # .data section
       - [0x865D4, .data, sys/memcard]
-      - [0x86694, .data, screen/background_draw]
-      - [0x86698, .data, screen/screen_fade]
+      - [0x86694, .data, screen/background]
+      - [0x86698, .data, screen/fade]
       - [0x866D4, .data, screen/cutscene_border]
-      - [0x86780, .data, screen/screen_data]
+      - [0x86780, .data, screen/data]
       - [0x86938, .data, sys/chara_data_info]
       - [0x86C08, .data, sys/map_info]
       - [0x86FA4, .data, sys/game_main]
@@ -472,9 +472,9 @@ segments:
       # .bss section
       - [0x8FFE8, .bss, sys/memcard]
       - [0x935F0, .bss, text/text_debug_draw]
-      - [0x935F8, .bss, screen/screen_fade]
+      - [0x935F8, .bss, screen/fade]
       - [0x935FC, pad]
-      - [0x93600, .bss, screen/screen_data]
+      - [0x93600, .bss, screen/data]
       - [0x976A0, bss] # `vcWork + g_ActiveBufferIdx` Not possible to set it in a logical
       - [0x97990, .bss, sys/syswork_globals]
       - [0x9A6D0, bss]

@@ -4,8 +4,8 @@
 #include <libgs.h>
 
 #include "main/fsqueue.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/data.h"
+#include "bodyprog/screen/draw.h"
 #include "bodyprog/view/structs.h"
 #include "bodyprog/view/vc_main.h"
 #include "bodyprog/view/vc_util.h"

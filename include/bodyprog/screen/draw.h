@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_SCREEN_SCREENDRAW_H
 #define _BODYPROG_SCREEN_SCREENDRAW_H
 
-#include "bodyprog/screen/screen_fade.h"
+#include "bodyprog/screen/fade.h"
 #include "bodyprog/screen/cutscene_border.h"
 
 // ==========

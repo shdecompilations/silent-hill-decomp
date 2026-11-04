@@ -1,9 +1,9 @@
 #include "game.h"
 
 #include "main/fsqueue.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
-#include "bodyprog/screen/background_draw.h"
+#include "bodyprog/screen/data.h"
+#include "bodyprog/screen/draw.h"
+#include "bodyprog/screen/background.h"
 #include "bodyprog/math/math.h"
 
 // ========================================
@@ -48,7 +48,7 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
 #endif
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/screen/background_draw", Screen_BackgroundImgDraw);
+INCLUDE_ASM("bodyprog/nonmatchings/screen/background", Screen_BackgroundImgDraw);
 #else
 void Screen_BackgroundImgDraw(s_FsImageDesc* image)
 {

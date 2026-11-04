@@ -3,7 +3,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/text/text_draw.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/draw.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 

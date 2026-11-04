@@ -3,8 +3,8 @@
 #include <psyq/libpad.h>
 
 #include "bodyprog/math/math.h"
-#include "bodyprog/screen/screen_data.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/data.h"
+#include "bodyprog/screen/draw.h"
 #include "bodyprog/sys/joy.h"
 
 void Joy_Init(void) // 0x8003441C

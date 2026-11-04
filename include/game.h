@@ -15,7 +15,7 @@
 #include "bodyprog/formats/anm.h"
 #include "bodyprog/items.h"
 #include "bodyprog/savegame.h"
-#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/data.h"
 #include "bodyprog/screen/vsync.h"
 #include "bodyprog/sys/joy.h"
 #include "maps/common/characters/harry.h"

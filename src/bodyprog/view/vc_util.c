@@ -5,7 +5,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/view/vc_util.h"
 #include "bodyprog/view/vw_system.h"
-#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/data.h"
 
 #define V_BLANKS_MULT 11
 

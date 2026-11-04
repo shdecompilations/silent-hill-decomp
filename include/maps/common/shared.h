@@ -5,8 +5,8 @@
 
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/screen/background_draw.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/background.h"
+#include "bodyprog/screen/draw.h"
 #include "maps/common/map_util.h"
 
 /** @brief Heading angle quadrants. TODO: Order uncertain. North/South and East/West could be swapped. */

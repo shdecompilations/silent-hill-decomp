@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd/libsd.h"
-#include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/screen/draw.h"
 #include "bodyprog/sys/game_main.h"
 #include "bodyprog/sys/joy.h"
 #include "bodyprog/text/text_draw.h"

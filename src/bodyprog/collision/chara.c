@@ -10,7 +10,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/screen/screen_data.h"
+#include "bodyprog/screen/data.h"
 #include "main/rng.h"
 
 bool func_80070320(void) // 0x80070320

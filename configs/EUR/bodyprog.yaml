@@ -62,7 +62,7 @@ segments:
       - [0x0,    .rodata, bodyprog]
       - [0x4,    .rodata, sys/memcard]
       - [0x138,   pad] # Garbage padding (should start at 0x13A but causes mismatches)
-      - [0x144,  .rodata, screen/screen_fade]
+      - [0x144,  .rodata, screen/fade]
       - [0x184,  .rodata, screen/cutscene_border]
       - [0x1E4,  .rodata, sys/syswork_globals]
       - [0x1F8,   pad]
@@ -128,7 +128,7 @@ segments:
       
       # data only files
       - [auto,       c, bodyprog]
-      - [auto,       c, screen/screen_data]
+      - [auto,       c, screen/data]
       - [auto,       c, sys/syswork_globals]
       - [auto,       c, sys/chara_data_info]
       - [auto,       c, sys/map_info]
@@ -138,10 +138,10 @@ segments:
       
       
       - [0x8678,     c, sys/memcard]
-      - [0xB534,     c, screen/background_draw]
+      - [0xB534,     c, screen/background]
       - [0xC0D0,     c, text/text_debug_draw]
-      - [0xC52C,     c, screen/screen_draw]
-      - [0xC77C,     c, screen/screen_fade]
+      - [0xC52C,     c, screen/draw]
+      - [0xC77C,     c, screen/fade]
       - [0xCA74,     c, screen/cutscene_border]
       - [0xCD54,     c, sys/vsync]
       - [0xCDA4,     c, sys/fs_screens]
@@ -439,10 +439,10 @@ segments:
 
       # .data section
       - [0x832E4, .data, sys/memcard]
-      - [0x833A4, .data, screen/background_draw]
-      - [0x833A8, .data, screen/screen_fade]
+      - [0x833A4, .data, screen/background]
+      - [0x833A8, .data, screen/fade]
       - [0x833E4, .data, screen/cutscene_border]
-      - [0x83490, .data, screen/screen_data]
+      - [0x83490, .data, screen/data]
       - [0x83648, .data, sys/chara_data_info]
       - [0x83918, .data, sys/map_info]
       - [0x83CB4, .data, sys/game_main]
@@ -512,11 +512,11 @@ segments:
       # .bss section
       - [0x8C578, .bss, sys/memcard]
       - [0x8FB80, .bss, text/text_debug_draw]
-      - [0x8FB88, .bss, screen/screen_fade]
+      - [0x8FB88, .bss, screen/fade]
       - [0x8FB8C,  pad]
-      - [0x8FB90, .bss, screen/screen_data]
+      - [0x8FB90, .bss, screen/data]
       - [0x93C30,  bss] # `vcWork + g_ActiveBufferIdx` Not possible to set it in a logical
-                        # way as it fits for `screen_data.c`, however due the hacky way we
+                        # way as it fits for `data.c`, however due the hacky way we
                         # use to define BSS data it's not possible to define it in order
                         # and in any case of modify the struct names/values it would require
                         # to replace struct, other way to circunvent the issue is too hacky
