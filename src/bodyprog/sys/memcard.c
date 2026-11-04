@@ -6,7 +6,7 @@
 #include <psyq/sys/file.h>
 
 #include "main/fsqueue.h"
-#include "bodyprog/memcard.h"
+#include "bodyprog/sys/memcard.h"
 
 #ifndef PAD_HACK_IGNORE
     s32 __pad_bss_800B5484;

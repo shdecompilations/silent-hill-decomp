@@ -1,6 +1,6 @@
 #include "game.h"
 
-#include "bodyprog/demo.h"
+#include "bodyprog/sys/demo.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sys/game_main.h"
 

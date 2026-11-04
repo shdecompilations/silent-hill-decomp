@@ -4,7 +4,7 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/demo.h"
+#include "bodyprog/sys/demo.h"
 #include "bodyprog/sys/joy.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sys/game_main.h"

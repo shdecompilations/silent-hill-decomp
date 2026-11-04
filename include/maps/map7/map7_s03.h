@@ -5,7 +5,7 @@
 
 #include <psyq/libgs.h>
 
-#include "bodyprog/dms.h"
+#include "bodyprog/chara/dms.h"
 
 #define HAS_PlayerState_Unk51
 #define HAS_PlayerState_Unk131

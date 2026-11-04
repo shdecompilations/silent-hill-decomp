@@ -12,6 +12,15 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
+// VRAM position of the CLUT rows used by `func_8008E5B4` and `func_8008E794`.
+#if VERSION_REGION_IS(PAL)
+    #define WATER_CLUT_X 928
+    #define WATER_CLUT_Y 432
+#else
+    #define WATER_CLUT_X 224
+    #define WATER_CLUT_Y 0
+#endif
+
 s_800C4818 D_800C4818;
 s32 __pad_bss_800C483C;
 
@@ -248,7 +257,7 @@ q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2) // 0x8008D8
     temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), lensFlareIntensity, 0, Q8(16.0f));
     temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, Q8(0.8f), Q8(13.0f));
     res   = Q12_MULT(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q8(3.335f), Q8(7.425f)), // TODO: Yucky floats, maybe these aren't distances?
-                        Q12_MULT(temp0, temp1));
+                     Q12_MULT(temp0, temp1));
 
     return (res > Q8(24.0f)) ? Q8(24.0f) : res;
 }
@@ -595,15 +604,6 @@ s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
     return NULL;
 }
 
-// VRAM position of the CLUT rows used by `func_8008E5B4` and `func_8008E794`.
-#if VERSION_REGION_IS(PAL)
-    #define WATER_CLUT_X 928
-    #define WATER_CLUT_Y 432
-#else
-    #define WATER_CLUT_X 224
-    #define WATER_CLUT_Y 0
-#endif
-
 void func_8008E5B4(void) // 0x8008E5B4
 {
     typedef struct
@@ -762,9 +762,6 @@ void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY) // 0x8008E794
     }
 }
 
-#undef WATER_CLUT_X
-#undef WATER_CLUT_Y
-
 void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 {
     typedef struct
@@ -912,10 +909,10 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 void func_8008EF18(void) {} // 0x8008EF18
 
 #if VERSION_IS(USA)
-// Padding with garbage data? DWAVE filename goes unused here.
-// TODO: check other regions.
-const u_Filename D_8002B2CC = { { 'D', 'W', 'A', 'V', 'E', '\0', 0x08, 0x80 } };
-const s32 D_8002B2D4 = 0;
+    // Padding with garbage data? DWAVE filename goes unused here.
+    // TODO: Check other regions.
+    const u_Filename D_8002B2CC = { { 'D', 'W', 'A', 'V', 'E', '\0', 0x08, 0x80 } };
+    const s32        D_8002B2D4 = 0;
 #else
 INCLUDE_RODATA("bodyprog/nonmatchings/water", D_8002B2CC);
 #if VERSION_IS(EUR)

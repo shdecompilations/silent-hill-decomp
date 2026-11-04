@@ -5,7 +5,7 @@
 #include <psyq/libspu.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/libsd.h"
+#include "bodyprog/libsd/libsd.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 

@@ -6,7 +6,7 @@
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s06.h"
 #include "maps/particle.h"

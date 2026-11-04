@@ -1,6 +1,6 @@
 #include "gpu.h"
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/demo.h"
+#include "bodyprog/sys/demo.h"
 #include "main/fsqueue.h"
 #include "main/fsmem.h"
 

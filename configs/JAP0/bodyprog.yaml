@@ -60,7 +60,7 @@ segments:
     subsegments:
       # .rodata section
       - [0x0, .rodata, bodyprog]
-      - [0x4, .rodata, memcard]
+      - [0x4, .rodata, sys/memcard]
       - [0x130, rodata] # Garbage padding (should start at 0x13A but causes mismatches)
       - [0x13C, .rodata, screen/screen_fade]
       - [0x17C, .rodata, screen/cutscene_border]
@@ -101,13 +101,13 @@ segments:
       - [0x3CFC, rodata]
       - [0x3D04, .rodata, collision/collision]
       - [0x3D54, .rodata, bodyprog_data_80028B94]
-      - [0x4910, .rodata, player_control]
+      - [0x4910, .rodata, player/player_control]
       - [0x5A10, .rodata, view/vc_main]
       - [0x5CBC, .rodata, events/events_util]
       - [0x5DC4, .rodata, bodyprog_80089090]
       - [0x615C, .rodata, chara/combat]
-      - [0x6414, .rodata, water]
-      - [0x6438, .rodata, demo]
+      - [0x6414, .rodata, gfx/water]
+      - [0x6438, .rodata, sys/demo]
       - [0x6458, .rodata, ranking]
       - [0x672C, rodata] # Garbage padding
       - [0x6734, o, libcd/iso9660, .rdata]
@@ -137,7 +137,7 @@ segments:
       - [auto,       c, events/event_data]
       - [auto,       c, sound/sound_data] # Possibly `sd_dat.c` from SH2 symbols?
       - [auto,       c, bodyprog_data_80028B94]
-      - [0x97F0, c, memcard]
+      - [0x97F0, c, sys/memcard]
       - [0xC674, c, screen/background_draw]
       - [0xD084, c, text/text_debug_draw]
       - [0xD4E0, c, screen/screen_draw]
@@ -199,7 +199,7 @@ segments:
       - [0x4C144, c, collision/trigger]
       - [0x4C890, c, collision/los]
       - [0x4D214, c, collision/chara]
-      - [0x4D5D8, c, player_control]
+      - [0x4D5D8, c, player/player_control]
       - [0x5D81C, c, view/vc_main]
       - [0x62C54, c, events/events_util]           # }
       - [0x64D84, c, events/bgm_utils]             # }
@@ -207,9 +207,9 @@ segments:
       - [0x65B58, c, events/chara_spawn]           # }
       - [0x65F6C, c, bodyprog_80089090]
       - [0x66F34, c, chara/combat]
-      - [0x6985C, c, dms]
-      - [0x6A2D8, c, water]
-      - [0x6BDDC, c, demo]
+      - [0x6985C, c, chara/dms]
+      - [0x6A2D8, c, gfx/water]
+      - [0x6BDDC, c, sys/demo]
       - [0x6C7D8, c, ranking]
       - [0x6E604, c, credits_init]
 
@@ -396,7 +396,7 @@ segments:
 
 
       # .data section
-      - [0x865D4, .data, memcard]
+      - [0x865D4, .data, sys/memcard]
       - [0x86694, .data, screen/background_draw]
       - [0x86698, .data, screen/screen_fade]
       - [0x866D4, .data, screen/cutscene_border]
@@ -427,12 +427,12 @@ segments:
       - [0x8BE08, .data, gfx/env_effects]
       - [0x8BF70, .data, gfx/bodyprog_800652F4]
       - [0x8BFA0, .data, paper_map/paper_map]
-      - [0x8C73C, .data, player_control]
+      - [0x8C73C, .data, player/player_control]
       - [0x8D4F4, .data, view/vc_main]
       - [0x8D564, .data, bodyprog_80089090]
       - [0x8D57C, .data, chara/combat]
-      - [0x8D59C, .data, water]
-      - [0x8D618, .data, demo]
+      - [0x8D59C, .data, gfx/water]
+      - [0x8D618, .data, sys/demo]
       - [0x8D654, .data, ranking]
       - [0x8D668, .data, credits_init]
       - [0x8D6DC, o, libcard/init, .data]
@@ -470,7 +470,7 @@ segments:
       - [0x8FFE6, sdata] # Garbage padding, some reason splat doesn't output data into the .s, so postbuild currently has to add it.
 
       # .bss section
-      - [0x8FFE8, .bss, memcard]
+      - [0x8FFE8, .bss, sys/memcard]
       - [0x935F0, .bss, text/text_debug_draw]
       - [0x935F8, .bss, screen/screen_fade]
       - [0x935FC, pad]
@@ -524,15 +524,15 @@ segments:
       - [0xA1E24, pad] # Garbage.
       - [0xA1E28, .bss, collision/collision]
       - [0xA1E9C, pad] # Garbage.
-      - [0xA1EA0, .bss, player_control]
+      - [0xA1EA0, .bss, player/player_control]
       - [0xA1FEC, pad] # Garbage.
       - [0xA1FF0, bss, player_control_2] # Only contains `D_800C4620` which must be nested
       - [0xA1FFC, pad] # Garbage.
       - [0xA2000, .bss, view/vc_main]
       - [0xA2010, .bss, events/events_util]
       - [0xA20F8, .bss, chara/combat]
-      - [0xA21E8, .bss, water]
-      - [0xA2210, .bss, demo]
+      - [0xA21E8, .bss, gfx/water]
+      - [0xA2210, .bss, sys/demo]
       - [0xA2270, .bss, ranking]
       - [0xA22B9]       # Garbage.
       - [0xA22BC, pad] # Garbage.

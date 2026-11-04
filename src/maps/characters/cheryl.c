@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "maps/shared.h"
 #include "maps/characters/cheryl.h"
 

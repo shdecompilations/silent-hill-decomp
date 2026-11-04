@@ -9,7 +9,7 @@
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/item_screens.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "bodyprog/screen/screen_data.h"
 #include "main/rng.h"
 

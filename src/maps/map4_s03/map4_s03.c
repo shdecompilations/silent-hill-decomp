@@ -7,7 +7,7 @@
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map4/map4_s03.h"
 #include "maps/particle.h"

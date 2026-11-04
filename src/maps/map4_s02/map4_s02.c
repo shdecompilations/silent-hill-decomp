@@ -7,7 +7,7 @@
 #include "maps/characters/player.h"
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/groaner.h"
 #include "maps/characters/romper.h"

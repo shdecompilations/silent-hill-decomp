@@ -1,5 +1,5 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "maps/characters/player.h"
 
 // Player-related functions kept inside map overlay for some reason.

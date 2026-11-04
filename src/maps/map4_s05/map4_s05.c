@@ -3,10 +3,10 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/dms.h"
+#include "bodyprog/chara/dms.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map4/map4_s05.h"

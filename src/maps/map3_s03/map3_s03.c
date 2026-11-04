@@ -2,7 +2,7 @@
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map3/map3_s03.h"
 #include "maps/particle.h"

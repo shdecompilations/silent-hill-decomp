@@ -6,7 +6,7 @@
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "bodyprog/view/vc_main.h"
 #include "bodyprog/view/vw_system.h"
 

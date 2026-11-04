@@ -2,7 +2,7 @@
 
 #include <psyq/libapi.h>
 
-#include "bodyprog/libsd.h"
+#include "bodyprog/libsd/libsd.h"
 
 SMF_SONG smf_song[2];
 

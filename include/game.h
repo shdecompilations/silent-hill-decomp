@@ -1,7 +1,7 @@
 #ifndef _GAME_H
 #define _GAME_H
 
-#include "event_flags.h"
+#include "bodyprog/events/event_flags.h"
 #include "gpu.h"
 #include "types.h"
 #include "libkpad.h"

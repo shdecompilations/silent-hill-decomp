@@ -3,7 +3,7 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/demo.h"
+#include "bodyprog/sys/demo.h"
 #include "bodyprog/events/events_main.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/item_screens.h"
@@ -13,7 +13,7 @@
 #include "bodyprog/sys/joy.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
+#include "bodyprog/sys/memcard.h"
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/sys/game_main.h"
 #include "screens/b_konami/b_konami.h"

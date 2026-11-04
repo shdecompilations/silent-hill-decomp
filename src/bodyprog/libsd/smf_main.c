@@ -2,7 +2,7 @@
 
 #include <psyq/libapi.h>
 
-#include "bodyprog/libsd.h"
+#include "bodyprog/libsd/libsd.h"
 
 bool sd_interrupt_start_flag = false;
 s16  sd_keyoff_mode          = 0;

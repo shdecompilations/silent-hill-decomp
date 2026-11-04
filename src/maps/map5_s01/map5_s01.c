@@ -1,5 +1,5 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/dms.h"
+#include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/gfx/map_effects.h"
@@ -14,7 +14,7 @@
 #include "maps/characters/romper.h"
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "maps/characters/groaner.h"
 
 #include "../src/maps/unk_draw_m1s03.c"

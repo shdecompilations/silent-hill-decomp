@@ -4,7 +4,7 @@
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "bodyprog/ranking.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_data.h"

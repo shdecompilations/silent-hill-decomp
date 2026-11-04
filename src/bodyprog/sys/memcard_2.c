@@ -3,7 +3,7 @@
 #include <memory.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/memcard.h"
+#include "bodyprog/sys/memcard.h"
 #include "screens/saveload.h"
 
 #ifndef PAD_HACK_IGNORE

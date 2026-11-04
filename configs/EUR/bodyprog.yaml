@@ -60,7 +60,7 @@ segments:
     subsegments:
       # .rodata section
       - [0x0,    .rodata, bodyprog]
-      - [0x4,    .rodata, memcard]
+      - [0x4,    .rodata, sys/memcard]
       - [0x138,   pad] # Garbage padding (should start at 0x13A but causes mismatches)
       - [0x144,  .rodata, screen/screen_fade]
       - [0x184,  .rodata, screen/cutscene_border]
@@ -101,13 +101,13 @@ segments:
       - [0x2B84, rodata]
       - [0x2B8C, .rodata, collision/collision]
       - [0x2BDC, .rodata, bodyprog_data_80028B94]
-      - [0x3798, .rodata, player_control]
+      - [0x3798, .rodata, player/player_control]
       - [0x4898, .rodata, view/vc_main]
       - [0x4B44, .rodata, events/events_util]
       - [0x4C4C, .rodata, bodyprog_80089090]
       - [0x4FE4, .rodata, chara/combat]
-      - [0x52FC, .rodata, water]
-      - [0x5320, .rodata, demo]
+      - [0x52FC, .rodata, gfx/water]
+      - [0x5320, .rodata, sys/demo]
       - [0x533C, .rodata, ranking]
       - [0x5614,  rodata] # Garbage padding
       - [0x561C,       o, libcd/iso9660, .rdata]
@@ -137,7 +137,7 @@ segments:
       - [auto,       c, bodyprog_data_80028B94]
       
       
-      - [0x8678,     c, memcard]
+      - [0x8678,     c, sys/memcard]
       - [0xB534,     c, screen/background_draw]
       - [0xC0D0,     c, text/text_debug_draw]
       - [0xC52C,     c, screen/screen_draw]
@@ -244,7 +244,7 @@ segments:
       - [0x497A8,    c, collision/trigger]
       - [0x49EF4,    c, collision/los]
       - [0x4A878,    c, collision/chara]
-      - [0x4AC3C,    c, player_control]
+      - [0x4AC3C,    c, player/player_control]
       - [0x5AE98,    c, view/vc_main]
                                                       # These files may be from a different path than `events/`
                                                       # considering their position, they still related to events,
@@ -262,9 +262,9 @@ segments:
       - [0x631CC,    c, events/chara_spawn]           # }
       - [0x635E0,    c, bodyprog_80089090]
       - [0x645AC,    c, chara/combat]
-      - [0x66EF4,    c, dms]
-      - [0x67970,    c, water]
-      - [0x6946C,    c, demo]
+      - [0x66EF4,    c, chara/dms]
+      - [0x67970,    c, gfx/water]
+      - [0x6946C,    c, sys/demo]
       - [0x69E98,    c, ranking]
       - [0x6BCC4,    c, credits_init]
       - [0x6C048,    o, libapi/a09]
@@ -438,7 +438,7 @@ segments:
       - [0x81504,    c, libsd/smf_mid]
 
       # .data section
-      - [0x832E4, .data, memcard]
+      - [0x832E4, .data, sys/memcard]
       - [0x833A4, .data, screen/background_draw]
       - [0x833A8, .data, screen/screen_fade]
       - [0x833E4, .data, screen/cutscene_border]
@@ -469,12 +469,12 @@ segments:
       - [0x88510, .data, gfx/env_effects]
       - [0x88678, .data, gfx/bodyprog_800652F4]
       - [0x886A8, .data, paper_map/paper_map]
-      - [0x88E44, .data, player_control]
+      - [0x88E44, .data, player/player_control]
       - [0x89BFC, .data, view/vc_main]
       - [0x89C6C, .data, bodyprog_80089090]
       - [0x89C84, .data, chara/combat]
-      - [0x89CA4, .data, water]
-      - [0x89D20, .data, demo]
+      - [0x89CA4, .data, gfx/water]
+      - [0x89D20, .data, sys/demo]
       - [0x89D54, .data, ranking]
       - [0x89D68, .data, credits_init]
       - [0x89DDC,     o, libcard/init, .data]
@@ -510,7 +510,7 @@ segments:
       - [0x8C570, .sdata, libkpad/libkpad]
 
       # .bss section
-      - [0x8C578, .bss, memcard]
+      - [0x8C578, .bss, sys/memcard]
       - [0x8FB80, .bss, text/text_debug_draw]
       - [0x8FB88, .bss, screen/screen_fade]
       - [0x8FB8C,  pad]
@@ -582,7 +582,7 @@ segments:
       - [0x9E3B4,  pad] # Garbage.
       - [0x9E3B8, .bss, collision/collision]
       - [0x9E42C,  pad] # Garbage.
-      - [0x9E430, .bss, player_control]
+      - [0x9E430, .bss, player/player_control]
       - [0x9E57C,  pad] # Garbage.
       - [0x9E580,  bss, player_control_2] # Only contains `D_800C4620` which must be nested
                                              # static inside `func_800806AC` (since it's only used
@@ -594,8 +594,8 @@ segments:
       - [0x9E590, .bss, view/vc_main]
       - [0x9E5A0, .bss, events/events_util]
       - [0x9E688, .bss, chara/combat]
-      - [0x9E778, .bss, water]
-      - [0x9E7A0, .bss, demo]
+      - [0x9E778, .bss, gfx/water]
+      - [0x9E7A0, .bss, sys/demo]
       - [0x9E800, .bss, ranking]
       - [0x9E849]       # Garbage.
       - [0x9E84C,  pad] # Garbage.

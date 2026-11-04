@@ -11,7 +11,7 @@
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/item_screens.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "bodyprog/math/math.h"
 
 static const s32 __pad_rodata_80025EAC = 0;

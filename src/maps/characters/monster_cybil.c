@@ -3,7 +3,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/bone.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 
 #include "maps/characters/cybil.h"
 #include "maps/characters/monster_cybil.h"

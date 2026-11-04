@@ -3,11 +3,11 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/dms.h"
+#include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s01.h"
 #include "maps/particle.h"

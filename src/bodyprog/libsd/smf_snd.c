@@ -3,7 +3,7 @@
 #include <psyq/libspu.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/libsd.h"
+#include "bodyprog/libsd/libsd.h"
 
 VAB_H        vab_h[SD_VAB_SLOTS];
 u8           sd_vb_malloc_rec[136];

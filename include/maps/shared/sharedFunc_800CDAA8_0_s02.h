@@ -1,5 +1,5 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/player.h"
+#include "bodyprog/player/player.h"
 
 // TODO:
 // - Rename `sharedFunc_800CDAA8_0_s02` -> `sharedFunc_800D0E34_0_s00`, g_Player_MoveSpeed` -> `sharedData_800E39DC_0_s00`

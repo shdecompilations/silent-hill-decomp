@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/demo.h"
+#include "bodyprog/sys/demo.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/collision_trigger.h"
 #include "bodyprog/events/radio.h"
