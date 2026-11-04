@@ -109,11 +109,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             func_8004C7E4();
 #endif
 
-#if VERSION_REGION_IS(PAL)
-            Screen_RectInterlacedClear(0, 1, SCREEN_WIDTH, 510, 0u, 0u, 0u);
-#else
-            Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, 448, 0u, 0u, 0u);
-#endif
+            Screen_RectInterlacedClear(0, SCREEN_FRAMEBUFFER_Y_INTERLACED, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0u, 0u, 0u);
             
             Screen_Init(SCREEN_WIDTH, true);
 
@@ -276,11 +272,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             func_8004C7E4();
 #endif
 
-#if VERSION_REGION_IS(PAL)
-            Screen_RectInterlacedClear(0, 1, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-#else
-            Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-#endif
+            Screen_RectInterlacedClear(0, SCREEN_FRAMEBUFFER_Y_INTERLACED, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
 
             Screen_Init(SCREEN_WIDTH, true);
 

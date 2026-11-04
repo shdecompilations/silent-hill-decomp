@@ -98,11 +98,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             g_GameWork.background2dColor.g = 0;
             g_GameWork.background2dColor.b = 0;
 
-#if VERSION_REGION_IS(PAL)
-            Screen_RectInterlacedClear(0, 1, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-#else
-            Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-#endif
+            Screen_RectInterlacedClear(0, SCREEN_FRAMEBUFFER_Y_INTERLACED, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks    = 1;
@@ -396,11 +392,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     }
     else
     {
-#if VERSION_REGION_IS(PAL)
-        setRECTFast((RECT*)PSX_SCRATCH, 0, 1, 320, 510);
-#else
-        setRECTFast((RECT*)PSX_SCRATCH, 0, 32, 320, 448);
-#endif
+        setRECTFast((RECT*)PSX_SCRATCH, 0, SCREEN_FRAMEBUFFER_Y_INTERLACED, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED);
         ClearImage2((RECT*)PSX_SCRATCH, 0u, 0u, 0u);
         Screen_Init(SCREEN_WIDTH, false);
         return;

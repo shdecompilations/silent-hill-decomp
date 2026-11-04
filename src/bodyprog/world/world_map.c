@@ -1431,13 +1431,7 @@ void WorldMap_Draw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 
 
 bool WorldMap_SubchunkVisibleCheck(s_IpdModelBuffer* modelBuf,
                                    q7_8 subchunkX, q7_8 subchunkZ, q23_8 chunkEdgeX, q23_8 chunkEdgeZ) // 0x80044420
-{
-#if VERSION_REGION_IS(PAL)
-    #define FAR_PLANE SCREEN_HEIGHT
-#else
-    #define FAR_PLANE g_GameWork.gsScreenHeight
-#endif
-    
+{    
     GsCOORDINATE2    viewCoord;
     MATRIX           viewMat;
     s_SubchunkRange* curSubchunkRange;
@@ -1464,7 +1458,7 @@ bool WorldMap_SubchunkVisibleCheck(s_IpdModelBuffer* modelBuf,
             return Vw_AabbVisibleInFrustumCheck(&viewMat,
                                                 modelBuf->minX, Q8(-8.0f), modelBuf->minZ,
                                                 modelBuf->maxX, Q8(4.0f), modelBuf->maxZ,
-                                                Q8(25.0f), FAR_PLANE);
+                                                Q8(25.0f), SCREEN_GEOM_DIST);
         }
     }
 

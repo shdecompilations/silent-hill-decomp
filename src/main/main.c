@@ -60,11 +60,7 @@ s32 g_MainFbIdx = 0;
 
 DISPENV g_MainDispEnv = {
     .disp   = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT },
-#if VERSION_REGION_IS(PAL)
-    .screen = { 0, 16, 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE }
-#else
-    .screen = { 0, 8, 256,  FRAMEBUFFER_HEIGHT_PROGRESSIVE }
-#endif
+    .screen = { 0, SCREEN_DISPENV_Y_BASE, 256, FRAMEBUFFER_HEIGHT_PROGRESSIVE }
 };
 
 DRAWENV g_MainDrawEnv = {

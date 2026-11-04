@@ -19,11 +19,7 @@ void vcInitCamera(s_MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos) // 0
 
     vcSetCameraUseWarp(chr_pos, g_SysWork.cameraAngleY);
 
-#if VERSION_REGION_IS(PAL)
-    SetGeomScreen(SCREEN_HEIGHT);
-#else
-    SetGeomScreen(g_GameWork.gsScreenHeight);
-#endif
+    SetGeomScreen(SCREEN_GEOM_DIST);
 
     vwInitViewInfo();
     vcInitVCSystem(map_overlay_ptr->cameraPaths);

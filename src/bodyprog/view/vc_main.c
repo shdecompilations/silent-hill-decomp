@@ -91,12 +91,12 @@ void vcStartCameraSystem(void) // 0x800809DC
 {
     vcWork.view_cam_active_f = true;
 #if VERSION_REGION_IS(PAL)
-    vcWork.geom_screen_dist  = SCREEN_HEIGHT; // Code relocated in PAL for some reason.
+    vcWork.geom_screen_dist  = SCREEN_GEOM_DIST; // Code relocated in PAL for some reason.
 #endif
     vcWork.updateLookAtPoint = false;
     vcWork.updateLookAtMat   = false;
 #if !VERSION_REGION_IS(PAL)
-    vcWork.geom_screen_dist  = g_GameWork.gsScreenHeight;
+    vcWork.geom_screen_dist  = SCREEN_GEOM_DIST;
 #endif
 }
 
@@ -266,11 +266,7 @@ void vcReturnPreAutoCamWork(bool warp_f) // 0x80080ED0
 
     vcWork.flags         &= ~(VC_USER_CAM_F | VC_USER_WATCH_F);
 
-#if VERSION_REGION_IS(PAL)
-    vcWork.geom_screen_dist = SCREEN_HEIGHT;
-#else
-    vcWork.geom_screen_dist = g_GameWork.gsScreenHeight;
-#endif
+    vcWork.geom_screen_dist = SCREEN_GEOM_DIST;
 }
 
 void vcSetSubjChara(VECTOR3* chara_pos,

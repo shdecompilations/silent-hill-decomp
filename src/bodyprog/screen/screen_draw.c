@@ -24,11 +24,7 @@ void Screen_Refresh(s32 screenWidth, bool isInterlaced) // 0x800323C8
 {
     DrawSync(SyncMode_Wait);
 
-#if VERSION_REGION_IS(PAL)
-    Screen_RectInterlacedClear(0, 1, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-#else
-    Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-#endif
+    Screen_RectInterlacedClear(0, SCREEN_FRAMEBUFFER_Y_INTERLACED, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
 
     Screen_Init(screenWidth, isInterlaced);
 }
@@ -41,11 +37,7 @@ void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
     DrawSync(SyncMode_Wait);
     GsInitGraph2(g_GameWork.gsScreenWidth, g_GameWork.gsScreenHeight, isInterlaced | (1 << 2), 1, 0);
 
-#if VERSION_REGION_IS(PAL)
-    GsDefDispBuff2(0, 0, 0, isInterlaced ? 0 : 256);
-#else
-    GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
-#endif
+    GsDefDispBuff2(0, SCREEN_DISPBUFF_Y_INTERLACED, 0, isInterlaced ? SCREEN_DISPBUFF_Y_INTERLACED : 256);
 
     GsDISPENV.screen.h =
     GsDRAWENV.clip.h   = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
@@ -79,11 +71,7 @@ void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
 
     displayEnv->screen.x = g_GameWorkConst->config.screenPositionX;
 
-#if VERSION_REGION_IS(PAL)
-    displayEnv->screen.y = g_GameWorkConst->config.screenPositionY + (RANGE_Y * 2);
-#else
-    displayEnv->screen.y = g_GameWorkConst->config.screenPositionY + RANGE_Y;
-#endif
+    displayEnv->screen.y = g_GameWorkConst->config.screenPositionY + SCREEN_DISPENV_Y_BASE;
     
     #undef RANGE_X
     #undef RANGE_Y

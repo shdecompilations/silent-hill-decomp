@@ -234,11 +234,7 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
         {
             if (interlacingEnabled)
             {
-#if VERSION_REGION_IS(PAL)
-                texOffsetY   = (i == 0) ? 1 : 0;
-#else
-                texOffsetY   = (i == 0) ? 32 : 0;
-#endif
+                texOffsetY   = (i == 0) ? SCREEN_FRAMEBUFFER_Y_INTERLACED : 0;
                 offsetY      = (i == 0) ? -FRAMEBUFFER_HEIGHT_PROGRESSIVE : 0;
                 tPageOffsetY = i * 256;
             }
@@ -246,11 +242,10 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
             {
 #if VERSION_REGION_IS(PAL)
                 texOffsetY   = 0;
-                offsetY      = -127;
 #else
-                texOffsetY   = (g_ActiveBufferIdx == 0) * 32;
-                offsetY      = -112;
+                texOffsetY   = (g_ActiveBufferIdx == 0) * SCREEN_FRAMEBUFFER_Y_INTERLACED;
 #endif
+                offsetY      = SCREEN_FRAMEBUFFER_EDGE_TOP;
                 tPageOffsetY = g_ActiveBufferIdx * 256;
             }
 

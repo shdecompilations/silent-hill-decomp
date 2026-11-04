@@ -1,6 +1,61 @@
 #ifndef _BODYPROG_SCREEN_SCREENDATA_H
 #define _BODYPROG_SCREEN_SCREENDATA_H
 
+// ========
+// Screen/framebuffer related defines.
+// ========
+
+#define SCREEN_WIDTH  320
+#define SCREEN_HEIGHT 240
+
+#if VERSION_REGION_IS(PAL)
+    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 255
+#else
+    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
+#endif
+
+#define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
+
+/** @brief First VRAM row of the interlaced framebuffer, used as the Y origin when clearing or drawing it. */
+#if VERSION_REGION_IS(PAL)
+    #define SCREEN_FRAMEBUFFER_Y_INTERLACED 1
+#else
+    #define SCREEN_FRAMEBUFFER_Y_INTERLACED 32
+#endif
+
+/** @brief Y position of the display buffer passed to `GsDefDispBuff2`. */
+#if VERSION_REGION_IS(PAL)
+    #define SCREEN_DISPBUFF_Y_INTERLACED 0
+#else
+    #define SCREEN_DISPBUFF_Y_INTERLACED 32
+#endif
+
+/** @brief Y offset of the display area within the TV picture. */
+#if VERSION_REGION_IS(PAL)
+    #define SCREEN_DISPENV_Y_BASE 16
+#else
+    #define SCREEN_DISPENV_Y_BASE 8
+#endif
+
+/** @brief Perspective projection distance used with `SetGeomScreen`.
+ * NTSC uses value from `g_GameWork.gsScreenHeight` while PAL always uses the 240 line screen height.
+ */
+#if VERSION_REGION_IS(PAL)
+    #define SCREEN_GEOM_DIST SCREEN_HEIGHT
+#else
+    #define SCREEN_GEOM_DIST g_GameWork.gsScreenHeight
+#endif
+
+/** @brief Distance from screen center to the top and bottom edges of the framebuffer. */
+#define SCREEN_FRAMEBUFFER_EDGE_TOP    (-(FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2))
+#define SCREEN_FRAMEBUFFER_EDGE_BOTTOM ((FRAMEBUFFER_HEIGHT_PROGRESSIVE + 1) / 2)
+
+#define ORDERING_TABLE_SIZE 2048
+
+// ========
+// Timing related defines.
+// ========
+
 #define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
 #define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
 #define TIMESTEP_60_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND))
@@ -18,17 +73,6 @@
 #else
     #define TICKS_PER_SECOND_REGIONAL TICKS_PER_SECOND
 #endif
-
-#define SCREEN_WIDTH  320
-#define SCREEN_HEIGHT 240
-#if VERSION_REGION_IS(PAL)
-    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 255
-#else
-    #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
-#endif
-    #define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
-
-#define ORDERING_TABLE_SIZE 2048
 
 /** @brief Converts seconds to frames at 60 FPS.
  *

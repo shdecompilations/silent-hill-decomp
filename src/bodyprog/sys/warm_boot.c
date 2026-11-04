@@ -93,7 +93,7 @@ void Game_WarmBoot(void) // 0x80034264
 #if VERSION_REGION_IS(PAL)
     Screen_RectInterlacedClear(0, 0, 512, 511, 0, 0, 0);
 #else
-    Screen_RectInterlacedClear(0, 32, 512, 448, 0, 0, 0);
+    Screen_RectInterlacedClear(0, SCREEN_FRAMEBUFFER_Y_INTERLACED, 512, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
 #endif
 
     func_800892A4(4);
