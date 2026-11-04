@@ -47,11 +47,11 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
 }
 #endif
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/screen/background", Screen_BackgroundImgDraw);
-#else
 void Screen_BackgroundImgDraw(s_FsImageDesc* image)
 {
+#if VERSION_REGION_IS(PAL)
+    s32       isInterlaced;
+#endif
     s32       baseYOffset;
     s32       tileX;
     s32       tileIdxX;
@@ -59,7 +59,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
     s32       y;
     u32       texShift;
     s32       texPageX;
-    u32       texOffsetY;
+    s32       texOffsetY;
     GsOT*     ot;
     DR_TPAGE* tPage;
     SPRT*     sprt;
@@ -67,6 +67,9 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
 
     ot          = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
     packet      = GsOUT_PACKET_P;
+#if VERSION_REGION_IS(PAL)
+    isInterlaced = g_GameWork.gsScreenHeight > 256;
+#endif
     baseYOffset = -120 << (g_GameWork.gsScreenHeight >> 8);
     texShift    = image->tPage[0];
     texPageX    = image->tPage[1];
@@ -85,12 +88,27 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
 
             if (y == 0)
             {
+#if VERSION_REGION_IS(PAL)
+                if (isInterlaced)
+                {
+                    setWH(sprt, 256, 256 - texOffsetY);
+                }
+                else
+                {
+                    setWH(sprt, 256, MIN(256 - texOffsetY, 240));
+                }
+#else
                 setWH(sprt, 256, 256 - texOffsetY);
+#endif
                 setUV0AndClutSum(sprt, 0, texOffsetY, getClut(image->clutX, image->clutY));
             }
             else
             {
+#if VERSION_REGION_IS(PAL)
+                setWH(sprt, 256, MIN(texOffsetY + 224, 256));
+#else
                 setWH(sprt, 256, 256);
+#endif
                 setUV0AndClutSum(sprt, 0, 0, getClut(image->clutX, image->clutY));
             }
 
@@ -107,7 +125,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
             setDrawTPage(tPage, 0, 1, getTPage(texShift, 0, (texPageX + tileIdxX) * 64, ((texPageX * 16) & 0x100) + y * 256));
 
             AddPrim(ot, tPage);
-            packet = (PACKET*)tPage + sizeof(DR_TPAGE);
+            packet = (u8*)tPage + sizeof(DR_TPAGE);
         }
     }
 
@@ -115,7 +133,6 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
     g_SysWork.bgmStatusFlags   |= BgmStatusFlag_Pause;
     g_Screen_BackgroundImgGamma = Q8(0.5f);
 }
-#endif
 
 void Screen_BackgroundImgTransition(s_FsImageDesc* imageIn, s_FsImageDesc* imageOut, q3_12 alpha)
 {
