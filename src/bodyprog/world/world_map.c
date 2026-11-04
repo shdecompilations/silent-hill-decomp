@@ -133,15 +133,17 @@ void WorldMap_ChunkQueueClear(s_MapChunk* activeChunks, s32 activeChunkCount) //
     }
 }
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/world/world_map", WorldMap_TexturesInit);
-#else
 void WorldMap_TexturesInit(void) // 0x80041D48
 {
     s32 i;
-    s16 j;
-    s16 x;
+    s32 j;
+    s32 x;
     s32 y;
+
+#if VERSION_REGION_IS(PAL)
+    #define CLUT_X(idx) ((((idx) & 3) * 16) | 0x380)
+    #define CLUT_Y(idx) ((((idx) >> 2) * 16) + 0x180)
+#endif
 
     // Run through texture pages.
     for (i = 0, y = 8, x = 0, j = 0;
@@ -153,6 +155,10 @@ void WorldMap_TexturesInit(void) // 0x80041D48
             y = 21;
         }
 
+#if VERSION_REGION_IS(PAL)
+        j = CLUT_Y(i);
+        x = CLUT_X(i);
+#endif
         Texture_Init(&g_WorldMapWork.chunkTextures.fullPageTextures[i], NULL, 0, y, 0, 0, x, j);
     }
 
@@ -164,6 +170,10 @@ void WorldMap_TexturesInit(void) // 0x80041D48
          i < 2;
          i++, x += 16)
     {
+#if VERSION_REGION_IS(PAL)
+        j = CLUT_Y(i + 8);
+        x = CLUT_X(i + 8);
+#endif
         Texture_Init(&g_WorldMapWork.chunkTextures.halfPageTextures[i], NULL, 0, y, (i & 0x1) * 32, 0, x, j);
         if (i & 0x1)
         {
@@ -173,8 +183,12 @@ void WorldMap_TexturesInit(void) // 0x80041D48
 
     Textures_ActiveTex_CountReset(&g_WorldMapWork.chunkTextures.halfPage);
     Textures_ActiveTex_PutTextures(&g_WorldMapWork.chunkTextures.halfPage, g_WorldMapWork.chunkTextures.halfPageTextures, 2);
-}
+
+#if VERSION_REGION_IS(PAL)
+    #undef CLUT_X
+    #undef CLUT_Y
 #endif
+}
 
 void WorldMap_CollisionDataReset(void) // 0x80041E98
 {
