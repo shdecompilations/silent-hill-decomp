@@ -240,11 +240,7 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
             }
             else
             {
-#if VERSION_REGION_IS(PAL)
-                texOffsetY   = 0;
-#else
-                texOffsetY   = (g_ActiveBufferIdx == 0) * SCREEN_FRAMEBUFFER_Y_INTERLACED;
-#endif
+                texOffsetY   = (g_ActiveBufferIdx == 0) * SCREEN_DISPBUFF_Y_INTERLACED;
                 offsetY      = SCREEN_FRAMEBUFFER_EDGE_TOP;
                 tPageOffsetY = g_ActiveBufferIdx * 256;
             }
