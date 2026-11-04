@@ -74,7 +74,7 @@ segments:
       - [0x6A0,  .rodata, game_boot/game_boot]
       - [0x6D4,   rodata] # Garbage padding
       - [0x6DC,  .rodata, text/bodyprog_8003652C]
-      - [0x700,  .rodata, text/map_msg_display]
+      - [0x700,  .rodata, text/map_msg]
       - [0x758,  .rodata, events/event_data]
       - [0x818,  .rodata, events/game_sys_states]
       - [0x91C,  .rodata, events/title]
@@ -167,7 +167,7 @@ segments:
                                                   # in SH2 the main menu code it is within the `events` folder.
       - [0x1003C,    c, events/bgm_update]        # }
       - [0x107B4,    c, text/bodyprog_8003652C]
-      - [0x10840,    c, text/map_msg_display]
+      - [0x10840,    c, text/map_msg]
       - [0x11104,    c, text/bodyprog_8004B45C]
       - [0x11410,    c, events/radio]             # }
       - [0x114A4,    c, events/player_pos_update] # }
@@ -451,7 +451,7 @@ segments:
       - [0x83D54, .data, game_boot/background_sound_init]
       - [0x83E4C, .data, game_boot/fs_chara_anim]
       - [0x83F14, .data, events/bgm_update]
-      - [0x83F24, .data, text/map_msg_display]
+      - [0x83F24, .data, text/map_msg]
       - [0x83F2C, .data, events/event_data]
       - [0x83F90, .data, events/events_main]
       - [0x83F9C, .data, events/game_sys_states]
@@ -535,7 +535,7 @@ segments:
       - [0x96CA8, .bss, game_boot/game_boot]
       - [0x96CAC,  pad] # Garbage.
       - [0x96CB0, .bss, events/bgm_update]
-      - [0x96CC0, .bss, text/map_msg_display]
+      - [0x96CC0, .bss, text/map_msg]
       - [0x96CDC,  pad] # Garbage.
       - [0x96CE0, .bss, events/game_sys_states]
       - [0x96D3C,  pad] # Garbage.

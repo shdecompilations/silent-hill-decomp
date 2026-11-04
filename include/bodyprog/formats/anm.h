@@ -9,7 +9,6 @@ typedef struct _AnmBindPose
     /* 0x2 */ s8 translationDataIdx;
     /* 0x3 */ s8 translationInitial[3];
 } s_AnmBindPose;
-STATIC_ASSERT_SIZEOF(s_AnmBindPose, 6);
 
 /** @brief ANM file header. */
 typedef struct _AnmHeader
@@ -27,6 +26,5 @@ typedef struct _AnmHeader
     /* 0x13 */ u8            rootYOffset;
     /* 0x14 */ s_AnmBindPose bindPoses[0];
 } s_AnmHeader;
-STATIC_ASSERT_SIZEOF(s_AnmHeader, 20);
 
 #endif

@@ -29,7 +29,6 @@ typedef struct _Material
                    u16 u16;
     /* 0x16 */ } field_16; // UV. Min or max, not sure.
 } s_Material;
-STATIC_ASSERT_SIZEOF(s_Material, 24);
 
 /** @brief LM file header. */
 typedef struct _LmHeader

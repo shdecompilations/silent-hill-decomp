@@ -10,7 +10,6 @@
 #include "bodyprog/chara/spawn.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/events_util.h"
-#include "bodyprog/events/map_msg.h"
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
@@ -22,6 +21,7 @@
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/sound/sfx_id_enum.h"
+#include "bodyprog/text/map_msg.h"
 #include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
 

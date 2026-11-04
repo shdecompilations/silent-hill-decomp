@@ -5,9 +5,9 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/events/map_msg.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
+#include "bodyprog/text/map_msg.h"
 #include "bodyprog/text/text_draw.h"
 
 void func_8003652C(void) // 0x8003652C

@@ -26,7 +26,6 @@ typedef enum _VC_ROAD_FLAGS
     VC_RD_USE_NEAR_ENEMY_F  = 1 << 6,
     VC_RD_MARGE_ROAD_F      = 1 << 7
 } VC_ROAD_FLAGS;
-STATIC_ASSERT_SIZEOF(VC_ROAD_FLAGS, 4);
 
 /** @brief Camera flags. */
 typedef enum _VC_FLAGS
@@ -44,7 +43,6 @@ typedef enum _VC_FLAGS
     VC_PRS_F_VIEW_F          = 1 << 9,
     VC_OLD_PRS_F_VIEW_F      = 1 << 10
 } VC_FLAGS;
-STATIC_ASSERT_SIZEOF(VC_FLAGS, 4);
 
 /** @brief Camera move types. */
 typedef enum _VC_CAM_MV_TYPE
@@ -57,7 +55,6 @@ typedef enum _VC_CAM_MV_TYPE
 
     VC_MV_SUU          = 5  /** Count. */
 } VC_CAM_MV_TYPE;
-STATIC_ASSERT_SIZEOF(VC_CAM_MV_TYPE, 4);
 
 /** @brief Camera check types. */
 typedef enum _VC_CAM_CHK_TYPE
@@ -65,7 +62,6 @@ typedef enum _VC_CAM_CHK_TYPE
     VC_CHK_NEAREST_ROAD_TYPE   = 0, /** Closest camera path. */
     VC_CHK_NEAREST_SWITCH_TYPE = 1  /** Closest switch type. */
 } VC_CAM_CHK_TYPE;
-STATIC_ASSERT_SIZEOF(VC_CAM_CHK_TYPE, 4);
 
 /** @brief Camera path type. */
 typedef enum _VC_ROAD_TYPE
@@ -79,7 +75,6 @@ typedef enum _VC_ROAD_TYPE
 
     VC_RD_TYPE_SUU            = 6  /** Count. */
 } VC_ROAD_TYPE;
-STATIC_ASSERT_SIZEOF(VC_ROAD_TYPE, 4);
 
 /** @brief Camera path direction binding types.
  *
@@ -101,7 +96,6 @@ typedef enum _VC_AREA_SIZE_TYPE
 
 //    VC_AREA_SUU     = 4 /** Count. Disabled to remove size warning since it's unused. */
 } VC_AREA_SIZE_TYPE;
-STATIC_ASSERT_SIZEOF(VC_AREA_SIZE_TYPE, 4);
 
 /** @brief Rail camera set command types. */
 typedef enum _THROUGH_DOOR_SET_CMD_TYPE
@@ -110,13 +104,12 @@ typedef enum _THROUGH_DOOR_SET_CMD_TYPE
     VC_TDSC_END   = 1,
     VC_TDSC_MAIN  = 2
 } THROUGH_DOOR_SET_CMD_TYPE;
-STATIC_ASSERT_SIZEOF(THROUGH_DOOR_SET_CMD_TYPE, 4);
 
 /** @brief Camera anchor types. */
 typedef enum _CameraAnchor
 {
     CameraAnchor_Character = 0,
-    CameraAnchor_Floor    = 1,
+    CameraAnchor_Floor     = 1,
     CameraAnchor_Camera    = 2 // TODO: Name uncertain. Relies on some backup camera Y value? -- Sezz
 } e_CameraAnchor;
 

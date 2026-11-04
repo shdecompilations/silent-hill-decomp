@@ -5,11 +5,11 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/events/map_msg.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/screen_data.h"
 #include "bodyprog/screen/screen_draw.h"
 #include "bodyprog/sound/sound_system.h"
+#include "bodyprog/text/map_msg.h"
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
 

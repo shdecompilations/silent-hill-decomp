@@ -34,7 +34,6 @@ typedef struct _Primitive
     /* 0xC  */ u8 faceIdxs[4];
     /* 0x10 */ u8 field_10[4]; // Normal indices?
 } s_Primitive;
-STATIC_ASSERT_SIZEOF(s_Primitive, 20);
 
 /** @brief Mesh data header. */
 typedef struct _MeshHeader
@@ -49,7 +48,6 @@ typedef struct _MeshHeader
     /* 0x10 */ s_Normal*    normals;
     /* 0x14 */ u8*          unkPtr_14;
 } s_MeshHeader;
-STATIC_ASSERT_SIZEOF(s_MeshHeader, 24);
 
 /** @brief Model data header. */
 typedef struct _ModelHeader

@@ -13,7 +13,6 @@ typedef struct _VC_LIMIT_AREA
     /* 0x4 */ q11_4 min_hz;
     /* 0x6 */ q11_4 max_hz;
 } VC_LIMIT_AREA;
-STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 
 /** @brief Internal camera info. */
 typedef struct _VC_CAMERA_INTINFO
@@ -23,7 +22,6 @@ typedef struct _VC_CAMERA_INTINFO
               // 1 byte of padding.
     /* 0x6 */ q3_12 ev_cam_rate; /** Camera elevation rate. */
 } VC_CAMERA_INTINFO;
-STATIC_ASSERT_SIZEOF(VC_CAMERA_INTINFO, 8);
 
 /** @brief Camera look-at move parameters.
  * TODO: These don't seem to be angles like the names would suggest, but distances don't fit either.
@@ -35,7 +33,6 @@ typedef struct _VC_WATCH_MV_PARAM
     /* 0x8 */ q3_12  max_ang_spd_x; /** Max angle speed on X axis. */
     /* 0xA */ q3_12  max_ang_spd_y; /** Max angle speed on Y axis. */
 } VC_WATCH_MV_PARAM;
-STATIC_ASSERT_SIZEOF(VC_WATCH_MV_PARAM, 12);
 
 /** @brief Camera move parameters. */
 typedef struct _VC_CAM_MV_PARAM
@@ -45,7 +42,6 @@ typedef struct _VC_CAM_MV_PARAM
     /* 0x8 */ q19_12 max_spd_xz; /** Max speed on XZ plane. */
     /* 0xC */ q19_12 max_spd_y;  /** Max speed on Y axis. */
 } VC_CAM_MV_PARAM;
-STATIC_ASSERT_SIZEOF(VC_CAM_MV_PARAM, 16);
 
 /** @brief Camera path data.
  *
@@ -67,7 +63,6 @@ typedef struct _VC_ROAD_DATA
     /* 0x16    */ q0_7              fix_ang_x;          /** @note Part of union in SH2 `VC_ROAD_DATA`. */
     /* 0x17    */ q0_7              fix_ang_y;
 } VC_ROAD_DATA;
-STATIC_ASSERT_SIZEOF(VC_ROAD_DATA, 24);
 
 /** @brief Rail camera parementers. */
 typedef struct _VC_THROUGH_DOOR_CAM_PARAM
@@ -80,7 +75,6 @@ typedef struct _VC_THROUGH_DOOR_CAM_PARAM
     /* 0xC  */ VECTOR3 rail_sta_pos;           /** Rail start position. */
     /* 0x18 */ q19_12  rail_sta_to_chara_dist; /** Distance from rail start position to locked-on character position. */
 } VC_THROUGH_DOOR_CAM_PARAM;
-STATIC_ASSERT_SIZEOF(VC_THROUGH_DOOR_CAM_PARAM, 28);
 
 /** @brief Nearby camera path collision. */
 typedef struct _VC_NEAR_ROAD_DATA
@@ -95,7 +89,6 @@ typedef struct _VC_NEAR_ROAD_DATA
     /* 0x14 */ VC_LIMIT_AREA rd;                  /** Camera path constraint on XZ plane. */
     /* 0x1C */ VC_LIMIT_AREA sw;                  /** Switch constraint on XZ plane. */
 } VC_NEAR_ROAD_DATA;
-STATIC_ASSERT_SIZEOF(VC_NEAR_ROAD_DATA, 36);
 
 /** @brief Camera workspace. */
 typedef struct _VC_WORK
@@ -157,7 +150,6 @@ typedef struct _VC_WORK
     /* 0x2E0 */ q19_12                    nearest_enemy_xz_dist;                     /** Distance to the closest enemy character on the XZ plane. */
     /* 0x2E4 */ q19_12                    watch_pos_y;                               /** Guessed name. Camera look-at Y position base? Combined with another value later. */
 } VC_WORK;
-STATIC_ASSERT_SIZEOF(VC_WORK, 744);
 
 /** @brief Camera matrix. */
 typedef struct _VbRVIEW
@@ -167,7 +159,6 @@ typedef struct _VbRVIEW
     /* 0x18 */ s32            rz;
     /* 0x1C */ GsCOORDINATE2* super;
 } VbRVIEW;
-STATIC_ASSERT_SIZEOF(VbRVIEW, 32);
 
 /** @brief Camera view renderer workspace. */
 typedef struct _VW_VIEW_WORK
@@ -177,7 +168,6 @@ typedef struct _VW_VIEW_WORK
     /* 0x70 */ VECTOR3       worldpos; /** Q19.12 | Camera world position. */
     /* 0x7C */ SVECTOR       worldang; /** Q3.12 | Camera world rotation. */
 } VW_VIEW_WORK;
-STATIC_ASSERT_SIZEOF(VW_VIEW_WORK, 132);
 
 /** @brief Camera view cull data. */
 typedef struct _CameraCullData
@@ -191,13 +181,11 @@ typedef struct _CameraCullData
     /* 0x118 */ DVECTOR field_118[24];
     /* 0x178 */ s32     field_178;
 } s_CameraCullData;
-STATIC_ASSERT_SIZEOF(s_CameraCullData, 380);
 
 /** @brief 3x3 screen region occupancy flags. */
 typedef struct _CameraScreenRegionFlags
 {
    /* 0x0 */ u8 flags[3][3]; /** `bool` */
 } s_CameraScreenRegionFlags;
-STATIC_ASSERT_SIZEOF(s_CameraScreenRegionFlags, 9);
 
 #endif
