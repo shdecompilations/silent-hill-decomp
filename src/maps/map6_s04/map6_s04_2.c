@@ -2149,7 +2149,7 @@ void func_800E2724(void) // 0x800E2724
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_NoEnemySpawn;
 
             func_800E1CA0();
@@ -2776,7 +2776,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             D_800EBB61 = 0;
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             func_8008D438();
@@ -3162,7 +3162,7 @@ void func_800E3EF4(void) // 0x800E3EF4
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
@@ -3311,7 +3311,7 @@ void func_800E558C(void) // 0x800E558C
 
             Dms_HeaderFixOffsets(FS_BUFFER_14);
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             CutsceneBorder_ForceShow();
             
             g_Cutscene_Timer            = NO_VALUE;

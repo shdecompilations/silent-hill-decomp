@@ -218,8 +218,8 @@ void GameBoot_InGameStartup(void)
                 if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipFadeIn)
                 {
                     g_GameWork.gameStateSteps[0] = 1;
-                    g_ScreenFade_Status          = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep,
-                                                                      IS_SCREEN_FADE_WHITE(g_ScreenFade_Status));
+                    g_Screen_FadeStatus          = SCREEN_FADE_STATUS(ScreenFadeState_ResetTimestep,
+                                                                      IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus));
                 }
             }
             break;
@@ -237,7 +237,7 @@ static void GameBoot_LoadingScreen(void) // 0x80034E58
 {
     if (g_SysWork.loadingScreenIdx != LoadingScreenId_None && g_GameWork.gameStateSteps[0] < 10)
     {
-        ScreenFade_Start(false, true, false);
+        Screen_FadeStart(false, true, false);
         g_ScreenFadeTimestep = Q12(0.8f);
         g_MapOverlayHdr.loadingScreenFuncs[g_SysWork.loadingScreenIdx]();
     }

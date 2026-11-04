@@ -1144,7 +1144,7 @@ void MapEvent_UnopenedCatLockerInspect(void) // 0x800DC310
     if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 11)
     {
-        ScreenFade_ResetTimestep();
+        Screen_FadeTimestepReset();
         Savegame_EventFlagSet(EventFlag_101);
         Savegame_EventFlagSet(EventFlag_102);
         Savegame_EventFlagSet(EventFlag_M1S03_LockerOpened);
@@ -1251,7 +1251,7 @@ void MapEvent_UnopenedCatLockerInspect(void) // 0x800DC310
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, 0, false);
             }
@@ -1478,7 +1478,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             Fs_QueueStartRead(FILE_ANIM_UFO1_DMS, FS_BUFFER_13);
 
             g_Cutscene_Timer = NO_VALUE;
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             SD_Call(Sfx_Unk1467);
             Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
@@ -2122,7 +2122,7 @@ void func_800DE828(void) // 0x800DE828
                         Savegame_EventFlagSet(EventFlag_M1S03_LockerOpened);
                     }
 
-                    if (Savegame_EventFlagGet(EventFlag_104) || ScreenFade_IsFinished() ||
+                    if (Savegame_EventFlagGet(EventFlag_104) || Screen_IsFadeFinished() ||
                         g_WorldObject1.rotation.vy < Q12_ANGLE(-67.5f))
                     {
                         g_WorldObject1.rotation.vy = Q12_ANGLE(-67.5f);

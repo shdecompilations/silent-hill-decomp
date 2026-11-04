@@ -129,7 +129,7 @@ void Event_DisplayMapMsg(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1,
  * @note Two phases:
  *   - Start the transition.
  *   - Poll until complete.
- * Fade types 0-1 perform actual screen fades (to/from black or white) using `ScreenFade_Start`.
+ * Fade types 0-1 perform actual screen fades (to/from black or white) using `Screen_FadeStart`.
  * Fade types 2-3 use cutscene letterbox borders instead of a screen fade? Type 3 additionally
  * sets `SysFlag_CutsceneActive`.
  *

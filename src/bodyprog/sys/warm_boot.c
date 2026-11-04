@@ -139,6 +139,6 @@ void Game_WarmBoot(void) // 0x80034264
 
     Game_StateSetNext(GameState_MainMenu);
 
-    ScreenFade_Start(true, true, false);
+    Screen_FadeStart(true, true, false);
     g_ScreenFadeTimestep = Q12(0.0f);
 }

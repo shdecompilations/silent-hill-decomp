@@ -308,7 +308,7 @@ bool Demo_Update(void) // 0x8008F5D8
     prevScreenFadeCpy      = prevScreenFade;
     isLoadingChunks        = g_Demo_IsLoadingChunks;
     g_Demo_IsLoadingChunks = false;
-    prevScreenFade         = g_ScreenFade_Status;
+    prevScreenFade         = g_Screen_FadeStatus;
 
     if (!(g_SysWork.sysFlags & SysFlag_DemoActive))
     {
@@ -332,7 +332,7 @@ bool Demo_Update(void) // 0x8008F5D8
     }
 
     if (!Gfx_ScreenFadeIn_IsInProgress(prevScreenFadeCpy)   ||
-        !Gfx_ScreenFadeIn_IsInProgress(g_ScreenFade_Status) ||
+        !Gfx_ScreenFadeIn_IsInProgress(g_Screen_FadeStatus) ||
         isLoadingChunks)
     {
         g_Demo_ActivePlaybackFrame = NULL;

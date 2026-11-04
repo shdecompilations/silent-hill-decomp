@@ -161,7 +161,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             Player_ControlFreeze();
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags              |= SysFlag_CutsceneActive;
             g_SavegamePtr->itemToggleFlags &= ~ItemToggleFlag_RadioOn;
             g_SysWork.sysFlags              |= SysFlag_5 | SysFlag_9;

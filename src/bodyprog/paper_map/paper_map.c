@@ -233,7 +233,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             Fs_QueueWaitForEmpty();
 
             g_IntervalVBlanks = 1;
-            ScreenFade_Start(true, true, false);
+            Screen_FadeStart(true, true, false);
 
             Game_StateStepSet(0, 2);
             break;
@@ -260,7 +260,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             temp_s0_2 = func_80067914(paperMapIdx, scrollX, scrollY, scale);
             func_80068E0C(1, paperMapIdx, 0, 0, scrollX, scrollY, scale);
 
-            if (ScreenFade_IsNone())
+            if (Screen_IsFadeNone())
             {
                 if (!D_800AE770 && D_800C4454 == Q12(1.0f))
                 {
@@ -292,11 +292,11 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
 
                     GameFs_MapItemsTextureLoad(g_SavegamePtr->mapIdx);
                     func_80066D90();
-                    ScreenFade_ResetTimestep();
+                    Screen_FadeTimestepReset();
                 }
                 else
                 {
-                    ScreenFade_Start(true, false, false);
+                    Screen_FadeStart(true, false, false);
                 }
 
                 Game_StateStepSet(0, 4);
@@ -332,7 +332,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                             markingIdx = D_800AE740[paperMapIdx][0];
 
                             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[markingIdx]);
-                            ScreenFade_Start(true, false, false);
+                            Screen_FadeStart(true, false, false);
 
                             screenPosX                   = NO_VALUE;
                             
@@ -348,7 +348,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
                             markingIdx = D_800AE740[paperMapIdx][1];
 
                             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[markingIdx]);
-                            ScreenFade_Start(true, false, false);
+                            Screen_FadeStart(true, false, false);
 
                             screenPosX                   = NO_VALUE;
 
@@ -371,7 +371,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             break;
 
         case 3:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 paperMapIdx = markingIdx;
 
@@ -397,7 +397,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             }
 
             Fs_QueueWaitForEmpty();
-            ScreenFade_Start(true, true, false);
+            Screen_FadeStart(true, true, false);
 
             Game_StateStepSet(0, 2);
             break;
@@ -413,7 +413,7 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             func_80068E0C(1, paperMapIdx, 0, 0, scrollX, scrollY, scale);
             PaperMap_DrawScaled(scrollX, scrollY, scale);
 
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 if (g_GameWork.gameStatePrev == GameState_InGame || g_GameWork.gameStatePrev == GameState_LoadMapScreen)
                 {

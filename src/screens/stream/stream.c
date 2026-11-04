@@ -27,7 +27,7 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
     {
         case 0:
             VSync(SyncMode_Wait8);
-            ScreenFade_Start(true, true, false);
+            Screen_FadeStart(true, true, false);
 
 #if VERSION_REGION_IS(NTSCJ)
             Fs_QueueStartRead(FILE_TIM_WATER_TIM, g_OvlDynamic);
@@ -41,13 +41,13 @@ void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
         case 1:
             if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_TO_FRAMES(5))
             {
-                ScreenFade_Start(false, false, false);
+                Screen_FadeStart(false, false, false);
                 g_GameWork.gameStateSteps[0] = 2;
             }
             break;
 
         case 2:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Fs_QueueWaitForEmpty();
                 Game_StateSetNext(GameState_MovieIntro);

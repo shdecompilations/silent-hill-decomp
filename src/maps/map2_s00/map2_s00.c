@@ -388,7 +388,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             g_SysWork.playerWork.player.position.vz = Q12(-107.46f);
             g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-45.0f);
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             Event_PaperMapCmd(PaperMapCmd_Load, 1);
             func_800EB824(1);
             SysWork_StateStepIncrement(0);
@@ -547,7 +547,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
     if (D_800F228E)
     {
-        if (ScreenFade_IsFinished())
+        if (Screen_IsFadeFinished())
         {
             D_800F228E = false;
             SysWork_StateStepSet(0, 12);
@@ -734,7 +734,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 
     if (D_800F2295)
     {
-        if (ScreenFade_IsFinished())
+        if (Screen_IsFadeFinished())
         {
             if (D_800F2295 == 1)
             {

@@ -1,9 +1,9 @@
-#ifndef _BODYPROG_SCREEN_SCREENDATA_H
-#define _BODYPROG_SCREEN_SCREENDATA_H
+#ifndef _BODYPROG_SCREEN_DATA_H
+#define _BODYPROG_SCREEN_DATA_H
 
-// ========
-// Screen/framebuffer related defines.
-// ========
+// =====================================
+// SCREEN/FRAMEBUFFER-RELATED CONSTANTS
+// =====================================
 
 #define SCREEN_WIDTH  320
 #define SCREEN_HEIGHT 240
@@ -38,7 +38,7 @@
 #endif
 
 /** @brief Perspective projection distance used with `SetGeomScreen`.
- * NTSC uses value from `g_GameWork.gsScreenHeight` while PAL always uses the 240 line screen height.
+ * NTSC uses the value from `g_GameWork.gsScreenHeight`, while PAL always uses the 240 line screen height.
  */
 #if VERSION_REGION_IS(PAL)
     #define SCREEN_GEOM_DIST SCREEN_HEIGHT
@@ -46,17 +46,17 @@
     #define SCREEN_GEOM_DIST g_GameWork.gsScreenHeight
 #endif
 
-/** @brief Distance from screen center to the top and bottom edges of the framebuffer. */
+/** @brief Distance from the screen center to the top and bottom edges of the framebuffer. */
 #define SCREEN_FRAMEBUFFER_EDGE_TOP    (-(FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2))
 #define SCREEN_FRAMEBUFFER_EDGE_BOTTOM ((FRAMEBUFFER_HEIGHT_PROGRESSIVE + 1) / 2)
 
 #define ORDERING_TABLE_SIZE 2048
 
-// ========
-// Timing related defines.
-// ========
+// =========================
+// TIMING-RELATED CONSTANTS
+// =========================
 
-#define TICKS_PER_SECOND 60 /** Game has a variable timestep with 60 ticks max. */
+#define TICKS_PER_SECOND 60                                        /** Game has a variable timestep with 60 ticks max. */
 #define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2))
 #define TIMESTEP_60_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND))
 
@@ -83,7 +83,8 @@
     (s32)((sec) * TICKS_PER_SECOND)
 
 /** @brief Converts seconds to frames at the region's full refresh rate.
- * 60 FPS for NTSC/NTSCJ, 50 FPS for PAL.
+ *
+ * @note 60 FPS for NTSC/NTSCJ, 50 FPS for PAL.
  *
  * @param sec Seconds to convert.
  * @return Frames at 50/60 FPS.

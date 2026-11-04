@@ -781,7 +781,7 @@ void func_800D2CDC(void) // 0x800D2CDC
         case 0:
             Player_ControlFreeze();
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 2, false, false);
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
         case 1:
             Event_WaitPlayerStop();

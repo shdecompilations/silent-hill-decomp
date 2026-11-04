@@ -63,7 +63,7 @@ void func_800D02B4(void) // 0x800D02B4
     {
         case EventState_0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             SysWork_StateStepIncrement(0);
             break;
 
@@ -98,7 +98,7 @@ void func_800D03FC(void) // 0x800D03FC
 
             D_800D1FBC = Q12(100.0f);
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             SysWork_StateStepIncrement(0);
             break;
 
@@ -261,7 +261,7 @@ void func_800D0608(void) // 0x800D0608
         case 0:
             Player_ControlFreeze();
             func_8003A16C();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;

@@ -1,7 +1,7 @@
-#ifndef _BODYPROG_SCREEN_SCREENFADE_H
-#define _BODYPROG_SCREEN_SCREENFADE_H
+#ifndef _BODYPROG_SCREEN_FADE_H
+#define _BODYPROG_SCREEN_FADE_H
 
-/** @brief Screen fade states used by `g_ScreenFade_Status`. The flow is not linear. */
+/** @brief Screen fade states used by `g_Screen_FadeStatus`. The flow is not linear. */
 typedef enum _ScreenFadeState
 {
     ScreenFadeState_Reset           = 0,
@@ -14,23 +14,16 @@ typedef enum _ScreenFadeState
     ScreenFadeState_FadeInSteps     = 7
 } e_ScreenFadeState;
 
-/** @brief Packed screen fade effect data. Uses `e_ScreenFadeState`.
+/** @brief Active screen fade effect data. Uses `e_ScreenFadeState`.
  *
  * Data is packed as follows:
  * State as `e_ScreenFadeState`: bits 0-2.
  * Is white:                     bit 3.
- *
- * TODO: Reference enum entries for details below.
- * 0-1   - Nothing.
- * 2-5   - Fades to black and keeps the screen black.
- * 6-7   - Fades from black.
- * 10-15 - Fades to white and keeps the screen white.
- * 16    - Fades to black.
  */
-extern s32 g_ScreenFade_Status;
+extern s32 g_Screen_FadeStatus;
 
 /** @brief Packs a screen fade status containing a fade state and white flag.
- * See `g_ScreenFade_Status` for bit layout.
+ * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param state Screen fade state.
  * @param isWhite White status (`bool`).
@@ -40,7 +33,7 @@ extern s32 g_ScreenFade_Status;
     ((state) | ((isWhite) ? (1 << 3) : 0))
 
 /** @brief Checks if the screen fade is white.
- * See `g_ScreenFade_Status` for bit layout.
+ * See `g_Screen_FadeStatus` for bit layout.
  *
  * @param fadeStatus Packed screen fade status containing a fade state and white flag.
  * @return `true` if white, `false` if black.
@@ -52,15 +45,15 @@ extern s32 g_ScreenFade_Status;
  *
  * @return `true` if finished, `false` if still in progress.
  */
-#define ScreenFade_IsFinished() \
-    ((g_ScreenFade_Status & 0x7) == ScreenFadeState_FadeOutComplete)
+#define Screen_IsFadeFinished() \
+    ((g_Screen_FadeStatus & 0x7) == ScreenFadeState_FadeOutComplete)
 
 /** @brief Checks if the screen fade is not in progress (idle step) without masking away the color bit.
  *
  * @return `true` if idle, `false` otherwise.
  */
-#define ScreenFade_IsNone() \
-    (g_ScreenFade_Status == ScreenFadeState_None)
+#define Screen_IsFadeNone() \
+    (g_Screen_FadeStatus == ScreenFadeState_None)
 
 /** @brief Starts a screen fade in/out.
  *
@@ -70,24 +63,24 @@ extern s32 g_ScreenFade_Status;
  * @param fadeIn `true` for fade in, `false` for fade out.
  * @param isWhite `true` for white fade, `false` for black fade.
  */
-#define ScreenFade_Start(reset, fadeIn, isWhite)                                                                \
-    g_ScreenFade_Status = (((((reset) == true) ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
+#define Screen_FadeStart(reset, fadeIn, isWhite)                                                                \
+    g_Screen_FadeStatus = (((((reset) == true) ? ScreenFadeState_FadeOutStart : ScreenFadeState_FadeOutSteps) + \
                             (((fadeIn) == true) ? (1 << 2) : 0)) |                                              \
                            (((isWhite) == true) ? (1 << 3) : 0))
 
 /** @brief Resets the screen fade. */
-#define ScreenFade_Reset() \
-    g_ScreenFade_Status = ScreenFadeState_Reset
+#define Screen_FadeReset() \
+    g_Screen_FadeStatus = ScreenFadeState_Reset
 
 /** @brief Resets the custom screen fade timestep back to zero, disregarding the color bit. */
-#define ScreenFade_ResetTimestep() \
-    g_ScreenFade_Status = ScreenFadeState_ResetTimestep
+#define Screen_FadeTimestepReset() \
+    g_Screen_FadeStatus = ScreenFadeState_ResetTimestep
 
 /** @brief Gets the screen fade effect's progress.
  *
  * @return Fade progress.
  */
-q19_12 Screen_FadeInProgressGet(void);
+q19_12 Screen_FadeProgressGet(void);
 
 /** @brief Updates the screen fade effect. */
 void Screen_FadeUpdate(void);

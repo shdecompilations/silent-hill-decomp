@@ -57,7 +57,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D94F8
 
 void GameBoot_LoadScreen_StageString(void) // 0x800D95D4
 {
-    ScreenFade_Start(false, true, false);
+    Screen_FadeStart(false, true, false);
 
     Text_Debug_PositionSet(100, 100);
     Text_Debug_Draw("STAGE 0-0");
@@ -138,7 +138,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
             Fs_QueueStartRead(FILE_ANIM_OPEN_DMS, FS_BUFFER_16);
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
@@ -231,7 +231,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
                 Player_ControlUnfreeze(true);
                 SysWork_StateSetNext(SysState_Gameplay);
 
-                if (ScreenFade_IsFinished())
+                if (Screen_IsFadeFinished())
                 {
                     Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
                 }

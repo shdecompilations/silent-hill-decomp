@@ -285,7 +285,7 @@ void func_800D2668(void) // 0x800D2668
             Dms_HeaderFixOffsets(FS_BUFFER_11);
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
 #if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?

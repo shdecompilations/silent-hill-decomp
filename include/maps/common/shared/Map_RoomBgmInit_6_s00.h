@@ -35,12 +35,12 @@ void Map_RoomBgmInit(bool arg0)
                     break;
 
                 case GameState_SaveScreen:
-                    if (g_ScreenFade_Status >= SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false))
+                    if (g_Screen_FadeStatus >= SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false))
                     {
                         bgmFlags  = 0xFE;
                         var_s1 = Q12(240.0f);
                     }
-                    else if (g_ScreenFade_Status < SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false))
+                    else if (g_Screen_FadeStatus < SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false))
                     {
                         bgmFlags  = 0xFE;
                         var_s1 = Q12(240.0f);

@@ -186,7 +186,7 @@ void func_800D822C(void) // 0x800D822C
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             SysWork_StateStepIncrement(0);
 
         case 1:

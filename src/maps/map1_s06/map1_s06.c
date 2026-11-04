@@ -321,7 +321,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
     if (D_800D7790)
     {
-        if (ScreenFade_IsFinished())
+        if (Screen_IsFadeFinished())
         {
             D_800D7790 = 0;
             SysWork_StateStepSet(0, 13);
@@ -332,7 +332,7 @@ void func_800D5DD8(void) // 0x800D5DD8
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             CutsceneBorder_ForceShow();
             g_SysWork.playerWork.player.position.vx = Q12(109.2f);

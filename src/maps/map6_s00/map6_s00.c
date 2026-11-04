@@ -162,7 +162,7 @@ void func_800EB11C(void) // 0x800EB11C
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 

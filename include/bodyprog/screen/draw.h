@@ -1,12 +1,8 @@
-#ifndef _BODYPROG_SCREEN_SCREENDRAW_H
-#define _BODYPROG_SCREEN_SCREENDRAW_H
+#ifndef _BODYPROG_SCREEN_DRAW_H
+#define _BODYPROG_SCREEN_DRAW_H
 
 #include "bodyprog/screen/fade.h"
 #include "bodyprog/screen/cutscene_border.h"
-
-// ==========
-// FUNCTIONS
-// ==========
 
 void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b);
 

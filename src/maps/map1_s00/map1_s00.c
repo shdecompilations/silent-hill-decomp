@@ -495,7 +495,7 @@ void func_800D85D8(void) // 0x800D85D8
     if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 5)
     {
-        ScreenFade_ResetTimestep();
+        Screen_FadeTimestepReset();
         SysWork_StateStepReset();
     }
 
@@ -579,7 +579,7 @@ void func_800D8948(void) // 0x800D8948
     if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
         g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] < 6)
     {
-        ScreenFade_ResetTimestep();
+        Screen_FadeTimestepReset();
         SysWork_StateStepReset();
     }
 

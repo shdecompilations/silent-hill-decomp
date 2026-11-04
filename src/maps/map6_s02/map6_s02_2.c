@@ -163,7 +163,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             Player_ControlFreeze();
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             func_8003D03C();
             Player_EmptyWeaponHandSet();
@@ -422,7 +422,7 @@ void func_800CFC34(void) // 0x800CFC34
 
             g_Cutscene_Timer = NO_VALUE;
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             SD_Call(Sfx_Unk1467);
             Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, 255, 0);
@@ -936,14 +936,14 @@ void func_800D0500(void) // 0x800D0500
             return;
         }
 
-        switch (g_ScreenFade_Status)
+        switch (g_Screen_FadeStatus)
         {
             case ScreenFadeState_Reset:
             case ScreenFadeState_None:
                 D_800D3C98 += g_DeltaTime;
                 if (D_800D3C98 >= Q12(4.0f))
                 {
-                    ScreenFade_Start(true, false, false);
+                    Screen_FadeStart(true, false, false);
                 }
                 break;
 
@@ -1538,7 +1538,7 @@ void func_800D2364(void) // 0x800D2364
     gte_ReadGeomScreen(&ptr->field_64);
 
     ptr->field_68 = g_ActiveBufferIdx;
-    temp          = Q12_MULT_PRECISE((g_GameWork.config.brightness * 8) + 4, Screen_FadeInProgressGet());
+    temp          = Q12_MULT_PRECISE((g_GameWork.config.brightness * 8) + 4, Screen_FadeProgressGet());
 
     ptr->field_4 = GsOUT_PACKET_P;
 
@@ -1781,7 +1781,7 @@ void func_800D2364(void) // 0x800D2364
 
 void func_800D32D0(void) // 0x800D32D0
 {
-    g_ScreenFade_Status = ScreenFadeState_FadeOutComplete;
+    g_Screen_FadeStatus = ScreenFadeState_FadeOutComplete;
 
     switch (g_SysWork.sysStateSteps[0])
     {

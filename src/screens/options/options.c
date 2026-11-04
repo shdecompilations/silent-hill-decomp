@@ -138,7 +138,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             g_GameWork.background2dColor.g = 0;
             g_GameWork.background2dColor.b = 0;
 
-            ScreenFade_Start(false, true, false);
+            Screen_FadeStart(false, true, false);
             g_IntervalVBlanks   = 1;
 
             if (g_GameWork.gameStatePrev == GameState_InGame)
@@ -208,7 +208,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterScreenPos:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Game_StateStepSet(0, OptionsMenuState_ScreenPos);
             }
@@ -219,7 +219,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterBrightness:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Fs_QueueWaitForEmpty();
                 Game_StateStepSet(0, OptionsMenuState_Brightness);
@@ -232,7 +232,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
         case OptionsMenuState_EnterController:
             // Switch to controller binding menu.
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Game_StateStepSet(0, OptionsMenuState_Controller);
             }
@@ -243,12 +243,12 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_Leave:
-            ScreenFade_Start(true, false, false);
+            Screen_FadeStart(true, false, false);
             Game_StateStepSet(0, OptionsMenuState_LeaveMainOptions);
             break;
 
         case OptionsMenuState_LeaveMainOptions:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 // TODO: `Game_StateSetPrevious` won't work here? (also tried macro version of it)
                 e_GameState prevGameState = g_GameWork.gameStatePrev;
@@ -259,10 +259,10 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_EnterExtraOptions:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Game_StateStepSet(0, OptionsMenuState_ExtraOptions);
-                ScreenFade_Start(false, true, false);
+                Screen_FadeStart(false, true, false);
                 g_Options_SelectionHighlightTimer = 0;
 
 #if VERSION_REGION_IS(NTSCJ)
@@ -276,10 +276,10 @@ void GameState_Options_Update(void) // 0x801E2D44
             break;
 
         case OptionsMenuState_LeaveExtraOptions:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Game_StateStepSet(0, OptionsMenuState_EnterMainOptions);
-                ScreenFade_Start(false, true, false);
+                Screen_FadeStart(false, true, false);
             }
             break;
     }
@@ -500,7 +500,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
             Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
         }
 
-        ScreenFade_Start(true, false, false);
+        Screen_FadeStart(true, false, false);
         Game_StateStepSet(0, OptionsMenuState_LeaveExtraOptions);
     }
 }
@@ -613,7 +613,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             {
                 Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
                 Fs_QueueStartReadTim(FILE_TIM_OPTION2_TIM, IMAGE_BUFFER_3, &g_ControllerButtonAtlasImg);
-                ScreenFade_Start(true, false, false);
+                Screen_FadeStart(true, false, false);
                 Game_StateStepSet(0, OptionsMenuState_EnterController);
             }
             break;
@@ -623,7 +623,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
             {
                 Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
-                ScreenFade_Start(true, false, false);
+                Screen_FadeStart(true, false, false);
                 Game_StateStepSet(0, OptionsMenuState_EnterScreenPos);
             }
             break;
@@ -643,7 +643,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 }
 #endif
 
-                ScreenFade_Start(true, false, false);
+                Screen_FadeStart(true, false, false);
                 Game_StateStepSet(0, OptionsMenuState_EnterBrightness);
             }
             break;
@@ -783,7 +783,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 
         Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
 
-        ScreenFade_Start(true, false, false);
+        Screen_FadeStart(true, false, false);
         Game_StateStepSet(0, OptionsMenuState_EnterExtraOptions);
     }
 
@@ -1751,7 +1751,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     switch (g_GameWork.gameStateSteps[1])
     {
         case ScreenPosMenuState_0:
-            ScreenFade_Start(true, true, false);
+            Screen_FadeStart(true, true, false);
             screenPosMenu_BackgroundFade  = 255;
             Game_StateStepSet(1, ScreenPosMenuState_1);
 
@@ -1802,16 +1802,16 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             {
                 Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
 
-                ScreenFade_Start(true, false, false);
+                Screen_FadeStart(true, false, false);
                 Game_StateStepIncrement(1);
             }
             break;
 
         case ScreenPosMenuState_Leave:
             // Switch to previous menu.
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
-                ScreenFade_Start(true, true, false);
+                Screen_FadeStart(true, true, false);
 
                 Game_StateStepSet(0, OptionsMenuState_LeaveScreenPos);
 
@@ -2050,7 +2050,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
             break;
 
         case BrightnessMenuState_StartFade:
-            ScreenFade_Start(true, true, false);
+            Screen_FadeStart(true, true, false);
             Game_StateStepSet(1, BrightnessMenuState_SetConfig);
             break;
 
@@ -2085,19 +2085,19 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                     Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
                 }
 
-                ScreenFade_Start(true, false, false);
+                Screen_FadeStart(true, false, false);
                 Game_StateStepIncrement(1);
             }
             break;
 
         case BrightnessMenuState_Leave:
             // Switch to previous menu.
-            // TODO: Odd check for `ScreenFade_IsFinished()`.
-            if ( (g_ScreenFade_Status & (1 << 2)) &&
-                !(g_ScreenFade_Status & (1 << 1)) &&
-                 (g_ScreenFade_Status & (1 << 0)))
+            // TODO: Odd check for `Screen_IsFadeFinished()`.
+            if ( (g_Screen_FadeStatus & (1 << 2)) &&
+                !(g_Screen_FadeStatus & (1 << 1)) &&
+                 (g_Screen_FadeStatus & (1 << 0)))
             {
-                ScreenFade_Start(true, true, false);
+                Screen_FadeStart(true, true, false);
                 Game_StateStepSet(0, OptionsMenuState_LeaveBrightness);
 
                 g_GameWork.background2dColor.r = 0;
@@ -2697,7 +2697,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
     switch (g_GameWork.gameStateSteps[1])
     {
         case ControllerMenuState_Exit:
-            ScreenFade_Start(false, true, false);
+            Screen_FadeStart(false, true, false);
             selectedEntries.preset = ControllerMenuState_Exit;
 
             // Leave menu.
@@ -2706,7 +2706,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             {
                 SD_Call(Sfx_MenuCancel);
 
-                ScreenFade_Start(false, false, false);
+                Screen_FadeStart(false, false, false);
                 Game_StateStepSet(1, ControllerMenuState_Leave);
                 break;
             }
@@ -2807,9 +2807,9 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
 
         case ControllerMenuState_Leave:
             // Switch to previous menu.
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
-                ScreenFade_Start(true, true, false);
+                Screen_FadeStart(true, true, false);
                 Game_StateStepSet(0, OptionsMenuState_LeaveController);
             }
             break;

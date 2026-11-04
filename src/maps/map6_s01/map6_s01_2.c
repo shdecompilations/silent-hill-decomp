@@ -255,7 +255,7 @@ void func_800D13D8(void) // 0x800D13D8
             Player_ControlFreeze();
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
@@ -628,7 +628,7 @@ void func_800D236C(void) // 0x800D236C
         case 0:
             Player_ControlFreeze();
             g_Cutscene_MapMsgAudioIdx1 = 0;
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             CutsceneBorder_ForceShow();
 
             g_SysWork.playerWork.player.position.vx = Q12(-20.98);
@@ -738,7 +738,7 @@ void func_800D2658(void) // 0x800D2658
             Fs_QueueStartRead(FILE_ANIM_UFO4_DMS, FS_BUFFER_13);
             g_Cutscene_Timer = NO_VALUE;
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             SD_Call(Sfx_Unk1467);
             Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
 

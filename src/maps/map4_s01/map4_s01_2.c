@@ -699,7 +699,7 @@ void func_800D2F74(void) // 0x800D2F74
 
             CutsceneBorder_ForceShow();
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             g_Cutscene_MapMsgAudioIdx0 = 0;
             g_Cutscene_Timer1 = Q12(0.0f);
@@ -1166,7 +1166,7 @@ void func_800D4410(void) // 0x800D4410
             Player_ControlFreeze();
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Fs_QueueStartRead(FILE_ANIM_SQSU_DMS, FS_BUFFER_11);

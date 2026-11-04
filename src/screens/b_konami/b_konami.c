@@ -31,7 +31,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
             case KonamiLogoStateStep_Init:
                 Screen_Init(SCREEN_WIDTH * 2, true);
 
-                ScreenFade_Start(true, true, false);
+                Screen_FadeStart(true, true, false);
                 g_ScreenFadeTimestep = Q12(0.2f);
 
                 // Load `1ST/KONAMI2.TIM` (Konami logo).
@@ -48,7 +48,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 break;
 
             case KonamiLogoStateStep_WaitForFade:
-                if (ScreenFade_IsNone())
+                if (Screen_IsFadeNone())
                 {
                     g_GameWork.gameStateSteps[0] = KonamiLogoStateStep_LogoDelay;
                 }
@@ -57,14 +57,14 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
             case KonamiLogoStateStep_LogoDelay:
                 if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_TO_FRAMES(3))
                 {
-                    ScreenFade_Start(false, false, false);
+                    Screen_FadeStart(false, false, false);
                     g_ScreenFadeTimestep         = Q12(0.2f);
                     g_GameWork.gameStateSteps[0] = KonamiLogoStateStep_FinishAfterFade;
                 }
                 break;
 
             case KonamiLogoStateStep_FinishAfterFade:
-                if (ScreenFade_IsFinished())
+                if (Screen_IsFadeFinished())
                 {
                     Fs_QueueWaitForEmpty();
                     Game_StateSetNext(GameState_KcetLogo);
@@ -148,7 +148,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
             case KcetLogoStateStep_Init:
                 Settings_RestoreDefaults();
 
-                ScreenFade_Start(true, true, false);
+                Screen_FadeStart(true, true, false);
                 g_ScreenFadeTimestep = Q12(0.2f);
 
 #if VERSION_REGION_IS(PAL)
@@ -165,7 +165,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 break;
 
             case KcetLogoStateStep_CheckMemCards:
-                if (ScreenFade_IsNone())
+                if (Screen_IsFadeNone())
                 {
                     s32 curTime;
 
@@ -304,14 +304,14 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
             case KcetLogoStateStep_LogoDelay:
                 if (g_Controller0->buttonFlags.held != 0 || g_SysWork.gameStateCounter > SECONDS_TO_FRAMES(3))
                 {
-                    ScreenFade_Start(false, false, false);
+                    Screen_FadeStart(false, false, false);
                     g_ScreenFadeTimestep = Q12(0.2f);
                     g_GameWork.gameStateSteps[0]++;
                 }
                 break;
 
             case KcetLogoStateStep_FinishAfterFade:
-                if (ScreenFade_IsFinished())
+                if (Screen_IsFadeFinished())
                 {
                     Settings_ScreenAndVolUpdate();
                     Screen_Init(SCREEN_WIDTH, false);

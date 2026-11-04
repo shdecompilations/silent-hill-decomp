@@ -80,7 +80,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     switch (g_GameWork.gameStateSteps[0])
     {
         case 0:
-            ScreenFade_Start(true, true, false);
+            Screen_FadeStart(true, true, false);
             g_ScreenFadeTimestep         = Q12(3.0f);
             g_GameWork.gameStateSteps[0] = 1;
 
@@ -133,7 +133,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     }
     Demo_DemoRandSeedRestore();
 
-    g_IsLoadingFinished = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
+    g_IsLoadingFinished = Screen_IsFadeFinished() && Fs_QueueChunksLoad();
 
     // Update world objects if not paused.
     if (!(g_SysWork.bgmStatusFlags & BgmStatusFlag_Pause) &&
@@ -271,7 +271,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     {
         g_SysWork.sysFlags |= SysFlag_MenuActive;
     }
-    else if (ScreenFade_IsNone())
+    else if (Screen_IsFadeNone())
     {
         g_SysWork.sysFlags &= ~SysFlag_MenuActive;
     }
@@ -334,7 +334,7 @@ void SysState_OptionsMenu_Update(void) // 0x80039344
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
-            ScreenFade_Start(true, false, false);
+            Screen_FadeStart(true, false, false);
             g_ScreenFadeTimestep       = Q12(0.0f);
             g_SysWork.sysStateSteps[0] = 1;
 
@@ -459,7 +459,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
     {
         DrawSync(SyncMode_Wait);
         g_IntervalVBlanks = 1;
-        ScreenFade_Reset();
+        Screen_FadeReset();
 
         func_8003943C();
 
@@ -514,7 +514,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
 
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx]);
 
-            ScreenFade_Start(true, false, false);
+            Screen_FadeStart(true, false, false);
             g_ScreenFadeTimestep = Q12(0.0f);
             g_SysWork.sysStateSteps[0]++;
         }
@@ -562,7 +562,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
-            ScreenFade_Start(false, false, false);
+            Screen_FadeStart(false, false, false);
             g_IsLoadingFinished                 = false;
             g_SysWork.sysStateSteps[0] = 1;
 
@@ -794,14 +794,14 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
             {
                 GameFs_SaveLoadBinLoad();
 
-                ScreenFade_Start(true, false, false);
+                Screen_FadeStart(true, false, false);
                 SysWork_StateStepIncrement(0);
             }
             else if (Gfx_MapMsg_Draw(MapMsgIdx_SaveGame) == MapMsgState_SelectEntry0)
             {
                 Savegame_EventFlagSet(EventFlag_SeenSaveScreen);
                 GameFs_SaveLoadBinLoad();
-                ScreenFade_Start(true, false, false);
+                Screen_FadeStart(true, false, false);
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -809,7 +809,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
         case 1:
             if (g_IsLoadingFinished)
             {
-                ScreenFade_Start(true, true, false);
+                Screen_FadeStart(true, true, false);
                 func_8003943C();
                 Game_StateSetNext(GameState_SaveScreen);
             }
@@ -1047,11 +1047,11 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
     if (g_GameWork.gameStateSteps[0] == 0)
     {
         g_IntervalVBlanks = 1;
-        ScreenFade_Start(true, true, false);
+        Screen_FadeStart(true, true, false);
         g_GameWork.gameStateSteps[0] = 1;
     }
 
-    g_IsLoadingFinished = ScreenFade_IsFinished() && Fs_QueueChunksLoad();
+    g_IsLoadingFinished = Screen_IsFadeFinished() && Fs_QueueChunksLoad();
 
     Savegame_EventFlagSetAlt(g_MapEventData->completeFlag);
     g_MapOverlayHdr.mapEventFuncs[g_MapEventParam]();

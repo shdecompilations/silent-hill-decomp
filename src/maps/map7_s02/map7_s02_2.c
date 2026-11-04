@@ -418,7 +418,7 @@ void func_800DA248(void) // 0x800DA248
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_Lisa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             CutsceneBorder_ForceShow();
             g_SysWork.lightIntensity = Q12(0.8f);
             g_SysWork.sysFlags      |= SysFlag_CutsceneActive;
@@ -948,7 +948,7 @@ void func_800DBB34(void) // 0x800DBB34
 
             CutsceneBorder_ForceShow();
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
             func_8008D438();
             Event_CameraPositionSet(NULL,
@@ -1870,7 +1870,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             Chara_Spawn(Chara_Dahlia, 0, Q12(140.0f), Q12(-60.0f), 0, 3);
             Chara_Spawn(Chara_GhostDoctor, 0, Q12(140.0f), Q12(-60.0f), 0, 3);
             Chara_Spawn(Chara_GhostDoctor, 1, Q12(140.0f), Q12(-60.0f), 0, 3);
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags           |= 1 << 3;
@@ -2148,7 +2148,7 @@ void func_800DF21C(void) // 0x800DF21C
             D_800EB6B0 = 0;
             Game_TurnFlashlightOn();
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
             func_8003D03C();
             Player_EmptyWeaponHandSet();
@@ -3006,7 +3006,7 @@ void func_800E1398(void) // 0x800E1398
                 Savegame_EventFlagSet(EventFlag_499);
             }
 
-            ScreenFade_Reset();
+            Screen_FadeReset();
             g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             SD_Call(0x679U);

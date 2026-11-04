@@ -106,12 +106,12 @@ void GameState_Init_Update(void) // 0x80032D1C
 
             Fs_QueueStartReadTim(FILE_1ST_KONAMI_TIM, FS_BUFFER_1, &g_KonamiLogoImg);
 
-            ScreenFade_Start(true, false, false);
+            Screen_FadeStart(true, false, false);
             g_GameWork.gameStateSteps[0]++;
             break;
 
         case 3:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Fs_QueueWaitForEmpty();
 
@@ -263,7 +263,7 @@ void MainLoop(void) // 0x80032EE0
             }
             else
             {
-                if (!ScreenFade_IsNone())
+                if (!Screen_IsFadeNone())
                 {
                     VSync(SyncMode_Wait);
                 }

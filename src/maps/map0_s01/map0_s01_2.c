@@ -101,7 +101,7 @@ void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
 
 void GameBoot_LoadScreen_StageString(void) // 0x800DA8A4
 {
-    ScreenFade_Start(false, true, false);
+    Screen_FadeStart(false, true, false);
 
     Text_Debug_PositionSet(100, 100);
     Text_Debug_Draw("STAGE 0-1");

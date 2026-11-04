@@ -512,7 +512,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         case 0:
             Player_ControlFreeze();
             D_800DA6E8 = 0;
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 

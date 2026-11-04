@@ -281,7 +281,7 @@ void func_800D725C(void) // 0x800D725C
 
             Chara_Load(0, Chara_Lisa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             CutsceneBorder_ForceShow();
             g_SysWork.lightIntensity      = Q12(0.8f);
@@ -938,7 +938,7 @@ void func_800D8FF8(void) // 0x800D8FF8
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             CutsceneBorder_ForceShow();
 
             Fs_QueueStartReadTim(FILE_TIM_GLASS_TIM, FS_BUFFER_1, &D_800A908C);
@@ -1834,7 +1834,7 @@ void func_800DB1F0(void) // 0x800DB1F0
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(57.2f), Q12(-20.4f), Q12(-0.25f), 3);
@@ -1900,7 +1900,7 @@ void func_800DB3D0(void) // 0x800DB3D0
                 Savegame_EventFlagSet(EventFlag_499);
             }
 
-            ScreenFade_Reset();
+            Screen_FadeReset();
             g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             SD_Call(Sfx_Unk1657);
@@ -2063,7 +2063,7 @@ void func_800DCE20(void) // 0x800DCE20
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             CutsceneBorder_ForceShow();
             SysWork_StateStepIncrement(0);
             break;

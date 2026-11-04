@@ -190,7 +190,7 @@ void func_800D6774(void) // 0x800D6774
 
             Collision_SurfaceGet(&surface, playerChara.position.vx, playerChara.position.vz);
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             playerChara.position.vy = surface.floorHeight;
 
@@ -1604,7 +1604,7 @@ void func_800D9824(void) // 0x800D9824
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             SysWork_StateStepIncrement(0);
             break;

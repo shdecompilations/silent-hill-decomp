@@ -5341,7 +5341,7 @@ void func_800E3390(void) // 0x800E3390
             Anim_CharaTypeAnimInfoClear();
             WorldGfx_CharaLmBufferAssign(CHARA_FORCE_FREE_ALL);
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
@@ -5414,7 +5414,7 @@ void func_800E3390(void) // 0x800E3390
             break;
 
         case 7:
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 D_800F4805++;
             }
@@ -8399,7 +8399,7 @@ void func_800E9AC8(void) // 0x800E9AC8
 
 void func_800E9C28(void) // 0x800E9C28
 {
-    g_ScreenFade_Status = ScreenFadeState_FadeOutComplete;
+    g_Screen_FadeStatus = ScreenFadeState_FadeOutComplete;
 
     switch (g_SysWork.sysStateSteps[0])
     {

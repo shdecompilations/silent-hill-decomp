@@ -140,7 +140,7 @@ void func_800D0C14(void) // 0x800D0C14
         case 0:
             Player_ControlFreeze();
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Sd_SfxStop(Sfx_Unk1522);

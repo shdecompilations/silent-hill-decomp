@@ -329,7 +329,7 @@ void func_800D1910(void) // 0x800D1910
             func_8008D438();
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 117, false);
@@ -483,7 +483,7 @@ void func_800D23E4(void) // 0x800D23E4
             func_8008D438();
 
             CutsceneBorder_ForceShow();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             D_800D37C1            = 0;
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;

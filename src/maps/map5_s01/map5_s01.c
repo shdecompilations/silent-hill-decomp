@@ -910,7 +910,7 @@ void func_800EC42C(void) // 0x800EC42C
 
             g_Cutscene_Timer = NO_VALUE;
 
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             SD_Call(Sfx_Unk1467);
             Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
 

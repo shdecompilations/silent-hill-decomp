@@ -302,7 +302,7 @@ void func_800D7308(void)
             vcReturnPreAutoCamWork(true);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
-            if (ScreenFade_IsFinished())
+            if (Screen_IsFadeFinished())
             {
                 Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             }
@@ -383,7 +383,7 @@ void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
         g_SysWork.sysStateSteps[0] >= EventState_MedallionCutsceneStart &&
         g_SysWork.sysStateSteps[0] <  EventState_MedallionCutsceneEnd)
     {
-        ScreenFade_ResetTimestep();
+        Screen_FadeTimestepReset();
         SysWork_StateStepSet(0, EventState_Skip);
 
         // Warp Silver Medallion pickup.

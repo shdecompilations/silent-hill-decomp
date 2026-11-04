@@ -101,7 +101,7 @@ void func_800E9EAC(void) // 0x800E9EAC
         case 0:
             Player_ControlFreeze();
 
-            g_ScreenFade_Status = 12; // TODO: Can't be created with `ScreenFade_Start` macro?
+            g_Screen_FadeStatus = 12; // TODO: Can't be created with `Screen_FadeStart` macro?
 
             Sd_SfxStop(Sfx_Unk1522);
             SysWork_StateStepIncrement(0);
@@ -133,7 +133,7 @@ void func_800E9FDC(void) // 0x800E9FDC
     {
         case 0:
             Player_ControlFreeze();
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
             SysWork_StateStepIncrement(0);
 
         case 1:

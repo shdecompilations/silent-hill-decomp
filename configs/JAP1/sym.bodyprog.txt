@@ -353,9 +353,9 @@ MemCard_State_FileOpen                       = 0x80030EEC; // type:func
 MemCard_State_FileReadWrite                  = 0x80030FC8; // type:func
 MemCard_DevicePathGenerate                   = 0x8003120C; // type:func
 
-//-------------------------------------------------------------------------
+//--------------------------------------------------------------------
 //--- PA: 0x00C6F4   VA: 0x80031254   subsegment: c, screen/background
-//-------------------------------------------------------------------------
+//--------------------------------------------------------------------
 Screen_BackgroundImgDraw                     = 0x80031254; // type:func
 Screen_BackgroundImgTransition               = 0x80031534; // type:func
 Screen_BackgroundImgDrawBlackFadeIn          = 0x80031814; // type:func
@@ -369,20 +369,20 @@ Text_Debug_Draw                              = 0x80031CA8; // type:func
 Text_Debug_IntToString                       = 0x80031EBC; // type:func
 Text_Debug_DrawDecimal                       = 0x80031F54; // type:func
 
-//---------------------------------------------------------------------
+//--------------------------------------------------------------
 //--- PA: 0x00D560   VA: 0x800320C0   subsegment: c, screen/draw
-//---------------------------------------------------------------------
+//--------------------------------------------------------------
 Screen_RectInterlacedClear                   = 0x800320C0; // type:func
 Screen_Refresh                               = 0x80032130; // type:func
 Screen_Init                                  = 0x80032190; // type:func
 Screen_XyPositionSet                         = 0x8003225C; // type:func
 Screen_DisplayEnvXySet                       = 0x8003228C; // type:func
 
-//---------------------------------------------------------------------
+//--------------------------------------------------------------
 //--- PA: 0x00D7AC   VA: 0x8003230C   subsegment: c, screen/fade
-//---------------------------------------------------------------------
+//--------------------------------------------------------------
 Screen_FadeDrawModeSet                       = 0x8003230C; // type:func
-Screen_FadeInProgressGet                     = 0x80032360; // type:func
+Screen_FadeProgressGet                       = 0x80032360; // type:func
 Screen_FadeUpdate                            = 0x80032374; // type:func
 
 //-------------------------------------------------------------------------
@@ -680,7 +680,7 @@ Options_BrightnessMenu_LinesDraw             = 0x8003E3C0; // type:func
 GameFs_FlameGfxLoad                          = 0x8003E4E8; // type:func
 func_8003E740                                = 0x8003E518; // type:func
 Game_SpotlightLoadScreenAttribsSet           = 0x8003E92C; // type:func
-Game_FlashlightAttribsSet                 = 0x8003E978; // type:func
+Game_FlashlightAttribsSet                    = 0x8003E978; // type:func
 WorldEnv_MapPresetSet                        = 0x8003E9CC; // type:func
 Game_TurnFlashlightOn                        = 0x8003EA94; // type:func
 Game_TurnFlashlightOff                       = 0x8003EABC; // type:func
@@ -2875,14 +2875,14 @@ midi_smf_stat                                = 0x800AB1C0; // type:func
 //------------------------------------------------------------------
 g_MemCard_SaveIconTim                        = 0x800AB258;  // size:0xC0
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------
 //--- PA: 0x0867B8   VA: 0x800AB318   subsegment: .data, screen/background
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------
 g_Screen_BackgroundImgGamma                  = 0x800AB318; // size:0x2
 
-//-------------------------------------------------------------------------
+//------------------------------------------------------------------
 //--- PA: 0x0867BC   VA: 0x800AB31C   subsegment: .data, screen/fade
-//-------------------------------------------------------------------------
+//------------------------------------------------------------------
 D_800A8E5C                                   = 0x800AB31C;
 D_800A8E74                                   = 0x800AB334;
 g_Screen_FadeProgress                        = 0x800AB354; // type:s32
@@ -2894,9 +2894,9 @@ D_800A8E98                                   = 0x800AB358;
 D_800A8EB0                                   = 0x800AB370;
 g_Screen_BlackBorderShade                    = 0x800AB400;
 
-//-------------------------------------------------------------------------
+//------------------------------------------------------------------
 //--- PA: 0x0868A4   VA: 0x800AB404   subsegment: .data, screen/data
-//-------------------------------------------------------------------------
+//------------------------------------------------------------------
 vcNullRoadArray                              = 0x800AB404; // _VC_ROAD_DATA[2]
 g_OrderingTable0                             = 0x800AB434; // type:s8 size:0x28
 g_OrderingTable1                             = 0x800AB45C; // type:s8 size:0x28
@@ -3490,14 +3490,14 @@ g_MemCardSaveWork                            = 0x800B7B60; // size:0x718
 g_Text_Debug_PositionSet0                    = 0x800B8278; // type:DVECTOR size:4
 g_Text_Debug_PositionSet1                    = 0x800B827C; // type:DVECTOR size:4
 
-//------------------------------------------------------------------------
+//-----------------------------------------------------------------
 //--- PA: 0x093720   VA: 0x800B8280   subsegment: .bss, screen/fade
-//------------------------------------------------------------------------
+//-----------------------------------------------------------------
 D_800B5C28                                   = 0x800B8280;
 
-//------------------------------------------------------------------------
+//-----------------------------------------------------------------
 //--- PA: 0x093728   VA: 0x800B8288   subsegment: .bss, screen/data
-//------------------------------------------------------------------------
+//-----------------------------------------------------------------
 g_ScreenFadeTimestep                         = 0x800B8288; // type:s32
 g_VBlanks                                    = 0x800B828C; // type:s32
 g_UncappedVBlanks                            = 0x800B8290; // type:s32
@@ -3522,7 +3522,7 @@ g_GameWork                                   = 0x800BED80; // type:GameWork size
 //---------------------------------------------------
 //--- PA: 0x09A7F8   VA: 0x800BF358   subsegment: bss
 //---------------------------------------------------
-g_ScreenFade_Status                          = 0x800BF364;
+g_Screen_FadeStatus                          = 0x800BF364;
 
 //-------------------------------------------------------------------
 //--- PA: 0x09A810   VA: 0x800BF370   subsegment: .bss, sys/memcard_2

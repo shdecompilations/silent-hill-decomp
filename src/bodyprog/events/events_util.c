@@ -238,11 +238,11 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
             {
                 if (fadeType == ScreenFadeType_Black)
                 {
-                    ScreenFade_Start(false, false, false);
+                    Screen_FadeStart(false, false, false);
                 }
                 else if (fadeType == ScreenFadeType_White)
                 {
-                    ScreenFade_Start(false, false, true);
+                    Screen_FadeStart(false, false, true);
                 }
                 else
                 {
@@ -258,11 +258,11 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
             {
                 if (fadeType == ScreenFadeType_Black)
                 {
-                    ScreenFade_Start(false, true, false);
+                    Screen_FadeStart(false, true, false);
                 }
                 else if (fadeType == ScreenFadeType_White)
                 {
-                    ScreenFade_Start(false, true, true);
+                    Screen_FadeStart(false, true, true);
                 }
                 else
                 {
@@ -281,8 +281,8 @@ void Event_ScreenFadeCmd(e_ScreenFadeCmd cmd, bool fadeOut, e_ScreenFadeType fad
             // `fadeType == ScreenFadeType_Black || fadeType == ScreenFadeType_White`.
             if (fadeType < ScreenFadeType_ScreenBorders)
             {
-                if ((fadeOut == false && ScreenFade_IsNone()) ||
-                    (fadeOut == true  && ScreenFade_IsFinished()))
+                if ((fadeOut == false && Screen_IsFadeNone()) ||
+                    (fadeOut == true  && Screen_IsFadeFinished()))
                 {
                     Event_SysStateStepIncrement(incSubStep);
                 }

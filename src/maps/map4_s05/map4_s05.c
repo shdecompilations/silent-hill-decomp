@@ -360,7 +360,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             Fs_QueueStartRead(FILE_ANIM_UFO2_DMS, FS_BUFFER_19);
 
             g_Cutscene_Timer = NO_VALUE;
-            ScreenFade_ResetTimestep();
+            Screen_FadeTimestepReset();
 
             SD_Call(Sfx_Unk1467);
             Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
