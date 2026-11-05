@@ -2261,8 +2261,6 @@ static s32 MemCard_State_FileReadWrite(void)
  */
 static void MemCard_DevicePathGenerate(s32 deviceId, char* result)
 {
-    // @hack JAP0 has 2 bytes of garbage padding right after buXX: string below.
-    // Can't find way to add those 2 bytes here (or in splat yaml). Postbuild will have to handle them.
     strcpy(result, "buXX:");
 
     // Convert sequential device ID to PSX channel number.
