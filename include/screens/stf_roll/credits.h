@@ -83,8 +83,6 @@ extern s32 g_CreditsColorTable[7];
 
 extern s32 g_CreditsColorTable3d[7];
 
-extern u8 D_801E5FF8[];
-
 extern u8 D_801E5E5C[];
 
 extern u8 D_801E5E6C[];
@@ -106,6 +104,8 @@ extern s32 D_801E5E8C; // Index for some array used by most recent `func_801E2E2
 extern u8 D_801E5E90[];
 
 extern u8 D_801E5FD0[];
+
+extern u8 D_801E5FF8[];
 
 extern u32 D_801E600C; // Random 16-bit number.
 

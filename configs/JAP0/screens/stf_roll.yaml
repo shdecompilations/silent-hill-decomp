@@ -64,6 +64,7 @@ segments:
 
       # .data section
       - [0x2F50, .data, credits]
+      - [0x386C, .bss, credits]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data

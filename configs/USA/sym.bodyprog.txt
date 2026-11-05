@@ -27,7 +27,7 @@ MAP_INFOS                                    = 0x8002500C; // type:MapType size:
 DEFAULT_CONTROLLER_CONFIGS                   = 0x8002511C;
 
 //--------------------------------------------------------------------------
-//--- PA: 0x000758   VA: 0x800252B8   subsegment: .rodata, events/event_data
+//--- PA: 0x00075C   VA: 0x800252BC   subsegment: .rodata, events/event_data
 //--------------------------------------------------------------------------
 SFX_PAIRS                                    = 0x800252BC; // type:AreaLoadSfx size:0x64
 
@@ -49,9 +49,9 @@ LABEL_STR_POS_TABLE                          = 0x80027DD8; // size:0x20
 tileScreenEdgesX                             = 0x80028B2C;
 tileScreenEdgesY                             = 0x80028B34;
 
-//----------------------------------------------------------------------------
-//--- PA: 0x003FE4   VA: 0x80028B44   subsegment: .rodata, collision/collision
-//----------------------------------------------------------------------------
+//------------------------------------------------------
+//--- PA: 0x00402C   VA: 0x80028B8C   subsegment: rodata
+//------------------------------------------------------
 hack_D_80028B8C_fix                          = 0x80028B8C; // type:s32 can_reference:False - Garbage padding where data coincidentally equals `Gfx_Items_Draw` address, causing spimdisasm to create a relocation here.
 
 //--------------------------------------------------------------------------------
@@ -59,9 +59,9 @@ hack_D_80028B8C_fix                          = 0x80028B8C; // type:s32 can_refer
 //--------------------------------------------------------------------------------
 HARRY_WEAPON_ANIM_INFOS                      = 0x80028B94;
 
-//------------------------------------------------------------------------------
-//--- PA: 0x004BF0   VA: 0x80029750   subsegment: .rodata, player/player_control
-//------------------------------------------------------------------------------
+//------------------------------------------------------
+//--- PA: 0x005CE4   VA: 0x8002A844   subsegment: rodata
+//------------------------------------------------------
 hack_D_8002A844_fix                          = 0x8002A844; // type:s32
 
 //--------------------------------------------------------------------------
@@ -69,9 +69,9 @@ hack_D_8002A844_fix                          = 0x8002A844; // type:s32
 //--------------------------------------------------------------------------
 g_VibScript_Steps                            = 0x8002AC04;
 
-//------------------------------------------------------------------
-//--- PA: 0x006754   VA: 0x8002B2B4   subsegment: .rodata, gfx/water
-//------------------------------------------------------------------
+//------------------------------------------------------
+//--- PA: 0x006754   VA: 0x8002B2B4   subsegment: rodata
+//------------------------------------------------------
 hack_vcSetWatchTgtXzPos_fix                  = 0x8002B2B4; // type:s32 - Some 0x80083500 value which coincidentally points to code inside vcSetWatchTgtXzPos, probably unrelated flags or something. A jtbl is right before this which spimdisasm tries to include, breaking vcSetWatchTgtXzPos build.
 
 //--------------------------------------------------------------------------
