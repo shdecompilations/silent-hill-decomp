@@ -371,9 +371,15 @@ bool func_801E342C(void) // 0x801E342C
  * are this applied, they could be also some
  * sort of value defined with an macro.
 */
+#if VERSION_IS(EUR)
+static const s16 D_801E2E1E = 0x3731;
+static const s32 D_801E2E20 = 0x24283000;
+static const s32 D_801E2E24 = 0x0A0D2900;
+#else
 static const s16 D_801E2E1E = 0x50;    // 80
 static const s32 D_801E2E20 = 0x1800;  // 6144
 static const s32 D_801E2E24 = 0x21700; // 136960
+#endif
 
 s32 D_801E5C20 = 400;
 
@@ -419,6 +425,8 @@ u8 D_801E5E6C[8] = {
     '\x04'
 #elif VERSION_IS(JAP2)
     '\x10'
+#elif VERSION_IS(EUR)
+    '\x0A'
 #endif
 };
 

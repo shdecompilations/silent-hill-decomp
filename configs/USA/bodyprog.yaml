@@ -101,13 +101,17 @@ segments:
       - [0x3ECC, .rodata, paper_map/paper_map]
       - [0x3FDC, rodata]
       - [0x3FE4, .rodata, collision/collision]
+      - [0x402C, rodata] # Garbage padding
       - [0x4034, .rodata, player/weapon_anim_data]
       - [0x4BF0, .rodata, player/player_control]
+      - [0x5CE4, rodata] # Garbage padding
       - [0x5CF0, .rodata, view/vc_main]
       - [0x5F9C, .rodata, events/events_util]
       - [0x60A4, .rodata, bodyprog_80089090]
       - [0x643C, .rodata, chara/combat]
-      - [0x6754, .rodata, gfx/water]
+      - [0x6754, rodata] # Garbage padding
+      - [0x675C, .rodata, gfx/water]
+      - [0x676C, rodata] # Garbage padding
       - [0x6778, .rodata, sys/demo]
       - [0x6794, .rodata, ranking]
       - [0x6A6C,  rodata] # Garbage padding

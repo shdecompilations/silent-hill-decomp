@@ -28,6 +28,8 @@ q3_12 g_Pow2NegFracTable[] = {
     0x0
 #elif VERSION_IS(JAP2)
     0x8004
+#elif VERSION_IS(EUR)
+    0x800A
 #else
     0x0
 #endif

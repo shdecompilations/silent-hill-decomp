@@ -69,7 +69,7 @@ segments:
       - [0x195C, o, libpress/libpress, .data]
       - [0x1AAC, o, libpress/vlc, .data]
       - [0x1ADC, o, libpress/table, .data]
-      - [0x12ADC, pad] # Garbage padding data.
+      - [0x12ADC, data] # Garbage padding data.
 
       # .bss section
       - [0x12AE0, .bss, stream]

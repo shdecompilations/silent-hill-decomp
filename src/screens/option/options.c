@@ -3176,4 +3176,10 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
  * The type is assumed. It is unknown where this is used and
  * could be something defined by a macro.
  */
+#if VERSION_REGION_IS(NTSCJ)
+static const u16 D_801E2D42 = 0x9868;
+#elif VERSION_IS(EUR)
+static const u16 D_801E2D42 = 0x0A0D;
+#else
 static const u16 D_801E2D42 = 4160;
+#endif

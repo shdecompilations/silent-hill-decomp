@@ -2493,15 +2493,3 @@ void func_8006D7EC(s_CollisionCharaState* charaState, const SVECTOR* offset0, co
     charaState->positionToZ   = charaState->positionFromZ + charaState->moveOffset.vz;
 }
 
-// Padding with garbage data.
-#if VERSION_IS(USA)
-    static const u8 hack_D_80028B8C_fix[] = { 0x00, 0x42, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP0)
-    static const u8 hack_D_80028B8C_fix[] = { 0x00, 0x20, 0x3D, 0x20, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP1)
-    static const u8 hack_D_80028B8C_fix[] = { 0x00, 0x5E, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP2)
-    static const u8 hack_D_80028B8C_fix[] = { 0x00, 0x00, 0x42, 0x24, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(EUR)
-    static const u8 hack_D_80028B8C_fix[] = { 0x00, 0x3C, 0x05, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#endif

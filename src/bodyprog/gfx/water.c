@@ -262,19 +262,6 @@ q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2) // 0x8008D8
     return (res > Q8(24.0f)) ? Q8(24.0f) : res;
 }
 
-// TODO: Garbage data, move to separate split?
-#if VERSION_IS(USA)
-    const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x35, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP0)
-    const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x65, 0x5F, 0x61, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP1)
-    const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x51, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(JAP2)
-    const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x00, 0xA3, 0x8E, 0x00, 0x00, 0x00, 0x00 };
-#elif VERSION_IS(EUR)
-    const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x31, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
-#endif
-
 // Angles used by `func_8008D990`.
 q3_12 D_800AFD7C[] = {
     Q12_ANGLE(-175.0f), 0xF889, 0xFA39, 0xFAE4,
@@ -907,15 +894,3 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 }
 
 void func_8008EF18(void) {} // 0x8008EF18
-
-#if VERSION_IS(USA)
-    // Padding with garbage data? DWAVE filename goes unused here.
-    // TODO: Check other regions.
-    const u_Filename D_8002B2CC = { { 'D', 'W', 'A', 'V', 'E', '\0', 0x08, 0x80 } };
-    const s32        D_8002B2D4 = 0;
-#else
-INCLUDE_RODATA("bodyprog/nonmatchings/gfx/water", D_8002B2CC);
-#if VERSION_IS(EUR)
-INCLUDE_RODATA("bodyprog/nonmatchings/gfx/water", D_8002B2D4);
-#endif
-#endif

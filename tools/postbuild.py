@@ -4,7 +4,6 @@ import os
 # Patch garbage bytes back into built files
 
 USA_STREAM = [
-    [0x12ADC, b'\xA0\x05\x60\xAC'],
     [0x12AE4, b'\xE4\x73\x40\xAC']
 ]
 
@@ -41,8 +40,6 @@ USA_BODYPROG = [
 ]
 
 EUR_BODYPROG = [
-    [0x1, b'\x8E\x00'],
-    [0xAD, b'\x45'],
     [0x136, b'\x2C'],
     [0x139, b'\xAF\x28'],
     [0x9BF, b'\xB2\x00\x08\xDD\x86'],
@@ -50,8 +47,6 @@ EUR_BODYPROG = [
     [0x533A, b'\x08\x80'],
     [0x83F2A, b'\x40\x08'],
     [0x87A0A, b'\x01\x02'], # Padding after `D_800AD098`.
-    [0x8850E, b'\x0A\x80'],
-    [0x886A6, b'\x0A'],
     [0x8C577, b'\x18'],
     [0x8FB8C, b'\x74\x7A\x74\x20'],
     [0x96CA1, b'\x01\x2C'],
@@ -88,7 +83,6 @@ EUR_BODYPROG = [
 ]
 
 EUR_STREAM = [
-    [0x12ADC, b'\x06\x00\xF4\x03'],
     [0x12AE4, b'\x06\x00\xF4\x03']
 ]
 
@@ -290,28 +284,6 @@ SCREEN_PATCHES = {
     "EUR": {
         "b_konami": [
             [0xE55, b'\x5C\x63\x61']
-        ],
-        "option": [
-            [0x81A, b'\x0D\x0A']
-        ],
-        "stf_roll": [
-            [0x822, b'\x31\x37\x00\x30\x28\x24\x00\x29\x0D\x0A'],
-            [0x387B, b'\x0A']
-        ]
-    },
-    "JAP0": {
-        "option": [
-            [0xB62, b'\x68\x98']
-        ]
-    },
-    "JAP1": {
-        "option": [
-            [0xB62, b'\x68\x98']
-        ]
-    },
-    "JAP2": {
-        "option": [
-            [0xB62, b'\x68\x98']
         ]
     }
 }

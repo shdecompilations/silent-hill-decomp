@@ -1321,6 +1321,8 @@ static void MemCard_FilenameGenerate(char* dest, s32 fileIdx)
 
 #if VERSION_REGION_IS(NTSCJ)
     strcpy(dest, "BI");
+#elif VERSION_REGION_IS(PAL)
+    strcpy(dest, "BE");
 #else
     strcpy(dest, "BA");
 #endif

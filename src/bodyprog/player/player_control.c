@@ -9352,9 +9352,3 @@ s32 Math_MagnitudeShiftGet(q19_12 mag) // 0x800808F8
     return shift;
 }
 
-#if VERSION_IS(USA)
-// Padding with garbage data.
-static const u8 hack_D_8002A844_fix[] = { 0x00, 0x34, 0x07, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-#else
-INCLUDE_RODATA("bodyprog/nonmatchings/player/player_control", hack_D_8002A844_fix);
-#endif
