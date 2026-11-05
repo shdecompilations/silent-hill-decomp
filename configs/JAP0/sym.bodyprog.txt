@@ -1023,7 +1023,7 @@ Textures_ActiveTex_PutTextures               = 0x8005CEC8; // type:func
 Textures_ActiveTex_FindTexture               = 0x8005CF10; // type:func
 
 //---------------------------------------------------------------------
-//--- PA: 0x038450   VA: 0x8005CFB0   subsegment: c, gfx/billboard_draw
+//--- PA: 0x038450   VA: 0x8005CFB0   subsegment: c, gfx/billboard
 //---------------------------------------------------------------------
 Gfx_BillboardInfosInit                       = 0x8005CFB0; // type:func
 Gfx_BillboardDraw                            = 0x8005D080; // type:func
@@ -3054,7 +3054,7 @@ D_800AE1B4                                   = 0x800B0574;
 D_800AE1C0                                   = 0x800B0580;
 
 //-------------------------------------------------------------------------
-//--- PA: 0x08BA64   VA: 0x800B05C4   subsegment: .data, gfx/billboard_draw
+//--- PA: 0x08BA64   VA: 0x800B05C4   subsegment: .data, gfx/billboard
 //-------------------------------------------------------------------------
 g_BillboardInfos                             = 0x800B05C4; // size:0x2D8
 g_BillboardWorks                             = 0x800B089C;
@@ -3625,7 +3625,7 @@ g_Items_Coords                               = 0x800C6378;
 g_WorldEnvWork                               = 0x800C6698; // type:u8 size:0x150 - size likely incomplete
 
 //------------------------------------------------------------------------
-//--- PA: 0x0A1C88   VA: 0x800C67E8   subsegment: .bss, gfx/billboard_draw
+//--- PA: 0x0A1C88   VA: 0x800C67E8   subsegment: .bss, gfx/billboard
 //------------------------------------------------------------------------
 g_BillboardViewCoord                         = 0x800C67E8;
 

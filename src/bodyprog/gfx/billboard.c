@@ -1,17 +1,11 @@
 #include "game.h"
 #include "inline_no_dmpsx.h"
 
-#include <psyq/gtemac.h>
-#include <psyq/libapi.h>
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/billboard.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/item_screens.h"
-#include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
 extern s_WorldEnvWork g_WorldEnvWork;
@@ -89,7 +83,7 @@ void Gfx_BillboardInfosInit(GsCOORDINATE2* viewCoord) // 0x8005B55C
     }
 }
 
-void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 otShift) // 0x8005B62C
+void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot, s32 otShift) // 0x8005B62C
 {
     MATRIX            worldToScreenMat;
     MATRIX            worldMat;
@@ -329,16 +323,16 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
                 setPolyG4(poly_g4);
                 setSemiTrans(poly_g4, 1);
 
-                addPrim(&ot_arg4->org[temp_v0_2 >> otShift], packet);
-                addPrim(&ot_arg4->org[temp_v0_2 >> otShift], poly_g4);
-                addPrim(&ot_arg4->org[temp_v0_2 >> otShift], packet2);
-                addPrim(&ot_arg4->org[temp_v0_2 >> otShift], poly_gt4);
+                addPrim(&ot->org[temp_v0_2 >> otShift], packet);
+                addPrim(&ot->org[temp_v0_2 >> otShift], poly_g4);
+                addPrim(&ot->org[temp_v0_2 >> otShift], packet2);
+                addPrim(&ot->org[temp_v0_2 >> otShift], poly_gt4);
                 poly_g4++;
                 poly_gt4 = poly_g4;
             }
             else
             {
-                addPrim(&ot_arg4->org[temp_v0_2 >> otShift], poly_gt4);
+                addPrim(&ot->org[temp_v0_2 >> otShift], poly_gt4);
                 poly_gt4++;
             }
         }

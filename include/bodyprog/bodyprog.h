@@ -282,32 +282,6 @@ typedef struct
     /* 0x3DC */ } u;
 } s_GteScratchData2;
 
-/** @brief 2D billboard sprite info. */
-typedef struct _BillboardInfo
-{
-    /* 0x0  */ q3_12   positionY;
-    /* 0x2  */ q3_12   offsetDistance;
-    /* 0x4  */ q3_12   offsetAngle; // Or maybe the facing angle, i.e. the direction toward which it's displayed?
-    /* 0x6  */ s16     field_6;     // } Related to depth scale, maybe for XZ axes.
-    /* 0x8  */ s16     field_8;     // }
-    /* 0xA  */ s8      __pad_A[2];
-    /* 0xC  */ SVECTOR offsetDirection; /** Q3.12 | Unused, dead code. Set in `Gfx_BillboardInfosInit` and never referenced again. */
-    /* 0x14 */ SVECTOR position;        /** Q3.12 */
-} s_BillboardInfo;
-
-/** @brief Workspace for 2D billboard sprites to draw. */
-typedef struct
-{
-    /* 0x0 */ s_BillboardInfo* billboardInfos;     /** Billboards to draw on the current frame. */
-    /* 0x4 */ u8               billboardInfoCount; /** `billboardInfos` array size. */
-    /* 0x5 */ s8               __pad_5;
-    /* 0x6 */ q7_8             field_6;
-    /* 0x8 */ u8               field_8; // u0
-    /* 0x9 */ u8               field_9; // 
-    /* 0xA */ u8               field_A; // u3
-    /* 0xB */ u8               field_B; //
-} s_BillboardWork;
-
 // Paper map marking info?
 typedef struct
 {
@@ -1615,14 +1589,6 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
 
-/** @brief Initializes positions in the `g_BillboardInfos` array.
- *
- * @param viewCoord Camera coordinate.
- */
-void Gfx_BillboardInfosInit(GsCOORDINATE2* viewCoord);
-
-void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 otShift);
-
 u32 func_8005C478(s16* arg0, q19_12 x0, q19_12 y0, q19_12 x1, q19_12 y1, q19_12 x2, q19_12 y2);
 
 s32 Chara_NpcIdxGet(s_SubCharacter* chara);
@@ -1792,7 +1758,7 @@ void Textures_ActiveTex_PutTextures(s_ActiveChunkTextures* activeTexs, s_Texture
 
 s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveChunkTextures* activeTexs);
 
-/** @brief Sets the debug string position.
+/** @brief @unused Sets the debug string position.
  *
  * @param unused @unused
  * @param posX X screen position.

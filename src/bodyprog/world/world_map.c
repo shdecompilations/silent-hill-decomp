@@ -4,9 +4,9 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
+#include "bodyprog/gfx/billboard.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/screen/data.h"
 #include "main/fsqueue.h"
 
 static s_WorldMapWork g_WorldMapWork;

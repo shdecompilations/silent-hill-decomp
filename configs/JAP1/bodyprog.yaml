@@ -185,7 +185,7 @@ segments:
       - [0x331EC, c, gfx/materials]
       - [0x33D34, c, gfx/bodyprog_80056D8C]
       - [0x38148, c, gfx/texture_utils]
-      - [0x38504, c, gfx/billboard_draw]
+      - [0x38504, c, gfx/billboard]
       - [0x38EE0, c, bodyprog_math_8005BF38]
       - [0x39778, c, chara/utils]
       - [0x3A814, c, sound/sfx]
@@ -408,7 +408,7 @@ segments:
       - [0x8ADF8, .data, text/text_draw]
       - [0x8AE24, .data, items/item_screens_3]
       - [0x8BB38, .data, gfx/bodyprog_80055028]
-      - [0x8BB88, .data, gfx/billboard_draw]
+      - [0x8BB88, .data, gfx/billboard]
       - [0x8BEA4, .data, bodyprog_math_8005BF38]
       - [0x8BEE8, .data, sound/sfx]
       - [0x8BF2C, .data, gfx/env_effects]
@@ -498,7 +498,7 @@ segments:
       - [0xA1498, pad] # Garbage.
       - [0xA14A0, .bss, items/item_screens_3]
       - [0xA1C60, .bss, gfx/bodyprog_80055028]
-      - [0xA1DB0, .bss, gfx/billboard_draw]
+      - [0xA1DB0, .bss, gfx/billboard]
       - [0xA1DB4, pad] # Garbage.
       - [0xA1DB8, .bss, sound/sfx]
       - [0xA1DC8, bss] # Player related? - Dead code.

@@ -230,7 +230,7 @@ segments:
       - [0x30638,    c, gfx/materials]
       - [0x31180,    c, gfx/bodyprog_80056D8C]
       - [0x35594,    c, gfx/texture_utils]
-      - [0x35950,    c, gfx/billboard_draw]
+      - [0x35950,    c, gfx/billboard]
       
       - [0x3632C,    c, bodyprog_math_8005BF38]
       - [0x36BC4,    c, chara/utils]
@@ -463,7 +463,7 @@ segments:
       - [0x87A00, .data, text/text_draw]
       - [0x87A0C, .data, items/item_screens_3]
       - [0x8811C, .data, gfx/bodyprog_80055028]
-      - [0x8816C, .data, gfx/billboard_draw]
+      - [0x8816C, .data, gfx/billboard]
       - [0x88488, .data, bodyprog_math_8005BF38]
       - [0x884CC, .data, sound/sfx]
       - [0x88510, .data, gfx/env_effects]
@@ -565,7 +565,7 @@ segments:
       - [0x9D900, pad] # Garbage.
       - [0x9D908, .bss, items/item_screens_3]
       - [0x9E0C8, .bss, gfx/bodyprog_80055028]
-      - [0x9E218, .bss, gfx/billboard_draw]
+      - [0x9E218, .bss, gfx/billboard]
       - [0x9E21C,  pad] # Garbage.
       - [0x9E220, .bss, sound/sfx]
       - [0x9E230,  bss] # Player related? - Dead code.
