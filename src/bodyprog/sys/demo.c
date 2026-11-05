@@ -376,17 +376,6 @@ bool Demo_Update(void) // 0x8008F5D8
     return true;
 }
 
-// Junk padding?
-#if VERSION_IS(USA)
-    const s16 unkRodata_8002B2F2 = 0x8008;
-#elif VERSION_IS(JAP0)
-    const s16 unkRodata_8002B2F2 = 0x2009;
-#elif VERSION_IS(JAP1)
-    const s16 unkRodata_8002B2F2 = 0x8008;
-#elif VERSION_IS(JAP2)
-    const s16 unkRodata_8002B2F2 = 0x8EA4;
-#endif
-
 bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
 {
     u32 butFlags;

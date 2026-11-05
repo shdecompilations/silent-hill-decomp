@@ -3167,13 +3167,3 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
     #undef ICON_OFFSET_X
 }
 
-
-/** @brief Garbage .rodata value. (TODO: Move to postbuild?)
- */
-#if VERSION_IS(USA)
-static const u16 D_801E2D42 = 0x1040;
-#elif VERSION_IS(EUR)
-static const u16 D_801E2D42 = 0x0A0D;
-#else // JAP
-static const u16 D_801E2D42 = 0x9868;
-#endif

@@ -37,6 +37,8 @@ USA_BODYPROG = [
     [0x981E4, b'\x05\x00\x02\x24'],
     [0x981EC, b'\x28\x00\x02\x24'],
     [0x9821C, b'\x21\x10\x49'],
+    [0x6792, b'\x08\x80'], # `unkRodata_8002B2F2`
+    [0x89BDE, b'\x02\x80'], # Padding after `D_800AE73C`.
 ]
 
 EUR_BODYPROG = [
@@ -80,6 +82,8 @@ EUR_BODYPROG = [
     [0xA0F8F, b'\x05'],
     [0xA164E, b'\x02\x0F'],
     [0xA2A5C, b'\x24\x10\x50'],
+    [0x8850E, b'\x0A\x80'], # Padding after `g_Pow2NegFracTable`.
+    [0x886A6, b'\x0A\x80'], # Padding after `D_800AE73C`.
 ]
 
 EUR_STREAM = [
@@ -110,7 +114,10 @@ JAP0_BODYPROG = [
     [0xA490C, b'\x3A\x20\x25\x64'],
     [0xA49FC, b'\x54\x81\x09\x80'],
     [0xA50BC, b'\x73\x5F\x6F\x72'],
-    [0xA64CC, b'\x6F\x72\x67\x65']
+    [0xA64CC, b'\x6F\x72\x67\x65'],
+    [0x6452, b'\x09\x20'], # `unkRodata_8002B2F2`
+    [0x8BE06, b'\x55\x54'], # Padding after `g_Pow2NegFracTable`.
+    [0x8BF9E, b'\x2C\x34'], # Padding after `D_800AE73C`.
 ]
 
 JAP1_STREAM = [
@@ -148,7 +155,9 @@ JAP1_BODYPROG = [
     [0xA4A34, b'\x0A\x09\x2E\x62'],
     [0xA4B24, b'\x09\x2E\x62\x79'],
     [0xA51E4, b'\x2E\x62\x79\x74'],
-    [0xA65F4, b'\x0A\x09\x2E\x62']
+    [0xA65F4, b'\x0A\x09\x2E\x62'],
+    [0x64BE, b'\x08\x80'], # `unkRodata_8002B2F2`
+    [0x8C0C2, b'\x02\x80'], # Padding after `D_800AE73C`.
 ]
 
 JAP2_STREAM = [
@@ -185,7 +194,9 @@ JAP2_BODYPROG = [
     [0xA23EC, b'\xA0\x82\xCC\x95'],
     [0xA51E4, b'\x30\x0D\x0A\x09'],
     [0xA65F4, b'\x09\x30\x78\x33'],
-    [0xA65F4, b'\x09\x30\x78\x33']
+    [0xA65F4, b'\x09\x30\x78\x33'],
+    [0x64BE, b'\xA4\x8E'], # `unkRodata_8002B2F2`
+    [0x8BF2A, b'\x04\x80'] # Padding after `g_Pow2NegFracTable`.
 ]
 
 # Garbage bytes to patch into map overlays, per version: { version: { map: [[offset, bytes], ...] } }
@@ -281,10 +292,26 @@ MAP_PATCHES = {
 
 # Garbage bytes to patch into screen overlays, per version: { version: { screen: [[offset, bytes], ...] } }
 SCREEN_PATCHES = {
+    "USA": {
+        "stf_roll": [[0x3873, b'\x20']], # Padding after `D_801E5E6C`.
+        "option": [[0x742, b'\x40\x10']] # Padding in options.c .rodata.
+    },
     "EUR": {
-        "b_konami": [
-            [0xE55, b'\x5C\x63\x61']
-        ]
+        "b_konami": [[0xE55, b'\x5C\x63\x61']],
+        "stf_roll": [[0x387B, b'\x0A']],
+        "option": [[0x81A, b'\x0D\x0A']]
+    },
+    "JAP0": {
+        "stf_roll": [[0x386B, b'\x8D']],
+        "option": [[0xB62, b'\x68\x98']]
+    },
+    "JAP1": {
+        "stf_roll": [[0x3873, b'\x04']],
+        "option": [[0xB62, b'\x68\x98']]
+    },
+    "JAP2": {
+        "stf_roll": [[0x3873, b'\x10']],
+        "option": [[0xB62, b'\x68\x98']]
     }
 }
 

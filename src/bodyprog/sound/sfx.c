@@ -20,19 +20,7 @@ q3_12 g_Pow2NegFracTable[] = {
     Q12(0.6482f), Q12(0.6343f), Q12(0.621f),  Q12(0.6075f),
     Q12(0.5945f), Q12(0.582f),  Q12(0.5694f), Q12(0.5572f),
     Q12(0.5452f), Q12(0.5335f), Q12(0.522f),  Q12(0.5108f),
-    Q12(0.5f),
-    // TODO: Garbage padding follows.
-#if VERSION_IS(JAP0)
-    0x5455
-#elif VERSION_IS(JAP1)
-    0x0
-#elif VERSION_IS(JAP2)
-    0x8004
-#elif VERSION_IS(EUR)
-    0x800A
-#else
-    0x0
-#endif
+    Q12(0.5f)
 };
 
 static VECTOR3  g_Sfx_CameraPosition; // Q19.12

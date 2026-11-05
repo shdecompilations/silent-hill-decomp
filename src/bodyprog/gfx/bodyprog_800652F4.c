@@ -32,19 +32,6 @@ s32 D_800AE71C[][2] = {
 // Some timer used in `func_80066184`.
 q3_12 D_800AE73C = Q12(0.0f);
 
-// TODO: Garbage data.
-#if VERSION_IS(JAP0)
-s16 D_800AE73E = 0x342C;
-#elif VERSION_IS(JAP1)
-s16 D_800AE73E = 0x8002;
-#elif VERSION_IS(JAP2)
-s16 D_800AE73E = 0x0000;
-#elif VERSION_IS(EUR)
-s16 D_800AE73E = 0x800A;
-#else
-s16 D_800AE73E = 0x8002;
-#endif
-
 void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
 {
     DVECTOR          sp10[32][3];
