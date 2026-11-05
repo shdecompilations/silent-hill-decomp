@@ -3,7 +3,11 @@
 
 /** @note Likely the original name for this subsystem is `font` as indicated by SH2 and SH4 symbols. */
 
-#define MAP_MSG_CODE_MARKER        '~' /** Message code start. */
+#if VERSION_REGION_IS(PAL)
+    #define MAP_MSG_CODE_MARKER '{' /** Message code start. */
+#else
+    #define MAP_MSG_CODE_MARKER '~' /** Message code start. */
+#endif
 #define MAP_MSG_CODE_COLOR         'C' /** Set color. */
 #define MAP_MSG_CODE_DISPLAY_ALL   'D' /** Display message instantly with no rollout. */
 #define MAP_MSG_CODE_END           'E' /** End message. */
@@ -19,8 +23,12 @@
 #define FONT_12X16_GLYPH_SIZE_X       12
 #define FONT_12X16_GLYPH_SIZE_Y       16
 #define FONT_12X16_SPACE_SIZE         6
-#define FONT_12X16_LINE_COUNT_MAX     9
 #define FONT_12X16_ATLAS_COLUMN_COUNT (FONT_12X16_GLYPH_COUNT / 4)
+#if VERSION_REGION_IS(PAL)
+    #define FONT_12X16_LINE_COUNT_MAX 10
+#else
+    #define FONT_12X16_LINE_COUNT_MAX 9
+#endif
 
 #define GLYPH_TABLE_ASCII_OFFSET '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 #define DEFAULT_TEXT_LAYER_IDX   6    /** Values < 6 would make text unaffected by the screen fade effect and are thus @unused. */
@@ -141,7 +149,11 @@ bool Gfx_StringDraw(char* str, s32 displayLength);
  *
  * @param mapMsgIdx Index of the map message to evaluate.
  */
-s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx);
+#if VERSION_REGION_IS(NTSCJ)
+    s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx);
+#else
+    void Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx);
+#endif
 
 /** @brief Draws a string in screen space using 12x16 glyphs and returns a map message code.
  *

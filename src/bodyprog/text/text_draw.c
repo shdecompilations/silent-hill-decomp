@@ -370,16 +370,16 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
 
 #if !VERSION_REGION_IS(NTSCJ)
 
-#if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw", Gfx_MapMsg_WidthsCompute);
-#else
-s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
+void Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
 {
     s32 i;
     s32 j;
     s32 charCode;
     u8  msgCode;
     s32 posIdx;
+#if VERSION_REGION_IS(PAL)
+    s32 glyphIdx;
+#endif
     u8* mapMsg;
 
     g_MapMsg_WidthIdx  = 1;
@@ -396,6 +396,128 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
     {
         charCode = *mapMsg;
 
+#if VERSION_REGION_IS(PAL)
+        // PAL slightly changes map message codes, codes are now written `{Xn}`, newlines 
+        // are raw `\n` or `\r` chars, and spaces are drawn as-is.
+        switch (charCode)
+        {
+            case '\t':
+                break;
+
+            case ' ':
+            case '_':
+                g_MapMsg_Widths[g_MapMsg_WidthIdx - 1] += FONT_12X16_SPACE_SIZE;
+                break;
+
+            case '\n':
+            case '\r':
+                j++;
+                g_MapMsg_WidthIdx++;
+                break;
+
+            case MAP_MSG_CODE_MARKER:
+                msgCode = *++mapMsg;
+                posIdx  = *++mapMsg - '0';
+
+                switch (msgCode)
+                {
+                    case MAP_MSG_CODE_HALF_HEIGHT:
+                        g_SysWork.enableHalfHeightGlyphs = true;
+                        break;
+
+                    case MAP_MSG_CODE_END:
+                        j = FONT_12X16_LINE_COUNT_MAX;
+                        break;
+
+                    case MAP_MSG_CODE_LINE_POSITION:
+                        g_MapMsg_ActiveLine.positionIdx = posIdx;
+
+                    // Skip the closing `}` of codes that take an argument.
+                    case MAP_MSG_CODE_COLOR:
+                    case MAP_MSG_CODE_SELECT:
+                        mapMsg++;
+                        break;
+
+                    case MAP_MSG_CODE_JUMP:
+                        if (posIdx == 2)
+                        {
+                            g_MapMsg_AudioType = MapMsgAudioType_VoiceStream;
+                        }
+
+                        while (posIdx != '}')
+                        {
+                            posIdx = *++mapMsg;
+                        }
+
+                        break;
+
+                    case MAP_MSG_CODE_TAB:
+                        break;
+                }
+
+                break;
+
+            case 0:
+                return;
+
+            default:
+                // TODO: Document these replacements, might be related to per-language glyphs?
+                if (charCode == 0x96)
+                {
+                    charCode = 0x2D;
+                }
+                else if (charCode == '!')
+                {
+                    charCode = '\\';
+                }
+                else if (charCode == '&')
+                {
+                    charCode = '^';
+                }
+                else if (charCode == 0x9C)
+                {
+                    charCode = 0x101;
+                }
+                else if (charCode == 0xA1)
+                {
+                    charCode = 0xFF;
+                }
+                else if (charCode == 0xBF)
+                {
+                    charCode = 0xFE;
+                }
+                else if (charCode == 0xC7)
+                {
+                    charCode = 0x100;
+                }
+
+                if (charCode == 0xC1)
+                {
+                    glyphIdx = 0x77;
+                }
+                else if (charCode >= 0xDF)
+                {
+                    glyphIdx = charCode - 0x8B;
+                }
+                else if (charCode >= 0xC0)
+                {
+                    glyphIdx = 0x72;
+                }
+                else
+                {
+                    glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
+                }
+
+                if (glyphIdx != 0x72 && glyphIdx != 0x77)
+                {
+                    g_MapMsg_Widths[g_MapMsg_WidthIdx - 1] += FONT_12X16_GLYPH_WIDTHS[glyphIdx];
+                }
+
+                break;
+        }
+
+        mapMsg++;
+#else
         switch (charCode)
         {
             // Ignore tabs, newlines, and spaces.
@@ -475,9 +597,9 @@ s32 Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
                 mapMsg++;
                 break;
         }
+#endif
     }
 }
-#endif
 
 #if VERSION_IS(EUR)
 INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw", Gfx_MapMsg_StringDraw);

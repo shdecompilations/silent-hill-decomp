@@ -48,7 +48,9 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     s32         curRolloutState;
     bool        skip;
     s32         curMenuSelection;
+#if VERSION_REGION_IS(NTSCJ)
     s32         unkJapVal;
+#endif
     static s32  rolloutState;
     static s32  menuSelection;
     static s32  displayLength;
@@ -88,7 +90,11 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             displayLengthInc                 = ROLLOUT_ADVANCE;
 
             Gfx_MapMsg_Reset();
+#if VERSION_REGION_IS(NTSCJ)
             unkJapVal = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
+#else
+            Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
+#endif
 
 #if VERSION_REGION_IS(NTSCJ)
             if (unkJapVal != 0)
@@ -234,7 +240,11 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                     g_MapMsg_CurrentIdx++;
                     g_SysWork.mapMsgTimer = g_MapMsg_Select.maxIdx;
 
-                    unkJapVal = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
+#if VERSION_REGION_IS(NTSCJ)
+            unkJapVal = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
+#else
+            Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
+#endif
 
 #if VERSION_REGION_IS(NTSCJ)
                     if (unkJapVal != 0)
