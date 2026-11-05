@@ -82,7 +82,7 @@ extern s32          __pad_bss_800C5E24[3];
 extern s32          g_MapMsg_Widths[9];
 #elif VERSION_IS(EUR)
 extern DVECTOR      g_StringPosition;
-extern s32          D_800C2E9C;
+extern DVECTOR      D_800C2E9C;
 extern s32          D_800C2EA0;
 extern s32          g_StringPositionX1;
 extern s_MapMsgLine g_MapMsg_ActiveLine;

@@ -3628,9 +3628,9 @@ VbWvsMatrix                                  = 0x800C2E78; // type:MATRIX size:0
 //--------------------------------------------------------------------
 //--- PA: 0x09D808   VA: 0x800C2E98   subsegment: .bss, text/text_draw
 //--------------------------------------------------------------------
-g_StringPosition                             = 0x800C2E98; // type:DVECTOR
+g_StringPosition                             = 0x800C2E98; // type:DVECTOR size:4
 g_StringPositionX1                           = 0x800C2EA4; // type:s32
-g_MapMsg_ActiveLine                          = 0x800C2EA8;
+g_MapMsg_ActiveLine                          = 0x800C2EA8; // size:2
 g_MapMsg_WidthIdx                            = 0x800C2EAC;
 g_MapMsg_Widths                              = 0x800C2EB8; // type:s32
 g_MapMsg_GlyphSprite                         = 0x800C2EE8;

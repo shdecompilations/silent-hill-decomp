@@ -121,7 +121,7 @@ s32          g_MapMsg_Widths[9];
 s32          D_800C3920;
 #elif VERSION_REGION_IS(PAL)
 DVECTOR      g_StringPosition;
-s32          D_800C2E9C;
+DVECTOR      D_800C2E9C;
 s32          D_800C2EA0;
 s32          g_StringPositionX1; // Copy of `g_StringPosition.vx` as `s32`. It's unclear what for.
 s_MapMsgLine g_MapMsg_ActiveLine;
@@ -602,7 +602,74 @@ void Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
 }
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("bodyprog/nonmatchings/text/text_draw", Gfx_MapMsg_StringDraw);
+s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AD10
+{
+    s32      i;
+    s32      glyphPosX;
+    s32      glyphPosY;
+    DVECTOR* lineStartPos;
+
+    g_StringPosition.vx = -(g_MapMsg_Widths[0] >> 1);
+
+    // TODO: Enum for positionIdx values used here? Anchoring text to different parts of screen?
+    switch (g_MapMsg_ActiveLine.positionIdx)
+    {
+        case 0:
+            g_StringPosition.vy = -92;
+            break;
+
+        case 1:
+            g_StringPosition.vy = 76 - ((g_MapMsg_WidthIdx - 1) * FONT_12X16_GLYPH_SIZE_Y);
+
+            // Shift down when no cutscene border is shown.
+            if (g_SysWork.cutsceneBorderState == CutsceneBorderState_None ||
+                g_SysWork.cutsceneBorderState == CutsceneBorderState_FadingOut ||
+                g_SysWork.cutsceneBorderState == CutsceneBorderState_Reset)
+            {
+                g_StringPosition.vy += 26;
+            }
+            break;
+
+        case 2:
+            g_StringPosition.vy = -60;
+            break;
+
+        case 3:
+            g_StringPosition.vy = 44 - ((g_MapMsg_WidthIdx - 1) * FONT_12X16_GLYPH_SIZE_Y);
+            break;
+
+        case 4:
+            g_StringPosition.vy = ((FONT_12X16_LINE_COUNT_MAX - g_MapMsg_WidthIdx) * 8) - 76;
+            break;
+    }
+
+    // Longest line width.
+    D_800C2EA0 = g_MapMsg_Widths[0];
+    for (i = 0; i < g_MapMsg_WidthIdx; i++)
+    {
+        if (D_800C2EA0 < g_MapMsg_Widths[i])
+        {
+            D_800C2EA0 = g_MapMsg_Widths[i];
+        }
+    }
+
+    D_800AD098[0] = 1;
+
+    // Line start position, restored after drawing advances `g_StringPosition`.
+    lineStartPos     = &D_800C2E9C; // @hack Pointer needed to match.
+    glyphPosY        = g_StringPosition.vy;
+    lineStartPos->vy = glyphPosY;
+
+    g_StringPosition.vx = -(D_800C2EA0 >> 1);
+    g_StringPositionX1  = g_StringPosition.vx;
+    glyphPosX           = g_StringPositionX1;
+    lineStartPos->vx    = glyphPosX;
+
+    Gfx_StringDraw(mapMsg, displayLength);
+
+    D_800AD098[0] = 0;
+    Math_SetDVectorFast(&g_StringPosition, glyphPosX, glyphPosY);
+}
 #else
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AF18
 {
