@@ -13,7 +13,7 @@
 # The existing main_BSS_END should be used, but the BSS
 # section ends earlier than what the values used here show.
 # Likely the main EXE was truncated by devs after building?
-.set main_BSS_END, g_bodyProg
+.set main_BSS_END, g_Bodyprog
 .set main_BSS_SIZE, 0x1EC8
 
 glabel __SN_ENTRY_POINT

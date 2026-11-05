@@ -67,7 +67,7 @@ typedef struct _PointLight
  */
 typedef struct _WorldEnvWork
 {
-    /* 0x0   */ u8           field_0;
+    /* 0x0   */ u8           field_0;                /** `e_UnkGfxEnum` */
     /* 0x1   */ u8           isFogEnabled;           /** `bool` */
     /* 0x2   */ u8           enableTintLightOverlap; /** `bool`. Allows overlapping the world tint and volumetric light color.
                                                       * @note Specifically modifies the volumetric light color that the point light generates,

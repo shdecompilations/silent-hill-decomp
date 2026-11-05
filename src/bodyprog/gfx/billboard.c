@@ -10,7 +10,7 @@
 
 extern s_WorldEnvWork g_WorldEnvWork;
 
-s_BillboardInfo g_BillboardInfos[26] = {
+static s_BillboardInfo g_BillboardInfos[26] = {
 /* 0  */ { 89,   Q12(0.025f), Q12_ANGLE(160.0f), 542,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
 /* 1  */ { 21,   306,         Q12_ANGLE(300.0f), 573,  356, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
 /* 2  */ { 4,    306,         Q12_ANGLE(60.0f),  558,  356, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
@@ -41,7 +41,7 @@ s_BillboardInfo g_BillboardInfos[26] = {
 
 // Used in `Gfx_BillboardDraw` (https://decomp.me/scratch/20BvV1)
 // References subsets of `g_BillboardInfos` to determine the relevant billboard pool for a given context?
-s_BillboardWork g_BillboardWorks[3] = {
+static s_BillboardWork g_BillboardWorks[3] = {
 #if VERSION_REGION_IS(PAL)
     { &g_BillboardInfos[1],  3,  0, 0,      0x80, 0, 0xBF, 0x3F },
     { &g_BillboardInfos[0],  12, 0, 0,      0x80, 0, 0xBF, 0x3F },
@@ -53,7 +53,7 @@ s_BillboardWork g_BillboardWorks[3] = {
 #endif
 };
 
-SVECTOR D_800AE500[4] = {
+static SVECTOR D_800AE500[4] = {
     SVECTOR( 0.0f,    255.65f, 255.65f),
     SVECTOR(-255.65f, 0.0f,    255.65f),
     SVECTOR( 255.65f, 0.0f,    255.65f),
@@ -169,8 +169,9 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
     {
         Vw_CoordHierarchyMatrixCompute(g_BillboardViewCoord, &worldMat);
 
+        // Set matrix translation.
         worldMat.t[0] = Q12_TO_Q8(posX);
-        worldMat.t[1] = Q12_TO_Q8(posY) + billboardWork->field_6;
+        worldMat.t[1] = Q12_TO_Q8(posY) + billboardWork->offsetY;
         worldMat.t[2] = Q12_TO_Q8(posZ);
 
         WorldEnv_LightTransform(&worldMat, g_WorldEnvWork.light.intensity,

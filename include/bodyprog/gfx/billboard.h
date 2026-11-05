@@ -20,7 +20,7 @@ typedef struct _BillboardWork
     /* 0x0 */ s_BillboardInfo* billboardInfos;     /** Billboards to draw on the current frame. */
     /* 0x4 */ u8               billboardInfoCount; /** `billboardInfos` array size. */
     /* 0x5 */ s8               __pad_5;
-    /* 0x6 */ q7_8             field_6;
+    /* 0x6 */ q7_8             offsetY;
     /* 0x8 */ u8               field_8; // u0
     /* 0x9 */ u8               field_9; // 
     /* 0xA */ u8               field_A; // u3

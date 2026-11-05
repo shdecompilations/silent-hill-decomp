@@ -195,16 +195,16 @@ s_800AEDBC D_800AEDBC[] = {
 
 void GameState_PaperMapScreen_Update(void) // 0x80066EB0
 {
-    s32           temp_s0_2;
-    q19_12        scale;
-    s8            markingFileIdx;
-    u16           scrollY;
-    u16           scrollX;
-    u32           temp_a0;
-    q20_12        scrollPosX;
-    q20_12        scrollPosY;
-    u32           temp3;
-    u32           temp4;
+    s32    temp_s0_2;
+    q19_12 scale;
+    s8     markingFileIdx;
+    u16    scrollY;
+    u16    scrollX;
+    q20_12 scrollPosX;
+    q20_12 scrollPosY;
+    u32    temp3;
+    u32    temp4;
+
     static u8     paperMapIdx;
     static u8     markingIdx;
     static s8     activeMarkingFileIdx;
