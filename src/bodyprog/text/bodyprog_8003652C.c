@@ -34,5 +34,3 @@ void func_8003652C(void) // 0x8003652C
 
     #undef SPRITE_CX
 }
-
-static const s32 __pad = 0;

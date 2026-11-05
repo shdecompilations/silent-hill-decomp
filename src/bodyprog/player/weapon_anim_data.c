@@ -571,5 +571,3 @@ const s_800C44F0 D_800294F4[] = {
         .endKeyframeIdx   = 579
     }
 };
-
-const __pad = 0;

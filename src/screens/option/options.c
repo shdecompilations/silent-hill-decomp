@@ -68,10 +68,6 @@ static s32 g_ExtraOptionsMenu_SelectedBloodColorEntry;
 
 static s32 g_ExtraOptionsMenu_BulletMultMax;
 
-#if VERSION_REGION_IS(PAL)
-static s32 __pad_bss_801E76A8[2];
-#endif
-
 // ========================================
 // MAIN AND EXTRA OPTION SCREEN
 // ========================================
@@ -3172,14 +3168,12 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
 }
 
 
-/** @brief Unknown .rodata value.
- * The type is assumed. It is unknown where this is used and
- * could be something defined by a macro.
+/** @brief Garbage .rodata value. (TODO: Move to postbuild?)
  */
-#if VERSION_REGION_IS(NTSCJ)
-static const u16 D_801E2D42 = 0x9868;
+#if VERSION_IS(USA)
+static const u16 D_801E2D42 = 0x1040;
 #elif VERSION_IS(EUR)
 static const u16 D_801E2D42 = 0x0A0D;
-#else
-static const u16 D_801E2D42 = 4160;
+#else // JAP
+static const u16 D_801E2D42 = 0x9868;
 #endif

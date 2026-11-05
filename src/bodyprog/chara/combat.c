@@ -202,8 +202,6 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
     return ret;
 }
 
-const s32 g_rodataPad_8002AF9C[2] = { 0, 0 }; // TODO: Might indicate split nearby?
-
 u32 func_8008A270(s32 idx) // 0x8008A270
 {
 #if VERSION_EQUAL_OR_NEWER(USA)

@@ -1722,5 +1722,3 @@ void WorldGfx_PuppetDoctorMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x80
         }
     }
 }
-
-const s32 __pad_rodata_80025BB0 = 0;

@@ -8,8 +8,6 @@
 #include "bodyprog/ranking.h"
 #include "main/fsqueue.h"
 
-static const s32 __pad_rodata_8002B2F8 = 0;
-
 s16  g_Ranking_SavegameCount;
 u16  g_Ranking_GameplayHours;
 u16  g_Ranking_WalkDistanceKm;

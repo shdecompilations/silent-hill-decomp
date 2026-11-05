@@ -2,8 +2,6 @@
 
 #include "bodyprog/events/event_data.h"
 
-const s32 __pad_rodata_800252B8 = 0;
-
 /** @brief SFX pairs.
  *
  * @note Used when loading areas. Maybe facilitates things like the
@@ -71,5 +69,3 @@ s32           g_MapEventSysState     = SysState_Gameplay;
 u32           g_MapEventParam        = 0;
 s32           g_MapEventLastUsedItem = 0;
 s32           g_RadioPitchState      = 0;
-
-const s32 __pad_rodata_80025374 = 0;

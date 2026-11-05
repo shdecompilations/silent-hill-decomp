@@ -3859,9 +3859,4 @@ void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx) //
         return;
     }
 }
-
-// Likely the first pad is supposed to be generated during file linking, while the second is inserted at
-// `bodyprog_80055028.c` directly.
-const s32 rodataPad_80028524 = 0;
-const s32 rodataPad_80028528 = 0;
  

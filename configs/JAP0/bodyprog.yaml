@@ -69,17 +69,22 @@ segments:
       - [0x1F4, .rodata, sys/map_info]
       - [0x598, .rodata, sys/fs_screens]
       - [0x5A8, .rodata, sys/settings_reset]
+      - [0x5FC, pad]
       - [0x604, .rodata, sys/memcard_2]
       - [0x680, rodata] # Garbage padding
       - [0x68C, .rodata, game_boot/game_boot]
       - [0x6C0, rodata] # Garbage padding
       - [0x6C8, .rodata, text/bodyprog_8003652C]
+      - [0x6E8, pad]
       - [0x6EC, .rodata, text/map_msg]
-      - [0x744, .rodata, events/event_data]
+      - [0x744, pad]
+      - [0x748, .rodata, events/event_data]
+      - [0x800, pad]
       - [0x804, .rodata, events/game_sys_states]
       - [0x908, .rodata, events/title]
       - [0x9AC, rodata] # Garbage padding
       - [0x9B0, .rodata, world/world_draw]
+      - [0x103C, pad]
       - [0x1040, .rodata, world/world_effects]
       - [0x1070, rodata] # Garbage padding
       - [0x1080, .rodata, sound/sd_call]
@@ -88,6 +93,7 @@ segments:
       - [0x1450, .rodata, items/item_utils]
       - [0x1470, .rodata, items/item_screens_2]
       - [0x1848, .rodata, items/item_screens_3]
+      - [0x36E4, pad]
       - [0x36EC, .rodata, gfx/bodyprog_80056D8C]
       - [0x3704, .rodata, gfx/texture_utils]
       - [0x370C, rodata]
@@ -102,17 +108,20 @@ segments:
       - [0x3D04, .rodata, collision/collision]
       - [0x3D4C, rodata] # Garbage padding
       - [0x3D54, .rodata, player/weapon_anim_data]
+      - [0x490C, pad]
       - [0x4910, .rodata, player/player_control]
       - [0x5A04, rodata] # Garbage padding
       - [0x5A10, .rodata, view/vc_main]
       - [0x5CBC, .rodata, events/events_util]
       - [0x5DC4, .rodata, bodyprog_80089090]
-      - [0x615C, .rodata, chara/combat]
+      - [0x615C, pad]
+      - [0x6164, .rodata, chara/combat]
       - [0x6414, rodata] # Garbage padding
       - [0x641C, .rodata, gfx/water]
       - [0x642C, rodata] # Garbage padding
       - [0x6438, .rodata, sys/demo]
-      - [0x6458, .rodata, ranking]
+      - [0x6454, pad]
+      - [0x645C, .rodata, ranking]
       - [0x672C, rodata] # Garbage padding
       - [0x6734, o, libcd/iso9660, .rdata]
       - [0x6924, o, libcd/type, .rdata]
@@ -536,6 +545,7 @@ segments:
       - [0xA2010, .bss, events/events_util]
       - [0xA20F8, .bss, chara/combat]
       - [0xA21E8, .bss, gfx/water]
+      - [0xA220C, pad]
       - [0xA2210, .bss, sys/demo]
       - [0xA2270, .bss, ranking]
       - [0xA22B9]       # Garbage.

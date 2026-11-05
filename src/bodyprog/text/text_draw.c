@@ -152,9 +152,6 @@ GsSPRITE     g_MapMsg_GlyphSprite;
 s16          g_GlyphSpritePositionX;
 s16          D_800C391E;
 s32          D_800C3920;
-#ifndef PAD_HACK_IGNORE
-s32          __pad_bss_800C3924;
-#endif
 #endif
 
 void Gfx_StringPositionSet(s32 x, s32 y) // 0x8004A87C

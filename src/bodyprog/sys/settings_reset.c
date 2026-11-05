@@ -146,8 +146,6 @@ void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
     }
 }
 
-const s32 __pad_rodata_80025170[2] = {};
-
 void nullsub_800334C8(void) {} // 0x800334C8
 
 void func_800334D0(void) {} // 0x800334D0
