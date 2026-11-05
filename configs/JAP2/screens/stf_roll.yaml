@@ -7,12 +7,12 @@ options:
   platform: psx
   compiler: GCC
 
-  asm_path: asm/JAP2/screens/credits
-  src_path: src/screens/credits
-  asset_path: asm/JAP2/screens/credits
+  asm_path: asm/JAP2/screens/stf_roll
+  src_path: src/screens/stf_roll
+  asset_path: asm/JAP2/screens/stf_roll
   build_path: build/JAP2
 
-  ld_script_path: linkers/JAP2/screens/credits.ld
+  ld_script_path: linkers/JAP2/screens/stf_roll.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -30,14 +30,14 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP1/screens/sym.credits.txt
+    - configs/JAP1/screens/sym.stf_roll.txt
     - configs/JAP1/sym.bodyprog.txt
     - configs/USA/sym.main.txt
   reloc_addrs_path:
-    - configs/JAP1/screens/rel.credits.txt
+    - configs/JAP1/screens/rel.stf_roll.txt
 
-  undefined_funcs_auto_path: linkers/JAP2/screens/undefined_funcs_auto.credits.txt
-  undefined_syms_auto_path: linkers/JAP2/screens/undefined_syms_auto.credits.txt
+  undefined_funcs_auto_path: linkers/JAP2/screens/undefined_funcs_auto.stf_roll.txt
+  undefined_syms_auto_path: linkers/JAP2/screens/undefined_syms_auto.stf_roll.txt
 
   extensions_path: tools/splat_ext
 
@@ -48,7 +48,7 @@ options:
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: credits
+  - name: stf_roll
     type: code
     start: 0
     vram: 0x801E2600

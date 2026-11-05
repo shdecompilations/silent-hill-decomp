@@ -17,7 +17,7 @@
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/sys/game_main.h"
 #include "screens/b_konami/b_konami.h"
-#include "screens/credits/credits.h"
+#include "screens/stf_roll/credits.h"
 #include "screens/options.h"
 #include "screens/saveload.h"
 #include "screens/stream/stream.h"

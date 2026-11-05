@@ -1112,7 +1112,7 @@ def main():
 
     if args.target == "all":
         OverlayNames = [
-            "bodyprog", "b_konami", "credits", "options", "saveload", "stream",
+            "bodyprog", "b_konami", "stf_roll", "options", "saveload", "stream",
             "map0_s00", "map0_s01", "map0_s02",
             "map1_s00", "map1_s01", "map1_s02", "map1_s03", "map1_s04", "map1_s05", "map1_s06",
             "map2_s00", "map2_s01", "map2_s02", "map2_s03", "map2_s04",

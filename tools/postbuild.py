@@ -294,7 +294,7 @@ SCREEN_PATCHES = {
         "options": [
             [0x81A, b'\x0D\x0A']
         ],
-        "credits": [
+        "stf_roll": [
             [0x822, b'\x31\x37\x00\x30\x28\x24\x00\x29\x0D\x0A'],
             [0x387B, b'\x0A']
         ]
@@ -318,7 +318,7 @@ SCREEN_PATCHES = {
 
 SCREEN_BIN_NAMES = {
     "options": "OPTION",
-    "credits": "STF_ROLL",
+    "stf_roll": "STF_ROLL",
     "b_konami": "B_KONAMI"
 }
 

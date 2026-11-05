@@ -35,7 +35,7 @@ options:
     - configs/JAP1/screens/sym.stream.txt
     - configs/JAP1/screens/sym.saveload.txt
     - configs/JAP1/screens/sym.options.txt
-    - configs/JAP1/screens/sym.credits.txt
+    - configs/JAP1/screens/sym.stf_roll.txt
     - configs/JAP1/sym.bodyprog.txt
     - configs/USA/sym.main.txt
   reloc_addrs_path:

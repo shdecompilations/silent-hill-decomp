@@ -169,7 +169,7 @@ SILENT_ASSETS_FLAGS := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$
 INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -ftb "$(ASSETS_DIR)/$(GAME_VERSION)/filetable.c.inc" -b $(OUT_DIR) -xml "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" -o $(ROM_DIR)
 
 # Targets that will run tools/postbuild.py after being linked & extracted from ELF.
-TARGET_POSTBUILD := main bodyprog screens/b_konami screens/credits screens/stream screens/options maps/map3_s06 maps/map4_s05 maps/map5_s01 maps/map6_s01 maps/map1_s04 maps/map4_s00 maps/map4_s06 maps/map6_s05 maps/map2_s03
+TARGET_POSTBUILD := main bodyprog screens/b_konami screens/stf_roll screens/stream screens/options maps/map3_s06 maps/map4_s05 maps/map5_s01 maps/map6_s01 maps/map1_s04 maps/map4_s00 maps/map4_s06 maps/map6_s05 maps/map2_s03
 
 # Adjusts compiler and assembler flags based on source file location.
 # - Files under main executable paths use -G8; overlay files use -G0.
@@ -235,7 +235,7 @@ get_target_out_slow = $(patsubst $(OUT_DIR)/$(GAME_VERSION)%,$(OUT_DIR)%,$(addpr
 get_target_out = $(patsubst $(strip $1)|%,%,$(filter $(strip $1)|%,$(TARGET_OUT_CACHE)))
 
 # Template definition for elf target.
-# First parameter should be source target with folder (e.g. screens/credits).
+# First parameter should be source target with folder (e.g. screens/stf_roll).
 # Second parameter should be end target (e.g. build/VIN/STF_ROLL.BIN).
 # If we skip the ASM inclusion to determine progress, we will not be able to link. Skip linking, if so.
 
@@ -281,7 +281,7 @@ TARGET_SCREENS_SRC_DIR := screens
 TARGET_MAPS_SRC_DIR    := maps
 TARGET_ITEMS_SRC_DIR   := items
 
-ifeq ($(EXE)$(ENG)$(BKO)$(CRE)$(OPT)$(SAV)$(FMV)$(M00)$(M01)$(M02)$(M10)$(M11)$(M12)$(M13)$(M14)$(M15)$(M16)$(M20)$(M21)$(M22)$(M23)$(M24)$(M30)$(M31)$(M32)$(M33)$(M34)$(M35)$(M36)$(M40)$(M41)$(M42)$(M43)$(M44)$(M45)$(M46)$(M50)$(M51)$(M52)$(M53)$(M60)$(M61)$(M62)$(M63)$(M64)$(M65)$(M70)$(M71)$(M72)$(M73)$(M0X)$(M1X)$(M2X)$(M3X)$(M4X)$(M5X)$(M6X)$(M7X)$(SCR)$(STR)$(MAP)$(ITE)$(ITG)$(ITF)$(ITI)$(ITS)$(ITM),)
+ifeq ($(EXE)$(ENG)$(BKO)$(STF)$(OPT)$(SAV)$(FMV)$(M00)$(M01)$(M02)$(M10)$(M11)$(M12)$(M13)$(M14)$(M15)$(M16)$(M20)$(M21)$(M22)$(M23)$(M24)$(M30)$(M31)$(M32)$(M33)$(M34)$(M35)$(M36)$(M40)$(M41)$(M42)$(M43)$(M44)$(M45)$(M46)$(M50)$(M51)$(M52)$(M53)$(M60)$(M61)$(M62)$(M63)$(M64)$(M65)$(M70)$(M71)$(M72)$(M73)$(M0X)$(M1X)$(M2X)$(M3X)$(M4X)$(M5X)$(M6X)$(M7X)$(SCR)$(STR)$(MAP)$(ITE)$(ITG)$(ITF)$(ITI)$(ITS)$(ITM),)
 
 ifeq ($(BUILD_EXE), 1)
 
@@ -299,7 +299,7 @@ endif
 
 ifeq ($(BUILD_SCREENS), 1)
 
-TARGET_SCREENS := b_konami credits options saveload stream
+TARGET_SCREENS := b_konami options saveload stf_roll stream
 
 ifeq ($(GAME_VERSION), JAP0)
 TARGET_SCREENS := $(TARGET_SCREENS) hp_safe1 s__safe2
@@ -457,9 +457,9 @@ TARGET_MAPS := $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 TARGET_EXE_$(EXE)             := main
 TARGET_ENG_$(ENG)             := bodyprog
 TARGET_BKO_$(BKO)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/b_konami
-TARGET_CRE_$(CRE)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/credits
 TARGET_OPT_$(OPT)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/options
 TARGET_SAV_$(SAV)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/saveload
+TARGET_STF_$(STF)$(SCR)       := $(TARGET_SCREENS_SRC_DIR)/stf_roll
 TARGET_FMV_$(FMV)$(STR)$(SCR) := $(TARGET_SCREENS_SRC_DIR)/stream
 TARGET_MAP_$(MAP)             := $(TARGET_MAPS)
 
@@ -564,7 +564,7 @@ TARGET_M73_$(M73)$(M7X) := $(TARGET_MAPS_SRC_DIR)/map7_s03
 #endif GAME_VERSION
 endif
 
-TARGET_IN := $(TARGET_EXE_1) $(TARGET_ENG_1) $(TARGET_BKO_1) $(TARGET_CRE_1) $(TARGET_OPT_1) $(TARGET_SAV_1) $(TARGET_FMV_1) $(TARGET_M00_1) $(TARGET_M01_1) $(TARGET_M02_1) $(TARGET_M10_1) $(TARGET_M11_1) $(TARGET_M12_1) $(TARGET_M13_1) $(TARGET_M14_1) $(TARGET_M15_1) $(TARGET_M16_1) $(TARGET_M20_1) $(TARGET_M21_1) $(TARGET_M22_1) $(TARGET_M23_1) $(TARGET_M24_1) $(TARGET_M30_1) $(TARGET_M31_1) $(TARGET_M32_1) $(TARGET_M33_1) $(TARGET_M34_1) $(TARGET_M35_1) $(TARGET_M36_1) $(TARGET_M40_1) $(TARGET_M41_1) $(TARGET_M42_1) $(TARGET_M43_1) $(TARGET_M44_1) $(TARGET_M45_1) $(TARGET_M46_1) $(TARGET_M50_1) $(TARGET_M51_1) $(TARGET_M52_1) $(TARGET_M53_1) $(TARGET_M60_1) $(TARGET_M61_1) $(TARGET_M62_1) $(TARGET_M63_1) $(TARGET_M64_1) $(TARGET_M65_1) $(TARGET_M70_1) $(TARGET_M71_1) $(TARGET_M72_1) $(TARGET_M73_1) $(TARGET_MAP_1) $(TARGET_ITS_1) $(TARGET_ITL_1) $(TARGET_ITF_1) $(TARGET_ITG_1) $(TARGET_ITE_1)
+TARGET_IN := $(TARGET_EXE_1) $(TARGET_ENG_1) $(TARGET_BKO_1) $(TARGET_STF_1) $(TARGET_OPT_1) $(TARGET_SAV_1) $(TARGET_FMV_1) $(TARGET_M00_1) $(TARGET_M01_1) $(TARGET_M02_1) $(TARGET_M10_1) $(TARGET_M11_1) $(TARGET_M12_1) $(TARGET_M13_1) $(TARGET_M14_1) $(TARGET_M15_1) $(TARGET_M16_1) $(TARGET_M20_1) $(TARGET_M21_1) $(TARGET_M22_1) $(TARGET_M23_1) $(TARGET_M24_1) $(TARGET_M30_1) $(TARGET_M31_1) $(TARGET_M32_1) $(TARGET_M33_1) $(TARGET_M34_1) $(TARGET_M35_1) $(TARGET_M36_1) $(TARGET_M40_1) $(TARGET_M41_1) $(TARGET_M42_1) $(TARGET_M43_1) $(TARGET_M44_1) $(TARGET_M45_1) $(TARGET_M46_1) $(TARGET_M50_1) $(TARGET_M51_1) $(TARGET_M52_1) $(TARGET_M53_1) $(TARGET_M60_1) $(TARGET_M61_1) $(TARGET_M62_1) $(TARGET_M63_1) $(TARGET_M64_1) $(TARGET_M65_1) $(TARGET_M70_1) $(TARGET_M71_1) $(TARGET_M72_1) $(TARGET_M73_1) $(TARGET_MAP_1) $(TARGET_ITS_1) $(TARGET_ITL_1) $(TARGET_ITF_1) $(TARGET_ITG_1) $(TARGET_ITE_1)
 
 endif
 

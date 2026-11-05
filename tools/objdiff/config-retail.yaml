@@ -20,10 +20,10 @@ categories:
     name: Options Screen
     paths:
       - screens/options
-  - id: screen.credits
+  - id: screen.stf_roll
     name: Credits Screen
     paths:
-      - screens/credits
+      - screens/stf_roll
   - id: screen.saveload
     name: Save Screen
     paths:

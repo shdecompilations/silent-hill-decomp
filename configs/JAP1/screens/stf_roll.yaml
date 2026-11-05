@@ -1,18 +1,18 @@
 name: Credits roll overlay (STF_ROLL)
-sha1: B86F92835CBE1682F3B92FA77F266C5630E3B774
+sha1: 54e3edc5f24dec8c57de1651d33ffcc8c971a9c5
 options:
   basename: STF_ROLL.BIN
-  target_path: assets/JAP0/VIN/STF_ROLL.BIN
+  target_path: assets/JAP1/VIN/STF_ROLL.BIN
   base_path: ../../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/JAP0/screens/credits
-  src_path: src/screens/credits
-  asset_path: asm/JAP0/screens/credits
-  build_path: build/JAP0
+  asm_path: asm/JAP1/screens/stf_roll
+  src_path: src/screens/stf_roll
+  asset_path: asm/JAP1/screens/stf_roll
+  build_path: build/JAP1
 
-  ld_script_path: linkers/JAP0/screens/credits.ld
+  ld_script_path: linkers/JAP1/screens/stf_roll.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -30,14 +30,14 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP0/screens/sym.credits.txt
-    - configs/JAP0/sym.bodyprog.txt
+    - configs/JAP1/screens/sym.stf_roll.txt
+    - configs/JAP1/sym.bodyprog.txt
     - configs/USA/sym.main.txt
   reloc_addrs_path:
-    - configs/JAP0/screens/rel.credits.txt
+    - configs/JAP1/screens/rel.stf_roll.txt
 
-  undefined_funcs_auto_path: linkers/JAP0/screens/undefined_funcs_auto.credits.txt
-  undefined_syms_auto_path: linkers/JAP0/screens/undefined_syms_auto.credits.txt
+  undefined_funcs_auto_path: linkers/JAP1/screens/undefined_funcs_auto.stf_roll.txt
+  undefined_syms_auto_path: linkers/JAP1/screens/undefined_syms_auto.stf_roll.txt
 
   extensions_path: tools/splat_ext
 
@@ -48,7 +48,7 @@ options:
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: credits
+  - name: stf_roll
     type: code
     start: 0
     vram: 0x801E2600
@@ -60,13 +60,13 @@ segments:
       - [0x8, .rodata, credits]
 
       # .text section
-      - [0x820, c, credits]
+      - [0x828, c, credits]
 
       # .data section
-      - [0x2F50, .data, credits]
+      - [0x2F58, .data, credits]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data
     type: bin
-    start: 0x3A08
+    start: 0x3A10
   - [0x3B00]

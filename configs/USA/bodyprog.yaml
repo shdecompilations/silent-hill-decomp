@@ -37,7 +37,7 @@ options:
     - configs/USA/screens/sym.stream.txt
     - configs/USA/screens/sym.saveload.txt
     - configs/USA/screens/sym.options.txt
-    - configs/USA/screens/sym.credits.txt
+    - configs/USA/screens/sym.stf_roll.txt
     - configs/USA/sym.bodyprog.txt
     - configs/USA/sym.main.txt
   reloc_addrs_path:

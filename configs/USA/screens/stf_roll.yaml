@@ -1,18 +1,18 @@
 name: Credits roll overlay (STF_ROLL)
-sha1: 54e3edc5f24dec8c57de1651d33ffcc8c971a9c5
+sha1: 5a40c5ea20e9903804c5656c828869f8b858c2d1
 options:
   basename: STF_ROLL.BIN
-  target_path: assets/JAP1/VIN/STF_ROLL.BIN
+  target_path: assets/USA/VIN/STF_ROLL.BIN
   base_path: ../../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/JAP1/screens/credits
-  src_path: src/screens/credits
-  asset_path: asm/JAP1/screens/credits
-  build_path: build/JAP1
+  asm_path: asm/USA/screens/stf_roll
+  src_path: src/screens/stf_roll
+  asset_path: asm/USA/screens/stf_roll
+  build_path: build/USA
 
-  ld_script_path: linkers/JAP1/screens/credits.ld
+  ld_script_path: linkers/USA/screens/stf_roll.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -30,14 +30,14 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP1/screens/sym.credits.txt
-    - configs/JAP1/sym.bodyprog.txt
+    - configs/USA/screens/sym.stf_roll.txt
+    - configs/USA/sym.bodyprog.txt
     - configs/USA/sym.main.txt
   reloc_addrs_path:
-    - configs/JAP1/screens/rel.credits.txt
+    - configs/USA/screens/rel.stf_roll.txt
 
-  undefined_funcs_auto_path: linkers/JAP1/screens/undefined_funcs_auto.credits.txt
-  undefined_syms_auto_path: linkers/JAP1/screens/undefined_syms_auto.credits.txt
+  undefined_funcs_auto_path: linkers/USA/screens/undefined_funcs_auto.stf_roll.txt
+  undefined_syms_auto_path: linkers/USA/screens/undefined_syms_auto.stf_roll.txt
 
   extensions_path: tools/splat_ext
 
@@ -48,7 +48,7 @@ options:
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: credits
+  - name: stf_roll
     type: code
     start: 0
     vram: 0x801E2600

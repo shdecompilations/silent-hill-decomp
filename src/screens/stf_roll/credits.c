@@ -9,7 +9,7 @@
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
-#include "screens/credits/credits.h"
+#include "screens/stf_roll/credits.h"
 
 extern s_CreditTextState   g_CreditTextState;
 extern s_CreditText3dState g_CreditText3dState;

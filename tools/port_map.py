@@ -357,7 +357,7 @@ def cmd_port(args):
             m = SYM.match(line)
             if m:
                 annotations[m.group(1)] = m.group(3) or ''
-    # functions/data the map uses from the screen overlays (credits etc.), which load at 0x801E....
+    # functions/data the map uses from the screen overlays (stf_roll etc.), which load at 0x801E....
     for kind, ext in (('funcs', '.text'), ('syms', None)):
         path = 'linkers/USA/maps/undefined_%s_auto.%s.txt' % (kind, M)
         if not os.path.exists(path):

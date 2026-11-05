@@ -67,7 +67,7 @@ YAML_SCREENS = [
     "screens/b_konami.yaml",
     "screens/stream.yaml",
     "screens/options.yaml",
-    "screens/credits.yaml",
+    "screens/stf_roll.yaml",
     "screens/saveload.yaml"
 ]
 YAML_ITEMS = [

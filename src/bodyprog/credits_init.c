@@ -6,7 +6,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/ranking.h"
 #include "main/fsqueue.h"
-#include "screens/credits/credits.h"
+#include "screens/stf_roll/credits.h"
 
 s32 D_800C48F0;
 

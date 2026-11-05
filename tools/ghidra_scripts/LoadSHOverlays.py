@@ -220,8 +220,6 @@ def loadSplatSymbolsFile(sym_path):
     if segment_name == "main" or segment_name == "bodyprog":
         space = addr_factory.getDefaultAddressSpace()
     else:
-        if segment_name == "credits":
-            segment_name = "stf_roll"
         if segment_name == "options":
             segment_name = "option"
         space = addr_factory.getAddressSpace(segment_name)
