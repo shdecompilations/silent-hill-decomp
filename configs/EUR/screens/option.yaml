@@ -1,21 +1,21 @@
 name: Options screen overlay (OPTION)
-sha1: F1D3E3FF4184CA83A230C942A87E4C4D608D2A99
+sha1: 94bed5b0b6b4e6ecbefa42a743ca84981ceefdea
 options:
   basename: OPTION.BIN
-  target_path: assets/JAP2/VIN/OPTION.BIN
+  target_path: assets/EUR/VIN/OPTION.BIN
   base_path: ../../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/JAP2/screens/options
-  src_path: src/screens/options
-  asset_path: asm/JAP2/screens/options
-  build_path: build/JAP2
+  asm_path: asm/EUR/screens/option
+  src_path: src/screens/option
+  asset_path: asm/EUR/screens/option
+  build_path: build/EUR
 
-  ld_script_path: linkers/JAP2/screens/options.ld
+  ld_script_path: linkers/EUR/screens/option.ld
 
   find_file_boundaries: False
-  gp_value: 0x80022BB0
+  gp_value: 0x800236B4
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 
@@ -30,16 +30,14 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP1/screens/sym.options.txt
-    - configs/JAP1/sym.bodyprog.txt
-    - configs/USA/sym.main.txt
+    - configs/EUR/screens/sym.option.txt
+    - configs/EUR/sym.bodyprog.txt
+    - configs/EUR/sym.main.txt
   reloc_addrs_path:
-    - configs/JAP1/screens/rel.options.txt
+    - configs/EUR/screens/rel.option.txt
 
-  undefined_funcs_auto_path: linkers/JAP2/screens/undefined_funcs_auto.options.txt
-  undefined_syms_auto_path: linkers/JAP2/screens/undefined_syms_auto.options.txt
-
-  extensions_path: tools/splat_ext
+  undefined_funcs_auto_path: linkers/EUR/screens/undefined_funcs_auto.option.txt
+  undefined_syms_auto_path: linkers/EUR/screens/undefined_syms_auto.option.txt
 
   subalign: 4
 
@@ -48,7 +46,7 @@ options:
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: options
+  - name: option
     type: code
     start: 0
     vram: 0x801E2600
@@ -56,17 +54,18 @@ segments:
     subalign: 4
     subsegments:
       # .rodata section
-      - [0x0, .rodata, options]
+      - [0x0, pad]
+      - [0x8, .rodata, options]
 
       # .text section
-      - [0xB64, c, options]
+      - [0x81C, c, options]
 
       # .data section
-      - [0x5FDC, .data, options]
-      - [0x609C, .bss, options]
+      - [0x4FA4, .data, options]
+      - [0x5064, .bss, options]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data
     type: bin
-    start: 0x60DC
-  - [0x6100]
+    start: 0x50B0
+  - [0x5100]

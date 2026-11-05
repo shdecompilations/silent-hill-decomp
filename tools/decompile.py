@@ -147,13 +147,13 @@ def check_injected_code(func) -> InjectRes:
         elif func.overlay_name == "b_konami":
             make_str = "build/out/1ST/B_KONAMI.BIN"
             make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
-        elif func.overlay_name == "option" or func.overlay_name == "options":
+        elif func.overlay_name == "option":
             make_str = "build/out/VIN/OPTION.BIN"
             make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "saveload":
             make_str = "build/out/VIN/SAVELOAD.BIN"
             make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
-        elif func.overlay_name == "stf_roll" or func.overlay_name == "stf_roll":
+        elif func.overlay_name == "stf_roll":
             make_str = "build/out/VIN/STF_ROLL.BIN"
             make_defines = "BUILD_ENGINE=0 BUILD_SCREENS=1 BUILD_MAPS=0"
         elif func.overlay_name == "stream":

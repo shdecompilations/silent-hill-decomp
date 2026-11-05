@@ -1,18 +1,18 @@
 name: Options screen overlay (OPTION)
-sha1: 518E7B61ADD5602E1C9719B597EAA02CD832B6B6
+sha1: F1D3E3FF4184CA83A230C942A87E4C4D608D2A99
 options:
   basename: OPTION.BIN
-  target_path: assets/JAP0/VIN/OPTION.BIN
+  target_path: assets/JAP1/VIN/OPTION.BIN
   base_path: ../../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/JAP0/screens/options
-  src_path: src/screens/options
-  asset_path: asm/JAP0/screens/options
-  build_path: build/JAP0
+  asm_path: asm/JAP1/screens/option
+  src_path: src/screens/option
+  asset_path: asm/JAP1/screens/option
+  build_path: build/JAP1
 
-  ld_script_path: linkers/JAP0/screens/options.ld
+  ld_script_path: linkers/JAP1/screens/option.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -30,14 +30,14 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP0/screens/sym.options.txt
-    - configs/JAP0/sym.bodyprog.txt
+    - configs/JAP1/screens/sym.option.txt
+    - configs/JAP1/sym.bodyprog.txt
     - configs/USA/sym.main.txt
   reloc_addrs_path:
-    - configs/JAP0/screens/rel.options.txt
+    - configs/JAP1/screens/rel.option.txt
 
-  undefined_funcs_auto_path: linkers/JAP0/screens/undefined_funcs_auto.options.txt
-  undefined_syms_auto_path: linkers/JAP0/screens/undefined_syms_auto.options.txt
+  undefined_funcs_auto_path: linkers/JAP1/screens/undefined_funcs_auto.option.txt
+  undefined_syms_auto_path: linkers/JAP1/screens/undefined_syms_auto.option.txt
 
   extensions_path: tools/splat_ext
 
@@ -48,7 +48,7 @@ options:
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: options
+  - name: option
     type: code
     start: 0
     vram: 0x801E2600

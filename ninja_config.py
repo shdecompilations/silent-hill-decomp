@@ -66,7 +66,7 @@ YAML_ENGINE = ["bodyprog.yaml"]
 YAML_SCREENS = [
     "screens/b_konami.yaml",
     "screens/stream.yaml",
-    "screens/options.yaml",
+    "screens/option.yaml",
     "screens/stf_roll.yaml",
     "screens/saveload.yaml"
 ]

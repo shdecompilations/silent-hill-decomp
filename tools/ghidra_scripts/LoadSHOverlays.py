@@ -219,10 +219,6 @@ def loadSplatSymbolsFile(sym_path):
 
     if segment_name == "main" or segment_name == "bodyprog":
         space = addr_factory.getDefaultAddressSpace()
-    else:
-        if segment_name == "options":
-            segment_name = "option"
-        space = addr_factory.getAddressSpace(segment_name)
 
     if space is None:
         printerr("Memory space '{}' not found in program.".format(segment_name))

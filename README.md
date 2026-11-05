@@ -144,7 +144,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td>Purpose</td>
             <td>Note</td>
         </tr>
-            <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp?category=screen.options"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=screen.options&label=OPTIONS&color=rgb(255,215,0)"/></a></td>
+            <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp?category=screen.option"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=screen.option&label=OPTIONS&color=rgb(255,215,0)"/></a></td>
             <td>Options screen logic.</td>
             <td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/a7ab294077dab8104a18ddacb8e567c23eaf0efe">Fifth fully decompiled and matching overlay!</a></td>
         </tr>

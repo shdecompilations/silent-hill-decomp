@@ -291,7 +291,7 @@ SCREEN_PATCHES = {
         "b_konami": [
             [0xE55, b'\x5C\x63\x61']
         ],
-        "options": [
+        "option": [
             [0x81A, b'\x0D\x0A']
         ],
         "stf_roll": [
@@ -300,24 +300,24 @@ SCREEN_PATCHES = {
         ]
     },
     "JAP0": {
-        "options": [
+        "option": [
             [0xB62, b'\x68\x98']
         ]
     },
     "JAP1": {
-        "options": [
+        "option": [
             [0xB62, b'\x68\x98']
         ]
     },
     "JAP2": {
-        "options": [
+        "option": [
             [0xB62, b'\x68\x98']
         ]
     }
 }
 
 SCREEN_BIN_NAMES = {
-    "options": "OPTION",
+    "option": "OPTION",
     "stf_roll": "STF_ROLL",
     "b_konami": "B_KONAMI"
 }

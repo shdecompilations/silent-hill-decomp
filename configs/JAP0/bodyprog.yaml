@@ -34,7 +34,7 @@ options:
     - configs/JAP0/screens/sym.b_konami.txt
     - configs/JAP0/screens/sym.stream.txt
     - configs/JAP0/screens/sym.saveload.txt
-    - configs/JAP0/screens/sym.options.txt
+    - configs/JAP0/screens/sym.option.txt
     - configs/JAP0/screens/sym.stf_roll.txt
     - configs/JAP0/sym.bodyprog.txt
     - configs/USA/sym.main.txt

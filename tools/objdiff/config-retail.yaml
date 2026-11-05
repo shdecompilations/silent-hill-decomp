@@ -16,10 +16,10 @@ categories:
     name: Boot Screen
     paths:
       - screens/b_konami
-  - id: screen.options
+  - id: screen.option
     name: Options Screen
     paths:
-      - screens/options
+      - screens/option
   - id: screen.stf_roll
     name: Credits Screen
     paths:

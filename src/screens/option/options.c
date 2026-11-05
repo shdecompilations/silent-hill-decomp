@@ -21,7 +21,7 @@ extern s32 D_800A93B8;
 #endif
 
 #if VERSION_REGION_IS(NTSCJ)
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2600);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2600);
 #endif
 
 // Japanese releases draw the main and extra option menus 20 pixels higher, PAL only moves the main menu up by 8.
@@ -813,7 +813,7 @@ void Options_MainOptionsMenu_SfxVolumeBarDraw(void) // 0x801E3F90
 }
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_VolumeBarDraw);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_MainOptionsMenu_VolumeBarDraw);
 #else
 void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
 {
@@ -1166,10 +1166,10 @@ static inline void Options_MainOptionsMenu_SelectionHighlightDraw_Statics(void)
     (void)mainOptions_SelectionHighlightFrom;
     (void)mainOptions_SelectionHighlightTo;
 }
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E286C);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2878);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2888);
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_SelectionHighlightDraw);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E286C);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2878);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2888);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_MainOptionsMenu_SelectionHighlightDraw);
 #else
 void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
 {
@@ -1286,7 +1286,7 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
 #endif
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_Menu_BackgroundDraw);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_Menu_BackgroundDraw);
 #else
 void Options_Menu_BackgroundDraw(void) // 0x801E49F0
 {
@@ -1331,27 +1331,27 @@ void Options_Menu_BackgroundDraw(void) // 0x801E49F0
 #endif
 
 #if VERSION_IS(EUR)
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2898);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2958);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A18);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A20);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A28);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A30);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A38);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A40);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A48);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A4C);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A54);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A58);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A5C);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A68);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A6C);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A70);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A74);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A78);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A7C);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2A80);
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_ExtraOptionsMenu_ConfigDraw);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2898);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2958);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A18);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A20);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A28);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A30);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A38);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A40);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A48);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A4C);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A54);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A58);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A5C);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A68);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A6C);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A70);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A74);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A78);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A7C);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2A80);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_ExtraOptionsMenu_ConfigDraw);
 #else
 void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
 {
@@ -1570,17 +1570,17 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
 #endif
 
 #if VERSION_IS(EUR)
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2AF0);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2B80);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C10);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C18);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C24);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C2C);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C34);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C3C);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C44);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2C4C);
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_MainOptionsMenu_ConfigDraw);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2AF0);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2B80);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2C10);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2C18);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2C24);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2C2C);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2C34);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2C3C);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2C44);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2C4C);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_MainOptionsMenu_ConfigDraw);
 #else
 void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
 {
@@ -1723,7 +1723,7 @@ static inline void Options_ScreenPosMenu_Control_Statics(void)
     (void)screenPosMenu_PositionX;
     (void)screenPosMenu_PositionY;
 }
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_ScreenPosMenu_Control);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_ScreenPosMenu_Control);
 #else
 void Options_ScreenPosMenu_Control(void) // 0x801E53A0
 {
@@ -2038,7 +2038,7 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
 // ========================================
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_BrightnessMenu_Control);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_BrightnessMenu_Control);
 #else
 void Options_BrightnessMenu_Control(void) // 0x801E6018
 {
@@ -2124,7 +2124,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
 #endif
 
 #if VERSION_IS(EUR)
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_BrightnessMenu_ConfigDraw);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_BrightnessMenu_ConfigDraw);
 #else
 void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
 {
@@ -2138,9 +2138,9 @@ void Options_BrightnessMenu_ConfigDraw(void) // 0x801E6238
 #endif
 
 #if VERSION_IS(EUR)
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2D4C);
-INCLUDE_RODATA("screens/options/nonmatchings/options", D_801E2D64);
-INCLUDE_ASM("screens/options/nonmatchings/options", Options_BrightnessMenu_ArrowsDraw);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2D4C);
+INCLUDE_RODATA("screens/option/nonmatchings/options", D_801E2D64);
+INCLUDE_ASM("screens/option/nonmatchings/options", Options_BrightnessMenu_ArrowsDraw);
 #else
 void Options_BrightnessMenu_ArrowsDraw(void) // 0x801E628C
 {
