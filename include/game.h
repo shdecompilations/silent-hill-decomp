@@ -230,7 +230,7 @@ typedef enum _SpecialEnvEventFlags
 
 typedef enum _UnkGfxEnum
 {
-    UnkGfxEnum_0 = 0,
+    UnkGfxEnum_0 = 0, // Something fog-related, maybe enables fog tint overlay for drawn objects?
     UnkGfxEnum_1 = 1,
     UnkGfxEnum_2 = 2,
 } e_UnkGfxEnum;

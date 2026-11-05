@@ -184,7 +184,7 @@ void World_Init(void) // 0x8003C048
     g_SysWork.lightIntensity = Q12(1.0f);
 
     Game_FlashlightAttribsSet();
-    func_8005B55C(vwGetViewCoord());
+    Gfx_BillboardInfosInit(vwGetViewCoord());
     WorldObjects_Clear(&g_WorldGfxWork);
 }
 

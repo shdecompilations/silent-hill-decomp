@@ -2734,5 +2734,3 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* stalker, s32 sfxId)
         stalkerProps.sfxId_102 = newSfxId;
     }
 }
-
-#undef stalkerProps

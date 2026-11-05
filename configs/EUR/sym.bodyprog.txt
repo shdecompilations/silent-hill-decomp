@@ -102,9 +102,9 @@ D_80028B3C                                   = 0x80028214;
 //----------------------------------------------------------------------------
 hack_D_80028B8C_fix                          = 0x80028264; // type:s32 can_reference:False - Garbage padding where data coincidentally equals `Gfx_Items_Draw` address, causing spimdisasm to create a relocation here.
 
-//-------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 //--- PA: 0x002BDC   VA: 0x8002826C   subsegment: .rodata, player/weapon_anim_data
-//-------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 HARRY_WEAPON_ANIM_INFOS                      = 0x8002826C;
 D_800294F4                                   = 0x80028BCC;
 pad                                          = 0x80028E24;
@@ -993,7 +993,7 @@ Textures_ActiveTex_FindTexture               = 0x8005AF40; // type:func
 //---------------------------------------------------------------------
 //--- PA: 0x035950   VA: 0x8005AFE0   subsegment: c, gfx/billboard_draw
 //---------------------------------------------------------------------
-func_8005B55C                                = 0x8005AFE0; // type:func
+Gfx_BillboardInfosInit                       = 0x8005AFE0; // type:func
 Gfx_BillboardDraw                            = 0x8005B0B0; // type:func
 Gfx_DebugStringPositionSet                   = 0x8005B990; // type:func
 
@@ -3045,8 +3045,8 @@ D_800AE1C0                                   = 0x800AD7B8;
 //-------------------------------------------------------------------------
 //--- PA: 0x08816C   VA: 0x800AD7FC   subsegment: .data, gfx/billboard_draw
 //-------------------------------------------------------------------------
-D_800AE204                                   = 0x800AD7FC; // size:0x2D8
-D_800AE4DC                                   = 0x800ADAD4;
+g_BillboardInfos                             = 0x800AD7FC; // size:0x2D8
+g_BillboardWorks                             = 0x800ADAD4;
 D_800AE500                                   = 0x800ADAF8;
 
 //-----------------------------------------------------------------------------
@@ -3695,7 +3695,7 @@ g_WorldEnvWork                               = 0x800C3758; // type:u8 size:0x150
 //------------------------------------------------------------------------
 //--- PA: 0x09E218   VA: 0x800C38A8   subsegment: .bss, gfx/billboard_draw
 //------------------------------------------------------------------------
-g_ViewCoord                                  = 0x800C38A8;
+g_BillboardViewCoord                         = 0x800C38A8;
 
 //---------------------------------------------------------------
 //--- PA: 0x09E220   VA: 0x800C38B0   subsegment: .bss, sound/sfx

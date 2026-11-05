@@ -1405,5 +1405,3 @@ void LarvalStalker_CollisionUpdate(s_SubCharacter* larvalStalker)
 
     Chara_CollisionShapeOffsetsUpdate(&larvalStalker->collision.shapeOffsets, larvalStalker);
 }
-
-#undef larvalStalkerProps

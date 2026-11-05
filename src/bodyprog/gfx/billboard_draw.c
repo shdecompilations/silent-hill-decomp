@@ -16,45 +16,46 @@
 
 extern s_WorldEnvWork g_WorldEnvWork;
 
-s_800AE204 D_800AE204[26] = {
-    { 89,   102,  Q12_ANGLE(160.0f), 542,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 21,   306,  Q12_ANGLE(300.0f), 573,  356, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 4,    306,  Q12_ANGLE(60.0f),  558,  356, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -30,  289,  Q12_ANGLE(200.0f), 527,  418, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -64,  255,  Q12_ANGLE(270.0f), 527,  465, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -115, 306,  Q12_ANGLE(30.0f),  449,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -200, 289,  Q12_ANGLE(100.0f), 589,  465, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -285, 221,  Q12_ANGLE(180.0f), 496,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -370, 272,  Q12_ANGLE(250.0f), 465,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -455, 255,  Q12_ANGLE(300.0f), 449,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -642, 170,  Q12_ANGLE(0.0f),   418,  310, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -727, 136,  Q12_ANGLE(80.0f),  387,  310, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 13,   30,   Q12_ANGLE(220.0f), 270,  270, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -64,  60,   Q12_ANGLE(50.0f),  360,  240, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -115, 100,  Q12_ANGLE(180.0f), 340,  190, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -141, 30,   Q12_ANGLE(100.0f), 270,  240, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { -192, 70,   Q12_ANGLE(320.0f), 340,  180, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
-    { 0,    0,    Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } }
+s_BillboardInfo g_BillboardInfos[26] = {
+/* 0  */ { 89,   Q12(0.025f), Q12_ANGLE(160.0f), 542,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 1  */ { 21,   306,         Q12_ANGLE(300.0f), 573,  356, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 2  */ { 4,    306,         Q12_ANGLE(60.0f),  558,  356, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 3  */ { -30,  289,         Q12_ANGLE(200.0f), 527,  418, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 4  */ { -64,  255,         Q12_ANGLE(270.0f), 527,  465, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 5  */ { -115, 306,         Q12_ANGLE(30.0f),  449,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 6  */ { -200, 289,         Q12_ANGLE(100.0f), 589,  465, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 7  */ { -285, 221,         Q12_ANGLE(180.0f), 496,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 8  */ { -370, 272,         Q12_ANGLE(250.0f), 465,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 9  */ { -455, 255,         Q12_ANGLE(300.0f), 449,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 10 */ { -642, 170,         Q12_ANGLE(0.0f),   418,  310, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 11 */ { -727, 136,         Q12_ANGLE(80.0f),  387,  310, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 12 */ { 13,   30,          Q12_ANGLE(220.0f), 270,  270, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 13 */ { -64,  60,          Q12_ANGLE(50.0f),  360,  240, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 14 */ { -115, 100,         Q12_ANGLE(180.0f), 340,  190, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 15 */ { -141, 30,          Q12_ANGLE(100.0f), 270,  240, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 16 */ { -192, 70,          Q12_ANGLE(320.0f), 340,  180, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 17 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 18 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 19 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 20 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 21 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 22 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 23 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 24 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
+/* 25 */ { 0,    0,           Q12_ANGLE(0.0f),   0,    0,   0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } }
 };
 
-// Used in `Gfx_BillboardDraw` (https://decomp.me/scratch/2BvV1)
-s_800AE4DC D_800AE4DC[3] = {
+// Used in `Gfx_BillboardDraw` (https://decomp.me/scratch/20BvV1)
+// References subsets of `g_BillboardInfos` to determine the relevant billboard pool for a given context?
+s_BillboardWork g_BillboardWorks[3] = {
 #if VERSION_REGION_IS(PAL)
-    { &D_800AE204[1],  3,  0, 0,      0x80, 0, 0xBF, 0x3F },
-    { &D_800AE204[0],  12, 0, 0,      0x80, 0, 0xBF, 0x3F },
-    { &D_800AE204[12], 5,  0, 0xFF67, 0x80, 0, 0xBF, 0x3F },
+    { &g_BillboardInfos[1],  3,  0, 0,      0x80, 0, 0xBF, 0x3F },
+    { &g_BillboardInfos[0],  12, 0, 0,      0x80, 0, 0xBF, 0x3F },
+    { &g_BillboardInfos[12], 5,  0, 0xFF67, 0x80, 0, 0xBF, 0x3F },
 #else
-    { &D_800AE204[1],  3,  0, 0,      0, 0x80, 0x3F, 0xBF },
-    { &D_800AE204[0],  12, 0, 0,      0, 0x80, 0x3F, 0xBF },
-    { &D_800AE204[12], 5,  0, 0xFF67, 0, 0x80, 0x3F, 0xBF },
+    { &g_BillboardInfos[1],  3,  0, 0,      0, 0x80, 0x3F, 0xBF },
+    { &g_BillboardInfos[0],  12, 0, 0,      0, 0x80, 0x3F, 0xBF },
+    { &g_BillboardInfos[12], 5,  0, 0xFF67, 0, 0x80, 0x3F, 0xBF },
 #endif
 };
 
@@ -65,22 +66,26 @@ SVECTOR D_800AE500[4] = {
     SVECTOR( 0.0f,   -255.65f, 255.65f)
 };
 
-static GsCOORDINATE2* g_ViewCoord;
+static GsCOORDINATE2* g_BillboardViewCoord;
 
-void func_8005B55C(GsCOORDINATE2* viewCoord) // 0x8005B55C
+void Gfx_BillboardInfosInit(GsCOORDINATE2* viewCoord) // 0x8005B55C
 {
-    s_800AE204* curPtr;
+    s_BillboardInfo* curBillboardInfo;
 
-    g_ViewCoord = viewCoord;
+    g_BillboardViewCoord = viewCoord;
 
-    for (curPtr = &D_800AE204[0]; curPtr < &D_800AE204[26]; curPtr++)
+    // Run through billboard sprite infos.
+    for (curBillboardInfo = &g_BillboardInfos[0]; curBillboardInfo < &g_BillboardInfos[26]; curBillboardInfo++)
     {
-        curPtr->field_C.vz  = -Math_Cos(curPtr->field_4);
-        curPtr->field_C.vx  = -Math_Sin(curPtr->field_4);
-        curPtr->field_C.vy  = Q12(0.0f);
-        curPtr->position.vz = Q12_MULT(curPtr->field_2, Math_Cos(curPtr->field_4));
-        curPtr->position.vx = Q12_MULT(curPtr->field_2, Math_Sin(curPtr->field_4));
-        curPtr->position.vy = curPtr->positionY;
+        // Set offset direction vector (unused).
+        curBillboardInfo->offsetDirection.vz = -Math_Cos(curBillboardInfo->offsetAngle);
+        curBillboardInfo->offsetDirection.vx = -Math_Sin(curBillboardInfo->offsetAngle);
+        curBillboardInfo->offsetDirection.vy = Q12(0.0f);
+
+        // Set position.
+        curBillboardInfo->position.vz = Q12_MULT(curBillboardInfo->offsetDistance, Math_Cos(curBillboardInfo->offsetAngle));
+        curBillboardInfo->position.vx = Q12_MULT(curBillboardInfo->offsetDistance, Math_Sin(curBillboardInfo->offsetAngle));
+        curBillboardInfo->position.vy = curBillboardInfo->positionY;
     }
 }
 
@@ -102,7 +107,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
     s32               temp_a0;
     s32               temp_a0_2;
     q19_12            temp_lo; // Light-related.
-    s32               temp_lo_2;
+    s32               depthScaleFactor;
     q19_12            lightMag;
     s32               temp_v0_2;
     s32               temp_v1;
@@ -113,18 +118,17 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
     q19_12            lightPosZ;
     q19_12            fogAlpha;
     s32               var_v0;
-    s_800AE204*       curPtr;
-    s_800AE4DC*       temp_fp;
+    s_BillboardInfo*  curBillboardInfo;
+    s_BillboardWork*  billboardWork;
     s32               temp;
-    s32               i;
     PACKET*           packet;
     PACKET*           packet2;
     POLY_GT4*         poly_gt4;
     POLY_G4*          poly_g4;
 
-    temp_fp = &D_800AE4DC[idx];
-    sp4A0   = temp_fp->field_A | (temp_fp->field_9 << 8);
-    sp4A8   = temp_fp->field_8 | (temp_fp->field_B << 8);
+    billboardWork = &g_BillboardWorks[idx];
+    sp4A0   = billboardWork->field_A | (billboardWork->field_9 << 8);
+    sp4A8   = billboardWork->field_8 | (billboardWork->field_B << 8);
     sp498   = ReadGeomScreen();
 
     temp_v1 = 0x79C << (otShift + 2);
@@ -169,10 +173,10 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
     }
     else
     {
-        Vw_CoordHierarchyMatrixCompute(g_ViewCoord, &worldMat);
+        Vw_CoordHierarchyMatrixCompute(g_BillboardViewCoord, &worldMat);
 
         worldMat.t[0] = Q12_TO_Q8(posX);
-        worldMat.t[1] = Q12_TO_Q8(posY) + temp_fp->field_6;
+        worldMat.t[1] = Q12_TO_Q8(posY) + billboardWork->field_6;
         worldMat.t[2] = Q12_TO_Q8(posZ);
 
         WorldEnv_LightTransform(&worldMat, g_WorldEnvWork.light.intensity,
@@ -254,11 +258,12 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
     SetRotMatrix(&worldToScreenMat);
     SetTransMatrix(&worldToScreenMat);
 
-    for (curPtr = temp_fp->ptr_0, poly_gt4 = GsOUT_PACKET_P;
-         curPtr < &temp_fp->ptr_0[temp_fp->count_4];
-         curPtr++)
+    // Run through billboard sprites to draw.
+    for (curBillboardInfo = billboardWork->billboardInfos, poly_gt4 = GsOUT_PACKET_P;
+         curBillboardInfo < &billboardWork->billboardInfos[billboardWork->billboardInfoCount];
+         curBillboardInfo++)
     {
-        temp_v0_2 = RotTransPers(&curPtr->position, &sxy, &dummy, &dummy);
+        temp_v0_2 = RotTransPers(&curBillboardInfo->position, &sxy, &dummy, &dummy);
         temp_a0   = temp_v0_2 << 2;
 
         if (temp_v0_2 > 32 && temp_a0 < sp494)
@@ -269,7 +274,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
 #else
             s32 clut  = 140;
 #endif
-            temp_lo_2 = Q12(sp498) / temp_a0;
+            depthScaleFactor = Q12(sp498) / temp_a0;
 
             *(s32*)&poly_gt4->r0 = *(s32*)&colors[0];
             *(s32*)&poly_gt4->r1 = *(s32*)&colors[1];
@@ -284,13 +289,13 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_
 
             poly_gt4->clut       = clut;
             *(s32*)&poly_gt4->r3 = temp_a0;
-            *(s16*)&poly_gt4->u0 = *(s16*)&temp_fp->field_8;
+            *(s16*)&poly_gt4->u0 = *(s16*)&billboardWork->field_8;
             *(s16*)&poly_gt4->u1 = sp4A0;
             *(s16*)&poly_gt4->u2 = sp4A8;
-            *(s16*)&poly_gt4->u3 = *(s16*)&temp_fp->field_A;
+            *(s16*)&poly_gt4->u3 = *(s16*)&billboardWork->field_A;
 
-            temp_a0_2 = Q12_MULT(curPtr->field_8, temp_lo_2);
-            temp_v1_4 = Q12_MULT(curPtr->field_6, temp_lo_2);
+            temp_a0_2 = Q12_MULT(curBillboardInfo->field_8, depthScaleFactor);
+            temp_v1_4 = Q12_MULT(curBillboardInfo->field_6, depthScaleFactor);
 
             setXY4(poly_gt4,
                    sxy.vx, sxy.vy - (temp_a0_2 * 2),

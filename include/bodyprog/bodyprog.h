@@ -282,31 +282,33 @@ typedef struct
     /* 0x3DC */ } u;
 } s_GteScratchData2;
 
-// Something for inventory items.
-typedef struct
+/** @brief 2D billboard sprite info. */
+typedef struct _BillboardInfo _BillboardWork
 {
     /* 0x0  */ q3_12   positionY;
-    /* 0x2  */ q3_12   field_2; // Move dist?
-    /* 0x4  */ q3_12   field_4; // Angle.
-    /* 0x6  */ s16     field_6;
-    /* 0x8  */ s16     field_8;
+    /* 0x2  */ q3_12   offsetDistance;
+    /* 0x4  */ q3_12   offsetAngle; // Or maybe the facing angle, i.e. the direction toward which it's displayed?
+    /* 0x6  */ s16     field_6;     // } Related to depth scale, maybe for XZ axes.
+    /* 0x8  */ s16     field_8;     // }
     /* 0xA  */ s8      __pad_A[2];
-    /* 0xC  */ SVECTOR field_C;  // Q3.12 | Offset?
-    /* 0x14 */ SVECTOR position; /** Q3.12 */
-} s_800AE204;
+    /* 0xC  */ SVECTOR offsetDirection; /** Q3.12 | Unused, dead code. Set in `Gfx_BillboardInfosInit` and never referenced again. */
+    /* 0x14 */ SVECTOR position;        /** Q3.12 */
+} s_BillboardInfo;
 
+/** @brief Workspace for 2D billboard sprites to draw. */
 typedef struct
 {
-    /* 0x0 */ s_800AE204* ptr_0;
-    /* 0x4 */ u8          count_4;
-    /* 0x5 */ u8          unk_5;
-    /* 0x6 */ q7_8        field_6;
-    /* 0x8 */ u8          field_8;
-    /* 0x9 */ u8          field_9;
-    /* 0xA */ u8          field_A;
-    /* 0xB */ u8          field_B;
-} s_800AE4DC;
+    /* 0x0 */ s_BillboardInfo* billboardInfos;     /** Billboards to draw on the current frame. */
+    /* 0x4 */ u8               billboardInfoCount; /** `billboardInfos` array size. */
+    /* 0x5 */ s8               __pad_5;
+    /* 0x6 */ q7_8             field_6;
+    /* 0x8 */ u8               field_8; // u0
+    /* 0x9 */ u8               field_9; // 
+    /* 0xA */ u8               field_A; // u3
+    /* 0xB */ u8               field_B; //
+} s_BillboardWork;
 
+// Paper map marking info?
 typedef struct
 {
     /* 0x0 */ u8 field_0;
@@ -314,8 +316,7 @@ typedef struct
     /* 0x2 */ u8 field_2;
     /* 0x3 */ u8 field_3; // Map marking sprite height?
 } s_800AE8A0_0;
-
-typedef struct
+typedef struct // Maybe the same? Both related to `s_800AEDBC`.
 {
     /* 0x0 */ s8 field_0;
     /* 0x1 */ s8 field_1;
@@ -862,7 +863,7 @@ extern s8 D_800C39A0;
  */
 // extern s_WorldEnvWork g_WorldEnvWork;
 
-extern GsCOORDINATE2* g_ViewCoord;
+extern GsCOORDINATE2* g_BillboardViewCoord;
 
 extern q4_12 g_Player_RotationDeltaToTargetY;
 extern q4_12 g_Player_RotationDeltaToTargetX;
@@ -1614,8 +1615,11 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
 
-/** Initializes values in `D_800AE204` array. */
-void func_8005B55C(GsCOORDINATE2* viewCoord);
+/** @brief Initializes positions in the `g_BillboardInfos` array.
+ *
+ * @param viewCoord Camera coordinate.
+ */
+void Gfx_BillboardInfosInit(GsCOORDINATE2* viewCoord);
 
 void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot_arg4, s32 otShift);
 
