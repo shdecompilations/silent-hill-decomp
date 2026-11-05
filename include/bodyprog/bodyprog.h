@@ -283,7 +283,7 @@ typedef struct
 } s_GteScratchData2;
 
 /** @brief 2D billboard sprite info. */
-typedef struct _BillboardInfo _BillboardWork
+typedef struct _BillboardInfo
 {
     /* 0x0  */ q3_12   positionY;
     /* 0x2  */ q3_12   offsetDistance;
