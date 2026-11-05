@@ -224,10 +224,10 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0 */ u8  unused_0[4]; /** @unused */
-    /* 0x4 */ s16 field_4;     // Start keyframe index?
-    /* 0x6 */ s16 field_6;     // End keyframe index?
-} s_800C44F0; // Probable size: 8 bytes.
+    /* 0x0 */ u8  unused_0[4];      /** @unused TODO: Looks meaningful, but unclear what it could be. */
+    /* 0x4 */ s16 startKeyframeIdx;
+    /* 0x6 */ s16 endKeyframeIdx;
+} s_800C44F0;
 
 typedef struct _MapEnvPresetIdxs
 {

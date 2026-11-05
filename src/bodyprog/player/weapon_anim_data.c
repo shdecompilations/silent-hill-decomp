@@ -196,379 +196,379 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
 
 const s_800C44F0 D_800294F4[] = {
     {
-        .unused_0 = { 56, 57, 100, 0 },
-        .field_4 = 568,
-        .field_6 = 577,
+        .unused_0         = { 56, 57, 100, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 577
     },
     {
-        .unused_0 = { 58, 59, 101, 0 },
-        .field_4 = 579,
-        .field_6 = 598,
+        .unused_0         = { 58, 59, 101, 0 },
+        .startKeyframeIdx = 579,
+        .endKeyframeIdx   = 598
     },
     {
-        .unused_0 = { 60, 61, 102, 0 },
-        .field_4 = 599,
-        .field_6 = 615,
+        .unused_0         = { 60, 61, 102, 0 },
+        .startKeyframeIdx = 599,
+        .endKeyframeIdx   = 615
     },
     {
-        .unused_0 = { 62, 63, 103, 0 },
-        .field_4 = 616,
-        .field_6 = 635,
+        .unused_0         = { 62, 63, 103, 0 },
+        .startKeyframeIdx = 616,
+        .endKeyframeIdx   = 635
     },
     {
-        .unused_0 = { 64, 65, 100, 0 },
-        .field_4 = 568,
-        .field_6 = 577,
+        .unused_0         = { 64, 65, 100, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 577
     },
     {
-        .unused_0 = { 56, 57, 110, 0 },
-        .field_4 = 568,
-        .field_6 = 579,
+        .unused_0         = { 56, 57, 110, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 58, 59, 111, 0 },
-        .field_4 = 584,
-        .field_6 = 613,
+        .unused_0         = { 58, 59, 111, 0 },
+        .startKeyframeIdx = 584,
+        .endKeyframeIdx   = 613
     },
     {
-        .unused_0 = { 60, 61, 112, 0 },
-        .field_4 = 614,
-        .field_6 = 634,
+        .unused_0         = { 60, 61, 112, 0 },
+        .startKeyframeIdx = 614,
+        .endKeyframeIdx   = 634
     },
     {
-        .unused_0 = { 62, 63, 113, 0 },
-        .field_4 = 637,
-        .field_6 = 659,
+        .unused_0         = { 62, 63, 113, 0 },
+        .startKeyframeIdx = 637,
+        .endKeyframeIdx   = 659
     },
     {
-        .unused_0 = { 64, 65, 110, 0 },
-        .field_4 = 568,
-        .field_6 = 579,
+        .unused_0         = { 64, 65, 110, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 56, 57, 110, 0 },
-        .field_4 = 568,
-        .field_6 = 579,
+        .unused_0         = { 56, 57, 110, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 58, 59, 111, 0 },
-        .field_4 = 584,
-        .field_6 = 613,
+        .unused_0         = { 58, 59, 111, 0 },
+        .startKeyframeIdx = 584,
+        .endKeyframeIdx   = 613
     },
     {
-        .unused_0 = { 60, 61, 112, 0 },
-        .field_4 = 614,
-        .field_6 = 634,
+        .unused_0         = { 60, 61, 112, 0 },
+        .startKeyframeIdx = 614,
+        .endKeyframeIdx   = 634
     },
     {
-        .unused_0 = { 62, 63, 113, 0 },
-        .field_4 = 637,
-        .field_6 = 659,
+        .unused_0         = { 62, 63, 113, 0 },
+        .startKeyframeIdx = 637,
+        .endKeyframeIdx   = 659
     },
     {
-        .unused_0 = { 64, 65, 110, 0 },
-        .field_4 = 568,
-        .field_6 = 579,
+        .unused_0         = { 64, 65, 110, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 56, 57, 120, 0 },
-        .field_4 = 568,
-        .field_6 = 575,
+        .unused_0         = { 56, 57, 120, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 575
     },
     {
-        .unused_0 = { 58, 59, 121, 0 },
-        .field_4 = 583,
-        .field_6 = 595,
+        .unused_0         = { 58, 59, 121, 0 },
+        .startKeyframeIdx = 583,
+        .endKeyframeIdx   = 595
     },
     {
-        .unused_0 = { 60, 61, 122, 0 },
-        .field_4 = 596,
-        .field_6 = 611,
+        .unused_0         = { 60, 61, 122, 0 },
+        .startKeyframeIdx = 596,
+        .endKeyframeIdx   = 611
     },
     {
-        .unused_0 = { 62, 63, 123, 0 },
-        .field_4 = 613,
-        .field_6 = 629,
+        .unused_0         = { 62, 63, 123, 0 },
+        .startKeyframeIdx = 613,
+        .endKeyframeIdx   = 629
     },
     {
-        .unused_0 = { 64, 65, 120, 0 },
-        .field_4 = 568,
-        .field_6 = 577,
+        .unused_0         = { 64, 65, 120, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 577
     },
     {
-        .unused_0 = { 56, 57, 190, 0 },
-        .field_4 = 568,
-        .field_6 = 579,
+        .unused_0         = { 56, 57, 190, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 58, 59, 191, 0 },
-        .field_4 = 580,
-        .field_6 = 597,
+        .unused_0         = { 58, 59, 191, 0 },
+        .startKeyframeIdx = 580,
+        .endKeyframeIdx   = 597
     },
     {
-        .unused_0 = { 60, 61, 192, 0 },
-        .field_4 = 598,
-        .field_6 = 611,
+        .unused_0         = { 60, 61, 192, 0 },
+        .startKeyframeIdx = 598,
+        .endKeyframeIdx   = 611
     },
     {
-        .unused_0 = { 62, 63, 193, 0 },
-        .field_4 = 612,
-        .field_6 = 625,
+        .unused_0         = { 62, 63, 193, 0 },
+        .startKeyframeIdx = 612,
+        .endKeyframeIdx   = 625
     },
     {
-        .unused_0 = { 64, 65, 190, 0 },
-        .field_4 = 568,
-        .field_6 = 579,
+        .unused_0         = { 64, 65, 190, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 56, 57, 160, 0 },
-        .field_4 = 568,
-        .field_6 = 583,
+        .unused_0         = { 56, 57, 160, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 583
     },
     {
-        .unused_0 = { 58, 59, 161, 0 },
-        .field_4 = 584,
-        .field_6 = 602,
+        .unused_0         = { 58, 59, 161, 0 },
+        .startKeyframeIdx = 584,
+        .endKeyframeIdx   = 602
     },
     {
-        .unused_0 = { 60, 61, 162, 0 },
-        .field_4 = 603,
-        .field_6 = 618,
+        .unused_0         = { 60, 61, 162, 0 },
+        .startKeyframeIdx = 603,
+        .endKeyframeIdx   = 618
     },
     {
-        .unused_0 = { 62, 63, 163, 0 },
-        .field_4 = 619,
-        .field_6 = 637,
+        .unused_0         = { 62, 63, 163, 0 },
+        .startKeyframeIdx = 619,
+        .endKeyframeIdx   = 637
     },
     {
-        .unused_0 = { 64, 65, 164, 0 },
-        .field_4 = 638,
-        .field_6 = 649,
+        .unused_0         = { 64, 65, 164, 0 },
+        .startKeyframeIdx = 638,
+        .endKeyframeIdx   = 649
     },
     {
-        .unused_0 = { 66, 67, 164, 0 },
-        .field_4 = 638,
-        .field_6 = 649,
+        .unused_0         = { 66, 67, 164, 0 },
+        .startKeyframeIdx = 638,
+        .endKeyframeIdx   = 649
     },
     {
-        .unused_0 = { 68, 69, 165, 0 },
-        .field_4 = 650,
-        .field_6 = 655,
+        .unused_0         = { 68, 69, 165, 0 },
+        .startKeyframeIdx = 650,
+        .endKeyframeIdx   = 655
     },
     {
-        .unused_0 = { 56, 57, 180, 0 },
-        .field_4 = 568,
-        .field_6 = 583,
+        .unused_0         = { 56, 57, 180, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 583
     },
     {
-        .unused_0 = { 58, 59, 181, 0 },
-        .field_4 = 584,
-        .field_6 = 597,
+        .unused_0         = { 58, 59, 181, 0 },
+        .startKeyframeIdx = 584,
+        .endKeyframeIdx   = 597
     },
     {
-        .unused_0 = { 60, 61, 182, 0 },
-        .field_4 = 598,
-        .field_6 = 611,
+        .unused_0         = { 60, 61, 182, 0 },
+        .startKeyframeIdx = 598,
+        .endKeyframeIdx   = 611
     },
     {
-        .unused_0 = { 62, 63, 183, 0 },
-        .field_4 = 612,
-        .field_6 = 625,
+        .unused_0         = { 62, 63, 183, 0 },
+        .startKeyframeIdx = 612,
+        .endKeyframeIdx   = 625
     },
     {
-        .unused_0 = { 64, 65, 184, 0 },
-        .field_4 = 626,
-        .field_6 = 636,
+        .unused_0         = { 64, 65, 184, 0 },
+        .startKeyframeIdx = 626,
+        .endKeyframeIdx   = 636
     },
     {
-        .unused_0 = { 66, 67, 184, 0 },
-        .field_4 = 626,
-        .field_6 = 636,
+        .unused_0         = { 66, 67, 184, 0 },
+        .startKeyframeIdx = 626,
+        .endKeyframeIdx   = 636
     },
     {
-        .unused_0 = { 68, 69, 185, 0 },
-        .field_4 = 637,
-        .field_6 = 640,
+        .unused_0         = { 68, 69, 185, 0 },
+        .startKeyframeIdx = 637,
+        .endKeyframeIdx   = 640
     },
     {
-        .unused_0 = { 56, 57, 130, 0 },
-        .field_4 = 570,
-        .field_6 = 579,
+        .unused_0         = { 56, 57, 130, 0 },
+        .startKeyframeIdx = 570,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 58, 59, 131, 0 },
-        .field_4 = 582,
-        .field_6 = 592,
+        .unused_0         = { 58, 59, 131, 0 },
+        .startKeyframeIdx = 582,
+        .endKeyframeIdx   = 592
     },
     {
-        .unused_0 = { 60, 61, 132, 0 },
-        .field_4 = 594,
-        .field_6 = 604,
+        .unused_0         = { 60, 61, 132, 0 },
+        .startKeyframeIdx = 594,
+        .endKeyframeIdx   = 604
     },
     {
-        .unused_0 = { 62, 63, 133, 0 },
-        .field_4 = 605,
-        .field_6 = 658,
+        .unused_0         = { 62, 63, 133, 0 },
+        .startKeyframeIdx = 605,
+        .endKeyframeIdx   = 658
     },
     {
-        .unused_0 = { 64, 65, 130, 0 },
-        .field_4 = 570,
-        .field_6 = 592,
+        .unused_0         = { 64, 65, 130, 0 },
+        .startKeyframeIdx = 570,
+        .endKeyframeIdx   = 592
     },
     {
-        .unused_0 = { 66, 67, 130, 0 },
-        .field_4 = 570,
-        .field_6 = 579,
+        .unused_0         = { 66, 67, 130, 0 },
+        .startKeyframeIdx = 570,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 68, 69, 131, 0 },
-        .field_4 = 580,
-        .field_6 = 592,
+        .unused_0         = { 68, 69, 131, 0 },
+        .startKeyframeIdx = 580,
+        .endKeyframeIdx   = 592
     },
     {
-        .unused_0 = { 70, 71, 130, 0 },
-        .field_4 = 570,
-        .field_6 = 592,
+        .unused_0         = { 70, 71, 130, 0 },
+        .startKeyframeIdx = 570,
+        .endKeyframeIdx   = 592
     },
     {
-        .unused_0 = { 72, 73, 131, 0 },
-        .field_4 = 582,
-        .field_6 = 604,
+        .unused_0         = { 72, 73, 131, 0 },
+        .startKeyframeIdx = 582,
+        .endKeyframeIdx   = 604
     },
     {
-        .unused_0 = { 56, 57, 140, 0 },
-        .field_4 = 568,
-        .field_6 = 587,
+        .unused_0         = { 56, 57, 140, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 587,
     },
     {
-        .unused_0 = { 58, 59, 141, 0 },
-        .field_4 = 588,
-        .field_6 = 597,
+        .unused_0         = { 58, 59, 141, 0 },
+        .startKeyframeIdx = 588,
+        .endKeyframeIdx   = 597
     },
     {
-        .unused_0 = { 60, 61, 142, 0 },
-        .field_4 = 598,
-        .field_6 = 607,
+        .unused_0         = { 60, 61, 142, 0 },
+        .startKeyframeIdx = 598,
+        .endKeyframeIdx   = 607
     },
     {
-        .unused_0 = { 62, 63, 143, 0 },
-        .field_4 = 608,
-        .field_6 = 642,
+        .unused_0         = { 62, 63, 143, 0 },
+        .startKeyframeIdx = 608,
+        .endKeyframeIdx   = 642
     },
     {
-        .unused_0 = { 64, 65, 140, 0 },
-        .field_4 = 588,
-        .field_6 = 597,
+        .unused_0         = { 64, 65, 140, 0 },
+        .startKeyframeIdx = 588,
+        .endKeyframeIdx   = 597
     },
     {
-        .unused_0 = { 66, 67, 140, 0 },
-        .field_4 = 588,
-        .field_6 = 597,
+        .unused_0         = { 66, 67, 140, 0 },
+        .startKeyframeIdx = 588,
+        .endKeyframeIdx   = 597
     },
     {
-        .unused_0 = { 68, 69, 141, 0 },
-        .field_4 = 597,
-        .field_6 = 597,
+        .unused_0         = { 68, 69, 141, 0 },
+        .startKeyframeIdx = 597,
+        .endKeyframeIdx   = 597
     },
     {
-        .unused_0 = { 70, 71, 140, 0 },
-        .field_4 = 568,
-        .field_6 = 587,
+        .unused_0         = { 70, 71, 140, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 587
     },
     {
-        .unused_0 = { 72, 73, 140, 0 },
-        .field_4 = 599,
-        .field_6 = 607,
+        .unused_0         = { 72, 73, 140, 0 },
+        .startKeyframeIdx = 599,
+        .endKeyframeIdx   = 607
     },
     {
-        .unused_0 = { 56, 57, 140, 0 },
-        .field_4 = 570,
-        .field_6 = 579,
+        .unused_0         = { 56, 57, 140, 0 },
+        .startKeyframeIdx = 570,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 58, 59, 141, 0 },
-        .field_4 = 582,
-        .field_6 = 592,
+        .unused_0         = { 58, 59, 141, 0 },
+        .startKeyframeIdx = 582,
+        .endKeyframeIdx   = 592
     },
     {
-        .unused_0 = { 60, 61, 142, 0 },
-        .field_4 = 594,
-        .field_6 = 604,
+        .unused_0         = { 60, 61, 142, 0 },
+        .startKeyframeIdx = 594,
+        .endKeyframeIdx   = 604
     },
     {
-        .unused_0 = { 62, 63, 153, 0 },
-        .field_4 = 605,
-        .field_6 = 641,
+        .unused_0         = { 62, 63, 153, 0 },
+        .startKeyframeIdx = 605,
+        .endKeyframeIdx   = 641
     },
     {
-        .unused_0 = { 64, 65, 140, 0 },
-        .field_4 = 570,
-        .field_6 = 592,
+        .unused_0         = { 64, 65, 140, 0 },
+        .startKeyframeIdx = 570,
+        .endKeyframeIdx   = 592
     },
     {
-        .unused_0 = { 66, 67, 140, 0 },
-        .field_4 = 570,
-        .field_6 = 579,
+        .unused_0         = { 66, 67, 140, 0 },
+        .startKeyframeIdx = 570,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 68, 69, 141, 0 },
-        .field_4 = 580,
-        .field_6 = 592,
+        .unused_0         = { 68, 69, 141, 0 },
+        .startKeyframeIdx = 580,
+        .endKeyframeIdx   = 592
     },
     {
-        .unused_0 = { 70, 71, 140, 0 },
-        .field_4 = 570,
-        .field_6 = 592,
+        .unused_0         = { 70, 71, 140, 0 },
+        .startKeyframeIdx = 570,
+        .endKeyframeIdx   = 592
     },
     {
-        .unused_0 = { 72, 73, 140, 0 },
-        .field_4 = 582,
-        .field_6 = 604,
+        .unused_0         = { 72, 73, 140, 0 },
+        .startKeyframeIdx = 582,
+        .endKeyframeIdx   = 604
     },
     {
-        .unused_0 = { 56, 57, 170, 0 },
-        .field_4 = 568,
-        .field_6 = 574,
+        .unused_0         = { 56, 57, 170, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 574
     },
     {
-        .unused_0 = { 58, 59, 170, 0 },
-        .field_4 = 574,
-        .field_6 = 574,
+        .unused_0         = { 58, 59, 170, 0 },
+        .startKeyframeIdx = 574,
+        .endKeyframeIdx   = 574
     },
     {
-        .unused_0 = { 60, 61, 173, 0 },
-        .field_4 = 575,
-        .field_6 = 579,
+        .unused_0         = { 60, 61, 173, 0 },
+        .startKeyframeIdx = 575,
+        .endKeyframeIdx   = 579
     },
     {
-        .unused_0 = { 62, 63, 173, 0 },
-        .field_4 = 568,
-        .field_6 = 568,
+        .unused_0         = { 62, 63, 173, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 568
     },
     {
-        .unused_0 = { 64, 65, 170, 0 },
-        .field_4 = 568,
-        .field_6 = 574,
+        .unused_0         = { 64, 65, 170, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 574
     },
     {
-        .unused_0 = { 66, 67, 170, 0 },
-        .field_4 = 568,
-        .field_6 = 574,
+        .unused_0         = { 66, 67, 170, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 574
     },
     {
-        .unused_0 = { 68, 69, 170, 0 },
-        .field_4 = 574,
-        .field_6 = 574,
+        .unused_0         = { 68, 69, 170, 0 },
+        .startKeyframeIdx = 574,
+        .endKeyframeIdx   = 574
     },
     {
-        .unused_0 = { 70, 71, 170, 0 },
-        .field_4 = 568,
-        .field_6 = 574,
+        .unused_0         = { 70, 71, 170, 0 },
+        .startKeyframeIdx = 568,
+        .endKeyframeIdx   = 574
     },
     {
-        .unused_0 = { 72, 73, 172, 0 },
-        .field_4 = 574,
-        .field_6 = 579,
+        .unused_0         = { 72, 73, 172, 0 },
+        .startKeyframeIdx = 574,
+        .endKeyframeIdx   = 579
     }
 };
 

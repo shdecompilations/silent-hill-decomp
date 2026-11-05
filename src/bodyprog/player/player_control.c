@@ -3038,13 +3038,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.outOfAmmoSfx, &player->position, Q8(0.5f), SfxFlag_None);
 
                     player->properties.player.field_10C = 32;
-                    extra->model.anim.keyframeIdx = D_800C44F0[D_800AF220].field_6 - 3;
-                    extra->model.anim.time        = Q12(D_800C44F0[D_800AF220].field_6 - 3);
+                    extra->model.anim.keyframeIdx = D_800C44F0[D_800AF220].endKeyframeIdx - 3;
+                    extra->model.anim.time        = Q12(D_800C44F0[D_800AF220].endKeyframeIdx - 3);
 
                     if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim)
                     {
-                        player->model.anim.keyframeIdx = D_800C44F0[D_800AF220].field_6 - 3;
-                        player->model.anim.time        = Q12(D_800C44F0[D_800AF220].field_6 - 3);
+                        player->model.anim.keyframeIdx = D_800C44F0[D_800AF220].endKeyframeIdx - 3;
+                        player->model.anim.time        = Q12(D_800C44F0[D_800AF220].endKeyframeIdx - 3);
                     }
                 }
             }
@@ -3066,10 +3066,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true) ||
                 extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
             {
-                if (extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].field_6)
+                if (extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].endKeyframeIdx)
                 {
                     extra->model.anim.status      = ANIM_STATUS(HarryAnim_HandgunAim, true);
-                    extra->model.anim.keyframeIdx = D_800C44F0[0].field_6;
+                    extra->model.anim.keyframeIdx = D_800C44F0[0].endKeyframeIdx;
                     extra->model.anim.time        = Q12(extra->model.anim.keyframeIdx);
 
                     if (playerProps.flags & PlayerFlag_Unk0)
@@ -3107,7 +3107,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         // Attack anim.
         else if ((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true) ||
                   extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk36, true)) &&
-                 extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].field_6)
+                 extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].endKeyframeIdx)
         {
             if (playerProps.flags & PlayerFlag_Unk0)
             {
@@ -3610,9 +3610,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 playerTurn = (g_Player_IsTurningLeft != false) * 2;
             }
 
-            if ((extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk29, true) || extra->model.anim.keyframeIdx != D_800C44F0[1].field_6) &&
-                (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk30, true) || extra->model.anim.keyframeIdx != D_800C44F0[2].field_6) &&
-                (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk32, true) || extra->model.anim.keyframeIdx != D_800C44F0[4].field_6))
+            if ((extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk29, true) || extra->model.anim.keyframeIdx != D_800C44F0[1].endKeyframeIdx) &&
+                (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk30, true) || extra->model.anim.keyframeIdx != D_800C44F0[2].endKeyframeIdx) &&
+                (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk32, true) || extra->model.anim.keyframeIdx != D_800C44F0[4].endKeyframeIdx))
             {
                 playerTurn = 0;
                 player->properties.player.field_100++;
@@ -3743,10 +3743,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (((playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
-                      extra->model.anim.keyframeIdx >= (D_800C44F0[0].field_4 + 5)) ||
+                      extra->model.anim.keyframeIdx >= (D_800C44F0[0].startKeyframeIdx + 5)) ||
                      (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
-                      extra->model.anim.keyframeIdx >= (D_800C44F0[0].field_4 + 9))) &&
+                      extra->model.anim.keyframeIdx >= (D_800C44F0[0].startKeyframeIdx + 9))) &&
                     !(playerProps.flags & PlayerFlag_Unk2))
                 {
                     playerProps.gasWeaponPowerTimer = Q12(60.0f);
@@ -3777,10 +3777,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
                 playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
-                if (extra->model.anim.keyframeIdx == D_800C44F0[0].field_6 ||
-                    extra->model.anim.keyframeIdx == D_800C44F0[5].field_6)
+                if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx ||
+                    extra->model.anim.keyframeIdx == D_800C44F0[5].endKeyframeIdx)
                 {
-                    if (extra->model.anim.keyframeIdx == D_800C44F0[0].field_6)
+                    if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx)
                     {
                         func_8004C564(playerCombat.weaponAttack, 1);
                     }
@@ -3797,8 +3797,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
             else
             {
-                if (extra->model.anim.keyframeIdx == D_800C44F0[0].field_6 ||
-                    extra->model.anim.keyframeIdx == D_800C44F0[1].field_6)
+                if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx ||
+                    extra->model.anim.keyframeIdx == D_800C44F0[1].endKeyframeIdx)
                 {
                     playerExtra.upperBodyState = PlayerUpperBodyState_Aim;
                 }
@@ -3893,7 +3893,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     case ANIM_STATUS(HarryAnim_Unk29, true):
                     case ANIM_STATUS(HarryAnim_Unk32, true):
-                        if (extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].field_6)
+                        if (extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].endKeyframeIdx)
                         {
                             player->rotation.vy = temp_s1_2;
                         }
@@ -3929,7 +3929,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                     if (playerProps.flags & PlayerFlag_Unk9)
                     {
-                        if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
+                        if (extra->model.anim.keyframeIdx == D_800C44F0[4].endKeyframeIdx)
                         {
                             playerExtra.upperBodyState = PlayerUpperBodyState_Attack;
 
@@ -3945,7 +3945,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                             extra->model.stateStep                                  = 0;
                         }
                     }
-                    else if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
+                    else if (extra->model.anim.keyframeIdx == D_800C44F0[4].endKeyframeIdx)
                     {
                         playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
                         extra->model.controlState                          =
@@ -4000,7 +4000,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (playerProps.flags & PlayerFlag_Unk9)
                 {
-                    if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
+                    if (extra->model.anim.keyframeIdx == D_800C44F0[4].endKeyframeIdx)
                     {
                         playerExtra.upperBodyState = PlayerUpperBodyState_Attack;
 
@@ -4014,7 +4014,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                         extra->model.controlState = extra->model.stateStep = 0;
                     }
                 }
-                else if (extra->model.anim.keyframeIdx == D_800C44F0[4].field_6)
+                else if (extra->model.anim.keyframeIdx == D_800C44F0[4].endKeyframeIdx)
                 {
                     playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
                     extra->model.controlState = extra->model.stateStep = 0;
@@ -4031,10 +4031,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 extra->model.stateStep++;
             }
 
-            if (extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].field_4 ||
+            if (extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].startKeyframeIdx ||
                 ((playerExtra.lowerBodyState == PlayerLowerBodyState_RunForward || playerExtra.lowerBodyState == PlayerLowerBodyState_RunRight ||
                   playerExtra.lowerBodyState == PlayerLowerBodyState_RunLeft) &&
-                 (extra->model.anim.keyframeIdx <= D_800C44F0[D_800AF220].field_6)))
+                 (extra->model.anim.keyframeIdx <= D_800C44F0[D_800AF220].endKeyframeIdx)))
             {
                 switch (playerExtra.lowerBodyState)
                 {
@@ -4321,18 +4321,18 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                         playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                     {
                         if ((extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[0].field_6) &&
+                             extra->model.anim.keyframeIdx != D_800C44F0[0].endKeyframeIdx) &&
                             (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk29, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[1].field_6) &&
+                             extra->model.anim.keyframeIdx != D_800C44F0[1].endKeyframeIdx) &&
                             (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk34, true) ||
-                             extra->model.anim.keyframeIdx < D_800C44F0[6].field_4 ||
-                             D_800C44F0[6].field_6 < extra->model.anim.keyframeIdx) &&
+                             extra->model.anim.keyframeIdx < D_800C44F0[6].startKeyframeIdx ||
+                             D_800C44F0[6].endKeyframeIdx < extra->model.anim.keyframeIdx) &&
                             (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk30, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[2].field_6) &&
+                             extra->model.anim.keyframeIdx != D_800C44F0[2].endKeyframeIdx) &&
                             (extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunRecoil, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[3].field_6) &&
+                             extra->model.anim.keyframeIdx != D_800C44F0[3].endKeyframeIdx) &&
                             (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk33, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[5].field_6))
+                             extra->model.anim.keyframeIdx != D_800C44F0[5].endKeyframeIdx))
                         {
                             break;
                         }
@@ -4340,13 +4340,13 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     else
                     {
                         if ((extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[0].field_6) &&
+                             extra->model.anim.keyframeIdx != D_800C44F0[0].endKeyframeIdx) &&
                             (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk29, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[1].field_6) &&
+                             extra->model.anim.keyframeIdx != D_800C44F0[1].endKeyframeIdx) &&
                             (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk30, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[2].field_6) &&
+                             extra->model.anim.keyframeIdx != D_800C44F0[2].endKeyframeIdx) &&
                             (extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunRecoil, true) ||
-                             extra->model.anim.keyframeIdx != D_800C44F0[3].field_6))
+                             extra->model.anim.keyframeIdx != D_800C44F0[3].endKeyframeIdx))
                         {
                             break;
                         }
@@ -4355,19 +4355,19 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 else
                 {
                     if ((extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
-                         extra->model.anim.keyframeIdx != D_800C44F0[0].field_6) &&
+                         extra->model.anim.keyframeIdx != D_800C44F0[0].endKeyframeIdx) &&
                         (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk29, true) ||
-                         extra->model.anim.keyframeIdx != D_800C44F0[1].field_6) &&
+                         extra->model.anim.keyframeIdx != D_800C44F0[1].endKeyframeIdx) &&
                         (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk30, true) ||
-                         extra->model.anim.keyframeIdx != D_800C44F0[2].field_6) &&
+                         extra->model.anim.keyframeIdx != D_800C44F0[2].endKeyframeIdx) &&
                         (extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunRecoil, true) ||
-                         extra->model.anim.keyframeIdx != D_800C44F0[3].field_6) &&
+                         extra->model.anim.keyframeIdx != D_800C44F0[3].endKeyframeIdx) &&
                         (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk32, true) ||
-                         extra->model.anim.keyframeIdx != D_800C44F0[4].field_6) &&
+                         extra->model.anim.keyframeIdx != D_800C44F0[4].endKeyframeIdx) &&
                         (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk36, true) ||
-                         extra->model.anim.keyframeIdx != D_800C44F0[8].field_6) &&
+                         extra->model.anim.keyframeIdx != D_800C44F0[8].endKeyframeIdx) &&
                         (extra->model.anim.status != ANIM_STATUS(HarryAnim_Unk34, true) ||
-                         extra->model.anim.keyframeIdx != D_800C44F0[6].field_4))
+                         extra->model.anim.keyframeIdx != D_800C44F0[6].startKeyframeIdx))
                     {
                         break;
                     }
@@ -4735,8 +4735,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status))
                 {
                     if (player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) ||
-                        player->model.anim.keyframeIdx == D_800C44F0[0].field_6 ||
-                        player->model.anim.keyframeIdx == D_800C44F0[5].field_6)
+                        player->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx ||
+                        player->model.anim.keyframeIdx == D_800C44F0[5].endKeyframeIdx)
                     {
                         if (g_Player_IsMovingForward)
                         {
@@ -4759,7 +4759,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 {
                     if ((aimState == 0 && playerProps.moveSpeed == Q12(0.0f))||
                         player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) ||
-                        player->model.anim.keyframeIdx == D_800C44F0[0].field_6)
+                        player->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx)
                     {
                         if (g_Player_IsMovingForward)
                         {
@@ -6269,7 +6269,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Hold))
                 {
                     if (playerProps.moveSpeed == Q12(0.0f) &&
-                        (extra->model.anim.keyframeIdx >= D_800C44F0[D_800AF220].field_4 + 7))
+                        (extra->model.anim.keyframeIdx >= D_800C44F0[D_800AF220].startKeyframeIdx + 7))
                     {
                         playerProps.moveSpeed = Q12(5.0f);
                         g_Player_HeadingAngle = Q12_ANGLE(0.0f);
@@ -6345,8 +6345,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
 
-                    if (player->model.anim.keyframeIdx == D_800C44F0[0].field_6 ||
-                        player->model.anim.keyframeIdx == D_800C44F0[5].field_6)
+                    if (player->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx ||
+                        player->model.anim.keyframeIdx == D_800C44F0[5].endKeyframeIdx)
                     {
                         player->model.anim.status      = extra->model.anim.status;
                         player->model.anim.keyframeIdx = extra->model.anim.keyframeIdx;
@@ -6423,7 +6423,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status)  &&
                     (player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) ||
-                     player->model.anim.keyframeIdx == D_800C44F0[0].field_6))
+                     player->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx))
                 {
                     if (!g_Player_IsMovingForward)
                     {
@@ -6473,7 +6473,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
                 ANIM_STATUS_IS_ACTIVE(extra->model.anim.status)  &&
                 (player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) ||
-                 player->model.anim.keyframeIdx == D_800C44F0[0].field_6))
+                 player->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx))
             {
                 if (g_Player_IsMovingForward)
                 {
