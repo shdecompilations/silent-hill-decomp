@@ -13,14 +13,14 @@ typedef enum _StalkerFlags
     StalkerFlag_5            = 1 << 5,
     StalkerFlag_6            = 1 << 6,
     StalkerFlag_7            = 1 << 7,
-    StalkerFlag_8            = 1 << 8,
+    StalkerFlag_Falling      = 1 << 8,
     StalkerFlag_9            = 1 << 9,
     StalkerFlag_10           = 1 << 10,
     StalkerFlag_11           = 1 << 11,
     StalkerFlag_WarpRotation = 1 << 12, /** Warps to target heading angle. */
-    StalkerFlag_13           = 1 << 13,
+    StalkerFlag_Moving       = 1 << 13,
     StalkerFlag_14           = 1 << 14
-} s_StalkerFlags;
+} e_StalkerFlags;
 
 /** @brief Stalker character control states. */
 typedef enum _StalkerControl
@@ -74,7 +74,7 @@ typedef enum _StalkerAnim
     StalkerAnim_27    = 27,
     StalkerAnim_28    = 28,
     StalkerAnim_29    = 29,
-    StalkerAnim_30    = 30,
+    StalkerAnim_30    = 30, // Used when falling. Maybe an idle pose, haven't looked.
     StalkerAnim_31    = 31,
     StalkerAnim_32    = 32,
     StalkerAnim_33    = 33,
