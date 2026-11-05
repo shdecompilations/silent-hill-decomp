@@ -103,7 +103,7 @@ D_80028B3C                                   = 0x80028214;
 hack_D_80028B8C_fix                          = 0x80028264; // type:s32 can_reference:False - Garbage padding where data coincidentally equals `Gfx_Items_Draw` address, causing spimdisasm to create a relocation here.
 
 //-------------------------------------------------------------------------------
-//--- PA: 0x002BDC   VA: 0x8002826C   subsegment: .rodata, bodyprog_data_80028B94
+//--- PA: 0x002BDC   VA: 0x8002826C   subsegment: .rodata, player/weapon_anim_data
 //-------------------------------------------------------------------------------
 HARRY_WEAPON_ANIM_INFOS                      = 0x8002826C;
 D_800294F4                                   = 0x80028BCC;

@@ -55,7 +55,7 @@ tileScreenEdgesY                             = 0x80028B34;
 hack_D_80028B8C_fix                          = 0x80028B8C; // type:s32 can_reference:False - Garbage padding where data coincidentally equals `Gfx_Items_Draw` address, causing spimdisasm to create a relocation here.
 
 //-------------------------------------------------------------------------------
-//--- PA: 0x004034   VA: 0x80028B94   subsegment: .rodata, bodyprog_data_80028B94
+//--- PA: 0x004034   VA: 0x80028B94   subsegment: .rodata, player/weapon_anim_data
 //-------------------------------------------------------------------------------
 HARRY_WEAPON_ANIM_INFOS                      = 0x80028B94;
 

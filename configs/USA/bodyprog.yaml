@@ -100,7 +100,7 @@ segments:
       - [0x3ECC, .rodata, paper_map/paper_map]
       - [0x3FDC, rodata]
       - [0x3FE4, .rodata, collision/collision]
-      - [0x4034, .rodata, bodyprog_data_80028B94]
+      - [0x4034, .rodata, player/weapon_anim_data]
       - [0x4BF0, .rodata, player/player_control]
       - [0x5CF0, .rodata, view/vc_main]
       - [0x5F9C, .rodata, events/events_util]
@@ -134,7 +134,7 @@ segments:
       - [auto,       c, sys/map_info]
       - [auto,       c, events/event_data]
       - [auto,       c, sound/sound_data] # Possibly `sd_dat.c` from SH2 symbols?
-      - [auto,       c, bodyprog_data_80028B94]
+      - [auto,       c, player/weapon_anim_data]
       
       
       - [0x9AD0,     c, sys/memcard]

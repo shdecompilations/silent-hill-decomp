@@ -50,7 +50,7 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
 void Screen_BackgroundImgDraw(s_FsImageDesc* image)
 {
 #if VERSION_REGION_IS(PAL)
-    s32       isInterlaced;
+    bool      isInterlaced;
 #endif
     s32       baseYOffset;
     s32       tileX;

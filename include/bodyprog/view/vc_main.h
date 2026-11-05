@@ -7,7 +7,7 @@
  *
  * @param vc_road_ary_list Camera paths.
  */
-void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list);
+void vcInitVCSystem(const VC_ROAD_DATA* vc_road_ary_list);
 
 /** @brief Enables the camera system. */
 void vcStartCameraSystem(void);
@@ -111,13 +111,13 @@ q19_12 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, q19_12 far_watch_
 
 void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, q19_12 far_watch_rate, bool all_warp_f);
 
-void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list);
+void vcPreSetDataInVC_WORK(VC_WORK* w_p, const VC_ROAD_DATA* vc_road_ary_list);
 
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_TYPE set_cmd_type);
 
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p);
 
-void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, q19_12 half_w, s32 unused, bool near_enemy_f);
+void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, const VC_ROAD_DATA* road_ary_list, q19_12 half_w, s32 unused, bool near_enemy_f);
 
 s32  vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 unused);
 
@@ -183,7 +183,7 @@ void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p);
 
 void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size);
 
-void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(q19_12* x_p, q19_12* z_p, VC_LIMIT_AREA* lim_p);
+void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(q19_12* x_p, q19_12* z_p, const VC_LIMIT_AREA* lim_p);
 
 void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_p, q19_12 max_tgt_mv_xz_len);
 

@@ -135,15 +135,18 @@ void WorldMap_ChunkQueueClear(s_MapChunk* activeChunks, s32 activeChunkCount) //
 
 void WorldMap_TexturesInit(void) // 0x80041D48
 {
+#if VERSION_REGION_IS(PAL)
+    #define CLUT_X(idx) \
+        ((((idx) & 3) * 16) | 0x380)
+
+    #define CLUT_Y(idx) \
+        ((((idx) >> 2) * 16) + 0x180)
+#endif
+
     s32 i;
     s32 j;
     s32 x;
     s32 y;
-
-#if VERSION_REGION_IS(PAL)
-    #define CLUT_X(idx) ((((idx) & 3) * 16) | 0x380)
-    #define CLUT_Y(idx) ((((idx) >> 2) * 16) + 0x180)
-#endif
 
     // Run through texture pages.
     for (i = 0, y = 8, x = 0, j = 0;

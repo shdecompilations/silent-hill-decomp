@@ -204,7 +204,7 @@ typedef struct
         } s_0;
     } field_4;
     q3_12 vy_8;
-    u8    field_A;
+    u8    field_A; // Particle type?
     u8    field_B; // Flags?
     union
     {

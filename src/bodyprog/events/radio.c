@@ -16,7 +16,7 @@ void Game_RadioNoiseReset(void) // 0x80037154
     {
         g_RadioNoise[i].closeNpcInfoIdx = NO_VALUE;
         g_RadioNoise[i].idx             = NO_VALUE;
-        g_RadioNoise[i].unused          = 0;
+        g_RadioNoise[i].unused_3        = 0;
     }
 }
 

@@ -203,7 +203,7 @@ typedef struct _RadioNoise
     /* 0x0 */ s8 prevIdx;
     /* 0x1 */ s8 idx;
     /* 0x2 */ s8 closeNpcInfoIdx;
-    /* 0x3 */ s8 unused; /** @unused */
+    /* 0x3 */ s8 unused_3; /** @unused */
 } s_RadioNoise;
 STATIC_ASSERT_SIZEOF(s_RadioNoise, 4);
 
@@ -224,9 +224,9 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0 */ u8  unk_0[4];
-    /* 0x4 */ s16 field_4;
-    /* 0x6 */ s16 field_6; // Keyframe index or time.
+    /* 0x0 */ u8  unused_0[4]; /** @unused */
+    /* 0x4 */ s16 field_4;     // Start keyframe index?
+    /* 0x6 */ s16 field_6;     // End keyframe index?
 } s_800C44F0; // Probable size: 8 bytes.
 
 typedef struct _MapEnvPresetIdxs
@@ -594,6 +594,7 @@ extern RECT D_80028A20;
 
 extern const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[];
 
+// Something related to keyframes.
 extern const s_800C44F0 D_800294F4[];
 
 extern const s_AnimInfo* D_800297B8;

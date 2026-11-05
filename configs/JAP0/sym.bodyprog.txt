@@ -136,7 +136,7 @@ tileScreenEdgesX                             = 0x8002884C;
 tileScreenEdgesY                             = 0x80028854;
 
 //-------------------------------------------------------------------------------
-//--- PA: 0x003D54   VA: 0x800288B4   subsegment: .rodata, bodyprog_data_80028B94
+//--- PA: 0x003D54   VA: 0x800288B4   subsegment: .rodata, player/weapon_anim_data
 //-------------------------------------------------------------------------------
 HARRY_WEAPON_ANIM_INFOS                      = 0x800288B4;
 D_800294F4                                   = 0x80029214;
