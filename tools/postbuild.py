@@ -46,10 +46,10 @@ EUR_BODYPROG = [
     [0x136, b'\x2C'],
     [0x139, b'\xAF\x28'],
     [0x9BF, b'\xB2\x00\x08\xDD\x86'],
-    [0x1355, b'\x8F\x28\x00'],
     [0x2B82, b'\x05\x80'],
     [0x533A, b'\x08\x80'],
     [0x83F2A, b'\x40\x08'],
+    [0x87A0A, b'\x01\x02'], # Padding after `D_800AD098`.
     [0x8850E, b'\x0A\x80'],
     [0x886A6, b'\x0A'],
     [0x8C577, b'\x18'],

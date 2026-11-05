@@ -85,6 +85,7 @@ segments:
       - [0x1094, .rodata, sound/sd_call]
       - [0x1200,  rodata] # Garbage padding
       - [0x1208, .rodata, text/text_draw]
+      - [0x1328,  rodata] # Garbage padding
       - [0x132C, .rodata, items/item_utils]
       - [0x134C, .rodata, items/item_screens_2]
       - [0x1798, .rodata, items/item_screens_3]

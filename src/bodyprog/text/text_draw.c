@@ -74,7 +74,7 @@ static s16 g_StringColorId = StringColorId_White; /** `e_ColorId` */
 // 2 bytes of padding.
 static s32 g_StringLayerIdx = DEFAULT_TEXT_LAYER_IDX;
 #if VERSION_REGION_IS(PAL)
-u8 D_800AD098[4] = { 0, 0, 1, 2 };
+u8 D_800AD098 = 0;
 #endif
 
 #if VERSION_REGION_IS(NTSCJ)
@@ -601,7 +601,7 @@ void Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
     }
 }
 
-#if VERSION_IS(EUR)
+#if VERSION_REGION_IS(PAL)
 s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AD10
 {
     s32      i;
@@ -653,7 +653,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AD10
         }
     }
 
-    D_800AD098[0] = 1;
+    D_800AD098 = 1;
 
     // Line start position, restored after drawing advances `g_StringPosition`.
     lineStartPos     = &D_800C2E9C; // @hack Pointer needed to match.
@@ -667,7 +667,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AD10
 
     Gfx_StringDraw(mapMsg, displayLength);
 
-    D_800AD098[0] = 0;
+    D_800AD098 = 0;
     Math_SetDVectorFast(&g_StringPosition, glyphPosX, glyphPosY);
 }
 #else
@@ -1188,10 +1188,6 @@ void Gfx_StringDrawInt(s32 lengthMin, s32 val) // 0x8004B9F8
     #undef GLYPH_SIZE_X
     #undef ATLAS_COLUMN_COUNT
 }
-
-#if !VERSION_REGION_IS(NTSCJ)
-const s32 unused_Rodata_80025E88 = 0xC9457F00; /** @unused Garbage padding? */
-#endif
 
 // ========================================
 // JPN MAPMSG FUNCTIONS
