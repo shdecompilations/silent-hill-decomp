@@ -15,7 +15,9 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
-#define PROXIMITY_BUFFER Q8(1.0f / 32.0f)
+#define PROXIMITY_BUFFER                  (1.0f / 32.0f)
+#define CHARA_RADIUS_BUFFER               0.06f
+#define HARD_SHAPE_INTERSECT_DEPTH_BUFFER (1.0f / 16.0f)
 
 s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
@@ -353,9 +355,9 @@ void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_1
 
     // Cap base floor height.
     baseFloorHeight = DIV_FAST(floorHeightMin + floorHeightMax, 2);
-    if (baseFloorHeight < (floorHeight - INTERSECTION_BUFFER))
+    if (baseFloorHeight < (floorHeight - Q12(INTERSECTION_BUFFER)))
     {
-        baseFloorHeight = floorHeight - INTERSECTION_BUFFER;
+        baseFloorHeight = floorHeight - Q12(INTERSECTION_BUFFER);
     }
 
     // Search clockwise from lowest point for wall start.
@@ -611,7 +613,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
             radius = Q12_TO_Q8(chara->collision.cylinder.outerRadius) + query.charaState.radius;
             if (chara->collision.state < (u32)query.charaState.state)
             {
-                radius -= Q8(0.06f);
+                radius -= Q8(CHARA_RADIUS_BUFFER);
             }
 
             query.chunkOffsetFrom.vx = Q12_TO_Q8(chara->position.vx + chara->collision.shapeOffsets.cylinder.vx);
@@ -646,7 +648,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
             query.obstacleContext.charaPushConstraint.shapeCount != 0)
         {
             count = ARRAY_SIZE(query.obstacleContext.shapePassStamps);
-            if (query.obstacleContext.softPushConstraint.shapeCount < 9)
+            if (query.obstacleContext.softPushConstraint.shapeCount <= ARRAY_SIZE(query.obstacleContext.shapePassStamps))
             {
                 count = query.obstacleContext.softPushConstraint.shapeCount;
             }
@@ -696,7 +698,8 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
 void Collision_MoveOffsetDampen(VECTOR3* moveOffset, const s_CharaCollisionCylinder* cylinder,
                                 s_SubCharacter** charas, s32 charaCount) // 0x8006A940
 {
-    #define SLOWDOWN_MAX Q12(0.4f)
+    #define DEFAULT_SLOWDOWN_MAX          Q12(0.4f)
+    #define HANGED_SCRATCHER_SLOWDOWN_MAX Q12(0.6f)
     
     q19_12          headingAngle;
     q19_12          cylinderOffsetZ;
@@ -744,7 +747,7 @@ void Collision_MoveOffsetDampen(VECTOR3* moveOffset, const s_CharaCollisionCylin
         
         // Check if cylinders collide on XZ plane.
         dist = Vc_VectorMagnitudeCalc(cylinderOffsetX, Q12(0.0f), cylinderOffsetZ);
-        if (((curChara->collision.cylinder.outerRadius + cylinder->radius) + INTERSECTION_BUFFER) < dist)
+        if (((curChara->collision.cylinder.outerRadius + cylinder->radius) + Q12(INTERSECTION_BUFFER)) < dist)
         {
             continue;
         }
@@ -759,11 +762,11 @@ void Collision_MoveOffsetDampen(VECTOR3* moveOffset, const s_CharaCollisionCylin
         collAngleDelta = slowdownAlphaReduction; // @hack From here, `collAngleDelta` used as `slowdownAlphaReduction` for match.
         if (curChara->model.charaId == Chara_HangedScratcher)
         {
-            collAngleDelta = MIN(collAngleDelta, Q12(0.6f));
+            collAngleDelta = MIN(collAngleDelta, HANGED_SCRATCHER_SLOWDOWN_MAX);
         }
         else
         {
-            collAngleDelta = MIN(collAngleDelta, Q12(0.4f));
+            collAngleDelta = MIN(collAngleDelta, DEFAULT_SLOWDOWN_MAX);
         }
 
         // Adjust slowdown alpha.
@@ -771,9 +774,12 @@ void Collision_MoveOffsetDampen(VECTOR3* moveOffset, const s_CharaCollisionCylin
     }
 
     // Apply slowdown to displacement offset.
-    slowdownAlpha  = MAX(slowdownAlpha, Q12(0.4f));
+    slowdownAlpha  = MAX(slowdownAlpha, DEFAULT_SLOWDOWN_MAX);
     moveOffset->vx = Q12_MULT(slowdownAlpha, moveOffset->vx);
     moveOffset->vz = Q12_MULT(slowdownAlpha, moveOffset->vz);
+
+    #undef DEFAULT_SLOWDOWN_MAX
+    #undef HANGED_SCRATCHER_SLOWDOWN_MAX
 }
 
 void Collision_CollStateInit(s_CollisionQuery* query, VECTOR3* moveOffset,
@@ -1261,14 +1267,14 @@ bool func_8006B7E0(s_CollisionCachedSurface* cachedSurface, s_CharaCollisionDelt
         case SubChunkTransitionDirection_Z:
             switch (cachedSurface->subChunkTransDir)
             {
-                case 1:
+                case SubChunkTransitionDirection_Z:
                     if (charaDeltas->radiusCollDiffDist < cachedSurface->radiusCollDiffDist)
                     {
                         return true;
                     }
                     break;
 
-                case 2:
+                case SubChunkTransitionDirection_X:
                     if (charaDeltas->radiusCollDiffDist < (cachedSurface->radiusCollDiffDist + UNK_THRESHOLD))
                     {
                         return true;
@@ -1327,7 +1333,7 @@ void func_8006B8F8(s_CollisionShapePoint* cellPoint) // 0x8006B8F8
     temp                                                   = (u16)cellPoint->shapeAttribs.polygon.polygonSplitVertex0.vz;
     cellPoint->shapeAttribs.polygon.polygonSplitVertex1.vz = temp;
     temp                                                   = cellPoint->shapeAttribs.polygon.surfaceIdx0;
-    cellPoint->charaDeltas.charaMoveOffset.vx                 = -cellPoint->charaDeltas.charaMoveOffset.vx;
+    cellPoint->charaDeltas.charaMoveOffset.vx              = -cellPoint->charaDeltas.charaMoveOffset.vx;
 
     cellPoint->shapeAttribs.polygon.polygonSplitVertex0.vz = temp_a2;
     cellPoint->shapeAttribs.polygon.surfaceIdx0            = cellPoint->shapeAttribs.polygon.surfaceIdx1;
@@ -1362,7 +1368,7 @@ void func_8006B9C8(s_CollisionQuery* query) // 0x8006B9C8
         }
 
         charaRadius = query->charaState.radius;
-        if (query->enablePush && query->point.charaDeltas.radiusCollDiffDist < (charaRadius + PROXIMITY_BUFFER))
+        if (query->enablePush && query->point.charaDeltas.radiusCollDiffDist < (charaRadius + Q8(PROXIMITY_BUFFER)))
         {
             func_8006BB50(query, CollisionPushType_Soft);
         }
@@ -1385,70 +1391,75 @@ void func_8006B9C8(s_CollisionQuery* query) // 0x8006B9C8
 
 void func_8006BB50(s_CollisionQuery* query, s32 pushType) // 0x8006BB50
 {
-    q23_8 charaCollDistX;
-    q23_8 charaCollDistZ;
-    q7_8  temp2;
+    q23_8 collOffsetX;
+    q23_8 collOffsetZ;
+    q7_8  intersectDepth;
 
-    if (func_8006BC34(query) < Q8(0.0f))
+    // Return early if character is above floor.
+    if (Collision_CharaDistanceToFloorGet(query) < Q8(0.0f))
     {
         return;
     }
 
     if (query->point.charaDeltas.charaVertDiff.vx < Q8(0.0f))
     {
-        charaCollDistX = query->chunkOffsetFrom.offset.vx - query->point.shapeAttribs.polygon.polygonSplitVertex0.vx;
-        charaCollDistZ = query->chunkOffsetFrom.offset.vz - query->point.shapeAttribs.polygon.polygonSplitVertex0.vz;
+        collOffsetX = query->chunkOffsetFrom.offset.vx - query->point.shapeAttribs.polygon.polygonSplitVertex0.vx;
+        collOffsetZ = query->chunkOffsetFrom.offset.vz - query->point.shapeAttribs.polygon.polygonSplitVertex0.vz;
     }
     else if (query->point.offset.vz < query->point.charaDeltas.charaVertDiff.vx)
     {
-        charaCollDistX = query->chunkOffsetFrom.offset.vx - query->point.shapeAttribs.polygon.polygonSplitVertex1.vx;
-        charaCollDistZ = query->chunkOffsetFrom.offset.vz - query->point.shapeAttribs.polygon.polygonSplitVertex1.vz;
+        collOffsetX = query->chunkOffsetFrom.offset.vx - query->point.shapeAttribs.polygon.polygonSplitVertex1.vx;
+        collOffsetZ = query->chunkOffsetFrom.offset.vz - query->point.shapeAttribs.polygon.polygonSplitVertex1.vz;
     }
     else
     {
-        charaCollDistX =  query->point.offset.vy;
-        charaCollDistZ = -query->point.offset.vx;
+        collOffsetX =  query->point.offset.vy;
+        collOffsetZ = -query->point.offset.vx;
     }
 
-    temp2 = query->charaState.radius - query->point.charaDeltas.radiusCollDiffDist;
-    func_8006BCC4(&query->obstacleContext, &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx],
-                  pushType, charaCollDistX, charaCollDistZ, temp2);
+    intersectDepth = query->charaState.radius - query->point.charaDeltas.radiusCollDiffDist;
+    Collision_ObstacleIntersectDepthSet(&query->obstacleContext,
+                                        &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx],
+                                        pushType, collOffsetX, collOffsetZ, intersectDepth);
 }
 
-q23_8 func_8006BC34(s_CollisionQuery* query)
+q23_8 Collision_CharaDistanceToFloorGet(s_CollisionQuery* query) // 0x8006BC34
 {
-    q7_8 someZ;
+    q7_8 relZ;
     q7_8 height0;
     q7_8 height1;
-    q7_8 someX;
-    q7_8 height2;
-    q7_8 floorHeight; // Unsure.
+    q7_8 relX;
+    q7_8 baseHeight;
+    q7_8 floorHeight;
 
-    someX = query->point.charaDeltas.charaVertDiff.vx;
-    if (someX < Q8(0.0f))
+    relX = query->point.charaDeltas.charaVertDiff.vx;
+    if (relX < Q8(0.0f))
     {
         floorHeight = query->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
     }
     else
     {
-        someZ = query->point.offset.vz;
-        if (someZ < someX)
+        relZ = query->point.offset.vz;
+        if (relZ < relX)
         {
             floorHeight = query->point.shapeAttribs.polygon.polygonSplitVertex1.vy;
         }
         else
         {
-            height0 = query->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
-            height1 = query->point.shapeAttribs.polygon.polygonSplitVertex1.vy;
-            height2 = query->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
+            // Get polygon split vertex heights.
+            height0    = query->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
+            height1    = query->point.shapeAttribs.polygon.polygonSplitVertex1.vy;
+            baseHeight = query->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
 
+            // Set flat height.
             if (height0 == height1)
             {
-                floorHeight = height2;
+                floorHeight = baseHeight;
             }
+            // Compute height on slope.
             else
             {
-                floorHeight = height2 + ((q23_8)((height1 - height0) * someX) / someZ);
+                floorHeight = baseHeight + ((q23_8)((height1 - height0) * relX) / relZ);
             }
         }
     }
@@ -1456,14 +1467,13 @@ q23_8 func_8006BC34(s_CollisionQuery* query)
     return query->charaState.bottom - floorHeight;
 }
 
-void func_8006BCC4(s_CollisionObstacleContext* obstacleContext, u8* passStamp,
-                   u32 pushType, q7_8 distX, q7_8 distZ, q7_8 intersectDepth) // 0x8006BCC4
+void Collision_ObstacleIntersectDepthSet(s_CollisionObstacleContext* obstacleContext, u8* passStamp,
+                                         u32 pushType, q7_8 collOffsetX, q7_8 collOffsetZ, q7_8 intersectDepth) // 0x8006BCC4
 {
-    q7_8 angleMin;
-    q7_8 angleMax;
+    q3_12 angleMin;
+    q3_12 angleMax;
 
-    // TODO: This are not Q12 values nor angles. However the equivalent of both `Q12_ANGLE` in Q8 is weird.
-    angleMin = Q12_FRACT(ratan2(distZ, distX) - Q12_ANGLE(89.0f));
+    angleMin = Q12_FRACT(ratan2(collOffsetZ, collOffsetX) - Q12_ANGLE(89.0f));
     angleMax = Q12_FRACT(angleMin + Q12_ANGLE(178.0f));
 
     switch (pushType)
@@ -1481,7 +1491,7 @@ void func_8006BCC4(s_CollisionObstacleContext* obstacleContext, u8* passStamp,
         case CollisionPushType_Soft:
             Collision_PushConstraintShapeAdd(&obstacleContext->softPushConstraint, angleMin, angleMax);
 
-            if (obstacleContext->softPushConstraint.shapeCount < 9)
+            if (obstacleContext->softPushConstraint.shapeCount <= ARRAY_SIZE(obstacleContext->shapePassStamps))
             {
                 obstacleContext->shapePassStamps[obstacleContext->softPushConstraint.shapeCount - 1] = passStamp;
             }
@@ -1772,7 +1782,7 @@ void func_8006C45C(s_CollisionQuery* query) // 0x8006C45C
     s32   temp2;
 
     distMax = query->charaState.radius + query->point.shapeAttribs.cylinder.radius;
-    bound   = distMax + PROXIMITY_BUFFER;
+    bound   = distMax + Q8(PROXIMITY_BUFFER);
 
     if (query->chunkOffsetFrom.offset.vx < (query->point.offset.vx - bound) &&
         query->chunkOffsetTo.offset.vx   < (query->point.offset.vx - bound))
@@ -1820,7 +1830,7 @@ void func_8006C45C(s_CollisionQuery* query) // 0x8006C45C
         return;
     }
 
-    if (dist < (distMax + PROXIMITY_BUFFER) && query->enablePush)
+    if (dist < (distMax + Q8(PROXIMITY_BUFFER)) && query->enablePush)
     {
         func_8006C794(query, CollisionPushType_Soft, dist);
     }
@@ -1862,12 +1872,12 @@ void func_8006C794(s_CollisionQuery* query, s32 pushType, q23_8 dist) // 0x8006C
 {
     if (query->charaState.bottom >= (query->point.offset.vy + (dist - query->point.shapeAttribs.cylinder.radius)))
     {
-        func_8006BCC4(&query->obstacleContext,
-                      &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx],
-                      pushType,
-                      query->chunkOffsetFrom.offset.vx - query->point.offset.vx,
-                      query->chunkOffsetFrom.offset.vz - query->point.offset.vz,
-                      (query->charaState.radius + query->point.shapeAttribs.cylinder.radius) - dist);
+        Collision_ObstacleIntersectDepthSet(&query->obstacleContext,
+                                            &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx],
+                                            pushType,
+                                            query->chunkOffsetFrom.offset.vx - query->point.offset.vx,
+                                            query->chunkOffsetFrom.offset.vz - query->point.offset.vz,
+                                            (query->charaState.radius + query->point.shapeAttribs.cylinder.radius) - dist);
     }
 }
 
@@ -2019,13 +2029,13 @@ q23_8 Ipd_FloorHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionQuery* query) 
 
 void func_8006CC9C(s_CollisionQuery* query) // 0x8006CC9C
 {
-    q23_8  deltaX;
-    q23_8  deltaZ;
+    q23_8  collOffsetX;
+    q23_8  collOffsetZ;
     q19_12 hitAlpha;
-    q23_8  temp_s4;
+    q23_8  collDist;
     q23_8  temp;
     q23_8  temp2;
-    q23_8  radiusOffset;
+    q23_8  intersectDepth;
     q23_8  temp4;
     q23_8  targetCharaBottom;
 
@@ -2048,15 +2058,15 @@ void func_8006CC9C(s_CollisionQuery* query) // 0x8006CC9C
         return;
     }
 
-    deltaX = (query->charaState.positionFromX - query->chunkOffsetFrom.vx);
+    collOffsetX = (query->charaState.positionFromX - query->chunkOffsetFrom.vx);
 
     if (query->charaState.bottom < query->context.chara.bottom != Q8(0.0f))
     {
         return;
     }
 
-    deltaZ = query->charaState.positionFromZ - query->chunkOffsetTo.vz;
-    temp_s4 = Math_Vector2MagCalc(deltaX, deltaZ);
+    collOffsetZ = query->charaState.positionFromZ - query->chunkOffsetTo.vz;
+    collDist    = Math_Vector2MagCalc(collOffsetX, collOffsetZ);
 
     hitAlpha = func_8006C248(*(s32*)&query->charaState.moveDirection, query->charaState.moveDistance,
                               query->chunkOffsetFrom.vx - query->charaState.positionFromX,
@@ -2071,9 +2081,9 @@ void func_8006CC9C(s_CollisionQuery* query) // 0x8006CC9C
     {
         if (query->enablePush)
         {
-            radiusOffset = query->context.chara.radius - temp_s4;
-            func_8006BCC4(&query->obstacleContext, query->context.chara.passStamp,
-                          CollisionPushType_Chara, deltaX, deltaZ, radiusOffset);
+            intersectDepth = query->context.chara.radius - collDist;
+            Collision_ObstacleIntersectDepthSet(&query->obstacleContext, query->context.chara.passStamp,
+                                                CollisionPushType_Chara, collOffsetX, collOffsetZ, intersectDepth);
         }
     }
     else if (query->isCharaMoving && query->obstacleContext.hardPushConstraint.shapeCount == 0 &&
@@ -2106,7 +2116,7 @@ void func_8006CF18(s_CollisionQuery* query, s_CharaCollisionRecord* charaRecords
         radius = Q12_TO_Q8(curCharaRecord->radius) + query->charaState.radius;
         if (curCharaRecord->state < (u32)query->charaState.state)
         {
-            radius -= Q8(0.06f);
+            radius -= Q8(CHARA_RADIUS_BUFFER);
         }
 
         query->chunkOffsetFrom.vx = Q12_TO_Q8(curCharaRecord->position.vx);
@@ -2129,6 +2139,9 @@ void func_8006CF18(s_CollisionQuery* query, s_CharaCollisionRecord* charaRecords
 
 void func_8006D01C(VECTOR3* extraOffset, VECTOR3* offset, q3_12 offsetAlpha, s_CollisionQuery* query) // 0x8006D01C
 {
+    #define LARGE_OFFSET_BOUND  Q12(1.0f / 3.0f)
+    #define EXTRA_OFFSET_BUFFER Q12(1.0f / 256.0f)
+
     VECTOR3 adjOffset;
     q23_8   hitOffsetX;
     q23_8   hitOffsetZ;
@@ -2176,7 +2189,7 @@ void func_8006D01C(VECTOR3* extraOffset, VECTOR3* offset, q3_12 offsetAlpha, s_C
     if (offsetDistSqr < 256)
     {
         offsetDistSqr = SquareRoot0(offsetDistSqr * 256);
-        hitOffsetX = (hitOffsetX << 16) / offsetDistSqr;
+        hitOffsetX = (hitOffsetX << 16) / offsetDistSqr; // TODO: Fixed-point division? `Q12_DIV` wouldn't fit, why `<< 16`?
         hitOffsetZ = (hitOffsetZ << 16) / offsetDistSqr;
     }
     else
@@ -2186,27 +2199,31 @@ void func_8006D01C(VECTOR3* extraOffset, VECTOR3* offset, q3_12 offsetAlpha, s_C
         hitOffsetZ = Q12_DIV(hitOffsetZ, offsetDistSqr);
     }
 
+    // TODO: `Q12_SHIFT` doesn't seem correct, what's this doing?
     temp_v0  = FP_FROM((offset->vx * hitOffsetZ) + (offset->vz * -hitOffsetX), Q12_SHIFT);
     offset->vx = Q12_MULT(temp_v0, hitOffsetZ);
     offset->vz = Q12_MULT(temp_v0, -hitOffsetX);
 
-    if (hitOffsetX > Q12(1.0f / 3.0f))
+    if (hitOffsetX > LARGE_OFFSET_BOUND)
     {
-        extraOffset->vx += Q12(1.0f / 256.0f);
+        extraOffset->vx += EXTRA_OFFSET_BUFFER;
     }
-    else if (hitOffsetX < Q12(-1.0f / 3.0f))
+    else if (hitOffsetX < -LARGE_OFFSET_BOUND)
     {
-        extraOffset->vx -= Q12(1.0f / 256.0f);
+        extraOffset->vx -= EXTRA_OFFSET_BUFFER;
     }
 
-    if (hitOffsetZ > Q12(1.0f / 3.0f))
+    if (hitOffsetZ > LARGE_OFFSET_BOUND)
     {
-        extraOffset->vz += Q12(1.0f / 256.0f);
+        extraOffset->vz += EXTRA_OFFSET_BUFFER;
     }
-    else if (hitOffsetZ < Q12(-1.0f / 3.0f))
+    else if (hitOffsetZ < -LARGE_OFFSET_BOUND)
     {
-        extraOffset->vz -= Q12(1.0f / 256.0f);
+        extraOffset->vz -= EXTRA_OFFSET_BUFFER;
     }
+
+    #undef LARGE_OFFSET_BOUND
+    #undef EXTRA_OFFSET_BUFFER
 }
 
 void func_8006D2B4(VECTOR3* offset, s_CollisionObstacleContext* obstacleContext) // 0x8006D2B4
@@ -2220,7 +2237,7 @@ void func_8006D2B4(VECTOR3* offset, s_CollisionObstacleContext* obstacleContext)
     q3_12  angle1;
     q19_12 unkAngleMax;
     bool   cond;
-    bool   var_s1;
+    bool   noShapePush;
     q3_12  angle;
     q19_12 unkAngleMin;
     q7_8   dist;
@@ -2230,7 +2247,7 @@ void func_8006D2B4(VECTOR3* offset, s_CollisionObstacleContext* obstacleContext)
 
     if (obstacleContext->charaPushConstraint.shapeCount != 0)
     {
-        var_s1 = false;
+        noShapePush = false;
         if (obstacleContext->hardPushConstraint.shapeCount != 0)
         {
             angleMin1 = obstacleContext->hardPushConstraint.angleMin;
@@ -2249,10 +2266,10 @@ void func_8006D2B4(VECTOR3* offset, s_CollisionObstacleContext* obstacleContext)
         }
         else
         {
-            var_s1 = true;
+            noShapePush = true;
         }
 
-        if (var_s1)
+        if (noShapePush)
         {
             cond = true;
         }
@@ -2365,14 +2382,14 @@ void func_8006D2B4(VECTOR3* offset, s_CollisionObstacleContext* obstacleContext)
             }
         }
 
-        dist = Q8_TO_Q12(MIN(obstacleContext->hardIntersectDepth + PUSH_BUFFER, 16));
+        dist = Q8_TO_Q12(MIN(obstacleContext->hardIntersectDepth + PUSH_BUFFER, Q8(HARD_SHAPE_INTERSECT_DEPTH_BUFFER)));
         func_8006D600(offset, angle, angleMin, angleMax, dist);
     }
 
     #undef PUSH_BUFFER
 }
 
-void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 angleMin, q19_12 angleMax, q19_12 dist) // 0x8006D600
+void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 angleMin, q19_12 angleMax, q19_12 hardIntersectDepth) // 0x8006D600
 {
     q19_12 angle3;
     q3_12  normAngle;
@@ -2392,14 +2409,14 @@ void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 angleMin, q19_12 angleMax,
     normAngleMin = Q12_FRACT(angleMin);
     normAngleMax = Q12_FRACT(angleMax);
 
-    if (dist > Q12(1.0f / 16.0f))
+    if (hardIntersectDepth > Q12(HARD_SHAPE_INTERSECT_DEPTH_BUFFER))
     {
-        dist = Q12(1.0f / 16.0f);
+        hardIntersectDepth = Q12(HARD_SHAPE_INTERSECT_DEPTH_BUFFER);
     }
 
-    x      = Q12_MULT(dist, Math_Cos(normAngle));
+    x      = Q12_MULT(hardIntersectDepth, Math_Cos(normAngle));
     angle2 = normAngleMax;
-    z      = Q12_MULT(dist, Math_Sin(normAngle));
+    z      = Q12_MULT(hardIntersectDepth, Math_Sin(normAngle));
     deltaX = pos->vx - x;
     deltaZ = pos->vz - z;
     angle1 = Q12_FRACT(ratan2(deltaZ, deltaX));

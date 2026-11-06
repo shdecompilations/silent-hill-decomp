@@ -257,9 +257,9 @@ q19_12 Collision_TriggerCeilingHeightGet(VECTOR3* moveOffset,
                                        curTrigger);
 
             // Compute allowed intersection depth.
-            allowedIntersectDist = INTERSECTION_BUFFER;
+            allowedIntersectDist = Q12(INTERSECTION_BUFFER);
             distToTrigger        = Vc_VectorMagnitudeCalc(offsetToTriggerX, Q12(0.0f), offsetToTriggerZ);
-            if ((cylinderRadius - distToTrigger) <= INTERSECTION_BUFFER)
+            if ((cylinderRadius - distToTrigger) <= Q12(INTERSECTION_BUFFER))
             {
                 allowedIntersectDist = cylinderRadius - distToTrigger;
             }
@@ -304,9 +304,9 @@ q19_12 Collision_TriggerCeilingHeightGet(VECTOR3* moveOffset,
     if (ceilHeight != Q12(DEFAULT_CEILING_HEIGHT))
     {
         // Compute headroom.
-        headroom              = INTERSECTION_BUFFER;
+        headroom              = Q12(INTERSECTION_BUFFER);
         cylinderTopToCeilDist = ceilHeight - cylinderTop;
-        if (cylinderTopToCeilDist < INTERSECTION_BUFFER)
+        if (cylinderTopToCeilDist < Q12(INTERSECTION_BUFFER))
         {
             headroom = cylinderTopToCeilDist;
         }

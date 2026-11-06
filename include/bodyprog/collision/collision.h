@@ -9,9 +9,10 @@
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/map/map.h"
 
-#define DEFAULT_FLOOR_HEIGHT   30.0f
-#define DEFAULT_CEILING_HEIGHT -16.0f
-#define INTERSECTION_BUFFER    Q12(0.1f)
+#define DEFAULT_FLOOR_HEIGHT          30.0f
+#define DEFAULT_CEILING_HEIGHT        -16.0f
+#define INTERSECTION_BUFFER           0.1f
+#define SOFT_OBSTACLE_SHAPE_COUNT_MAX 8
 
 /** @brief Collision types. */
 typedef enum _CollisionType
@@ -84,19 +85,19 @@ typedef struct _CollisionCachedSurface
 /** @brief Collision push constraint. */
 typedef struct _CollisionPushConstraint
 {
-    /* 0x0 */ s8    shapeCount;
+    /* 0x0 */ s8    shapeCount; /** Number of soft-collided shapes. */
     /* 0x2 */ q3_12 angleMin;
     /* 0x4 */ q3_12 angleMax;
 } s_CollisionPushConstraint;
 
-/** @brief CollisionObstacleContext */
+/** @brief Collision obstacle context for collided shapes. */
 typedef struct _CollisionObstacleContext
 {
     /* 0x0  */ s_CollisionPushConstraint hardPushConstraint;
     /* 0x6  */ q7_8                      hardIntersectDepth;
     /* 0x8  */ s_CollisionPushConstraint softPushConstraint;
     /* 0xE  */ s8                        __pad_E[2];
-    /* 0x10 */ s8*                       shapePassStamps[8];
+    /* 0x10 */ s8*                       shapePassStamps[SOFT_OBSTACLE_SHAPE_COUNT_MAX];
     /* 0x30 */ s_CollisionPushConstraint charaPushConstraint;
     /* 0x36 */ q7_8                      charaIntersectDepth;
 } s_CollisionObstacleContext;
@@ -121,13 +122,13 @@ typedef union _CollisionShapeAttribs
     /* 0x0 */ } polygon;
 } s_CollisionShapeAttribs;
 
-/** @brief Collision shape point data. TODO: Come up with better naame. */
+/** @brief Collision shape point data. TODO: Come up with better name. */
 typedef struct _CollisionShapePoint
 {
     /* 0x0  */ s_IpdCollisionData*     ipdCollisionData;
     /* 0x4  */ u8                      shapeIdx; // `s_IpdCollisionData::polygons` index.
     /* 0x5  */ u8                      disableHeight;
-    /* 0x6  */ SVECTOR3                offset; // Q7.8 | Probe position inside cell/cell? Wrong struct? Y is maybe Z.
+    /* 0x6  */ SVECTOR3                offset; // Q7.8 | Probe position inside cell/cell? Y is maybe Z, likely wrong struct.
     /* 0xC  */ s_CollisionShapeAttribs shapeAttribs;
     /* 0x20 */ s_CharaCollisionDeltas  charaDeltas;
 } s_CollisionShapePoint;
@@ -407,12 +408,24 @@ void func_8006B9C8(s_CollisionQuery* query);
 // Related to polygons.
 void func_8006BB50(s_CollisionQuery* query, s32 pushType);
 
-// Related to polygons.
-// Computes floor height, accounting for differences in cell split vertex heights?
-q23_8 func_8006BC34(s_CollisionQuery* query);
+/** @brief Gets the relative height from the bottom of a character to the floor polygon.
+ * Called by `func_8006BB50`.
+ *
+ * @param query Collision query.
+ */
+q23_8 Collision_CharaDistanceToFloorGet(s_CollisionQuery* query);
 
-void func_8006BCC4(s_CollisionObstacleContext* obstacleContext, u8* passStamp,
-                   u32 pushType, q7_8 distX, q7_8 distZ, q7_8 radiusOffset);
+/** @brief Sets the shape intersection depth of a given push type in an obstacle context.
+ *
+ * @param obstacleContext Obstacle context to update.
+ * @param passStamp Shape pass stamp.
+ * @param pushType Push type.
+ * @param collOffsetX X collision offset.
+ * @param collOffsetZ Z collision offset.
+ * @param intersectDepth Shape intersection depth. TODO: Or intersection distance?
+ */
+void Collision_ObstacleIntersectDepthSet(s_CollisionObstacleContext* obstacleContext, u8* passStamp,
+                                         u32 pushType, q7_8 collOffsetX, q7_8 collOffsetZ, q7_8 intersectDepth);
 
 void Collision_PushConstraintShapeAdd(s_CollisionPushConstraint* pushConstraint,
                                       q3_12 angleConstraintMin, q3_12 angleConstraintMax);
@@ -458,7 +471,7 @@ void func_8006D01C(VECTOR3* extraOffset, VECTOR3* offset, q3_12 offsetAlpha, s_C
 
 void func_8006D2B4(VECTOR3* offset, s_CollisionObstacleContext* obstacleContext);
 
-void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 rotX, q19_12 rotY, q19_12 dist);
+void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 rotX, q19_12 rotY, q19_12 hardIntersectDepth);
 
 void func_8006D774(s_CollisionQuery* query, const VECTOR3* offset0, const VECTOR3* offset1);
 
