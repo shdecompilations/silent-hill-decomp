@@ -2021,11 +2021,9 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
 
 void Gfx_Results_ItemsPosition() // 0x8005227C
 {
-    #define DISPLAY_ITEM_COUNT 6
-
     s32 i;
 
-    const SVECTOR OFFSETS[DISPLAY_ITEM_COUNT] = {
+    const SVECTOR OFFSETS[] = {
         { Q8(0.0f),      Q8(-3.25f), Q8(20.0f), Q8(0.0f) },
         { Q8(-3.03125f), Q8(-1.5f),  Q8(20.0f), Q8(0.0f) },
         { Q8(3.03125f),  Q8(-1.5f),  Q8(20.0f), Q8(0.0f) },
@@ -2039,7 +2037,7 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
         g_SavegamePtr->clearGameCount = 1;
     }
 
-    for (i = 0; i < DISPLAY_ITEM_COUNT; i++)
+    for (i = 0; i < ARRAY_SIZE(OFFSETS); i++)
     {
         if ((g_Ranking_ExtraItemFlags >> i) & (1 << 0))
         {

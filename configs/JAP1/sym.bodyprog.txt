@@ -1235,7 +1235,6 @@ Collision_WallPush                           = 0x8006B900; // type:func
 Collision_CharaCollisionSetup                = 0x8006BB0C; // type:func
 Collision_DefaultResultSet                   = 0x8006BC88; // type:func
 Collision_CollidableCharasGet                = 0x8006BCB4; // type:func
-Collision_ObstacleIntersectDepthSet          = 0x8006BCC4; // type:func
 Collision_OffsetCheck                        = 0x8006BEC4; // type:func
 func_8006A42C                                = 0x8006BF3C; // type:func
 func_8006A4A8                                = 0x8006BFB8; // type:func
