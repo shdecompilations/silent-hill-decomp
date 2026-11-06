@@ -3166,4 +3166,3 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
     #undef ICON_SIZE_Y
     #undef ICON_OFFSET_X
 }
-

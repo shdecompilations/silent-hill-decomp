@@ -394,8 +394,10 @@ void Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
         charCode = *mapMsg;
 
 #if VERSION_REGION_IS(PAL)
-        // PAL slightly changes map message codes, codes are now written `{Xn}`, newlines 
-        // are raw `\n` or `\r` chars, and spaces are drawn as-is.
+        // PAL slightly changes the map message style:
+        // - Tags are written as `{Xn}`.
+        // - Newlines are raw `\n` or `\r` chars.
+        // - Spaces are literal.
         switch (charCode)
         {
             case '\t':
@@ -429,7 +431,7 @@ void Gfx_MapMsg_WidthsCompute(s32 mapMsgIdx) // 0x8004ACF4
                     case MAP_MSG_CODE_LINE_POSITION:
                         g_MapMsg_ActiveLine.positionIdx = posIdx;
 
-                    // Skip the closing `}` of codes that take an argument.
+                    // Skip closing `}` of tags that take an argument.
                     case MAP_MSG_CODE_COLOR:
                     case MAP_MSG_CODE_SELECT:
                         mapMsg++;
@@ -608,7 +610,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AD10
 
     g_StringPosition.vx = -(g_MapMsg_Widths[0] >> 1);
 
-    // TODO: Enum for positionIdx values used here? Anchoring text to different parts of screen?
+    // TODO: Enum for `positionIdx values` used here? Anchoring text to different parts of screen.
     switch (g_MapMsg_ActiveLine.positionIdx)
     {
         case 0:
@@ -652,7 +654,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 displayLength) // 0x8004AD10
 
     D_800AD098 = 1;
 
-    // Line start position, restored after drawing advances `g_StringPosition`.
+    // Line start position. Restored after drawing advances `g_StringPosition`.
     lineStartPos     = &D_800C2E9C; // @hack Pointer needed to match.
     glyphPosY        = g_StringPosition.vy;
     lineStartPos->vy = glyphPosY;

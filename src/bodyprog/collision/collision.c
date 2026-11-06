@@ -606,7 +606,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
         // Run through characters.
         for (curChara = charas; curChara < &charas[charaCount]; curChara++)
         {
-            chara  = *curChara;
+            chara = *curChara;
 
             radius = Q12_TO_Q8(chara->collision.cylinder.outerRadius) + query.charaState.radius;
             if (chara->collision.state < (u32)query.charaState.state)
@@ -656,7 +656,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
                 *query.obstacleContext.shapePassStamps[i] += 1;
             }
         }
-        else if (query.field_34 != CollisionContactType_None)
+        else if (query.contactType != CollisionContactType_None)
         {
             *query.passStamp += 1;
         }
@@ -776,28 +776,28 @@ void Collision_MoveOffsetDampen(VECTOR3* moveOffset, const s_CharaCollisionCylin
     moveOffset->vz = Q12_MULT(slowdownAlpha, moveOffset->vz);
 }
 
-void Collision_CollStateInit(s_CollisionQuery* state, VECTOR3* moveOffset,
+void Collision_CollStateInit(s_CollisionQuery* query, VECTOR3* moveOffset,
                              const s_CharaCollisionCylinder* cylinder, bool blockInvalidFloor) // 0x8006AB50
 {
-    state->offsetX                      = false;
-    state->triggerFlags                 = g_ActiveCollisionTriggers.flags;
-    state->charaState.blockInvalidFloor = blockInvalidFloor;
+    query->offsetX                      = false;
+    query->triggerFlags                 = g_ActiveCollisionTriggers.flags;
+    query->charaState.blockInvalidFloor = blockInvalidFloor;
 
-    Collision_MoveDirectionCalc(&state->charaState, moveOffset, cylinder);
+    Collision_MoveDirectionCalc(&query->charaState, moveOffset, cylinder);
 
-    state->slopedFloorHeight = Q8(DEFAULT_FLOOR_HEIGHT);
-    state->field_34 = CollisionContactType_None;
+    query->slopedFloorHeight = Q8(DEFAULT_FLOOR_HEIGHT);
+    query->contactType       = CollisionContactType_None;
     
-    state->obstacleContext.hardPushConstraint.shapeCount  = 0;
-    state->obstacleContext.hardIntersectDepth             = Q8(0.0f);
-    state->obstacleContext.softPushConstraint.shapeCount  = 0;
-    state->obstacleContext.charaIntersectDepth            = Q8(0.0f);
-    state->obstacleContext.charaPushConstraint.shapeCount = 0;
+    query->obstacleContext.hardPushConstraint.shapeCount  = 0;
+    query->obstacleContext.hardIntersectDepth             = Q8(0.0f);
+    query->obstacleContext.softPushConstraint.shapeCount  = 0;
+    query->obstacleContext.charaIntersectDepth            = Q8(0.0f);
+    query->obstacleContext.charaPushConstraint.shapeCount = 0;
     
-    state->slopeGradientZ = Q8(0.0f);
-    state->slopeGradientX = Q8(0.0f);
-    state->disableHeight  = true;
-    state->floorType      = FloorType_Default;
+    query->slopeGradientZ = Q8(0.0f);
+    query->slopeGradientX = Q8(0.0f);
+    query->disableHeight  = true;
+    query->floorType      = FloorType_Default;
 }
 
 void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState,
@@ -836,7 +836,7 @@ void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState,
     charaState->state         = cylinder->state;
 }
 
-void Collision_CharaCollisionHandle(s_CollisionQuery* state, s_IpdCollisionData* collData) // 0x8006AD44
+void Collision_CharaCollisionHandle(s_CollisionQuery* query, s_IpdCollisionData* collData) // 0x8006AD44
 {
     s32              endCellX;
     s32              startCellX;
@@ -848,21 +848,21 @@ void Collision_CharaCollisionHandle(s_CollisionQuery* state, s_IpdCollisionData*
     if ((collData->polygonSurfaceCount == 0 &&
          collData->polygonCount        == 0 &&
          collData->cylinderCount       == 0) ||
-        !Collision_CellInit(state, collData))
+        !Collision_CellInit(query, collData))
     {
         return;
     }
 
-    if (!state->offsetX)
+    if (!query->offsetX)
     {
         Collision_ShapePassReset(collData);
     }
 
     // Run through neighboring cells.
-    startCellX = state->context.shape.cellX;
-    endCellX   = (state->context.shape.cellX + state->context.shape.cellSpanX) - 1;
-    for (curCellZ = state->context.shape.cellZ;
-         curCellZ < (state->context.shape.cellZ + state->context.shape.cellSpanZ);
+    startCellX = query->context.shape.cellX;
+    endCellX   = (query->context.shape.cellX + query->context.shape.cellSpanX) - 1;
+    for (curCellZ = query->context.shape.cellZ;
+         curCellZ < (query->context.shape.cellZ + query->context.shape.cellSpanZ);
          curCellZ++)
     {
         shapeAlloc = &collData->shapeAllocs[(curCellZ * collData->cellCountX) + startCellX];
@@ -871,56 +871,56 @@ void Collision_CharaCollisionHandle(s_CollisionQuery* state, s_IpdCollisionData*
              curCellX <= endCellX;
              curCellX++, shapeAlloc++)
         {
-            func_8006B1C8(state, collData, shapeAlloc);
+            func_8006B1C8(query, collData, shapeAlloc);
         }
     }
 
-    if (!state->offsetX)
+    if (!query->offsetX)
     {
         Collision_ShapePassUpdate(collData);
     }
 
     // TODO: Something that handles height and movement on slopes.
-    if (state->field_0_10)
+    if (query->field_0_10)
     {
-        func_8006C838(state, collData);
-        if (state->context.shape.shapeAlloc != NULL)
+        func_8006C838(query, collData);
+        if (query->context.shape.shapeAlloc != NULL)
         {
-            func_8006CA18(state, collData, state->context.shape.shapeAlloc);
+            func_8006CA18(query, collData, query->context.shape.shapeAlloc);
         }
     }
 }
 
-bool Collision_CellInit(s_CollisionQuery* state, const s_IpdCollisionData* collData) // 0x8006AEAC
+bool Collision_CellInit(s_CollisionQuery* query, const s_IpdCollisionData* collData) // 0x8006AEAC
 {
     s_CollisionCachedSurface* curCachedSurface;
 
-    if (!Collision_CellIdxGet(state, collData))
+    if (!Collision_CellIdxGet(query, collData))
     {
         return false;
     }
 
-    state->chunkOffsetFrom.offset.vx = state->charaState.positionFromX - collData->positionX;
-    state->chunkOffsetFrom.offset.vz = state->charaState.positionFromZ - collData->positionZ;
-    state->chunkOffsetTo.offset.vx   = state->charaState.positionToX   - collData->positionX;
-    state->chunkOffsetTo.offset.vz   = state->charaState.positionToZ   - collData->positionZ;
+    query->chunkOffsetFrom.offset.vx = query->charaState.positionFromX - collData->positionX;
+    query->chunkOffsetFrom.offset.vz = query->charaState.positionFromZ - collData->positionZ;
+    query->chunkOffsetTo.offset.vx   = query->charaState.positionToX   - collData->positionX;
+    query->chunkOffsetTo.offset.vz   = query->charaState.positionToZ   - collData->positionZ;
     
-    if ((state->chunkOffsetFrom.offset.vx / collData->cellSize) <  0                    ||
-        (state->chunkOffsetFrom.offset.vx / collData->cellSize) >= collData->cellCountX ||
-        (state->chunkOffsetFrom.offset.vz / collData->cellSize) <  0                    ||
-        (state->chunkOffsetFrom.offset.vz / collData->cellSize) >= collData->cellCountZ)
+    if ((query->chunkOffsetFrom.offset.vx / collData->cellSize) <  0                    ||
+        (query->chunkOffsetFrom.offset.vx / collData->cellSize) >= collData->cellCountX ||
+        (query->chunkOffsetFrom.offset.vz / collData->cellSize) <  0                    ||
+        (query->chunkOffsetFrom.offset.vz / collData->cellSize) >= collData->cellCountZ)
     {
-        state->context.shape.shapeAlloc = NULL;
+        query->context.shape.shapeAlloc = NULL;
     }
     else
     {
-        state->context.shape.shapeAlloc = &collData->shapeAllocs[((state->chunkOffsetFrom.offset.vz / collData->cellSize) * collData->cellCountX) +
-                                                                    (state->chunkOffsetFrom.offset.vx / collData->cellSize)];
-        state->shapeIdx                    = NO_VALUE;
+        query->context.shape.shapeAlloc = &collData->shapeAllocs[((query->chunkOffsetFrom.offset.vz / collData->cellSize) * collData->cellCountX) +
+                                                                    (query->chunkOffsetFrom.offset.vx / collData->cellSize)];
+        query->shapeIdx                 = NO_VALUE;
 
         // Run through cached surfaces.
-        for (curCachedSurface = &state->context.shape.surfaceCache[0];
-             curCachedSurface < &state->context.shape.surfaceCache[4];
+        for (curCachedSurface = &query->context.shape.surfaceCache[0];
+             curCachedSurface < &query->context.shape.surfaceCache[4];
              curCachedSurface++)
         {
             curCachedSurface->subChunkTransDir   = SubChunkTransitionDirection_None;
@@ -932,7 +932,7 @@ bool Collision_CellInit(s_CollisionQuery* state, const s_IpdCollisionData* collD
     return true;
 }
 
-bool Collision_CellIdxGet(s_CollisionQuery* state, const s_IpdCollisionData* collData) // 0x8006B004
+bool Collision_CellIdxGet(s_CollisionQuery* query, const s_IpdCollisionData* collData) // 0x8006B004
 {
     q23_8 charaCollDiffZClosest;
     q23_8 charaCollDiffXClosest;
@@ -949,28 +949,28 @@ bool Collision_CellIdxGet(s_CollisionQuery* state, const s_IpdCollisionData* col
     cellZLimit = cellZSize - 1;
 
     // Getting X axis differences.
-    charaCollDiffXClosest  = state->charaState.positionFromX - collData->positionX;
-    charaCollDiffXFarthest = state->charaState.positionToX   - collData->positionX;
+    charaCollDiffXClosest  = query->charaState.positionFromX - collData->positionX;
+    charaCollDiffXFarthest = query->charaState.positionToX   - collData->positionX;
     if (charaCollDiffXFarthest < charaCollDiffXClosest)
     {
         charaCollDiffXFarthest ^= charaCollDiffXClosest;
         charaCollDiffXClosest  ^= charaCollDiffXFarthest;
         charaCollDiffXFarthest ^= charaCollDiffXClosest;
     }
-    charaCollDiffXClosest  -= state->charaState.radius;
-    charaCollDiffXFarthest += state->charaState.radius;
+    charaCollDiffXClosest  -= query->charaState.radius;
+    charaCollDiffXFarthest += query->charaState.radius;
 
     // Getting Z axis differences.
-    charaCollDiffZClosest  = state->charaState.positionFromZ - collData->positionZ;
-    charaCollDiffZFarthest = state->charaState.positionToZ   - collData->positionZ;
+    charaCollDiffZClosest  = query->charaState.positionFromZ - collData->positionZ;
+    charaCollDiffZFarthest = query->charaState.positionToZ   - collData->positionZ;
     if (charaCollDiffZFarthest < charaCollDiffZClosest)
     {
         charaCollDiffZFarthest ^= charaCollDiffZClosest;
         charaCollDiffZClosest  ^= charaCollDiffZFarthest;
         charaCollDiffZFarthest ^= charaCollDiffZClosest;
     }
-    charaCollDiffZClosest  -= state->charaState.radius;
-    charaCollDiffZFarthest += state->charaState.radius;
+    charaCollDiffZClosest  -= query->charaState.radius;
+    charaCollDiffZFarthest += query->charaState.radius;
 
     if (cellXSize < charaCollDiffXClosest ||
         cellZSize < charaCollDiffZClosest ||
@@ -985,17 +985,17 @@ bool Collision_CellIdxGet(s_CollisionQuery* state, const s_IpdCollisionData* col
     charaCollDiffXFarthest = limitRange(charaCollDiffXFarthest, Q8(0.0f), cellXLimit);
     charaCollDiffZFarthest = limitRange(charaCollDiffZFarthest, Q8(0.0f), cellZLimit);
 
-    state->context.shape.cellX     = charaCollDiffXClosest / collData->cellSize;
-    state->context.shape.cellZ     = charaCollDiffZClosest / collData->cellSize;
-    state->context.shape.cellSpanX = ((charaCollDiffXFarthest / collData->cellSize) -
-                                      state->context.shape.cellX) + 1;
-    state->context.shape.cellSpanZ = ((charaCollDiffZFarthest / collData->cellSize) -
-                                      state->context.shape.cellZ) + 1;
+    query->context.shape.cellX     = charaCollDiffXClosest / collData->cellSize;
+    query->context.shape.cellZ     = charaCollDiffZClosest / collData->cellSize;
+    query->context.shape.cellSpanX = ((charaCollDiffXFarthest / collData->cellSize) -
+                                      query->context.shape.cellX) + 1;
+    query->context.shape.cellSpanZ = ((charaCollDiffZFarthest / collData->cellSize) -
+                                      query->context.shape.cellZ) + 1;
 
     return true;
 }
 
-void func_8006B1C8(s_CollisionQuery* state, s_IpdCollisionData* collData, s_IpdShapeAlloc* shapeAlloc) // 0x8006B1C8
+void func_8006B1C8(s_CollisionQuery* query, s_IpdCollisionData* collData, s_IpdShapeAlloc* shapeAlloc) // 0x8006B1C8
 {
     s32 polygonCount;
     s32 i;
@@ -1017,37 +1017,37 @@ void func_8006B1C8(s_CollisionQuery* state, s_IpdCollisionData* collData, s_IpdS
         polygonCount = collData->polygonCount;
         if (shapeIdx < polygonCount)
         {
-            if (func_8006B318(state, collData, shapeIdx))
+            if (func_8006B318(query, collData, shapeIdx))
             {
-                if (state->field_0_10)
+                if (query->field_0_10)
                 {
-                    func_8006B6E8(state, shapeAlloc);
+                    func_8006B6E8(query, shapeAlloc);
                 }
 
-                if (state->isCharaMoving || state->enablePush)
+                if (query->isCharaMoving || query->enablePush)
                 {
-                    if (state->point.shapeAttribs.polygon.surfaceIdx1 == UCHAR_MAX)
+                    if (query->point.shapeAttribs.polygon.surfaceIdx1 == UCHAR_MAX)
                     {
-                        func_8006B9C8(state);
+                        func_8006B9C8(query);
                     }
 
-                    if (state->point.shapeAttribs.polygon.surfaceIdx0 == UCHAR_MAX)
+                    if (query->point.shapeAttribs.polygon.surfaceIdx0 == UCHAR_MAX)
                     {
-                        func_8006B8F8(&state->point);
-                        func_8006B9C8(state);
+                        func_8006B8F8(&query->point);
+                        func_8006B9C8(query);
                     }
                 }
             }
         }
         // Handle cylinder.
-        else if (func_8006C3D4(state, collData, shapeIdx))
+        else if (func_8006C3D4(query, collData, shapeIdx))
         {
-            func_8006C45C(state);
+            func_8006C45C(query);
         }
     }
 }
 
-bool func_8006B318(s_CollisionQuery* state, const s_IpdCollisionData* collData, s32 shapeIdx) // 0x8006B318
+bool func_8006B318(s_CollisionQuery* query, const s_IpdCollisionData* collData, s32 shapeIdx) // 0x8006B318
 {
     q23_8         charaVertDiffZ;
     q23_8         charaVertDiffX;
@@ -1062,48 +1062,48 @@ bool func_8006B318(s_CollisionQuery* state, const s_IpdCollisionData* collData, 
     // which specifically enable certain collisions under specific game events, see for example the school
     // boss valve puzzle which relays in this flag system in order to enable and disable the collision that
     // blocks the player from progressing until the puzzle is solved.
-    if (CHECK_FLAG_IDX(state->triggerFlags, (polygon->triggerFlagIdxHigh << 2) | polygon->triggerFlagIdxLow, false))
+    if (CHECK_FLAG_IDX(query->triggerFlags, (polygon->triggerFlagIdxHigh << 2) | polygon->triggerFlagIdxLow, false))
     {
         return false;
     }
 
-    state->point.ipdCollisionData = collData;
-    state->point.shapeIdx         = shapeIdx;
+    query->point.ipdCollisionData = collData;
+    query->point.shapeIdx         = shapeIdx;
 
-    state->point.offset.vx = polygon->offsetX;
-    state->point.offset.vy = polygon->offsetY;
-    state->point.offset.vz = polygon->offsetZ;
+    query->point.offset.vx = polygon->offsetX;
+    query->point.offset.vy = polygon->offsetY;
+    query->point.offset.vz = polygon->offsetZ;
 
-    state->point.shapeAttribs.polygon.polygonSplitVertex0 = collData->polygonSplitVertices[polygon->splitVertexIdx1];
-    state->point.shapeAttribs.polygon.polygonSplitVertex1 = collData->polygonSplitVertices[polygon->splitVertexIdx0];
+    query->point.shapeAttribs.polygon.polygonSplitVertex0 = collData->polygonSplitVertices[polygon->splitVertexIdx1];
+    query->point.shapeAttribs.polygon.polygonSplitVertex1 = collData->polygonSplitVertices[polygon->splitVertexIdx0];
 
-    state->point.shapeAttribs.polygon.surfaceIdx0 = polygon->surfaceIdx0;
-    if (state->point.shapeAttribs.polygon.surfaceIdx0 != UCHAR_MAX)
+    query->point.shapeAttribs.polygon.surfaceIdx0 = polygon->surfaceIdx0;
+    if (query->point.shapeAttribs.polygon.surfaceIdx0 != UCHAR_MAX)
     {
-        curSurface                                              = &collData->polygonSurfaces[state->point.shapeAttribs.polygon.surfaceIdx0];
-        state->point.shapeAttribs.polygon.surfaceCacheIdx0      = curSurface->surfaceCacheIdx;
-        state->point.shapeAttribs.polygon.disableSurfaceHeight0 = curSurface->disableHeight;
+        curSurface                                              = &collData->polygonSurfaces[query->point.shapeAttribs.polygon.surfaceIdx0];
+        query->point.shapeAttribs.polygon.surfaceCacheIdx0      = curSurface->surfaceCacheIdx;
+        query->point.shapeAttribs.polygon.disableSurfaceHeight0 = curSurface->disableHeight;
 
-        if (state->charaState.blockInvalidFloor &&
+        if (query->charaState.blockInvalidFloor &&
             (curSurface->disableHeight == true || curSurface->floorType == FloorType_None))
         {
-            state->point.shapeAttribs.polygon.polygonSplitVertex0.vy += Q8(DEFAULT_CEILING_HEIGHT);
-            state->point.shapeAttribs.polygon.polygonSplitVertex1.vy += Q8(DEFAULT_CEILING_HEIGHT);
+            query->point.shapeAttribs.polygon.polygonSplitVertex0.vy += Q8(DEFAULT_CEILING_HEIGHT);
+            query->point.shapeAttribs.polygon.polygonSplitVertex1.vy += Q8(DEFAULT_CEILING_HEIGHT);
         }
     }
 
-    state->point.shapeAttribs.polygon.surfaceIdx1 = polygon->surfaceIdx1;
-    if (state->point.shapeAttribs.polygon.surfaceIdx1 != UCHAR_MAX)
+    query->point.shapeAttribs.polygon.surfaceIdx1 = polygon->surfaceIdx1;
+    if (query->point.shapeAttribs.polygon.surfaceIdx1 != UCHAR_MAX)
     {
-        curSurface                                              = &collData->polygonSurfaces[state->point.shapeAttribs.polygon.surfaceIdx1];
-        state->point.shapeAttribs.polygon.surfaceCacheIdx1      = curSurface->surfaceCacheIdx;
-        state->point.shapeAttribs.polygon.disableSurfaceHeight1 = curSurface->disableHeight;
+        curSurface                                              = &collData->polygonSurfaces[query->point.shapeAttribs.polygon.surfaceIdx1];
+        query->point.shapeAttribs.polygon.surfaceCacheIdx1      = curSurface->surfaceCacheIdx;
+        query->point.shapeAttribs.polygon.disableSurfaceHeight1 = curSurface->disableHeight;
 
-        if (state->charaState.blockInvalidFloor &&
+        if (query->charaState.blockInvalidFloor &&
             (curSurface->disableHeight == true || curSurface->floorType == FloorType_None))
         {
-            state->point.shapeAttribs.polygon.polygonSplitVertex0.vy = Q8(DEFAULT_CEILING_HEIGHT);
-            state->point.shapeAttribs.polygon.polygonSplitVertex1.vy = Q8(DEFAULT_CEILING_HEIGHT);
+            query->point.shapeAttribs.polygon.polygonSplitVertex0.vy = Q8(DEFAULT_CEILING_HEIGHT);
+            query->point.shapeAttribs.polygon.polygonSplitVertex1.vy = Q8(DEFAULT_CEILING_HEIGHT);
         }
     }
 
@@ -1117,11 +1117,11 @@ bool func_8006B318(s_CollisionQuery* state, const s_IpdCollisionData* collData, 
     gte_ldR11R12(packedXz);
     gte_ldR13R21(packedXz);
     
-    packedXz = PACKED_XZ16(state->charaState.moveOffset.vx, state->charaState.moveOffset.vz);
+    packedXz = PACKED_XZ16(query->charaState.moveOffset.vx, query->charaState.moveOffset.vz);
     gte_ldvxy0(packedXz);
     gte_ldvz0();
     gte_rtv0();
-    gte_stMAC12(&state->point.charaDeltas.charaMoveOffset);
+    gte_stMAC12(&query->point.charaDeltas.charaMoveOffset);
     /* Will - 1: ^ These values are normally set to 0 when standing still and are only modified when moving.
     
        Will - 2: I think this a distance, the value when set isn't too big and also I think `charaState.moveOffset` is the
@@ -1129,48 +1129,48 @@ bool func_8006B318(s_CollisionQuery* state, const s_IpdCollisionData* collData, 
        that may explain why it's 0 when standing still.
     */
     
-    packedXz = PACKED_XZ16(state->chunkOffsetFrom.offset.vx - state->point.shapeAttribs.polygon.polygonSplitVertex0.vx,
-                           state->chunkOffsetFrom.offset.vz - state->point.shapeAttribs.polygon.polygonSplitVertex0.vz);
+    packedXz = PACKED_XZ16(query->chunkOffsetFrom.offset.vx - query->point.shapeAttribs.polygon.polygonSplitVertex0.vx,
+                           query->chunkOffsetFrom.offset.vz - query->point.shapeAttribs.polygon.polygonSplitVertex0.vz);
     gte_ldvxy0(packedXz);
     gte_ldvz0();
     gte_rtv0();
-    gte_stMAC12(&state->point.charaDeltas.charaVertDiff);
+    gte_stMAC12(&query->point.charaDeltas.charaVertDiff);
 
-    charaVertDiffX                                = state->point.charaDeltas.charaVertDiff.vx;
-    charaVertDiffZ                                = state->point.charaDeltas.charaVertDiff.vz;
-    state->point.charaDeltas.charaMoveVertDiff.vx = state->point.charaDeltas.charaMoveOffset.vx + charaVertDiffX;
-    state->point.charaDeltas.charaMoveVertDiff.vz = state->point.charaDeltas.charaMoveOffset.vz + charaVertDiffZ;
+    charaVertDiffX                                = query->point.charaDeltas.charaVertDiff.vx;
+    charaVertDiffZ                                = query->point.charaDeltas.charaVertDiff.vz;
+    query->point.charaDeltas.charaMoveVertDiff.vx = query->point.charaDeltas.charaMoveOffset.vx + charaVertDiffX;
+    query->point.charaDeltas.charaMoveVertDiff.vz = query->point.charaDeltas.charaMoveOffset.vz + charaVertDiffZ;
 
     if (charaVertDiffX < Q8(0.0f))
     {
-        state->point.charaDeltas.subChunkTransDir   = SubChunkTransitionDirection_X;
-        state->point.charaDeltas.radiusCollDiffDist = Math_Vector2MagCalc(charaVertDiffX, charaVertDiffZ);
-        state->point.charaDeltas.collDiffDist       = -charaVertDiffX;
+        query->point.charaDeltas.subChunkTransDir   = SubChunkTransitionDirection_X;
+        query->point.charaDeltas.radiusCollDiffDist = Math_Vector2MagCalc(charaVertDiffX, charaVertDiffZ);
+        query->point.charaDeltas.collDiffDist       = -charaVertDiffX;
     }
-    else if (state->point.offset.vz < charaVertDiffX)
+    else if (query->point.offset.vz < charaVertDiffX)
     {
-        state->point.charaDeltas.subChunkTransDir   = SubChunkTransitionDirection_X;
-        state->point.charaDeltas.radiusCollDiffDist = Math_Vector2MagCalc(charaVertDiffX - state->point.offset.vz, charaVertDiffZ);
-        state->point.charaDeltas.collDiffDist       = charaVertDiffX - state->point.offset.vz;
+        query->point.charaDeltas.subChunkTransDir   = SubChunkTransitionDirection_X;
+        query->point.charaDeltas.radiusCollDiffDist = Math_Vector2MagCalc(charaVertDiffX - query->point.offset.vz, charaVertDiffZ);
+        query->point.charaDeltas.collDiffDist       = charaVertDiffX - query->point.offset.vz;
     }
     else
     {
         if (charaVertDiffZ < Q8(0.0f))
         {
-            state->point.charaDeltas.radiusCollDiffDist = -charaVertDiffZ;
+            query->point.charaDeltas.radiusCollDiffDist = -charaVertDiffZ;
         }
         else
         {
-            state->point.charaDeltas.radiusCollDiffDist = charaVertDiffZ;
+            query->point.charaDeltas.radiusCollDiffDist = charaVertDiffZ;
         }
 
-        state->point.charaDeltas.subChunkTransDir = SubChunkTransitionDirection_Z;
+        query->point.charaDeltas.subChunkTransDir = SubChunkTransitionDirection_Z;
     }
 
     return true;
 }
 
-void func_8006B6E8(s_CollisionQuery* state, s_IpdShapeAlloc* shapeAlloc) // 0x8006B6E8
+void func_8006B6E8(s_CollisionQuery* query, s_IpdShapeAlloc* shapeAlloc) // 0x8006B6E8
 {
     s32                       surfaceCacheIdx;
     s32                       surfaceIdx0;
@@ -1179,10 +1179,10 @@ void func_8006B6E8(s_CollisionQuery* state, s_IpdShapeAlloc* shapeAlloc) // 0x80
     bool                      disableSurfaceHeight1;
     s_CollisionCachedSurface* cachedSurface;
 
-    surfaceIdx0           = state->point.shapeAttribs.polygon.surfaceIdx0;
-    surfaceIdx1           = state->point.shapeAttribs.polygon.surfaceIdx1;
-    disableSurfaceHeight0 = state->point.shapeAttribs.polygon.disableSurfaceHeight0;
-    disableSurfaceHeight1 = state->point.shapeAttribs.polygon.disableSurfaceHeight1;
+    surfaceIdx0           = query->point.shapeAttribs.polygon.surfaceIdx0;
+    surfaceIdx1           = query->point.shapeAttribs.polygon.surfaceIdx1;
+    disableSurfaceHeight0 = query->point.shapeAttribs.polygon.disableSurfaceHeight0;
+    disableSurfaceHeight1 = query->point.shapeAttribs.polygon.disableSurfaceHeight1;
 
     if (surfaceIdx0 == UCHAR_MAX)
     {
@@ -1191,11 +1191,11 @@ void func_8006B6E8(s_CollisionQuery* state, s_IpdShapeAlloc* shapeAlloc) // 0x80
             return;
         }
 
-        surfaceCacheIdx = state->point.shapeAttribs.polygon.surfaceCacheIdx1;
+        surfaceCacheIdx = query->point.shapeAttribs.polygon.surfaceCacheIdx1;
     }
     else
     {
-        surfaceCacheIdx = state->point.shapeAttribs.polygon.surfaceCacheIdx0;
+        surfaceCacheIdx = query->point.shapeAttribs.polygon.surfaceCacheIdx0;
     }
 
     /* Will - 1: checks if the value at whatever the struct is `temp_s0`
@@ -1203,24 +1203,24 @@ void func_8006B6E8(s_CollisionQuery* state, s_IpdShapeAlloc* shapeAlloc) // 0x80
        is 0 or not, need to mention that this value is defined by default as `-1`
        in `Collision_CellInit` so any other value means that the values where defined
        already, but if `s_CollisionCachedSurface::field_0` is not zero then it checks
-       if the value stored in `state->point.charaDeltas.field_8` is
+       if the value stored in `query->point.charaDeltas.field_8` is
        defined with any value other than 0, if not then it comes back here and continues
        if it is then it proceed to do some other checks that will return true.
        
        Likely if any of those cases fails the check then it will redefine whatever
        is supposed to be stored there.
     */
-    cachedSurface = &state->context.shape.surfaceCache[surfaceCacheIdx];
-    if (!func_8006B7E0(cachedSurface, &state->point.charaDeltas))
+    cachedSurface = &query->context.shape.surfaceCache[surfaceCacheIdx];
+    if (!func_8006B7E0(cachedSurface, &query->point.charaDeltas))
     {
         return;
     }
 
-    cachedSurface->subChunkTransDir   = state->point.charaDeltas.subChunkTransDir;
-    cachedSurface->radiusCollDiffDist = state->point.charaDeltas.radiusCollDiffDist;
-    cachedSurface->collDiffDist       = state->point.charaDeltas.collDiffDist;
+    cachedSurface->subChunkTransDir   = query->point.charaDeltas.subChunkTransDir;
+    cachedSurface->radiusCollDiffDist = query->point.charaDeltas.radiusCollDiffDist;
+    cachedSurface->collDiffDist       = query->point.charaDeltas.collDiffDist;
 
-    if (state->point.charaDeltas.charaVertDiff.vz >= Q8(0.0f))
+    if (query->point.charaDeltas.charaVertDiff.vz >= Q8(0.0f))
     {
         if (disableSurfaceHeight0 == true)
         {
@@ -1346,76 +1346,76 @@ void func_8006B8F8(s_CollisionShapePoint* cellPoint) // 0x8006B8F8
     ptr->charaMoveVertDiff.vx = (cellPoint->offset.vz - ptr->charaMoveVertDiff.vx);
 }
 
-void func_8006B9C8(s_CollisionQuery* state) // 0x8006B9C8
+void func_8006B9C8(s_CollisionQuery* query) // 0x8006B9C8
 {
     q23_8 charaRadius;
 
-    if (state->point.shapeAttribs.polygon.surfaceIdx1 == UCHAR_MAX &&
-        state->point.charaDeltas.charaVertDiff.vz < Q8(0.0f) &&
-        (state->charaState.bottom >= state->point.shapeAttribs.polygon.polygonSplitVertex0.vy ||
-         state->charaState.bottom >= state->point.shapeAttribs.polygon.polygonSplitVertex1.vy))
+    if (query->point.shapeAttribs.polygon.surfaceIdx1 == UCHAR_MAX &&
+        query->point.charaDeltas.charaVertDiff.vz < Q8(0.0f) &&
+        (query->charaState.bottom >= query->point.shapeAttribs.polygon.polygonSplitVertex0.vy ||
+         query->charaState.bottom >= query->point.shapeAttribs.polygon.polygonSplitVertex1.vy))
     {
-        if (state->enablePush && state->point.charaDeltas.radiusCollDiffDist < state->charaState.radius)
+        if (query->enablePush && query->point.charaDeltas.radiusCollDiffDist < query->charaState.radius)
         {
-            func_8006BB50(state, CollisionPushType_Hard);
+            func_8006BB50(query, CollisionPushType_Hard);
             return;
         }
 
-        charaRadius = state->charaState.radius;
-        if (state->enablePush && state->point.charaDeltas.radiusCollDiffDist < (charaRadius + PROXIMITY_BUFFER))
+        charaRadius = query->charaState.radius;
+        if (query->enablePush && query->point.charaDeltas.radiusCollDiffDist < (charaRadius + PROXIMITY_BUFFER))
         {
-            func_8006BB50(state, CollisionPushType_Soft);
+            func_8006BB50(query, CollisionPushType_Soft);
         }
 
-        if (state->isCharaMoving)
+        if (query->isCharaMoving)
         {
-            if (!state->obstacleContext.hardPushConstraint.shapeCount &&
-                (-charaRadius < state->point.charaDeltas.charaVertDiff.vz ||
-                 -charaRadius < state->point.charaDeltas.charaMoveVertDiff.vz) &&
-                (-charaRadius < state->point.charaDeltas.charaVertDiff.vx ||
-                 -charaRadius < state->point.charaDeltas.charaMoveVertDiff.vx) &&
-                (state->point.charaDeltas.charaVertDiff.vx     < (charaRadius + state->point.offset.vz) ||
-                 state->point.charaDeltas.charaMoveVertDiff.vx < (charaRadius + state->point.offset.vz)))
+            if (!query->obstacleContext.hardPushConstraint.shapeCount &&
+                (-charaRadius < query->point.charaDeltas.charaVertDiff.vz ||
+                 -charaRadius < query->point.charaDeltas.charaMoveVertDiff.vz) &&
+                (-charaRadius < query->point.charaDeltas.charaVertDiff.vx ||
+                 -charaRadius < query->point.charaDeltas.charaMoveVertDiff.vx) &&
+                (query->point.charaDeltas.charaVertDiff.vx     < (charaRadius + query->point.offset.vz) ||
+                 query->point.charaDeltas.charaMoveVertDiff.vx < (charaRadius + query->point.offset.vz)))
             {
-                func_8006BE40(state);
+                func_8006BE40(query);
             }
         }
     }
 }
 
-void func_8006BB50(s_CollisionQuery* state, s32 pushType) // 0x8006BB50
+void func_8006BB50(s_CollisionQuery* query, s32 pushType) // 0x8006BB50
 {
     q23_8 charaCollDistX;
     q23_8 charaCollDistZ;
     q7_8  temp2;
 
-    if (func_8006BC34(state) < Q8(0.0f))
+    if (func_8006BC34(query) < Q8(0.0f))
     {
         return;
     }
 
-    if (state->point.charaDeltas.charaVertDiff.vx < Q8(0.0f))
+    if (query->point.charaDeltas.charaVertDiff.vx < Q8(0.0f))
     {
-        charaCollDistX = state->chunkOffsetFrom.offset.vx - state->point.shapeAttribs.polygon.polygonSplitVertex0.vx;
-        charaCollDistZ = state->chunkOffsetFrom.offset.vz - state->point.shapeAttribs.polygon.polygonSplitVertex0.vz;
+        charaCollDistX = query->chunkOffsetFrom.offset.vx - query->point.shapeAttribs.polygon.polygonSplitVertex0.vx;
+        charaCollDistZ = query->chunkOffsetFrom.offset.vz - query->point.shapeAttribs.polygon.polygonSplitVertex0.vz;
     }
-    else if (state->point.offset.vz < state->point.charaDeltas.charaVertDiff.vx)
+    else if (query->point.offset.vz < query->point.charaDeltas.charaVertDiff.vx)
     {
-        charaCollDistX = state->chunkOffsetFrom.offset.vx - state->point.shapeAttribs.polygon.polygonSplitVertex1.vx;
-        charaCollDistZ = state->chunkOffsetFrom.offset.vz - state->point.shapeAttribs.polygon.polygonSplitVertex1.vz;
+        charaCollDistX = query->chunkOffsetFrom.offset.vx - query->point.shapeAttribs.polygon.polygonSplitVertex1.vx;
+        charaCollDistZ = query->chunkOffsetFrom.offset.vz - query->point.shapeAttribs.polygon.polygonSplitVertex1.vz;
     }
     else
     {
-        charaCollDistX =  state->point.offset.vy;
-        charaCollDistZ = -state->point.offset.vx;
+        charaCollDistX =  query->point.offset.vy;
+        charaCollDistZ = -query->point.offset.vx;
     }
 
-    temp2 = state->charaState.radius - state->point.charaDeltas.radiusCollDiffDist;
-    func_8006BCC4(&state->obstacleContext, &state->point.ipdCollisionData->shapePassStampBuffer[state->point.shapeIdx],
+    temp2 = query->charaState.radius - query->point.charaDeltas.radiusCollDiffDist;
+    func_8006BCC4(&query->obstacleContext, &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx],
                   pushType, charaCollDistX, charaCollDistZ, temp2);
 }
 
-q23_8 func_8006BC34(s_CollisionQuery* state)
+q23_8 func_8006BC34(s_CollisionQuery* query)
 {
     q7_8 someZ;
     q7_8 height0;
@@ -1424,23 +1424,23 @@ q23_8 func_8006BC34(s_CollisionQuery* state)
     q7_8 height2;
     q7_8 floorHeight; // Unsure.
 
-    someX = state->point.charaDeltas.charaVertDiff.vx;
+    someX = query->point.charaDeltas.charaVertDiff.vx;
     if (someX < Q8(0.0f))
     {
-        floorHeight = state->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
+        floorHeight = query->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
     }
     else
     {
-        someZ = state->point.offset.vz;
+        someZ = query->point.offset.vz;
         if (someZ < someX)
         {
-            floorHeight = state->point.shapeAttribs.polygon.polygonSplitVertex1.vy;
+            floorHeight = query->point.shapeAttribs.polygon.polygonSplitVertex1.vy;
         }
         else
         {
-            height0 = state->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
-            height1 = state->point.shapeAttribs.polygon.polygonSplitVertex1.vy;
-            height2 = state->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
+            height0 = query->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
+            height1 = query->point.shapeAttribs.polygon.polygonSplitVertex1.vy;
+            height2 = query->point.shapeAttribs.polygon.polygonSplitVertex0.vy;
 
             if (height0 == height1)
             {
@@ -1453,7 +1453,7 @@ q23_8 func_8006BC34(s_CollisionQuery* state)
         }
     }
 
-    return state->charaState.bottom - floorHeight;
+    return query->charaState.bottom - floorHeight;
 }
 
 void func_8006BCC4(s_CollisionObstacleContext* obstacleContext, u8* passStamp,
@@ -1514,7 +1514,7 @@ void Collision_PushConstraintShapeAdd(s_CollisionPushConstraint* pushConstraint,
     Vw_ClampAngleRange(&pushConstraint->angleMin, &pushConstraint->angleMax, angleConstraintMin, angleConstraintMax);
 }
 
-void func_8006BE40(s_CollisionQuery* state) // 0x8006BE40
+void func_8006BE40(s_CollisionQuery* query) // 0x8006BE40
 {
     q23_8  negRadius;
     q23_8  unkDist;
@@ -1523,16 +1523,16 @@ void func_8006BE40(s_CollisionQuery* state) // 0x8006BE40
     q19_12 dist;
 
     distAlpha = Q12(0.0f);
-    negRadius = -(state->charaState.radius);
+    negRadius = -(query->charaState.radius);
     unkDist   = Q8(0.0f);
 
-    if (state->point.charaDeltas.charaVertDiff.vz >= negRadius)
+    if (query->point.charaDeltas.charaVertDiff.vz >= negRadius)
     {
-        if (state->point.charaDeltas.charaVertDiff.vx >= Q8(0.0f))
+        if (query->point.charaDeltas.charaVertDiff.vx >= Q8(0.0f))
         {
-            if (state->point.offset.vz >= state->point.charaDeltas.charaVertDiff.vx)
+            if (query->point.offset.vz >= query->point.charaDeltas.charaVertDiff.vx)
             {
-                unkDist = state->point.charaDeltas.charaVertDiff.vx;
+                unkDist = query->point.charaDeltas.charaVertDiff.vx;
                 unkSwitchType = 2;
             }
             else
@@ -1547,29 +1547,29 @@ void func_8006BE40(s_CollisionQuery* state) // 0x8006BE40
     }
     else
     {
-        if (state->point.charaDeltas.charaMoveOffset.vz == 0)
+        if (query->point.charaDeltas.charaMoveOffset.vz == 0)
         {
-            if (state->point.charaDeltas.charaVertDiff.vx > 0 &&
-                state->point.charaDeltas.charaVertDiff.vx < state->point.offset.vz)
+            if (query->point.charaDeltas.charaVertDiff.vx > 0 &&
+                query->point.charaDeltas.charaVertDiff.vx < query->point.offset.vz)
             {
                 distAlpha = Q12(0.0f);
-                unkDist = state->point.charaDeltas.charaVertDiff.vx;
+                unkDist = query->point.charaDeltas.charaVertDiff.vx;
             }
         }
         else
         {
-            distAlpha = FP_TO(negRadius - state->point.charaDeltas.charaVertDiff.vz, Q12_SHIFT) /
-                        state->point.charaDeltas.charaMoveOffset.vz;
-            dist      = state->point.charaDeltas.charaMoveOffset.vx * distAlpha;
+            distAlpha = FP_TO(negRadius - query->point.charaDeltas.charaVertDiff.vz, Q12_SHIFT) /
+                        query->point.charaDeltas.charaMoveOffset.vz;
+            dist      = query->point.charaDeltas.charaMoveOffset.vx * distAlpha;
             dist      = FP_FROM(dist, Q12_SHIFT);
-            unkDist   = dist + state->point.charaDeltas.charaVertDiff.vx;
+            unkDist   = dist + query->point.charaDeltas.charaVertDiff.vx;
         }
 
         if (unkDist < Q8(0.0F))
         {
             unkSwitchType = 0;
         }
-        else if (state->point.offset.vz < unkDist)
+        else if (query->point.offset.vz < unkDist)
         {
             unkSwitchType = 1;
         }
@@ -1582,71 +1582,70 @@ void func_8006BE40(s_CollisionQuery* state) // 0x8006BE40
     switch (unkSwitchType)
     {
         case 0: // Vertex 0.
-            func_8006BF88(state, &state->point.shapeAttribs.polygon.polygonSplitVertex0);
+            func_8006BF88(query, &query->point.shapeAttribs.polygon.polygonSplitVertex0);
             break;
 
         case 1: // Vertex 1.
-            func_8006BF88(state, &state->point.shapeAttribs.polygon.polygonSplitVertex1);
+            func_8006BF88(query, &query->point.shapeAttribs.polygon.polygonSplitVertex1);
             break;
 
         case 2: // Non-split?
-            func_8006C0C8(state, distAlpha, unkDist);
+            func_8006C0C8(query, distAlpha, unkDist);
             break;
     }
 }
 
-void func_8006BF88(s_CollisionQuery* state, const SVECTOR3* splitVert) // 0x8006BF88
+void func_8006BF88(s_CollisionQuery* query, const SVECTOR3* splitVert) // 0x8006BF88
 {
     q3_12 hitAlpha;
     s32   temp2;
     s32   temp3;
 
     // TODO: Can actual struct be passed?
-    hitAlpha = func_8006C248(*(s32*)&state->charaState.moveDirection, state->charaState.moveDistance,
-                             splitVert->vx - state->chunkOffsetFrom.offset.vx,
-                             splitVert->vz - state->chunkOffsetFrom.offset.vz,
-                             state->charaState.radius);
-    if (hitAlpha != NO_VALUE && func_8006C1B8(2, hitAlpha, state) && state->charaState.bottom > splitVert->vy)
+    hitAlpha = func_8006C248(*(s32*)&query->charaState.moveDirection, query->charaState.moveDistance,
+                             splitVert->vx - query->chunkOffsetFrom.offset.vx,
+                             splitVert->vz - query->chunkOffsetFrom.offset.vz,
+                             query->charaState.radius);
+    if (hitAlpha != NO_VALUE && func_8006C1B8(2, hitAlpha, query) && query->charaState.bottom > splitVert->vy)
     {
-        state->hitAlpha  = hitAlpha;
-        state->field_34  = CollisionContactType_2;
-        temp2            = state->chunkOffsetFrom.offset.vx + Q12_MULT(state->charaState.moveOffset.vx, hitAlpha);
-        state->hitDistance  = Q12_TO_Q4(state->charaState.moveDistance * hitAlpha);
-        state->passStamp = &state->point.ipdCollisionData->shapePassStampBuffer[state->point.shapeIdx];
-
-        state->field_3C = temp2 - splitVert->vx;
-        temp3           = state->chunkOffsetFrom.offset.vz + Q12_MULT(state->charaState.moveOffset.vz, hitAlpha);
-        state->field_3E = temp3 - splitVert->vz;
+        query->hitAlpha    = hitAlpha;
+        query->contactType = CollisionContactType_2;
+        temp2              = query->chunkOffsetFrom.offset.vx + Q12_MULT(query->charaState.moveOffset.vx, hitAlpha);
+        query->hitDistance = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+        query->passStamp   = &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx];
+        query->hitOffsetX  = temp2 - splitVert->vx;
+        temp3              = query->chunkOffsetFrom.offset.vz + Q12_MULT(query->charaState.moveOffset.vz, hitAlpha);
+        query->hitOffsetZ  = temp3 - splitVert->vz;
     }
 }
 
-void func_8006C0C8(s_CollisionQuery* state, q3_12 hitAlpha, q7_8 arg2) // 0x8006C0C8
+void func_8006C0C8(s_CollisionQuery* query, q3_12 hitAlpha, q7_8 arg2) // 0x8006C0C8
 {
     q23_8 temp;
 
-    if (!func_8006C1B8(1, hitAlpha, state) || state->point.charaDeltas.charaMoveOffset.vz < 0)
+    if (!func_8006C1B8(1, hitAlpha, query) || query->point.charaDeltas.charaMoveOffset.vz < 0)
     {
         return;
     }
 
-    temp = ((state->point.shapeAttribs.polygon.polygonSplitVertex1.vy -
-             state->point.shapeAttribs.polygon.polygonSplitVertex0.vy) * arg2) / state->point.offset.vz;
-    if (temp + state->point.shapeAttribs.polygon.polygonSplitVertex0.vy < state->charaState.bottom)
+    temp = ((query->point.shapeAttribs.polygon.polygonSplitVertex1.vy -
+             query->point.shapeAttribs.polygon.polygonSplitVertex0.vy) * arg2) / query->point.offset.vz;
+    if (temp + query->point.shapeAttribs.polygon.polygonSplitVertex0.vy < query->charaState.bottom)
     {
-        state->passStamp = &state->point.ipdCollisionData->shapePassStampBuffer[state->point.shapeIdx];
-        state->field_34  = CollisionContactType_1;
-        state->hitAlpha  = hitAlpha;
-        state->hitDistance  = Q12_TO_Q4(state->charaState.moveDistance * hitAlpha);
-        state->field_3C  = state->point.offset.vy;
-        state->field_3E  = -state->point.offset.vx;
+        query->passStamp   = &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx];
+        query->contactType = CollisionContactType_1;
+        query->hitAlpha    = hitAlpha;
+        query->hitDistance = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+        query->hitOffsetX  = query->point.offset.vy;
+        query->hitOffsetZ  = -query->point.offset.vx;
     }
 }
 
-bool func_8006C1B8(u32 contactType, q3_12 hitAlpha, s_CollisionQuery* state) // 0x8006C1B8
+bool func_8006C1B8(u32 contactType, q3_12 hitAlpha, s_CollisionQuery* query) // 0x8006C1B8
 {
     q27_4 hitDist;
 
-    hitDist = Q12_TO_Q4(state->charaState.moveDistance * hitAlpha);
+    hitDist = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
     switch (contactType)
     {
         default:
@@ -1654,9 +1653,9 @@ bool func_8006C1B8(u32 contactType, q3_12 hitAlpha, s_CollisionQuery* state) // 
             return false;
 
         case CollisionContactType_2:
-            if (state->field_34 != CollisionContactType_1)
+            if (query->contactType != CollisionContactType_1)
             {
-                if (state->field_34 == CollisionContactType_None)
+                if (query->contactType == CollisionContactType_None)
                 {
                    return true;
                 }
@@ -1668,11 +1667,11 @@ bool func_8006C1B8(u32 contactType, q3_12 hitAlpha, s_CollisionQuery* state) // 
             break;
 
         case CollisionContactType_1:
-            if (state->field_34 != contactType)
+            if (query->contactType != contactType)
             {
-                if (state->field_34 != CollisionContactType_None)
+                if (query->contactType != CollisionContactType_None)
                 {
-                    if (state->field_34 == CollisionContactType_2)
+                    if (query->contactType == CollisionContactType_2)
                     {
                         hitDist -= Q4(6.0f);
                     }
@@ -1685,7 +1684,7 @@ bool func_8006C1B8(u32 contactType, q3_12 hitAlpha, s_CollisionQuery* state) // 
             break;
     }
 
-    return hitDist < state->hitDistance;
+    return hitDist < query->hitDistance;
 }
 
 q3_12 func_8006C248(s32 packedDir, q3_12 moveDist, q3_12 deltaX, q7_8 deltaZ, q7_8 radius) // 0x8006C248
@@ -1740,28 +1739,28 @@ q3_12 func_8006C248(s32 packedDir, q3_12 moveDist, q3_12 deltaX, q7_8 deltaZ, q7
     return alpha;
 }
 
-bool func_8006C3D4(s_CollisionQuery* state, s_IpdCollisionData* collData, s32 shapeIdx) // 0x8006C3D4
+bool func_8006C3D4(s_CollisionQuery* query, s_IpdCollisionData* collData, s32 shapeIdx) // 0x8006C3D4
 {
     s_IpdCylinder* cylinder;
 
-    state->point.ipdCollisionData = collData;
-    state->point.shapeIdx         = shapeIdx;
+    query->point.ipdCollisionData = collData;
+    query->point.shapeIdx         = shapeIdx;
     cylinder                      = &collData->cylinders[shapeIdx - collData->polygonCount];
 
-    if (CHECK_FLAG_IDX(state->triggerFlags, cylinder->triggerFlagIdx, false))
+    if (CHECK_FLAG_IDX(query->triggerFlags, cylinder->triggerFlagIdx, false))
     {
         return false;
     }
 
-    state->point.disableHeight                = cylinder->disableHeight;
-    state->point.offset.vx                    = cylinder->offset.vx;
-    state->point.offset.vy                    = cylinder->offset.vy;
-    state->point.offset.vz                    = cylinder->offset.vz;
-    state->point.shapeAttribs.cylinder.radius = cylinder->radius;
+    query->point.disableHeight                = cylinder->disableHeight;
+    query->point.offset.vx                    = cylinder->offset.vx;
+    query->point.offset.vy                    = cylinder->offset.vy;
+    query->point.offset.vz                    = cylinder->offset.vz;
+    query->point.shapeAttribs.cylinder.radius = cylinder->radius;
     return true;
 }
 
-void func_8006C45C(s_CollisionQuery* state) // 0x8006C45C
+void func_8006C45C(s_CollisionQuery* query) // 0x8006C45C
 {
     q7_8  distMax;
     q7_8  dist;
@@ -1772,68 +1771,68 @@ void func_8006C45C(s_CollisionQuery* state) // 0x8006C45C
     s32   temp;
     s32   temp2;
 
-    distMax = state->charaState.radius + state->point.shapeAttribs.cylinder.radius;
+    distMax = query->charaState.radius + query->point.shapeAttribs.cylinder.radius;
     bound   = distMax + PROXIMITY_BUFFER;
 
-    if (state->chunkOffsetFrom.offset.vx < (state->point.offset.vx - bound) &&
-        state->chunkOffsetTo.offset.vx   < (state->point.offset.vx - bound))
+    if (query->chunkOffsetFrom.offset.vx < (query->point.offset.vx - bound) &&
+        query->chunkOffsetTo.offset.vx   < (query->point.offset.vx - bound))
     {
         return;
     }
 
-    if ((state->point.offset.vx + bound) < state->chunkOffsetFrom.offset.vx &&
-        (state->point.offset.vx + bound) < state->chunkOffsetTo.offset.vx)
+    if ((query->point.offset.vx + bound) < query->chunkOffsetFrom.offset.vx &&
+        (query->point.offset.vx + bound) < query->chunkOffsetTo.offset.vx)
     {
         return;
     }
 
-    if (state->chunkOffsetFrom.offset.vz < (state->point.offset.vz - bound) &&
-        state->chunkOffsetTo.offset.vz   < (state->point.offset.vz - bound))
+    if (query->chunkOffsetFrom.offset.vz < (query->point.offset.vz - bound) &&
+        query->chunkOffsetTo.offset.vz   < (query->point.offset.vz - bound))
     {
         return;
     }
 
-    if ((state->point.offset.vz + bound) < state->chunkOffsetFrom.offset.vz &&
-        (state->point.offset.vz + bound) < state->chunkOffsetTo.offset.vz)
+    if ((query->point.offset.vz + bound) < query->chunkOffsetFrom.offset.vz &&
+        (query->point.offset.vz + bound) < query->chunkOffsetTo.offset.vz)
     {
         return;
     }
 
-    distX = state->chunkOffsetFrom.offset.vx - state->point.offset.vx;
-    distZ = state->chunkOffsetFrom.offset.vz - state->point.offset.vz;
+    distX = query->chunkOffsetFrom.offset.vx - query->point.offset.vx;
+    distZ = query->chunkOffsetFrom.offset.vz - query->point.offset.vz;
     dist  = Math_Vector2MagCalc(distX, distZ);
 
-    if (dist < state->point.shapeAttribs.cylinder.radius && state->point.disableHeight != true &&
-        (state->shapeIdx == UCHAR_MAX || state->point.offset.vy < state->floorHeight))
+    if (dist < query->point.shapeAttribs.cylinder.radius && query->point.disableHeight != true &&
+        (query->shapeIdx == UCHAR_MAX || query->point.offset.vy < query->floorHeight))
     {
-        state->shapeIdx    = state->point.shapeIdx;
-        state->floorHeight = state->point.offset.vy;
+        query->shapeIdx    = query->point.shapeIdx;
+        query->floorHeight = query->point.offset.vy;
     }
 
-    if ((!state->isCharaMoving && !state->enablePush) || dist < state->point.shapeAttribs.cylinder.radius)
-    {
-        return;
-    }
-
-    if (dist < distMax && state->enablePush)
-    {
-        func_8006C794(state, CollisionPushType_Hard, dist);
-        return;
-    }
-
-    if (dist < (distMax + PROXIMITY_BUFFER) && state->enablePush)
-    {
-        func_8006C794(state, CollisionPushType_Soft, dist);
-    }
-
-    if (!state->isCharaMoving || state->obstacleContext.hardPushConstraint.shapeCount)
+    if ((!query->isCharaMoving && !query->enablePush) || dist < query->point.shapeAttribs.cylinder.radius)
     {
         return;
     }
 
-    hitAlpha = func_8006C248(*(s32*)&state->charaState.moveDirection, state->charaState.moveDistance,
-                              state->point.offset.vx - state->chunkOffsetFrom.offset.vx,
-                              state->point.offset.vz - state->chunkOffsetFrom.offset.vz,
+    if (dist < distMax && query->enablePush)
+    {
+        func_8006C794(query, CollisionPushType_Hard, dist);
+        return;
+    }
+
+    if (dist < (distMax + PROXIMITY_BUFFER) && query->enablePush)
+    {
+        func_8006C794(query, CollisionPushType_Soft, dist);
+    }
+
+    if (!query->isCharaMoving || query->obstacleContext.hardPushConstraint.shapeCount)
+    {
+        return;
+    }
+
+    hitAlpha = func_8006C248(*(s32*)&query->charaState.moveDirection, query->charaState.moveDistance,
+                              query->point.offset.vx - query->chunkOffsetFrom.offset.vx,
+                              query->point.offset.vz - query->chunkOffsetFrom.offset.vz,
                               distMax);
 
     if (hitAlpha == NO_VALUE)
@@ -1846,59 +1845,59 @@ void func_8006C45C(s_CollisionQuery* state) // 0x8006C45C
         hitAlpha = Q12(0.0f);
     }
 
-    if (func_8006C1B8(1, hitAlpha, state) && state->charaState.bottom >= state->point.offset.vy)
+    if (func_8006C1B8(1, hitAlpha, query) && query->charaState.bottom >= query->point.offset.vy)
     {
-        state->hitAlpha  = hitAlpha;
-        state->field_34  = CollisionContactType_1;
-        temp             = state->chunkOffsetFrom.offset.vx + Q12_MULT(state->charaState.moveOffset.vx, hitAlpha);
-        state->hitDistance  = Q12_TO_Q4(state->charaState.moveDistance * hitAlpha);
-        state->passStamp = &state->point.ipdCollisionData->shapePassStampBuffer[state->point.shapeIdx];
-        state->field_3C  = temp - state->point.offset.vx;
-        temp2            = state->chunkOffsetFrom.offset.vz + Q12_MULT(state->charaState.moveOffset.vz, hitAlpha);
-        state->field_3E  = temp2 - state->point.offset.vz;
+        query->hitAlpha    = hitAlpha;
+        query->contactType = CollisionContactType_1;
+        temp               = query->chunkOffsetFrom.offset.vx + Q12_MULT(query->charaState.moveOffset.vx, hitAlpha);
+        query->hitDistance = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+        query->passStamp   = &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx];
+        query->hitOffsetX  = temp - query->point.offset.vx;
+        temp2              = query->chunkOffsetFrom.offset.vz + Q12_MULT(query->charaState.moveOffset.vz, hitAlpha);
+        query->hitOffsetZ  = temp2 - query->point.offset.vz;
     }
 }
 
-void func_8006C794(s_CollisionQuery* state, s32 pushType, q23_8 dist) // 0x8006C794
+void func_8006C794(s_CollisionQuery* query, s32 pushType, q23_8 dist) // 0x8006C794
 {
-    if (state->charaState.bottom >= (state->point.offset.vy + (dist - state->point.shapeAttribs.cylinder.radius)))
+    if (query->charaState.bottom >= (query->point.offset.vy + (dist - query->point.shapeAttribs.cylinder.radius)))
     {
-        func_8006BCC4(&state->obstacleContext,
-                      &state->point.ipdCollisionData->shapePassStampBuffer[state->point.shapeIdx],
+        func_8006BCC4(&query->obstacleContext,
+                      &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx],
                       pushType,
-                      state->chunkOffsetFrom.offset.vx - state->point.offset.vx,
-                      state->chunkOffsetFrom.offset.vz - state->point.offset.vz,
-                      (state->charaState.radius + state->point.shapeAttribs.cylinder.radius) - dist);
+                      query->chunkOffsetFrom.offset.vx - query->point.offset.vx,
+                      query->chunkOffsetFrom.offset.vz - query->point.offset.vz,
+                      (query->charaState.radius + query->point.shapeAttribs.cylinder.radius) - dist);
     }
 }
 
-void func_8006C838(s_CollisionQuery* state, s_IpdCollisionData* collData) // 0x8006C838
+void func_8006C838(s_CollisionQuery* query, s_IpdCollisionData* collData) // 0x8006C838
 {
     q19_12                    slopedFloorHeight;
     s_CollisionCachedSurface* curCachedSurface;
     s_IpdSurface*             curSurface;
     s_IpdCylinder*            cylinder;
 
-    if (state->context.shape.shapeAlloc == NULL)
+    if (query->context.shape.shapeAlloc == NULL)
     {
         return;
     }
 
-    if (state->shapeIdx != UCHAR_MAX && state->floorHeight < state->slopedFloorHeight)
+    if (query->shapeIdx != UCHAR_MAX && query->floorHeight < query->slopedFloorHeight)
     {
-        cylinder                 = &collData->cylinders[state->shapeIdx - collData->polygonCount];
-        state->slopedFloorHeight = state->floorHeight;
-        state->positionX         = state->chunkOffsetFrom.offset.vx + collData->positionX;
-        state->positionZ         = state->chunkOffsetFrom.offset.vz + collData->positionZ;
-        state->slopeGradientX    = Q8(0.0f);
-        state->slopeGradientZ    = Q8(0.0f);
-        state->disableHeight     = cylinder->disableHeight;
-        state->floorType         = cylinder->floorType;
+        cylinder                 = &collData->cylinders[query->shapeIdx - collData->polygonCount];
+        query->slopedFloorHeight = query->floorHeight;
+        query->positionX         = query->chunkOffsetFrom.offset.vx + collData->positionX;
+        query->positionZ         = query->chunkOffsetFrom.offset.vz + collData->positionZ;
+        query->slopeGradientX    = Q8(0.0f);
+        query->slopeGradientZ    = Q8(0.0f);
+        query->disableHeight     = cylinder->disableHeight;
+        query->floorType         = cylinder->floorType;
     }
 
     // Run through cached surfaces.
-    for (curCachedSurface = &state->context.shape.surfaceCache[0];
-         curCachedSurface < &state->context.shape.surfaceCache[4];
+    for (curCachedSurface = &query->context.shape.surfaceCache[0];
+         curCachedSurface < &query->context.shape.surfaceCache[4];
          curCachedSurface++)
     {
         if (curCachedSurface->surfaceIdx != UCHAR_MAX)
@@ -1910,29 +1909,29 @@ void func_8006C838(s_CollisionQuery* state, s_IpdCollisionData* collData) // 0x8
             if (curSurface->slopeGradientX != Q8(0.0f))
             {
                 slopedFloorHeight += Q12_MULT(curSurface->slopeGradientX,
-                                              state->chunkOffsetFrom.offset.vx - curSurface->offset.vx);
+                                              query->chunkOffsetFrom.offset.vx - curSurface->offset.vx);
             }
             if (curSurface->slopeGradientZ != Q8(0.0f))
             {
                 slopedFloorHeight += Q12_MULT(curSurface->slopeGradientZ,
-                                              state->chunkOffsetFrom.offset.vz - curSurface->offset.vz);
+                                              query->chunkOffsetFrom.offset.vz - curSurface->offset.vz);
             }
 
-            if (slopedFloorHeight < state->slopedFloorHeight)
+            if (slopedFloorHeight < query->slopedFloorHeight)
             {
-                state->slopedFloorHeight = slopedFloorHeight;
-                state->positionX         = state->chunkOffsetFrom.offset.vx + collData->positionX;
-                state->positionZ         = state->chunkOffsetFrom.offset.vz + collData->positionZ;
-                state->slopeGradientX    = curSurface->slopeGradientX;
-                state->slopeGradientZ    = curSurface->slopeGradientZ;
-                state->disableHeight     = curSurface->disableHeight;
-                state->floorType         = curSurface->floorType;
+                query->slopedFloorHeight = slopedFloorHeight;
+                query->positionX         = query->chunkOffsetFrom.offset.vx + collData->positionX;
+                query->positionZ         = query->chunkOffsetFrom.offset.vz + collData->positionZ;
+                query->slopeGradientX    = curSurface->slopeGradientX;
+                query->slopeGradientZ    = curSurface->slopeGradientZ;
+                query->disableHeight     = curSurface->disableHeight;
+                query->floorType         = curSurface->floorType;
             }
         }
     }
 }
 
-void func_8006CA18(s_CollisionQuery* state, s_IpdCollisionData* collData, s_IpdShapeAlloc* shapeAlloc) // 0x8006CA18
+void func_8006CA18(s_CollisionQuery* query, s_IpdCollisionData* collData, s_IpdShapeAlloc* shapeAlloc) // 0x8006CA18
 {
     s32           surfaceLutStartIdx;
     s32           surfaceLutEndIdx;
@@ -1956,7 +1955,7 @@ void func_8006CA18(s_CollisionQuery* state, s_IpdCollisionData* collData, s_IpdS
     {
         // Check if surface is collidable.
         curSurface = &collData->polygonSurfaces[*curSurfaceIdx];
-        if (CHECK_FLAG_IDX(state->triggerFlags, curSurface->triggerFlagIdx, false) ||
+        if (CHECK_FLAG_IDX(query->triggerFlags, curSurface->triggerFlagIdx, false) ||
             curSurface->disableHeight == true)
         {
             continue;
@@ -1966,59 +1965,59 @@ void func_8006CA18(s_CollisionQuery* state, s_IpdCollisionData* collData, s_IpdS
         slopedFloorHeight = curSurface->offset.vy;
         if (curSurface->slopeGradientX != Q8(0.0f))
         {
-            slopedFloorHeight += Q12_MULT(curSurface->slopeGradientX, state->chunkOffsetFrom.offset.vx - curSurface->offset.vx);
+            slopedFloorHeight += Q12_MULT(curSurface->slopeGradientX, query->chunkOffsetFrom.offset.vx - curSurface->offset.vx);
         }
         if (curSurface->slopeGradientZ != Q8(0.0f))
         {
-            slopedFloorHeight += Q12_MULT(curSurface->slopeGradientZ, state->chunkOffsetFrom.offset.vz - curSurface->offset.vz);
+            slopedFloorHeight += Q12_MULT(curSurface->slopeGradientZ, query->chunkOffsetFrom.offset.vz - curSurface->offset.vz);
         }
 
-        if (slopedFloorHeight < state->slopedFloorHeight)
+        if (slopedFloorHeight < query->slopedFloorHeight)
         {
-            state->slopedFloorHeight = slopedFloorHeight;
-            state->positionX  = state->chunkOffsetFrom.offset.vx + collData->positionX;
-            state->positionZ  = state->chunkOffsetFrom.offset.vz + collData->positionZ;
-            state->slopeGradientX    = curSurface->slopeGradientX;
-            state->slopeGradientZ    = curSurface->slopeGradientZ;
-            state->disableHeight     = curSurface->disableHeight;
-            state->floorType         = curSurface->floorType;
+            query->slopedFloorHeight = slopedFloorHeight;
+            query->positionX  = query->chunkOffsetFrom.offset.vx + collData->positionX;
+            query->positionZ  = query->chunkOffsetFrom.offset.vz + collData->positionZ;
+            query->slopeGradientX    = curSurface->slopeGradientX;
+            query->slopeGradientZ    = curSurface->slopeGradientZ;
+            query->disableHeight     = curSurface->disableHeight;
+            query->floorType         = curSurface->floorType;
         }
     }
 }
 
-q3_12 Collision_OffsetAlphaGet(s_CollisionQuery* state) // 0x8006CB90
+q3_12 Collision_OffsetAlphaGet(s_CollisionQuery* query) // 0x8006CB90
 {
     q23_8 floorHeight;
 
-    if (state->slopedFloorHeight == Q8(DEFAULT_FLOOR_HEIGHT))
+    if (query->slopedFloorHeight == Q8(DEFAULT_FLOOR_HEIGHT))
     {
         return Q12(1.0f);
     }
 
-    floorHeight = Ipd_FloorHeightGet(state->charaState.positionToX, state->charaState.positionToZ, state);
-    if ((state->charaState.bottom + state->charaState.moveOffset.vy) < floorHeight ||
-        floorHeight == state->slopedFloorHeight)
+    floorHeight = Ipd_FloorHeightGet(query->charaState.positionToX, query->charaState.positionToZ, query);
+    if ((query->charaState.bottom + query->charaState.moveOffset.vy) < floorHeight ||
+        floorHeight == query->slopedFloorHeight)
     {
         return Q12(1.0f);
     }
 
-    return Q12_DIV(state->charaState.moveDistance, Math_Vector2MagCalc(state->charaState.moveDistance,
-                                                                   floorHeight - state->charaState.bottom));
+    return Q12_DIV(query->charaState.moveDistance, Math_Vector2MagCalc(query->charaState.moveDistance,
+                                                                   floorHeight - query->charaState.bottom));
 }
 
-q23_8 Ipd_FloorHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionQuery* state) // 0x8006CC44
+q23_8 Ipd_FloorHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionQuery* query) // 0x8006CC44
 {
-    if (state->floorType != FloorType_None)
+    if (query->floorType != FloorType_None)
     {
-        return Q12_MULT(state->slopeGradientX, posX - state->positionX) +
-               Q12_MULT(state->slopeGradientZ, posZ - state->positionZ) +
-               state->slopedFloorHeight;
+        return Q12_MULT(query->slopeGradientX, posX - query->positionX) +
+               Q12_MULT(query->slopeGradientZ, posZ - query->positionZ) +
+               query->slopedFloorHeight;
     }
 
     return Q8(8.0f);
 }
 
-void func_8006CC9C(s_CollisionQuery* state) // 0x8006CC9C
+void func_8006CC9C(s_CollisionQuery* query) // 0x8006CC9C
 {
     q23_8  deltaX;
     q23_8  deltaZ;
@@ -2030,39 +2029,39 @@ void func_8006CC9C(s_CollisionQuery* state) // 0x8006CC9C
     q23_8  temp4;
     q23_8  targetCharaBottom;
 
-    if (state->context.chara.state < CharaCollisionState_2 ||
-        *state->context.chara.passStamp != 0)
+    if (query->context.chara.state < CharaCollisionState_2 ||
+        *query->context.chara.passStamp != 0)
     {
         return;
     }
 
-    if (state->charaState.positionFromX > (state->chunkOffsetFrom.vx + (state->context.chara.radius + state->charaState.moveDistance)) ||
-        state->charaState.positionToX   < (state->chunkOffsetFrom.vx - (state->context.chara.radius + state->charaState.moveDistance)))
+    if (query->charaState.positionFromX > (query->chunkOffsetFrom.vx + (query->context.chara.radius + query->charaState.moveDistance)) ||
+        query->charaState.positionToX   < (query->chunkOffsetFrom.vx - (query->context.chara.radius + query->charaState.moveDistance)))
     {
         return;
     }
 
-    if (state->charaState.positionFromZ > (state->chunkOffsetTo.vz + (state->context.chara.radius + state->charaState.moveDistance)) ||
-        state->charaState.positionToZ   < (state->chunkOffsetTo.vz - (state->context.chara.radius + state->charaState.moveDistance)) ||
-        state->charaState.top > state->context.chara.top)
+    if (query->charaState.positionFromZ > (query->chunkOffsetTo.vz + (query->context.chara.radius + query->charaState.moveDistance)) ||
+        query->charaState.positionToZ   < (query->chunkOffsetTo.vz - (query->context.chara.radius + query->charaState.moveDistance)) ||
+        query->charaState.top > query->context.chara.top)
     {
         return;
     }
 
-    deltaX = (state->charaState.positionFromX - state->chunkOffsetFrom.vx);
+    deltaX = (query->charaState.positionFromX - query->chunkOffsetFrom.vx);
 
-    if (state->charaState.bottom < state->context.chara.bottom != Q8(0.0f))
+    if (query->charaState.bottom < query->context.chara.bottom != Q8(0.0f))
     {
         return;
     }
 
-    deltaZ = state->charaState.positionFromZ - state->chunkOffsetTo.vz;
+    deltaZ = query->charaState.positionFromZ - query->chunkOffsetTo.vz;
     temp_s4 = Math_Vector2MagCalc(deltaX, deltaZ);
 
-    hitAlpha = func_8006C248(*(s32*)&state->charaState.moveDirection, state->charaState.moveDistance,
-                              state->chunkOffsetFrom.vx - state->charaState.positionFromX,
-                              state->chunkOffsetTo.vz   - state->charaState.positionFromZ,
-                              state->context.chara.radius);
+    hitAlpha = func_8006C248(*(s32*)&query->charaState.moveDirection, query->charaState.moveDistance,
+                              query->chunkOffsetFrom.vx - query->charaState.positionFromX,
+                              query->chunkOffsetTo.vz   - query->charaState.positionFromZ,
+                              query->context.chara.radius);
     if (hitAlpha == NO_VALUE)
     {
         return;
@@ -2070,34 +2069,33 @@ void func_8006CC9C(s_CollisionQuery* state) // 0x8006CC9C
 
     if (hitAlpha == Q12(0.0f))
     {
-        if (state->enablePush)
+        if (query->enablePush)
         {
-            radiusOffset = state->context.chara.radius - temp_s4;
-            func_8006BCC4(&state->obstacleContext, state->context.chara.passStamp,
+            radiusOffset = query->context.chara.radius - temp_s4;
+            func_8006BCC4(&query->obstacleContext, query->context.chara.passStamp,
                           CollisionPushType_Chara, deltaX, deltaZ, radiusOffset);
         }
     }
-    else if (state->isCharaMoving && state->obstacleContext.hardPushConstraint.shapeCount == 0 &&
-             func_8006C1B8(1, hitAlpha, state))
+    else if (query->isCharaMoving && query->obstacleContext.hardPushConstraint.shapeCount == 0 &&
+             func_8006C1B8(1, hitAlpha, query))
     {
-        temp2 = (state->charaState.positionFromZ - state->chunkOffsetTo.vz);
-        targetCharaBottom = Q12_MULT(hitAlpha, state->charaState.moveOffset.vz);
+        temp2 = (query->charaState.positionFromZ - query->chunkOffsetTo.vz);
+        targetCharaBottom = Q12_MULT(hitAlpha, query->charaState.moveOffset.vz);
 
-        state->passStamp = state->context.chara.passStamp;
-        state->hitAlpha  = hitAlpha;
+        query->passStamp   = query->context.chara.passStamp;
+        query->hitAlpha    = hitAlpha;
+        query->contactType = CollisionContactType_1;
 
-        state->field_34 = CollisionContactType_1;
+        temp  = (query->charaState.positionFromX - query->chunkOffsetFrom.vx);
+        temp4 = Q12_MULT(hitAlpha, query->charaState.moveOffset.vx);
 
-        temp  = (state->charaState.positionFromX - state->chunkOffsetFrom.vx);
-        temp4 = Q12_MULT(hitAlpha, state->charaState.moveOffset.vx);
-
-        state->hitDistance = Q12_TO_Q4(state->charaState.moveDistance * hitAlpha);
-        state->field_3C = temp + temp4;
-        state->field_3E = temp2 + targetCharaBottom;
+        query->hitDistance = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+        query->hitOffsetX  = temp + temp4;
+        query->hitOffsetZ  = temp2 + targetCharaBottom;
     }
 }
 
-void func_8006CF18(s_CollisionQuery* state, s_CharaCollisionRecord* charaRecords, s32 charaRecordCount) // 0x8006CF18
+void func_8006CF18(s_CollisionQuery* query, s_CharaCollisionRecord* charaRecords, s32 charaRecordCount) // 0x8006CF18
 {
     q23_8                   radius;
     s_CharaCollisionRecord* curCharaRecord;
@@ -2105,52 +2103,52 @@ void func_8006CF18(s_CollisionQuery* state, s_CharaCollisionRecord* charaRecords
     // Run through character records.
     for (curCharaRecord = charaRecords; curCharaRecord < &charaRecords[charaRecordCount]; curCharaRecord++)
     {
-        radius = Q12_TO_Q8(curCharaRecord->radius) + state->charaState.radius;
-        if (curCharaRecord->state < (u32)state->charaState.state)
+        radius = Q12_TO_Q8(curCharaRecord->radius) + query->charaState.radius;
+        if (curCharaRecord->state < (u32)query->charaState.state)
         {
             radius -= Q8(0.06f);
         }
 
-        state->chunkOffsetFrom.vx = Q12_TO_Q8(curCharaRecord->position.vx);
-        state->chunkOffsetTo.vz   = Q12_TO_Q8(curCharaRecord->position.vz);
+        query->chunkOffsetFrom.vx = Q12_TO_Q8(curCharaRecord->position.vx);
+        query->chunkOffsetTo.vz   = Q12_TO_Q8(curCharaRecord->position.vz);
 
-        state->context.chara.bottom    = Q12_TO_Q8(curCharaRecord->topExtent    + curCharaRecord->position.vy);
-        state->context.chara.top       = Q12_TO_Q8(curCharaRecord->bottomExtent + curCharaRecord->position.vy);
-        state->context.chara.radius    = radius;
-        state->context.chara.state     = curCharaRecord->state;
-        state->context.chara.passStamp = &curCharaRecord->passStamp;
+        query->context.chara.bottom    = Q12_TO_Q8(curCharaRecord->topExtent    + curCharaRecord->position.vy);
+        query->context.chara.top       = Q12_TO_Q8(curCharaRecord->bottomExtent + curCharaRecord->position.vy);
+        query->context.chara.radius    = radius;
+        query->context.chara.state     = curCharaRecord->state;
+        query->context.chara.passStamp = &curCharaRecord->passStamp;
 
-        if (!state->offsetX)
+        if (!query->offsetX)
         {
             curCharaRecord->passStamp = 0;
         }
 
-        func_8006CC9C(state);
+        func_8006CC9C(query);
     }
 }
 
-void func_8006D01C(VECTOR3* extraOffset, VECTOR3* offset, q3_12 offsetAlpha, s_CollisionQuery* state) // 0x8006D01C
+void func_8006D01C(VECTOR3* extraOffset, VECTOR3* offset, q3_12 offsetAlpha, s_CollisionQuery* query) // 0x8006D01C
 {
     VECTOR3 adjOffset;
-    s32     temp_s0;
-    s32     temp_s1;
-    s32     temp_a0;
+    q23_8   hitOffsetX;
+    q23_8   hitOffsetZ;
+    s32     offsetDistSqr;
     s32     temp_v0;
 
     adjOffset.vx = Q12_MULT(offset->vx, offsetAlpha);
     adjOffset.vz = Q12_MULT(offset->vz, offsetAlpha);
 
-    if (state->obstacleContext.hardPushConstraint.shapeCount  != 0||
-        state->obstacleContext.charaPushConstraint.shapeCount != 0)
+    if (query->obstacleContext.hardPushConstraint.shapeCount  != 0||
+        query->obstacleContext.charaPushConstraint.shapeCount != 0)
     {
         extraOffset->vx = Q12(0.0f);
         extraOffset->vz = Q12(0.0f);
         *offset         = adjOffset;
-        func_8006D2B4(offset, &state->obstacleContext);
+        func_8006D2B4(offset, &query->obstacleContext);
         return;
     }
 
-    if (state->field_34 == CollisionContactType_None)
+    if (query->contactType == CollisionContactType_None)
     {
         *extraOffset = adjOffset;
         offset->vz   = Q12(0.0f);
@@ -2158,55 +2156,54 @@ void func_8006D01C(VECTOR3* extraOffset, VECTOR3* offset, q3_12 offsetAlpha, s_C
         return;
     }
 
-    if (offsetAlpha < state->hitAlpha)
+    if (offsetAlpha < query->hitAlpha)
     {
-        state->field_34 = CollisionContactType_None;
-        *extraOffset    = adjOffset;
-        offset->vz      = Q12(0.0f);
-        offset->vx      = Q12(0.0f);
+        query->contactType = CollisionContactType_None;
+        *extraOffset       = adjOffset;
+        offset->vz         = Q12(0.0f);
+        offset->vx         = Q12(0.0f);
         return;
     }
 
-    extraOffset->vx = Q12_MULT(offset->vx, state->hitAlpha);
-    extraOffset->vz = Q12_MULT(offset->vz, state->hitAlpha);
+    extraOffset->vx = Q12_MULT(offset->vx, query->hitAlpha);
+    extraOffset->vz = Q12_MULT(offset->vz, query->hitAlpha);
     offset->vx      = adjOffset.vx - extraOffset->vx;
     offset->vz      = adjOffset.vz - extraOffset->vz;
 
-    temp_s0 = state->field_3C;
-    temp_s1 = state->field_3E;
-    temp_a0 = SQUARE(temp_s0) + SQUARE(temp_s1);
-
-    if (temp_a0 < 256)
+    hitOffsetX    = query->hitOffsetX;
+    hitOffsetZ    = query->hitOffsetZ;
+    offsetDistSqr = SQUARE(hitOffsetX) + SQUARE(hitOffsetZ);
+    if (offsetDistSqr < 256)
     {
-        temp_a0 = SquareRoot0(temp_a0 * 256);
-        temp_s0 = (temp_s0 << 16) / temp_a0;
-        temp_s1 = (temp_s1 << 16) / temp_a0;
+        offsetDistSqr = SquareRoot0(offsetDistSqr * 256);
+        hitOffsetX = (hitOffsetX << 16) / offsetDistSqr;
+        hitOffsetZ = (hitOffsetZ << 16) / offsetDistSqr;
     }
     else
     {
-        temp_a0 = SquareRoot0(temp_a0);
-        temp_s0 = (temp_s0 << 12) / temp_a0; // `Q12_SHIFT`?
-        temp_s1 = (temp_s1 << 12) / temp_a0;
+        offsetDistSqr = SquareRoot0(offsetDistSqr);
+        hitOffsetX = Q12_DIV(hitOffsetX, offsetDistSqr);
+        hitOffsetZ = Q12_DIV(hitOffsetZ, offsetDistSqr);
     }
 
-    temp_v0  = FP_FROM((offset->vx * temp_s1) + (offset->vz * -temp_s0), Q12_SHIFT);
-    offset->vx = Q12_MULT(temp_v0, temp_s1);
-    offset->vz = Q12_MULT(temp_v0, -temp_s0);
+    temp_v0  = FP_FROM((offset->vx * hitOffsetZ) + (offset->vz * -hitOffsetX), Q12_SHIFT);
+    offset->vx = Q12_MULT(temp_v0, hitOffsetZ);
+    offset->vz = Q12_MULT(temp_v0, -hitOffsetX);
 
-    if (temp_s0 > Q12(1.0f / 3.0f))
+    if (hitOffsetX > Q12(1.0f / 3.0f))
     {
         extraOffset->vx += Q12(1.0f / 256.0f);
     }
-    else if (temp_s0 < Q12(-1.0f / 3.0f))
+    else if (hitOffsetX < Q12(-1.0f / 3.0f))
     {
         extraOffset->vx -= Q12(1.0f / 256.0f);
     }
 
-    if (temp_s1 > Q12(1.0f / 3.0f))
+    if (hitOffsetZ > Q12(1.0f / 3.0f))
     {
         extraOffset->vz += Q12(1.0f / 256.0f);
     }
-    else if (temp_s1 < Q12(-1.0f / 3.0f))
+    else if (hitOffsetZ < Q12(-1.0f / 3.0f))
     {
         extraOffset->vz -= Q12(1.0f / 256.0f);
     }
@@ -2439,7 +2436,7 @@ void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 angleMin, q19_12 angleMax,
     }
 }
 
-void func_8006D774(s_CollisionQuery* state, const VECTOR3* offset0, const VECTOR3* offset1) // 0x8006D774
+void func_8006D774(s_CollisionQuery* query, const VECTOR3* offset0, const VECTOR3* offset1) // 0x8006D774
 {
     SVECTOR q8Offset0; // Q7.8
     SVECTOR q8Offset1; // Q7.8
@@ -2449,14 +2446,14 @@ void func_8006D774(s_CollisionQuery* state, const VECTOR3* offset0, const VECTOR
     q8Offset1.vx = Q12_TO_Q8(offset1->vx);
     q8Offset1.vy = Q12_TO_Q8(offset1->vz);
 
-    state->field_34                                       = CollisionContactType_None;
-    state->obstacleContext.hardPushConstraint.shapeCount  = 0;
-    state->obstacleContext.hardIntersectDepth             = Q8(0.0f);
-    state->obstacleContext.softPushConstraint.shapeCount  = 0;
-    state->obstacleContext.charaIntersectDepth            = Q8(0.0f);
-    state->obstacleContext.charaPushConstraint.shapeCount = 0;
+    query->contactType                                    = CollisionContactType_None;
+    query->obstacleContext.hardPushConstraint.shapeCount  = 0;
+    query->obstacleContext.hardIntersectDepth             = Q8(0.0f);
+    query->obstacleContext.softPushConstraint.shapeCount  = 0;
+    query->obstacleContext.charaIntersectDepth            = Q8(0.0f);
+    query->obstacleContext.charaPushConstraint.shapeCount = 0;
 
-    func_8006D7EC(&state->charaState, &q8Offset0, &q8Offset1);
+    func_8006D7EC(&query->charaState, &q8Offset0, &q8Offset1);
 }
 
 void func_8006D7EC(s_CollisionCharaState* charaState, const SVECTOR* offset0, const SVECTOR* offset1) // 0x8006D7EC
@@ -2492,4 +2489,3 @@ void func_8006D7EC(s_CollisionCharaState* charaState, const SVECTOR* offset0, co
     charaState->positionToX   = charaState->positionFromX + charaState->moveOffset.vx;
     charaState->positionToZ   = charaState->positionFromZ + charaState->moveOffset.vz;
 }
-

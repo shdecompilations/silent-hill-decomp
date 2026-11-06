@@ -9351,4 +9351,3 @@ s32 Math_MagnitudeShiftGet(q19_12 mag) // 0x800808F8
     shift = Q4_SHIFT;
     return shift;
 }
-

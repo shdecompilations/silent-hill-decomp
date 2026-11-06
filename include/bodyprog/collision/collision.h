@@ -142,11 +142,11 @@ typedef struct _CollisionQuery
     /* 0x0+10 */ s8                         field_0_10    : 1;  /** `bool` | Enable floor check? */
     /* 0x2    */ u16                        triggerFlags  : 16; /** `e_CollisionTriggerFlags` */
     /* 0x4    */ s_CollisionCharaState      charaState;
-    /* 0x34   */ s32                        field_34;    // `s_CollisionContactType`
+    /* 0x34   */ s32                        contactType; /** `s_CollisionContactType` */
     /* 0x38   */ s16                        hitAlpha;    /** Closest hit alpha for a given movement distance. */
     /* 0x3A   */ q11_4                      hitDistance; /** Closest hit distance. */
-    /* 0x3C   */ q7_8                       field_3C;    // X. } Shape center to hit position's offset?
-    /* 0x3E   */ q7_8                       field_3E;    // Z. }
+    /* 0x3C   */ q7_8                       hitOffsetX;  // } Shape center to hit position's offset?
+    /* 0x3E   */ q7_8                       hitOffsetZ;  // }
     /* 0x40   */ u8*                        passStamp;   /** Tracks visited shapes/characters per query pass. */
     /* 0x44   */ s_CollisionObstacleContext obstacleContext;
     /* 0x7C   */ q23_8                      slopedFloorHeight; // TODO: How is `floorHeight` different?
@@ -341,6 +341,7 @@ s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s
 s32 func_8006A42C(s_CollisionResult* collResult, const VECTOR3* offset, const s_CharaCollisionCylinder* cylinder);
 
 // Something for character movement.
+// Returns 0, 1, or `NO_VALUE`.
 s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_CharaCollisionCylinder* cylinder, bool arg3,
                   s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_CharaCollisionRecord* charaRecords, s32 charaRecordCount,
                   s_SubCharacter** charas, s32 charaCount);
@@ -355,9 +356,9 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
 void Collision_MoveOffsetDampen(VECTOR3* moveOffset, const s_CharaCollisionCylinder* cylinder,
                                 s_SubCharacter** charas, s32 charaCount);
 
-/** @brief Initializes a collision state for a new pass.
+/** @brief Initializes a collision query for a new pass.
  *
- * @param state Collision state to initialize.
+ * @param query Collision query to initialize.
  * @param moveOffset Movement offset.
  * @param cylinder Collision cylinder.
  * @param blockInvalidFloor `true` to treat invalid floors as walls, `false` otherwise.
@@ -366,12 +367,12 @@ void Collision_CollStateInit(s_CollisionQuery* query, VECTOR3* moveOffset,
                              const s_CharaCollisionCylinder* cylinder, bool blockInvalidFloor);
 
 // ========================================
-// @split? Collision state fill.
+// @split? Collision query fill.
 // ========================================
 
 /** @brief Calculates the movement direction vector and distance from a position offset.
  *
- * @param charaState Character collision state.
+ * @param charaState Character collision query.
  * @param moveOffset Movement offset.
  * @param cylinder Collision cylinder.
  */
