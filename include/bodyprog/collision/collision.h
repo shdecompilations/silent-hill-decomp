@@ -13,6 +13,7 @@
 #define DEFAULT_CEILING_HEIGHT        -16.0f
 #define INTERSECTION_BUFFER           0.1f
 #define SOFT_OBSTACLE_SHAPE_COUNT_MAX 8
+#define CACHED_SURFACE_COUNT_MAX      4
 
 /** @brief Collision types. */
 typedef enum _CollisionType
@@ -134,6 +135,28 @@ typedef struct _CollisionShapePoint
 } s_CollisionShapePoint;
 STATIC_ASSERT_SIZEOF(s_CollisionShapePoint, 56);
 
+/** @brief Collision query shape context TODO: Cell lookup or character to check? */
+typedef union _CollisionQueryContext
+{
+              struct
+              {
+                  /* 0x0 */ u8                       cellX;
+                  /* 0x1 */ u8                       cellZ;
+                  /* 0x2 */ u8                       cellSpanX;
+                  /* 0x3 */ u8                       cellSpanZ;
+                  /* 0x4 */ s_IpdShapeAlloc*         shapeAlloc;
+                  /* 0x8 */ s_CollisionCachedSurface surfaceCache[CACHED_SURFACE_COUNT_MAX];
+    /* 0x0 */ } shape;
+              struct
+              {
+                  /* 0x0 */ q7_8 bottom;
+                  /* 0x2 */ q7_8 top;
+                  /* 0x4 */ q7_8 radius;
+                  /* 0x6 */ u8   state;     /** `e_CharaCollisionState` */
+                  /* 0x8 */ u8*  passStamp; /** Tracks visited characters per query pass. */
+    /* 0x0 */ } chara;
+} s_CollisionQueryContext;
+
 /** @brief In-progress collision query. */
 typedef struct _CollisionQuery
 {
@@ -169,36 +192,18 @@ typedef struct _CollisionQuery
                      q23_8      vz;
     /* 0x9C   */ } chunkOffsetTo; /** Offset from chunk position. */
 
-                 union
-                 {
-                     struct
-                     {
-                         /* 0x0 */ u8                       cellX;
-                         /* 0x1 */ u8                       cellZ;
-                         /* 0x2 */ u8                       cellSpanX;
-                         /* 0x3 */ u8                       cellSpanZ;
-                         /* 0x4 */ s_IpdShapeAlloc*         shapeAlloc;
-                         /* 0x8 */ s_CollisionCachedSurface surfaceCache[4];
-                     } shape;
-                     struct
-                     {
-                         /* 0x0 */ q7_8 bottom;
-                         /* 0x2 */ q7_8 top;
-                         /* 0x4 */ q7_8 radius;
-                         /* 0x6 */ u8   state;     /** `e_CharaCollisionState` */
-                         /* 0x8 */ u8*  passStamp; /** Tracks visited characters per query pass. */
-                     } chara;
-    /* 0xA0   */ } context; /** Query context (cell lookup or character to check??) */
-
-    /* 0xC8   */ u8                    shapeIdx; /** Secondary. Used only if detecting a cell after not finding one. */
-    /* 0xCA   */ q7_8                  floorHeight; // TODO: Base floor height with slope unaccounted for?
-    /* 0xCC   */ s_CollisionShapePoint point;
-    // TODO: Maybe incomplete. Maybe not, added the final padding based on `Collision_SurfaceGet`.
+    /* 0xA0   */ s_CollisionQueryContext context;
+    /* 0xC8   */ u8                      shapeIdx; /** Secondary. Used only if detecting a cell after not finding one. */
+    /* 0xCA   */ q7_8                    floorHeight; // TODO: Base floor height with slope unaccounted for?
+    /* 0xCC   */ s_CollisionShapePoint   point;
 } s_CollisionQuery;
 
 // emoose: Also works: `extern u16 g_ActiveCollisionTriggers[];`, `arg0->field_4 = g_ActiveCollisionTriggers[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
+
+#define PACKED_MOVE_DIRECTION(moveDir) \
+    *(s32*)&query->charaQuery.moveDirection
 
 // ========================================
 // @split? Collision init, flags, getters.
@@ -422,7 +427,7 @@ q23_8 Collision_CharaDistanceToFloorGet(const s_CollisionQuery* query);
  * @param pushType Push type.
  * @param collOffsetX X collision offset.
  * @param collOffsetZ Z collision offset.
- * @param intersectDepth Shape intersection depth. TODO: Or intersection distance?
+ * @param intersectDepth Shape intersection depth.
  */
 void Collision_ObstacleIntersectDepthSet(s_CollisionObstacleContext* obstacleContext, u8* passStamp,
                                          u32 pushType, q7_8 collOffsetX, q7_8 collOffsetZ, q7_8 intersectDepth);
@@ -439,8 +444,16 @@ void func_8006C0C8(s_CollisionQuery* query, q3_12 hitAlpha, q7_8 arg2);
 
 bool func_8006C1B8(u32 contactType, q3_12 hitAlpha, s_CollisionQuery* query);
 
-// Computes obstacle hit distance alpha along the move distance.
-q3_12 func_8006C248(s32 packedDir, q3_12 moveDist, q3_12 deltaX, q7_8 deltaZ, q7_8 radius);
+/** @brief Computes an obstacle intersection hit distance alpha along the provided movement distance.
+ *
+ * @param packedDir Packed intersection direction.
+ * @param moveDist Movement offset.
+ * @param deltaX X offset to the obstacle.
+ * @param deltaZ Z offset to the obstacle.
+ * @param radius Intersection radius.
+ * @return Hit alpha along `moveDist`, or `NO_VALUE` if no intersection.
+ */
+q3_12 Collision_HitAlphaGet(s32 packedDir, q3_12 moveDist, q3_12 offsetX, q7_8 offsetZ, q7_8 radius);
 
 // Related to cylinders.
 bool func_8006C3D4(s_CollisionQuery* query, s_IpdCollisionData* collData, s32 shapeIdx);
@@ -449,7 +462,7 @@ bool func_8006C3D4(s_CollisionQuery* query, s_IpdCollisionData* collData, s32 sh
 void func_8006C45C(s_CollisionQuery* query);
 
 // Related to cylinders.
-void func_8006C794(s_CollisionQuery* query, s32 pushType, q23_8 dist);
+void Collision_CylinderObstacleIntersectDepthSet(s_CollisionQuery* query, s32 pushType, q23_8 distToCylinder);
 
 void func_8006C838(s_CollisionQuery* query, s_IpdCollisionData* collData);
 
@@ -474,6 +487,7 @@ void func_8006D2B4(VECTOR3* offset, s_CollisionObstacleContext* obstacleContext)
 void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 rotX, q19_12 rotY, q19_12 hardIntersectDepth);
 
 /** @brief Sets raw character movement parameters and clears all shape contact pushes.
+ * Called by `func_8006A4A8`.
  *
  * @param query Collision query to update.
  * @param extraOffset Extra start offset (Q19.12).
@@ -482,6 +496,7 @@ void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 rotX, q19_12 rotY, q19_12 
 void Collision_CharaRawMovementSet(s_CollisionQuery* query, const VECTOR3* extraOffset, const VECTOR3* moveOffset);
 
 /** @brief Sets raw character movement parameters.
+ * Called by `Collision_CharaRawMovementSet`.
  *
  * @param query Character collision query to update.
  * @param extraOffset Extra start offset (Q23.8).

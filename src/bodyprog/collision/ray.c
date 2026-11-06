@@ -721,7 +721,7 @@ void func_8006EEB8(s_RayQuery* query, s_SubCharacter* chara) // 0x8006EEB8
 {
     VECTOR3 offset; // Q23.8
     s32     bound;
-    q3_12   alpha;
+    q3_12   hitAlpha;
     q3_12   clampedRayDist;
     q23_8   x1;
     q23_8   z1;
@@ -765,22 +765,23 @@ void func_8006EEB8(s_RayQuery* query, s_SubCharacter* chara) // 0x8006EEB8
         return;
     }
 
-    alpha = func_8006C248(*(s32*)&query->field_58, query->rayDistance,
-                          query->field_6C.positionX - query->from.vx,
-                          query->field_6C.positionZ - query->from.vz,
-                          bound);
-    if (alpha == NO_VALUE)
+    // Compute hit alpha. TODO: Use `PACKED_MOVE_DIRECTION`.
+    hitAlpha = Collision_HitAlphaGet(*(s32*)&query->field_58, query->rayDistance,
+                                     query->field_6C.positionX - query->from.vx,
+                                     query->field_6C.positionZ - query->from.vz,
+                                     bound);
+    if (hitAlpha == NO_VALUE)
     {
         return;
     }
 
-    clampedRayDist = Q12_MULT(query->rayDistance, alpha);
+    clampedRayDist = Q12_MULT(query->rayDistance, hitAlpha);
     if (clampedRayDist >= query->hitDistance)
     {
         return;
     }
 
-    offset.vy = query->from.vy + (Q12_MULT(query->offset.vy, alpha));
+    offset.vy = query->from.vy + (Q12_MULT(query->offset.vy, hitAlpha));
     if ((offset.vy + query->field_4E) < query->field_6C.u.shape.floorHeight ||
         query->field_6C.u.shape.topHeight < (offset.vy + query->field_4C))
     {
@@ -817,8 +818,8 @@ void func_8006EEB8(s_RayQuery* query, s_SubCharacter* chara) // 0x8006EEB8
     }
     else
     {
-        offset.vx = query->from.vx + Q12_MULT(query->offset.vx, alpha);
-        offset.vz = query->from.vz + Q12_MULT(query->offset.vz, alpha);
+        offset.vx = query->from.vx + Q12_MULT(query->offset.vx, hitAlpha);
+        offset.vz = query->from.vz + Q12_MULT(query->offset.vz, hitAlpha);
     }
 
     query->hitDistance = clampedRayDist;
