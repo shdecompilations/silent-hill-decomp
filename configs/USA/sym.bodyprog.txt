@@ -889,6 +889,8 @@ Collision_CharaDistanceToFloorGet            = 0x8006BC34; // type:func
 Collision_PushConstraintShapeAdd             = 0x8006BDDC; // type:func
 Collision_OffsetAlphaGet                     = 0x8006CB90;
 Ipd_FloorHeightGet                           = 0x8006CC44; // type:func
+Collision_CharaRawMovementSet                = 0x8006D774; // type:func
+Collision_CharaMovementSet                   = 0x8006D7EC; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x048DAC   VA: 0x8006D90C   subsegment: c, collision/ray

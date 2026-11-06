@@ -1132,8 +1132,8 @@ func_8006CF18                                = 0x8006CB00; // type:func
 func_8006D01C                                = 0x8006CC04; // type:func
 func_8006D2B4                                = 0x8006CE9C; // type:func
 func_8006D600                                = 0x8006D1E8; // type:func
-func_8006D774                                = 0x8006D35C; // type:func
-func_8006D7EC                                = 0x8006D3D4; // type:func
+Collision_CharaRawMovementSet                = 0x8006D35C; // type:func
+Collision_CharaMovementSet                   = 0x8006D3D4; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x047E64   VA: 0x8006D4F4   subsegment: c, collision/ray

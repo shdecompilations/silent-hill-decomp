@@ -142,7 +142,7 @@ typedef struct _CollisionQuery
     /* 0x0+9  */ s8                         enablePush    : 1;  /** `bool` | Push away from obstacles. */
     /* 0x0+10 */ s8                         field_0_10    : 1;  /** `bool` | Enable floor check? */
     /* 0x2    */ u16                        triggerFlags  : 16; /** `e_CollisionTriggerFlags` */
-    /* 0x4    */ s_CollisionCharaState      charaState;
+    /* 0x4    */ s_CharaCollisionQuery      charaQuery;
     /* 0x34   */ s32                        contactType; /** `s_CollisionContactType` */
     /* 0x38   */ s16                        hitAlpha;    /** Closest hit alpha for a given movement distance. */
     /* 0x3A   */ q11_4                      hitDistance; /** Closest hit distance. */
@@ -373,11 +373,11 @@ void Collision_CollStateInit(s_CollisionQuery* query, VECTOR3* moveOffset,
 
 /** @brief Calculates the movement direction vector and distance from a position offset.
  *
- * @param charaState Character collision query.
+ * @param query Character collision query to update.
  * @param moveOffset Movement offset.
  * @param cylinder Collision cylinder.
  */
-void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState,
+void Collision_MoveDirectionCalc(s_CharaCollisionQuery* query,
                                  const VECTOR3* moveOffset, const s_CharaCollisionCylinder* cylinder);
 
 void Collision_CharaCollisionHandle(s_CollisionQuery* query, s_IpdCollisionData* collData);
@@ -411,9 +411,9 @@ void func_8006BB50(s_CollisionQuery* query, s32 pushType);
 /** @brief Gets the relative height from the bottom of a character to the floor polygon.
  * Called by `func_8006BB50`.
  *
- * @param query Collision query.
+ * @param query Reference collision query.
  */
-q23_8 Collision_CharaDistanceToFloorGet(s_CollisionQuery* query);
+q23_8 Collision_CharaDistanceToFloorGet(const s_CollisionQuery* query);
 
 /** @brief Sets the shape intersection depth of a given push type in an obstacle context.
  *
@@ -473,9 +473,20 @@ void func_8006D2B4(VECTOR3* offset, s_CollisionObstacleContext* obstacleContext)
 
 void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 rotX, q19_12 rotY, q19_12 hardIntersectDepth);
 
-void func_8006D774(s_CollisionQuery* query, const VECTOR3* offset0, const VECTOR3* offset1);
+/** @brief Sets raw character movement parameters and clears all shape contact pushes.
+ *
+ * @param query Collision query to update.
+ * @param extraOffset Extra start offset (Q19.12).
+ * @param moveOffset Movement offset (Q19.12).
+ */
+void Collision_CharaRawMovementSet(s_CollisionQuery* query, const VECTOR3* extraOffset, const VECTOR3* moveOffset);
 
-/** Offsets are Q23.8. */
-void func_8006D7EC(s_CollisionCharaState* charaState, const SVECTOR* offset0, const SVECTOR* offset1);
+/** @brief Sets raw character movement parameters.
+ *
+ * @param query Character collision query to update.
+ * @param extraOffset Extra start offset (Q23.8).
+ * @param moveOffset Movement offset (Q23.8).
+ */
+void Collision_CharaMovementSet(s_CharaCollisionQuery* query, const SVECTOR* extraOffset, const SVECTOR* moveOffset);
 
 #endif

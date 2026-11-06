@@ -300,7 +300,7 @@
  * @return `x` converted to Q*.8 fixed-point.
  */
 #define Q4_TO_Q8(x) \
-    ((x) << 4)
+    ((x) << (Q8_SHIFT - Q4_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.4 to Q*.12.
  *
@@ -308,7 +308,7 @@
  * @return `x` converted to Q*.12 fixed-point.
  */
 #define Q4_TO_Q12(x) \
-    ((x) << 8)
+    ((x) << (Q12_SHIFT - Q4_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.6 to Q*.12.
  *
@@ -316,7 +316,7 @@
  * @return `x` converted to Q*.12 fixed-point.
  */
 #define Q6_TO_Q12(x) \
-    ((x) << 6)
+    ((x) << (Q12_SHIFT - Q6_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.8 to Q*.12.
  *
@@ -324,7 +324,7 @@
  * @return `x` converted to Q*.12 fixed-point.
  */
 #define Q8_TO_Q12(x) \
-    ((x) << 4)
+    ((x) << (Q12_SHIFT - Q8_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.8 to Q*.4.
  *
@@ -332,7 +332,7 @@
  * @return `x` converted to Q*.4 fixed-point.
  */
 #define Q8_TO_Q4(x) \
-    ((x) >> 4)
+    ((x) >> (Q8_SHIFT - Q4_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.10 to Q*.12.
  *
@@ -340,7 +340,7 @@
  * @return `x` converted to Q*.12 fixed-point.
  */
 #define Q10_TO_Q12(x) \
-    ((x) << 2)
+    ((x) << (Q12_SHIFT - Q10_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.12 to Q*.4.
  *
@@ -348,7 +348,7 @@
  * @return `x` converted to Q*.4 fixed-point.
  */
 #define Q12_TO_Q4(x) \
-    ((x) >> 8)
+    ((x) >> (Q12_SHIFT - Q4_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.12 to Q*.6.
  *
@@ -356,7 +356,7 @@
  * @return `x` converted to Q*.6 fixed-point.
  */
 #define Q12_TO_Q6(x) \
-    ((x) >> 6)
+    ((x) >> (Q12_SHIFT - Q6_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.12 to Q*.8.
  *
@@ -364,7 +364,7 @@
  * @return `x` converted to Q*.8 fixed-point.
  */
 #define Q12_TO_Q8(x) \
-    ((x) >> 4)
+    ((x) >> (Q12_SHIFT - Q8_SHIFT))
 
 /** @brief Converts a fixed-point value from Q*.12 to Q*.10.
  *
@@ -372,7 +372,7 @@
  * @return `x` converted to Q*.10 fixed-point.
  */
 #define Q12_TO_Q10(x) \
-    ((x) >> 2)
+    ((x) >> (Q12_SHIFT - Q10_SHIFT))
 
 /** @brief Extracts the fractional part of a value in Q*.12 fixed-point.
  *

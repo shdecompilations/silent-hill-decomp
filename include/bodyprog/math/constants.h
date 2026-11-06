@@ -7,6 +7,7 @@
 #define Q4_SHIFT  4
 #define Q6_SHIFT  6
 #define Q8_SHIFT  8
+#define Q10_SHIFT 10
 #define Q12_SHIFT 12
 
 #endif

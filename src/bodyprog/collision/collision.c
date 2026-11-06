@@ -170,8 +170,8 @@ void Collision_SurfaceGet(s_CollisionSurface* surface, q19_12 posX, q19_12 posZ)
     else
     {
         surface->floorType   = query.floorType;
-        surface->floorHeight = Q8_TO_Q12(Ipd_FloorHeightGet(query.charaState.positionFromX,
-                                                            query.charaState.positionFromZ,
+        surface->floorHeight = Q8_TO_Q12(Ipd_FloorHeightGet(query.charaQuery.positionFromX,
+                                                            query.charaQuery.positionFromZ,
                                                             &query));
     }
 
@@ -413,7 +413,7 @@ bool Collision_CharaCollisionSetup(s_CollisionResult* collResult, const VECTOR3*
 
     offsetCpy = *moveOffset;
 
-    // TODO: Condition related to ceiling detection, exact purpose unclear. See `s_CollisionCharaState::field_4`.
+    // TODO: Condition related to ceiling detection, exact purpose unclear. See `s_CharaCollisionQuery::blockInvalidFloor`.
     switch (chara->model.charaId)
     {
         case Chara_Harry:
@@ -576,17 +576,18 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
     collResult->offset.vx = Q12(0.0f);
     collResult->offset.vy = moveOffsetCpy0.vy;
 
+    // Accumulate pushes?
     while (true)
     {
         if (query.offsetX)
         {
-            query.isCharaMoving = query.charaState.moveDistance != Q12(0.0f);
+            query.isCharaMoving = query.charaQuery.moveDistance != Q12(0.0f);
             query.enablePush    = false;
             query.field_0_10    = false;
         }
         else
         {
-            query.isCharaMoving = query.charaState.moveDistance != Q12(0.0f);
+            query.isCharaMoving = query.charaQuery.moveDistance != Q12(0.0f);
             query.enablePush    = true;
             query.field_0_10    = true;
         }
@@ -610,8 +611,8 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
         {
             chara = *curChara;
 
-            radius = Q12_TO_Q8(chara->collision.cylinder.outerRadius) + query.charaState.radius;
-            if (chara->collision.state < (u32)query.charaState.state)
+            radius = Q12_TO_Q8(chara->collision.cylinder.outerRadius) + query.charaQuery.radius;
+            if (chara->collision.state < (u32)query.charaQuery.state)
             {
                 radius -= Q8(CHARA_RADIUS_BUFFER);
             }
@@ -668,7 +669,7 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
         }
 
         query.offsetX = true;
-        func_8006D774(&query, &extraOffset, &moveOffsetCpy1);
+        Collision_CharaRawMovementSet(&query, &extraOffset, &moveOffsetCpy1);
     }
 
     if (query.disableHeight == true)
@@ -679,8 +680,8 @@ s32 func_8006A4A8(s_CollisionResult* collResult, VECTOR3* moveOffset, const s_Ch
     else
     {
         collResult->surface.floorType = query.floorType;
-        floorHeight                   = Q8_TO_Q12(Ipd_FloorHeightGet(query.charaState.positionFromX + Q12_TO_Q8(extraOffset.vx),
-                                                                     query.charaState.positionFromZ + Q12_TO_Q8(extraOffset.vz), &query));
+        floorHeight                   = Q8_TO_Q12(Ipd_FloorHeightGet(query.charaQuery.positionFromX + Q12_TO_Q8(extraOffset.vx),
+                                                                     query.charaQuery.positionFromZ + Q12_TO_Q8(extraOffset.vz), &query));
     }
 
     collResult->surface.floorHeight    = floorHeight;
@@ -787,9 +788,9 @@ void Collision_CollStateInit(s_CollisionQuery* query, VECTOR3* moveOffset,
 {
     query->offsetX                      = false;
     query->triggerFlags                 = g_ActiveCollisionTriggers.flags;
-    query->charaState.blockInvalidFloor = blockInvalidFloor;
+    query->charaQuery.blockInvalidFloor = blockInvalidFloor;
 
-    Collision_MoveDirectionCalc(&query->charaState, moveOffset, cylinder);
+    Collision_MoveDirectionCalc(&query->charaQuery, moveOffset, cylinder);
 
     query->slopedFloorHeight = Q8(DEFAULT_FLOOR_HEIGHT);
     query->contactType       = CollisionContactType_None;
@@ -806,40 +807,40 @@ void Collision_CollStateInit(s_CollisionQuery* query, VECTOR3* moveOffset,
     query->floorType      = FloorType_Default;
 }
 
-void Collision_MoveDirectionCalc(s_CollisionCharaState* charaState,
+void Collision_MoveDirectionCalc(s_CharaCollisionQuery* query,
                                  const VECTOR3* moveOffset, const s_CharaCollisionCylinder* cylinder) // 0x8006ABC0
 {
     q3_12 headingAngle;
 
-    charaState->moveOffset.vx = Q12_TO_Q8(moveOffset->vx);
-    charaState->moveOffset.vy = Q12_TO_Q8(moveOffset->vy);
-    charaState->moveOffset.vz = Q12_TO_Q8(moveOffset->vz);
+    query->moveOffset.vx = Q12_TO_Q8(moveOffset->vx);
+    query->moveOffset.vy = Q12_TO_Q8(moveOffset->vy);
+    query->moveOffset.vz = Q12_TO_Q8(moveOffset->vz);
 
-    charaState->moveDistance = Math_Vector2MagCalc(charaState->moveOffset.vx, charaState->moveOffset.vz);
-    if (charaState->moveDistance != Q12(0.0f))
+    query->moveDistance = Math_Vector2MagCalc(query->moveOffset.vx, query->moveOffset.vz);
+    if (query->moveDistance != Q12(0.0f))
     {
         // @unused
-        charaState->moveDirection.vx = Q12(charaState->moveOffset.vx) / charaState->moveDistance;
-        charaState->moveDirection.vz = Q12(charaState->moveOffset.vz) / charaState->moveDistance;
+        query->moveDirection.vx = Q12(query->moveOffset.vx) / query->moveDistance;
+        query->moveDirection.vz = Q12(query->moveOffset.vz) / query->moveDistance;
 
-        headingAngle                 = ratan2(charaState->moveOffset.vz, charaState->moveOffset.vx);
-        charaState->moveDirection.vx = Math_Cos(headingAngle);
-        charaState->moveDirection.vz = Math_Sin(headingAngle);
+        headingAngle                 = ratan2(query->moveOffset.vz, query->moveOffset.vx);
+        query->moveDirection.vx = Math_Cos(headingAngle);
+        query->moveDirection.vz = Math_Sin(headingAngle);
     }
     else
     {
-        charaState->moveDirection.vx = Q12(1.0f);
-        charaState->moveDirection.vz = Q12(0.0f);
+        query->moveDirection.vx = Q12(1.0f);
+        query->moveDirection.vz = Q12(0.0f);
     }
 
-    charaState->radius        = Q12_TO_Q8(cylinder->radius);
-    charaState->positionFromX = Q12_TO_Q8(cylinder->position.vx);
-    charaState->positionFromZ = Q12_TO_Q8(cylinder->position.vz);
-    charaState->positionToX   = charaState->positionFromX + charaState->moveOffset.vx;
-    charaState->positionToZ   = charaState->positionFromZ + charaState->moveOffset.vz;
-    charaState->top           = Q12_TO_Q8(cylinder->topExtent    + cylinder->position.vy);
-    charaState->bottom        = Q12_TO_Q8(cylinder->bottomExtent + cylinder->position.vy);
-    charaState->state         = cylinder->state;
+    query->radius        = Q12_TO_Q8(cylinder->radius);
+    query->positionFromX = Q12_TO_Q8(cylinder->position.vx);
+    query->positionFromZ = Q12_TO_Q8(cylinder->position.vz);
+    query->positionToX   = query->positionFromX + query->moveOffset.vx;
+    query->positionToZ   = query->positionFromZ + query->moveOffset.vz;
+    query->top           = Q12_TO_Q8(cylinder->topExtent    + cylinder->position.vy);
+    query->bottom        = Q12_TO_Q8(cylinder->bottomExtent + cylinder->position.vy);
+    query->state         = cylinder->state;
 }
 
 void Collision_CharaCollisionHandle(s_CollisionQuery* query, s_IpdCollisionData* collData) // 0x8006AD44
@@ -906,10 +907,10 @@ bool Collision_CellInit(s_CollisionQuery* query, const s_IpdCollisionData* collD
         return false;
     }
 
-    query->chunkOffsetFrom.offset.vx = query->charaState.positionFromX - collData->positionX;
-    query->chunkOffsetFrom.offset.vz = query->charaState.positionFromZ - collData->positionZ;
-    query->chunkOffsetTo.offset.vx   = query->charaState.positionToX   - collData->positionX;
-    query->chunkOffsetTo.offset.vz   = query->charaState.positionToZ   - collData->positionZ;
+    query->chunkOffsetFrom.offset.vx = query->charaQuery.positionFromX - collData->positionX;
+    query->chunkOffsetFrom.offset.vz = query->charaQuery.positionFromZ - collData->positionZ;
+    query->chunkOffsetTo.offset.vx   = query->charaQuery.positionToX   - collData->positionX;
+    query->chunkOffsetTo.offset.vz   = query->charaQuery.positionToZ   - collData->positionZ;
     
     if ((query->chunkOffsetFrom.offset.vx / collData->cellSize) <  0                    ||
         (query->chunkOffsetFrom.offset.vx / collData->cellSize) >= collData->cellCountX ||
@@ -955,28 +956,28 @@ bool Collision_CellIdxGet(s_CollisionQuery* query, const s_IpdCollisionData* col
     cellZLimit = cellZSize - 1;
 
     // Getting X axis differences.
-    charaCollDiffXClosest  = query->charaState.positionFromX - collData->positionX;
-    charaCollDiffXFarthest = query->charaState.positionToX   - collData->positionX;
+    charaCollDiffXClosest  = query->charaQuery.positionFromX - collData->positionX;
+    charaCollDiffXFarthest = query->charaQuery.positionToX   - collData->positionX;
     if (charaCollDiffXFarthest < charaCollDiffXClosest)
     {
         charaCollDiffXFarthest ^= charaCollDiffXClosest;
         charaCollDiffXClosest  ^= charaCollDiffXFarthest;
         charaCollDiffXFarthest ^= charaCollDiffXClosest;
     }
-    charaCollDiffXClosest  -= query->charaState.radius;
-    charaCollDiffXFarthest += query->charaState.radius;
+    charaCollDiffXClosest  -= query->charaQuery.radius;
+    charaCollDiffXFarthest += query->charaQuery.radius;
 
     // Getting Z axis differences.
-    charaCollDiffZClosest  = query->charaState.positionFromZ - collData->positionZ;
-    charaCollDiffZFarthest = query->charaState.positionToZ   - collData->positionZ;
+    charaCollDiffZClosest  = query->charaQuery.positionFromZ - collData->positionZ;
+    charaCollDiffZFarthest = query->charaQuery.positionToZ   - collData->positionZ;
     if (charaCollDiffZFarthest < charaCollDiffZClosest)
     {
         charaCollDiffZFarthest ^= charaCollDiffZClosest;
         charaCollDiffZClosest  ^= charaCollDiffZFarthest;
         charaCollDiffZFarthest ^= charaCollDiffZClosest;
     }
-    charaCollDiffZClosest  -= query->charaState.radius;
-    charaCollDiffZFarthest += query->charaState.radius;
+    charaCollDiffZClosest  -= query->charaQuery.radius;
+    charaCollDiffZFarthest += query->charaQuery.radius;
 
     if (cellXSize < charaCollDiffXClosest ||
         cellZSize < charaCollDiffZClosest ||
@@ -1090,7 +1091,7 @@ bool func_8006B318(s_CollisionQuery* query, const s_IpdCollisionData* collData, 
         query->point.shapeAttribs.polygon.surfaceCacheIdx0      = curSurface->surfaceCacheIdx;
         query->point.shapeAttribs.polygon.disableSurfaceHeight0 = curSurface->disableHeight;
 
-        if (query->charaState.blockInvalidFloor &&
+        if (query->charaQuery.blockInvalidFloor &&
             (curSurface->disableHeight == true || curSurface->floorType == FloorType_None))
         {
             query->point.shapeAttribs.polygon.polygonSplitVertex0.vy += Q8(DEFAULT_CEILING_HEIGHT);
@@ -1105,7 +1106,7 @@ bool func_8006B318(s_CollisionQuery* query, const s_IpdCollisionData* collData, 
         query->point.shapeAttribs.polygon.surfaceCacheIdx1      = curSurface->surfaceCacheIdx;
         query->point.shapeAttribs.polygon.disableSurfaceHeight1 = curSurface->disableHeight;
 
-        if (query->charaState.blockInvalidFloor &&
+        if (query->charaQuery.blockInvalidFloor &&
             (curSurface->disableHeight == true || curSurface->floorType == FloorType_None))
         {
             query->point.shapeAttribs.polygon.polygonSplitVertex0.vy = Q8(DEFAULT_CEILING_HEIGHT);
@@ -1123,14 +1124,14 @@ bool func_8006B318(s_CollisionQuery* query, const s_IpdCollisionData* collData, 
     gte_ldR11R12(packedXz);
     gte_ldR13R21(packedXz);
     
-    packedXz = PACKED_XZ16(query->charaState.moveOffset.vx, query->charaState.moveOffset.vz);
+    packedXz = PACKED_XZ16(query->charaQuery.moveOffset.vx, query->charaQuery.moveOffset.vz);
     gte_ldvxy0(packedXz);
     gte_ldvz0();
     gte_rtv0();
     gte_stMAC12(&query->point.charaDeltas.charaMoveOffset);
     /* Will - 1: ^ These values are normally set to 0 when standing still and are only modified when moving.
     
-       Will - 2: I think this a distance, the value when set isn't too big and also I think `charaState.moveOffset` is the
+       Will - 2: I think this a distance, the value when set isn't too big and also I think `charaQuery.moveOffset` is the
        character movement offset, like the equivalent of doing `chunkOffsetFrom.offset.vx - chunkOffsetTo.offset.vx`
        that may explain why it's 0 when standing still.
     */
@@ -1358,16 +1359,16 @@ void func_8006B9C8(s_CollisionQuery* query) // 0x8006B9C8
 
     if (query->point.shapeAttribs.polygon.surfaceIdx1 == UCHAR_MAX &&
         query->point.charaDeltas.charaVertDiff.vz < Q8(0.0f) &&
-        (query->charaState.bottom >= query->point.shapeAttribs.polygon.polygonSplitVertex0.vy ||
-         query->charaState.bottom >= query->point.shapeAttribs.polygon.polygonSplitVertex1.vy))
+        (query->charaQuery.bottom >= query->point.shapeAttribs.polygon.polygonSplitVertex0.vy ||
+         query->charaQuery.bottom >= query->point.shapeAttribs.polygon.polygonSplitVertex1.vy))
     {
-        if (query->enablePush && query->point.charaDeltas.radiusCollDiffDist < query->charaState.radius)
+        if (query->enablePush && query->point.charaDeltas.radiusCollDiffDist < query->charaQuery.radius)
         {
             func_8006BB50(query, CollisionPushType_Hard);
             return;
         }
 
-        charaRadius = query->charaState.radius;
+        charaRadius = query->charaQuery.radius;
         if (query->enablePush && query->point.charaDeltas.radiusCollDiffDist < (charaRadius + Q8(PROXIMITY_BUFFER)))
         {
             func_8006BB50(query, CollisionPushType_Soft);
@@ -1417,13 +1418,13 @@ void func_8006BB50(s_CollisionQuery* query, s32 pushType) // 0x8006BB50
         collOffsetZ = -query->point.offset.vx;
     }
 
-    intersectDepth = query->charaState.radius - query->point.charaDeltas.radiusCollDiffDist;
+    intersectDepth = query->charaQuery.radius - query->point.charaDeltas.radiusCollDiffDist;
     Collision_ObstacleIntersectDepthSet(&query->obstacleContext,
                                         &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx],
                                         pushType, collOffsetX, collOffsetZ, intersectDepth);
 }
 
-q23_8 Collision_CharaDistanceToFloorGet(s_CollisionQuery* query) // 0x8006BC34
+q23_8 Collision_CharaDistanceToFloorGet(const s_CollisionQuery* query) // 0x8006BC34
 {
     q7_8 relZ;
     q7_8 height0;
@@ -1464,7 +1465,7 @@ q23_8 Collision_CharaDistanceToFloorGet(s_CollisionQuery* query) // 0x8006BC34
         }
     }
 
-    return query->charaState.bottom - floorHeight;
+    return query->charaQuery.bottom - floorHeight;
 }
 
 void Collision_ObstacleIntersectDepthSet(s_CollisionObstacleContext* obstacleContext, u8* passStamp,
@@ -1533,7 +1534,7 @@ void func_8006BE40(s_CollisionQuery* query) // 0x8006BE40
     q19_12 dist;
 
     distAlpha = Q12(0.0f);
-    negRadius = -(query->charaState.radius);
+    negRadius = -(query->charaQuery.radius);
     unkDist   = Q8(0.0f);
 
     if (query->point.charaDeltas.charaVertDiff.vz >= negRadius)
@@ -1612,19 +1613,19 @@ void func_8006BF88(s_CollisionQuery* query, const SVECTOR3* splitVert) // 0x8006
     s32   temp3;
 
     // TODO: Can actual struct be passed?
-    hitAlpha = func_8006C248(*(s32*)&query->charaState.moveDirection, query->charaState.moveDistance,
+    hitAlpha = func_8006C248(*(s32*)&query->charaQuery.moveDirection, query->charaQuery.moveDistance,
                              splitVert->vx - query->chunkOffsetFrom.offset.vx,
                              splitVert->vz - query->chunkOffsetFrom.offset.vz,
-                             query->charaState.radius);
-    if (hitAlpha != NO_VALUE && func_8006C1B8(2, hitAlpha, query) && query->charaState.bottom > splitVert->vy)
+                             query->charaQuery.radius);
+    if (hitAlpha != NO_VALUE && func_8006C1B8(2, hitAlpha, query) && query->charaQuery.bottom > splitVert->vy)
     {
         query->hitAlpha    = hitAlpha;
         query->contactType = CollisionContactType_2;
-        temp2              = query->chunkOffsetFrom.offset.vx + Q12_MULT(query->charaState.moveOffset.vx, hitAlpha);
-        query->hitDistance = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+        temp2              = query->chunkOffsetFrom.offset.vx + Q12_MULT(query->charaQuery.moveOffset.vx, hitAlpha);
+        query->hitDistance = Q12_TO_Q4(query->charaQuery.moveDistance * hitAlpha);
         query->passStamp   = &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx];
         query->hitOffsetX  = temp2 - splitVert->vx;
-        temp3              = query->chunkOffsetFrom.offset.vz + Q12_MULT(query->charaState.moveOffset.vz, hitAlpha);
+        temp3              = query->chunkOffsetFrom.offset.vz + Q12_MULT(query->charaQuery.moveOffset.vz, hitAlpha);
         query->hitOffsetZ  = temp3 - splitVert->vz;
     }
 }
@@ -1640,12 +1641,12 @@ void func_8006C0C8(s_CollisionQuery* query, q3_12 hitAlpha, q7_8 arg2) // 0x8006
 
     temp = ((query->point.shapeAttribs.polygon.polygonSplitVertex1.vy -
              query->point.shapeAttribs.polygon.polygonSplitVertex0.vy) * arg2) / query->point.offset.vz;
-    if (temp + query->point.shapeAttribs.polygon.polygonSplitVertex0.vy < query->charaState.bottom)
+    if (temp + query->point.shapeAttribs.polygon.polygonSplitVertex0.vy < query->charaQuery.bottom)
     {
         query->passStamp   = &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx];
         query->contactType = CollisionContactType_1;
         query->hitAlpha    = hitAlpha;
-        query->hitDistance = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+        query->hitDistance = Q12_TO_Q4(query->charaQuery.moveDistance * hitAlpha);
         query->hitOffsetX  = query->point.offset.vy;
         query->hitOffsetZ  = -query->point.offset.vx;
     }
@@ -1655,7 +1656,7 @@ bool func_8006C1B8(u32 contactType, q3_12 hitAlpha, s_CollisionQuery* query) // 
 {
     q27_4 hitDist;
 
-    hitDist = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+    hitDist = Q12_TO_Q4(query->charaQuery.moveDistance * hitAlpha);
     switch (contactType)
     {
         default:
@@ -1781,7 +1782,7 @@ void func_8006C45C(s_CollisionQuery* query) // 0x8006C45C
     s32   temp;
     s32   temp2;
 
-    distMax = query->charaState.radius + query->point.shapeAttribs.cylinder.radius;
+    distMax = query->charaQuery.radius + query->point.shapeAttribs.cylinder.radius;
     bound   = distMax + Q8(PROXIMITY_BUFFER);
 
     if (query->chunkOffsetFrom.offset.vx < (query->point.offset.vx - bound) &&
@@ -1840,7 +1841,7 @@ void func_8006C45C(s_CollisionQuery* query) // 0x8006C45C
         return;
     }
 
-    hitAlpha = func_8006C248(*(s32*)&query->charaState.moveDirection, query->charaState.moveDistance,
+    hitAlpha = func_8006C248(*(s32*)&query->charaQuery.moveDirection, query->charaQuery.moveDistance,
                               query->point.offset.vx - query->chunkOffsetFrom.offset.vx,
                               query->point.offset.vz - query->chunkOffsetFrom.offset.vz,
                               distMax);
@@ -1855,29 +1856,29 @@ void func_8006C45C(s_CollisionQuery* query) // 0x8006C45C
         hitAlpha = Q12(0.0f);
     }
 
-    if (func_8006C1B8(1, hitAlpha, query) && query->charaState.bottom >= query->point.offset.vy)
+    if (func_8006C1B8(1, hitAlpha, query) && query->charaQuery.bottom >= query->point.offset.vy)
     {
         query->hitAlpha    = hitAlpha;
         query->contactType = CollisionContactType_1;
-        temp               = query->chunkOffsetFrom.offset.vx + Q12_MULT(query->charaState.moveOffset.vx, hitAlpha);
-        query->hitDistance = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+        temp               = query->chunkOffsetFrom.offset.vx + Q12_MULT(query->charaQuery.moveOffset.vx, hitAlpha);
+        query->hitDistance = Q12_TO_Q4(query->charaQuery.moveDistance * hitAlpha);
         query->passStamp   = &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx];
         query->hitOffsetX  = temp - query->point.offset.vx;
-        temp2              = query->chunkOffsetFrom.offset.vz + Q12_MULT(query->charaState.moveOffset.vz, hitAlpha);
+        temp2              = query->chunkOffsetFrom.offset.vz + Q12_MULT(query->charaQuery.moveOffset.vz, hitAlpha);
         query->hitOffsetZ  = temp2 - query->point.offset.vz;
     }
 }
 
 void func_8006C794(s_CollisionQuery* query, s32 pushType, q23_8 dist) // 0x8006C794
 {
-    if (query->charaState.bottom >= (query->point.offset.vy + (dist - query->point.shapeAttribs.cylinder.radius)))
+    if (query->charaQuery.bottom >= (query->point.offset.vy + (dist - query->point.shapeAttribs.cylinder.radius)))
     {
         Collision_ObstacleIntersectDepthSet(&query->obstacleContext,
                                             &query->point.ipdCollisionData->shapePassStampBuffer[query->point.shapeIdx],
                                             pushType,
                                             query->chunkOffsetFrom.offset.vx - query->point.offset.vx,
                                             query->chunkOffsetFrom.offset.vz - query->point.offset.vz,
-                                            (query->charaState.radius + query->point.shapeAttribs.cylinder.radius) - dist);
+                                            (query->charaQuery.radius + query->point.shapeAttribs.cylinder.radius) - dist);
     }
 }
 
@@ -2004,15 +2005,15 @@ q3_12 Collision_OffsetAlphaGet(s_CollisionQuery* query) // 0x8006CB90
         return Q12(1.0f);
     }
 
-    floorHeight = Ipd_FloorHeightGet(query->charaState.positionToX, query->charaState.positionToZ, query);
-    if ((query->charaState.bottom + query->charaState.moveOffset.vy) < floorHeight ||
+    floorHeight = Ipd_FloorHeightGet(query->charaQuery.positionToX, query->charaQuery.positionToZ, query);
+    if ((query->charaQuery.bottom + query->charaQuery.moveOffset.vy) < floorHeight ||
         floorHeight == query->slopedFloorHeight)
     {
         return Q12(1.0f);
     }
 
-    return Q12_DIV(query->charaState.moveDistance, Math_Vector2MagCalc(query->charaState.moveDistance,
-                                                                   floorHeight - query->charaState.bottom));
+    return Q12_DIV(query->charaQuery.moveDistance, Math_Vector2MagCalc(query->charaQuery.moveDistance,
+                                                                   floorHeight - query->charaQuery.bottom));
 }
 
 q23_8 Ipd_FloorHeightGet(q23_8 posX, q23_8 posZ, const s_CollisionQuery* query) // 0x8006CC44
@@ -2045,32 +2046,32 @@ void func_8006CC9C(s_CollisionQuery* query) // 0x8006CC9C
         return;
     }
 
-    if (query->charaState.positionFromX > (query->chunkOffsetFrom.vx + (query->context.chara.radius + query->charaState.moveDistance)) ||
-        query->charaState.positionToX   < (query->chunkOffsetFrom.vx - (query->context.chara.radius + query->charaState.moveDistance)))
+    if (query->charaQuery.positionFromX > (query->chunkOffsetFrom.vx + (query->context.chara.radius + query->charaQuery.moveDistance)) ||
+        query->charaQuery.positionToX   < (query->chunkOffsetFrom.vx - (query->context.chara.radius + query->charaQuery.moveDistance)))
     {
         return;
     }
 
-    if (query->charaState.positionFromZ > (query->chunkOffsetTo.vz + (query->context.chara.radius + query->charaState.moveDistance)) ||
-        query->charaState.positionToZ   < (query->chunkOffsetTo.vz - (query->context.chara.radius + query->charaState.moveDistance)) ||
-        query->charaState.top > query->context.chara.top)
+    if (query->charaQuery.positionFromZ > (query->chunkOffsetTo.vz + (query->context.chara.radius + query->charaQuery.moveDistance)) ||
+        query->charaQuery.positionToZ   < (query->chunkOffsetTo.vz - (query->context.chara.radius + query->charaQuery.moveDistance)) ||
+        query->charaQuery.top > query->context.chara.top)
     {
         return;
     }
 
-    collOffsetX = (query->charaState.positionFromX - query->chunkOffsetFrom.vx);
+    collOffsetX = (query->charaQuery.positionFromX - query->chunkOffsetFrom.vx);
 
-    if (query->charaState.bottom < query->context.chara.bottom != Q8(0.0f))
+    if (query->charaQuery.bottom < query->context.chara.bottom != Q8(0.0f))
     {
         return;
     }
 
-    collOffsetZ = query->charaState.positionFromZ - query->chunkOffsetTo.vz;
+    collOffsetZ = query->charaQuery.positionFromZ - query->chunkOffsetTo.vz;
     collDist    = Math_Vector2MagCalc(collOffsetX, collOffsetZ);
 
-    hitAlpha = func_8006C248(*(s32*)&query->charaState.moveDirection, query->charaState.moveDistance,
-                              query->chunkOffsetFrom.vx - query->charaState.positionFromX,
-                              query->chunkOffsetTo.vz   - query->charaState.positionFromZ,
+    hitAlpha = func_8006C248(*(s32*)&query->charaQuery.moveDirection, query->charaQuery.moveDistance,
+                              query->chunkOffsetFrom.vx - query->charaQuery.positionFromX,
+                              query->chunkOffsetTo.vz   - query->charaQuery.positionFromZ,
                               query->context.chara.radius);
     if (hitAlpha == NO_VALUE)
     {
@@ -2089,17 +2090,17 @@ void func_8006CC9C(s_CollisionQuery* query) // 0x8006CC9C
     else if (query->isCharaMoving && query->obstacleContext.hardPushConstraint.shapeCount == 0 &&
              func_8006C1B8(1, hitAlpha, query))
     {
-        temp2 = (query->charaState.positionFromZ - query->chunkOffsetTo.vz);
-        targetCharaBottom = Q12_MULT(hitAlpha, query->charaState.moveOffset.vz);
+        temp2 = (query->charaQuery.positionFromZ - query->chunkOffsetTo.vz);
+        targetCharaBottom = Q12_MULT(hitAlpha, query->charaQuery.moveOffset.vz);
 
         query->passStamp   = query->context.chara.passStamp;
         query->hitAlpha    = hitAlpha;
         query->contactType = CollisionContactType_1;
 
-        temp  = (query->charaState.positionFromX - query->chunkOffsetFrom.vx);
-        temp4 = Q12_MULT(hitAlpha, query->charaState.moveOffset.vx);
+        temp  = (query->charaQuery.positionFromX - query->chunkOffsetFrom.vx);
+        temp4 = Q12_MULT(hitAlpha, query->charaQuery.moveOffset.vx);
 
-        query->hitDistance = Q12_TO_Q4(query->charaState.moveDistance * hitAlpha);
+        query->hitDistance = Q12_TO_Q4(query->charaQuery.moveDistance * hitAlpha);
         query->hitOffsetX  = temp + temp4;
         query->hitOffsetZ  = temp2 + targetCharaBottom;
     }
@@ -2113,8 +2114,8 @@ void func_8006CF18(s_CollisionQuery* query, s_CharaCollisionRecord* charaRecords
     // Run through character records.
     for (curCharaRecord = charaRecords; curCharaRecord < &charaRecords[charaRecordCount]; curCharaRecord++)
     {
-        radius = Q12_TO_Q8(curCharaRecord->radius) + query->charaState.radius;
-        if (curCharaRecord->state < (u32)query->charaState.state)
+        radius = Q12_TO_Q8(curCharaRecord->radius) + query->charaQuery.radius;
+        if (curCharaRecord->state < (u32)query->charaQuery.state)
         {
             radius -= Q8(CHARA_RADIUS_BUFFER);
         }
@@ -2434,7 +2435,7 @@ void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 angleMin, q19_12 angleMax,
     angle3 = normAngleMin + Q12_ANGLE(360.0f);
     if (angle2 < angle1)
     {
-        if (((angle2 + angle3) >> 1) < angle1)
+        if (DIV_FAST(angle2 + angle3, 2) < angle1)
         {
             angle2 = angle3;
         }
@@ -2453,16 +2454,18 @@ void func_8006D600(VECTOR3* pos, q19_12 angle, q19_12 angleMin, q19_12 angleMax,
     }
 }
 
-void func_8006D774(s_CollisionQuery* query, const VECTOR3* offset0, const VECTOR3* offset1) // 0x8006D774
+void Collision_CharaRawMovementSet(s_CollisionQuery* query, const VECTOR3* extraOffset, const VECTOR3* moveOffset) // 0x8006D774
 {
-    SVECTOR q8Offset0; // Q7.8
-    SVECTOR q8Offset1; // Q7.8
+    SVECTOR locExtraOffset; // Q7.8
+    SVECTOR locMoveOffset;  // Q7.8
 
-    q8Offset0.vx = Q12_TO_Q8(offset0->vx);
-    q8Offset0.vy = Q12_TO_Q8(offset0->vz);
-    q8Offset1.vx = Q12_TO_Q8(offset1->vx);
-    q8Offset1.vy = Q12_TO_Q8(offset1->vz);
+    // Convert offsets to Q8.
+    locExtraOffset.vx = Q12_TO_Q8(extraOffset->vx);
+    locExtraOffset.vy = Q12_TO_Q8(extraOffset->vz);
+    locMoveOffset.vx  = Q12_TO_Q8(moveOffset->vx);
+    locMoveOffset.vy  = Q12_TO_Q8(moveOffset->vz);
 
+    // Clear shape contact pushes.
     query->contactType                                    = CollisionContactType_None;
     query->obstacleContext.hardPushConstraint.shapeCount  = 0;
     query->obstacleContext.hardIntersectDepth             = Q8(0.0f);
@@ -2470,39 +2473,44 @@ void func_8006D774(s_CollisionQuery* query, const VECTOR3* offset0, const VECTOR
     query->obstacleContext.charaIntersectDepth            = Q8(0.0f);
     query->obstacleContext.charaPushConstraint.shapeCount = 0;
 
-    func_8006D7EC(&query->charaState, &q8Offset0, &q8Offset1);
+    // Set movement.
+    Collision_CharaMovementSet(&query->charaQuery, &locExtraOffset, &locMoveOffset);
 }
 
-void func_8006D7EC(s_CollisionCharaState* charaState, const SVECTOR* offset0, const SVECTOR* offset1) // 0x8006D7EC
+void Collision_CharaMovementSet(s_CharaCollisionQuery* query, const SVECTOR* extraOffset, const SVECTOR* moveOffset) // 0x8006D7EC
 {
     q3_12  headingAngle;
     q19_12 moveDist;
-    q7_8   offsetY;
+    q7_8   moveOffsetY;
 
-    charaState->moveOffset.vx = offset1->vx;
-    offsetY                   = offset1->vy;
-    charaState->moveOffset.vz = offset1->vy;
+    // Set movement offset.
+    query->moveOffset.vx = moveOffset->vx;
+    moveOffsetY          = moveOffset->vy;
+    query->moveOffset.vz = moveOffset->vy;
 
-    moveDist                 = Math_Vector2MagCalc(charaState->moveOffset.vx, offsetY);
-    charaState->moveDistance = moveDist;
+    // Compute movement distance.
+    moveDist            = Math_Vector2MagCalc(query->moveOffset.vx, moveOffsetY);
+    query->moveDistance = moveDist;
 
+    // Compute movement direction.
     if (moveDist != Q12(0.0f))
     {
-        charaState->moveDirection.vx = Q12_DIV(charaState->moveOffset.vx, moveDist);
-        charaState->moveDirection.vz = Q12_DIV(charaState->moveOffset.vz, charaState->moveDistance);
+        query->moveDirection.vx = Q12_DIV(query->moveOffset.vx, moveDist);
+        query->moveDirection.vz = Q12_DIV(query->moveOffset.vz, query->moveDistance);
 
-        headingAngle             = ratan2(charaState->moveOffset.vz, charaState->moveOffset.vx);
-        charaState->moveDirection.vx = Math_Cos(headingAngle);
-        charaState->moveDirection.vz = Math_Sin(headingAngle);
+        headingAngle            = ratan2(query->moveOffset.vz, query->moveOffset.vx);
+        query->moveDirection.vx = Math_Cos(headingAngle);
+        query->moveDirection.vz = Math_Sin(headingAngle);
     }
     else
     {
-        charaState->moveDirection.vx = Q12(1.0f);
-        charaState->moveDirection.vz = Q12(0.0f);
+        query->moveDirection.vx = Q12(1.0f);
+        query->moveDirection.vz = Q12(0.0f);
     }
 
-    charaState->positionFromX = charaState->positionFromX + offset0->vx;
-    charaState->positionFromZ = charaState->positionFromZ + offset0->vy;
-    charaState->positionToX   = charaState->positionFromX + charaState->moveOffset.vx;
-    charaState->positionToZ   = charaState->positionFromZ + charaState->moveOffset.vz;
+    // Compute positions.
+    query->positionFromX = query->positionFromX + extraOffset->vx;
+    query->positionFromZ = query->positionFromZ + extraOffset->vy;
+    query->positionToX   = query->positionFromX + query->moveOffset.vx;
+    query->positionToZ   = query->positionFromZ + query->moveOffset.vz;
 }

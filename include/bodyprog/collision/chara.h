@@ -14,8 +14,8 @@ typedef struct _CharaCollisionCylinder
 } s_CharaCollisionCylinder;
 STATIC_ASSERT_SIZEOF(s_CharaCollisionCylinder, 20);
 
-/** @brief Character collision state. TODO: Name clash with `e_CharaCollisionState`. */
-typedef struct _CollisionCharaState
+/** @brief Character collision query. */
+typedef struct _CharaCollisionQuery
 {
     /* 0x0  */ s32        state;             /** `e_CharaCollisionState` */
     /* 0x4  */ bool       blockInvalidFloor;
@@ -29,7 +29,7 @@ typedef struct _CollisionCharaState
     /* 0x28 */ q7_8       radius;
     /* 0x2A */ q7_8       top;
     /* 0x2C */ q7_8       bottom;
-} s_CollisionCharaState;
+} s_CharaCollisionQuery;
 
 // TODO: Rough name.
 typedef struct _CharaCollisionDeltas

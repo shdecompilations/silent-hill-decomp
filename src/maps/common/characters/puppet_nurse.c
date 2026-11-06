@@ -85,7 +85,7 @@ void PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor)
 {
     extern s_800D5710 sharedData_800D5710_3_s03[4]; // Likely static.
 
-    s32             charaState;
+    s32             charaQuery;
     s32             charStatIdx;
     s32             charPalette;
     s32             modelVariantIdx;
@@ -114,7 +114,7 @@ void PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor)
     charPalette     = (nurse->model.stateStep - 1) % 3;
     stateStepDiv3   = (nurse->model.stateStep - 1) / 3;
     modelVariantIdx = stateStepDiv3 % 3;
-    charaState      = stateStepDiv3 / 3;
+    charaQuery      = stateStepDiv3 / 3;
 
     nurseProps.field_11A = Q12(0.0f);
     nurse->flags        |= CharaFlag_Hit;
@@ -136,7 +136,7 @@ void PuppetNurse_Init(s_SubCharacter* nurse, bool isDoctor)
     nurse->health           = localNurseProps.field_124->health_0;
     nurse->model.paletteIdx = charPalette;
 
-    switch (charaState)
+    switch (charaQuery)
     {
         case 0:
             nurse->model.controlState     = PuppetNurseControl_11;

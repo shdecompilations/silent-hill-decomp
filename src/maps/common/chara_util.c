@@ -217,7 +217,7 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
 bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, q19_12 angleIn, s32 arg4)
 {
     // TODO: Figure out which characters get passed to this function.
-    // Looks like Cheryl might be, but the charaState defines below don't fit with `s_PropsNpc`...
+    // Looks like Cheryl might be, but the charaQuery defines below don't fit with `s_PropsNpc`...
     #define ANGLE_THRESHOLD (Q12_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
     q7_8     shortestAngle;
@@ -227,26 +227,26 @@ bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
     // TODO: This data is hard to keep track of and may not point to the right `properties` struct.
     // Short-hand defines to make it easier to follow.
-    #define charaState3  chara->model.stateStep
-    #define charaStateE8 chara->properties.npc.controlState
-    #define charaStateEC chara->properties.dummy.properties_E8[1].val32
-    #define charaStateF4 chara->properties.npc.field_F4
-    #define charaStateFC chara->properties.dummy.properties_E8[5].val32
+    #define charaQuery3  chara->model.stateStep
+    #define charaQueryE8 chara->properties.npc.controlState
+    #define charaQueryEC chara->properties.dummy.properties_E8[1].val32
+    #define charaQueryF4 chara->properties.npc.field_F4
+    #define charaQueryFC chara->properties.dummy.properties_E8[5].val32
 
     angleIn = Q12_ANGLE_ABS(angleIn);
     arg2 = arg2In;
 
-    switch (charaStateEC)
+    switch (charaQueryEC)
     {
         case 0:
             sharedData_800DF1F8_0_s00 = 0;
-            charaStateEC = 1;
+            charaQueryEC = 1;
             break;
 
         case 1:
             if (arg2[0].vx == chara->position.vx && arg2[0].vz == chara->position.vz)
             {
-                charaStateEC = 6;
+                charaQueryEC = 6;
             }
             else
             {
@@ -257,24 +257,24 @@ bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 if (ABS(shortestAngle) < ANGLE_THRESHOLD)
                 {
                     chara->rotation.vy = sharedData_800DF1FA_0_s00;
-                    charaStateEC = 3;
+                    charaQueryEC = 3;
                 }
                 else
                 {
                     if (shortestAngle < Q12_ANGLE(0.0f))
                     {
-                        charaStateFC = 4;
-                        charaStateE8 = 4;
-                        charaState3 = 0;
+                        charaQueryFC = 4;
+                        charaQueryE8 = 4;
+                        charaQuery3 = 0;
                     }
                     else
                     {
-                        charaStateFC = 3;
-                        charaStateE8 = 3;
-                        charaState3 = 0;
+                        charaQueryFC = 3;
+                        charaQueryE8 = 3;
+                        charaQuery3 = 0;
                     }
 
-                    charaStateEC = 2;
+                    charaQueryEC = 2;
                 }
             }
             break;
@@ -284,7 +284,7 @@ bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
                 chara->rotation.vy = sharedData_800DF1FA_0_s00;
-                charaStateEC = 3;
+                charaQueryEC = 3;
             }
             break;
 
@@ -293,16 +293,16 @@ bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
             if (ABS((int)dist) < Q8(0.15f)) // @hack Needs to be `int` for `ABS` to match?
             {
-                charaStateE8 = 0;
-                charaState3 = 0;
-                charaStateEC = 8;
+                charaQueryE8 = 0;
+                charaQuery3 = 0;
+                charaQueryEC = 8;
             }
             else
             {
-                charaStateE8 = arg1;
-                charaState3 = 0;
-                charaStateFC = arg1;
-                charaStateEC = 4;
+                charaQueryE8 = arg1;
+                charaQuery3 = 0;
+                charaQueryFC = arg1;
+                charaQueryEC = 4;
             }
             break;
 
@@ -311,7 +311,7 @@ bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                                                       arg2[sharedData_800DF1F8_0_s00].vz - chara->position.vz));
             sharedData_800DF1F4_0_s00 = SquareRoot0(Q12_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position));
 
-            charaStateEC = 5;
+            charaQueryEC = 5;
             break;
 
         case 5:
@@ -361,11 +361,11 @@ bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
                 if (sharedData_800DF1F8_0_s00 == arg4)
                 {
-                    charaStateEC = 6;
+                    charaQueryEC = 6;
                 }
                 else
                 {
-                    charaStateEC = 4;
+                    charaQueryEC = 4;
                 }
             }
 
@@ -377,24 +377,24 @@ bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
                 chara->rotation.vy = angleIn;
-                charaStateEC = 8;
+                charaQueryEC = 8;
             }
             else
             {
                 if (shortestAngle < Q12_ANGLE(0.0f))
                 {
-                    charaStateFC = 4;
-                    charaStateE8 = 4;
-                    charaState3 = 0;
+                    charaQueryFC = 4;
+                    charaQueryE8 = 4;
+                    charaQuery3 = 0;
                 }
                 else
                 {
-                    charaStateFC = 3;
-                    charaStateE8 = 3;
-                    charaState3 = 0;
+                    charaQueryFC = 3;
+                    charaQueryE8 = 3;
+                    charaQuery3 = 0;
                 }
 
-                charaStateEC = 7;
+                charaQueryEC = 7;
             }
             break;
 
@@ -402,18 +402,18 @@ bool Chara_PathWaypointExecute(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             Math_ShortestAngleGet(chara->rotation.vy, angleIn, &shortestAngle);
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
             {
-                charaStateFC = arg1 - 1;
+                charaQueryFC = arg1 - 1;
                 chara->rotation.vy = angleIn;
-                charaStateE8 = 0;
-                charaState3 = 0;
-                charaStateEC = 8;
+                charaQueryE8 = 0;
+                charaQuery3 = 0;
+                charaQueryEC = 8;
             }
             break;
 
         case 8:
-            charaStateF4 = 1;
+            charaQueryF4 = 1;
             sharedData_800DF1FA_0_s00 = 0;
-            charaStateEC = 0;
+            charaQueryEC = 0;
             *(s32*)&chara->properties.npc.moveDistance_124 = 0;
             return true;
     }
