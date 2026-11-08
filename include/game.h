@@ -218,22 +218,33 @@ typedef enum _GameEndingFlags
     GameEndingFlag_7        = 1 << 7  // Set if ranking has been seen and ending was UFO?
 } e_GameEndingFlags;
 
-typedef enum _SpecialEnvEventFlags
+/** @brief `s_WorldEnvPreset::flags`. */
+typedef enum _WorldEnvFlags
 {
-    SpecialEnvEventFlags_None              = 0,
-    SpecialEnvEventFlags_DarkEnvironment   = 1 << 0, // Double check.
-    SpecialEnvEventFlags_FlashlightAllowed = 1 << 1,
-    SpecialEnvEventFlags_EnableBrightness  = 1 << 2,
-    SpecialEnvEventFlags_UseLighter        = 1 << 3,
-    SpecialEnvEventFlags_EnableLensflare   = 1 << 4,
-} e_SpecialEnvEventFlags;
+    WorldEnvFlag_None              = 0,
+    WorldEnvFlag_Dark              = 1 << 0, /** Set on the flashlight-off preset of dark areas. Lots of map overlay code check this to tell if area is currently in darkness. (TODO: Macro for checking this?) */
+    WorldEnvFlag_FlashlightAllowed = 1 << 1,
+    WorldEnvFlag_EnableBrightness  = 1 << 2, /** Applies the users brightness setting. */
+    WorldEnvFlag_UseLighter        = 1 << 3,
+    WorldEnvFlag_EnableLensFlare   = 1 << 4,
+} e_WorldEnvFlags;
 
-typedef enum _UnkGfxEnum
+/** @brief `s_WorldEnvPreset::lightMode`. How models and billboards get lit by the dynamic light. */
+typedef enum _WorldEnvLightMode
 {
-    UnkGfxEnum_0 = 0, // Something fog-related, maybe enables fog tint overlay for drawn objects?
-    UnkGfxEnum_1 = 1,
-    UnkGfxEnum_2 = 2,
-} e_UnkGfxEnum;
+    WorldEnvLightMode_None        = 0, /** No dynamic light. Flat vertex colors, fog drawn as overlay polygons. */
+    WorldEnvLightMode_Spot        = 1, /** Positional light (normally the flashlight). Enables the lens flare. */
+    WorldEnvLightMode_Directional = 2, /** Lights everywhere from one direction. No source point or distance falloff. */
+} e_WorldEnvLightMode;
+
+/** @brief `s_WorldEnvPreset::fogMode`. */
+typedef enum _WorldEnvFogMode
+{
+    WorldEnvFogMode_Off         = 0,
+    WorldEnvFogMode_On          = 1,
+    WorldEnvFogMode_Zero        = 2, /** Fog on with a distance of 0. @unused No preset sets it. */
+    WorldEnvFogMode_FollowLight = 3, /** Fog distance follows the light position. @unused Only set by preset 5, which nothing selects? */
+} e_WorldEnvFogMode;
 
 /** @brief Game workspace. Stores miscellaneous gameplay-related data. */
 typedef struct _GameWork
@@ -309,56 +320,23 @@ STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 /** @brief World environment preset: contains fog, lighting and tint settings. */
 typedef struct _WorldEnvPreset
 {
-    /* 0x0  */ u8      flags;   /** `e_SpecialEnvEventFlags` */
-    /* 0x1  */ u8      field_1; // Blended between presets.
-    /* 0x2  */ u8      gfxEnum; /** `e_UnkGfxEnum` */
-    /* 0x3  */ u8      field_3;
+    /* 0x0  */ u8      flags;         /** `e_WorldEnvFlags` */
+    /* 0x1  */ u8      lightLevelMax; /** Upper limit on the computed light level of lit vertices. `0xFF` for no limit. */
+    /* 0x2  */ u8      lightMode;     /** `e_WorldEnvLightMode` */
+    /* 0x3  */ u8      __pad_3;
     /* 0x4  */ q3_12   spotLightIntensity;
     /* 0x6  */ q3_12   worldLightIntensity;
     /* 0x8  */ q3_12   worldTintR;
     /* 0xA  */ q3_12   worldTintG;
     /* 0xC  */ q3_12   worldTintB;
-    /* 0xE  */ u8      field_E; /** Some fog state information.
-                                 * It works basically as a boolean to determine if fog is or not enabled, however,
-                                 * the code count with probably unused features as some pieces of code handle cases
-                                 * where this variable is set to 2 and 3.
-                                 * * In `WorldEnv_StateFromPreset`, if this variable is set to 3, has the same behaviour as
-                                 * * 0 and 1 (which sets the target fog distance). If set to 2, the fog distance is set to 0.
-                                 * * In `WorldEnv_Update` setting the value to 3 sets some special behaviour and
-                                 * * adjust the fog distance.
-                                 * The only way this value is set is through the defined enviroment preset at `WORLD_ENV_PRESETS`
-                                 * and by that it can be confirmed that 2 is unused as it is never defined in any preset, 3 only
-                                 * at the sixth (index 5) element defined, but, it seems the code never uses that preset.
-                                 * Forcing the load of the preset that assigns 3 at the beginning of the game result in a dark
-                                 * scene with the flashlight emitting a gigantic light effect, similar to the light that the
-                                 * flauros emits at the scene where Dahlia kidnap Alessa, but more intense and a slight purple
-                                 * world tone.
-                                 *
-                                 * Possibly state 2 and 3 were some early attempt to circumvent some issue with some effect
-                                 * that were left unused.
-                                 */
+    /* 0xE  */ u8      fogMode;       /** `e_WorldEnvFogMode`. */
     /* 0x10 */ q19_12  fogDistance;
     /* 0x14 */ CVECTOR fogColor;
     /* 0x18 */ u8      enableTintLightOverlap; /** `bool` */
     /* 0x19 */ CVECTOR pointLightTint;         /** Volumetric point light color. */
     /* 0x1D */ CVECTOR worldTint;              /** Subtractive. */
-                                               /** Odd use. (Particle related)
-                                                * This variables are only ever used in the maps' particle system. At `Particle_SystemUpdate`
-                                                * these variables values are retrieved to two different global variables by using  `func_8003EDB8`
-                                                *
-                                                * The values from `field_21` are only used in the code that handles the snow effect to define the color of the particles.
-                                                * The values from `field_26` are used in the code that handles the snow and rain effect from the first
-                                                * overlay, to define the color of the particles.
-                                                *
-                                                * The first variable shouldn't do any real impact as by default the game uses only the red value
-                                                * to represent all of the other three values, despite the existance of code that handle each of the
-                                                * variables from the struct, that code is never used. That code is also exclusive of the first overlay
-                                                * other overlays doesn't have the function that uses this value.
-                                                * The second variable seems to be either broken or doesn't do any real impact neither in rain the
-                                                * effect or the snow effect.
-                                                */
-    /* 0x21 */ CVECTOR field_21;               // } Particle effect related. Only the first value affects snow transparency.
-    /* 0x25 */ CVECTOR field_25;               // }
+    /* 0x21 */ CVECTOR snowColor;              /** Snow particle color. `Particle_SnowDraw` uses only the red value in maps with header `field_16 == 1`. } Both multiply a dim additive texture, colors in the default env presets likely make very little difference? */
+    /* 0x25 */ CVECTOR rainColor;              /** Rain particle color. `Particle_RainDraw` uses only the red value in maps with header `field_16 == 1`. } */
                // 3 bytes of padding.
 } s_WorldEnvPreset;
 STATIC_ASSERT_SIZEOF(s_WorldEnvPreset, 44);

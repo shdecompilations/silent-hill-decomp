@@ -180,7 +180,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     offset.vx = g_SysWork.playerWork.player.position.vx - chara->position.vx;
     offset.vz = g_SysWork.playerWork.player.position.vz - chara->position.vz;
 
-    if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed))
+    if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))
     {
         offset.vy = Q12(0.0f);
         pos.vy    = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.topExtent;

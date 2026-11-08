@@ -404,7 +404,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             sharedData_800DD584_0_s00 = g_DeltaTime == Q12(0.0f);
 #endif
 
-            func_8003EDB8(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
+            WorldEnv_SnowRainColorGet(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
 
             if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00)
             {
@@ -4312,7 +4312,7 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
             break;
 
         case 2:
-            if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed))
+            if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
@@ -4330,7 +4330,7 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
                 prim->g0 = 0x30;
                 prim->b0 = 0x30;
             }
-            else if (!(g_SysWork.worldEnv.transitionCur[1].params.flags & SpecialEnvEventFlags_DarkEnvironment))
+            else if (!(g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;

@@ -147,7 +147,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
         u8 x = -x;
     }
 
-    if (g_WorldEnvRenderWork.field_0 == UnkGfxEnum_0)
+    if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_None)
     {
         colors[4].r = Q12_MULT(g_WorldEnvRenderWork.worldTintColor.r, g_WorldEnvRenderWork.field_20);
         colors[4].g = Q12_MULT(g_WorldEnvRenderWork.worldTintColor.g, g_WorldEnvRenderWork.field_20);
@@ -177,17 +177,17 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
         WorldEnvRender_LightTransform(&worldMat, g_WorldEnvRenderWork.light.intensity,
                                       &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position);
 
-        switch (g_WorldEnvRenderWork.field_0)
+        switch (g_WorldEnvRenderWork.lightMode)
         {
-            case UnkGfxEnum_0:
-            case UnkGfxEnum_1:
+            case WorldEnvLightMode_None:
+            case WorldEnvLightMode_Spot:
                 func_8005A478(&sp90, fogAlpha);
                 SetColorMatrix(&g_WorldEnvRenderWork.colorMat);
                 gte_lddqa(g_WorldEnvRenderWork.light.field_0);
                 gte_lddqb_0();
                 break;
 
-            case UnkGfxEnum_2:
+            case WorldEnvLightMode_Directional:
                 func_8005A838(&sp90, fogAlpha);
                 SetColorMatrix(&g_WorldEnvRenderWork.colorMat);
                 break;
@@ -220,7 +220,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
             lightPosY = Q12_MULT(lightPosY, temp_lo);
             lightPosZ = Q12_MULT(lightPosZ, temp_lo);
 
-            if (g_WorldEnvRenderWork.field_0 == UnkGfxEnum_1)
+            if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_Spot)
             {
                 gte_lddp(temp_lo);
                 gte_ldir_stbk();

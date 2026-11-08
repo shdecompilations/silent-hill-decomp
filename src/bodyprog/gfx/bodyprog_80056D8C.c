@@ -144,7 +144,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 otShift, MATRIX* view
     }
     else
     {
-        if (worldMat != NULL && g_WorldEnvRenderWork.field_0 != UnkGfxEnum_0)
+        if (worldMat != NULL && g_WorldEnvRenderWork.lightMode != WorldEnvLightMode_None)
         {
             WorldEnvRender_LightTransform(worldMat, g_WorldEnvRenderWork.light.intensity, &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position);
         }
@@ -239,16 +239,16 @@ void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX*
             func_800574D4(curMeshHdr, scratchData);
         }
 
-        switch (g_WorldEnvRenderWork.field_0)
+        switch (g_WorldEnvRenderWork.lightMode)
         {
-            case UnkGfxEnum_0:
+            case WorldEnvLightMode_None:
                 break;
 
-            case UnkGfxEnum_1:
+            case WorldEnvLightMode_Spot:
                 func_80057658(curMeshHdr, normalOffset, scratchData, &g_WorldEnvRenderWork.light.field_28, &g_WorldEnvRenderWork.light.field_30);
                 break;
 
-            case UnkGfxEnum_2:
+            case WorldEnvLightMode_Directional:
                 func_80057A3C(curMeshHdr, normalOffset, scratchData, &g_WorldEnvRenderWork.light.field_28);
                 break;
         }
@@ -357,7 +357,7 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     SetGeomScreen(16);
 
     temp_t9 = g_WorldEnvRenderWork.field_20 >> 5;
-    temp_v1 = g_WorldEnvRenderWork.field_3;
+    temp_v1 = g_WorldEnvRenderWork.lightLevelMax;
 
     var_t0 = &scratchData->field_2B8[offset];
     mat    = &scratchData->field_380.field_0;
@@ -675,7 +675,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
     scratchData->field_380.s_0.field_8    = g_WorldEnvRenderWork.worldTintColor;
     scratchData->field_380.s_0.field_8.cd = 60;
 
-    if (g_WorldEnvRenderWork.field_0 == UnkGfxEnum_0)
+    if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_None)
     {
         gte_lddp(Q12(1.0f) - g_WorldEnvRenderWork.field_20);
         gte_ldrgb(&scratchData->field_380.s_0.field_8);
@@ -690,7 +690,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
     prim = meshHdr->primitives;
 
-    if (g_WorldEnvRenderWork.field_0 != UnkGfxEnum_0)
+    if (g_WorldEnvRenderWork.lightMode != WorldEnvLightMode_None)
     {
         if (g_WorldEnvRenderWork.isFogEnabled)
         {
@@ -1604,20 +1604,20 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX*
         var_v1 = 256 << 4;
     }
 
-    switch (g_WorldEnvRenderWork.field_0)
+    switch (g_WorldEnvRenderWork.lightMode)
     {
-        case UnkGfxEnum_0:
+        case WorldEnvLightMode_None:
             func_8005A42C(scratchData, var_v1);
             break;
 
-        case UnkGfxEnum_1:
+        case WorldEnvLightMode_Spot:
             func_8005A478(scratchData, var_v1);
             SetColorMatrix(&g_WorldEnvRenderWork.colorMat);
             gte_lddqa(g_WorldEnvRenderWork.light.field_0);
             gte_lddqb_0();
             break;
 
-        case UnkGfxEnum_2:
+        case WorldEnvLightMode_Directional:
             func_8005A838(scratchData, var_v1);
             SetColorMatrix(&g_WorldEnvRenderWork.colorMat);
             gte_lddqa(g_WorldEnvRenderWork.light.field_0);
@@ -1633,7 +1633,7 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX*
     {
         func_8005A900(curMeshHdr, vertOffset, scratchData, viewMat);
 
-        if (g_WorldEnvRenderWork.field_0 != UnkGfxEnum_0)
+        if (g_WorldEnvRenderWork.lightMode != WorldEnvLightMode_None)
         {
             func_8005AA08(curMeshHdr, normalOffset, scratchData);
         }
@@ -1728,9 +1728,9 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
 
     var_s0  += var_v1;
     var_s0 >>= 1;
-    if (g_WorldEnvRenderWork.field_3 < var_s0)
+    if (g_WorldEnvRenderWork.lightLevelMax < var_s0)
     {
-        var_s0 = g_WorldEnvRenderWork.field_3;
+        var_s0 = g_WorldEnvRenderWork.lightLevelMax;
     }
 
     var_s0 = Q12_MULT(var_s0, alpha);
@@ -1930,7 +1930,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
     u16*         var_t5;
     u_poly       poly;
 
-    var_a3              = g_WorldEnvRenderWork.field_0;
+    var_a3              = g_WorldEnvRenderWork.lightMode;
     scratchData->u.s_1.field_8 = g_WorldEnvRenderWork.clutY << 16;
 
     temp_a0 = 0x79C << (otShift + 2);
@@ -1965,7 +1965,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
             *(s32*)&poly.gt3->x1 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1];
             *(s32*)&poly.gt3->x2 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2];
 
-            if (var_a3 != UnkGfxEnum_0)
+            if (var_a3 != WorldEnvLightMode_None)
             {
                 *(s32*)&poly.gt3->r0 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_4];
                 *(s32*)&poly.gt3->r1 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_5];
@@ -2020,7 +2020,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
             *(s32*)&poly.gt4->x2 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2];
             *(s32*)&poly.gt4->x3 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_3];
 
-            if (var_a3 != UnkGfxEnum_0)
+            if (var_a3 != WorldEnvLightMode_None)
             {
                 *(s32*)&poly.gt4->r0 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_4];
                 *(s32*)&poly.gt4->r1 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_5];

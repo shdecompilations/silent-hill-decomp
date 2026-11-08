@@ -2829,7 +2829,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         {
             if (!g_GameWork.config.extraAutoAiming)
             {
-                if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                 {
                     func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                     func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
@@ -2872,7 +2872,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         {
             if (g_SysWork.targetNpcIdx != NO_VALUE && !g_GameWork.config.extraAutoAiming)
             {
-                if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                 {
                     func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(3.0f), 5);
                 }
@@ -3627,7 +3627,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 playerProps.flags                 &= ~PlayerFlag_Unk9;
                 player->properties.player.field_F4 = g_Player_FlexRotationX;
 
-                if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                 {
                     func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(2.0f / 3.0f), Q12(10.0f), playerTurn);
                 }
@@ -3675,7 +3675,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                         g_Player_PrevPosition.vy != g_SysWork.playerWork.player.position.vy ||
                         g_Player_PrevPosition.vz != g_SysWork.playerWork.player.position.vz)
                     {
-                        if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                        if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                         {
                             func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                         }
@@ -3813,7 +3813,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (g_GameWork.config.extraAutoAiming)
                 {
-                    if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                    if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                     {
                         func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                     }
@@ -3822,7 +3822,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                         func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
                     }
                 }
-                else if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                else if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                 {
                     func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(7.0f), 4);
                 }
@@ -4166,7 +4166,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     {
                         if (g_GameWork.config.extraAutoAiming)
                         {
-                            if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                            if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                             {
                                 func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                             }
@@ -4175,7 +4175,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                                 func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
                             }
                         }
-                        else if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                        else if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                         {
                             func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(7.0f), 4);
                         }
@@ -4377,7 +4377,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
 
                 if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                    if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                     {
                         func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(3.0f), 5);
                     }
@@ -4390,7 +4390,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 }
                 else
                 {
-                    if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                    if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
                     {
                         func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(7.0f), Q12(7.0f), 5);
                     }

@@ -308,10 +308,10 @@ void func_8003EDA8(void) // 0x8003EDA8
     g_SysWork.worldEnv.flashEffect = true;
 }
 
-void func_8003EDB8(CVECTOR* color0, CVECTOR* color1) // 0x8003EDB8
+void WorldEnv_SnowRainColorGet(CVECTOR* snowColor, CVECTOR* rainColor) // 0x8003EDB8
 {
-    *color0 = g_SysWork.worldEnv.transitionCur[g_SysWork.worldEnv.isFlashlightOn].params.field_21;
-    *color1 = g_SysWork.worldEnv.transitionCur[g_SysWork.worldEnv.isFlashlightOn].params.field_25;
+    *snowColor = g_SysWork.worldEnv.transitionCur[g_SysWork.worldEnv.isFlashlightOn].params.snowColor;
+    *rainColor = g_SysWork.worldEnv.transitionCur[g_SysWork.worldEnv.isFlashlightOn].params.rainColor;
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
@@ -364,7 +364,7 @@ void WorldEnv_StateFromPreset(s_WorldEnvState* arg0, const s_WorldEnvPreset* pre
 {
     arg0->params = *preset;
 
-    if (preset->flags & SpecialEnvEventFlags_EnableBrightness)
+    if (preset->flags & WorldEnvFlag_EnableBrightness)
     {
         arg0->brightnessIntensity = Q12(1.0f);
     }
@@ -373,7 +373,7 @@ void WorldEnv_StateFromPreset(s_WorldEnvState* arg0, const s_WorldEnvPreset* pre
         arg0->brightnessIntensity = Q12(0.0f);
     }
 
-    if (preset->flags & SpecialEnvEventFlags_EnableLensflare)
+    if (preset->flags & WorldEnvFlag_EnableLensFlare)
     {
         arg0->flashlightLensFlareIntensity = Q12(1.0f);
     }
@@ -382,18 +382,18 @@ void WorldEnv_StateFromPreset(s_WorldEnvState* arg0, const s_WorldEnvPreset* pre
         arg0->flashlightLensFlareIntensity = Q12(0.0f);
     }
 
-    switch (preset->field_E)
+    switch (preset->fogMode)
     {
-        case 0:
-        case 1:
+        case WorldEnvFogMode_Off:
+        case WorldEnvFogMode_On:
             arg0->fogDistance = preset->fogDistance;
             break;
 
-        case 2:
+        case WorldEnvFogMode_Zero:
             arg0->fogDistance = Q12(0.0f);
             break;
 
-        case 3:
+        case WorldEnvFogMode_FollowLight:
             arg0->fogDistance = preset->fogDistance;
             break;
     }
@@ -424,8 +424,8 @@ void WorldEnv_Update(void) // 0x8003F170
 
     g_SysWork.worldEnv.flashlightIntensity = CLAMP(g_SysWork.worldEnv.flashlightIntensity, Q12(0.0f), Q12(1.0f));
 
-    /** @unused See `s_WorldEnvPreset::field_E`. */
-    if (g_SysWork.worldEnv.transitionTo[g_SysWork.worldEnv.flashlightIntensity != Q12(0.0f)].params.field_E == 3)
+    /** @unused See `WorldEnvFogMode_FollowLight`. */
+    if (g_SysWork.worldEnv.transitionTo[g_SysWork.worldEnv.flashlightIntensity != Q12(0.0f)].params.fogMode == WorldEnvFogMode_FollowLight)
     {
         Vw_CoordToViewSpaceMatrix(g_SysWork.lightBoneCoord, &viewMat);
         ApplyMatrixLV(&viewMat, &g_SysWork.lightPosition, &sp48);
@@ -459,11 +459,11 @@ void WorldEnv_Update(void) // 0x8003F170
         flags            = currentInGameGfx->params.flags;
         ptr->flashEffect = false;
 
-        if (flags & SpecialEnvEventFlags_DarkEnvironment)
+        if (flags & WorldEnvFlag_Dark)
         {
             WorldEnv_StateFromPreset(currentInGameGfx, &WORLD_ENV_PRESETS[8]);
         }
-        else if (flags & SpecialEnvEventFlags_FlashlightAllowed)
+        else if (flags & WorldEnvFlag_FlashlightAllowed)
         {
             currentInGameGfx->params.spotLightIntensity += Q12(0.3f);
         }
@@ -472,14 +472,14 @@ void WorldEnv_Update(void) // 0x8003F170
     ptr->visibilityDistance = func_8003FEC0(&currentInGameGfx->params);
     WorldEnv_Apply(currentInGameGfx);
 
-    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, currentInGameGfx->params.spotLightIntensity, currentInGameGfx->params.gfxEnum, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
+    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, currentInGameGfx->params.spotLightIntensity, currentInGameGfx->params.lightMode, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
 
     Gfx_FlashlightPositionUpdate(lightIntensity, currentInGameGfx->flashlightLensFlareIntensity, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
                                  g_SysWork.lightPosition.vx, g_SysWork.lightPosition.vy, g_SysWork.lightPosition.vz,
                                  g_WorldGfxWork.mapInfo->waterZones);
     func_80055814(currentInGameGfx->fogDistance);
 
-    if (ptr->current.params.flags & SpecialEnvEventFlags_UseLighter)
+    if (ptr->current.params.flags & WorldEnvFlag_UseLighter)
     {
         func_8003E740();
     }
@@ -690,59 +690,59 @@ static void func_8003F838(s_WorldEnvState* target, s_WorldEnvState* envSettings0
         target->flashlightLensFlareIntensity = Math_WeightedAverageGet(envSettings0->flashlightLensFlareIntensity, envSettings1->flashlightLensFlareIntensity, weight0);
     }
 
-    if (envSettings0->params.flags & SpecialEnvEventFlags_DarkEnvironment)
+    if (envSettings0->params.flags & WorldEnvFlag_Dark)
     {
-        if (envSettings1->params.flags & SpecialEnvEventFlags_DarkEnvironment)
+        if (envSettings1->params.flags & WorldEnvFlag_Dark)
         {
-            target->params.field_1 = Math_WeightedAverageGet(envSettings0->params.field_1, envSettings1->params.field_1, weight);
+            target->params.lightLevelMax = Math_WeightedAverageGet(envSettings0->params.lightLevelMax, envSettings1->params.lightLevelMax, weight);
         }
         else
         {
-            target->params.field_1 = Math_WeightedAverageGet(envSettings0->params.field_1, envSettings1->params.field_1, weight1);
+            target->params.lightLevelMax = Math_WeightedAverageGet(envSettings0->params.lightLevelMax, envSettings1->params.lightLevelMax, weight1);
         }
     }
     else
     {
-        if (envSettings1->params.flags & SpecialEnvEventFlags_DarkEnvironment)
+        if (envSettings1->params.flags & WorldEnvFlag_Dark)
         {
-            target->params.field_1 = Math_WeightedAverageGet(envSettings0->params.field_1, envSettings1->params.field_1, weight0);
+            target->params.lightLevelMax = Math_WeightedAverageGet(envSettings0->params.lightLevelMax, envSettings1->params.lightLevelMax, weight0);
         }
         else
         {
-            target->params.field_1 = Math_WeightedAverageGet(envSettings0->params.field_1, envSettings1->params.field_1, weight);
+            target->params.lightLevelMax = Math_WeightedAverageGet(envSettings0->params.lightLevelMax, envSettings1->params.lightLevelMax, weight);
         }
     }
 
     // Fog values adjustment.
-    if (envSettings0->params.field_E == 0)
+    if (envSettings0->params.fogMode == WorldEnvFogMode_Off)
     {
-        if (envSettings1->params.field_E != 0)
+        if (envSettings1->params.fogMode != WorldEnvFogMode_Off)
         {
-            target->params.field_E = envSettings1->params.field_E;
+            target->params.fogMode = envSettings1->params.fogMode;
             func_8003FD38(target, envSettings0, envSettings1, weight, weight0, weight1);
         }
         else
         {
-            target->params.field_E = temp = envSettings1->params.field_E;
+            target->params.fogMode = temp = envSettings1->params.fogMode;
             func_8003FD38(target, envSettings0, envSettings1, weight, weight, weight);
         }
     }
-    else if (envSettings1->params.field_E == 0)
+    else if (envSettings1->params.fogMode == WorldEnvFogMode_Off)
     {
         if (weight1 >= Q12(1.0f))
         {
-            target->params.field_E = envSettings1->params.field_E;
+            target->params.fogMode = envSettings1->params.fogMode;
         }
         else
         {
-            target->params.field_E = envSettings0->params.field_E;
+            target->params.fogMode = envSettings0->params.fogMode;
         }
 
         func_8003FD38(target, envSettings0, envSettings1, weight, weight1, weight0);
     }
     else
     {
-        target->params.field_E = temp = envSettings1->params.field_E;
+        target->params.fogMode = temp = envSettings1->params.fogMode;
         func_8003FD38(target, envSettings0, envSettings1, weight, weight, weight);
     }
 
@@ -750,57 +750,57 @@ static void func_8003F838(s_WorldEnvState* target, s_WorldEnvState* envSettings0
     target->params.worldTintG = Math_WeightedAverageGet(envSettings0->params.worldTintG, envSettings1->params.worldTintG, weight);
     target->params.worldTintB = Math_WeightedAverageGet(envSettings0->params.worldTintB, envSettings1->params.worldTintB, weight);
 
-    if (envSettings0->params.gfxEnum == UnkGfxEnum_1 && envSettings1->params.gfxEnum == UnkGfxEnum_2)
+    if (envSettings0->params.lightMode == WorldEnvLightMode_Spot && envSettings1->params.lightMode == WorldEnvLightMode_Directional)
     {
         if (weight < Q12(5.0f / 6.0f))
         {
             weight2                                = Q12_MULT(weight, Q12(1.2f));
             weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->params.gfxEnum  = envSettings0->params.gfxEnum;
+            target->params.lightMode  = envSettings0->params.lightMode;
             target->params.spotLightIntensity = Math_WeightedAverageGet(envSettings0->params.spotLightIntensity, 0, weight2);
         }
         else
         {
             weight2                                = (weight - Q12(5.0f / 6.0f)) * 6;
             weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->params.gfxEnum  = envSettings1->params.gfxEnum;
+            target->params.lightMode  = envSettings1->params.lightMode;
             weight0                                = envSettings1->params.spotLightIntensity;
             target->params.spotLightIntensity = Math_WeightedAverageGet(Q12(0.0f), weight0, weight2);
         }
     }
-    else if (envSettings0->params.gfxEnum == UnkGfxEnum_2 && envSettings1->params.gfxEnum == UnkGfxEnum_1)
+    else if (envSettings0->params.lightMode == WorldEnvLightMode_Directional && envSettings1->params.lightMode == WorldEnvLightMode_Spot)
     {
         if (weight < Q12(1.0f / 6.0f))
         {
             weight2                                = weight * 6;
             weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->params.gfxEnum  = envSettings0->params.gfxEnum;
+            target->params.lightMode  = envSettings0->params.lightMode;
             target->params.spotLightIntensity = Math_WeightedAverageGet(envSettings0->params.spotLightIntensity, Q12(0.0f), weight2);
         }
         else
         {
             weight2                                = Q12_MULT(weight - Q12(1.0f / 6.0f), Q12(1.2f));
             weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->params.gfxEnum  = envSettings1->params.gfxEnum;
+            target->params.lightMode  = envSettings1->params.lightMode;
             target->params.spotLightIntensity = Math_WeightedAverageGet(Q12(0.0f), envSettings1->params.spotLightIntensity, weight2);
         }
     }
     else
     {
-        if (envSettings0->params.gfxEnum != UnkGfxEnum_0 && envSettings1->params.gfxEnum == UnkGfxEnum_0)
+        if (envSettings0->params.lightMode != WorldEnvLightMode_None && envSettings1->params.lightMode == WorldEnvLightMode_None)
         {
             if (weight >= Q12(1.0f))
             {
-                target->params.gfxEnum = envSettings1->params.gfxEnum;
+                target->params.lightMode = envSettings1->params.lightMode;
             }
             else
             {
-                target->params.gfxEnum = envSettings0->params.gfxEnum;
+                target->params.lightMode = envSettings0->params.lightMode;
             }
         }
         else
         {
-            target->params.gfxEnum = envSettings1->params.gfxEnum;
+            target->params.lightMode = envSettings1->params.lightMode;
         }
 
         target->params.spotLightIntensity = Math_WeightedAverageGet(envSettings0->params.spotLightIntensity, envSettings1->params.spotLightIntensity, weight);
@@ -824,8 +824,8 @@ static void func_8003FCB0(s_WorldEnvPreset* target, const s_WorldEnvPreset* envS
     q19_12 alphaFrom;
 
     alphaFrom = Q12(1.0f) - alphaTo;
-    LoadAverageCol(&envSettings0->field_21.r, &envSettings1->field_21.r, alphaFrom, alphaTo, &target->field_21.r);
-    LoadAverageCol(&envSettings0->field_25.r, &envSettings1->field_25.r, alphaFrom, alphaTo, &target->field_25.r);
+    LoadAverageCol(&envSettings0->snowColor.r, &envSettings1->snowColor.r, alphaFrom, alphaTo, &target->snowColor.r);
+    LoadAverageCol(&envSettings0->rainColor.r, &envSettings1->rainColor.r, alphaFrom, alphaTo, &target->rainColor.r);
 }
 
 /**
@@ -883,7 +883,7 @@ s32 func_8003FEC0(const s_WorldEnvPreset* arg0) // 0x8003FEC0
         return arg0->fogDistance;
     }
 
-    if (g_WorldEnvRenderWork.field_0 == UnkGfxEnum_1)
+    if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_Spot)
     {
         return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->spotLightIntensity, 0, Q12(2.0f));
     }
@@ -900,8 +900,8 @@ void WorldEnv_Apply(s_WorldEnvState* arg0) // 0x8003FF2C
     temp_v1    = Q12_MULT(arg0->brightnessIntensity, (g_GameWork.config.brightness * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    WorldEnvRender_WorldLightingParamSet(arg0->params.gfxEnum, arg0->params.worldLightIntensity, arg0->params.field_1, arg0->params.worldTintR, arg0->params.worldTintG, arg0->params.worldTintB, brightness);
-    WorldEnvRender_FogParamsSet(arg0->params.field_E != 0, arg0->params.fogColor.r, arg0->params.fogColor.g, arg0->params.fogColor.b);
+    WorldEnvRender_WorldLightingParamSet(arg0->params.lightMode, arg0->params.worldLightIntensity, arg0->params.lightLevelMax, arg0->params.worldTintR, arg0->params.worldTintG, arg0->params.worldTintB, brightness);
+    WorldEnvRender_FogParamsSet(arg0->params.fogMode != WorldEnvFogMode_Off, arg0->params.fogColor.r, arg0->params.fogColor.g, arg0->params.fogColor.b);
 
     fogDistCpy = arg0->params.fogDistance;
 

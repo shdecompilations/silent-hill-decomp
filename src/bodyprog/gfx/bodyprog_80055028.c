@@ -49,8 +49,8 @@ void WorldEnvRender_Init(void) // 0x80055028
     func_80040BAC();
     func_8008D41C();
 
-    g_WorldEnvRenderWork.field_0  = UnkGfxEnum_0;
-    g_WorldEnvRenderWork.field_20 = Q12(1.0f);
+    g_WorldEnvRenderWork.lightMode = WorldEnvLightMode_None;
+    g_WorldEnvRenderWork.field_20  = Q12(1.0f);
 
     g_WorldEnvRenderWork.worldTintColor.r = 128;
     g_WorldEnvRenderWork.worldTintColor.g = 128;
@@ -90,7 +90,7 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
         func_80041074(ot, g_WorldEnvRenderWork.light.intensity, &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position);
     }
 
-    if (g_WorldEnvRenderWork.field_0 == UnkGfxEnum_1 && g_WorldEnvRenderWork.light.lensFlareIntensity != Q12(0.0f))
+    if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_Spot && g_WorldEnvRenderWork.light.lensFlareIntensity != Q12(0.0f))
     {
         func_8008D470(g_WorldEnvRenderWork.light.lensFlareIntensity, &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position, g_WorldEnvRenderWork.waterZones);
     }
@@ -176,9 +176,9 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 
 void WorldEnvRender_WorldLightingParamSet(u8 arg0, q19_12 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
 {
-    g_WorldEnvRenderWork.field_0          = arg0;
+    g_WorldEnvRenderWork.lightMode        = arg0;
     g_WorldEnvRenderWork.field_20         = arg1;
-    g_WorldEnvRenderWork.field_3          = arg2;
+    g_WorldEnvRenderWork.lightLevelMax    = arg2;
     g_WorldEnvRenderWork.worldTintColor.r = tintR >> 5;
     g_WorldEnvRenderWork.colorMat.m[0][2] = tintR;
     g_WorldEnvRenderWork.colorMat.m[0][1] = tintR;
@@ -591,7 +591,7 @@ u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
     pos[1] = Q12_TO_Q8(posY) - Q12_TO_Q8(g_WorldEnvRenderWork.light.position.vy);
     pos[2] = Q12_TO_Q8(posZ) - Q12_TO_Q8(g_WorldEnvRenderWork.light.position.vz);
 
-    if (g_WorldEnvRenderWork.field_0 != UnkGfxEnum_0)
+    if (g_WorldEnvRenderWork.lightMode != WorldEnvLightMode_None)
     {
         ptr1 = &g_WorldEnvRenderWork.light.field_38;
         for (i = 0, ptr0 = ptr1, var_a3 = 0xFF;
@@ -620,7 +620,7 @@ u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
 
     var_a3 += g_WorldEnvRenderWork.field_20 >> 5;
 
-    limitRange(var_a3, 0, g_WorldEnvRenderWork.field_3);
+    limitRange(var_a3, 0, g_WorldEnvRenderWork.lightLevelMax);
     return var_a3;
 }
 
@@ -682,7 +682,7 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat) // 0x80055F08
     rotMat.m[2][1] = arg0->vy - g_WorldEnvRenderWork.light.field_30.vy;
     rotMat.m[2][2] = arg0->vz - g_WorldEnvRenderWork.light.field_30.vz;
 
-    field_3  = g_WorldEnvRenderWork.field_3;
+    field_3  = g_WorldEnvRenderWork.lightLevelMax;
     field_20 = g_WorldEnvRenderWork.field_20 >> 5;
 
     SetRotMatrix(&rotMat);

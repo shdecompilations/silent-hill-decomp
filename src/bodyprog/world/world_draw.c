@@ -1272,7 +1272,7 @@ void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 otShif
     if (timer != Q12(0.0f))
     {
         tintColor = g_WorldEnvRenderWork.worldTintColor;
-        WorldEnvRender_WorldLightingParamSet(g_WorldEnvRenderWork.field_0, g_WorldEnvRenderWork.field_20, g_WorldEnvRenderWork.field_3,
+        WorldEnvRender_WorldLightingParamSet(g_WorldEnvRenderWork.lightMode, g_WorldEnvRenderWork.field_20, g_WorldEnvRenderWork.lightLevelMax,
                       Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvRenderWork.worldTintColor.r) << 5,
                       Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvRenderWork.worldTintColor.g) << 5,
                       Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvRenderWork.worldTintColor.b) << 5,
@@ -1284,7 +1284,7 @@ void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 otShif
 
     if (timer != Q12(0.0f))
     {
-        WorldEnvRender_WorldLightingParamSet(g_WorldEnvRenderWork.field_0, g_WorldEnvRenderWork.field_20, g_WorldEnvRenderWork.field_3,
+        WorldEnvRender_WorldLightingParamSet(g_WorldEnvRenderWork.lightMode, g_WorldEnvRenderWork.field_20, g_WorldEnvRenderWork.lightLevelMax,
                       tintColor.r << 5,
                       tintColor.g << 5,
                       tintColor.b << 5,

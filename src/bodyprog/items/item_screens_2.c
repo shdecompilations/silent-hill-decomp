@@ -814,10 +814,10 @@ void Inventory_Update(void) // 0x8004D518
             }
             else if (Pad_ButtonClickedBind(enter))
             {
-                if ((!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed) ||
+                if ((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) ||
                      g_SysWork.worldEnv.isFlashlightOn ||
-                     (!(g_SysWork.worldEnv.transitionCur[0].params.flags & SpecialEnvEventFlags_DarkEnvironment) &&
-                      !(g_SysWork.worldEnv.transitionCur[1].params.flags & SpecialEnvEventFlags_DarkEnvironment))) &&
+                     (!(g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark) &&
+                      !(g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark))) &&
                     HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
                 {
                     Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.5f), Q7(0.5f));
@@ -852,10 +852,10 @@ void Inventory_Update(void) // 0x8004D518
             {
                 Inventory_UnavailableMapTextDraw(1);
             }
-            else if (g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed &&
+            else if (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed &&
                      !g_SysWork.worldEnv.isFlashlightOn &&
-                     (g_SysWork.worldEnv.transitionCur[0].params.flags & SpecialEnvEventFlags_DarkEnvironment ||
-                      g_SysWork.worldEnv.transitionCur[1].params.flags & SpecialEnvEventFlags_DarkEnvironment))
+                     (g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark ||
+                      g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark))
             {
                 Inventory_UnavailableMapTextDraw(0);
             }
@@ -956,10 +956,10 @@ void Inventory_Update(void) // 0x8004D518
                     case InvCmdId_UseLook:
                         if (g_Inventory_CmdSelectedIdx != 0)
                         {
-                            if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed) ||
+                            if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) ||
                                 g_SysWork.worldEnv.isFlashlightOn ||
-                                (!(g_SysWork.worldEnv.transitionCur[0].params.flags & SpecialEnvEventFlags_DarkEnvironment) &&
-                                 !(g_SysWork.worldEnv.transitionCur[1].params.flags & SpecialEnvEventFlags_DarkEnvironment)))
+                                (!(g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark) &&
+                                 !(g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)))
                             {
                                 g_Inventory_SelectionBordersDraw = 1;
                                 g_Inventory_SelectionId          = InvSelectionId_Examine;
@@ -1034,10 +1034,10 @@ void Inventory_Update(void) // 0x8004D518
                         break;
 
                     case InvCmdId_Look:
-                        if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed) ||
+                        if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) ||
                             g_SysWork.worldEnv.isFlashlightOn ||
-                            (!(g_SysWork.worldEnv.transitionCur[0].params.flags & SpecialEnvEventFlags_DarkEnvironment) &&
-                             !(g_SysWork.worldEnv.transitionCur[1].params.flags & SpecialEnvEventFlags_DarkEnvironment)))
+                            (!(g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark) &&
+                             !(g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)))
                         {
                             g_Inventory_SelectionBordersDraw = 1;
                             g_Inventory_SelectionId          = InvSelectionId_Examine;

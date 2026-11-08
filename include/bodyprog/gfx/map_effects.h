@@ -35,7 +35,7 @@ void Gfx_MapInitMapEffectsUpdate(s32 idx0, s32 idx1);
 
 void func_8003EDA8(void);
 
-void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
+void WorldEnv_SnowRainColorGet(CVECTOR* snowColor, CVECTOR* rainColor);
 
 /** @brief @unused */
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
