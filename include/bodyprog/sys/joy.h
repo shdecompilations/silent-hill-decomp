@@ -10,7 +10,7 @@
 
 #define INPUT_ACTION_COUNT   14
 #define CONTROLLER_COUNT_MAX 2
-#define STICK_DEADZONE       FP_STICK(0.5f)
+#define STICK_DEADZONE       Q7(0.5f)
 
 /** @brief PSX controller input flags. */
 typedef enum _ControllerFlags
@@ -133,6 +133,11 @@ STATIC_ASSERT_SIZEOF(s_ControllerConfig, 28);
 
 extern s_ControllerData* const g_Controller0;
 extern s_ControllerData* const g_Controller1;
+
+// TODO: Went with Pad_XXX for these over Joy_XXX so they wouldn't get confused with
+// actual Joy_XXX funcs, but not against making these more consistent
+// (right now we use "controller", "pad", "joy", maybe something less gamepad-focused
+// like "Input" would be better) -- emoose
 
 /** @brief Checks clicked/debounced controller 0 button flags against a mask of `e_ControllerFlags`.
  *
