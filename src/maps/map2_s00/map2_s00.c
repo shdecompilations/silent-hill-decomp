@@ -1424,8 +1424,8 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
     {
         case 0:
             Player_ControlFreeze();
-            Gfx_MapEnvSet(1, 1);
-            Gfx_MapEnvUpdate(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
+            WorldEnv_PresetsSet(1, 1);
+            WorldEnv_TransitionStart(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
 
             g_SysWork.playerWork.player.position.vx = Q12(147.7f);
             g_SysWork.playerWork.player.position.vz = Q12(376.5f);
@@ -1461,7 +1461,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             break;
 
         case 4:
-            Gfx_MapEnvSet(6, 3);
+            WorldEnv_PresetsSet(6, 3);
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
 
@@ -2404,7 +2404,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(22, 25):
             if (D_800F56E4 != 2)
             {
-                Gfx_MapEnvSet(6, 3);
+                WorldEnv_PresetsSet(6, 3);
                 D_800F56E4 = 2;
                 Game_TurnFlashlightOff();
             }
@@ -2416,7 +2416,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             {
                 if (D_800F56E4 != 1)
                 {
-                    Gfx_MapEnvSet(6, 3);
+                    WorldEnv_PresetsSet(6, 3);
                     D_800F56E4 = 1;
                 }
             }
@@ -2424,7 +2424,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             {
                 if (D_800F56E4 != 3)
                 {
-                    Gfx_MapEnvSet(13, 13);
+                    WorldEnv_PresetsSet(13, 13);
                     D_800F56E4 = 3;
                 }
             }
@@ -2434,7 +2434,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
         case CELL_XZ(20, 24):
             if (D_800F56E4 != 3)
             {
-                Gfx_MapEnvSet(13, 13);
+                WorldEnv_PresetsSet(13, 13);
                 D_800F56E4 = 3;
             }
             break;
@@ -2457,12 +2457,12 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             {
                 if (Savegame_EventFlagGet(EventFlag_134) || !Savegame_EventFlagGet(EventFlag_159))
                 {
-                    Gfx_MapEnvSet(1, 1);
+                    WorldEnv_PresetsSet(1, 1);
                     Game_TurnFlashlightOff();
                 }
                 else
                 {
-                    Gfx_MapEnvSet(6, 3);
+                    WorldEnv_PresetsSet(6, 3);
                 }
 
                 D_800F56E4 = 1;

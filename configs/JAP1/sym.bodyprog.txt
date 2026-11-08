@@ -698,15 +698,15 @@ Game_TurnFlashlightOn                        = 0x8003EA94; // type:func
 Game_TurnFlashlightOff                       = 0x8003EABC; // type:func
 Game_FlashlightToggle                        = 0x8003EAE0; // type:func
 Game_FlashlightIsOn                          = 0x8003EB3C; // type:func
-Gfx_MapEnvSet                                = 0x8003EB4C; // type:func
+WorldEnv_PresetsSet                          = 0x8003EB4C; // type:func
 func_8003EDA8                                = 0x8003EB80; // type:func
 func_8003EDB8                                = 0x8003EB90; // type:func
 func_8003EE30                                = 0x8003EC08; // type:func
-Gfx_LoadScreenMapEffectsUpdate               = 0x8003ECB4; // type:func
-Gfx_MapEnvUpdate                             = 0x8003ECE8; // type:func
-Gfx_MapEnvStepUpdate                         = 0x8003ED4C; // type:func
-Gfx_FogParametersSet                         = 0x8003EE64; // type:func
-Gfx_EffectsUpdate                            = 0x8003EF48; // type:func
+WorldEnv_LoadScreenPresetsSet                = 0x8003ECB4; // type:func
+WorldEnv_TransitionStart                     = 0x8003ECE8; // type:func
+WorldEnv_TransitionStartFromPresets          = 0x8003ED4C; // type:func
+WorldEnv_StateFromPreset                     = 0x8003EE64; // type:func
+WorldEnv_Update                              = 0x8003EF48; // type:func
 func_8003F4DC                                = 0x8003F2B4; // type:func
 func_8003F654                                = 0x8003F42C; // type:func
 func_8003F6F0                                = 0x8003F4C8; // type:func
@@ -716,7 +716,7 @@ func_8003FCB0                                = 0x8003FA88; // type:func
 func_8003FD38                                = 0x8003FB10; // type:func
 func_8003FE04                                = 0x8003FBDC; // type:func
 func_8003FEC0                                = 0x8003FC98; // type:func
-WorldEnv_FogLightingParamsUpdate             = 0x8003FD04; // type:func
+WorldEnv_Apply                               = 0x8003FD04; // type:func
 
 //--------------------------------------------------------------------------
 //--- PA: 0x01B27C   VA: 0x8003FDDC   subsegment: c, world/collision_trigger
@@ -746,7 +746,7 @@ nullsub_80040B6C                             = 0x80040944; // type:func
 //--------------------------------------------------------------------------
 Chara_ModelLoadedCheck                       = 0x8004094C; // type:func
 func_80040BAC                                = 0x80040984; // type:func
-WorldEnv_WorldLightTintParamSet              = 0x80040C54; // type:func
+WorldEnvRender_WorldLightTintParamSet        = 0x80040C54; // type:func
 func_80041074                                = 0x80040E4C; // type:func
 func_800410D8                                = 0x80040EB0; // type:func
 Math_RelativeRotationGet                     = 0x80041004; // type:func
@@ -1049,19 +1049,19 @@ Items_AmmoReloadCompute                      = 0x80056AC8; // type:func
 //------------------------------------------------------------------------
 //--- PA: 0x031FD0   VA: 0x80056B30   subsegment: c, gfx/bodyprog_80055028
 //------------------------------------------------------------------------
-WorldEnv_Init                                = 0x80056B30; // type:func
+WorldEnvRender_Init                          = 0x80056B30; // type:func
 WorldGfx_2dEffectsDraw                       = 0x80056BD8; // type:func
-WorldEnv_WorldLightingParamSet               = 0x80056E38; // type:func
-WorldEnv_FogParamsSet                        = 0x80056ECC; // type:func
-WorldEnv_WorldLightTintSet                   = 0x80056EE8; // type:func
-WorldEnv_LightPositionGet                    = 0x80056F3C; // type:func
-WorldEnv_LightRotationAndIntensityGet        = 0x80056F64; // type:func
-WorldEnv_LightDirectionAndIntensityGet       = 0x80056F98; // type:func
+WorldEnvRender_WorldLightingParamSet         = 0x80056E38; // type:func
+WorldEnvRender_FogParamsSet                  = 0x80056ECC; // type:func
+WorldEnvRender_WorldLightTintSet             = 0x80056EE8; // type:func
+WorldEnvRender_LightPositionGet              = 0x80056F3C; // type:func
+WorldEnvRender_LightRotationAndIntensityGet  = 0x80056F64; // type:func
+WorldEnvRender_LightDirectionAndIntensityGet = 0x80056F98; // type:func
 Gfx_FlashlightPositionUpdate                 = 0x80056FCC; // type:func
 func_80055648                                = 0x80057150; // type:func
 func_800557DC                                = 0x800572E4; // type:func
 func_80055814                                = 0x8005731C; // type:func
-WorldEnv_FogDistanceSet                      = 0x80057348; // type:func
+WorldEnvRender_FogDistanceSet                = 0x80057348; // type:func
 func_800559A8                                = 0x800574B0; // type:func
 func_80055A50                                = 0x80057558; // type:func
 func_80055A90                                = 0x80057598; // type:func
@@ -1101,7 +1101,7 @@ StringCopy                                   = 0x8005886C; // type:func
 Gfx_FogOverlayQuadDraw                       = 0x80058894; // type:func
 func_80057090                                = 0x80058B98; // type:func
 func_800571D0                                = 0x80058CD8; // type:func size:0x58
-WorldEnv_LightTransform                      = 0x80058D30; // type:func
+WorldEnvRender_LightTransform                = 0x80058D30; // type:func
 func_80057344                                = 0x80058E4C; // type:func
 func_800574D4                                = 0x80058FDC; // type:func
 func_8005759C                                = 0x800590A4; // type:func
@@ -2947,7 +2947,7 @@ CHARA_FILE_INFOS                             = 0x800AB5BC; // type:CharaFileInfo
 //-------------------------------------------------------------------
 //--- PA: 0x086D2C   VA: 0x800AB88C   subsegment: .data, sys/map_info
 //-------------------------------------------------------------------
-MAP_EFFECTS_INFOS                            = 0x800AB88C;
+WORLD_ENV_PRESETS                            = 0x800AB88C;
 D_800A952C                                   = 0x800AB9EC;
 
 //--------------------------------------------------------------------
@@ -3746,7 +3746,7 @@ g_Items_Coords                               = 0x800C64A0;
 //---------------------------------------------------------------------------
 //--- PA: 0x0A1C60   VA: 0x800C67C0   subsegment: .bss, gfx/bodyprog_80055028
 //---------------------------------------------------------------------------
-g_WorldEnvWork                               = 0x800C67C0; // type:u8 size:0x150 - size likely incomplete
+g_WorldEnvRenderWork                         = 0x800C67C0; // type:u8 size:0x150 - size likely incomplete
 
 //-------------------------------------------------------------------
 //--- PA: 0x0A1DB0   VA: 0x800C6910   subsegment: .bss, gfx/billboard

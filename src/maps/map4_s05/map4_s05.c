@@ -524,7 +524,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
     {
         if (D_800DB9B0 == 0)
         {
-            Gfx_MapEnvSet(6, 12);
+            WorldEnv_PresetsSet(6, 12);
             D_800DB9B0++;
         }
 

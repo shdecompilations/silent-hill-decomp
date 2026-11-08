@@ -306,8 +306,8 @@ typedef struct _PlayerCombat
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
-/** @brief Map effects info. */
-typedef struct _MapEffectsInfo
+/** @brief World environment preset: contains fog, lighting and tint settings. */
+typedef struct _WorldEnvPreset
 {
     /* 0x0  */ u8      flags;   /** `e_SpecialEnvEventFlags` */
     /* 0x1  */ u8      field_1; // Blended between presets.
@@ -322,11 +322,11 @@ typedef struct _MapEffectsInfo
                                  * It works basically as a boolean to determine if fog is or not enabled, however,
                                  * the code count with probably unused features as some pieces of code handle cases
                                  * where this variable is set to 2 and 3.
-                                 * * In `Gfx_FogParametersSet`, if this variable is set to 3, has the same behaviour as
+                                 * * In `WorldEnv_StateFromPreset`, if this variable is set to 3, has the same behaviour as
                                  * * 0 and 1 (which sets the target fog distance). If set to 2, the fog distance is set to 0.
-                                 * * In `Gfx_EffectsUpdate` setting the value to 3 sets some special behaviour and
+                                 * * In `WorldEnv_Update` setting the value to 3 sets some special behaviour and
                                  * * adjust the fog distance.
-                                 * The only way this value is set is through the defined enviroment preset at `MAP_EFFECTS_INFOS`
+                                 * The only way this value is set is through the defined enviroment preset at `WORLD_ENV_PRESETS`
                                  * and by that it can be confirmed that 2 is unused as it is never defined in any preset, 3 only
                                  * at the sixth (index 5) element defined, but, it seems the code never uses that preset.
                                  * Forcing the load of the preset that assigns 3 at the beginning of the game result in a dark
@@ -360,50 +360,47 @@ typedef struct _MapEffectsInfo
     /* 0x21 */ CVECTOR field_21;               // } Particle effect related. Only the first value affects snow transparency.
     /* 0x25 */ CVECTOR field_25;               // }
                // 3 bytes of padding.
-} s_MapEffectsInfo;
-STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
+} s_WorldEnvPreset;
+STATIC_ASSERT_SIZEOF(s_WorldEnvPreset, 44);
 
 typedef struct
 {
-    /* 0x0  */ s_MapEffectsInfo effectsInfo;
+    /* 0x0  */ s_WorldEnvPreset params;
     /* 0x2C */ q3_12            flashlightLensFlareIntensity;
     /* 0x2E */ q3_12            brightnessIntensity;
     /* 0x30 */ q19_12           fogDistance;
-} s_StructUnk3;
-STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
+} s_WorldEnvState;
+STATIC_ASSERT_SIZEOF(s_WorldEnvState, 52);
 
-// Current enviroment effects information.
+/** @brief Game-side world environment, the lighting and fog presets in use and the flashlight state.
+ *
+ * Each frame `WorldEnv_Update` works out `current` in two steps:
+ * 1. `transitionCur` fades from the old presets (`transitionFrom`) toward the new ones (`transitionTo`).
+ * 2. `current` is a mix of the flashlight off and on entries of `transitionCur`, weighted by `flashlightIntensity`.
+ *
+ * `WorldEnv_Apply` then copies `current` into `g_WorldEnvRenderWork` for drawing.
+ *
+ * The transitionXXX arrays are indexed by flashlight state: 0 off, 1 on.
+ */
 typedef struct
 {
-    /* 0x0   */ s32          primitiveType; /** `e_PrimitiveType` */
-    /* 0x4   */ s8*          field_4;       // } This stores a pointer to some data from overlays.
-    /* 0x8   */ q19_12       field_8;       // } All this values are related to `primitiveType` which seemly does some special work for
-                                            // } some special flashlight/spotlight effect.
-    /* 0xC   */ q19_12       field_C;       // }
-    /* 0x10  */ q19_12       field_10;      /** @unused Dead code. This variable stores a value returned by `func_8003FEC0`
-                                             * (which is the only instance in the code this function is ever used), but it's
-                                             * never used.
-                                             */
+    /* 0x0   */ s32          progressType;  /** `e_PrimitiveType` of `progressValue`. `PrimitiveType_None`: no transition. */
+    /* 0x4   */ s8*          progressValue; /** Value that drives the transition, usually overlay data. */
+    /* 0x8   */ q19_12       progressStart; /** `progressValue` at which the transition starts. */
+    /* 0xC   */ q19_12       progressEnd;   /** `progressValue` at which the transition completes. */
+    /* 0x10  */ q19_12       visibilityDistance; /** @unused Result of `func_8003FEC0`, never read. */
     /* 0x14  */ u8           flashEffect;             /** `bool`. Trigger world flash effect (used for weapons). */
     /* 0x15  */ u8           isFlashlightOn;          /** `bool` */
-    /* 0x16  */ u8           isFlashlightUnavailable; /** `bool` */
+    /* 0x16  */ u8           isFlashlightUnavailable; /** `bool`. Set when both presets are the same, forces the flashlight off. */
                 // 1 byte of padding.
     /* 0x18  */ q3_12        flashlightIntensity;
                 // 2 bytes of padding.
-                
-                /** Each of these arrays represent some sort of graphical configuration for the
-                 * in-game state. The reason of two is because one (first index) is used when the
-                 * flashlight is not being used and the other (second index) is when it is being used.
-                 * `field_154` store live graphic details as it is the current state of the flashlight
-                 * intensity. Notice this is the live graphic details and not the target preset as this
-                 * is also used to handle the transition so the values can slowly fade.
-                 */
-    /* 0x1C  */ s_StructUnk3 field_1C[2]; /** Stores adjusted/updated values to then being used by `field_154`. */
-    /* 0x84  */ s_StructUnk3 field_84[2]; /** Stores current selected enviroment preset. */
-    /* 0xEC  */ s_StructUnk3 field_EC[2]; /** Stores previous selected enviroment preset. */
-    /* 0x154 */ s_StructUnk3 field_154;
-} s_SysWork_2388;
-STATIC_ASSERT_SIZEOF(s_SysWork_2388, 392);
+    /* 0x1C  */ s_WorldEnvState transitionCur[2];  /** Blend of `transitionFrom` and `transitionTo`. */
+    /* 0x84  */ s_WorldEnvState transitionTo[2];   /** Most recently selected presets. */
+    /* 0xEC  */ s_WorldEnvState transitionFrom[2]; /** Copy of `transitionCur` taken when a transition starts. */
+    /* 0x154 */ s_WorldEnvState current;           /** Final blended state, read by gameplay code for the environment flags. */
+} s_WorldEnvWork;
+STATIC_ASSERT_SIZEOF(s_WorldEnvWork, 392);
 
 /** @brief Main system workspace. Stores key engine data. */
 typedef struct _SysWork
@@ -467,7 +464,7 @@ typedef struct _SysWork
     /* 0x237E   */ s16              field_237E;
     /* 0x2380   */ q19_12           cameraRadiusXz;
     /* 0x2384   */ q19_12           cameraY;
-    /* 0x2388   */ s_SysWork_2388   field_2388;
+    /* 0x2388   */ s_WorldEnvWork   worldEnv;
     /* 0x2510   */ s_KPad_Handler*  kpadHandlers; /** Head of the kpad handler list from `KPad_HandlerList_Init`. */
     /* 0x2514   */ s_KPadWork       kpad;
     /* 0x2534   */ s_KPad_Channel   kpadChannels[2];

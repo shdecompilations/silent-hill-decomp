@@ -177,7 +177,7 @@ void func_800D6774(void) // 0x800D6774
             g_SysWork.lightIntensity = Q12(1.0f);
             Game_TurnFlashlightOn();
 
-            Gfx_MapEnvSet(6, 3);
+            WorldEnv_PresetsSet(6, 3);
 
             if (Savegame_EventFlagGet(EventFlag_322))
             {
@@ -1838,11 +1838,11 @@ void func_800DA3E0(void) // 0x800DA3E0
         {
             if (D_800E05E2 != 0)
             {
-                Gfx_MapEnvSet(6, 3);
+                WorldEnv_PresetsSet(6, 3);
             }
             else
             {
-                Gfx_MapEnvSet(6, 20);
+                WorldEnv_PresetsSet(6, 20);
             }
 
             D_800E05E2 ^= 1;

@@ -91,7 +91,7 @@ void func_800D5614(void) // 0x800D5614
     {
         case 0:
             Player_ControlFreeze();
-            Gfx_MapEnvSet(19, 4);
+            WorldEnv_PresetsSet(19, 4);
 
             CutsceneBorder_ForceShow();
             D_800D7760         = 0;
@@ -226,7 +226,7 @@ void func_800D5614(void) // 0x800D5614
         default:
             Savegame_EventFlagSet(EventFlag_134);
 
-            Gfx_MapEnvSet(7, 4);
+            WorldEnv_PresetsSet(7, 4);
 
             vcReturnPreAutoCamWork(false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
@@ -529,7 +529,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
 
         if (D_800D7761 != 1)
         {
-            Gfx_MapEnvSet(7, 4);
+            WorldEnv_PresetsSet(7, 4);
             D_800D7761 = 1;
         }
 
@@ -542,7 +542,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     {
         if (D_800D7761 != 0)
         {
-            Gfx_MapEnvSet(2, 2);
+            WorldEnv_PresetsSet(2, 2);
             Game_TurnFlashlightOff();
             D_800D7761 = 0;
         }

@@ -1081,7 +1081,7 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     g_SysWork.lensFlareBoneCoord = NULL;
 
     func_8008D438();
-    Gfx_MapEnvSet(4, 4);
+    WorldEnv_PresetsSet(4, 4);
 
     Savegame_EventFlagSet(EventFlag_428);
 }

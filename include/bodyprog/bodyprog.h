@@ -229,11 +229,11 @@ typedef struct
     /* 0x6 */ s16 endKeyframeIdx;
 } s_800C44F0;
 
-typedef struct _MapEnvPresetIdxs
+typedef struct _WorldEnvPresetIdxs
 {
     /* 0x0 */ u8 presetIdx0;
     /* 0x1 */ u8 presetIdx1;
-} s_MapEnvPresetIdxs;
+} s_WorldEnvPresetIdxs;
 
 typedef struct
 {
@@ -605,9 +605,9 @@ extern s_FsImageDesc D_800A9094;
 
 extern s_FsImageDesc g_Font24AtlasImg;
 
-extern s_MapEffectsInfo MAP_EFFECTS_INFOS[21];
+extern s_WorldEnvPreset WORLD_ENV_PRESETS[21];
 
-extern s_StructUnk3 D_800A952C;
+extern s_WorldEnvState D_800A952C;
 
 extern s32 D_800A9A20;
 
@@ -739,15 +739,15 @@ extern s32 D_800A9F78;
 
 extern s32 D_800A9F7C;
 
-extern s_MapEnvPresetIdxs D_800A9F80;
+extern s_WorldEnvPresetIdxs D_800A9F80;
 
-extern s_MapEnvPresetIdxs D_800A9F84;
+extern s_WorldEnvPresetIdxs D_800A9F84;
 
-extern s_MapEnvPresetIdxs D_800A9F88;
+extern s_WorldEnvPresetIdxs D_800A9F88;
 
-extern s_MapEnvPresetIdxs D_800A9F8C;
+extern s_WorldEnvPresetIdxs D_800A9F8C;
 
-extern s_MapEnvPresetIdxs D_800A9F98;
+extern s_WorldEnvPresetIdxs D_800A9F98;
 
 extern u32 D_800A9FB0;
 
@@ -832,10 +832,10 @@ extern s16 D_800C16A4;
 
 extern s8 D_800C39A0;
 
-/** Functions from `bodyprog_8003AB28` access `g_WorldEnvWork` as constant, but some functions from `bodyprog_80055028` write to it.
- * It appears that g_WorldEnvWork is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
+/** Functions from `bodyprog_8003AB28` access `g_WorldEnvRenderWork` as constant, but some functions from `bodyprog_80055028` write to it.
+ * It appears that g_WorldEnvRenderWork is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
  */
-// extern s_WorldEnvWork g_WorldEnvWork;
+// extern s_WorldEnvRenderWork g_WorldEnvRenderWork;
 
 extern GsCOORDINATE2* g_BillboardViewCoord;
 
@@ -1031,10 +1031,10 @@ void WorldGfx_CharaMeshSwap(e_CharaId charaId, s32 meshSwapStatus);
 
 bool Chara_ModelLoadedCheck(e_CharaId charaId);
 
-/** Related to the screen. Called by `WorldEnv_Init`. */
+/** Related to the screen. Called by `WorldEnvRender_Init`. */
 void func_80040BAC(void);
 
-void WorldEnv_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
+void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
 
 void func_80041074(GsOT* ot, s32 arg1, SVECTOR* rot, const VECTOR3* pos);
 
@@ -1417,37 +1417,37 @@ bool Gfx_PickupItemAnimate(u8 itemId);
  */
 void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
-void WorldEnv_Init(void);
+void WorldEnvRender_Init(void);
 
 /** @brief Draws 2D screen effects for the flashlight's lens flare and glow. */
 void WorldGfx_2dEffectsDraw(void);
 
 /** Sets visual world parameters. */
-void WorldEnv_WorldLightingParamSet(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
+void WorldEnvRender_WorldLightingParamSet(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
 
-void WorldEnv_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
+void WorldEnvRender_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
 
-void WorldEnv_WorldLightTintSet(u32 overlapLighting, u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
+void WorldEnvRender_WorldLightTintSet(u32 overlapLighting, u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
 
 /** @brief Gets the point light position.
  *
  * @param pos Output light position.
  */
-void WorldEnv_LightPositionGet(VECTOR3* pos);
+void WorldEnvRender_LightPositionGet(VECTOR3* pos);
 
 /** @brief Gets the point light rotation and intensity.
  *
  * @param rot Output light rotation.
  * @return Light intensity.
  */
-s32 WorldEnv_LightRotationAndIntensityGet(SVECTOR* rot);
+s32 WorldEnvRender_LightRotationAndIntensityGet(SVECTOR* rot);
 
 /** @brief Gets the point light direction and intensity.
  *
  * @param rot Output light direction.
  * @return Light intensity.
  */
-s32 WorldEnv_LightDirectionAndIntensityGet(SVECTOR* dir);
+s32 WorldEnvRender_LightDirectionAndIntensityGet(SVECTOR* dir);
 
 /** Light function. */
 void Gfx_FlashlightPositionUpdate(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
@@ -1460,7 +1460,7 @@ s32 func_800557DC(void);
 
 void func_80055814(s32 arg0);
 
-void WorldEnv_FogDistanceSet(q19_12 nearDist, q19_12 farDist);
+void WorldEnvRender_FogDistanceSet(q19_12 nearDist, q19_12 farDist);
 
 s32 func_800559A8(s32 arg0);
 
@@ -1469,8 +1469,8 @@ u8 func_80055A50(s32 arg0);
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3);
 
 /** @brief Applies uniform lighting and fog shading to `color`, outputting to `result`.
- * The fog factor is derived from `arg2` via `g_WorldEnvWork.fogRamp` and blends the lit color toward the far/fog color in `g_WorldEnvWork.field_1C/field_1D/field_1E`,
- * with lighting strength from `g_WorldEnvWork.field_20` applied equally on all axes.
+ * The fog factor is derived from `arg2` via `g_WorldEnvRenderWork.fogRamp` and blends the lit color toward the far/fog color in `g_WorldEnvRenderWork.field_1C/field_1D/field_1E`,
+ * with lighting strength from `g_WorldEnvRenderWork.field_20` applied equally on all axes.
  */
 void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
 
@@ -1569,7 +1569,7 @@ void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 otShift, MATRIX* vie
 
 s32 func_800571D0(u32 arg0);
 
-void WorldEnv_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECTOR3* arg3);
+void WorldEnvRender_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
 void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* mat);
 

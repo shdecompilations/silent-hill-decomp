@@ -44,7 +44,7 @@ typedef struct _Fog
 typedef struct
 {
     VECTOR3 field_0[2][1];
-} s_WorldEnvWork_84;
+} s_WorldEnvRenderWork_84;
 
 /** @brief Dynamic point light. */
 typedef struct _PointLight
@@ -57,15 +57,15 @@ typedef struct _PointLight
     /* 0x20 */ SVECTOR           rotation;  /** Q3.12 */
     /* 0x28 */ SVECTOR           field_28;  // Q8 light position for matrix?
     /* 0x30 */ SVECTOR           field_30;  // Light offset?
-    /* 0x38 */ s_WorldEnvWork_84 field_38[3];
+    /* 0x38 */ s_WorldEnvRenderWork_84 field_38[3];
 } s_PointLight;
 
-/** @brief World environment workspace.
+/** @brief World environment render workspace.
  *
  * Holds fog distances and ramps, lighting and color parameters, water zone references, and other per-map environmental
- * data used for world drawing.
+ * data used for world drawing. Most of it is set each frame from `g_SysWork.worldEnv.current` by `WorldEnv_Apply`.
  */
-typedef struct _WorldEnvWork
+typedef struct _WorldEnvRenderWork
 {
     /* 0x0   */ u8           field_0;                /** `e_UnkGfxEnum` */
     /* 0x1   */ u8           isFogEnabled;           /** `bool` */
@@ -83,6 +83,6 @@ typedef struct _WorldEnvWork
     /* 0x4C  */ s_PointLight light;
     /* 0xCC  */ u8           fogRamp[128]; // Fog-related values based on `fog.nearDistance`/`fog.farDistance`.
     /* 0x14C */ u16          clutY;
-} s_WorldEnvWork;
+} s_WorldEnvRenderWork;
 
 #endif

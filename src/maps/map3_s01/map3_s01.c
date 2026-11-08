@@ -414,7 +414,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
     {
         if (D_800D8734 != 1)
         {
-            Gfx_MapEnvSet(7, 4);
+            WorldEnv_PresetsSet(7, 4);
             Game_TurnFlashlightOff();
             D_800D8734 = 1;
         }
@@ -425,7 +425,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
     {
         if (D_800D8734 != 2)
         {
-            Gfx_MapEnvSet(13, 13);
+            WorldEnv_PresetsSet(13, 13);
             Game_TurnFlashlightOff();
             D_800D8734 = 2;
         }
@@ -435,7 +435,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
     {
         if (D_800D8734 != 3)
         {
-            Gfx_MapEnvSet(2, 2);
+            WorldEnv_PresetsSet(2, 2);
             D_800D8734 = 3;
         }
     }
@@ -446,7 +446,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
         {
             D_800D8734 = 4;
 
-            Gfx_MapEnvSet(4, 4);
+            WorldEnv_PresetsSet(4, 4);
 
             g_SysWork.lightBoneCoord     = NULL;
             g_SysWork.lightPosition.vx   = Q12(59.1f);
@@ -486,7 +486,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
     {
         if (D_800D8734 != 5)
         {
-            Gfx_MapEnvSet(2, 2);
+            WorldEnv_PresetsSet(2, 2);
             D_800D8734 = 5;
         }
     }
@@ -495,7 +495,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
     {
         if (D_800D8734 != 6)
         {
-            Gfx_MapEnvSet(2, 2);
+            WorldEnv_PresetsSet(2, 2);
             D_800D8734 = 6;
         }
     }

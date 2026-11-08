@@ -5314,7 +5314,7 @@ void func_800E3390(void) // 0x800E3390
             // Freeze player.
             Player_ControlFreeze();
             func_8003A16C();
-            Gfx_MapEnvSet(18, 18);
+            WorldEnv_PresetsSet(18, 18);
             func_8008D438();
 
             g_Cutscene_UpdateSibyl = false;
@@ -7492,7 +7492,7 @@ void func_800E787C(void) // 0x800E787C
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
-            Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            WorldEnv_TransitionStart(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
 
             D_800F483C = Q12(40.0f);
             D_800F4838 = 1;
@@ -7521,7 +7521,7 @@ void func_800E787C(void) // 0x800E787C
 
             D_800F483C = Q12(100.0f);
 
-            Gfx_MapEnvSet(9, 9);
+            WorldEnv_PresetsSet(9, 9);
 
             D_800F4806           = false;
             g_Cutscene_Timer      = Q12(61.0f);
@@ -7596,8 +7596,8 @@ void func_800E787C(void) // 0x800E787C
             D_800F4818 = true;
 
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
-            Gfx_MapEnvSet(9, 9);
-            Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            WorldEnv_PresetsSet(9, 9);
+            WorldEnv_TransitionStart(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(80.0f);
             SysWork_StateStepIncrement(0);
@@ -7819,7 +7819,7 @@ void func_800E86BC(void) // 0x800E86BC
             D_800F483C = Q12(70.0f);
 #else
             Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
-            Gfx_MapEnvSet(17, 17);
+            WorldEnv_PresetsSet(17, 17);
 
             D_800F4820 = 0;
             D_800F4818 = true;
@@ -7827,8 +7827,8 @@ void func_800E86BC(void) // 0x800E86BC
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 #endif
 
-            Gfx_MapEnvSet(9, 9);
-            Gfx_MapEnvUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            WorldEnv_PresetsSet(9, 9);
+            WorldEnv_TransitionStart(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             SysWork_StateStepIncrement(0);
 
         case 9:

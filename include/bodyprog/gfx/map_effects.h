@@ -11,7 +11,7 @@ void Game_SpotlightLoadScreenAttribsSet(void);
 /** @brief Adjust light point attributes to make it simile a flashlight. */
 void Game_FlashlightAttribsSet(void);
 
-/** @brief Determines what enviroment effects data from `MAP_EFFECTS_INFOS` will use based on
+/** @brief Determines what enviroment effects data from `WORLD_ENV_PRESETS` will use based on
  * `s_MapOverlayHdr::field_16`.
  */
 void WorldEnv_MapPresetSet(s_MapOverlayHdr* mapHdr);
@@ -40,17 +40,17 @@ void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 /** @brief @unused */
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3);
 
-void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1);
+void WorldEnv_LoadScreenPresetsSet(s32 arg0, s32 arg1);
 
-void Gfx_MapEnvUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
+void WorldEnv_TransitionStart(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
-void Gfx_MapEnvStepUpdate(const s_MapEffectsInfo* preset0, const s_MapEffectsInfo* preset1,
-                              e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
+void WorldEnv_TransitionStartFromPresets(const s_WorldEnvPreset* preset0, const s_WorldEnvPreset* preset1,
+                                         e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
-void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* preset);
+void WorldEnv_StateFromPreset(s_WorldEnvState* arg0, const s_WorldEnvPreset* preset);
 
 // https://decomp.me/scratch/XWo1G
-void Gfx_EffectsUpdate(void);
+void WorldEnv_Update(void);
 
 /** @brief Computes the weighted average of `a` and `b`.
  *
@@ -61,10 +61,10 @@ void Gfx_EffectsUpdate(void);
  */
 q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight);
 
-void func_8003FE04(const s_MapEffectsInfo* arg0, const s_MapEffectsInfo* arg1, const s_MapEffectsInfo* arg2, q19_12 alphaTo);
+void func_8003FE04(const s_WorldEnvPreset* arg0, const s_WorldEnvPreset* arg1, const s_WorldEnvPreset* arg2, q19_12 alphaTo);
 
-s32 func_8003FEC0(const s_MapEffectsInfo* arg0);
+s32 func_8003FEC0(const s_WorldEnvPreset* arg0);
 
-void func_8003FF2C(s_StructUnk3* arg0);
+void func_8003FF2C(s_WorldEnvState* arg0);
 
 #endif

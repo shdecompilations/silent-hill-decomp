@@ -857,7 +857,7 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.lensFlareBoneCoord = NULL;
             Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 
-            Gfx_MapEnvUpdate(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
+            WorldEnv_TransitionStart(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
             D_800D5B00 = Q12(0.0f);
             func_8008D438();
 
@@ -947,7 +947,7 @@ void func_800D3420(void) // 0x800D3420
             D_800D5AF9 = false;
             Sd_SfxStop(Sfx_Unk1540);
             g_Cutscene_Timer3 = Q12(140.0f);
-            Gfx_MapEnvSet(7, 4);
+            WorldEnv_PresetsSet(7, 4);
 
             g_SysWork.lightBoneCoord     = NULL;
             g_SysWork.lensFlareBoneCoord = NULL;
@@ -1190,7 +1190,7 @@ void func_800D4410(void) // 0x800D4410
             g_SysWork.lightRotation.vz   = Q12_ANGLE(0.0f);
             g_SysWork.lightIntensity     = Q12(1.0f);
 
-            Gfx_MapEnvSet(14, 14);
+            WorldEnv_PresetsSet(14, 14);
             func_8003D03C();
             Player_EmptyWeaponHandSet();
             SysWork_StateStepIncrement(0);
@@ -1268,7 +1268,7 @@ void func_800D4410(void) // 0x800D4410
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
-            Gfx_MapEnvSet(7, 4);
+            WorldEnv_PresetsSet(7, 4);
             func_8008D448();
             Game_FlashlightAttribsSet();
 

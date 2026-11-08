@@ -259,7 +259,7 @@ void func_80045468(s_Skeleton* skel, s32* boneHierarchy, bool cond) // 0x8004546
     }
 }
 
-extern s_WorldEnvWork const g_WorldEnvWork;
+extern s_WorldEnvRenderWork const g_WorldEnvRenderWork;
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneCoords,
                    q3_12 arg4, u16 clutY, s_FsImageDesc* images) // 0x80045534
@@ -370,7 +370,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneC
 
             func_80057090(&curBoneNode->bone.modelInfo, ot, otShift, &viewMat, &worldMat, clutY);
 
-            if (g_WorldEnvWork.isFogEnabled)
+            if (g_WorldEnvRenderWork.isFogEnabled)
             {
                 gte_SetRotMatrix(&viewMat);
                 gte_SetTransMatrix(&viewMat);
@@ -413,7 +413,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneC
         }
     }
 
-    if (g_WorldEnvWork.isFogEnabled)
+    if (g_WorldEnvRenderWork.isFogEnabled)
     {
         temp_s1_2 = g_SysWork.playerBoneCoords[1].coord.t[1];
         temp_s1_2 = CLAMP(temp_s1_2, Q8(-2.0f), Q8(0.0f));

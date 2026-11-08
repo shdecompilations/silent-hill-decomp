@@ -174,7 +174,7 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
 
 void World_Init(void) // 0x8003C048
 {
-    WorldEnv_Init();
+    WorldEnvRender_Init();
 
     g_WorldGfxWork.useStoredPoint = false;
 
@@ -236,7 +236,7 @@ void Chara_ModelFree(s_CharaModel* model) // 0x8003C1AC
 // IPD INITALIZATION & MAP GRAPHIC DRAW
 // ========================================
 
-extern s_WorldEnvWork const g_WorldEnvWork;
+extern s_WorldEnvRenderWork const g_WorldEnvRenderWork;
 
 void WorldGfx_MapInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
@@ -347,7 +347,7 @@ void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
         pos.vz = Q12(200.0f);
     }
 
-    if (g_WorldEnvWork.isFogEnabled)
+    if (g_WorldEnvRenderWork.isFogEnabled)
     {
         vwGetViewPosition(&projPos);
         vwGetViewAngle(&camRot);
@@ -1271,12 +1271,12 @@ void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 otShif
 
     if (timer != Q12(0.0f))
     {
-        tintColor = g_WorldEnvWork.worldTintColor;
-        WorldEnv_WorldLightingParamSet(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
-                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.r) << 5,
-                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.g) << 5,
-                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor.b) << 5,
-                      g_WorldEnvWork.screenBrightness);
+        tintColor = g_WorldEnvRenderWork.worldTintColor;
+        WorldEnvRender_WorldLightingParamSet(g_WorldEnvRenderWork.field_0, g_WorldEnvRenderWork.field_20, g_WorldEnvRenderWork.field_3,
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvRenderWork.worldTintColor.r) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvRenderWork.worldTintColor.g) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvRenderWork.worldTintColor.b) << 5,
+                      g_WorldEnvRenderWork.screenBrightness);
     }
 
     func_80045534(&g_WorldGfxWork.registeredCharaModels[charaId]->skeleton, &g_OrderingTable0[g_ActiveBufferIdx], otShift,
@@ -1284,11 +1284,11 @@ void WorldGfx_CharaDraw(e_CharaId charaId, GsCOORDINATE2* boneCoords, s32 otShif
 
     if (timer != Q12(0.0f))
     {
-        WorldEnv_WorldLightingParamSet(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
+        WorldEnvRender_WorldLightingParamSet(g_WorldEnvRenderWork.field_0, g_WorldEnvRenderWork.field_20, g_WorldEnvRenderWork.field_3,
                       tintColor.r << 5,
                       tintColor.g << 5,
                       tintColor.b << 5,
-                      g_WorldEnvWork.screenBrightness);
+                      g_WorldEnvRenderWork.screenBrightness);
     }
 }
 

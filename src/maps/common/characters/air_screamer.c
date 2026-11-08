@@ -1017,7 +1017,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_
     q19_12 angle;
     q19_12 dist;
 
-    idxInfo = g_SysWork.field_2388.field_154.effectsInfo.flags;
+    idxInfo = g_SysWork.worldEnv.current.params.flags;
     idx     = (idxInfo & (1 << 1)) ? ((idxInfo & (1 << 0)) ? 2 : 3) : (sharedFunc_800D4A80_0_s01(airScreamer) == 3);
 
     deltaX = inVec->vx - airScreamer->position.vx;
@@ -1215,7 +1215,7 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
         angleToPlayer    = Math_AngleBetweenPositionsGet(airScreamer->position, g_SysWork.playerWork.player.position);
         angleToPlayerCpy = angleToPlayer;
 
-        offsetZ = g_SysWork.field_2388.field_154.effectsInfo.flags;
+        offsetZ = g_SysWork.worldEnv.current.params.flags;
         if (!(offsetZ & 0x2))
         {
             // @hack Permuter find.
@@ -9312,14 +9312,14 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer)
 {
 #if VERSION_EQUAL_OR_NEWER(USA)
-    if ((g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) &&
+    if ((g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment) &&
         (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal || airScreamer->model.charaId == Chara_AirScreamer))
     {
         return false;
     }
 #else
     if (airScreamer->model.charaId == Chara_AirScreamer &&
-        (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))
+        (g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
     {
         return false;
     }
@@ -9372,11 +9372,11 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
 
 #if VERSION_EQUAL_OR_NEWER(USA)
     if (!(airScreamerProps.flags & AirScreamerFlag_29) &&
-        (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) ||
+        (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment) ||
          (g_SavegamePtr->gameDifficulty > GameDifficulty_Normal && airScreamer->model.charaId != Chara_AirScreamer)))
 #else
     if (!(airScreamerProps.flags & AirScreamerFlag_29) &&
-        !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))
+        !(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment))
 #endif
     {
         if (sharedFunc_800DC3BC_2_s00(airScreamer) && (AirScreamer_IsFlooredCheck(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))

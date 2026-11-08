@@ -335,7 +335,7 @@ void func_800D1910(void) // 0x800D1910
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 117, false);
             D_800D37C0 = 0;
 
-            Gfx_MapEnvSet(15, 15);
+            WorldEnv_PresetsSet(15, 15);
             SysWork_StateStepIncrement(0);
             g_WorldObject0.position.vz = Q12(141.0f);
             break;

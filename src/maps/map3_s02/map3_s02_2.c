@@ -103,7 +103,7 @@ void func_800D03FC(void) // 0x800D03FC
             break;
 
         case 1:
-            Gfx_MapEnvSet(7, 4);
+            WorldEnv_PresetsSet(7, 4);
 
             D_800D3154 = 0;
 
@@ -279,7 +279,7 @@ void func_800D0608(void) // 0x800D0608
             Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
 
             func_8008D438();
-            Gfx_MapEnvSet(16, 16);
+            WorldEnv_PresetsSet(16, 16);
             D_800D1FEC = 0;
 
             SysWork_StateStepIncrement(0);
@@ -320,8 +320,8 @@ void func_800D0608(void) // 0x800D0608
 
             vcReturnPreAutoCamWork(true);
             D_800D1FEC = NO_VALUE;
-            Gfx_MapEnvSet(2, 2);
-            Gfx_MapEnvUpdate(7, 7, PrimitiveType_S32, &D_800D1FBC, 0, Q12(100.0f));
+            WorldEnv_PresetsSet(2, 2);
+            WorldEnv_TransitionStart(7, 7, PrimitiveType_S32, &D_800D1FBC, 0, Q12(100.0f));
             break;
     }
 

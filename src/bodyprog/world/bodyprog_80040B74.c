@@ -13,7 +13,7 @@
  *
  * This system is used only at one specific moment in the game. The
  * only time this system is active is when an environment preset from 
- * `MAP_EFFECTS_INFOS` has `enableTintLightOverlap` enabled, or when both 
+ * `WORLD_ENV_PRESETS` has `enableTintLightOverlap` enabled, or when both 
  * `pointLightTint` and `worldTint` have defined values. The code does not 
  * redefine these variables again.
  *
@@ -133,7 +133,7 @@ void func_80040BAC(void) // 0x80040BAC
     }
 }
 
-void WorldEnv_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x80040E7C
+void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x80040E7C
 {
     u32      colorTable[4];
     s32      j;

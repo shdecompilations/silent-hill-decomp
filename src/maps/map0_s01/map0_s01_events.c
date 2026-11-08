@@ -978,7 +978,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
 
     if (Savegame_EventFlagGet(EventFlag_159) && !Savegame_EventFlagGet(EventFlag_134))
     {
-        Gfx_MapEnvSet(6, 3);
+        WorldEnv_PresetsSet(6, 3);
     }
 
     g_Cutscene_Timer = Q12(0.0f);

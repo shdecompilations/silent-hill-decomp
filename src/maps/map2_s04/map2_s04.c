@@ -177,7 +177,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!D_800CF280)
         {
-            Gfx_MapEnvSet(7, 4);
+            WorldEnv_PresetsSet(7, 4);
             D_800CF280++;
         }
 

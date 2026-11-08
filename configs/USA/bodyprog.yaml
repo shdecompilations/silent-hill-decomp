@@ -200,23 +200,23 @@ segments:
       # this is actually meant to handle the core of the in-game world functionality.
       # The other part handles the drawing.
       #
-      # Another important clue of this recognition is the usage of `g_WorldGfxWork`, `g_WorldEnvWork`
-      # and `g_SysWork.field_2388`. These three may seem to work for the same, but in reality all of them
+      # Another important clue of this recognition is the usage of `g_WorldGfxWork`, `g_WorldEnvRenderWork`
+      # and `g_SysWork.worldEnv`. These three may seem to work for the same, but in reality all of them
       # serve different purposes.
       # `g_WorldGfxWork` Seems to be handling some basic information of the in-game world.
       # This information exclusively limits to fundamental world drawing and collision functionality
       # as previously explained, this does not include any other element of the game like character
       # functionality or events.
       #
-      # `g_SysWork.field_2388` Seems to be handling the processing and update of in-game graphics.
+      # `g_SysWork.worldEnv` Seems to be handling the processing and update of in-game graphics.
       # The information mainly surround about map environmental graphic information, fundamentally
       # the lighting, the fog and apparently any currently playing effect which code is at the map overlay.
       # This variable DOES NOT handle game drawing for the most part, the code at `bodyprog_80040B74.c` and
       # `bodyprog_bone_80044F14.c` does handle drawing of a lighting overlay effect and characters,
       # however, all the information here (including the water effect that for reason isn't handle
       # in these files) is processed and then through functions will be simplified and passed to
-      # `g_WorldEnvWork` which is the variable that will be used to handle in-game drawing.
-      # The previously explained behavior of `g_WorldEnvWork` may explain why at these files the variable
+      # `g_WorldEnvRenderWork` which is the variable that will be used to handle in-game drawing.
+      # The previously explained behavior of `g_WorldEnvRenderWork` may explain why at these files the variable
       # is being used as constant despite not being a constant variable, as it would be a way to avoid
       # accidentally modify values as in rare occasions is used to access to some current in-game graphic data.
       #

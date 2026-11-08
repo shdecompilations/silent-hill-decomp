@@ -164,7 +164,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         Player_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords);
 
         Demo_DemoRandSeedRestore();
-        Gfx_EffectsUpdate();
+        WorldEnv_Update();
 
         if (g_SavegamePtr->mapIdx != MapIdx_MAP7_S03)
         {
@@ -234,7 +234,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     }
 
     if (Pad_ButtonClickedBind(light) &&
-        g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed)
+        g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed)
     {
         Game_FlashlightToggle();
     }
@@ -493,9 +493,9 @@ void SysState_MapScreen_Update(void) // 0x800396D4
             SysWork_StateSetNext(SysState_Gameplay);
         }
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed) && !g_SysWork.field_2388.isFlashlightOn &&
-             ((g_SysWork.field_2388.field_1C[0].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) ||
-              (g_SysWork.field_2388.field_1C[1].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)))
+    else if ((g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed) && !g_SysWork.worldEnv.isFlashlightOn &&
+             ((g_SysWork.worldEnv.transitionCur[0].params.flags & SpecialEnvEventFlags_DarkEnvironment) ||
+              (g_SysWork.worldEnv.transitionCur[1].params.flags & SpecialEnvEventFlags_DarkEnvironment)))
     {
         if (Pad_ButtonClickedBind(map) ||
             Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgState_Idle)
@@ -900,8 +900,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if (((!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed)) && (tipIdx - 13) >= 2u) ||
-                        (!(!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed)) && (tipIdx - 13) <  2u))
+                    if (((!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed)) && (tipIdx - 13) >= 2u) ||
+                        (!(!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed)) && (tipIdx - 13) <  2u))
                     {
                         randTipVal += 3;
                     }
@@ -920,8 +920,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if (((!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed)) && (tipIdx - 13) >= 2u) ||
-                        (!(!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed)) && (tipIdx - 13) <  2u))
+                    if (((!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed)) && (tipIdx - 13) >= 2u) ||
+                        (!(!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed)) && (tipIdx - 13) <  2u))
                     {
                         if (randTipVal < 3)
                         {

@@ -78,8 +78,8 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
 {
     s32 temp_s0;
 
-    WorldEnv_LightPositionGet(&g_ParticleVectors0.vector_0);
-    g_ParticleVectors0.field_28 = WorldEnv_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
+    WorldEnvRender_LightPositionGet(&g_ParticleVectors0.vector_0);
+    g_ParticleVectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
 
     vwGetViewPosition(&g_ParticleVectors0.viewPosition);
     vwGetViewAngle(&g_ParticleVectors0.viewRotation);
@@ -147,8 +147,8 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
     Particle_SoundUpdate();
 #endif
 
-    WorldEnv_LightPositionGet(&g_ParticleVectors0.vector_0);
-    g_ParticleVectors0.field_28 = WorldEnv_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
+    WorldEnvRender_LightPositionGet(&g_ParticleVectors0.vector_0);
+    g_ParticleVectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
 
     vwGetViewPosition(&g_ParticleVectors0.viewPosition);
     vwGetViewAngle(&g_ParticleVectors0.viewRotation);
@@ -4312,25 +4312,25 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
             break;
 
         case 2:
-            if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
+            if (!(g_SysWork.worldEnv.current.params.flags & SpecialEnvEventFlags_FlashlightAllowed))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
                 prim->b0 = 0xFF;
             }
-            else if (g_SysWork.field_2388.isFlashlightOn)
+            else if (g_SysWork.worldEnv.isFlashlightOn)
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
                 prim->b0 = 0xFF;
             }
-            else if (g_SysWork.field_2388.field_1C[0].effectsInfo.flags & 1)
+            else if (g_SysWork.worldEnv.transitionCur[0].params.flags & 1)
             {
                 prim->r0 = 0x30;
                 prim->g0 = 0x30;
                 prim->b0 = 0x30;
             }
-            else if (!(g_SysWork.field_2388.field_1C[1].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))
+            else if (!(g_SysWork.worldEnv.transitionCur[1].params.flags & SpecialEnvEventFlags_DarkEnvironment))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;

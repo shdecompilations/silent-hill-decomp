@@ -443,7 +443,7 @@ void func_800D64E0(void) // 0x800D64E0
     {
         case 0:
             D_800DACEC = 0;
-            Gfx_MapEnvUpdate(7, 9, PrimitiveType_S32, &D_800DACEC, 0, 0x64000);
+            WorldEnv_TransitionStart(7, 9, PrimitiveType_S32, &D_800DACEC, 0, 0x64000);
             break;
 
         case 5:
@@ -602,7 +602,7 @@ void func_800D64E0(void) // 0x800D64E0
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, 0, false);
             Savegame_EventFlagSet(EventFlag_284);
 
-            Gfx_MapEnvSet(7, 4);
+            WorldEnv_PresetsSet(7, 4);
             func_8008D448();
             vcReturnPreAutoCamWork(true);
 

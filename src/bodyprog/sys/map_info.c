@@ -2,7 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "game.h"
 
-s_MapEffectsInfo MAP_EFFECTS_INFOS[21] = {
+s_WorldEnvPreset WORLD_ENV_PRESETS[21] = {
     {
         .flags                  = SpecialEnvEventFlags_None,
         .field_1                = 0xFF,

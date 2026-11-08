@@ -488,7 +488,7 @@ extern s_Pose g_CommonWorldObjectPoses[1];
 
 void Map_WorldObjectsInit(void)
 {
-    Gfx_MapEnvSet(1, 1);
+    WorldEnv_PresetsSet(1, 1);
 
     WorldObject_PosePositionInit(&g_WorldObject_Item, "ITEM_HID", 19.8289f, -1.3633f, 24.0735f);
     WorldObject_Init(&g_WorldObject_Key, "KEY_HIDE", 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);

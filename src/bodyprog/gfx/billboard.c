@@ -8,7 +8,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 
-extern s_WorldEnvWork g_WorldEnvWork;
+extern s_WorldEnvRenderWork g_WorldEnvRenderWork;
 
 static s_BillboardInfo g_BillboardInfos[26] = {
 /* 0  */ { 89,   Q12(0.025f), Q12_ANGLE(160.0f), 542,  387, 0, { Q12(0.0f), Q12(0.0f), Q12(0.0f) }, { Q12(0.0f), Q12(0.0f), Q12(0.0f) } },
@@ -96,8 +96,8 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
     s32               sp498;
     u16               sp4A0;
     u16               sp4A8;
-    s_WorldEnvWork*   worldEnvWork;
-    s_WorldEnvWork*   worldEngWork1;
+    s_WorldEnvRenderWork*   worldEnvWork;
+    s_WorldEnvRenderWork*   worldEngWork1;
     s32               temp_a0;
     s32               temp_a0_2;
     q19_12            temp_lo; // Light-related.
@@ -126,12 +126,12 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
     sp498   = ReadGeomScreen();
 
     temp_v1 = 0x79C << (otShift + 2);
-    sp494   = g_WorldEnvWork.isFogEnabled ? MIN(temp_v1, g_WorldEnvWork.fog.farDistance) : temp_v1;
+    sp494   = g_WorldEnvRenderWork.isFogEnabled ? MIN(temp_v1, g_WorldEnvRenderWork.fog.farDistance) : temp_v1;
     Vw_WorldScreenMatrixAtPositionGet(&worldToScreenMat, posX, posY, posZ);
 
     // @hack Pointer needed for match, is there a way to remove this?
     // `Gfx_FogOverlayQuadDraw` `Gfx_MeshDraw` `func_8005AC50` all seem to do similar thing without needing pointer?
-    worldEnvWork = &g_WorldEnvWork;
+    worldEnvWork = &g_WorldEnvRenderWork;
     if (!worldEnvWork->isFogEnabled)
     {
         fogAlpha = Q12(1.0f);
@@ -147,13 +147,13 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
         u8 x = -x;
     }
 
-    if (g_WorldEnvWork.field_0 == UnkGfxEnum_0)
+    if (g_WorldEnvRenderWork.field_0 == UnkGfxEnum_0)
     {
-        colors[4].r = Q12_MULT(g_WorldEnvWork.worldTintColor.r, g_WorldEnvWork.field_20);
-        colors[4].g = Q12_MULT(g_WorldEnvWork.worldTintColor.g, g_WorldEnvWork.field_20);
-        colors[4].b = Q12_MULT(g_WorldEnvWork.worldTintColor.b, g_WorldEnvWork.field_20);
+        colors[4].r = Q12_MULT(g_WorldEnvRenderWork.worldTintColor.r, g_WorldEnvRenderWork.field_20);
+        colors[4].g = Q12_MULT(g_WorldEnvRenderWork.worldTintColor.g, g_WorldEnvRenderWork.field_20);
+        colors[4].b = Q12_MULT(g_WorldEnvRenderWork.worldTintColor.b, g_WorldEnvRenderWork.field_20);
 
-        if (g_WorldEnvWork.isFogEnabled)
+        if (g_WorldEnvRenderWork.isFogEnabled)
         {
             colors[4].r = Q12_MULT(colors[4].r, fogAlpha);
             colors[4].g = Q12_MULT(colors[4].g, fogAlpha);
@@ -174,29 +174,29 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
         worldMat.t[1] = Q12_TO_Q8(posY) + billboardWork->offsetY;
         worldMat.t[2] = Q12_TO_Q8(posZ);
 
-        WorldEnv_LightTransform(&worldMat, g_WorldEnvWork.light.intensity,
-                                &g_WorldEnvWork.light.direction, &g_WorldEnvWork.light.position);
+        WorldEnvRender_LightTransform(&worldMat, g_WorldEnvRenderWork.light.intensity,
+                                      &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position);
 
-        switch (g_WorldEnvWork.field_0)
+        switch (g_WorldEnvRenderWork.field_0)
         {
             case UnkGfxEnum_0:
             case UnkGfxEnum_1:
                 func_8005A478(&sp90, fogAlpha);
-                SetColorMatrix(&g_WorldEnvWork.colorMat);
-                gte_lddqa(g_WorldEnvWork.light.field_0);
+                SetColorMatrix(&g_WorldEnvRenderWork.colorMat);
+                gte_lddqa(g_WorldEnvRenderWork.light.field_0);
                 gte_lddqb_0();
                 break;
 
             case UnkGfxEnum_2:
                 func_8005A838(&sp90, fogAlpha);
-                SetColorMatrix(&g_WorldEnvWork.colorMat);
+                SetColorMatrix(&g_WorldEnvRenderWork.colorMat);
                 break;
         }
 
         ReadLightMatrix(&lightMat);
 
         // Get light position.
-        if (g_WorldEnvWork.isFogEnabled)
+        if (g_WorldEnvRenderWork.isFogEnabled)
         {
             lightPosX = Q12_MULT(lightMat.m[0][0], fogAlpha);
             lightPosY = Q12_MULT(lightMat.m[0][1], fogAlpha);
@@ -220,7 +220,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
             lightPosY = Q12_MULT(lightPosY, temp_lo);
             lightPosZ = Q12_MULT(lightPosZ, temp_lo);
 
-            if (g_WorldEnvWork.field_0 == UnkGfxEnum_1)
+            if (g_WorldEnvRenderWork.field_0 == UnkGfxEnum_1)
             {
                 gte_lddp(temp_lo);
                 gte_ldir_stbk();
@@ -248,7 +248,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
     }
 
     // @hack Needed to get right reg order for `poly_gt4`.
-    worldEngWork1 = &g_WorldEnvWork;
+    worldEngWork1 = &g_WorldEnvRenderWork;
 
     SetRotMatrix(&worldToScreenMat);
     SetTransMatrix(&worldToScreenMat);
@@ -310,7 +310,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
                 temp = (func_80055A50(temp_v0_2 << 6) * 16) + worldEngWork1->fog.intensity;
 
                 gte_lddp(Q12(1.0f) - MIN(temp, Q12(1.0f)));
-                gte_ldrgb(&g_WorldEnvWork.fog.color);
+                gte_ldrgb(&g_WorldEnvRenderWork.fog.color);
                 gte_dpcs();
                 gte_strgb((CVECTOR*)&poly_g4->r0);
 
