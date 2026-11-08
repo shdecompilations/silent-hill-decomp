@@ -393,7 +393,7 @@ typedef struct _SysWork
     /* 0x0      */ s8               unused_0[8];          /** @unused */
     /* 0x8      */ e_SysState       sysState;
     /* 0xC      */ s32              sysStateSteps[3];     /** Temp data used by current `sysState`. Can be another state ID or other data. */
-    /* 0x10     */ bool             isMgsStringSet;       /** Indicates if string have been loaded and is going (or it is) being display. */
+    /* 0x10     */ bool             isMsgStringSet;       /** Indicates if string have been loaded and is going (or it is) being display. */
     /* 0x1C     */ s32              gameStateCounter;     /** Frame counter for the current `g_GameWork.gameState`. Reset when `gameState` is changed. */
     /* 0x1C     */ s32              gameStateStepCounter; /** Frame counter for the current `g_GameWork.gameStateSteps[0]`. Reset when `gameStateSteps[0]` is changed. */
     /* 0x24     */ s32              sysStateCounter;      /** Frame counter for the current `sysState`. Reset when `sysState` is changed. */
@@ -401,7 +401,7 @@ typedef struct _SysWork
                                                            * Data at an index is cleared when that step index is changed. Holds a timer or other data.
                                                            */
     /* 0x30     */ s32              cutsceneBorderState;  /** `e_CutsceneBorderState` */
-    /* 0x34     */ s8               unused_34[4];         /** @unused */
+    /* 0x34     */ s8               __pad_34[4];
     /* 0x38     */ s_PlayerCombat   playerCombat;
     /* 0x4C     */ s_PlayerWork     playerWork;
     /* 0x1A0    */ s_SubCharacter   npcs[NPC_COUNT_MAX];
@@ -416,7 +416,7 @@ typedef struct _SysWork
                                                                         // Enabling a flag for Larval Stalkers causes them to die.
     /* 0x228C   */ s32              field_228C[1];  // Spawn flags for enemy characters?
     /* 0x2290   */ s32              npcFlags;       // Flags related to NPCs. Each bit corresponds to an `npcs` array entry.
-    /* 0x2294   */ s8               unused_2294[4]; /** @unused */
+    /* 0x2294   */ s8               __pad_2294[4];
     /* 0x2298   */ e_ProcessFlags   processFlags;
     /* 0x229C   */ s32              unused_229C; /** @unused Set to `NO_VALUE` when the player has been initalized and 0 when the player changes areas. Beyond that it's dead code. */
     /* 0x22A0   */ e_BgmStatusFlags bgmStatusFlags;
@@ -436,7 +436,7 @@ typedef struct _SysWork
     /* 0x2353   */ s8               targetNpcIdx;               /** Index of the NPC in `npcs` being targeted by the player. */
     /* 0x2354   */ s8               npcIdxs[CHARA_GROUP_COUNT];
     /* 0x2358   */ u8               enablePlayerMatchAnim; /** `bool` | Activates the animation performed by Harry when lighting a match at the beginning of the game. */
-    /* 0x2359   */ s8               unused_2359;           /** @unused */
+    /* 0x2359   */ s8               __pad_2359[1];
     /* 0x235A   */ u8               playerStopFlags;       /** `e_PlayerStopFlags` */
                    // 1 byte of padding.
     /* 0x235C   */ GsCOORDINATE2*   lightBoneCoord;
@@ -446,7 +446,7 @@ typedef struct _SysWork
     /* 0x2378   */ q3_12            lightIntensity;
     /* 0x237A   */ q3_12            cameraAngleY;
     /* 0x237C   */ q3_12            cameraAngleZ;
-    /* 0x237E   */ s16              field_237E;
+    /* 0x237E   */ s8               __pad_237E[2];
     /* 0x2380   */ q19_12           cameraRadiusXz;
     /* 0x2384   */ q19_12           cameraY;
     /* 0x2388   */ s_WorldEnvWork   worldEnv;
@@ -706,20 +706,6 @@ static inline void Game_StateStepIncrement(s32 stepIdx)
     SysWork_StateSetNext(SysState_Gameplay);                 \
 }
 
-static inline void Game_StateSetPreviousA()
-{
-    e_GameState curState;
-    curState = g_GameWork.gameState;
-    
-    g_GameWork.gameStateSteps[0] = curState;
-    g_GameWork.gameState         = g_GameWork.gameStatePrev;
-    g_SysWork.gameStateCounter   = 0;
-    g_GameWork.gameStatePrev     = curState;
-    
-    Game_StateStepSet(0, 0);
-    SysWork_StateSetNext(SysState_Gameplay);
-}
-
 // =======================
 // =======================
 // =======================
@@ -730,14 +716,14 @@ static inline void Game_StateSetPreviousA()
 
 /** @brief Checks if the world environment is in darkness, without the flashlight turned on.
  *
- * @return `true` if the work environment is in darkness, `false` otherwise.
+ * @return `WorldEnvFlag_Dark` if the work environment is in darkness, `false` otherwise.
  */
 #define WorldEnv_IsInDarkness() \
     (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark)
 
 /** @brief Checks if the world environment allows the flashlight to be used.
  *
- * @return `true` if the flashlight can be used, `false` otherwise.
+ * @return `WorldEnvFlag_FlashlightAllowed` if the flashlight can be used, `false` otherwise.
  */
 #define WorldEnv_IsFlashlightAllowed() \
     (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)

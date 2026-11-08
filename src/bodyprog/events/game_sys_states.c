@@ -113,7 +113,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     // Run system state.
     if (g_SysWork.sysState == SysState_Gameplay)
     {
-        g_SysWork.isMgsStringSet = false;
+        g_SysWork.isMsgStringSet = false;
         g_SysStateFuncs[SysState_Gameplay]();
     }
     else
@@ -257,7 +257,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     else if (Pad_ButtonClickedBind(map))
     {
         SysWork_StateSetNext(SysState_MapScreen);
-        g_SysWork.isMgsStringSet = false;
+        g_SysWork.isMsgStringSet = false;
     }
     else if (Pad_ButtonClickedBind(option))
     {
@@ -722,7 +722,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
         g_DeltaTime = g_DeltaTimeCpy;
     }
 
-    if (g_SysWork.isMgsStringSet == false)
+    if (g_SysWork.isMsgStringSet == false)
     {
         g_MapOverlayHdr.playerControlFreeze();
     }

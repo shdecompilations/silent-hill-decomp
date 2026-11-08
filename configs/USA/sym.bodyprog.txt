@@ -3129,7 +3129,7 @@ g_SelectedDeviceId                           = 0x800BCD40; // size:1
 //-------------------------------------------------------------------------
 //--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: .bss, game_boot/game_boot
 //-------------------------------------------------------------------------
-demoLoadAttempCount                          = 0x800BCD48;
+demoLoadAttemptCount                          = 0x800BCD48;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x0981F0   VA: 0x800BCD50   subsegment: .bss, events/bgm_update

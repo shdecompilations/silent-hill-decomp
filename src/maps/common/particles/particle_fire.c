@@ -14,9 +14,8 @@
 #include "maps/map4/map4_s01.h" // For `sharedData_800DFB7C_0_s00` size.
 #endif
 
-// Unknown drawing code included in M1S05, M3S05 and M4S01.
-// Might be used by some kind of world object, based on M1S05 `Map_WorldObjectsInit` calling into this?
-// TODO: Make this separate split in each map instead of `#include`.
+// Fire particles included in M1S05, M3S05 and M4S01.
+// Configured through `sharedData_800D8568_1_s05` before `sharedFunc_800CAAD0_1_s05` starts the emitter.
 
 void sharedFunc_800CAAD0_1_s05(void) // 0x800CC19C
 {

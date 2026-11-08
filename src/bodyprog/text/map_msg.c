@@ -72,10 +72,10 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     if (activeMapMsgIdx != mapMsgIdx)
     {
-        g_SysWork.isMgsStringSet = false;
+        g_SysWork.isMsgStringSet = false;
     }
 
-    switch (g_SysWork.isMgsStringSet)
+    switch (g_SysWork.isMsgStringSet)
     {
         case false:
             g_SysWork.mapMsgTimer            = NO_VALUE;
@@ -90,6 +90,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
             displayLengthInc                 = ROLLOUT_ADVANCE;
 
             Gfx_MapMsg_Reset();
+
 #if VERSION_REGION_IS(NTSCJ)
             unkJapVal = Gfx_MapMsg_WidthsCompute(g_MapMsg_CurrentIdx);
 #else
@@ -114,7 +115,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 #endif
 
             loadAudio = true;
-            g_SysWork.isMgsStringSet++;
+            g_SysWork.isMsgStringSet++;
             return MapMsgState_Finish;
 
         case true:
@@ -303,7 +304,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         return MapMsgState_Idle;
     }
 
-    g_SysWork.isMgsStringSet         = false;
+    g_SysWork.isMsgStringSet         = false;
     g_SysWork.enableHalfHeightGlyphs = false;
     displayLength                    = 0;
 
