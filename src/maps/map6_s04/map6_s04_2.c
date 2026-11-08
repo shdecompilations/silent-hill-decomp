@@ -21,7 +21,7 @@
 #include "maps/common/characters/stalker.h"
 #include "maps/common/characters/player.h"
 
-#include "../src/maps/common/unk_draw_m1s01.c"
+#include "../src/maps/common/particles/particle_smoke.c"
 
 #include "../src/maps/common/particles/particle.c"
 

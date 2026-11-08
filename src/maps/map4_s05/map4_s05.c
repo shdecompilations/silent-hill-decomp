@@ -16,7 +16,7 @@
 
 #include "../src/maps/common/particles/particle_acid.c"
 
-#include "../src/maps/common/unk_draw_m1s03.c"
+#include "../src/maps/common/particles/particle_ufo.c"
 
 #include "../src/maps/common/particles/particle.c"
 

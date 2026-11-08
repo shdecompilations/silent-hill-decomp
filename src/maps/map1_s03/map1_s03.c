@@ -187,7 +187,7 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
     return true;
 }
 
-#include "../src/maps/common/unk_draw_m1s03.c"
+#include "../src/maps/common/particles/particle_ufo.c"
 
 #include "../src/maps/common/particles/particle.c"
 

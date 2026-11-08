@@ -12,7 +12,7 @@
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
 
-#include "../src/maps/common/unk_draw_m1s03.c"
+#include "../src/maps/common/particles/particle_ufo.c"
 
 #include "../src/maps/common/particles/particle.c"
 
