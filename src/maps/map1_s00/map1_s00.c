@@ -454,8 +454,7 @@ void func_800D8354(void) // 0x800D8354
         case 4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
-            if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                  g_GameWorkPtr->config.controllerConfig.cancel))
+            if (Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
             {
                 SysWork_StateStepIncrement(0);
                 break;
@@ -492,7 +491,7 @@ void func_800D85A4(void) // 0x800D85A4
 void func_800D85D8(void) // 0x800D85D8
 {
     // Skip.
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 5)
     {
         Screen_FadeTimestepReset();
@@ -576,7 +575,7 @@ void func_800D85D8(void) // 0x800D85D8
 void func_800D8948(void) // 0x800D8948
 {
     // Skip.
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] < 6)
     {
         Screen_FadeTimestepReset();

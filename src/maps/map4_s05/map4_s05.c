@@ -59,7 +59,7 @@ const VECTOR3 D_800CABE4 = { Q12(-115.5f), Q12(2.0f), Q12(110.5f) };
 
 void func_800D61AC(void) // 0x800D61AC
 {
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 12)
     {
         // Warp player.

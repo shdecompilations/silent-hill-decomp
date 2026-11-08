@@ -2224,7 +2224,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
 
             // Memory cards are inserted and user is moving between slots.
             if (g_Savegame_ElementCount0[0] != 0 && g_Savegame_ElementCount0[1] != 0 &&
-                (g_Controller0->buttonFlags.clicked & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft)))
+                Pad_ButtonClicked(ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
             {
                 g_SelectedSaveSlotIdx ^= 1;
                 SD_Call(Sfx_MenuMove);
@@ -2238,7 +2238,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 g_MemCard_ActiveMemCardSlotSaves = MemCard_ActiveMemCardSlotGet(g_SelectedSaveSlotIdx);
 
                 // Move down savegame entry.
-                if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
+                if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp))
                 {
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] != 0)
                     {
@@ -2248,7 +2248,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 }
 
                 // Move up savegame entry.
-                if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
+                if (Pad_ButtonPulsed(ControllerFlag_LStickHighDown))
                 {
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] < g_Savegame_ElementCount0[g_SelectedSaveSlotIdx] - 1)
                     {
@@ -2281,7 +2281,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 }
 
                 // Overwrite or format savegame entry.
-                if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+                if (Pad_ButtonClickedBind(enter))
                 {
                     if (g_SaveScreen_IsFormatting | g_SaveScreen_IsNewSaveSelected)
                     {
@@ -2299,9 +2299,9 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
 
             // Exit save screen.
 #if VERSION_EQUAL_OR_NEWER(JAP1)
-            if (!(g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter))
+            if (!Pad_ButtonClickedBind(enter))
 #endif
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            if Pad_ButtonClickedBind(cancel)
             {
                 Screen_FadeStart(false, false, false);
                 Game_StateStepSet(1, 2);
@@ -2324,19 +2324,19 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
 
             g_SaveScreen_MemCardStateTextTimer = 0;
 
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighLeft)
+            if (Pad_ButtonClicked(ControllerFlag_LStickHighLeft))
             {
                 isSaveWriteOptionSelected = gameStateStep;
                 SD_Call(Sfx_MenuMove);
             }
 
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighRight)
+            if (Pad_ButtonClicked(ControllerFlag_LStickHighRight))
             {
                 isSaveWriteOptionSelected = false;
                 SD_Call(Sfx_MenuMove);
             }
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 if (!isSaveWriteOptionSelected)
                 {
@@ -2350,7 +2350,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             }
 
             // Cancel overwrite.
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            if (Pad_ButtonClickedBind(cancel))
             {
                 Game_StateStepSet(1, 0);
                 SD_Call(Sfx_MenuCancel);

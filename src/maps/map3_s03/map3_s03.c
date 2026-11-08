@@ -392,7 +392,7 @@ void func_800D1A58(void) // 0x800D1A58
             Gfx_CursorDraw((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
                           8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 12);
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 for (i = 0; i < 8; i++)
                 {
@@ -450,7 +450,7 @@ void func_800D1A58(void) // 0x800D1A58
                     break;
                 }
             }
-            else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            else if (Pad_ButtonClickedBind(cancel))
             {
                 Event_InvItemCmd(InvItemCmd_AddItem, D_800D8144 + InvItemId_PlateOfTurtle, 1, false);
                 SysWork_StateStepSet(0, 16);
@@ -501,7 +501,7 @@ void func_800D1A58(void) // 0x800D1A58
             Gfx_CursorDraw((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
                           8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 for (i = 0; i < 8; i++)
                 {
@@ -564,7 +564,7 @@ void func_800D1A58(void) // 0x800D1A58
                     break;
                 }
             }
-            else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            else if (Pad_ButtonClickedBind(cancel))
             {
                 SysWork_StateStepSet(0, 16);
             }
@@ -702,8 +702,7 @@ void func_800D27F4(void) // 0x800D27F4
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (g_SysWork.sysStateSteps[0] == 9 &&
-                (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.skip |
-                                                       g_GameWorkPtr->config.controllerConfig.cancel)))
+                Pad_ButtonClicked(Pad_BindingGet(skip) | Pad_BindingGet(cancel)))
             {
                 SD_Call(19);
                 SysWork_StateStepIncrement(0);

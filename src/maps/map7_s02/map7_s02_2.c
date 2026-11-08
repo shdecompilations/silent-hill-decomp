@@ -396,7 +396,7 @@ void func_800DA248(void) // 0x800DA248
 {
     s_FsImageDesc charaTex;
 
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] <= 20)
     {
         SysWork_StateStepSet(0, 22);
@@ -573,7 +573,7 @@ void func_800DAA4C(void) // 0x800DAA4C
     SVECTOR3 rot;
 
     // Skip.
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] <= 15)
     {
         SysWork_StateStepSet(0, 17);
@@ -887,7 +887,7 @@ void func_800DB738(void) // 0x800DB738
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
             if (g_SysWork.sysStateSteps[0] == 8 &&
-                g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.skip | g_GameWorkPtr->config.controllerConfig.cancel))
+                Pad_ButtonClicked(Pad_BindingGet(skip) | Pad_BindingGet(cancel)))
             {
                 SD_Call(19);
                 SysWork_StateStepIncrement(0);
@@ -933,7 +933,7 @@ void func_800DB738(void) // 0x800DB738
 
 void func_800DBB34(void) // 0x800DBB34
 {
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 1 && g_SysWork.sysStateSteps[0] <= 13)
     {
         SysWork_StateStepSet(0, 14);
@@ -1837,7 +1837,7 @@ void func_800DE1FC(void) // 0x800DE1FC
     s_ScratchData* scratch;
 
     // Skip.
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 8)
     {
         SD_Call(0x13);
@@ -2135,7 +2135,7 @@ void func_800DF21C(void) // 0x800DF21C
     VECTOR3       lightIntPos;
     SVECTOR3      unused;
 
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 11)
     {
         SysWork_StateStepSet(0, 11);
@@ -2482,8 +2482,8 @@ void func_800DFDDC(void) // 0x800DFDDC
             break;
 
         case 4:
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter ||
-                g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            if (Pad_ButtonClickedBind(enter) ||
+                Pad_ButtonClickedBind(cancel))
             {
                 if (!Savegame_EventFlagGet(EventFlag_487) &&
                     (D_800EA494.field_0 == 1 || D_800EA494.field_0 == 5 || D_800EA494.field_0 == 6))
@@ -2495,7 +2495,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                     SysWork_StateStepSet(0, 15);
                 }
             }
-            else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            else if (Pad_ButtonClickedBind(cancel))
             {
                 SysWork_StateStepSet(0, 15);
             }
@@ -2554,13 +2554,13 @@ void func_800DFDDC(void) // 0x800DFDDC
                            (s16)FP_FROM(sharedData_800E2CAC_7_s01, 12) + 8,
                            8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            if (Pad_ButtonClickedBind(cancel))
             {
                 SysWork_StateStepSet(0, 15);
                 break;
             }
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 for (i = 0; i < 3; i++)
                 {
@@ -3355,13 +3355,13 @@ void func_800E32E0(void) // 0x800E32E0
             cursorX = FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) + 8;
             Gfx_CursorDraw(cursorX, FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            if (Pad_ButtonClickedBind(cancel))
             {
                 SysWork_StateStepSet(0, 8);
                 break;
             }
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 for (i = 0; i < ARRAY_SIZE(D_800E9DE8); i++)
                 {

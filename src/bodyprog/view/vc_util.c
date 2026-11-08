@@ -260,36 +260,36 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
 
     vwGetViewAngle(&cam_ang);
 
-    if (!(g_Controller1->buttonFlags.held & ControllerFlag_Circle))
+    if (!Pad2_ButtonHeld(ControllerFlag_Circle))
     {
-        if (g_Controller1->buttonFlags.held & ControllerFlag_LStickHighDown)
+        if (Pad2_ButtonHeld(ControllerFlag_LStickHighDown))
         {
             cam_ang.vx = cam_ang.vx - (g_VBlanks * V_BLANKS_MULT);
         }
 
-        if (g_Controller1->buttonFlags.held & ControllerFlag_LStickHighUp)
+        if (Pad2_ButtonHeld(ControllerFlag_LStickHighUp))
         {
             cam_ang.vx = cam_ang.vx + (g_VBlanks * V_BLANKS_MULT);
         }
 
-        if (g_Controller1->buttonFlags.held & ControllerFlag_LStickHighRight)
+        if (Pad2_ButtonHeld(ControllerFlag_LStickHighRight))
         {
             cam_ang.vy = cam_ang.vy + (g_VBlanks * V_BLANKS_MULT);
         }
 
-        if (g_Controller1->buttonFlags.held & ControllerFlag_LStickHighLeft)
+        if (Pad2_ButtonHeld(ControllerFlag_LStickHighLeft))
         {
             cam_ang.vy = cam_ang.vy - (g_VBlanks * V_BLANKS_MULT);
         }
 
-        if (g_Controller1->buttonFlags.held & (ControllerFlag_Triangle | ControllerFlag_Cross))
+        if (Pad2_ButtonHeld(ControllerFlag_Triangle | ControllerFlag_Cross))
         {
             moveStep = Q8(0.0f);
-            if (g_Controller1->buttonFlags.held & ControllerFlag_Triangle)
+            if (Pad2_ButtonHeld(ControllerFlag_Triangle))
             {
                 moveStep = MOVE_DIST;
             }
-            if (g_Controller1->buttonFlags.held & ControllerFlag_Cross)
+            if (Pad2_ButtonHeld(ControllerFlag_Cross))
             {
                 moveStep = -MOVE_DIST - 1; // TODO: `- 1` enforces a rounded down result, but `Q8` truncates toward 0.
             }
@@ -301,23 +301,23 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     }
     else
     {
-        if (g_Controller1->buttonFlags.held & ControllerFlag_LStickHighUp)
+        if (Pad2_ButtonHeld(ControllerFlag_LStickHighUp))
         {
             newCamPos.vy -= MOVE_DIST;
         }
-        if (g_Controller1->buttonFlags.held & ControllerFlag_LStickHighDown)
+        if (Pad2_ButtonHeld(ControllerFlag_LStickHighDown))
         {
             newCamPos.vy += MOVE_DIST;
         }
 
-        if (g_Controller1->buttonFlags.held & (ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
+        if (Pad2_ButtonHeld(ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
         {
             moveStep = Q8(0.0f);
-            if (g_Controller1->buttonFlags.held & ControllerFlag_LStickHighRight)
+            if (Pad2_ButtonHeld(ControllerFlag_LStickHighRight))
             {
                 moveStep = MOVE_DIST;
             }
-            if (g_Controller1->buttonFlags.held & ControllerFlag_LStickHighLeft)
+            if (Pad2_ButtonHeld(ControllerFlag_LStickHighLeft))
             {
                 moveStep = -MOVE_DIST - 1; // TODO: `- 1` enforces a rounded down result, but `Q8` truncates toward 0.
             }
@@ -336,12 +336,12 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     lookAtMat.t[2] = newCamPos.vz;
     vwSetViewInfoDirectMatrix(NULL, &lookAtMat);
 
-    if (g_Controller1->buttonFlags.held & (ControllerFlag_LStickHighUp    |
-                                     ControllerFlag_LStickHighRight |
-                                     ControllerFlag_LStickHighDown  |
-                                     ControllerFlag_LStickHighLeft  |
-                                     ControllerFlag_Cross       |
-                                     ControllerFlag_Triangle))
+    if (Pad2_ButtonHeld(ControllerFlag_LStickHighUp    |
+                  ControllerFlag_LStickHighRight |
+                  ControllerFlag_LStickHighDown  |
+                  ControllerFlag_LStickHighLeft  |
+                  ControllerFlag_Cross           |
+                  ControllerFlag_Triangle))
     {
         SVECTOR refOffset; // Q19.12?
 

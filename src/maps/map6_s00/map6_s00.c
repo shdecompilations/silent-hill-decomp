@@ -119,7 +119,7 @@ void func_800EB11C(void) // 0x800EB11C
     s32 vol;
 
     // Skip.
-    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);

@@ -52,7 +52,7 @@ void func_800D49AC(void) // 0x800D49AC
 {
     s32 i;
 
-    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
+    if (Pad_ButtonClickedBind(skip))
     {
         if (g_SysWork.sysStateSteps[0] >= 3)
         {

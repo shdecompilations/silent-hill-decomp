@@ -128,7 +128,7 @@ void func_800D0B10(void) // 0x800D0B10
 void func_800D0C14(void) // 0x800D0C14
 {
     // Skip.
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] < 30)
     {
         SysWork_StateStepSet(0, 30);

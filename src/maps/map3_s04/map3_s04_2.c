@@ -260,7 +260,7 @@ void func_800D2668(void) // 0x800D2668
     s32 i;
 
     // Skip.
-    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 23)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -618,7 +618,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         }
     }
 
-    if (g_Controller0->buttonFlags.clicked & ControllerFlag_R3)
+    if (Pad_ButtonClicked(ControllerFlag_R3))
     {
         SD_Call(Sfx_Unk1529);
     }

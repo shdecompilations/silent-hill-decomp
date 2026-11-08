@@ -134,7 +134,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         EventState_CutsceneSkip  = 36
     } e_EventState;
 
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= EventState_CutsceneStart && g_SysWork.sysStateSteps[0] < EventState_CutsceneEnd)
     {
         SysWork_StateStepSet(0, EventState_CutsceneSkip);

@@ -233,7 +233,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
         return;
     }
 
-    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.light &&
+    if (Pad_ButtonClickedBind(light) &&
         g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed)
     {
         Game_FlashlightToggle();
@@ -243,7 +243,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     {
         SysWork_StateSetNext(g_MapEventSysState);
     }
-    else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.pause)
+    else if (Pad_ButtonClickedBind(pause))
     {
         SysWork_StateSetNext(SysState_GamePaused);
     }
@@ -251,16 +251,16 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     {
         return;
     }
-    else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.item)
+    else if (Pad_ButtonClickedBind(item))
     {
         SysWork_StateSetNext(SysState_StatusMenu);
     }
-    else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.map)
+    else if (Pad_ButtonClickedBind(map))
     {
         SysWork_StateSetNext(SysState_MapScreen);
         g_SysWork.isMgsStringSet = false;
     }
-    else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.option)
+    else if (Pad_ButtonClickedBind(option))
     {
         SysWork_StateSetNext(SysState_OptionsMenu);
     }
@@ -311,7 +311,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
                                              ControllerFlag_LStickLowLeft    |
                                              ControllerFlag_RStickLowLeft    |
                                              ControllerFlag_LStickHighLeft)) &&
-        (g_Controller0->buttonFlags.clicked & ControllerFlag_L3))
+        Pad_ButtonClicked(ControllerFlag_L3))
     {
         D_800A9A68 = 0;
         SD_Call(4);
@@ -320,7 +320,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
         return;
     }
 
-    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.pause)
+    if (Pad_ButtonClickedBind(pause))
     {
         D_800A9A68 = 0;
 
@@ -487,7 +487,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
 {
     if (!HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
     {
-        if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.map ||
+        if (Pad_ButtonClickedBind(map) ||
             Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > MapMsgState_Idle)
         {
             SysWork_StateSetNext(SysState_Gameplay);
@@ -497,7 +497,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
              ((g_SysWork.field_2388.field_1C[0].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) ||
               (g_SysWork.field_2388.field_1C[1].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)))
     {
-        if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.map ||
+        if (Pad_ButtonClickedBind(map) ||
             Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgState_Idle)
         {
             SysWork_StateSetNext(SysState_Gameplay);
@@ -967,8 +967,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             Gfx_StringDraw("\7GAME_OVER", DEFAULT_MAP_MESSAGE_LENGTH);
             g_SysWork.sysStateStepData[0]++;
 
-            if ((g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                       g_GameWorkPtr->config.controllerConfig.cancel)) ||
+            if (Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)) ||
                 g_SysWork.sysStateStepData[0] > SECONDS_TO_FRAMES(4))
             {
                 SysWork_StateStepIncrement(0);
@@ -1004,8 +1003,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             g_SysWork.sysStateStepData[0]++;
             Screen_BackgroundImgDraw(&TIP_IMG);
 
-            if (!(g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                        g_GameWorkPtr->config.controllerConfig.cancel)))
+            if (!Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
             {
                 if (g_SysWork.sysStateStepData[0] <= SECONDS_TO_FRAMES(8))
                 {

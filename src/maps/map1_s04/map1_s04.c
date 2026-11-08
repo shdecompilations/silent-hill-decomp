@@ -94,13 +94,13 @@ void func_800CCA2C(void) // 0x800CCA2C
             SysWork_StateStepIncrement(0);
 
         case 1:
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_R3)
+            if (Pad_ButtonClicked(ControllerFlag_R3))
             {
                 D_800CD768 = 0;
                 D_800CD76C = 0;
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighDown))
             {
                 if (D_800CD768 == 0)
                 {
@@ -109,7 +109,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 D_800CD768--;
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp))
             {
                 D_800CD768++;
                 if (D_800CD768 == 23)
@@ -118,7 +118,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighLeft)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighLeft))
             {
                 if (D_800CD76C != 0)
                 {
@@ -126,7 +126,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighRight)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighRight))
             {
                 if (D_800CD76C != 39 && D_800CD038[D_800CD768][D_800CD76C + 1] != 0)
                 {
@@ -134,7 +134,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 }
             }
 
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_Circle)
+            if (Pad_ButtonClicked(ControllerFlag_Circle))
             {
                 SD_Call(D_800CD038[D_800CD768][D_800CD76C]);
                 D_800CD770 = 0;
@@ -151,7 +151,7 @@ void func_800CCA2C(void) // 0x800CCA2C
             {
                 D_800CD770 += g_DeltaTime;
 
-                if (g_Controller0->buttonFlags.clicked & ControllerFlag_Cross)
+                if (Pad_ButtonClicked(ControllerFlag_Cross))
                 {
                     D_800CD774 = 0;
                 }
@@ -180,24 +180,24 @@ void func_800CCA2C(void) // 0x800CCA2C
             }
 #endif
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
+            if (Pad_ButtonClickedBind(skip))
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 2:
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_Circle)
+            if (Pad_ButtonClicked(ControllerFlag_Circle))
             {
                 SD_Call(D_800CD768_tbl[D_800CD768]);
             }
 
-            if (g_Controller0->buttonFlags.clicked & ControllerFlag_Cross)
+            if (Pad_ButtonClicked(ControllerFlag_Cross))
             {
                 Sd_SfxStop(D_800CD768_tbl[D_800CD768]);
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighDown))
             {
                 if (D_800CD768 == 0)
                 {
@@ -206,7 +206,7 @@ void func_800CCA2C(void) // 0x800CCA2C
                 D_800CD768--;
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp))
             {
                 D_800CD768++;
                 if (D_800CD768 == 4)
@@ -222,17 +222,17 @@ void Map_WorldObjectsInit(void) {} // 0x800CCE30
 
 void Map_WorldObjectsUpdate(void) // 0x800CCE38
 {
-    if (g_Controller0->buttonFlags.clicked & ControllerFlag_R1)
+    if (Pad_ButtonClicked(ControllerFlag_R1))
     {
         SD_Call(Sfx_UseKey);
     }
 
-    if (g_Controller0->buttonFlags.clicked & ControllerFlag_R2)
+    if (Pad_ButtonClicked(ControllerFlag_R2))
     {
         SD_Call(Sfx_DoorUnlocked);
     }
 
-    if (g_Controller0->buttonFlags.clicked & ControllerFlag_R3)
+    if (Pad_ButtonClicked(ControllerFlag_R3))
     {
         SD_Call(Sfx_Unk1343);
     }

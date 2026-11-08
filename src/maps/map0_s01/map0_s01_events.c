@@ -149,7 +149,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
     #define cybilChara g_SysWork.npcs[0]
 
     // Skip.
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] > 5 && g_SysWork.sysStateSteps[0] < 47)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -510,8 +510,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 5:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                      g_GameWorkPtr->config.controllerConfig.cancel))
+            if (Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -536,8 +535,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 9:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                 g_GameWorkPtr->config.controllerConfig.cancel))
+            if (Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
             {
                 SysWork_StateStepIncrement(0);
             }

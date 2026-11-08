@@ -12,6 +12,22 @@
 #define CONTROLLER_COUNT_MAX 2
 #define STICK_DEADZONE       FP_STICK(0.5f)
 
+/** @brief Checks controller 1 button flags against a mask of `e_ControllerFlags`. */
+#define Pad_ButtonClicked(buttons)   (g_Controller0->buttonFlags.clicked & (buttons))
+#define Pad_ButtonHeld(buttons)      (g_Controller0->buttonFlags.held & (buttons))
+#define Pad_ButtonPulsed(buttons)    (g_Controller0->buttonFlags.pulsed & (buttons))
+#define Pad_ButtonPulsedGui(buttons) (g_Controller0->buttonFlags.pulsedGui & (buttons))
+
+/** @brief Checks controller 2 held button flags against a mask of `e_ControllerFlags`. */
+#define Pad2_ButtonHeld(buttons)     (g_Controller1->buttonFlags.held & (buttons))
+
+/** @brief Gets the buttons bound to an input action, e.g. `Pad_BindingGet(cancel)`. */
+#define Pad_BindingGet(action) (g_GameWorkPtr->config.controllerConfig.action)
+
+/** @brief Checks controller 1 button flags against the buttons bound to an input action. */
+#define Pad_ButtonClickedBind(action) Pad_ButtonClicked(Pad_BindingGet(action))
+#define Pad_ButtonHeldBind(action)    Pad_ButtonHeld(Pad_BindingGet(action))
+
 /** @brief PSX controller input flags. */
 typedef enum _ControllerFlags
 {

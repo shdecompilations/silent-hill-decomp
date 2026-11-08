@@ -93,7 +93,7 @@ void sharedFunc_800DB60C_7_s01(void)
             cursorX = FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) + 8;
             Gfx_CursorDraw(cursorX, FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0u, 0, 0xC);
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            if (Pad_ButtonClickedBind(cancel))
             {
 #ifndef MAP7_S02
                 SD_Call(Sfx_Unk1652);
@@ -114,7 +114,7 @@ void sharedFunc_800DB60C_7_s01(void)
                 break;
             }
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 for (i = 0; i < 3; i++)
                 {

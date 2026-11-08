@@ -407,8 +407,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
                     Event_WaitTimer(Q12(3.5f), false);
 
                     if (g_SysWork.sysStateSteps[0] == sysState0 &&
-                        (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                               g_GameWorkPtr->config.controllerConfig.cancel)))
+                        Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
                     {
                         SysWork_StateStepSet(0, 3);
                     }
@@ -527,7 +526,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 {
     q19_12 progressAlpha;
 
-    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
+    if (Pad_ButtonClickedBind(skip))
     {
         if (g_SysWork.sysStateSteps[0] == 2)
         {
@@ -658,8 +657,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             g_Gfx_PaperMapMarkingAlpha++;
             if (g_Gfx_PaperMapMarkingAlpha >= 128)
             {
-                if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                          g_GameWorkPtr->config.controllerConfig.cancel))
+                if (Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -715,7 +713,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 {
     q3_12 progressAlpha;
 
-    if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip)
+    if (Pad_ButtonClickedBind(skip))
     {
         if (!D_800F2295)
         {
@@ -870,8 +868,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             D_800F2298++;
             if (D_800F2298 >= 128)
             {
-                if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                          g_GameWorkPtr->config.controllerConfig.cancel))
+                if (Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -1389,8 +1386,7 @@ void func_800E9DD8(void) // 0x800E9DD8
             Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
             Event_WaitTimer(Q12(1.0f), false);
 
-            if (g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                      g_GameWorkPtr->config.controllerConfig.cancel))
+            if (Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
             {
                 SysWork_StateStepIncrement(0);
             }

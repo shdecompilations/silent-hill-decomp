@@ -230,7 +230,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
             }
             else if (dpadButFlags == ControllerFlag_DpadUp)
             {
-                if (!(heldButFlags & g_GameWorkPtr->config.controllerConfig.run))
+                if (!(heldButFlags & Pad_BindingGet(run)))
                 {
                     processedInputFlags |= 0xE0000000;
                 }
@@ -261,15 +261,15 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
 
 bool func_8003483C(u16* arg0) // 0x8003483C
 {
-    if (g_Controller0->buttonFlags.clicked & *(*arg0 + arg0))
+    if (Pad_ButtonClicked(*(*arg0 + arg0)))
     {
         *arg0 = *arg0 + 1;
     }
-    else if (g_Controller0->buttonFlags.clicked & (*(arg0 + 1)))
+    else if (Pad_ButtonClicked(*(arg0 + 1)))
     {
         *arg0 = 2;
     }
-    else if (g_Controller0->buttonFlags.clicked & ControllerFlag_FaceButtons)
+    else if (Pad_ButtonClicked(ControllerFlag_FaceButtons))
     {
         *arg0 = 1;
     }

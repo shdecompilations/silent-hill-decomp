@@ -28,13 +28,13 @@ s16 func_800CD20C(void) // 0x800CD20C
     {
         if (g_SysWork.sysStateSteps[0] == 5)
         {
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighDown))
             {
                 D_800ED5C8 += 3;
                 Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp))
             {
                 D_800ED5C8 += 1;
                 Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
@@ -42,7 +42,7 @@ s16 func_800CD20C(void) // 0x800CD20C
 
             D_800ED5C8 &= 0x3;
 
-            if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighLeft)
+            if (Pad_ButtonHeld(ControllerFlag_LStickHighLeft))
             {
                 Sd_SfxPlay(Sfx_Unk1589, Q8(0.0f), Q8(0.25f));
 
@@ -53,7 +53,7 @@ s16 func_800CD20C(void) // 0x800CD20C
                 }
             }
 
-            if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighRight)
+            if (Pad_ButtonHeld(ControllerFlag_LStickHighRight))
             {
                 Sd_SfxPlay(Sfx_Unk1589, Q8(0.0f), Q8(0.25f));
 
@@ -661,13 +661,13 @@ void func_800EBA40(void) // 0x800EBA40
             Game_TimerUpdate();
             Gfx_CursorDraw((s16)(FP_FROM(D_800F0354, Q12_SHIFT) + 8), FP_FROM(D_800F0358, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            if (Pad_ButtonClickedBind(cancel))
             {
                 SysWork_StateStepSet(0, 7);
                 break;
             }
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 for (i = 0; i < ARRAY_SIZE(D_800F0158); i++)
                 {
@@ -817,7 +817,7 @@ void func_800EBF70(void) // 0x800EBF70
             g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 
             temp_v0 = func_800CD20C();
-            if (!(g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel))
+            if (!Pad_ButtonClickedBind(cancel))
             {
                 if (temp != temp_v0)
                 {

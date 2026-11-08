@@ -154,7 +154,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
             g_MainMenu_VisibleEntryFlags |= g_MainMenu_VisibleEntryFlags << MainMenuEntry_Count;
 
-            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown))
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown))
             {
                 SD_Call(Sfx_MenuMove);
                 g_GameWork.gameState = GameState_MainMenu;
@@ -166,13 +166,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp))
             {
                 g_MainMenu_SelectedEntry += MainMenuEntry_Count;
                 while (!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)));
             }
 
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighDown))
             {
                 while (!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedEntry)));
             }
@@ -180,7 +180,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             // Wrap selection.
             g_MainMenu_SelectedEntry %= MainMenuEntry_Count;
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 g_GameWork.gameState = GameState_MainMenu;
 
@@ -258,9 +258,8 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown) ||
-                g_Controller0->buttonFlags.clicked & (g_GameWorkPtr->config.controllerConfig.enter |
-                                                      g_GameWorkPtr->config.controllerConfig.cancel))
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown) ||
+                Pad_ButtonClicked(Pad_BindingGet(enter) | Pad_BindingGet(cancel)))
             {
                 g_GameWork.gameState = GameState_MainMenu;
 
@@ -272,7 +271,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Scroll game difficulty options.
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighUp)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp))
             {
                 prevGameDifficultyIdx = 2;
                 if (newGameSelectedDifficultyIdx > 0)
@@ -281,7 +280,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
                 newGameSelectedDifficultyIdx = prevGameDifficultyIdx;
             }
-            if (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighDown)
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighDown))
             {
                 nextGameDifficultyIdx = 0;
                 if (newGameSelectedDifficultyIdx < 2)
@@ -292,13 +291,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Play scroll sound.
-            if (g_Controller0->buttonFlags.pulsed & (ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown))
+            if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp | ControllerFlag_LStickHighDown))
             {
                 SD_Call(Sfx_MenuMove);
             }
 
             // Select game difficulty.
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter)
+            if (Pad_ButtonClickedBind(enter))
             {
                 GameBoot_SavegameInitialize(0, newGameSelectedDifficultyIdx - 1);
                 GameBoot_WorldInit();
@@ -313,7 +312,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 g_MainMenuState = MainMenuState_NewGameStart;
             }
             // Cancel.
-            else if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            else if (Pad_ButtonClickedBind(cancel))
             {
                 SD_Call(Sfx_MenuCancel);
                 g_MainMenuState = MainMenuState_Main;

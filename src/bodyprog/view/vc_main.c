@@ -810,7 +810,7 @@ void vcPreSetDataInVC_WORK(VC_WORK* w_p, const VC_ROAD_DATA* vc_road_ary_list) /
             vcWork.flags &= ~VC_OLD_PRS_F_VIEW_F;
         }
 
-        if (g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.view)
+        if (Pad_ButtonHeldBind(view))
         {
             vcWork.flags |= VC_PRS_F_VIEW_F;
         }

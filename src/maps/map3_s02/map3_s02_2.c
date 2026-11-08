@@ -250,7 +250,7 @@ void func_800D0608(void) // 0x800D0608
         GsOUT_PACKET_P = (PACKET*)scratch->stp_8;
     }
 
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 4)
     {
         SysWork_StateStepSet(0, 4);

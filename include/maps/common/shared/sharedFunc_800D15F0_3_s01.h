@@ -31,7 +31,7 @@ void sharedFunc_800D15F0_3_s01(void)
     s32 temp2;
 
     // Skip.
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 9 && g_SysWork.sysStateSteps[0] < 17)
     {
         SysWork_StateStepSet(0, 17);
@@ -103,13 +103,13 @@ void sharedFunc_800D15F0_3_s01(void)
             cursorX = FP_FROM(sharedData_800D4D10_3_s01, Q12_SHIFT) + 8;
             Gfx_CursorDraw(cursorX, FP_FROM(sharedData_800D4D14_3_s01, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
-            if (g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.cancel)
+            if (Pad_ButtonClickedBind(cancel))
             {
                 SysWork_StateStepSet(0, 6);
                 break;
             }
 
-            if (!(g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.enter))
+            if (!Pad_ButtonClickedBind(enter))
             {
                 break;
             }

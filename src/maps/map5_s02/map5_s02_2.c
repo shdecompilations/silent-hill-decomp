@@ -501,7 +501,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
     SVECTOR3 unused;
     s32      i;
 
-    if ((g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.skip) &&
+    if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 3 && g_SysWork.sysStateSteps[0] < 41)
     {
         SysWork_StateStepSet(0, 43);
