@@ -180,8 +180,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // `EventActivationType_Button`: Only allow button activated events when area is lit up?
         if (mapEvent->activationType == EventActivationType_Button)
         {
-            if ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed) && !g_SysWork.field_2388.isFlashlightOn &&
-                ((g_SysWork.field_2388.field_1C[0].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) || (g_SysWork.field_2388.field_1C[1].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)))
+            if ((g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed) && !g_SysWork.field_2388.isFlashlightOn &&
+                ((g_SysWork.field_2388.field_1C[0].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) || (g_SysWork.field_2388.field_1C[1].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)))
             {
                 if (mapEvent->sysState != SysState_LoadOverlay && (mapEvent->sysState != SysState_LoadRoom && mapEvent->eventParam > 1))
                 {

@@ -414,12 +414,11 @@ void Romper_Control_1(s_SubCharacter* romper)
     q19_12 newMoveSpeed;
     s32    var;
 
-    flags = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed);
-    if (flags == 0)
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         var = func_8006FD90(romper, 1, Q12(1.8f), Q12(4.0f));
     }
-    else if (flags == (1 << 1))
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         var = func_8006FD90(romper, 1, Q12(3.0f), Q12(7.0f));
     }
@@ -495,12 +494,11 @@ void Romper_ControlWalkForward(s_SubCharacter* romper)
     romperProps.field_F0 += sharedFunc_800E939C_2_s02(romper);
     romper->moveSpeed += romperProps.field_F0;
 
-    flags = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed);
-    if (flags == 0)
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         startRunning = func_8006FD90(romper, 1, Q12(1.8f), Q12(4.0f));
     }
-    else if (flags == (1 << 1))
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         startRunning = func_8006FD90(romper, 1, Q12(3.0f), Q12(7.0f));
     }
@@ -549,12 +547,11 @@ void Romper_Control_3(s_SubCharacter* romper)
     romperProps.field_F0 += sharedFunc_800E94B4_2_s02(romper);
     romper->moveSpeed    += romperProps.field_F0;
 
-    temp_v1_2 = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed);
-    if (temp_v1_2 == 0)
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         var_s0 = func_8006FD90(romper, 0, Q12(2.5f), Q12(6.0f));
     }
-    else if (temp_v1_2 == 2)
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         var_s0 = func_8006FD90(romper, 0, Q12(3.0f), Q12(8.0f));
     }
@@ -755,12 +752,11 @@ void Romper_Control_4(s_SubCharacter* romper)
     s32    i;
     q19_12 angle1;
 
-    flags = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed);
-    if (flags == 0)
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         var_s0 = func_8006FD90(romper, 0, Q12(2.5f), Q12(6.0f));
     }
-    else if (flags == (1 << 1))
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         var_s0 = func_8006FD90(romper, 0, Q12(3.0f), Q12(8.0f));
     }

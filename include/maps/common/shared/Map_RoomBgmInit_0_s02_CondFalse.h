@@ -19,7 +19,7 @@ void Map_RoomBgmInit_CondFalse(void)
         case 2:
         case 3:
         case 4:
-            bgmFlags    = (g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed) ? BgmFlag_Layer2 : BgmFlag_Layer1;
+            bgmFlags    = (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed) ? BgmFlag_Layer2 : BgmFlag_Layer1;
             layerLimits = sharedData_800CFB1C_0_s02;
             break;
 

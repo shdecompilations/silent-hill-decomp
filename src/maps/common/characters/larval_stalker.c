@@ -108,13 +108,12 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
         larvalStalker->field_44.field_0 = 0;
     }
 
-    idxInfo = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed);
-    if (idxInfo == 0)
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         baseDistMax = Q12(2.5f);
         distStep = Q12(8.0f);
     }
-    else if (idxInfo == 2)
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         baseDistMax = Q12(3.5f);
         distStep = Q12(10.0f);

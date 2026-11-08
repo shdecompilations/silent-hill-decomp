@@ -269,12 +269,12 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
     Chara_MoveSpeedUpdate3(creeper, Q12(4.0f), Q12(0.0f));
     creeperProps.chirpTimer += g_DeltaTime;
 
-    if ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)) == SpecialEnvEventFlags_FlashlightAllowed)
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         cond = func_8006FD90(creeper, 2, Q12(12.0f), Q12(8.0f));
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed) &&
-             (g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))
+    else if ((g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed) &&
+             (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))
     {
         cond = func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f));
     }
@@ -380,10 +380,10 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(creeper->position, playerChara.position) -
                                                    creeper->rotation.vy);
 
-    if (((g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)) == SpecialEnvEventFlags_FlashlightAllowed && func_8006FD90(creeper, 0, Q12(12.0f), Q12(8.0f))) ||
-        ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed) &&
-         (g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) && func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f))) ||
-        (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)) && func_8006FD90(creeper, 1, Q12(4.0f), Q12(12.0f))) ||
+    if (((!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed)) && func_8006FD90(creeper, 0, Q12(12.0f), Q12(8.0f))) ||
+        ((g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed) &&
+         (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f))) ||
+        ((!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed)) && func_8006FD90(creeper, 1, Q12(4.0f), Q12(12.0f))) ||
         (func_80070360(creeper, 0, Q12(0.5f)) || creeperProps.flags & CreeperFlag_Alerted))
     {
         creeperProps.targetPositionX = playerChara.position.vx;

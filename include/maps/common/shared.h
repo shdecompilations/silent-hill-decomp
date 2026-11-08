@@ -70,27 +70,7 @@ typedef struct
     /* 0x128 */ VECTOR3             field_128;
     /* 0x134 */ VECTOR3             field_134;
     /* 0x140 */ VECTOR3             field_140;
-    union
-    {
-        struct
-        {
-            u8  field_14C_0 : 1;
-            u8  field_14C_1 : 1;
-            u8  field_14C_2 : 1;
-            u8  field_14C_3 : 1;
-            u32 field_14C_4 : 28; // Unsure if used.
-        } bits;
-        // @hack Some functions only match when bits are defined as `u32`, but that breaks other functions.
-        struct
-        {
-            u32 field_14C_0 : 1;
-            u32 field_14C_1 : 1;
-            u32 field_14C_2 : 1;
-            u32 field_14C_3 : 1;
-            u32 field_14C_4 : 28;
-        } bits32;
-        u32 flags;
-    } field_14C;
+    /* 0x14C */ u32                 field_14C; // Flags returned by `sharedFunc_800D3758_0_s01`, bit 2 set when `sharedFunc_800D3430_0_s01` finds the target.
     q19_12 distance_150;
     q19_12 angle_154;
     q19_12 field_158; // Displacement distance.

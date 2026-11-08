@@ -364,7 +364,7 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* effectsInf
 {
     arg0->effectsInfo = *effectsInfo;
 
-    if (effectsInfo->flags.field_00[0] & SpecialEnvEventFlags_EnableBrightness)
+    if (effectsInfo->flags & SpecialEnvEventFlags_EnableBrightness)
     {
         arg0->brightnessIntensity = Q12(1.0f);
     }
@@ -373,7 +373,7 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, const s_MapEffectsInfo* effectsInf
         arg0->brightnessIntensity = Q12(0.0f);
     }
 
-    if (effectsInfo->flags.field_00[0] & SpecialEnvEventFlags_EnableLensflare)
+    if (effectsInfo->flags & SpecialEnvEventFlags_EnableLensflare)
     {
         arg0->flashlightLensFlareIntensity = Q12(1.0f);
     }
@@ -456,7 +456,7 @@ void Gfx_EffectsUpdate(void) // 0x8003F170
 
     if (ptr->flashEffect)
     {
-        flags            = currentInGameGfx->effectsInfo.flags.field_00[0];
+        flags            = currentInGameGfx->effectsInfo.flags;
         ptr->flashEffect = false;
 
         if (flags & SpecialEnvEventFlags_DarkEnvironment)
@@ -472,14 +472,14 @@ void Gfx_EffectsUpdate(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&currentInGameGfx->effectsInfo);
     WorldEnv_FogLightingParamsUpdate(currentInGameGfx);
 
-    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, currentInGameGfx->effectsInfo.spotLightIntensity, currentInGameGfx->effectsInfo.flags.field_00[2], Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
+    lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, currentInGameGfx->effectsInfo.spotLightIntensity, currentInGameGfx->effectsInfo.gfxEnum, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
 
     Gfx_FlashlightPositionUpdate(lightIntensity, currentInGameGfx->flashlightLensFlareIntensity, lightBoneCoord, g_SysWork.lightBoneCoord, &rot,
                                  g_SysWork.lightPosition.vx, g_SysWork.lightPosition.vy, g_SysWork.lightPosition.vz,
                                  g_WorldGfxWork.mapInfo->waterZones);
     func_80055814(currentInGameGfx->fogDistance);
 
-    if (ptr->field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_UseLighter)
+    if (ptr->field_154.effectsInfo.flags & SpecialEnvEventFlags_UseLighter)
     {
         func_8003E740();
     }
@@ -672,11 +672,11 @@ static void func_8003F838(s_StructUnk3* target, s_StructUnk3* envSettings0, s_St
     // Copy enviroment flags.
     if (weight < Q12(0.5f))
     {
-        target->effectsInfo.flags.field_00[0] = envSettings0->effectsInfo.flags.field_00[0];
+        target->effectsInfo.flags = envSettings0->effectsInfo.flags;
     }
     else
     {
-        target->effectsInfo.flags.field_00[0] = envSettings1->effectsInfo.flags.field_00[0];
+        target->effectsInfo.flags = envSettings1->effectsInfo.flags;
     }
 
     func_8003FCB0(&target->effectsInfo, &envSettings0->effectsInfo, &envSettings1->effectsInfo, weight);
@@ -690,26 +690,26 @@ static void func_8003F838(s_StructUnk3* target, s_StructUnk3* envSettings0, s_St
         target->flashlightLensFlareIntensity = Math_WeightedAverageGet(envSettings0->flashlightLensFlareIntensity, envSettings1->flashlightLensFlareIntensity, weight0);
     }
 
-    if (envSettings0->effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)
+    if (envSettings0->effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)
     {
-        if (envSettings1->effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)
+        if (envSettings1->effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)
         {
-            target->effectsInfo.flags.field_00[1] = Math_WeightedAverageGet(envSettings0->effectsInfo.flags.field_00[1], envSettings1->effectsInfo.flags.field_00[1], weight);
+            target->effectsInfo.field_1 = Math_WeightedAverageGet(envSettings0->effectsInfo.field_1, envSettings1->effectsInfo.field_1, weight);
         }
         else
         {
-            target->effectsInfo.flags.field_00[1] = Math_WeightedAverageGet(envSettings0->effectsInfo.flags.field_00[1], envSettings1->effectsInfo.flags.field_00[1], weight1);
+            target->effectsInfo.field_1 = Math_WeightedAverageGet(envSettings0->effectsInfo.field_1, envSettings1->effectsInfo.field_1, weight1);
         }
     }
     else
     {
-        if (envSettings1->effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)
+        if (envSettings1->effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)
         {
-            target->effectsInfo.flags.field_00[1] = Math_WeightedAverageGet(envSettings0->effectsInfo.flags.field_00[1], envSettings1->effectsInfo.flags.field_00[1], weight0);
+            target->effectsInfo.field_1 = Math_WeightedAverageGet(envSettings0->effectsInfo.field_1, envSettings1->effectsInfo.field_1, weight0);
         }
         else
         {
-            target->effectsInfo.flags.field_00[1] = Math_WeightedAverageGet(envSettings0->effectsInfo.flags.field_00[1], envSettings1->effectsInfo.flags.field_00[1], weight);
+            target->effectsInfo.field_1 = Math_WeightedAverageGet(envSettings0->effectsInfo.field_1, envSettings1->effectsInfo.field_1, weight);
         }
     }
 
@@ -750,57 +750,57 @@ static void func_8003F838(s_StructUnk3* target, s_StructUnk3* envSettings0, s_St
     target->effectsInfo.worldTintG = Math_WeightedAverageGet(envSettings0->effectsInfo.worldTintG, envSettings1->effectsInfo.worldTintG, weight);
     target->effectsInfo.worldTintB = Math_WeightedAverageGet(envSettings0->effectsInfo.worldTintB, envSettings1->effectsInfo.worldTintB, weight);
 
-    if (envSettings0->effectsInfo.flags.field_00[2] == UnkGfxEnum_1 && envSettings1->effectsInfo.flags.field_00[2] == UnkGfxEnum_2)
+    if (envSettings0->effectsInfo.gfxEnum == UnkGfxEnum_1 && envSettings1->effectsInfo.gfxEnum == UnkGfxEnum_2)
     {
         if (weight < Q12(5.0f / 6.0f))
         {
             weight2                                = Q12_MULT(weight, Q12(1.2f));
             weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->effectsInfo.flags.field_00[2]  = envSettings0->effectsInfo.flags.field_00[2];
+            target->effectsInfo.gfxEnum  = envSettings0->effectsInfo.gfxEnum;
             target->effectsInfo.spotLightIntensity = Math_WeightedAverageGet(envSettings0->effectsInfo.spotLightIntensity, 0, weight2);
         }
         else
         {
             weight2                                = (weight - Q12(5.0f / 6.0f)) * 6;
             weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->effectsInfo.flags.field_00[2]  = envSettings1->effectsInfo.flags.field_00[2];
+            target->effectsInfo.gfxEnum  = envSettings1->effectsInfo.gfxEnum;
             weight0                                = envSettings1->effectsInfo.spotLightIntensity;
             target->effectsInfo.spotLightIntensity = Math_WeightedAverageGet(Q12(0.0f), weight0, weight2);
         }
     }
-    else if (envSettings0->effectsInfo.flags.field_00[2] == UnkGfxEnum_2 && envSettings1->effectsInfo.flags.field_00[2] == UnkGfxEnum_1)
+    else if (envSettings0->effectsInfo.gfxEnum == UnkGfxEnum_2 && envSettings1->effectsInfo.gfxEnum == UnkGfxEnum_1)
     {
         if (weight < Q12(1.0f / 6.0f))
         {
             weight2                                = weight * 6;
             weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->effectsInfo.flags.field_00[2]  = envSettings0->effectsInfo.flags.field_00[2];
+            target->effectsInfo.gfxEnum  = envSettings0->effectsInfo.gfxEnum;
             target->effectsInfo.spotLightIntensity = Math_WeightedAverageGet(envSettings0->effectsInfo.spotLightIntensity, Q12(0.0f), weight2);
         }
         else
         {
             weight2                                = Q12_MULT(weight - Q12(1.0f / 6.0f), Q12(1.2f));
             weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->effectsInfo.flags.field_00[2]  = envSettings1->effectsInfo.flags.field_00[2];
+            target->effectsInfo.gfxEnum  = envSettings1->effectsInfo.gfxEnum;
             target->effectsInfo.spotLightIntensity = Math_WeightedAverageGet(Q12(0.0f), envSettings1->effectsInfo.spotLightIntensity, weight2);
         }
     }
     else
     {
-        if (envSettings0->effectsInfo.flags.field_00[2] != UnkGfxEnum_0 && envSettings1->effectsInfo.flags.field_00[2] == UnkGfxEnum_0)
+        if (envSettings0->effectsInfo.gfxEnum != UnkGfxEnum_0 && envSettings1->effectsInfo.gfxEnum == UnkGfxEnum_0)
         {
             if (weight >= Q12(1.0f))
             {
-                target->effectsInfo.flags.field_00[2] = envSettings1->effectsInfo.flags.field_00[2];
+                target->effectsInfo.gfxEnum = envSettings1->effectsInfo.gfxEnum;
             }
             else
             {
-                target->effectsInfo.flags.field_00[2] = envSettings0->effectsInfo.flags.field_00[2];
+                target->effectsInfo.gfxEnum = envSettings0->effectsInfo.gfxEnum;
             }
         }
         else
         {
-            target->effectsInfo.flags.field_00[2] = envSettings1->effectsInfo.flags.field_00[2];
+            target->effectsInfo.gfxEnum = envSettings1->effectsInfo.gfxEnum;
         }
 
         target->effectsInfo.spotLightIntensity = Math_WeightedAverageGet(envSettings0->effectsInfo.spotLightIntensity, envSettings1->effectsInfo.spotLightIntensity, weight);
@@ -900,7 +900,7 @@ void WorldEnv_FogLightingParamsUpdate(s_StructUnk3* arg0) // 0x8003FF2C
     temp_v1    = Q12_MULT(arg0->brightnessIntensity, (g_GameWork.config.brightness * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    WorldEnv_WorldLightingParamSet(arg0->effectsInfo.flags.field_00[2], arg0->effectsInfo.worldLightIntensity, arg0->effectsInfo.flags.field_00[1], arg0->effectsInfo.worldTintR, arg0->effectsInfo.worldTintG, arg0->effectsInfo.worldTintB, brightness);
+    WorldEnv_WorldLightingParamSet(arg0->effectsInfo.gfxEnum, arg0->effectsInfo.worldLightIntensity, arg0->effectsInfo.field_1, arg0->effectsInfo.worldTintR, arg0->effectsInfo.worldTintG, arg0->effectsInfo.worldTintB, brightness);
     WorldEnv_FogParamsSet(arg0->effectsInfo.field_E != 0, arg0->effectsInfo.fogColor.r, arg0->effectsInfo.fogColor.g, arg0->effectsInfo.fogColor.b);
 
     fogDistCpy = arg0->effectsInfo.fogDistance;

@@ -309,11 +309,10 @@ STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 /** @brief Map effects info. */
 typedef struct _MapEffectsInfo
 {
-    /* 0x0  */ union
-               {
-                   s32 field_0;     // Bitfield?         }
-                   u8  field_00[4]; // Individual flags? } Index 0 `e_SpecialEnvEventFlags` | Index 2 `e_UnkGfxEnum`.
-               } flags;
+    /* 0x0  */ u8      flags;   /** `e_SpecialEnvEventFlags` */
+    /* 0x1  */ u8      field_1; // Blended between presets.
+    /* 0x2  */ u8      gfxEnum; /** `e_UnkGfxEnum` */
+    /* 0x3  */ u8      field_3;
     /* 0x4  */ q3_12   spotLightIntensity;
     /* 0x6  */ q3_12   worldLightIntensity;
     /* 0x8  */ q3_12   worldTintR;

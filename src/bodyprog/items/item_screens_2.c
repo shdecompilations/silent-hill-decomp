@@ -814,10 +814,10 @@ void Inventory_Update(void) // 0x8004D518
             }
             else if (Pad_ButtonClickedBind(enter))
             {
-                if ((!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed) ||
+                if ((!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed) ||
                      g_SysWork.field_2388.isFlashlightOn ||
-                     (!(g_SysWork.field_2388.field_1C[0].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) &&
-                      !(g_SysWork.field_2388.field_1C[1].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))) &&
+                     (!(g_SysWork.field_2388.field_1C[0].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) &&
+                      !(g_SysWork.field_2388.field_1C[1].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))) &&
                     HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
                 {
                     Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.25f), Q8(0.25f));
@@ -852,10 +852,10 @@ void Inventory_Update(void) // 0x8004D518
             {
                 Inventory_UnavailableMapTextDraw(1);
             }
-            else if (g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed &&
+            else if (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed &&
                      !g_SysWork.field_2388.isFlashlightOn &&
-                     (g_SysWork.field_2388.field_1C[0].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment ||
-                      g_SysWork.field_2388.field_1C[1].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))
+                     (g_SysWork.field_2388.field_1C[0].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment ||
+                      g_SysWork.field_2388.field_1C[1].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))
             {
                 Inventory_UnavailableMapTextDraw(0);
             }
@@ -956,10 +956,10 @@ void Inventory_Update(void) // 0x8004D518
                     case InvCmdId_UseLook:
                         if (g_Inventory_CmdSelectedIdx != 0)
                         {
-                            if (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed) ||
+                            if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed) ||
                                 g_SysWork.field_2388.isFlashlightOn ||
-                                (!(g_SysWork.field_2388.field_1C[0].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) &&
-                                 !(g_SysWork.field_2388.field_1C[1].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)))
+                                (!(g_SysWork.field_2388.field_1C[0].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) &&
+                                 !(g_SysWork.field_2388.field_1C[1].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)))
                             {
                                 g_Inventory_SelectionBordersDraw = 1;
                                 g_Inventory_SelectionId          = InvSelectionId_Examine;
@@ -1034,10 +1034,10 @@ void Inventory_Update(void) // 0x8004D518
                         break;
 
                     case InvCmdId_Look:
-                        if (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_FlashlightAllowed) ||
+                        if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed) ||
                             g_SysWork.field_2388.isFlashlightOn ||
-                            (!(g_SysWork.field_2388.field_1C[0].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) &&
-                             !(g_SysWork.field_2388.field_1C[1].effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)))
+                            (!(g_SysWork.field_2388.field_1C[0].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) &&
+                             !(g_SysWork.field_2388.field_1C[1].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)))
                         {
                             g_Inventory_SelectionBordersDraw = 1;
                             g_Inventory_SelectionId          = InvSelectionId_Examine;

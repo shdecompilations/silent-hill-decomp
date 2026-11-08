@@ -1017,7 +1017,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_
     q19_12 angle;
     q19_12 dist;
 
-    idxInfo = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0;
+    idxInfo = g_SysWork.field_2388.field_154.effectsInfo.flags;
     idx     = (idxInfo & (1 << 1)) ? ((idxInfo & (1 << 0)) ? 2 : 3) : (sharedFunc_800D4A80_0_s01(airScreamer) == 3);
 
     deltaX = inVec->vx - airScreamer->position.vx;
@@ -1215,7 +1215,7 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
         angleToPlayer    = Math_AngleBetweenPositionsGet(airScreamer->position, g_SysWork.playerWork.player.position);
         angleToPlayerCpy = angleToPlayer;
 
-        offsetZ = g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0];
+        offsetZ = g_SysWork.field_2388.field_154.effectsInfo.flags;
         if (!(offsetZ & 0x2))
         {
             // @hack Permuter find.
@@ -1393,7 +1393,7 @@ bool AirScreamer_ControlUpdate(s_SubCharacter* airScreamer)
         airScreamerProps.timer_120 = someTime - deltaTime;
     }
 
-    sharedData_800E21D0_0_s01.field_14C.flags = sharedFunc_800D3758_0_s01(airScreamer,
+    sharedData_800E21D0_0_s01.field_14C = sharedFunc_800D3758_0_s01(airScreamer,
                                                                           &sharedData_800E21D0_0_s01.distance_150,
                                                                           &sharedData_800E21D0_0_s01.angle_154,
                                                                           &sharedData_800E21D0_0_s01.field_158,
@@ -1875,7 +1875,7 @@ void AirScreamer_ControlStandIdle(s_SubCharacter* airScreamer)
     switch (AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case AirScreamerHit_None:
-            if (sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2)
+            if (sharedData_800E21D0_0_s01.field_14C & (1 << 2))
             {
                 if (!airScreamerProps.field_E8_8)
                 {
@@ -1950,9 +1950,9 @@ void AirScreamer_Control_4(s_SubCharacter* airScreamer)
     cond       = false;
     temp_fp    = sharedFunc_800D4A80_0_s01(airScreamer);
 
-    var_v0_2 = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    new_var  = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
-    temp_s6  = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
+    var_v0_2 = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    new_var  = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
+    temp_s6  = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
 
     temp_s5 = var_v0_2;
     temp_s7 = new_var;
@@ -2149,9 +2149,9 @@ void AirScreamer_Control_5(s_SubCharacter* airScreamer)
     cond       = false;
 
     new_var    = sharedFunc_800D4A80_0_s01(airScreamer);
-    new_var1   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    new_var2   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    new_var3   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    new_var1   = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    new_var2   = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    new_var3   = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     temp_fp    = new_var;
     field14C_0 = new_var1;
     field14C_1 = new_var2;
@@ -2336,9 +2336,9 @@ void AirScreamer_Control_6(s_SubCharacter* airScreamer)
     cond           = false;
     temp_fp_tmp    = sharedFunc_800D4A80_0_s01(airScreamer);
     field15C       = sharedData_800E21D0_0_s01.field_15C;
-    field14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    field14C_1_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     temp_fp        = temp_fp_tmp;
     field14C_0     = field14C_0_tmp;
     field14C_1     = field14C_1_tmp;
@@ -2552,9 +2552,9 @@ void AirScreamer_Control_7(s_SubCharacter* airScreamer)
     var_s5         = false;
     temp_fp_tmp    = sharedFunc_800D4A80_0_s01(airScreamer);
     field15C       = sharedData_800E21D0_0_s01.field_15C;
-    field14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    field14C_1_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     field14C_0     = field14C_0_tmp;
     field14C_1     = field14C_1_tmp;
     temp_fp        = temp_fp_tmp;
@@ -2778,7 +2778,7 @@ void AirScreamer_Control_8(s_SubCharacter* airScreamer)
     sp10        = sharedFunc_800D4A80_0_s01(airScreamer);
     unkDist     = sharedData_800E21D0_0_s01.distance_150;
     unkAngle    = sharedData_800E21D0_0_s01.angle_154;
-    field14C_2  = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
+    field14C_2  = (sharedData_800E21D0_0_s01.field_14C >> 2) & 1;
 
     if (airScreamerProps.field_E8_4)
     {
@@ -3028,7 +3028,7 @@ void AirScreamer_Control_9(s_SubCharacter* airScreamer)
                 case 0:
                     if (ANIM_STATUS_IS_ACTIVE(animStatus))
                     {
-                        if (sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2)
+                        if (sharedData_800E21D0_0_s01.field_14C & (1 << 2))
                         {
                             if (!airScreamerProps.field_E8_8)
                             {
@@ -3050,7 +3050,7 @@ void AirScreamer_Control_9(s_SubCharacter* airScreamer)
                             }
                         }
                         else if (airScreamerProps.flags & AirScreamerFlag_31 ||
-                                 sharedData_800E21D0_0_s01.field_14C.bits.field_14C_1 ||
+                                 (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) ||
                                  sharedData_800E21D0_0_s01.field_15C > Q12(10.0f))
                         {
                             airScreamer->model.anim.status  = ANIM_STATUS(AirScreamerAnim_StandIdle, false);
@@ -3115,7 +3115,7 @@ void AirScreamer_Control_10(s_SubCharacter* airScreamer)
 
     animStatus = airScreamer->model.anim.status;
     sp14       = sharedFunc_800D4A80_0_s01(airScreamer);
-    new_var    = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    new_var    = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     sp18       = new_var;
     unkDist    = sharedData_800E21D0_0_s01.distance_150;
 
@@ -3320,7 +3320,7 @@ void AirScreamer_Control_11(s_SubCharacter* airScreamer)
     idx        = sharedFunc_800D4A80_0_s01(airScreamer);
     switch2Idx = 0;
 
-    bit3       = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
+    bit3       = (sharedData_800E21D0_0_s01.field_14C >> 2) & 1;
     stateStep  = airScreamer->model.stateStep;
     f150       = sharedData_800E21D0_0_s01.distance_150;
     stateStep1 = 1;
@@ -3570,8 +3570,8 @@ void AirScreamer_Control_13(s_SubCharacter* airScreamer)
     animStatus = airScreamer->model.anim.status;
     switchCond = 0;
     new_var    = sharedFunc_800D4A80_0_s01(airScreamer);
-    new_var3   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    new_var2   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    new_var3   = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    new_var2   = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     field14C_1 = new_var3;
     temp_s4    = new_var;
     field14C_2 = new_var2;
@@ -3722,7 +3722,7 @@ void AirScreamer_Control_14(s_SubCharacter* airScreamer)
     temp_s7_tmp    = sharedFunc_800D4A80_0_s01(airScreamer);
     dist           = sharedData_800E21D0_0_s01.distance_150;
     angle          = sharedData_800E21D0_0_s01.angle_154;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     temp_s7        = temp_s7_tmp;
     field14C_2     = field14C_2_tmp;
     distFieldF8    = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition);
@@ -3937,7 +3937,7 @@ void AirScreamer_ControlRecoil(s_SubCharacter* airScreamer)
     q19_12 var_s1;
 
     animStatus             = airScreamer->model.anim.status;
-    field14C_2_tmp         = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_2_tmp         = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     airScreamer->flags |= CharaFlag_Hit;
     field14C_2             = field14C_2_tmp;
     cond                   = false;
@@ -4217,9 +4217,9 @@ void AirScreamer_Control_18(s_SubCharacter* airScreamer)
     sp10       = sharedFunc_800D4A80_0_s01(airScreamer);
     cond       = false;
 
-    field14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    field14C_1_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     field14C_0     = field14C_0_tmp;
     field14C_1     = field14C_1_tmp;
     field14C_2     = field14C_2_tmp;
@@ -4416,9 +4416,9 @@ void AirScreamer_Control_19(s_SubCharacter* airScreamer)
 
     // @hack These flags/bitfields always need weird variable juggling, is there a way to remove it?
     sp10_temp  = sharedFunc_800D4A80_0_s01(airScreamer);
-    new_var4   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    new_var2   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    new_var3   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    new_var4   = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    new_var2   = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    new_var3   = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     sp10       = sp10_temp;
     cond       = false;
     field14C_0 = new_var4;
@@ -4605,9 +4605,9 @@ void AirScreamer_Control_20(s_SubCharacter* airScreamer)
     animStatus = airScreamer->model.anim.status;
     angle0     = sharedData_800E21D0_0_s01.field_15C;
 
-    field14C_0_tmp    = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field14C_1_tmp    = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field14C_2_tmp    = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0_tmp    = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    field14C_1_tmp    = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    field14C_2_tmp    = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     field14C_0        = field14C_0_tmp;
     field14C_1        = field14C_1_tmp;
     field14C_2        = field14C_2_tmp;
@@ -4840,9 +4840,9 @@ void AirScreamer_Control_21(s_SubCharacter* airScreamer)
     animStatus        = airScreamer->model.anim.status;
     angle0            = sharedData_800E21D0_0_s01.field_15C;
 
-    field14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    field14C_1_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     field14C_0     = field14C_0_tmp;
     field14C_1     = field14C_1_tmp;
     field14C_2     = field14C_2_tmp;
@@ -5085,7 +5085,7 @@ void AirScreamer_Control_22(s_SubCharacter* airScreamer)
     animStatus = airScreamer->model.anim.status;
     dist0      = sharedData_800E21D0_0_s01.distance_150;
     angle0     = sharedData_800E21D0_0_s01.angle_154;
-    field14C_2 = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
+    field14C_2 = (sharedData_800E21D0_0_s01.field_14C >> 2) & 1;
 
     if (airScreamerProps.field_E8_4)
     {
@@ -5282,7 +5282,7 @@ void AirScreamer_Control_23(s_SubCharacter* airScreamer)
 
     temp_fp_tmp    = sharedFunc_800D4A80_0_s01(airScreamer);
     dist0          = sharedData_800E21D0_0_s01.distance_150;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     temp_fp        = temp_fp_tmp;
     field14C_2     = field14C_2_tmp;
     temp_s6        = AirScreamer_HasLandedCheck(airScreamer);
@@ -5473,7 +5473,7 @@ void AirScreamer_Control_24(s_SubCharacter* airScreamer)
     switchCond  = 0;
     animStatus  = airScreamer->model.anim.status;
     unkField150 = sharedData_800E21D0_0_s01.distance_150;
-    unkField14C = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
+    unkField14C = (sharedData_800E21D0_0_s01.field_14C >> 2) & 1;
     temp_a0     = AirScreamer_HasLandedCheck(airScreamer);
 
     switch (airScreamer->model.stateStep)
@@ -5778,8 +5778,8 @@ void AirScreamer_Control_26(s_SubCharacter* airScreamer)
     switchCond = false;
     animStatus = airScreamer->model.anim.status;
 
-    new_var    = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    new_var2   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    new_var    = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    new_var2   = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     field14C_1 = new_var;
     field14C_2 = new_var2;
 
@@ -5930,7 +5930,7 @@ void AirScreamer_Control_27(s_SubCharacter* airScreamer)
     animStatus     = airScreamer->model.anim.status;
     switchCond     = 0;
     temp_fp        = sharedFunc_800D4A80_0_s01(airScreamer);
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     dist           = sharedData_800E21D0_0_s01.distance_150;
     angle          = sharedData_800E21D0_0_s01.angle_154;
     field14C_2     = field14C_2_tmp;
@@ -6145,7 +6145,7 @@ void AirScreamer_Control_29(s_SubCharacter* airScreamer)
     bool new_var;
 
     animStatus             = airScreamer->model.anim.status;
-    new_var                = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    new_var                = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     var_s1                 = 0;
     temp_s2                = new_var;
     stateStep              = airScreamer->model.stateStep;
@@ -6546,9 +6546,9 @@ void AirScreamer_ControlGlide(s_SubCharacter* airScreamer)
     sp10       = sharedFunc_800D4A80_0_s01(airScreamer);
     cond       = 0;
 
-    field14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    field14C_1_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
 
     field14C_0 = field14C_0_tmp;
     field14C_1 = field14C_1_tmp;
@@ -6739,9 +6739,9 @@ void AirScreamer_Control_34(s_SubCharacter* airScreamer)
     switchCond     = 0;
     sp10           = sharedFunc_800D4A80_0_s01(airScreamer);
     cond           = false;
-    field14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    field14C_1_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     field14C_0     = field14C_0_tmp;
     field14C_1     = field14C_1_tmp;
     field14C_2     = field14C_2_tmp;
@@ -6891,9 +6891,9 @@ void AirScreamer_Control_35(s_SubCharacter* airScreamer)
 
     temp_s6 = sharedData_800E21D0_0_s01.field_15C;
 
-    new_var  = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    new_var2 = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
-    new_var3 = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
+    new_var  = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    new_var2 = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
+    new_var3 = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
 
     temp_s5 = new_var3;
     temp_s4 = new_var;
@@ -7176,9 +7176,9 @@ void AirScreamer_Control_36(s_SubCharacter* airScreamer)
     switchCond     = 0;
     temp_fp        = sharedFunc_800D4A80_0_s01(airScreamer);
     field15C       = sharedData_800E21D0_0_s01.field_15C;
-    field14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 0)) != 0;
+    field14C_1_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) != 0;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
 
     field14C_0 = field14C_0_tmp;
     field14C_1 = field14C_1_tmp;
@@ -7482,7 +7482,7 @@ void AirScreamer_Control_37(s_SubCharacter* airScreamer)
     new_var    = sharedFunc_800D4A80_0_s01(airScreamer);
     dist       = sharedData_800E21D0_0_s01.distance_150;
     angle      = sharedData_800E21D0_0_s01.angle_154;
-    field14C   = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
+    field14C   = (sharedData_800E21D0_0_s01.field_14C >> 2) & 1;
     temp_s4    = new_var;
     temp_a0    = sharedFunc_800DC438_2_s00(airScreamer);
 
@@ -7656,7 +7656,7 @@ void AirScreamer_Control_38(s_SubCharacter* airScreamer)
 
     temp_v0 = sharedFunc_800D4A80_0_s01(airScreamer);
 
-    new_var = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    new_var = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     temp_s0 = sharedData_800E21D0_0_s01.distance_150;
     sp10    = new_var;
 
@@ -7841,7 +7841,7 @@ void AirScreamer_Control_39(s_SubCharacter* airScreamer)
     temp_s6 = airScreamer->model.anim.status;
     var_s4  = 0;
     temp_v0 = sharedFunc_800D4A80_0_s01(airScreamer);
-    new_var = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    new_var = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     sp10    = new_var;
 
     temp_s5   = sharedData_800E21D0_0_s01.distance_150;
@@ -8116,7 +8116,7 @@ void AirScreamer_Control_41(s_SubCharacter* airScreamer)
 
     // @hack Weird variable juggling needed for match, is there another way to do this?
     temp_s6_tmp    = sharedFunc_800D4A80_0_s01(airScreamer);
-    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
+    field14C_2_tmp = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     temp_s6        = temp_s6_tmp;
     field14C_2     = field14C_2_tmp;
     temp_s4        = sharedFunc_800DC438_2_s00(airScreamer);
@@ -8305,7 +8305,7 @@ void AirScreamer_Control_42(s_SubCharacter* airScreamer)
     new_var    = sharedFunc_800D4A80_0_s01(airScreamer);
     dist       = sharedData_800E21D0_0_s01.distance_150;
     angle      = sharedData_800E21D0_0_s01.angle_154;
-    field14C   = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
+    field14C   = (sharedData_800E21D0_0_s01.field_14C >> 2) & 1;
     temp_s7    = new_var;
     var_s3     = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition);
     temp_a0    = sharedFunc_800DC438_2_s00(airScreamer);
@@ -8504,7 +8504,7 @@ void AirScreamer_Control_44(s_SubCharacter* airScreamer)
     q19_12 var_s1;
 
     animStatus             = airScreamer->model.anim.status;
-    field14C_2_tmp         = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_2_tmp         = (sharedData_800E21D0_0_s01.field_14C & (1 << 2)) != 0;
     airScreamer->flags |= CharaFlag_Hit;
     field14C_2             = field14C_2_tmp;
     cond                   = false;
@@ -9312,14 +9312,14 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer)
 {
 #if VERSION_EQUAL_OR_NEWER(USA)
-    if ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) &&
+    if ((g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) &&
         (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal || airScreamer->model.charaId == Chara_AirScreamer))
     {
         return false;
     }
 #else
     if (airScreamer->model.charaId == Chara_AirScreamer &&
-        (g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))
+        (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))
     {
         return false;
     }
@@ -9372,11 +9372,11 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
 
 #if VERSION_EQUAL_OR_NEWER(USA)
     if (!(airScreamerProps.flags & AirScreamerFlag_29) &&
-        (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment) ||
+        (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) ||
          (g_SavegamePtr->gameDifficulty > GameDifficulty_Normal && airScreamer->model.charaId != Chara_AirScreamer)))
 #else
     if (!(airScreamerProps.flags & AirScreamerFlag_29) &&
-        !(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))
+        !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))
 #endif
     {
         if (sharedFunc_800DC3BC_2_s00(airScreamer) && (AirScreamer_IsFlooredCheck(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))

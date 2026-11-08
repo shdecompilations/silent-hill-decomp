@@ -850,13 +850,13 @@ void Stalker_Control_3(s_SubCharacter* stalker)
                                               g_Stalker_TargetPositionZ - stalker->position.vz) -
                                        stalker->rotation.vy);
 
-    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)))
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         radiusMax = Q12(15.0f);
         radiusMin = Q12(5.5f);
         cond1  = func_8006FD90(stalker, 0, Q12(7.5f), Q12(7.5f));
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)) == SpecialEnvEventFlags_FlashlightAllowed)
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
 #if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP5_S02) || defined(MAP6_S03) || defined(MAP6_S04) || defined(MAP7_S02)
         radiusMax = Q12(16.0f);
@@ -1117,12 +1117,12 @@ void Stalker_Control_4(s_SubCharacter* stalker)
     distToPlayer = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
                                        g_SysWork.playerWork.player.position.vz - stalker->position.vz);
 
-    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)))
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         dist1     = Q12(5.5f);
         condCombo = func_8006FD90(stalker, 0, Q12(7.5f), Q12(7.5f));
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)) == SpecialEnvEventFlags_FlashlightAllowed)
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
 #if defined(MAP1_S00) || defined(MAP1_S01)
         dist1     = Q12(4.5f);
@@ -1542,11 +1542,9 @@ void Stalker_Control_8(s_SubCharacter* stalker)
 
     u32    activeKeyframeIdx;
     s32    animDivTmp;
-    s32    animDiv;
     s32    step;
     q19_12 animMult;
     s32    frameIdx;
-    s32    flags;
     s32    cond;
     q19_12 duration;
 
@@ -1580,9 +1578,10 @@ void Stalker_Control_8(s_SubCharacter* stalker)
 
     if (animMult != Q12(0.0f))
     {
-        animDiv  = FP_TO(animDivTmp, Q12_SHIFT);
+        // @hack Reusing `cond` as the divisor is needed for a register allocation match.
+        cond     = FP_TO(animDivTmp, Q12_SHIFT);
         duration = STALKER_ANIM_INFOS[stalker->model.anim.status].duration.constant;
-        step     = (Q12_MULT_PRECISE(duration, g_DeltaTime) * animMult) / animDiv;
+        step     = (Q12_MULT_PRECISE(duration, g_DeltaTime) * animMult) / cond;
 
         stalkerProps.offset_EC = Q12_MULT(step, Math_Sin(stalker->rotation.vy));
         stalkerProps.offset_EE = Q12_MULT(step, Math_Cos(stalker->rotation.vy));
@@ -1615,14 +1614,11 @@ void Stalker_Control_8(s_SubCharacter* stalker)
         stalkerProps.relKeyframeIdx_FE   = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 427);
     }
 
-    // @hack `animDiv` has to be used for certain stuff for a match, weird.
-    animDiv = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0;
-    flags = animDiv & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed);
-    if (flags == SpecialEnvEventFlags_None)
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         cond = func_8006FD90(stalker, 0, Q12(7.5f), Q12(0.0f));
     }
-    else if (flags == SpecialEnvEventFlags_FlashlightAllowed)
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         cond = func_8006FD90(stalker, 0, BASE_DIST_MAX, Q12(0.0f));
     }
@@ -1858,11 +1854,11 @@ void Stalker_Control_12(s_SubCharacter* stalker)
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
                                        stalker->rotation.vy);
 
-    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)))
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         cond = func_8006FD90(stalker, 0, Q12(7.5f), Q12(7.5f));
     }
-    else if ((g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed)) == SpecialEnvEventFlags_FlashlightAllowed)
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         cond = func_8006FD90(stalker, 0, BASE_DIST_MAX, Q12(0.0f));
     }

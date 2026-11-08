@@ -520,7 +520,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                 if (var_s2 < 170)
                 {
-                    if (g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)
+                    if (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)
                     {
                         var_s2 = (var_s2 + 170) / 2;
                     }
@@ -584,7 +584,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                                     }
                                 }
 
-                                if (!(g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment))
+                                if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))
                                 {
                                     if (temp_t3_2 >= sp30)
                                     {
@@ -850,7 +850,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                     case 33:
                         if (sp30 != NO_VALUE)
                         {
-                            if (g_SysWork.field_2388.field_154.effectsInfo.flags.field_00[0] & SpecialEnvEventFlags_DarkEnvironment)
+                            if (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment)
                             {
                                 var_s0_2 = 3;
                             }

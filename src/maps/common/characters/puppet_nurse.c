@@ -703,12 +703,11 @@ s32 sharedFunc_800CEEAC_3_s03(void)
 {
     s32 temp_a0;
 
-    temp_a0 = g_SysWork.field_2388.field_154.effectsInfo.flags.field_0 & (SpecialEnvEventFlags_DarkEnvironment | SpecialEnvEventFlags_FlashlightAllowed);
-    if (temp_a0 == 0)
+    if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && !(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         return 0;
     }
-    else if (temp_a0 == 2)
+    else if (!(g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment) && (g_SysWork.field_2388.field_154.effectsInfo.flags & SpecialEnvEventFlags_FlashlightAllowed))
     {
         return 1;
     }
