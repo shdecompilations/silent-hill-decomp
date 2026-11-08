@@ -716,9 +716,20 @@ static inline void Game_StateSetPreviousA()
 // TODO: Move these and the e_WorldEnv enums into `map_effects.h` with the `WorldEnv_XXX` funcs?
 
 /** @brief Whether the current world environment is in darkness, without flashlight turned on. */
-#define WorldEnv_IsInDarkness()        (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark)
+#define WorldEnv_IsInDarkness() \
+    (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark)
 
 /** @brief Whether the current world environment allows the flashlight to be used. */
-#define WorldEnv_IsFlashlightAllowed() (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)
+#define WorldEnv_IsFlashlightAllowed() \
+    (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)
+
+/** @brief Whether the flashlight is currently turned on. */
+#define WorldEnv_IsFlashlightOn() \
+    (g_SysWork.worldEnv.isFlashlightOn)
+
+/** @brief Whether any active world environment presets can count as in darkness. */
+#define WorldEnv_CanBeInDarkness() \
+    (g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark || \
+     g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)
 
 #endif

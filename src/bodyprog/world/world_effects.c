@@ -282,7 +282,7 @@ void Game_FlashlightToggle(void) // 0x8003ED08
 {
     // Awkward `isFlashlightOn` toggle.
     g_SysWork.worldEnv.isFlashlightOn ^= true;
-    if (g_SysWork.worldEnv.isFlashlightOn == true)
+    if (WorldEnv_IsFlashlightOn() == true)
     {
         g_SavegamePtr->itemToggleFlags &= ~ItemToggleFlag_FlashlightOff;
     }
@@ -294,7 +294,7 @@ void Game_FlashlightToggle(void) // 0x8003ED08
 
 bool Game_FlashlightIsOn(void) // 0x8003ED64
 {
-    return g_SysWork.worldEnv.isFlashlightOn;
+    return WorldEnv_IsFlashlightOn();
 }
 
 void WorldEnv_PresetsSet(s32 idx0, s32 idx1) // 0x8003ED74
@@ -310,8 +310,8 @@ void func_8003EDA8(void) // 0x8003EDA8
 
 void WorldEnv_SnowRainColorGet(CVECTOR* snowColor, CVECTOR* rainColor) // 0x8003EDB8
 {
-    *snowColor = g_SysWork.worldEnv.transitionCur[g_SysWork.worldEnv.isFlashlightOn].params.snowColor;
-    *rainColor = g_SysWork.worldEnv.transitionCur[g_SysWork.worldEnv.isFlashlightOn].params.rainColor;
+    *snowColor = g_SysWork.worldEnv.transitionCur[WorldEnv_IsFlashlightOn()].params.snowColor;
+    *rainColor = g_SysWork.worldEnv.transitionCur[WorldEnv_IsFlashlightOn()].params.rainColor;
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
@@ -413,7 +413,7 @@ void WorldEnv_Update(void) // 0x8003F170
 
     ptr = &g_SysWork.worldEnv;
 
-    if (g_SysWork.worldEnv.isFlashlightOn)
+    if (WorldEnv_IsFlashlightOn())
     {
         g_SysWork.worldEnv.flashlightIntensity += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 4.0f);
     }

@@ -4313,25 +4313,7 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
             break;
 
         case 2:
-            if (!WorldEnv_IsFlashlightAllowed())
-            {
-                prim->r0 = 0xFF;
-                prim->g0 = 0xFF;
-                prim->b0 = 0xFF;
-            }
-            else if (g_SysWork.worldEnv.isFlashlightOn)
-            {
-                prim->r0 = 0xFF;
-                prim->g0 = 0xFF;
-                prim->b0 = 0xFF;
-            }
-            else if (g_SysWork.worldEnv.transitionCur[0].params.flags & 1)
-            {
-                prim->r0 = 0x30;
-                prim->g0 = 0x30;
-                prim->b0 = 0x30;
-            }
-            else if (!(g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark))
+            if (!WorldEnv_IsFlashlightAllowed() || WorldEnv_IsFlashlightOn() || !WorldEnv_CanBeInDarkness())
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
