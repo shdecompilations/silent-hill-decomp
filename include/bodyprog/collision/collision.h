@@ -203,7 +203,7 @@ typedef struct _CollisionQuery
 extern s_ActiveCollisionTriggers g_ActiveCollisionTriggers;
 
 #define PACKED_MOVE_DIRECTION(moveDir) \
-    *(s32*)&query->charaQuery.moveDirection
+    *(s32*)&(moveDir)
 
 // ========================================
 // @split? Collision init, flags, getters.

@@ -187,8 +187,8 @@ bool Ray_TraceSetup(s_RayQuery* query, bool ignoreFloors, q7_8 radiusOffset, con
         return false;
     }
 
-    query->field_58 = (query->offset.vx << Q12_SHIFT) / query->rayDistance;
-    query->field_5A = (query->offset.vz << Q12_SHIFT) / query->rayDistance;
+    query->direction.vx = Q12_DIV(query->offset.vx, query->rayDistance);
+    query->direction.vz = Q12_DIV(query->offset.vz, query->rayDistance);
 
     if (query->offset.vy < 0)
     {
@@ -555,7 +555,7 @@ void func_8006E78C(s_RayQuery* query, s_IpdPolygon* polygon, SVECTOR3* splitVert
             floorType = surfaces[polygon->surfaceIdx1].floorType;
         }
 
-        unkXz = PACKED_XZ16(query->field_58, query->field_5A);
+        unkXz = PACKED_XZ16(query->direction.vx, query->direction.vz);
         gte_ldR11R12(unkXz);
         gte_ldR13R21(unkXz);
         gte_ldvxy0(PACKED_XZ16(splitVert1->vx - query->field_6C.u.unk.offset.vx, splitVert1->vz - query->field_6C.u.unk.offset.vz));
@@ -653,7 +653,7 @@ void func_8006EB8C(s_RayQuery* query, s_IpdCylinder* cylinder) // 0x8006EB8C
         return;
     }
 
-    temp_v1 = PACKED_XZ16(query->field_58, query->field_5A);
+    temp_v1 = PACKED_XZ16(query->direction.vx, query->direction.vz);
     gte_ldR11R12(temp_v1);
     gte_ldR13R21(temp_v1);
     gte_ldvxy0(PACKED_XZ16(cylinder->offset.vx - query->field_6C.u.unk.offset.vx, cylinder->offset.vz - query->field_6C.u.unk.offset.vz));
@@ -765,8 +765,7 @@ void func_8006EEB8(s_RayQuery* query, s_SubCharacter* chara) // 0x8006EEB8
         return;
     }
 
-    // Compute hit alpha. TODO: Use `PACKED_MOVE_DIRECTION`.
-    hitAlpha = Collision_HitAlphaGet(*(s32*)&query->field_58, query->rayDistance,
+    hitAlpha = Collision_HitAlphaGet(PACKED_MOVE_DIRECTION(query->direction), query->rayDistance,
                                      query->field_6C.positionX - query->from.vx,
                                      query->field_6C.positionZ - query->from.vz,
                                      bound);

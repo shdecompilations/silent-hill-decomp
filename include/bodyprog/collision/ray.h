@@ -71,8 +71,7 @@ typedef struct _RayQuery
     /* 0x4C */ q7_8             field_4C; // X?
     /* 0x4E */ q7_8             field_4E; // Height offset.
     /* 0x50 */ SVECTOR          offset;   // Q23.8
-    /* 0x58 */ u16              field_58; // X } Movement direction vector?
-    /* 0x5A */ s16              field_5A; // Z }
+    /* 0x58 */ DVECTOR_XZ       direction;
     /* 0x5C */ q7_8             rayDistance;
     /* 0x5E */ s16              field_5E;
     /* 0x60 */ s16              field_60;
@@ -83,8 +82,8 @@ typedef struct _RayQuery
     /* 0x7C */ s32              cellCountX;
     /* 0x80 */ s32              cellCountZ;
     /* 0x84 */ q8_8             cellSize;
-    /* 0x86 */ u8               __pad_86[2];
-    /* 0x88 */ s32              field_88;    // `field_8C` array size.
+    /* 0x86 */ s8               __pad_86[2];
+    /* 0x88 */ s32              field_88;    /** `field_8C` array size. */
     /* 0x8C */ s_RayQuery_8C    field_8C[1]; // Unknown buffer size.
 } s_RayQuery;
 
