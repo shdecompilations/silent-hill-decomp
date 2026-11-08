@@ -72,7 +72,7 @@ typedef struct _WorldEnvRenderWork
     /* 0x2   */ u8           enableTintLightOverlap; /** `bool`. Allows overlapping the world tint and volumetric light color.
                                                       * @note Specifically modifies the volumetric light color that the point light generates,
                                                       * the color it applies to the enviroment doesn't change. */
-    /* 0x3   */ u8           lightLevelMax;          // Upper limit on the computed light level of lit vertices.
+    /* 0x3   */ u8           lightLevelMax;          /** Upper limit on the computed light level of lit vertices. */
     /* 0x4   */ s_WaterZone* waterZones;
     /* 0x8   */ s32          screenBrightness;
     /* 0xC   */ s_Fog        fog;

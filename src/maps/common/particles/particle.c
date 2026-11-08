@@ -404,7 +404,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             sharedData_800DD584_0_s00 = g_DeltaTime == Q12(0.0f);
 #endif
 
-            WorldEnv_SnowRainColorGet(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
+            WorldEnv_SnowRainColorGet(&g_WorldEnv_SnowColor, &g_WorldEnv_RainColor);
 
             if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00)
             {
@@ -604,7 +604,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 
             for (i = g_ParticlesAddedCount[0] + g_ParticlesAddedCount[1]; i < PARTICLE_COUNT_MAX; i++)
             {
-                g_Particles[i].stateStep_1E = 0;
+                g_Particles[i].stateStep = 0;
             }
             break;
     }
@@ -679,7 +679,7 @@ void Particle_SnowInitialize(s_Particle* parts)
     // Reset states.
     for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
     {
-        part->stateStep_1E = 0;
+        part->stateStep = 0;
     }
 
     // Reset counts. NOTE: One is unused.
@@ -692,7 +692,7 @@ void Particle_SnowInitialize(s_Particle* parts)
     {
         for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
         {
-            part->type_1F = SnowType_Light;
+            part->type = SnowType_Light;
         }
 
         density = (g_SysWork.field_2349 == 1) ? 1 : 3;
@@ -701,7 +701,7 @@ void Particle_SnowInitialize(s_Particle* parts)
     {
         for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
         {
-            part->type_1F = settingsState;
+            part->type = settingsState;
         }
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
@@ -759,7 +759,7 @@ void Particle_SnowInitialize(s_Particle* parts)
 
             for (i = 0, part = parts; i < g_ParticlesAddedCount[settingsState]; i++, part++)
             {
-                switch (part->stateStep_1E)
+                switch (part->stateStep)
                 {
                     case ParticleState_Spawn:
                         // Throttle spawning.
@@ -774,21 +774,21 @@ void Particle_SnowInitialize(s_Particle* parts)
                         Particle_SpawnMovementApply(settingsState, part, &rand, &deltaTime);
 
                         // Step to rest state when Y position reaches 0.
-                        if (part->position0_0.vy == 0)
+                        if (part->position0.vy == 0)
                         {
 #if defined(MAP1_S06)
-                            part->stateStep_1E = 0;
+                            part->stateStep = 0;
 #else
-                            part->stateStep_1E++;
+                            part->stateStep++;
 #endif
                         }
                         break;
 
                     default: // `ParticleState_Rest`
-                        part->stateStep_1E++;
-                        if (part->stateStep_1E >= SNOW_REST_TICKS_MAX)
+                        part->stateStep++;
+                        if (part->stateStep >= SNOW_REST_TICKS_MAX)
                         {
-                            part->stateStep_1E = 0;
+                            part->stateStep = 0;
                         }
                         break;
                 }
@@ -1314,16 +1314,16 @@ bool Particle_Update(s_Particle* partHead)
         {
             // Keep only the lower 4 bits.
             // NOTE: &= 0xF would be faster, but this is what they've done.
-            curPart->type_1F %= 0xF0;
+            curPart->type %= 0xF0;
 
             switch (pass)
             {
                 case 0:
                 #if MAP_PARTICLE_HAS_SNOW
-                    if (curPart->type_1F >= 2)
+                    if (curPart->type >= 2)
                     {
-                        curPart->stateStep_1E = 0;
-                        curPart->type_1F = 0;
+                        curPart->stateStep = 0;
+                        curPart->type = 0;
                     }
                 #endif
                     break;
@@ -1331,10 +1331,10 @@ bool Particle_Update(s_Particle* partHead)
                 case 1:
                 #if MAP_PARTICLE_HAS_RAIN
                     // Changes any non-HeavyWindow snow particles into rain?
-                    if (curPart->type_1F != ParticleType_Rain && curPart->type_1F != SnowType_HeavyWindy)
+                    if (curPart->type != ParticleType_Rain && curPart->type != SnowType_HeavyWindy)
                     {
-                        curPart->stateStep_1E = 0;
-                        curPart->type_1F = ParticleType_Rain;
+                        curPart->stateStep = 0;
+                        curPart->type = ParticleType_Rain;
                     }
                 #endif
                     break;
@@ -1351,7 +1351,7 @@ bool Particle_Update(s_Particle* partHead)
             }
             else
             {
-                switch (curPart->stateStep_1E)
+                switch (curPart->stateStep)
                 {
                     case ParticleState_Spawn:
                         if (g_ParticleSpawnCount < density)
@@ -1366,8 +1366,8 @@ bool Particle_Update(s_Particle* partHead)
                         break;
 
                     default: // `ParticleState_Rest`
-                        curPart->stateStep_1E++;
-                        if (curPart->stateStep_1E < SNOW_REST_TICKS_UPDATE_MAX)
+                        curPart->stateStep++;
+                        if (curPart->stateStep < SNOW_REST_TICKS_UPDATE_MAX)
                         {
                             sharedFunc_800CFFF8_0_s00(pass, curPart, &rand);
                         }
@@ -1977,9 +1977,9 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
             case 1:
             case 4:
             case 10:
-                poly->r0 = temp_v0 + sharedData_800E3258_0_s00.r;
-                poly->g0 = temp_v0 + sharedData_800E3258_0_s00.g;
-                poly->b0 = temp_v0 + sharedData_800E3258_0_s00.b;
+                poly->r0 = temp_v0 + g_WorldEnv_SnowColor.r;
+                poly->g0 = temp_v0 + g_WorldEnv_SnowColor.g;
+                poly->b0 = temp_v0 + g_WorldEnv_SnowColor.b;
                 break;
 
             default:
@@ -1989,17 +1989,17 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
                 temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
 
                 temp_v0 >>= 3;
-                poly->r0  = sharedData_800E3258_0_s00.r + temp_v0;
-                poly->g0  = sharedData_800E3258_0_s00.g + temp_v0;
-                poly->b0  = sharedData_800E3258_0_s00.b + temp_v0;
+                poly->r0  = g_WorldEnv_SnowColor.r + temp_v0;
+                poly->g0  = g_WorldEnv_SnowColor.g + temp_v0;
+                poly->b0  = g_WorldEnv_SnowColor.b + temp_v0;
                 break;
 
             case 7:
             case 9:
             case 11:
-                poly->r0 = sharedData_800E3258_0_s00.r;
-                poly->g0 = sharedData_800E3258_0_s00.g;
-                poly->b0 = sharedData_800E3258_0_s00.b;
+                poly->r0 = g_WorldEnv_SnowColor.r;
+                poly->g0 = g_WorldEnv_SnowColor.g;
+                poly->b0 = g_WorldEnv_SnowColor.b;
                 break;
         }
     }
@@ -2015,15 +2015,15 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
                                         g_SysWork.playerWork.player.position.vz + arg2->field_0.vz);
                 temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
 
-                poly->r0 = temp_v0 + sharedData_800E3258_0_s00.r;
-                poly->g0 = temp_v0 + sharedData_800E3258_0_s00.g;
-                poly->b0 = temp_v0 + sharedData_800E3258_0_s00.b;
+                poly->r0 = temp_v0 + g_WorldEnv_SnowColor.r;
+                poly->g0 = temp_v0 + g_WorldEnv_SnowColor.g;
+                poly->b0 = temp_v0 + g_WorldEnv_SnowColor.b;
                 break;
 
             default:
-                poly->r0 = sharedData_800E3258_0_s00.r;
-                poly->g0 = sharedData_800E3258_0_s00.g;
-                poly->b0 = sharedData_800E3258_0_s00.b;
+                poly->r0 = g_WorldEnv_SnowColor.r;
+                poly->g0 = g_WorldEnv_SnowColor.g;
+                poly->b0 = g_WorldEnv_SnowColor.b;
                 break;
         }
     }
@@ -2459,21 +2459,21 @@ void Particle_SnowDraw(s_Particle* part)
     localPart = part;
     polyFt3   = (POLY_FT3*)GsOUT_PACKET_P;
 
-    if (part->type_1F >= 240)
+    if (part->type >= 240)
     {
-        part->type_1F += 16;
-        if (part->stateStep_1E < 0 || part->stateStep_1E >= 31)
+        part->type += 16;
+        if (part->stateStep < 0 || part->stateStep >= 31)
         {
-            part->stateStep_1E = 0;
+            part->stateStep = 0;
             return;
         }
     }
-    else if (part->stateStep_1E != 0)
+    else if (part->stateStep != 0)
     {
 #if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
         if (sharedData_800DD591_0_s00 != 0)
         {
-            particlePos = part->position0_0;
+            particlePos = part->position0;
 
             // TODO: Check value of `sharedData_800DD591_0_s00` on each map, some of the `#if defined(MAPX)` changes in the switch below could be separate cases.
             // (fallback case might also have its own value too)
@@ -2481,7 +2481,7 @@ void Particle_SnowDraw(s_Particle* part)
             {
 #ifdef HAS_PARTICLE_CASE_1
                 PARTICLE_CASE(1):
-                    if (part->position0_0.vy < g_ParticleBox.corners[0].vy)
+                    if (part->position0.vy < g_ParticleBox.corners[0].vy)
                     {
                         Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
                     }
@@ -2491,7 +2491,7 @@ void Particle_SnowDraw(s_Particle* part)
                         partCorners[0].vx = g_ParticleBox.corners[0].vx;
                         partCorners[1].vx = g_ParticleBox.corners[1].vx;
                         temp_v1           = g_ParticleBox.corners[0].vz + 0x1400;
-                        temp_v1          += part->position0_0.vy >> 2;
+                        temp_v1          += part->position0.vy >> 2;
                         partCorners[1].vz = temp_v1;
                         partCorners[0].vz = temp_v1;
 
@@ -2567,15 +2567,15 @@ void Particle_SnowDraw(s_Particle* part)
             }
 
             particlePosQ8.vx = Q12_TO_Q8(particlePos.vx);
-            particlePosQ8.vy = Q12_TO_Q8(localPart->position0_0.vy);
+            particlePosQ8.vy = Q12_TO_Q8(localPart->position0.vy);
             particlePosQ8.vz = Q12_TO_Q8(particlePos.vz);
         }
         else
 #endif
         {
-            particlePosQ8.vx = Q12_TO_Q8(localPart->position0_0.vx);
-            particlePosQ8.vy = Q12_TO_Q8(localPart->position0_0.vy);
-            particlePosQ8.vz = Q12_TO_Q8(localPart->position0_0.vz);
+            particlePosQ8.vx = Q12_TO_Q8(localPart->position0.vx);
+            particlePosQ8.vy = Q12_TO_Q8(localPart->position0.vy);
+            particlePosQ8.vz = Q12_TO_Q8(localPart->position0.vz);
         }
 
         gte_ldv0(&particlePosQ8);
@@ -2596,28 +2596,28 @@ void Particle_SnowDraw(s_Particle* part)
 
         if (D_800C39A0 == 1 || D_800C39A0 == 4)
         {
-            primColorG = primColorB = primColorR = sharedData_800E3258_0_s00.r - (func_80055A50(zScreenStart) >> 2);
+            primColorG = primColorB = primColorR = g_WorldEnv_SnowColor.r - (func_80055A50(zScreenStart) >> 2);
         }
         else
         {
-            primColorR = sharedData_800E3258_0_s00.r;
-            primColorG = sharedData_800E3258_0_s00.g;
-            primColorB = sharedData_800E3258_0_s00.b;
+            primColorR = g_WorldEnv_SnowColor.r;
+            primColorG = g_WorldEnv_SnowColor.g;
+            primColorB = g_WorldEnv_SnowColor.b;
         }
 
         zScreenStart = zScreenStart >> 1;
 
-        if (localPart->stateStep_1E >= 2)
+        if (localPart->stateStep >= 2)
         {
-            if (localPart->stateStep_1E < 31)
+            if (localPart->stateStep < 31)
             {
-                primColorR -= (primColorR * localPart->stateStep_1E) >> 5;
-                primColorG -= (primColorG * localPart->stateStep_1E) >> 5;
-                primColorB -= (primColorB * localPart->stateStep_1E) >> 5;
+                primColorR -= (primColorR * localPart->stateStep) >> 5;
+                primColorG -= (primColorG * localPart->stateStep) >> 5;
+                primColorB -= (primColorB * localPart->stateStep) >> 5;
             }
             else
             {
-                localPart->stateStep_1E = 0;
+                localPart->stateStep = 0;
                 return;
             }
         }
@@ -2753,40 +2753,40 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 #endif
 
 #if defined(MAP0_S00) || defined(MAP4_S02) || defined(MAP4_S03)
-    if (localPart->stateStep_1E != 0 && sharedData_800DD591_0_s00 != 0)
+    if (localPart->stateStep != 0 && sharedData_800DD591_0_s00 != 0)
     {
-        sp10    = localPart->position0_0;
+        sp10    = localPart->position0;
         sp10.vy = -1;
 
         Particle_BoundaryClamp(&sp10, g_ParticleBox.corners, &g_ParticleBox.corners[1], 0);
 
-        localPart->position0_0.vx = sp10.vx;
-        localPart->position0_0.vz = sp10.vz;
+        localPart->position0.vx = sp10.vx;
+        localPart->position0.vz = sp10.vz;
 
         if (sp10.vy == 0)
         {
-            localPart->stateStep_1E = 0;
+            localPart->stateStep = 0;
             return;
         }
     }
 #endif
 
-    switch (localPart->stateStep_1E)
+    switch (localPart->stateStep)
     {
         case 0:
             return;
 
         case 1:
-            sp20.vx = Q12_TO_Q8(localPart->position1_C.vx);
-            sp20.vy = Q12_TO_Q8(localPart->position1_C.vy);
-            sp20.vz = Q12_TO_Q8(localPart->position1_C.vz);
+            sp20.vx = Q12_TO_Q8(localPart->position1.vx);
+            sp20.vy = Q12_TO_Q8(localPart->position1.vy);
+            sp20.vz = Q12_TO_Q8(localPart->position1.vz);
 
             gte_ldv0(&sp20);
             gte_rtps();
 
-            sp28.vx = Q12_TO_Q8(localPart->position0_0.vx);
-            sp28.vy = Q12_TO_Q8(localPart->position0_0.vy);
-            sp28.vz = Q12_TO_Q8(localPart->position0_0.vz);
+            sp28.vx = Q12_TO_Q8(localPart->position0.vx);
+            sp28.vy = Q12_TO_Q8(localPart->position0.vy);
+            sp28.vz = Q12_TO_Q8(localPart->position0.vz);
 
             gte_stsxy(&poly->x0);
             gte_stszotz(&depth);
@@ -2795,7 +2795,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 
             if (D_800C39A0 == 1 || D_800C39A0 == 4)
             {
-                color = sharedData_800E325C_0_s00.r - (func_80055A50(depth) >> 5);
+                color = g_WorldEnv_RainColor.r - (func_80055A50(depth) >> 5);
                 r     = color;
                 b     = color;
                 g     = color;
@@ -2803,13 +2803,13 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
             else
             {
 #if defined(MAP5_S00) || defined(MAP6_S03)
-                r = (sharedData_800E325C_0_s00.r * 3) >> 1;
-                g = (sharedData_800E325C_0_s00.g * 3) >> 1;
-                b = (sharedData_800E325C_0_s00.b * 3) >> 1;
+                r = (g_WorldEnv_RainColor.r * 3) >> 1;
+                g = (g_WorldEnv_RainColor.g * 3) >> 1;
+                b = (g_WorldEnv_RainColor.b * 3) >> 1;
 #else
-                r = sharedData_800E325C_0_s00.r;
-                g = sharedData_800E325C_0_s00.g;
-                b = sharedData_800E325C_0_s00.b;
+                r = g_WorldEnv_RainColor.r;
+                g = g_WorldEnv_RainColor.g;
+                b = g_WorldEnv_RainColor.b;
 #endif
             }
 
@@ -2836,7 +2836,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
                     setRGB0(poly, r, g, b);
                 }
 #elif defined(MAP4_S02)
-                if (localPart->movement_18.vx == 5)
+                if (localPart->movement.vx == 5)
                 {
                     poly->tpage = 0x4C;
                     setRGB0(poly, (r * 2) / 3, (g * 2) / 3, b);
@@ -2874,58 +2874,58 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
             return;
     }
 
-    switch (localPart->type_1F)
+    switch (localPart->type)
     {
         case 2:
         case 242:
 #if defined(MAP4_S02)
-            if (localPart->movement_18.vx == 5)
+            if (localPart->movement.vx == 5)
             {
-                if (localPart->stateStep_1E < 25)
+                if (localPart->stateStep < 25)
                 {
                     colorComp = 0xA3;
                 }
                 else
                 {
-                    localPart->stateStep_1E = 0;
+                    localPart->stateStep = 0;
                     return;
                 }
             }
             else
 #endif
             {
-                if (localPart->stateStep_1E < 17)
+                if (localPart->stateStep < 17)
                 {
-                    colorComp = localPart->stateStep_1E;
+                    colorComp = localPart->stateStep;
                     colorComp = colorComp << arg1;
 
-                    if (localPart->position0_0.vy == INT_MAX)
+                    if (localPart->position0.vy == INT_MAX)
                     {
                         return;
                     }
                 }
                 else
                 {
-                    localPart->stateStep_1E = 0;
+                    localPart->stateStep = 0;
                     return;
                 }
             }
 
-            sp20.vx = Q12_TO_Q8(localPart->position0_0.vx - colorComp);
-            sp20.vy = Q12_TO_Q8(localPart->position0_0.vy);
-            sp20.vz = Q12_TO_Q8(localPart->position0_0.vz - colorComp);
+            sp20.vx = Q12_TO_Q8(localPart->position0.vx - colorComp);
+            sp20.vy = Q12_TO_Q8(localPart->position0.vy);
+            sp20.vz = Q12_TO_Q8(localPart->position0.vz - colorComp);
 
             gte_ldv0(&sp20);
             gte_rtps();
 
             sp28.vx = sp20.vx;
             sp28.vy = sp20.vy;
-            sp28.vz = Q12_TO_Q8(localPart->position0_0.vz + colorComp);
+            sp28.vz = Q12_TO_Q8(localPart->position0.vz + colorComp);
 
             gte_stsxy(&poly->x0);
             gte_stszotz(&depth);
 
-            sp30.vx = Q12_TO_Q8(localPart->position0_0.vx + colorComp);
+            sp30.vx = Q12_TO_Q8(localPart->position0.vx + colorComp);
             sp30.vy = sp20.vy;
             sp30.vz = sp20.vz;
 
@@ -2939,9 +2939,9 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
             depth = depth >> 1;
 
 #if defined(MAP4_S02)
-            if (localPart->movement_18.vx == 5)
+            if (localPart->movement.vx == 5)
             {
-                color = localPart->stateStep_1E;
+                color = localPart->stateStep;
 
                 if (color >= 9u)
                 {
@@ -2979,7 +2979,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
                     r = g = b = colorComp;
                 }
 
-                step = localPart->stateStep_1E;
+                step = localPart->stateStep;
 
                 setUV4(poly, 16, 112, 16, 127, 31, 112, 31, 127);
 
@@ -3024,7 +3024,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
                 }
 
 #elif defined(MAP4_S02)
-                if (localPart->movement_18.vx == 5)
+                if (localPart->movement.vx == 5)
                 {
                     poly->clut = (((depth >> 5) + 0x68) << 6) | 0x30;
                     setRGB0(poly, r, r, r);
@@ -3053,31 +3053,31 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
             return;
     }
 
-    if (localPart->stateStep_1E < 31)
+    if (localPart->stateStep < 31)
     {
-        colorComp = localPart->stateStep_1E;
+        colorComp = localPart->stateStep;
     }
     else
     {
         colorComp = 0x20;
     }
 
-    if (localPart->stateStep_1E >= 49)
+    if (localPart->stateStep >= 49)
     {
-        localPart->stateStep_1E = 0;
+        localPart->stateStep = 0;
         return;
     }
 
-    sp20.vx = Q12_TO_Q8(localPart->position1_C.vx);
-    sp20.vy = Q12_TO_Q8(localPart->position1_C.vy);
-    sp20.vz = Q12_TO_Q8(localPart->position1_C.vz);
+    sp20.vx = Q12_TO_Q8(localPart->position1.vx);
+    sp20.vy = Q12_TO_Q8(localPart->position1.vy);
+    sp20.vz = Q12_TO_Q8(localPart->position1.vz);
 
     gte_ldv0(&sp20);
     gte_rtps();
 
-    sp28.vx = Q12_TO_Q8(localPart->position0_0.vx);
-    sp28.vy = Q12_TO_Q8(localPart->position0_0.vy);
-    sp28.vz = Q12_TO_Q8(localPart->position0_0.vz);
+    sp28.vx = Q12_TO_Q8(localPart->position0.vx);
+    sp28.vy = Q12_TO_Q8(localPart->position0.vy);
+    sp28.vz = Q12_TO_Q8(localPart->position0.vz);
 
     gte_stsxy(&poly->x0);
     gte_stszotz(&depth);
@@ -3124,7 +3124,7 @@ void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* del
     s16      movement;
     VECTOR3* pos;
 
-    pos = &part->position0_0;
+    pos = &part->position0;
 
     switch (arg0)
     {
@@ -3132,31 +3132,31 @@ void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* del
 #if MAP_PARTICLE_HAS_SNOW
             // Random value has been generated in caller and `rand` argument.
             // Add random X offset.
-            part->movement_18.vx += Rng_GenerateIntFromInput(*rand, -7, 7);
+            part->movement.vx += Rng_GenerateIntFromInput(*rand, -7, 7);
 
             // Random value for Z and Y to share and store in `rand` argument.
             *rand = (u16)Rng_Rand16();
 
             // Add random Z offset.
             localRand             = *rand;
-            part->movement_18.vz += Rng_GenerateIntFromInput(localRand, -7, 7);
+            part->movement.vz += Rng_GenerateIntFromInput(localRand, -7, 7);
 
             // Add random Y offset.
-            part->movement_18.vy += Rng_GenerateIntFromInput(*rand, -1, 3);
+            part->movement.vy += Rng_GenerateIntFromInput(*rand, -1, 3);
 
             // Apply movement to position over time.
-            part->position0_0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, (part->movement_18.vy >> 1) << 2);
+            part->position0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, (part->movement.vy >> 1) << 2);
 #endif
             break;
 
         case 1:
 #if MAP_PARTICLE_HAS_RAIN
-            part->position1_C.vx = pos->vx;
-            part->position1_C.vz = pos->vz;
-            part->position1_C.vy = pos->vy - part->movement_18.vy;
-            part->movement_18.vy += sharedData_800E32D4_0_s00;
+            part->position1.vx = pos->vx;
+            part->position1.vz = pos->vz;
+            part->position1.vy = pos->vy - part->movement.vy;
+            part->movement.vy += sharedData_800E32D4_0_s00;
 
-            pos->vy += TIMESTEP_SCALE_30_FPS(*deltaTime, part->movement_18.vy << 2);
+            pos->vy += TIMESTEP_SCALE_30_FPS(*deltaTime, part->movement.vy << 2);
 #endif
             break;
     }
@@ -3204,70 +3204,70 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
     {
         case 0:
 #if MAP_PARTICLE_HAS_SNOW
-            if (localPart->type_1F == ParticleType_Snow)
+            if (localPart->type == ParticleType_Snow)
             {
-                localPart->movement_18.vx += Rng_GenerateIntFromInput(*rand, -7, 7);
-                *rand                      = Rng_Rand16();
-                localRand                  = *rand;
-                localPart->movement_18.vz += Rng_GenerateIntFromInput(localRand, -7, 7);
-                localPart->movement_18.vy += Rng_GenerateIntFromInput(*rand, -1, 3);
+                localPart->movement.vx += Rng_GenerateIntFromInput(*rand, -7, 7);
+                *rand                   = Rng_Rand16();
+                localRand               = *rand;
+                localPart->movement.vz += Rng_GenerateIntFromInput(localRand, -7, 7);
+                localPart->movement.vy += Rng_GenerateIntFromInput(*rand, -1, 3);
             }
             else
             {
                 s32 localRand2 = Rng_Rand16();
                 s32 temp       = 12;
-                localPart->movement_18.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (g_ParticlesAddedCount[0] >> 4)) +
+                localPart->movement.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (g_ParticlesAddedCount[0] >> 4)) +
                                              Rng_GenerateIntFromInput(localRand2, -2, 2);
 
-                limitRange(localPart->movement_18.vy, 5, 1000);
+                limitRange(localPart->movement.vy, 5, 1000);
             }
 
-            localPart->position0_0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement_18.vx << 2) + g_Particle_SpeedX + deltaXCase0);
-            localPart->position0_0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement_18.vy >> 1) << 2);
-            localPart->position0_0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement_18.vz << 2) + g_Particle_SpeedZ + deltaZCase0);
+            localPart->position0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement.vx << 2) + g_Particle_SpeedX + deltaXCase0);
+            localPart->position0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement.vy >> 1) << 2);
+            localPart->position0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement.vz << 2) + g_Particle_SpeedZ + deltaZCase0);
 
 #if defined(MAP7_S03)
-            localPart->position0_0.vz += (deltaZCase0 - D_800F23D0);
+            localPart->position0.vz += (deltaZCase0 - D_800F23D0);
 #endif
 
-            if (ABS(localPart->position0_0.vx) + ABS(localPart->position0_0.vz) > Q12(UNK_VAL))
+            if (ABS(localPart->position0.vx) + ABS(localPart->position0.vz) > Q12(UNK_VAL))
             {
                 if (g_ParticleCameraMoved)
                 {
-                    Particle_PositionRandomize(rand, &part->position0_0, UNK_VAL);
+                    Particle_PositionRandomize(rand, &part->position0, UNK_VAL);
                 }
                 else
                 {
-                    localPart->position0_0.vx = -localPart->position0_0.vx;
-                    localPart->position0_0.vz = -localPart->position0_0.vz;
-                    localPart->type_1F       += 240;
+                    localPart->position0.vx = -localPart->position0.vx;
+                    localPart->position0.vz = -localPart->position0.vz;
+                    localPart->type       += 240;
                 }
             }
 
-            if (localPart->position0_0.vy >= Q12(0.0f))
+            if (localPart->position0.vy >= Q12(0.0f))
             {
 #if defined(MAP7_S03)
-                localPart->position0_0.vy = Q12(0.0f);
-                localPart->movement_18.vy = Q12(0.0f);
-                localPart->stateStep_1E++;
+                localPart->position0.vy = Q12(0.0f);
+                localPart->movement.vy = Q12(0.0f);
+                localPart->stateStep++;
 #else
                 PushMatrix();
-                Collision_SurfaceGet(&surface, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
+                Collision_SurfaceGet(&surface, localPart->position0.vx + g_Particle_Position.vx, localPart->position0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                if (localPart->position0_0.vy >= surface.floorHeight)
+                if (localPart->position0.vy >= surface.floorHeight)
                 {
 #if defined(MAP1_S06)
-                    localPart->stateStep_1E = 0;
+                    localPart->stateStep = 0;
 #else
-                    localPart->position0_0.vy = surface.floorHeight;
+                    localPart->position0.vy = surface.floorHeight;
                     if (surface.floorHeight < Q12(0.0f) && surface.floorHeight > Q12(-0.2))
                     {
-                        localPart->position0_0.vy = Q12(0.0f);
+                        localPart->position0.vy = Q12(0.0f);
                     }
 
-                    localPart->movement_18.vy = Q12(0.0f);
-                    localPart->stateStep_1E++;
+                    localPart->movement.vy = Q12(0.0f);
+                    localPart->stateStep++;
 #endif
                 }
 #endif
@@ -3281,73 +3281,73 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
             deltaXCase1 = g_ParticleVectors1.viewPosition.vx - g_ParticleVectors0.viewPosition.vx;
             deltaZCase1 = g_ParticleVectors1.viewPosition.vz - g_ParticleVectors0.viewPosition.vz;
 
-            localPart->position1_C.vx = localPart->position0_0.vx;
-            localPart->position1_C.vz = localPart->position0_0.vz;
-            localPart->position1_C.vy = localPart->position0_0.vy - localPart->movement_18.vy;
+            localPart->position1.vx = localPart->position0.vx;
+            localPart->position1.vz = localPart->position0.vz;
+            localPart->position1.vy = localPart->position0.vy - localPart->movement.vy;
 #endif
-            localPart->position0_0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, g_Particle_SpeedX + deltaXCase1);
-            localPart->movement_18.vy += sharedData_800E32D4_0_s00;
-            localPart->position0_0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, localPart->movement_18.vy << 2);
+            localPart->position0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, g_Particle_SpeedX + deltaXCase1);
+            localPart->movement.vy += sharedData_800E32D4_0_s00;
+            localPart->position0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, localPart->movement.vy << 2);
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
-            localPart->position1_C.vy = localPart->position0_0.vy - Q12(0.125f);
+            localPart->position1.vy = localPart->position0.vy - Q12(0.125f);
 #endif
 
-            localPart->position0_0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, g_Particle_SpeedZ + deltaZCase1);
+            localPart->position0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, g_Particle_SpeedZ + deltaZCase1);
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
-            localPart->position1_C.vx = localPart->position0_0.vx;
-            localPart->position1_C.vz = localPart->position0_0.vz;
+            localPart->position1.vx = localPart->position0.vx;
+            localPart->position1.vz = localPart->position0.vz;
 #endif
 
             if (g_ParticleCameraMoved)
             {
-                localPart->position1_C.vx = localPart->position0_0.vx;
-                localPart->position1_C.vz = localPart->position0_0.vz;
+                localPart->position1.vx = localPart->position0.vx;
+                localPart->position1.vz = localPart->position0.vz;
             }
 
-            if (ABS(localPart->position0_0.vx) + ABS(localPart->position0_0.vz) > Q12(6.0))
+            if (ABS(localPart->position0.vx) + ABS(localPart->position0.vz) > Q12(6.0))
             {
                 if (g_ParticleCameraMoved)
                 {
-                    Particle_PositionRandomize(rand, &part->position0_0, 6);
+                    Particle_PositionRandomize(rand, &part->position0, 6);
 
-                    localPart->position1_C.vx = localPart->position0_0.vx;
-                    localPart->position1_C.vz = localPart->position0_0.vz;
+                    localPart->position1.vx = localPart->position0.vx;
+                    localPart->position1.vz = localPart->position0.vz;
                 }
                 else
                 {
-                    localPart->position1_C.vx -= localPart->position0_0.vx;
-                    localPart->position1_C.vz -= localPart->position0_0.vz;
+                    localPart->position1.vx -= localPart->position0.vx;
+                    localPart->position1.vz -= localPart->position0.vz;
 
-                    localPart->position0_0.vx = -localPart->position0_0.vx;
-                    localPart->position0_0.vz = -localPart->position0_0.vz;
+                    localPart->position0.vx = -localPart->position0.vx;
+                    localPart->position0.vz = -localPart->position0.vz;
 
-                    localPart->position1_C.vx += localPart->position0_0.vx;
-                    localPart->position1_C.vz += localPart->position0_0.vz;
+                    localPart->position1.vx += localPart->position0.vx;
+                    localPart->position1.vz += localPart->position0.vz;
                 }
             }
 
-            if (localPart->position0_0.vy >= 0)
+            if (localPart->position0.vy >= 0)
             {
                 PushMatrix();
-                Collision_SurfaceGet(&surface, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
+                Collision_SurfaceGet(&surface, localPart->position0.vx + g_Particle_Position.vx, localPart->position0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                localPart->position0_0.vy = surface.floorHeight;
-                localPart->movement_18.vx = surface.floorType;
+                localPart->position0.vy = surface.floorHeight;
+                localPart->movement.vx = surface.floorType;
 
                 if (surface.floorType == FloorType_11)
                 {
-                    localPart->type_1F        = SnowType_HeavyWindy;
-                    localPart->position1_C.vx = localPart->position0_0.vx;
-                    localPart->position1_C.vz = localPart->position0_0.vz;
-                    localPart->position1_C.vy = localPart->position0_0.vy - 96; // TODO: Float.
+                    localPart->type        = SnowType_HeavyWindy;
+                    localPart->position1.vx = localPart->position0.vx;
+                    localPart->position1.vz = localPart->position0.vz;
+                    localPart->position1.vy = localPart->position0.vy - 96; // TODO: Float.
                 }
 
-                localPart->movement_18.vz = Q12(0.0f);
-                localPart->movement_18.vy = Q12(0.0f);
-                localPart->stateStep_1E++;
+                localPart->movement.vz = Q12(0.0f);
+                localPart->movement.vy = Q12(0.0f);
+                localPart->stateStep++;
             }
 #endif
             break;
@@ -3367,18 +3367,18 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
     #define PASS_ADD 5
 #endif
 
-    part->position0_0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    part->position0_0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+    part->position0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
+    part->position0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 
 #if defined(MAP7_S03)
-    part->position0_0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
+    part->position0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
 #endif
 
 #if MAP_PARTICLE_HAS_SNOW
     if (pass == 0 && sharedData_800E0CAC_0_s00 == 3)
     {
-        part->position0_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
-        part->position0_0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
+        part->position0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
+        part->position0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
     }
 #endif
 
@@ -3391,22 +3391,22 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
     }
 #endif
 
-    absX = abs(part->position0_0.vx);
+    absX = abs(part->position0.vx);
 
     // This helps match the original code: `threshold = threshold = ...`
     // Also matches:
     // threshold = FP_TO(pass + 5, Q12_SHIFT); threshold = threshold += 0;
     threshold = threshold = FP_TO(pass + PASS_ADD, Q12_SHIFT);
 
-    if (ABS_ADD(part->position0_0.vz, absX) > threshold)
+    if (ABS_ADD(part->position0.vz, absX) > threshold)
     {
-        part->stateStep_1E = ParticleState_Spawn;
+        part->stateStep = ParticleState_Spawn;
     }
 
-    if (part->type_1F == SnowType_HeavyWindy || part->type_1F == (0xF0 | SnowType_HeavyWindy)) // TODO: #define 0xF0 constant when purpose is found.
+    if (part->type == SnowType_HeavyWindy || part->type == (0xF0 | SnowType_HeavyWindy)) // TODO: #define 0xF0 constant when purpose is found.
     {
-        part->position1_C.vx = part->position0_0.vx;
-        part->position1_C.vz = part->position0_0.vz;
+        part->position1.vx = part->position0.vx;
+        part->position1.vz = part->position0.vz;
     }
 }
 
@@ -3417,18 +3417,18 @@ void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
     q19_12 x = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
     q19_12 z = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 
-    part->position1_C.vy  = part->position0_0.vy - part->movement_18.vy;
-    part->position0_0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, x);
-    part->movement_18.vy += Q12(0.001f);
-    part->position0_0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, part->movement_18.vy << 2);
-    part->position1_C.vy  = part->position0_0.vy - Q12(1.0f / 32.0f);
-    part->position0_0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, z);
-    part->position1_C.vx  = part->position0_0.vx;
-    part->position1_C.vz  = part->position0_0.vz;
+    part->position1.vy  = part->position0.vy - part->movement.vy;
+    part->position0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, x);
+    part->movement.vy += Q12(0.001f);
+    part->position0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, part->movement.vy << 2);
+    part->position1.vy  = part->position0.vy - Q12(1.0f / 32.0f);
+    part->position0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, z);
+    part->position1.vx  = part->position0.vx;
+    part->position1.vz  = part->position0.vz;
 
-    if ((ABS(part->position0_0.vx) + ABS(part->position0_0.vz)) > Q12(6.0f))
+    if ((ABS(part->position0.vx) + ABS(part->position0.vz)) > Q12(6.0f))
     {
-        part->stateStep_1E = ParticleState_Spawn;
+        part->stateStep = ParticleState_Spawn;
     }
 }
 #endif
@@ -3447,22 +3447,22 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
 
     if (pass == 0)
     {
-        part->position0_0.vx += deltaX;
-        part->position0_0.vz += deltaZ - ((*deltaTime) * 2);
+        part->position0.vx += deltaX;
+        part->position0.vz += deltaZ - ((*deltaTime) * 2);
 
-        if ((ABS(part->position0_0.vx) + ABS(part->position0_0.vz)) > Q12(8.0))
+        if ((ABS(part->position0.vx) + ABS(part->position0.vz)) > Q12(8.0))
         {
             if (g_ParticleCameraMoved)
             {
-                Particle_PositionRandomize(rand, &part->position0_0, 8);
+                Particle_PositionRandomize(rand, &part->position0, 8);
             }
             else
             {
-                ptr->position0_0.vx = -ptr->position0_0.vx;
-                ptr->position0_0.vz = -ptr->position0_0.vz;
+                ptr->position0.vx = -ptr->position0.vx;
+                ptr->position0.vz = -ptr->position0.vz;
             }
 
-            ptr->type_1F += 240;
+            ptr->type += 240;
         }
     }
 #endif
@@ -3523,58 +3523,58 @@ void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
 #if MAP_PARTICLE_HAS_SNOW
             if (sharedData_800DD592_0_s00 != 0)
             {
-                part->type_1F = ParticleType_Snow;
+                part->type = ParticleType_Snow;
             }
             else
             {
-                part->type_1F = ParticleType_Unk1;
+                part->type = ParticleType_Unk1;
             }
 
             // Set start position.
-            localPart->position0_0.vy = g_Particle_Position.vy;
+            localPart->position0.vy = g_Particle_Position.vy;
 
             // Set downward movement.
-            localPart->movement_18.vz = Q12(0.0f);
-            localPart->movement_18.vx = Q12(0.0f);
-            localPart->movement_18.vy = SNOW_Y_START_SPEED;
+            localPart->movement.vz = Q12(0.0f);
+            localPart->movement.vx = Q12(0.0f);
+            localPart->movement.vy = SNOW_Y_START_SPEED;
 
             // Set random start XZ position.
             Particle_PositionRandomize(rand, part, SNOW_XZ_SPAWN_RANGE);
 
             // Second position unused for snow.
-            localPart->position1_C.vz = Q12(0.0f);
-            localPart->position1_C.vy = Q12(0.0f);
-            localPart->position1_C.vx = Q12(0.0f);
+            localPart->position1.vz = Q12(0.0f);
+            localPart->position1.vy = Q12(0.0f);
+            localPart->position1.vx = Q12(0.0f);
 #endif
             break;
 
         case 1:
 #if MAP_PARTICLE_HAS_RAIN
-            localPart->type_1F = ParticleType_Rain;
+            localPart->type = ParticleType_Rain;
 
             // Set start position.
-            localPart->position0_0.vy = g_Particle_Position.vy + Q12(Rng_GenerateInt(0, 2));
+            localPart->position0.vy = g_Particle_Position.vy + Q12(Rng_GenerateInt(0, 2));
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
-            localPart->position1_C.vy = localPart->position0_0.vy - Q12(0.125f);
-            localPart->movement_18.vy = Q12(0.0091f);
+            localPart->position1.vy = localPart->position0.vy - Q12(0.125f);
+            localPart->movement.vy = Q12(0.0091f);
 #else
-            localPart->position1_C.vy = g_Particle_Position.vy;
-            localPart->movement_18.vy = Q12(0.03675f);
+            localPart->position1.vy = g_Particle_Position.vy;
+            localPart->movement.vy = Q12(0.03675f);
 #endif
 
             // Set random start XZ position.
             Particle_PositionRandomize(rand, part, RAIN_XZ_SPAWN_RANGE);
 
             // Copy random XZ to second position.
-            localPart->position1_C.vx = localPart->position0_0.vx;
-            localPart->position1_C.vz = localPart->position0_0.vz;
+            localPart->position1.vx = localPart->position0.vx;
+            localPart->position1.vz = localPart->position0.vz;
 #endif
             break;
     }
 
     // Step to active state.
-    localPart->stateStep_1E++;
+    localPart->stateStep++;
 }
 
 #endif

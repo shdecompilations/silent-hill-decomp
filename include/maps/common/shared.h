@@ -174,9 +174,9 @@ extern u16 sharedData_800E32D4_0_s00;
 
 extern s32 sharedData_800DD598_0_s00;
 
-extern CVECTOR sharedData_800E3258_0_s00;
+extern CVECTOR g_WorldEnv_SnowColor;
 
-extern CVECTOR sharedData_800E325C_0_s00;
+extern CVECTOR g_WorldEnv_RainColor;
 
 extern q19_12 sharedData_800E2370_0_s01[2]; // Air Screamer floor collision heights?
 

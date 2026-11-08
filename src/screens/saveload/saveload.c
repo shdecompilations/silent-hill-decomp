@@ -2274,7 +2274,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                     // Defines if the selected element is the `New Save` option.
                     // @bug While an edge case, reaching the maximum makes it
                     // impossible to select or overwrite files.
-                    if (saveEntry->totalSavegameCount >= 1 && saveEntry->totalSavegameCount <= 31099)
+                    if (saveEntry->totalSavegameCount >= 1 && saveEntry->totalSavegameCount < 31100)
                     {
                         g_SaveScreen_IsNewSaveSelected = true;
                     }

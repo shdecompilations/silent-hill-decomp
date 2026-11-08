@@ -212,39 +212,46 @@ typedef enum _GameEndingFlags
     GameEndingFlag_Bad      = 1 << 3,
     GameEndingFlag_Ufo      = 1 << 4,
 
-    // The following are only used in `currentEndingFlags`.
+    // TODO: The following are only used in `currentEndingFlags`.
     GameEndingFlag_5        = 1 << 5, // Unknown purpose, `Ranking_PrepareSavegame` sets `g_SavegamePtr->currentEndingFlags |= 1 << 5`, nothing checks it?
     GameEndingFlag_6        = 1 << 6, // Set the first time ranking has been seen?
     GameEndingFlag_7        = 1 << 7  // Set if ranking has been seen and ending was UFO?
 } e_GameEndingFlags;
 
-/** @brief `s_WorldEnvPreset::flags`. */
+// TODO: World Env group. Move to `map_effects.h`
+// =================================================================
+
+/** @brief World environment flags. Used by `s_WorldEnvPreset::flags`. */
 typedef enum _WorldEnvFlags
 {
     WorldEnvFlag_None              = 0,
-    WorldEnvFlag_Dark              = 1 << 0, /** Set on the flashlight-off preset of dark areas. Lots of map overlay code check this to tell if area is currently in darkness. (TODO: Macro for checking this?) */
+    WorldEnvFlag_Dark              = 1 << 0, /** Set on the "flashlight off" preset in dark areas. Lots of map overlay code check this to tell if area is currently in darkness. (TODO: Macro for checking this?) */
     WorldEnvFlag_FlashlightAllowed = 1 << 1,
-    WorldEnvFlag_EnableBrightness  = 1 << 2, /** Applies the users brightness setting. */
+    WorldEnvFlag_EnableBrightness  = 1 << 2, /** Applies the user's brightness setting. */
     WorldEnvFlag_UseLighter        = 1 << 3,
-    WorldEnvFlag_EnableLensFlare   = 1 << 4,
+    WorldEnvFlag_EnableLensFlare   = 1 << 4
 } e_WorldEnvFlags;
 
-/** @brief `s_WorldEnvPreset::lightMode`. How models and billboards get lit by the dynamic light. */
+/** @brief World environment light modes. Determines how models and billboards are lit by the dynamic light.
+ * Used by `s_WorldEnvPreset::lightMode`.
+ */
 typedef enum _WorldEnvLightMode
 {
-    WorldEnvLightMode_None        = 0, /** No dynamic light. Flat vertex colors, fog drawn as overlay polygons. */
+    WorldEnvLightMode_None        = 0, /** No dynamic light. Flat vertex colors nad fog drawn as overlay polygons. */
     WorldEnvLightMode_Spot        = 1, /** Positional light (normally the flashlight). Enables the lens flare. */
-    WorldEnvLightMode_Directional = 2, /** Lights everywhere from one direction. No source point or distance falloff. */
+    WorldEnvLightMode_Directional = 2  /** Lights everywhere from one direction. No source point or distance falloff. */
 } e_WorldEnvLightMode;
 
-/** @brief `s_WorldEnvPreset::fogMode`. */
+/** @brief World environment fog modes. Used by`s_WorldEnvPreset::fogMode`. */
 typedef enum _WorldEnvFogMode
 {
     WorldEnvFogMode_Off         = 0,
     WorldEnvFogMode_On          = 1,
-    WorldEnvFogMode_Zero        = 2, /** Fog on with a distance of 0. @unused No preset sets it. */
-    WorldEnvFogMode_FollowLight = 3, /** Fog distance follows the light position. @unused Only set by preset 5, which nothing selects? */
+    WorldEnvFogMode_Zero        = 2, /** @unused Fog on with a distance of 0. No preset sets it. */
+    WorldEnvFogMode_FollowLight = 3  /** @unused Fog distance follows the light position. Only set by preset 5, which nothing selects? */
 } e_WorldEnvFogMode;
+
+// =================================================================
 
 /** @brief Game workspace. Stores miscellaneous gameplay-related data. */
 typedef struct _GameWork
@@ -320,16 +327,16 @@ STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 /** @brief World environment preset: contains fog, lighting and tint settings. */
 typedef struct _WorldEnvPreset
 {
-    /* 0x0  */ u8      flags;         /** `e_WorldEnvFlags` */
-    /* 0x1  */ u8      lightLevelMax; /** Upper limit on the computed light level of lit vertices. `0xFF` for no limit. */
-    /* 0x2  */ u8      lightMode;     /** `e_WorldEnvLightMode` */
-    /* 0x3  */ u8      __pad_3;
+    /* 0x0  */ u8      flags;                  /** `e_WorldEnvFlags` */
+    /* 0x1  */ u8      lightLevelMax;          /** Upper limit on the computed light level of lit vertices. `0xFF` for no limit. */
+    /* 0x2  */ u8      lightMode;              /** `e_WorldEnvLightMode` */
+    /* 0x3  */ s8      __pad_3;
     /* 0x4  */ q3_12   spotLightIntensity;
     /* 0x6  */ q3_12   worldLightIntensity;
     /* 0x8  */ q3_12   worldTintR;
     /* 0xA  */ q3_12   worldTintG;
     /* 0xC  */ q3_12   worldTintB;
-    /* 0xE  */ u8      fogMode;       /** `e_WorldEnvFogMode`. */
+    /* 0xE  */ u8      fogMode;                /** `e_WorldEnvFogMode` */
     /* 0x10 */ q19_12  fogDistance;
     /* 0x14 */ CVECTOR fogColor;
     /* 0x18 */ u8      enableTintLightOverlap; /** `bool` */
@@ -713,26 +720,50 @@ static inline void Game_StateSetPreviousA()
     SysWork_StateSetNext(SysState_Gameplay);
 }
 
-// TODO: Move these and the e_WorldEnv enums into `map_effects.h` with the `WorldEnv_XXX` funcs?
+// =======================
+// =======================
+// =======================
+// TODO: Move these and the e_WorldEnv enums into `map_effects.h` with the `WorldEnv_XXX` funcs.
+// =======================
+// =======================
+// =======================
 
-/** @brief Whether the current world environment is in darkness, without flashlight turned on. */
+/** @brief Checks if the world environment is in darkness, without the flashlight turned on.
+ *
+ * @return `true` if the work environment is in darkness, `false` otherwise.
+ */
 #define WorldEnv_IsInDarkness() \
     (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark)
 
-/** @brief Whether the current world environment allows the flashlight to be used. */
+/** @brief Checks if the world environment allows the flashlight to be used.
+ *
+ * @return `true` if the flashlight can be used, `false` otherwise.
+ */
 #define WorldEnv_IsFlashlightAllowed() \
     (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)
 
-/** @brief Whether the flashlight is currently turned on. */
+/** @brief Checks if the flashlight is turned on.
+ *
+ * @return `true` if the flashlight is turned on, `false` otherwise.
+ */
 #define WorldEnv_IsFlashlightOn() \
     (g_SysWork.worldEnv.isFlashlightOn)
 
-/** @brief Whether any active world environment presets can count as in darkness. */
+/** @brief Checks if any active world environment presets can count as in darkness.
+ *
+ * @param `true`, otherwise `false`.
+ */
 #define WorldEnv_CanBeInDarkness() \
     (g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark || \
      g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)
 
-/** @brief Whether the world is currently lit, either from flashlight not being allowed, flashlight being turned on, or world not being able to turn dark. */
+/** @brief Checks if the world is lit by any of the following conditions:
+ * - The flashlight beign disallowed in a lit area. 
+ * - The flashlight being turned on.
+ * - The world being unable to turn dark.
+ *
+ * @return `true` if the world is lit, `false` otherwise.
+ */
 #define WorldEnv_IsWorldLit() \
     (!WorldEnv_IsFlashlightAllowed() || WorldEnv_IsFlashlightOn() || !WorldEnv_CanBeInDarkness())
 

@@ -37,11 +37,11 @@ typedef enum _SnowType
 /** @brief Particle effect. */
 typedef struct _Particle
 {
-    /* 0x0  */ VECTOR3  position0_0;  // Snow: position, Rain: streak start (bottom)
-    /* 0xC  */ VECTOR3  position1_C;  // Snow: unused, Rain: streak end (top)
-    /* 0x18 */ SVECTOR3 movement_18;  // Q19.12? | Snow: random accumulation, Rain: Y accumulation (affects streak length).
-    /* 0x1E */ u8       stateStep_1E; /** `e_ParticleState` */
-    /* 0x1F */ u8       type_1F;      /** `e_ParticleType` | TODO: Sometimes absurd values are checked for. */
+    /* 0x0  */ VECTOR3  position0; /** Q19.12? | Snow: position, Rain: streak start (bottom). */
+    /* 0xC  */ VECTOR3  position1; /** Q19.12? | Snow: unused, Rain: streak end (top). */
+    /* 0x18 */ SVECTOR3 movement;  /** Q19.12? | Snow: random accumulation, Rain: Y accumulation (affects streak length). */
+    /* 0x1E */ u8       stateStep; /** `e_ParticleState` */
+    /* 0x1F */ u8       type;      /** `e_ParticleType` | TODO: Sometimes absurd values are checked for. */
 } s_Particle;
 
 typedef struct
