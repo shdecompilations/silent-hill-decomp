@@ -8,7 +8,7 @@ void Settings_ScreenAndVolUpdate(void) // 0x800333CC
 {
     Screen_XyPositionSet(g_GameWork.config.screenPositionX, g_GameWork.config.screenPositionY);
     SD_Call((g_GameWork.config.soundType != 0) ? AudioMode_Mono : AudioMode_Stereo);
-    Sd_GlobalVolumeSet(OPT_SOUND_VOLUME_MAX, g_GameWork.config.volumeBgm, g_GameWork.config.volumeSe);
+    Sd_GlobalVolumeSet(Q7(1.0f), g_GameWork.config.volumeBgm, g_GameWork.config.volumeSe);
 }
 
 void Settings_RestoreDefaults(void) // 0x8003342C
@@ -18,12 +18,12 @@ void Settings_RestoreDefaults(void) // 0x8003342C
 
     Settings_RestoreControlDefaults(0);
 
-    g_GameWork.config.vibrationEnabled = OPT_VIBRATION_ENABLED;
-    g_GameWork.config.volumeBgm        = OPT_SOUND_VOLUME_MAX;
-    g_GameWork.config.volumeSe         = OPT_SOUND_VOLUME_MAX;
+    g_GameWork.config.vibrationEnabled = Q7(1.0f);
+    g_GameWork.config.volumeBgm        = Q7(1.0f);
+    g_GameWork.config.volumeSe         = Q7(1.0f);
 
 #if VERSION_REGION_IS(PAL)
-    g_GameWork.config.extraAutoAiming = 1;
+    g_GameWork.config.extraAutoAiming = true;
 #endif
 
     Settings_ScreenAndVolUpdate();

@@ -25,15 +25,6 @@
 #include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
 
-// ==========
-// CONSTANTS
-// ==========
-
-#define OPT_SOUND_VOLUME_MIN   0
-#define OPT_SOUND_VOLUME_MAX   128
-#define OPT_VIBRATION_DISABLED 0
-#define OPT_VIBRATION_ENABLED  128
-
 // ======
 // ENUMS
 // ======

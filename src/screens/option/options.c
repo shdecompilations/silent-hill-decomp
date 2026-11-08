@@ -503,10 +503,10 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
 
 void Options_MainOptionsMenu_Control(void) // 0x801E3770
 {
-    #define SOUND_VOL_STEP 8
+    #define SOUND_VOL_STEP Q7(1.0f / 16.0f)
 
-    s32 audioType;
-    s32 vol;
+    s32   audioType;
+    q24_7 vol;
 
     // Draw graphics.
     Options_MainOptionsMenu_EntryStringsDraw();
@@ -679,12 +679,12 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         case MainOptionsMenuEntry_BgmVolume:
             vol = g_GameWork.config.volumeBgm;
 
-            if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighRight)) ||
+            if ((vol < Q7(1.0f) && (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighRight)) ||
                 (vol > 0                    && (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighLeft)))
             {
                 SD_Call(Sfx_MenuMove);
             }
-            if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighRight)) ||
+            if ((vol == Q7(1.0f) && (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighRight)) ||
                 (vol == 0                    && (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighLeft)))
             {
                 SD_Call(Sfx_MenuError);
@@ -701,21 +701,21 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             }
 
             // Set config.
-            vol = CLAMP(vol, 0, OPT_SOUND_VOLUME_MAX);
-            Sd_GlobalVolumeSet(OPT_SOUND_VOLUME_MAX, vol, g_GameWork.config.volumeSe);
+            vol = CLAMP(vol, Q7(0.0f), Q7(1.0f));
+            Sd_GlobalVolumeSet(Q7(1.0f), vol, g_GameWork.config.volumeSe);
             g_GameWork.config.volumeBgm = vol;
             break;
 
         case MainOptionsMenuEntry_SfxVolume:
             vol = g_GameWork.config.volumeSe;
 
-            if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighRight)) ||
-                (vol > 0                    && (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighLeft)))
+            if ((vol < Q7(1.0f) && (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighRight)) ||
+                (vol > Q7(0.0f) && (g_Controller0->buttonFlags.pulsed & ControllerFlag_LStickHighLeft)))
             {
                 SD_Call(Sfx_MenuMove);
             }
-            if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighRight)) ||
-                (vol == 0                    && (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighLeft)))
+            if ((vol == Q7(1.0f) && (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighRight)) ||
+                (vol == Q7(0.0f) && (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighLeft)))
             {
                 SD_Call(Sfx_MenuError);
             }
@@ -729,9 +729,9 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 vol = vol - SOUND_VOL_STEP;
             }
 
-            vol = CLAMP(vol, 0, OPT_SOUND_VOLUME_MAX);
+            vol = CLAMP(vol, Q7(0.0f), Q7(1.0f));
 
-            Sd_GlobalVolumeSet(OPT_SOUND_VOLUME_MAX, vol, g_GameWork.config.volumeSe);
+            Sd_GlobalVolumeSet(Q7(1.0f), vol, g_GameWork.config.volumeSe);
             g_GameWork.config.volumeSe = vol;
             break;
 
@@ -1544,7 +1544,7 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
             case ExtraOptionsMenuEntry_AutoAiming:
                 strPosX = !g_GameWork.config.extraAutoAiming ? 228 : 226;
                 Gfx_StringPositionSet(strPosX, STR_BASE_Y + (STR_OFFSET_Y * ExtraOptionsMenuEntry_AutoAiming));
-                Gfx_StringDraw(CONFIG_STRS[((g_GameWork.config.extraAutoAiming != 0) ? 40 : 36) >> 2], 10);
+                Gfx_StringDraw(CONFIG_STRS[(g_GameWork.config.extraAutoAiming ? 40 : 36) >> 2], 10);
                 break;
 
             case ExtraOptionsMenuEntry_ViewMode:
@@ -2550,31 +2550,31 @@ void func_801E749C(void)
         case 2:
             setWHFast(prim, 48, 16);
             setXY0Fast(prim, 30, 78);
-            setUV0AndClut(prim, g_GameWork.config.extraViewCtrl != 0 ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
+            setUV0AndClut(prim, g_GameWork.config.extraViewCtrl ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
             break;
 
         case 3:
             setWHFast(prim, 48, 16);
             setXY0Fast(prim, 18, 78);
-            setUV0AndClut(prim, g_GameWork.config.extraRetreatTurn != 0 ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
+            setUV0AndClut(prim, g_GameWork.config.extraRetreatTurn ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
             break;
 
         case 4:
             setWHFast(prim, 48, 16);
             setXY0Fast(prim, 30, 78);
-            setUV0AndClut(prim, g_GameWork.config.extraWalkRunCtrl != 0 ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
+            setUV0AndClut(prim, g_GameWork.config.extraWalkRunCtrl ? 0 : 0x30, 0xE0, 0x130, 0x1FE);
             break;
 
         case 5:
             setWHFast(prim, 24, 16);
             setXY0Fast(prim, 36, 78);
-            setUV0AndClut(prim, g_GameWork.config.extraAutoAiming != 0 ? 0xC0 : 0xD8, 0xE0, 0x130, 0x1FE);
+            setUV0AndClut(prim, g_GameWork.config.extraAutoAiming ? 0xC0 : 0xD8, 0xE0, 0x130, 0x1FE);
             break;
 
         case 6:
             setWHFast(prim, 48, 16);
             setXY0Fast(prim, 30, 78);
-            setUV0AndClut(prim, g_GameWork.config.extraViewMode != 0 ? 0xC0 : 0x90, 0xE0, 0x130, 0x1FE);
+            setUV0AndClut(prim, g_GameWork.config.extraViewMode ? 0xC0 : 0x90, 0xE0, 0x130, 0x1FE);
             break;
 
         case 7:

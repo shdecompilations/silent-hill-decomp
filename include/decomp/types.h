@@ -15,6 +15,7 @@ typedef unsigned long long u64;
 
 typedef signed char        q0_7;   // Q0.7 fixed-point.
 typedef signed short       q11_4;  // Q11.4 fixed-point.
+typedef signed short       q8_7;   // Q8.7 fixed-point.
 typedef signed short       q7_8;   // Q7.8 fixed-point.
 typedef signed short       q3_12;  // Q3.12 fixed-point.
 typedef signed int         q27_4;  // Q27.4 fixed-point.

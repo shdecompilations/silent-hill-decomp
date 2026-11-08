@@ -159,6 +159,15 @@
 #define Q12_TRUNC(x) \
     FP_TRUNCATE(x, Q12_SHIFT)
 
+/** @brief Multiplies two integers in Q*.7 fixed-point.
+ *
+ * @param a First Q*.7 fixed-point factor.
+ * @param b Second Q*.7 fixed-point factor.
+ * @return Q*.7 product of `a` and `b`.
+ */
+#define Q7_MULT(a, b) \
+    FP_MULTIPLY(a, b, Q7_SHIFT)
+
 /** @brief Multiplies two integers in Q*.12 fixed-point.
  *
  * @param a First Q*.12 fixed-point factor.
@@ -269,6 +278,14 @@
  */
 #define Q7(x) \
     TO_FIXED(x, Q7_SHIFT)
+
+/** @brief Converts a floating-point value to clamped Q*.7 fixed-point.
+ *
+ * @param x Value to convert (`float`).
+ * @return `x` converted to clamped Q*.7 fixed-point.
+ */
+#define Q7_CLAMPED(x) \
+    CLAMP(Q7(x), Q7(0.0f), Q7(1.0f) - 1)
 
 /** @brief Converts a floating-point value to Q*.8 fixed-point.
  *

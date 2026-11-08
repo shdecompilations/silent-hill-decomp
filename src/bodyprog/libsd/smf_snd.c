@@ -726,7 +726,7 @@ s32 SdVbOpenOne(u8* addr, s32 sbaddr, s32 sbsize, s16 vabid) // 0x8009FBAC
     p->vab_id   = i;
     p->vh_addr_4  = (SD_VAB_H*)addr;
     p->vh_size_8  = sbsize;
-    p->mvol_18    = 127;
+    p->mvol_18    = Q7_CLAMPED(1.0f);
     p->vb_size_14 = sbsize;
     p->mpan_1B    = 64;
 
@@ -1624,10 +1624,10 @@ s16 SdVbKeyOn(s16 vabid, s32 voice, s16 center, s16 shift, s16 note, s16 voll, s
         smf_port[voice].center_1E = center;
         smf_port[voice].shift_1F  = shift;
         smf_port[voice].note_6    = note;
-        smf_port[voice].pvol_10   = 127;
+        smf_port[voice].pvol_10   = Q7_CLAMPED(1.0f);
         smf_port[voice].ppan_12   = 64;
         smf_port[voice].tpan_13   = 64;
-        smf_port[voice].tvol_11   = 127;
+        smf_port[voice].tvol_11   = Q7_CLAMPED(1.0f);
         smf_port[voice].vab_id_52 = vabid;
         smf_port[voice].l_vol_C   = voll << 7;
         smf_port[voice].r_vol_E   = volr << 7;

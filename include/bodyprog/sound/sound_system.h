@@ -205,21 +205,21 @@ typedef struct _AudioStreamingStates
 // @note Could the values of the fields be some sort of fractional value?
 typedef struct _ChannelsVolumeController
 {
-    /* 0x0 */ s16 volumeXa;
-    /* 0x2 */ s16 volumeXaToSet; // Sets value for `volumeXa`. See `Sd_XaAudioPlay`.
-    /* 0x4 */ u16 volumeSe;
-    /* 0x6 */ s16 volumeBgm;
-    /* 0x8 */ s16 volumeBgmToSet;
-    
+    /* 0x0 */ q8_7 volumeXa;
+    /* 0x2 */ q8_7 volumeXaToSet; // Sets value for `volumeXa`. See `Sd_XaAudioPlay`.
+    /* 0x4 */ q8_7 volumeSe;
+    /* 0x6 */ q8_7 volumeBgm;
+    /* 0x8 */ q8_7 volumeBgmToSet;
+
     /** As main difference with previous volume controlers, this influence the overall audio behavior of the game.
      *
      * These are also the values modified in the configuration menu.
      */
-    /* 0xA */ s16 globalVolumeGame; /** Volume of the entire game (not configurable). */
-    /* 0xC */ u8  globalVolumeSe;   /** Global SE volume channel. */
-    /* 0xD */ u8  globalVolumeBgm;  /** Global BGM volume channel. */
-    /* 0xE */ u8  globalVolumeXa;   /** Global Voice volume channel (not configurable). */
-    /* 0xF */ u8  reverbDepth;
+    /* 0xA */ q8_7 globalVolumeGame; /** Volume of the entire game (not configurable). */
+    /* 0xC */ u8   globalVolumeSe;   /** Global SE volume channel. */
+    /* 0xD */ u8   globalVolumeBgm;  /** Global BGM volume channel. */
+    /* 0xE */ u8   globalVolumeXa;   /** Global Voice volume channel (not configurable). */
+    /* 0xF */ u8   reverbDepth;
 } s_ChannelsVolumeController;
 
 /** @brief Sound struct for tracking currently playing XA audio play time. */
@@ -235,15 +235,15 @@ typedef struct
  */
 typedef struct _VabPlayingInfo
 {
-    /* 0x0 */ u8  voiceIdx; /** Index of audio at PSX's "Voice" channels. */
-    /* 0x1 */ s8  __pad_1;
-    /* 0x2 */ s16 typeIdx; /** `e_AudioType` */
-    /* 0x4 */ s16 progIdx;
-    /* 0x6 */ s16 toneIdx;
-    /* 0x8 */ s16 noteIdx;
-    /* 0xA */ s16 pitch;
-    /* 0xC */ s16 volumeLeft;
-    /* 0xE */ s16 volumeRight;
+    /* 0x0 */ u8   voiceIdx; /** Index of audio at PSX's "Voice" channels. */
+    /* 0x1 */ s8   __pad_1;
+    /* 0x2 */ s16  typeIdx; /** `e_AudioType` */
+    /* 0x4 */ s16  progIdx;
+    /* 0x6 */ s16  toneIdx;
+    /* 0x8 */ s16  noteIdx;
+    /* 0xA */ s16  pitch;
+    /* 0xC */ q8_7 volumeLeft;
+    /* 0xE */ q8_7 volumeRight;
 } s_VabPlayingInfo;
 
 /** @brief Sound struct VAB audio information.
@@ -251,11 +251,11 @@ typedef struct _VabPlayingInfo
  */
 typedef struct _VabInfo
 {
-    /* 0x0 */ u8  audioVabIdx; /** Index of audio inside VAB files. */
-    /* 0x1 */ s8  __pad_1;
-    /* 0x2 */ u16 vabProgIdx;  /** See `TYPE_AND_PROG_SFX`. */
-    /* 0x4 */ u8  noteIdx;
-    /* 0x5 */ s8  volumeMin;   /** Minimun volume required to play the audio. */
+    /* 0x0 */ u8   audioVabIdx; /** Index of audio inside VAB files. */
+    /* 0x1 */ s8   __pad_1;
+    /* 0x2 */ u16  vabProgIdx;  /** See `TYPE_AND_PROG_SFX`. */
+    /* 0x4 */ u8   noteIdx;
+    /* 0x5 */ q0_7 volumeMin;   /** Minimun volume required to play the audio. */
 } s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
@@ -510,13 +510,13 @@ void Sd_MidiChannelsVolumeSet(u8 channelIdx, u8 vol);
 void Sd_GlobalVolumeSet(u8 xaVol, s16 bgmVol, u8 seVol);
 
 /** @brief Sets the volume for the channels of music. */
-void Sd_BgmVolumeSet(s16 volumeLeft, s16 volumeRight);
+void Sd_BgmVolumeSet(q8_7 volumeLeft, q8_7 volumeRight);
 
 /** @brief Sets the volume for the channels of voices. */
-void Sd_XaVolumeSet(s16 volumeLeft, s16 volumeRight);
+void Sd_XaVolumeSet(q8_7 volumeLeft, q8_7 volumeRight);
 
 /** @brief Sets the volume for the channels of sound effects. */
-s16 Sd_SeVolumeGet(s16 arg0);
+q8_7 Sd_SeVolumeGet(q8_7 arg0);
 
 void Sd_XaAudioPlayTaskAdd(u16 sfx);
 
