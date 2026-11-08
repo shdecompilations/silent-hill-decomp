@@ -814,8 +814,7 @@ void Inventory_Update(void) // 0x8004D518
             }
             else if (Pad_ButtonClickedBind(enter))
             {
-                if ((!WorldEnv_IsFlashlightAllowed() || WorldEnv_IsFlashlightOn() || !WorldEnv_CanBeInDarkness()) &&
-                    HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
+                if (WorldEnv_IsWorldLit() && HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
                 {
                     Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.5f), Q7(0.5f));
 
@@ -849,7 +848,7 @@ void Inventory_Update(void) // 0x8004D518
             {
                 Inventory_UnavailableMapTextDraw(1);
             }
-            else if (WorldEnv_IsFlashlightAllowed() && !WorldEnv_IsFlashlightOn() && WorldEnv_CanBeInDarkness())
+            else if (!WorldEnv_IsWorldLit())
             {
                 Inventory_UnavailableMapTextDraw(0);
             }
@@ -950,7 +949,7 @@ void Inventory_Update(void) // 0x8004D518
                     case InvCmdId_UseLook:
                         if (g_Inventory_CmdSelectedIdx != 0)
                         {
-                            if (!WorldEnv_IsFlashlightAllowed() || WorldEnv_IsFlashlightOn() || !WorldEnv_CanBeInDarkness())
+                            if (WorldEnv_IsWorldLit())
                             {
                                 g_Inventory_SelectionBordersDraw = 1;
                                 g_Inventory_SelectionId          = InvSelectionId_Examine;
@@ -1025,9 +1024,7 @@ void Inventory_Update(void) // 0x8004D518
                         break;
 
                     case InvCmdId_Look:
-                        if (!WorldEnv_IsFlashlightAllowed() || 
-                             WorldEnv_IsFlashlightOn() ||
-                            !WorldEnv_CanBeInDarkness())
+                        if (WorldEnv_IsWorldLit())
                         {
                             g_Inventory_SelectionBordersDraw = 1;
                             g_Inventory_SelectionId          = InvSelectionId_Examine;

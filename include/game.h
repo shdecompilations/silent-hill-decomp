@@ -732,4 +732,8 @@ static inline void Game_StateSetPreviousA()
     (g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark || \
      g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)
 
+/** @brief Whether the world is currently lit, either from flashlight not being allowed, flashlight being turned on, or world not being able to turn dark. */
+#define WorldEnv_IsWorldLit() \
+    (!WorldEnv_IsFlashlightAllowed() || WorldEnv_IsFlashlightOn() || !WorldEnv_CanBeInDarkness())
+
 #endif

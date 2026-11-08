@@ -492,7 +492,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
             SysWork_StateSetNext(SysState_Gameplay);
         }
     }
-    else if (WorldEnv_IsFlashlightAllowed() && !WorldEnv_IsFlashlightOn() && WorldEnv_CanBeInDarkness())
+    else if (!WorldEnv_IsWorldLit())
     {
         if (Pad_ButtonClickedBind(map) ||
             Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgState_Idle)
