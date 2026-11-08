@@ -12,22 +12,6 @@
 #define CONTROLLER_COUNT_MAX 2
 #define STICK_DEADZONE       FP_STICK(0.5f)
 
-/** @brief Checks controller 1 button flags against a mask of `e_ControllerFlags`. */
-#define Pad_ButtonClicked(buttons)   (g_Controller0->buttonFlags.clicked & (buttons))
-#define Pad_ButtonHeld(buttons)      (g_Controller0->buttonFlags.held & (buttons))
-#define Pad_ButtonPulsed(buttons)    (g_Controller0->buttonFlags.pulsed & (buttons))
-#define Pad_ButtonPulsedGui(buttons) (g_Controller0->buttonFlags.pulsedGui & (buttons))
-
-/** @brief Checks controller 2 held button flags against a mask of `e_ControllerFlags`. */
-#define Pad2_ButtonHeld(buttons)     (g_Controller1->buttonFlags.held & (buttons))
-
-/** @brief Gets the buttons bound to an input action, e.g. `Pad_BindingGet(cancel)`. */
-#define Pad_BindingGet(action) (g_GameWorkPtr->config.controllerConfig.action)
-
-/** @brief Checks controller 1 button flags against the buttons bound to an input action. */
-#define Pad_ButtonClickedBind(action) Pad_ButtonClicked(Pad_BindingGet(action))
-#define Pad_ButtonHeldBind(action)    Pad_ButtonHeld(Pad_BindingGet(action))
-
 /** @brief PSX controller input flags. */
 typedef enum _ControllerFlags
 {
@@ -149,6 +133,70 @@ STATIC_ASSERT_SIZEOF(s_ControllerConfig, 28);
 
 extern s_ControllerData* const g_Controller0;
 extern s_ControllerData* const g_Controller1;
+
+/** @brief Checks clicked/debounced controller 0 button flags against a mask of `e_ControllerFlags`.
+ *
+ * @param buttons Controller button flags to check.
+ * @return `true` if the button is clicked, `false` otherwise.
+ */
+#define Pad_ButtonClicked(buttons) \
+    (g_Controller0->buttonFlags.clicked & (buttons))
+
+/** @brief Checks held/throttled controller 0 button flags against a mask of `e_ControllerFlags`.
+ *
+ * @param buttons Controller button flags to check.
+ * @return `true` if the button is held, `false` otherwise.
+ */
+#define Pad_ButtonHeld(buttons) \
+    (g_Controller0->buttonFlags.held & (buttons))
+
+/** @brief Checks pulsed controller 0 button flags against a mask of `e_ControllerFlags`.
+ *
+ * @param buttons Controller button flags to check.
+ * @return `true` if the button is pulsed, `false` otherwise.
+ */
+#define Pad_ButtonPulsed(buttons) \
+    (g_Controller0->buttonFlags.pulsed & (buttons))
+
+/** @brief Checks controller 0 button flags against a mask of `e_ControllerFlags` in a GUI context.
+ *
+ * @param buttons Controller button flags to check.
+ * @return `true` if the button is pulsed in a GUI, `false` otherwise.
+ */
+#define Pad_ButtonPulsedGui(buttons) \
+    (g_Controller0->buttonFlags.pulsedGui & (buttons))
+
+/** @brief Checks held/throttled controller 1 button flags against a mask of `e_ControllerFlags`.
+ *
+ * @param buttons Controller button flags to check.
+ * @return `true` if the button is held, `false` otherwise.
+ */
+#define Pad2_ButtonHeld(buttons)\
+    (g_Controller1->buttonFlags.held & (buttons))
+
+/** @brief Gets the number of buttons bound to an input action, e.g. `Pad_BindingGet(cancel)`.
+ *
+ * @param action Action binding field to check.
+ * @return Bound controller button flags `e_ControllerFlags`.
+ */
+#define Pad_BindingGet(action) \
+    (g_GameWorkPtr->config.controllerConfig.action)
+
+/** @brief Checks if an action is clicked/debounced on controller 0.
+ *
+ * @param action Action binding field to check.
+ * @return `true` if the action is clicked, `false` otherwise.
+ */
+#define Pad_ButtonClickedBind(action) \
+    Pad_ButtonClicked(Pad_BindingGet(action))
+
+/** @brief Checks if an action is held/throttled on controller 0.
+ *
+ * @param action Action binding field to check.
+ * @return `true` if the action is held, `false` otherwise.
+ */
+#define Pad_ButtonHeldBind(action) \
+    Pad_ButtonHeld(Pad_BindingGet(action))
 
 // ==========
 // FUNCTIONS
