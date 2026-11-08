@@ -313,9 +313,8 @@ void Game_NpcUpdate(void) // 0x80038354
             }
 
             // Set NPC visibility.
-            if ((g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed && curDistToNpc > SQUARE(15)) ||
-                (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) &&
-                    Camera_Distance2dGet(&curNpc->position) > SQUARE(15)))
+            if ((WorldEnv_IsFlashlightAllowed() && curDistToNpc > SQUARE(15)) ||
+                (!WorldEnv_IsFlashlightAllowed() && Camera_Distance2dGet(&curNpc->position) > SQUARE(15)))
             {
                 curNpc->model.anim.flags &= ~AnimFlag_Visible;
             }

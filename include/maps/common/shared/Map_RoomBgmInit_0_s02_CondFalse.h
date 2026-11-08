@@ -19,7 +19,7 @@ void Map_RoomBgmInit_CondFalse(void)
         case 2:
         case 3:
         case 4:
-            bgmFlags    = (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) ? BgmFlag_Layer2 : BgmFlag_Layer1;
+            bgmFlags    = WorldEnv_IsFlashlightAllowed() ? BgmFlag_Layer2 : BgmFlag_Layer1;
             layerLimits = sharedData_800CFB1C_0_s02;
             break;
 

@@ -814,7 +814,7 @@ void Inventory_Update(void) // 0x8004D518
             }
             else if (Pad_ButtonClickedBind(enter))
             {
-                if ((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) ||
+                if ((!WorldEnv_IsFlashlightAllowed() ||
                      g_SysWork.worldEnv.isFlashlightOn ||
                      (!(g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark) &&
                       !(g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark))) &&
@@ -852,8 +852,7 @@ void Inventory_Update(void) // 0x8004D518
             {
                 Inventory_UnavailableMapTextDraw(1);
             }
-            else if (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed &&
-                     !g_SysWork.worldEnv.isFlashlightOn &&
+            else if (WorldEnv_IsFlashlightAllowed() && !g_SysWork.worldEnv.isFlashlightOn &&
                      (g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark ||
                       g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark))
             {
@@ -956,7 +955,7 @@ void Inventory_Update(void) // 0x8004D518
                     case InvCmdId_UseLook:
                         if (g_Inventory_CmdSelectedIdx != 0)
                         {
-                            if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) ||
+                            if (!WorldEnv_IsFlashlightAllowed() ||
                                 g_SysWork.worldEnv.isFlashlightOn ||
                                 (!(g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark) &&
                                  !(g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)))
@@ -1034,7 +1033,7 @@ void Inventory_Update(void) // 0x8004D518
                         break;
 
                     case InvCmdId_Look:
-                        if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) ||
+                        if (!WorldEnv_IsFlashlightAllowed() ||
                             g_SysWork.worldEnv.isFlashlightOn ||
                             (!(g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark) &&
                              !(g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)))

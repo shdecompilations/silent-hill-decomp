@@ -80,12 +80,9 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
         return false;
     }
 
-    if (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)
+    if (WorldEnv_IsFlashlightAllowed() && WorldEnv_IsInDarkness())
     {
-        if (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark)
-        {
-            return false;
-        }
+        return false;
     }
 
     if (sharedData_800DFB7C_0_s00[idx].field_B != 0)

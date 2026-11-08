@@ -320,7 +320,7 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
     extern void (*sharedData_800EEE14_2_s00[])(s_SubCharacter* chara);
 
     #define getIndex() \
-        ((((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))) * 2) + ((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))))
+        ((((!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())) * 2) + ((!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed())))
 
     if (func_80070360(groaner, Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
             g_SysWork.playerWork.player.position.vz - groaner->position.vz), UNK_VAL) != 0 ||

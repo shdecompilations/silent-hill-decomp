@@ -269,12 +269,11 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
     Chara_MoveSpeedUpdate3(creeper, Q12(4.0f), Q12(0.0f));
     creeperProps.chirpTimer += g_DeltaTime;
 
-    if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))
+    if (!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed())
     {
         cond = func_8006FD90(creeper, 2, Q12(12.0f), Q12(8.0f));
     }
-    else if ((g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) &&
-             (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark))
+    else if (WorldEnv_IsFlashlightAllowed() && WorldEnv_IsInDarkness())
     {
         cond = func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f));
     }
@@ -380,10 +379,9 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
     angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(creeper->position, playerChara.position) -
                                                    creeper->rotation.vy);
 
-    if (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && func_8006FD90(creeper, 0, Q12(12.0f), Q12(8.0f))) ||
-        ((g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) &&
-         (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f))) ||
-        ((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && func_8006FD90(creeper, 1, Q12(4.0f), Q12(12.0f))) ||
+    if (((!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed()) && func_8006FD90(creeper, 0, Q12(12.0f), Q12(8.0f))) ||
+        (WorldEnv_IsFlashlightAllowed() && WorldEnv_IsInDarkness() && func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f))) ||
+        ((!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed()) && func_8006FD90(creeper, 1, Q12(4.0f), Q12(12.0f))) ||
         (func_80070360(creeper, 0, Q12(0.5f)) || creeperProps.flags & CreeperFlag_Alerted))
     {
         creeperProps.targetPositionX = playerChara.position.vx;

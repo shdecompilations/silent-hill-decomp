@@ -1300,7 +1300,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
         *(s32*)&(*poly)->u3 = (((ptr->field_164 << 5) + ptr->field_174) << 8) + ((ptr->field_150 << 5) + ptr->field_160);
     }
 
-    if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))
+    if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())
     {
         if (g_GameWork.config.extraBloodColor == 14)
         {
@@ -1748,7 +1748,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
     setSemiTrans(*poly, true);
 
-    if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))
+    if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())
     {
 #if VERSION_REGION_IS(PAL)
         *(s32*)&(*poly)->u0 = ((ptr->field_190 + ptr->field_194) << 8) + 0x78BB0000 + (ptr->field_17C + ptr->field_180);
@@ -2077,7 +2077,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
                 temp_s2 = 160;
             }
 
-            if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))
+            if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())
             {
                 func_80055A90(&ptr->field_12C, &ptr->field_130, temp_s2, ptr->field_20C * 0x10);
                 *(u16*)&(*poly)->r0 = ptr->field_12C.r + (ptr->field_12C.g << 8);
@@ -2443,7 +2443,7 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
 
         *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_1CC;
 
-        if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))
+        if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())
         {
             *(s32*)&(*poly)->r0 = 0x2E103030;
         }
@@ -2557,7 +2557,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
         ptr->field_15C = CLAMP_LOW(120 - (ptr->field_15A * 120) / ptr->field_168, 0);
     }
 
-    if (!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed))
+    if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())
     {
         func_80055A90(&ptr->field_134, &ptr->field_130, ptr->field_15C, ptr->field_150 * 16);
 

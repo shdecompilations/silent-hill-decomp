@@ -233,8 +233,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
         return;
     }
 
-    if (Pad_ButtonClickedBind(light) &&
-        g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)
+    if (Pad_ButtonClickedBind(light) && WorldEnv_IsFlashlightAllowed())
     {
         Game_FlashlightToggle();
     }
@@ -493,7 +492,7 @@ void SysState_MapScreen_Update(void) // 0x800396D4
             SysWork_StateSetNext(SysState_Gameplay);
         }
     }
-    else if ((g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) && !g_SysWork.worldEnv.isFlashlightOn &&
+    else if (WorldEnv_IsFlashlightAllowed() && !g_SysWork.worldEnv.isFlashlightOn &&
              ((g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark) ||
               (g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)))
     {
@@ -900,8 +899,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx != 13 && tipIdx != 14)) ||
-                        (!(!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx == 13 || tipIdx == 14)))
+                    if (((!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed()) && (tipIdx != 13 && tipIdx != 14)) ||
+                        (!(!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed()) && (tipIdx == 13 || tipIdx == 14)))
                     {
                         randTipVal += 3;
                     }
@@ -920,8 +919,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx != 13 && tipIdx != 14)) ||
-                        (!(!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx == 13 || tipIdx == 14)))
+                    if (((!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed()) && (tipIdx != 13 && tipIdx != 14)) ||
+                        (!(!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed()) && (tipIdx == 13 || tipIdx == 14)))
                     {
                         if (randTipVal < 3)
                         {

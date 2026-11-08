@@ -340,9 +340,8 @@ void HangedScratcher_Control_1(s_SubCharacter* scratcher)
     // TODO: Invert to return early instead?
     if (distToPlayer < Q12(1.0f) &&
         !Los_NpcToPlayerHitCheck(scratcher, &g_SysWork.playerWork.player) &&
-        (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && func_8006FD90(scratcher, 1, Q12(2.0f), Q12(1.5f))) ||
-         ((g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) &&
-          (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) &&
+        (((!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed()) && func_8006FD90(scratcher, 1, Q12(2.0f), Q12(1.5f))) ||
+         (WorldEnv_IsFlashlightAllowed() && WorldEnv_IsInDarkness() &&
           func_8006FD90(scratcher, 1, Q12(1.5f), Q12(0.3f)))))
     {
         scratcher->model.controlState = HangedScratcherControl_RunForward;
@@ -581,9 +580,8 @@ void HangedScratcher_Control_5(s_SubCharacter* scratcher)
             return;
         }
 
-        if (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && func_8006FD90(scratcher, 1, Q12(1.5f), Q12(0.5f))) ||
-            ((g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed) &&
-             (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && func_8006FD90(scratcher, 1, Q12(1.2f), Q12(0.3f))))
+        if (((!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed()) && func_8006FD90(scratcher, 1, Q12(1.5f), Q12(0.5f))) ||
+            (WorldEnv_IsFlashlightAllowed() && WorldEnv_IsInDarkness() && func_8006FD90(scratcher, 1, Q12(1.2f), Q12(0.3f))))
         {
             scratcher->model.controlState = HangedScratcherControl_WalkForward;
             scratcher->model.anim.status  = ANIM_STATUS(HangedScratcherAnim_WalkForward, false);
