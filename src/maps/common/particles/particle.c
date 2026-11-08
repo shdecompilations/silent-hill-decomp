@@ -1330,10 +1330,11 @@ bool Particle_Update(s_Particle* partHead)
 
                 case 1:
                 #if MAP_PARTICLE_HAS_RAIN
-                    if (curPart->type_1F < 2 || curPart->type_1F > 3)
+                    // Changes any non-HeavyWindow snow particles into rain?
+                    if (curPart->type_1F != ParticleType_Rain && curPart->type_1F != SnowType_HeavyWindy)
                     {
                         curPart->stateStep_1E = 0;
-                        curPart->type_1F = 2;
+                        curPart->type_1F = ParticleType_Rain;
                     }
                 #endif
                     break;
@@ -3402,7 +3403,7 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
         part->stateStep_1E = ParticleState_Spawn;
     }
 
-    if (part->type_1F == SnowType_HeavyWindy || part->type_1F == 243)
+    if (part->type_1F == SnowType_HeavyWindy || part->type_1F == (0xF0 | SnowType_HeavyWindy)) // TODO: #define 0xF0 constant when purpose is found.
     {
         part->position1_C.vx = part->position0_0.vx;
         part->position1_C.vz = part->position0_0.vz;

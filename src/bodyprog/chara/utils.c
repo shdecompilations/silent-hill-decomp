@@ -275,7 +275,7 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
             continue;
         }
 
-        if (mode < 1 || mode >= 3)
+        if (mode != 1 && mode != 2)
         {
             if (g_SysWork.targetNpcIdx == i)
             {
@@ -348,7 +348,7 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
                 continue;
             }
 
-            if (mode > 3 && mode < 6)
+            if (mode == 4 || mode == 5)
             {
                 swap       = angles1[i];
                 angles1[i] = angles1[j];

@@ -5545,7 +5545,7 @@ void AirScreamer_Control_24(s_SubCharacter* airScreamer)
             break;
     }
 
-    if (switchCond >= 2 && switchCond < 4)
+    if (switchCond == 2 || switchCond == 3)
     {
         sharedFunc_800D57C8_0_s01(airScreamer);
     }

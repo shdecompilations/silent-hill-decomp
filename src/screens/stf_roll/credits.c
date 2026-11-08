@@ -1104,7 +1104,6 @@ void Credits_TextDraw(char* str) // 0x801E4394
                 widthSum = 0;
                 while (1)
                 {
-                    s32 var  = 8;
                     nextChar = *scanPtr++;
                     if (nextChar == (charCode + 8) ||
                         (nextChar == charCode || nextChar == 10) ||
@@ -1114,13 +1113,24 @@ void Credits_TextDraw(char* str) // 0x801E4394
                         break;
                     }
 
-                    if ((nextChar - 240) >= var &&
-                        (nextChar - 248) > 7 &&
-                        (nextChar - 224) > 7 &&
-                        (nextChar - 232) > 7)
+                    if (nextChar >= 240 && nextChar < 248)
                     {
-                        widthSum += widthTable[nextChar];
+                        continue;
                     }
+                    if (nextChar >= 248 && nextChar < 256)
+                    {
+                        continue;
+                    }
+                    if (nextChar >= 224 && nextChar < 232)
+                    {
+                        continue;
+                    }
+                    if (nextChar >= 232 && nextChar < 240)
+                    {
+                        continue;
+                    }
+
+                    widthSum += widthTable[nextChar];
                 }
 
                 (&widthTable[charCode])[16] = widthSum / 2;
@@ -1329,7 +1339,7 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
     {
         poly = (POLY_FT4*)packet;
 
-        var_t0 = (charCode - 160) < 0x10u | ((charCode - 184) < 7u) << 1;
+        var_t0 = (charCode >= 160 && charCode < 176) | (charCode >= 184 && charCode < 191) << 1;
 
         // Map KCET font to normal.
         if (var_t0 != 0)
@@ -1398,32 +1408,45 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
             scanPtr  = str + 1;
             while (1)
             {
-                s32 var  = 8;
                 nextChar = *scanPtr++;
                 if (nextChar == (charCode + 8) || nextChar == charCode || nextChar == 10 || nextChar == 13 || nextChar == 12)
                 {
                     break;
                 }
 
-                if ((nextChar - 240) >= var && (nextChar - 248) >= 8u && (nextChar - 224) >= 8u && (nextChar - 232) >= 8u)
+                if (nextChar >= 240 && nextChar < 248)
                 {
-                    var_t0 = (nextChar >= 160 && nextChar < 176) | (nextChar >= 184 && nextChar < 191) << 1;
-                    if (var_t0 != 0) // Map KCET font to normal.
+                    continue;
+                }
+                if (nextChar >= 248 && nextChar < 256)
+                {
+                    continue;
+                }
+                if (nextChar >= 224 && nextChar < 232)
+                {
+                    continue;
+                }
+                if (nextChar >= 232 && nextChar < 240)
+                {
+                    continue;
+                }
+
+                var_t0 = (nextChar >= 160 && nextChar < 176) | (nextChar >= 184 && nextChar < 191) << 1;
+                if (var_t0 != 0) // Map KCET font to normal.
+                {
+                    if (var_t0 == 1)
                     {
-                        if (var_t0 == 1)
-                        {
-                            nextChar = D_801E5E5C[nextChar - 160];
-                        }
-                        else
-                        {
-                            nextChar = D_801E5E6C[nextChar - 184];
-                        }
-                        widthSum += (widthTable[nextChar] * 2) / 3;
+                        nextChar = D_801E5E5C[nextChar - 160];
                     }
                     else
                     {
-                        widthSum += widthTable[nextChar];
+                        nextChar = D_801E5E6C[nextChar - 184];
                     }
+                    widthSum += (widthTable[nextChar] * 2) / 3;
+                }
+                else
+                {
+                    widthSum += widthTable[nextChar];
                 }
             }
 

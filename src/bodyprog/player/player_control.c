@@ -1355,7 +1355,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            if (!(player->attackReceived >= 68 && player->attackReceived < 70))
+            if (player->attackReceived != 68 && player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
             {
                 g_Player_HeadingAngle        = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
                 playerProps.moveSpeed = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
@@ -2430,7 +2430,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            if (!(player->attackReceived >= 68 && player->attackReceived < 70)) // TODO: Demagic.
+            if (player->attackReceived != 68 && player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
             {
                 g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) -
                                         player->rotation.vy;
@@ -7068,8 +7068,8 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 return;
             }
 
-            if (player->attackReceived >= 68 &&
-                player->attackReceived <  70)
+            if (player->attackReceived == 68 ||
+                player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
             {
                 player->damage.amount = Q12(0.0f);
             }
@@ -7109,7 +7109,8 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             }
 
             enemyRotY = g_SysWork.npcs[player->field_40].rotation.vy;
-            if (player->attackReceived >= 64 && player->attackReceived < 66)
+            if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap) ||
+                player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap))
             {
                 enemyRotY -= Q12_ANGLE(90.0f);
             }

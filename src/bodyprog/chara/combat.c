@@ -1395,11 +1395,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
                 var_s7 = Q12_MULT_PRECISE(var_s7, offsetZ);
             }
 
-            // TODO: Doesn't match.
-            //if (weaponAttack > WEAPON_ATTACK(EquippedWeaponId_Axe,       AttackInputType_Tap) &&
-            //    weaponAttack < WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Hold))
-            if (weaponAttack > 7 &&
-                weaponAttack < 10)
+            if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap) ||
+                weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap))
             {
                 offsetX = attacker->field_44.field_48[0].vx;
                 offsetY   = 0;

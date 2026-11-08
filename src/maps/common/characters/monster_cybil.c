@@ -1504,8 +1504,8 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                     break;
             }
 
-            if (g_SysWork.playerWork.extra.state > 31 &&
-                g_SysWork.playerWork.extra.state < 34)
+            if (g_SysWork.playerWork.extra.state == PlayerState_EnemyGrabNeckFront ||
+                g_SysWork.playerWork.extra.state == PlayerState_EnemyGrabNeckBack)
             {
                 if (var_s3 < monsterCybil->position.vx)
                 {

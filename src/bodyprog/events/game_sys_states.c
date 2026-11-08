@@ -900,8 +900,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx - 13) >= 2u) ||
-                        (!(!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx - 13) <  2u))
+                    if (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx != 13 && tipIdx != 14)) ||
+                        (!(!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx == 13 || tipIdx == 14)))
                     {
                         randTipVal += 3;
                     }
@@ -920,8 +920,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx - 13) >= 2u) ||
-                        (!(!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx - 13) <  2u))
+                    if (((!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx != 13 && tipIdx != 14)) ||
+                        (!(!(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark) && !(g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)) && (tipIdx == 13 || tipIdx == 14)))
                     {
                         if (randTipVal < 3)
                         {
