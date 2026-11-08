@@ -11,7 +11,7 @@
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/puppet_nurse.h"
 
-#include "../src/maps/common/unk_draw.c"
+#include "../src/maps/common/particles/particle_fire.c"
 
 #include "../src/maps/common/particles/particle.c"
 
