@@ -7,9 +7,8 @@
 #include "main/rng.h"
 #include "maps/common/shared.h"
 
-// Unknown drawing code included in M1S03, M4S05, M5S01, M6S01 and M6S02.
-// Called by cutscene event code? Might be for a full-screen light flash effect.
-// TODO: Make this separate split in each map instead of `#include`.
+// UFO effect included in M1S03, M4S05, M5S01, M6S01 and M6S02, drawn during the Channeling Stone cutscenes.
+// Draws the `ENBAN.TIM` sprite (loaded by the map event code).
 
 void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3)
 {

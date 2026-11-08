@@ -12,9 +12,8 @@
 #include "maps/map6/map6_s04.h" // For `sharedData_800DFB7C_0_s00` size.
 #endif
 
-// Unknown drawing code included in M1S01 and M6S04.
-// Called by cutscene event code? Might be related to smoke/steam particle effects.
-// TODO: Make this separate split in each map instead of `#include`.
+// Smoke particles included in M1S01 and M6S04.
+// Used for the fumes from the chemical poured on the hand statue (M1S01) and the smoke from an NPC during the parasite cutscene (M6S04).
 
 void sharedFunc_800CB7F4_1_s01(void)
 {
