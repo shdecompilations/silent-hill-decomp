@@ -134,7 +134,7 @@ void SD_Call(u32 task) // 0x80045A7C
         // Play SFX. Range [1280, 1791].
         case 5:
         case 6:
-            Sd_SfxPlay(task, Q8(0.0f), Q8(0.0f));
+            Sd_SfxPlay(task, Q7(0.0f), Q7(0.0f));
             return;
 
         // Stop SFX. Range [1792, 2303].

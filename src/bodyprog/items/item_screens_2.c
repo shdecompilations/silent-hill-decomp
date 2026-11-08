@@ -316,7 +316,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             if (Pad_ButtonClicked(ControllerFlag_LStickHighRight | ControllerFlag_LStickHighLeft))
             {
                 g_Inventory_SelectionId = g_Inventory_SelectionId == 0;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
             }
 
             if Pad_ButtonClickedBind(enter)
@@ -325,7 +325,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 Screen_FadeStart(true, false, false);
                 prevGameState = g_GameWork.gameStateSteps[2];
 
-                Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.0f), Q7(0.5f));
 
                 if (g_Inventory_SelectionId == InvSelectionId_Item)
                 {
@@ -582,7 +582,7 @@ void Inventory_Update(void) // 0x8004D518
                 D_800AE178                       = 1;
                 g_Inventory_SelectionBordersDraw = 2;
                 g_Inventory_CmdSelectedIdx       = 0;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(-0.25f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(-0.5f), Q7(0.5f));
 
                 g_SysWork.invItemSelectedIdx = ((g_SysWork.invItemSelectedIdx + g_SavegamePtr->invSlotCount) - 1) % g_SavegamePtr->invSlotCount;
                 temp                         = g_SavegamePtr->invSlotCount - 3;
@@ -599,7 +599,7 @@ void Inventory_Update(void) // 0x8004D518
                 D_800AE178                       = 1;
                 g_Inventory_SelectionBordersDraw = 2;
                 g_Inventory_CmdSelectedIdx       = 0;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.25f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.5f), Q7(0.5f));
 
                 g_SysWork.invItemSelectedIdx = (g_SysWork.invItemSelectedIdx + 1) % g_SavegamePtr->invSlotCount;
                 func_800539A4(1, (g_SysWork.invItemSelectedIdx + 3) % g_SavegamePtr->invSlotCount);
@@ -611,7 +611,7 @@ void Inventory_Update(void) // 0x8004D518
                 if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
                 {
                     g_Inventory_SelectionId = InvSelectionId_EquippedItem;
-                    Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
                 }
             }
             else if ((Pad_ButtonClickedBind(cancel) || g_Inventory_IsDownClicked) &&
@@ -621,11 +621,11 @@ void Inventory_Update(void) // 0x8004D518
 
                 if (g_Inventory_IsDownClicked)
                 {
-                    Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
                 }
                 else
                 {
-                    Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
                 }
 
                 g_Inventory_SelectionId = InvSelectionId_Exit;
@@ -637,12 +637,12 @@ void Inventory_Update(void) // 0x8004D518
                     (g_SysWork.field_2388.isFlashlightUnavailable &&
                      g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].id == InvItemId_Flashlight))
                 {
-                    Sd_SfxPlay(Sfx_MenuError, Q8(0.25f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuError, Q7(0.5f), Q7(0.5f));
                 }
                 else if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].command == InvCmdId_Unk10)
                 {
                     Game_StateStepSet(1, 12);
-                    Sd_SfxPlay(Sfx_MenuError, Q8(0.25f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuError, Q7(0.5f), Q7(0.5f));
                 }
                 else
                 {
@@ -652,7 +652,7 @@ void Inventory_Update(void) // 0x8004D518
                     if (g_SavegamePtr->items[g_SysWork.invItemSelectedIdx].command != InvCmdId_Unk11)
                     {
                         g_Inventory_SelectionId = InvSelectionId_ItemCmd;
-                        Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.25f), Q8(0.25f));
+                        Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.5f), Q7(0.5f));
                     }
                 }
             }
@@ -663,7 +663,7 @@ void Inventory_Update(void) // 0x8004D518
             else
             {
                 step = g_GameWork.gameStateSteps[2];
-                Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
 
                 Screen_FadeStart(true, false, false);
                 Game_StateStepSet(1, 20);
@@ -677,7 +677,7 @@ void Inventory_Update(void) // 0x8004D518
             if (g_Inventory_IsDownClicked)
             {
                 g_Inventory_SelectionBordersDraw = 1;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
                 g_Inventory_SelectionId = InvSelectionId_Item;
             }
             else if (Pad_ButtonClickedBind(enter))
@@ -688,19 +688,19 @@ void Inventory_Update(void) // 0x8004D518
                 if (g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].command != InvCmdId_Unk11)
                 {
                     g_Inventory_SelectionId = InvSelectionId_EquippedItemCmd;
-                    Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.0f), Q7(0.5f));
                 }
             }
             else if (Pad_ButtonClickedBind(cancel))
             {
                 g_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_SelectionId          = InvSelectionId_Exit;
-                Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
             }
             else if (Pad_ButtonClickedBind(item))
             {
                 step = g_GameWork.gameStateSteps[2];
-                Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
 
                 Screen_FadeStart(true, false, false);
                 Game_StateStepSet(1, 20);
@@ -714,25 +714,25 @@ void Inventory_Update(void) // 0x8004D518
             if (g_Inventory_IsUpClicked)
             {
                 g_Inventory_SelectionBordersDraw = 1;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
                 g_Inventory_SelectionId = InvSelectionId_Item;
             }
             else if (g_Inventory_IsLeftClicked)
             {
                 g_Inventory_SelectionBordersDraw = 1;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(-0.25f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(-0.5f), Q7(0.5f));
                 g_Inventory_SelectionId = InvSelectionId_Settings;
             }
             else if (g_Inventory_IsRightClicked)
             {
                 g_Inventory_SelectionBordersDraw = 1;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.25f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.5f), Q7(0.5f));
                 g_Inventory_SelectionId = InvSelectionId_Map;
             }
             else if (Pad_ButtonClicked(Pad_BindingGet(item) | (Pad_BindingGet(enter) | Pad_BindingGet(cancel))))
             {
                 step = g_GameWork.gameStateSteps[2];
-                Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
 
                 Screen_FadeStart(true, false, false);
                 Game_StateStepSet(1, 20);
@@ -746,7 +746,7 @@ void Inventory_Update(void) // 0x8004D518
             if (g_Inventory_IsUpClicked)
             {
                 g_Inventory_SelectionBordersDraw = 1;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
                 g_Inventory_SelectionId = InvSelectionId_Item;
             }
             else if (g_Inventory_IsRightClicked ||
@@ -757,18 +757,18 @@ void Inventory_Update(void) // 0x8004D518
                 if (!g_Inventory_IsRightClicked ||
                     Pad_ButtonClickedBind(cancel))
                 {
-                    Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
                     g_Inventory_SelectionId = InvSelectionId_Exit;
                 }
                 else
                 {
-                    Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
                     g_Inventory_SelectionId = InvSelectionId_Exit;
                 }
             }
             else if (Pad_ButtonClickedBind(enter))
             {
-                Sd_SfxPlay(Sfx_MenuConfirm, Q8(-0.25f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuConfirm, Q7(-0.5f), Q7(0.5f));
 
                 Screen_FadeStart(true, false, false);
                 Game_StateStepSet(1, 18);
@@ -778,7 +778,7 @@ void Inventory_Update(void) // 0x8004D518
             else if (Pad_ButtonClickedBind(item))
             {
                 step = g_GameWork.gameStateSteps[2];
-                Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
 
                 Screen_FadeStart(true, false, false);
                 Game_StateStepSet(1, 20);
@@ -792,7 +792,7 @@ void Inventory_Update(void) // 0x8004D518
             if (g_Inventory_IsUpClicked)
             {
                 g_Inventory_SelectionBordersDraw = 1;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
                 g_Inventory_SelectionId = InvSelectionId_Item;
             }
             else if (g_Inventory_IsLeftClicked ||
@@ -803,11 +803,11 @@ void Inventory_Update(void) // 0x8004D518
                 if (!g_Inventory_IsLeftClicked ||
                     Pad_ButtonClickedBind(cancel))
                 {
-                    Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
                 }
                 else
                 {
-                    Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
                 }
 
                 g_Inventory_SelectionId = InvSelectionId_Exit;
@@ -820,7 +820,7 @@ void Inventory_Update(void) // 0x8004D518
                       !(g_SysWork.field_2388.field_1C[1].effectsInfo.flags & SpecialEnvEventFlags_DarkEnvironment))) &&
                     HAS_PAPER_MAP(g_SavegamePtr->paperMapIdx))
                 {
-                    Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.25f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.5f), Q7(0.5f));
 
                     if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx] != NO_VALUE)
                     {
@@ -833,13 +833,13 @@ void Inventory_Update(void) // 0x8004D518
                 }
                 else
                 {
-                    Sd_SfxPlay(Sfx_MenuError, Q8(0.25f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuError, Q7(0.5f), Q7(0.5f));
                 }
             }
             else if (Pad_ButtonClickedBind(item))
             {
                 step = g_GameWork.gameStateSteps[2];
-                Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
 
                 Screen_FadeStart(true, false, false);
                 Game_StateStepSet(1, 20);
@@ -901,7 +901,7 @@ void Inventory_Update(void) // 0x8004D518
                 {
                     g_Inventory_SelectionBordersDraw = 1;
                     g_Inventory_CmdSelectedIdx++;
-                    Sd_SfxPlay(Sfx_MenuMove, Q8(0.25f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuMove, Q7(0.5f), Q7(0.5f));
                 }
             }
             else if (g_Inventory_IsUpPulsed)
@@ -910,7 +910,7 @@ void Inventory_Update(void) // 0x8004D518
                 {
                     g_Inventory_SelectionBordersDraw = 1;
                     g_Inventory_CmdSelectedIdx--;
-                    Sd_SfxPlay(Sfx_MenuMove, Q8(0.25f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuMove, Q7(0.5f), Q7(0.5f));
                 }
             }
             else if (Pad_ButtonClickedBind(enter))
@@ -1143,11 +1143,11 @@ void Inventory_Update(void) // 0x8004D518
 
                 if (g_GameWork.gameStateSteps[1] == 12)
                 {
-                    Sd_SfxPlay(Sfx_MenuError, Q8(0.25f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuError, Q7(0.5f), Q7(0.5f));
                 }
                 else
                 {
-                    Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.25f), Q8(0.25f));
+                    Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.5f), Q7(0.5f));
                 }
             }
             else if (Pad_ButtonClickedBind(cancel))
@@ -1155,7 +1155,7 @@ void Inventory_Update(void) // 0x8004D518
                 g_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_CmdSelectedIdx       = 0;
                 g_Inventory_SelectionId          = InvSelectionId_Item;
-                Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
             }
 
             do {} while (false); // @hack Required for match.

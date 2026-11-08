@@ -156,12 +156,12 @@ void Sfx_WithFlagsPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlag
 void Sfx_WithFlagsAndPitchPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 sfxFlags, s32 pitch) // 0x8005DC3C
 {
     q23_8 adjVol;
-    q23_8 balance;
+    q24_7 balance;
 
     // Get stereo balance.
     if (sfxFlags & SfxFlag_Mono || g_GameWork.config.soundType)
     {
-        balance = Q8(0.0f);
+        balance = Q7(0.0f);
     }
     else
     {
@@ -192,6 +192,7 @@ void Sfx_WithFlagsAndPitchPlay(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32
         adjVol = Q8_CLAMPED(1.0f);
     }
 
+    // TODO: `~*` converts volumes?
     if (sfxFlags & SfxFlag_UpdateAttribs)
     {
         Sd_SfxAttributesUpdate(sfxId, balance, ~adjVol, pitch);

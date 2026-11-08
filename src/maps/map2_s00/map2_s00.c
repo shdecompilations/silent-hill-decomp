@@ -1345,7 +1345,7 @@ void func_800E9DD8(void) // 0x800E9DD8
         case 5:
             Event_DisplayMapMsg(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             Screen_BackgroundImgDrawBlackFadeIn(D_800F22A0);
-            Sd_SfxPlay(Sfx_Unk1390, Q8(0.0f), Q8(0.5f));
+            Sd_SfxPlay(Sfx_Unk1390, Q7(0.0f), Q7(1.0f));
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1641,7 +1641,7 @@ void func_800EA960(void) // 0x800EA960
                 D_800F5344.vz = 0;
 
                 Sd_SfxStop(Sfx_Unk1484);
-                Sd_SfxPlay(Sfx_Unk1485, Vc_StereoBalanceGet(&Q12_VECTOR3(-35.0f, 0.0f, 352.0f)), Q8(0.0f));
+                Sd_SfxPlay(Sfx_Unk1485, Vc_StereoBalanceGet(&Q12_VECTOR3(-35.0f, 0.0f, 352.0f)), Q7(0.0f));
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -1747,7 +1747,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             {
                 D_800F5344.vz = 0;
                 Sd_SfxStop(Sfx_Unk1484);
-                Sd_SfxPlay(Sfx_Unk1485, Vc_StereoBalanceGet(&Q12_VECTOR3(-35.0f, 0.0f, 352.0f)), Q8(0.0f));
+                Sd_SfxPlay(Sfx_Unk1485, Vc_StereoBalanceGet(&Q12_VECTOR3(-35.0f, 0.0f, 352.0f)), Q7(0.0f));
                 SysWork_StateStepIncrement(0);
             }
             break;

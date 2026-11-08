@@ -191,7 +191,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                         g_MapMsg_Select.maxIdx           = curMenuSelection;
                         g_MapMsg_Select.selectedEntryIdx = g_MapMsg_SelectCancelIdx;
 
-                        Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                        Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
 
                         if (g_SysWork.silentYesSelection)
                         {
@@ -208,11 +208,11 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                         if (g_MapMsg_Select.selectedEntryIdx == (s8)g_MapMsg_SelectCancelIdx)
                         {
-                            Sd_SfxPlay(Sfx_MenuCancel, Q8(0.0f), Q8(0.25f));
+                            Sd_SfxPlay(Sfx_MenuCancel, Q7(0.0f), Q7(0.5f));
                         }
                         else if (!g_SysWork.silentYesSelection)
                         {
-                            Sd_SfxPlay(Sfx_MenuConfirm, Q8(0.0f), Q8(0.25f));
+                            Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.0f), Q7(0.5f));
                         }
 
                         if (g_SysWork.silentYesSelection)
@@ -408,7 +408,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* displayLength) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx--;
 
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
             }
 
             if (g_Controller0->buttonFlags.clicked & ControllerFlag_LStickHighDown &&
@@ -417,7 +417,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* displayLength) // 0x80036B5C
                 g_MapMsg_SelectFlashTimer = Q12(0.0f);
                 g_MapMsg_Select.selectedEntryIdx++;
 
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
             }
 
             returnCode = NO_VALUE;

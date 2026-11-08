@@ -900,7 +900,7 @@ void Map_WorldObjectsUpdate(void)
         if (D_800E1180 == 0)
         {
             D_800E1180 = 1;
-            Sd_SfxPlay(Sfx_Unk1359, Q8(0.0f), Q8(29.0f / 32.0f));
+            Sd_SfxPlay(Sfx_Unk1359, Q7(0.0f), Q8(29.0f / 32.0f));
         }
     }
 
@@ -909,7 +909,7 @@ void Map_WorldObjectsUpdate(void)
         if (D_800E1180 == 1)
         {
             D_800E1180 = 2;
-            Sd_SfxPlay(Sfx_Unk1359, Q8(0.0f), Q8(27.0f / 32.0f));
+            Sd_SfxPlay(Sfx_Unk1359, Q7(0.0f), Q8(27.0f / 32.0f));
         }
     }
 

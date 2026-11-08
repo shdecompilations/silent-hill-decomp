@@ -31,20 +31,20 @@ s16 func_800CD20C(void) // 0x800CD20C
             if (Pad_ButtonPulsed(ControllerFlag_LStickHighDown))
             {
                 D_800ED5C8 += 3;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
             }
 
             if (Pad_ButtonPulsed(ControllerFlag_LStickHighUp))
             {
                 D_800ED5C8 += 1;
-                Sd_SfxPlay(Sfx_MenuMove, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
             }
 
             D_800ED5C8 &= 0x3;
 
             if (Pad_ButtonHeld(ControllerFlag_LStickHighLeft))
             {
-                Sd_SfxPlay(Sfx_Unk1589, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_Unk1589, Q7(0.0f), Q7(0.5f));
 
                 D_800F1598[D_800ED5C8]++;
                 if (D_800F1598[D_800ED5C8] == 8)
@@ -55,7 +55,7 @@ s16 func_800CD20C(void) // 0x800CD20C
 
             if (Pad_ButtonHeld(ControllerFlag_LStickHighRight))
             {
-                Sd_SfxPlay(Sfx_Unk1589, Q8(0.0f), Q8(0.25f));
+                Sd_SfxPlay(Sfx_Unk1589, Q7(0.0f), Q7(0.5f));
 
                 D_800F1598[D_800ED5C8]--;
                 if (D_800F1598[D_800ED5C8] == NO_VALUE)
@@ -683,7 +683,7 @@ void func_800EBA40(void) // 0x800EBA40
                         continue;
                     }
 
-                    Sd_SfxPlay(Sfx_Unk1586, Q8(0.0f), Q8(0.5f));
+                    Sd_SfxPlay(Sfx_Unk1586, Q7(0.0f), Q7(1.0f));
 
                     if (i < 11)
                     {
@@ -727,7 +727,7 @@ void func_800EBA40(void) // 0x800EBA40
             break;
 
         case 6:
-            Sd_SfxPlay(Sfx_Unk1587, Q8(0.0f), Q8(0.5f));
+            Sd_SfxPlay(Sfx_Unk1587, Q7(0.0f), Q7(1.0f));
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -825,7 +825,7 @@ void func_800EBF70(void) // 0x800EBF70
                 }
 
                 Savegame_EventFlagSet(EventFlag_371);
-                Sd_SfxPlay(Sfx_Unk1588, Q8(0.0f), Q8(0.5f));
+                Sd_SfxPlay(Sfx_Unk1588, Q7(0.0f), Q7(1.0f));
             }
 
             SysWork_StateStepIncrement(0);

@@ -360,7 +360,7 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     #undef MOVE_DIST
 }
 
-s8 Vc_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
+q0_7 Vc_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 {
     VECTOR3 camPos; // Q19.12
     VECTOR  offset; // Q25.6

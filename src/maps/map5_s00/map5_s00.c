@@ -805,12 +805,12 @@ void func_800D6B00(void) // 0x800D6B00
 
             if (g_SavegamePtr->gameDifficulty != GameDifficulty_Easy)
             {
-                Chara_Spawn(Chara_HangedScratcher, 14, Q12(-94.3f), Q12(-5.5f), Q12_ANGLE(0.0f), 7U);
+                Chara_Spawn(Chara_HangedScratcher, 14, Q12(-94.3f), Q12(-5.5f), Q12_ANGLE(0.0f), 7u);
             }
 
             CutsceneBorder_ForceShow();
 
-            Sd_SfxPlay(Sfx_Unk1575, Q8(0.0f), Q8(0.5f));
+            Sd_SfxPlay(Sfx_Unk1575, Q7(0.0f), Q7(1.0f));
             SysWork_StateStepIncrement(0);
 
         case 11:

@@ -142,7 +142,7 @@ void MapEvent_CutsceneOpening(void) // 0x0x800D9748
 
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            Sd_SfxPlay(Sfx_Unk1361, Q8(0.0f), Q8(9.0f / 16.0f));
+            Sd_SfxPlay(Sfx_Unk1361, Q7(0.0f), Q8(9.0f / 16.0f));
             SysWork_StateStepIncrement(0);
 
         case EventState_LoadChunks:
@@ -1170,7 +1170,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 
             WorldMap_ChunkSet(FILE_BG_THRF908_IPD, -7, 6);
             Sd_SfxStop(Sfx_Unk1358);
-            Sd_SfxPlay(Sfx_Unk1359, Q8(0.0f), Q8(13.0f / 16.0f));
+            Sd_SfxPlay(Sfx_Unk1359, Q7(0.0f), Q8(13.0f / 16.0f));
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));
             Event_PathWaypointSet(true, 0, 1, Q12_ANGLE(112.5f), Q12(-251.0f), Q12(218.5f));
 
@@ -1616,7 +1616,7 @@ void func_800DCC54(void) // 0x800DCC54
         Gfx_MapEnvUpdate(6, 6, PrimitiveType_S32, &D_800DFADC, Q12(0.0f), Q12(100.0f));
         D_800DFADC = Q12(0.0f);
 
-        Sd_SfxPlay(Sfx_Unk1359, Q8(0.0f), Q8(7.0f / 8.0f));
+        Sd_SfxPlay(Sfx_Unk1359, Q7(0.0f), Q8(7.0f / 8.0f));
     }
 
     if (Savegame_EventFlagGet(EventFlag_14))
@@ -1625,7 +1625,7 @@ void func_800DCC54(void) // 0x800DCC54
         {
             sharedFunc_800D0B18_0_s00(6);
             Savegame_EventFlagSet(EventFlag_18);
-            Sd_SfxPlay(Sfx_Unk1359, Q8(0.0f), Q8(0.75f));
+            Sd_SfxPlay(Sfx_Unk1359, Q7(0.0f), Q8(0.75f));
 
             D_800DFADC = Q12(60.0f);
         }
