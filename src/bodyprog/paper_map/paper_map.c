@@ -628,18 +628,10 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                     mapCoordIdxX = (playerChara.position.vx / Q12(2.0f)) + 60;
                     mapCoordIdxZ = (-playerChara.position.vz / Q12(2.0f)) - 85;
 
-                    if (PLAYER_IN_MAP_CHUNK(-4, -1))
+                    if (PLAYER_IN_MAP_CHUNK(-4, -1) || PLAYER_IN_MAP_CHUNK(-5, -1))
                     {
                         mapCoordIdxX += 87;
                         mapCoordIdxZ += 61;
-                        break;
-                    }
-
-                    if (PLAYER_IN_MAP_CHUNK(-5, -1))
-                    {
-                        mapCoordIdxX += 87;
-                        mapCoordIdxZ += 61;
-                        break;
                     }
                     break;
 
