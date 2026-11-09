@@ -16,9 +16,9 @@
 
 #define IPD_HEADER_MAGIC 20
 
-#define CELL_SIZE     2.0f  /** 2x2 meters. */
 #define CHUNK_SIZE    40.0f /** 40x40 meters. */
 #define SUBCHUNK_SIZE 8.0f  /** 8x8 meters. */
+#define CELL_SIZE     2.0f  /** 2x2 meters. */
 
 /** @brief Floor material types. TODO: SH2 suggests "material"? */
 typedef enum _FloorType

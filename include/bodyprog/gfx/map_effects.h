@@ -1,6 +1,75 @@
 #ifndef _BODYPROG_GFX_MAPEFFECTS_H
 #define _BODYPROG_GFX_MAPEFFECTS_H
 
+/** @brief World environment flags. Used by `s_WorldEnvPreset::flags`. */
+typedef enum _WorldEnvFlags
+{
+    WorldEnvFlag_None              = 0,
+    WorldEnvFlag_Dark              = 1 << 0, /** Set on the "flashlight off" preset in dark areas. Lots of map overlay code check this to tell if area is currently in darkness. (TODO: Macro for checking this?) */
+    WorldEnvFlag_FlashlightAllowed = 1 << 1,
+    WorldEnvFlag_EnableBrightness  = 1 << 2, /** Applies the user's brightness setting. */
+    WorldEnvFlag_UseLighter        = 1 << 3,
+    WorldEnvFlag_EnableLensFlare   = 1 << 4
+} e_WorldEnvFlags;
+
+/** @brief World environment light modes. Determines how models and billboards are lit by the dynamic light.
+ * Used by `s_WorldEnvPreset::lightMode`.
+ */
+typedef enum _WorldEnvLightMode
+{
+    WorldEnvLightMode_None        = 0, /** No dynamic light. Flat vertex colors nad fog drawn as overlay polygons. */
+    WorldEnvLightMode_Spot        = 1, /** Positional light (normally the flashlight). Enables the lens flare. */
+    WorldEnvLightMode_Directional = 2  /** Lights everywhere from one direction. No source point or distance falloff. */
+} e_WorldEnvLightMode;
+
+/** @brief World environment fog modes. Used by`s_WorldEnvPreset::fogMode`. */
+typedef enum _WorldEnvFogMode
+{
+    WorldEnvFogMode_Off         = 0,
+    WorldEnvFogMode_On          = 1,
+    WorldEnvFogMode_Zero        = 2, /** @unused Fog on with a distance of 0. No preset sets it. */
+    WorldEnvFogMode_FollowLight = 3  /** @unused Fog distance follows the light position. Only set by preset 5, which nothing selects? */
+} e_WorldEnvFogMode;
+
+/** @brief Checks if the world environment is in darkness, without the flashlight turned on.
+ *
+ * @return `WorldEnvFlag_Dark` if the work environment is in darkness, `false` otherwise.
+ */
+#define WorldEnv_IsInDarkness() \
+    (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_Dark)
+
+/** @brief Checks if the world environment allows the flashlight to be used.
+ *
+ * @return `WorldEnvFlag_FlashlightAllowed` if the flashlight can be used, `false` otherwise.
+ */
+#define WorldEnv_IsFlashlightAllowed() \
+    (g_SysWork.worldEnv.current.params.flags & WorldEnvFlag_FlashlightAllowed)
+
+/** @brief Checks if the flashlight is turned on.
+ *
+ * @return `true` if the flashlight is turned on, `false` otherwise.
+ */
+#define WorldEnv_IsFlashlightOn() \
+    (g_SysWork.worldEnv.isFlashlightOn)
+
+/** @brief Checks if any active world environment presets can count as in darkness.
+ *
+ * @param `true`, otherwise `false`.
+ */
+#define WorldEnv_CanBeInDarkness()                                          \
+    ((g_SysWork.worldEnv.transition[0].params.flags & WorldEnvFlag_Dark) || \
+     (g_SysWork.worldEnv.transition[1].params.flags & WorldEnvFlag_Dark))
+
+/** @brief Checks if the world is lit by any of the following conditions:
+ * - The flashlight beign disallowed in a lit area. 
+ * - The flashlight being turned on.
+ * - The world being unable to turn dark.
+ *
+ * @return `true` if the world is lit, `false` otherwise.
+ */
+#define WorldEnv_IsWorldLit() \
+    (!WorldEnv_IsFlashlightAllowed() || WorldEnv_IsFlashlightOn() || !WorldEnv_CanBeInDarkness())
+
 void Options_BrightnessMenu_LinesDraw(s32 brightness);
 
 /** Loads a flame graphic. */
@@ -61,10 +130,10 @@ void WorldEnv_Update(void);
  */
 q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight);
 
-void func_8003FE04(const s_WorldEnvPreset* arg0, const s_WorldEnvPreset* arg1, const s_WorldEnvPreset* arg2, q19_12 alphaTo);
+void func_8003FE04(const s_WorldEnvPreset* preset0, const s_WorldEnvPreset* preset1, const s_WorldEnvPreset* preset2, q19_12 alphaTo);
 
-s32 func_8003FEC0(const s_WorldEnvPreset* arg0);
+s32 func_8003FEC0(const s_WorldEnvPreset* preset);
 
-void func_8003FF2C(s_WorldEnvState* arg0);
+void WorldEnv_Apply(s_WorldEnvState* state);
 
 #endif

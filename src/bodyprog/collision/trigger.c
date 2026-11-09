@@ -1,8 +1,5 @@
 #include "game.h"
 
-#include <psyq/libapi.h>
-#include <psyq/strings.h>
-
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
@@ -158,7 +155,7 @@ bool Collision_TriggerIntersectGet(s_CollisionTriggerIntersect* intersect, const
             }
         }
 
-        // TODO: What are these shifts? Q12 division (x / Q12(16.0f))?
+        // TODO: What are these shifts? Q12 division?
         intersectAlphaX = Vw_LineSegmentIntersectionCheck(Q12(intersect->offsetX) >> 16,
                                                           Q12(intersect->offsetZ) >> 16, Q12(edgeZ - intersect->startZ) >> 16,
                                                           Q12(aabbMinX - intersect->startX) >> 16, Q12(aabbMaxX - intersect->startX) >> 16);

@@ -1,6 +1,8 @@
-#include "bodyprog/bodyprog.h"
-#include "bodyprog/math/math.h"
 #include "game.h"
+
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/math/math.h"
 
 s_WorldEnvPreset WORLD_ENV_PRESETS[21] = {
     {

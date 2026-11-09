@@ -269,13 +269,13 @@ void WorldEnv_MapPresetSet(s_MapOverlayHdr* mapHdr) // 0x8003EBF4
 void Game_TurnFlashlightOn(void) // 0x8003ECBC
 {
     g_SysWork.worldEnv.isFlashlightOn = true;
-    g_SavegamePtr->itemToggleFlags        &= ~ItemToggleFlag_FlashlightOff;
+    g_SavegamePtr->itemToggleFlags   &= ~ItemToggleFlag_FlashlightOff;
 }
 
 void Game_TurnFlashlightOff(void) // 0x8003ECE4
 {
     g_SysWork.worldEnv.isFlashlightOn = false;
-    g_SavegamePtr->itemToggleFlags     |= ItemToggleFlag_FlashlightOff;
+    g_SavegamePtr->itemToggleFlags   |= ItemToggleFlag_FlashlightOff;
 }
 
 void Game_FlashlightToggle(void) // 0x8003ED08
@@ -401,17 +401,17 @@ void WorldEnv_StateFromPreset(s_WorldEnvState* arg0, const s_WorldEnvPreset* pre
 
 void WorldEnv_Update(void) // 0x8003F170
 {
-    MATRIX          viewMat;
-    VECTOR          sp48;
-    SVECTOR         rot; // Q19.12
-    q19_12          weight;
-    u8              flags;
-    q19_12          lightIntensity;
-    GsCOORDINATE2*  lightBoneCoord;
-    s_WorldEnvState*   currentInGameGfx;
-    s_WorldEnvWork* ptr;
+    MATRIX           viewMat;
+    VECTOR           sp48;
+    SVECTOR          rot; // Q19.12
+    q19_12           weight;
+    u8               flags;
+    q19_12           lightIntensity;
+    GsCOORDINATE2*   lightBoneCoord;
+    s_WorldEnvState* currentInGameGfx;
+    s_WorldEnvWork*  worldEnv;
 
-    ptr = &g_SysWork.worldEnv;
+    worldEnv = &g_SysWork.worldEnv;
 
     if (WorldEnv_IsFlashlightOn())
     {
@@ -429,35 +429,35 @@ void WorldEnv_Update(void) // 0x8003F170
     {
         Vw_CoordToViewSpaceMatrix(g_SysWork.lightBoneCoord, &viewMat);
         ApplyMatrixLV(&viewMat, &g_SysWork.lightPosition, &sp48);
-        ptr->transitionTo[g_SysWork.worldEnv.flashlightIntensity != Q12(0.0f)].fogDistance = sp48.vz + Q8_TO_Q12(viewMat.t[2]);
+        worldEnv->transitionTo[g_SysWork.worldEnv.flashlightIntensity != Q12(0.0f)].fogDistance = sp48.vz + Q8_TO_Q12(viewMat.t[2]);
     }
 
-    if (ptr->progressType == PrimitiveType_None)
+    if (worldEnv->progressType == PrimitiveType_None)
     {
-        ptr->transition[0] = ptr->transitionTo[0];
-        ptr->transition[1] = ptr->transitionTo[1];
+        worldEnv->transition[0] = worldEnv->transitionTo[0];
+        worldEnv->transition[1] = worldEnv->transitionTo[1];
     }
     else
     {
-        weight = func_8003F6F0(func_8003F654(ptr), ptr->progressStart, ptr->progressEnd);
+        weight = func_8003F6F0(func_8003F654(worldEnv), worldEnv->progressStart, worldEnv->progressEnd);
 
-        func_8003F838(&ptr->transition[0], &ptr->transitionFrom[0], &ptr->transitionTo[0], weight);
-        func_8003F838(&ptr->transition[1], &ptr->transitionFrom[1], &ptr->transitionTo[1], weight);
+        func_8003F838(&worldEnv->transition[0], &worldEnv->transitionFrom[0], &worldEnv->transitionTo[0], weight);
+        func_8003F838(&worldEnv->transition[1], &worldEnv->transitionFrom[1], &worldEnv->transitionTo[1], weight);
 
         if (weight >= Q12(1.0f))
         {
-            ptr->progressType = PrimitiveType_None;
+            worldEnv->progressType = PrimitiveType_None;
         }
     }
 
-    func_8003F838(&ptr->current, &ptr->transition[0], &ptr->transition[1], ptr->flashlightIntensity);
+    func_8003F838(&worldEnv->current, &worldEnv->transition[0], &worldEnv->transition[1], worldEnv->flashlightIntensity);
 
-    currentInGameGfx = &ptr->current;
+    currentInGameGfx = &worldEnv->current;
 
-    if (ptr->flashEffect)
+    if (worldEnv->flashEffect)
     {
         flags            = currentInGameGfx->params.flags;
-        ptr->flashEffect = false;
+        worldEnv->flashEffect = false;
 
         if (flags & WorldEnvFlag_Dark)
         {
@@ -469,7 +469,7 @@ void WorldEnv_Update(void) // 0x8003F170
         }
     }
 
-    ptr->visibilityDistance = func_8003FEC0(&currentInGameGfx->params);
+    worldEnv->visibilityDistance = func_8003FEC0(&currentInGameGfx->params);
     WorldEnv_Apply(currentInGameGfx);
 
     lightIntensity = Q12_MULT(func_8003F4DC(&lightBoneCoord, &rot, currentInGameGfx->params.spotLightIntensity, currentInGameGfx->params.lightMode, Vc_LensFlareTypeGet(), &g_SysWork), g_SysWork.lightIntensity);
@@ -479,7 +479,7 @@ void WorldEnv_Update(void) // 0x8003F170
                                  g_WorldGfxWork.mapInfo->waterZones);
     func_80055814(currentInGameGfx->fogDistance);
 
-    if (ptr->current.params.flags & WorldEnvFlag_UseLighter)
+    if (worldEnv->current.params.flags & WorldEnvFlag_UseLighter)
     {
         func_8003E740();
     }
@@ -819,13 +819,13 @@ static void func_8003F838(s_WorldEnvState* target, s_WorldEnvState* envSettings0
 /**
  * Scratch: https://decomp.me/scratch/wk8iD
  */
-static void func_8003FCB0(s_WorldEnvPreset* target, const s_WorldEnvPreset* envSettings0, const s_WorldEnvPreset* envSettings1, q19_12 alphaTo)
+static void func_8003FCB0(s_WorldEnvPreset* target, const s_WorldEnvPreset* envPreset0, const s_WorldEnvPreset* envPreset1, q19_12 alphaTo)
 {
     q19_12 alphaFrom;
 
     alphaFrom = Q12(1.0f) - alphaTo;
-    LoadAverageCol(&envSettings0->snowColor.r, &envSettings1->snowColor.r, alphaFrom, alphaTo, &target->snowColor.r);
-    LoadAverageCol(&envSettings0->rainColor.r, &envSettings1->rainColor.r, alphaFrom, alphaTo, &target->rainColor.r);
+    LoadAverageCol(&envPreset0->snowColor.r, &envPreset1->snowColor.r, alphaFrom, alphaTo, &target->snowColor.r);
+    LoadAverageCol(&envPreset0->rainColor.r, &envPreset1->rainColor.r, alphaFrom, alphaTo, &target->rainColor.r);
 }
 
 /**
@@ -849,26 +849,26 @@ static void func_8003FD38(s_WorldEnvState* target, const s_WorldEnvState* envSet
     LoadAverageCol(&envSettings0->params.fogColor.r, &envSettings1->params.fogColor.r, Q12(1.0f) - alphaTo, alphaTo, &target->params.fogColor.r);
 }
 
-void func_8003FE04(const s_WorldEnvPreset* arg0, const s_WorldEnvPreset* arg1, const s_WorldEnvPreset* arg2, q19_12 alphaTo) // 0x8003FE04
+void func_8003FE04(const s_WorldEnvPreset* preset0, const s_WorldEnvPreset* preset1, const s_WorldEnvPreset* preset2, q19_12 alphaTo) // 0x8003FE04
 {
     q19_12 alphaFrom;
 
     alphaFrom = Q12(1.0f) - alphaTo;
-    LoadAverageCol(&arg1->pointLightTint.r, &arg2->pointLightTint.r, alphaFrom, alphaTo, &arg0->pointLightTint.r);
-    LoadAverageCol(&arg1->worldTint.r, &arg2->worldTint.r, alphaFrom, alphaTo, &arg0->worldTint.r);
+    LoadAverageCol(&preset1->pointLightTint.r, &preset2->pointLightTint.r, alphaFrom, alphaTo, &preset0->pointLightTint.r);
+    LoadAverageCol(&preset1->worldTint.r, &preset2->worldTint.r, alphaFrom, alphaTo, &preset0->worldTint.r);
 
-    if ((arg0->pointLightTint.r || arg0->pointLightTint.g || arg0->pointLightTint.b) ||
-        (arg0->worldTint.r || arg0->worldTint.g || arg0->worldTint.b))
+    if ((preset0->pointLightTint.r || preset0->pointLightTint.g || preset0->pointLightTint.b) ||
+        (preset0->worldTint.r || preset0->worldTint.g || preset0->worldTint.b))
     {
-        arg0->enableTintLightOverlap = true;
+        preset0->enableTintLightOverlap = true;
     }
     else
     {
-        arg0->enableTintLightOverlap = false;
+        preset0->enableTintLightOverlap = false;
     }
 }
 
-s32 func_8003FEC0(const s_WorldEnvPreset* arg0) // 0x8003FEC0
+s32 func_8003FEC0(const s_WorldEnvPreset* preset) // 0x8003FEC0
 {
     static q19_12 Y_ARRAY[5] = {
         Q12(1.75f),
@@ -880,31 +880,31 @@ s32 func_8003FEC0(const s_WorldEnvPreset* arg0) // 0x8003FEC0
 
     if (g_WorldEnvRenderWork.isFogEnabled)
     {
-        return arg0->fogDistance;
+        return preset->fogDistance;
     }
 
     if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_Spot)
     {
-        return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->spotLightIntensity, 0, Q12(2.0f));
+        return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), preset->spotLightIntensity, 0, Q12(2.0f));
     }
 
     return Q12(20.0f);
 }
 
-void WorldEnv_Apply(s_WorldEnvState* arg0) // 0x8003FF2C
+void WorldEnv_Apply(s_WorldEnvState* state) // 0x8003FF2C
 {
     s32   fogDistCpy;
     s32   temp_v1;
     q23_8 brightness;
 
-    temp_v1    = Q12_MULT(arg0->brightnessIntensity, (g_GameWork.config.brightness * 8) + 4);
+    temp_v1    = Q12_MULT(state->brightnessIntensity, (g_GameWork.config.brightness * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    WorldEnvRender_WorldLightingParamSet(arg0->params.lightMode, arg0->params.worldLightIntensity, arg0->params.lightLevelMax, arg0->params.worldTintR, arg0->params.worldTintG, arg0->params.worldTintB, brightness);
-    WorldEnvRender_FogParamsSet(arg0->params.fogMode != WorldEnvFogMode_Off, arg0->params.fogColor.r, arg0->params.fogColor.g, arg0->params.fogColor.b);
+    WorldEnvRender_WorldLightingParamSet(state->params.lightMode, state->params.worldLightIntensity, state->params.lightLevelMax, state->params.worldTintR, state->params.worldTintG, state->params.worldTintB, brightness);
+    WorldEnvRender_FogParamsSet(state->params.fogMode != WorldEnvFogMode_Off, state->params.fogColor.r, state->params.fogColor.g, state->params.fogColor.b);
 
-    fogDistCpy = arg0->params.fogDistance;
+    fogDistCpy = state->params.fogDistance;
 
     WorldEnvRender_FogDistanceSet(fogDistCpy, fogDistCpy + Q12(1.0f));
-    WorldEnvRender_WorldLightTintSet(arg0->params.enableTintLightOverlap, arg0->params.pointLightTint.r, arg0->params.pointLightTint.g, arg0->params.pointLightTint.b, arg0->params.worldTint.r, arg0->params.worldTint.g, arg0->params.worldTint.b);
+    WorldEnvRender_WorldLightTintSet(state->params.enableTintLightOverlap, state->params.pointLightTint.r, state->params.pointLightTint.g, state->params.pointLightTint.b, state->params.worldTint.r, state->params.worldTint.g, state->params.worldTint.b);
 }

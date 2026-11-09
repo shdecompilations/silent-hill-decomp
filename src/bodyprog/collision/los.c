@@ -1,18 +1,11 @@
 #include "game.h"
-#include "inline_no_dmpsx.h"
 
-#include <psyq/gtemac.h>
-#include <psyq/libapi.h>
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/collision/collision.h"
+#include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/item_screens.h"
-#include "bodyprog/player/player.h"
-#include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C

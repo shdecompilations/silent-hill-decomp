@@ -1,16 +1,8 @@
 #include "game.h"
-#include "inline_no_dmpsx.h"
-
-#include <psyq/gtemac.h>
-#include <psyq/libapi.h>
-#include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/item_screens.h"
-#include "bodyprog/player/player.h"
-#include "bodyprog/screen/data.h"
 #include "main/rng.h"
 
 bool func_80070320(void) // 0x80070320

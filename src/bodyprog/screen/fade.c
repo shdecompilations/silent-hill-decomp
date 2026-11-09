@@ -9,18 +9,18 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
+#if VERSION_REGION_IS(PAL)
+    #define FADE_TILE_HEIGHT 255
+#else
+    #define FADE_TILE_HEIGHT SCREEN_HEIGHT
+#endif
+
 static q19_12 g_Screen_PrevFadeProgressState;
 
 static DR_MODE D_800A8E5C[] = {
     { 0x3000000, { 0xE1000240, 0x0 } },
     { 0x3000000, { 0xE1000240, 0x0 } }
 };
-
-#if VERSION_REGION_IS(PAL)
-    #define FADE_TILE_HEIGHT 255
-#else
-    #define FADE_TILE_HEIGHT SCREEN_HEIGHT
-#endif
 
 static TILE D_800A8E74[] = {
     { 0x3000000, 255, 0, 0, 0x62, -SCREEN_WIDTH, -FADE_TILE_HEIGHT, SCREEN_WIDTH * 2, FADE_TILE_HEIGHT * 2 },

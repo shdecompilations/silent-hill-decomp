@@ -1,18 +1,12 @@
 #include "game.h"
 #include "inline_no_dmpsx.h"
 
-#include <psyq/gtemac.h>
 #include <psyq/libapi.h>
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/item_screens.h"
-#include "bodyprog/player/player.h"
-#include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
 #define g_RayQueryCache (s_RayQuery*)PSX_SCRATCH

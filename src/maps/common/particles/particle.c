@@ -10,21 +10,21 @@
 
 // TODO: Find why removing these includes causes mismatch.
 #if defined(MAP0_S00)
-#include "maps/map0/map0_s00.h" // TODO: Move particle-related decls to particle.h
+    #include "maps/map0/map0_s00.h" // TODO: Move particle-related decls to particle.h
 #elif defined(MAP7_S03)
-#include "maps/map7/map7_s03.h" // TODO: Move particle-related decls to particle.h
+    #include "maps/map7/map7_s03.h" // TODO: Move particle-related decls to particle.h
 #elif defined(MAP0_S02)
-#include "maps/map0/map0_s02.h"
+    #include "maps/map0/map0_s02.h"
 #elif defined(MAP2_S00)
-#include "maps/map2/map2_s00.h"
+    #include "maps/map2/map2_s00.h"
 #elif defined(MAP2_S02)
-#include "maps/map2/map2_s02.h"
+    #include "maps/map2/map2_s02.h"
 #elif defined(MAP3_S00)
-#include "maps/map3/map3_s00.h"
+    #include "maps/map3/map3_s00.h"
 #elif defined(MAP3_S01)
-#include "maps/map3/map3_s01.h"
+    #include "maps/map3/map3_s01.h"
 #elif defined(MAP5_S01)
-#include "maps/map5/map5_s01.h"
+    #include "maps/map5/map5_s01.h"
 #endif
 
 // Particle-related functions.

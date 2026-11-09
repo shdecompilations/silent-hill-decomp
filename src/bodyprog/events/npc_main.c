@@ -10,6 +10,7 @@
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/game_boot/fs_chara_anim.h"
+#include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/screen/data.h"
