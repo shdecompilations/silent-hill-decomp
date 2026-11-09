@@ -247,7 +247,6 @@ void func_800D625C(void) // 0x800D625C
     PACKET*          packet;
     s32              col;
     s32              idx;
-    int              code;
 
     ptr = (s_func_800D5EC0*)FS_BUFFER_1;
 
@@ -261,8 +260,7 @@ void func_800D625C(void) // 0x800D625C
     ot  = g_OrderingTable0[idx].org;
     ot  = &ot[ptr->field_A54 >> 1];
 
-    col  = 0x3A000000;
-    code = 0x3A;
+    col = 0x3A000000;
 
     for (i = 1; i < 61; i++)
     {
@@ -321,8 +319,16 @@ void func_800D625C(void) // 0x800D625C
             }
 
             setPolyG4(poly);
-            poly->code = (float)sp18; // @hack
-            poly->code = code;
+
+            // @hack Identical arms needed for match.
+            if (sp18 != 0)
+            {
+                setSemiTrans(poly, 1);
+            }
+            else
+            {
+                setSemiTrans(poly, 1);
+            }
 
             addPrim(ot, poly);
             poly++;
@@ -626,7 +632,6 @@ void func_800D6C0C(void) // 0x800D6C0C
     PACKET*          packet;
     s32              col;
     s32              idx;
-    int              code;
 
     ptr = FS_BUFFER_1;
 
@@ -640,8 +645,7 @@ void func_800D6C0C(void) // 0x800D6C0C
     ot  = g_OrderingTable0[idx].org;
     ot  = &ot[ptr->field_A00 >> 1];
 
-    col  = 0x3A000000;
-    code = 0x3A;
+    col = 0x3A000000;
 
     for (i = 1; i < 49; i++)
     {
@@ -700,8 +704,16 @@ void func_800D6C0C(void) // 0x800D6C0C
             }
 
             setPolyG4(poly);
-            poly->code = (float)sp18; // @hack
-            poly->code = code;
+
+            // @hack Identical arms needed for match.
+            if (sp18 != 0)
+            {
+                setSemiTrans(poly, 1);
+            }
+            else
+            {
+                setSemiTrans(poly, 1);
+            }
 
             addPrim(ot, poly);
             poly++;
@@ -1021,7 +1033,6 @@ void func_800D77E4(void) // 0x800D77E4
     PACKET*          packet;
     s32              col;
     s32              idx;
-    int              code;
 
     ptr = FS_BUFFER_25;
 
@@ -1043,9 +1054,8 @@ void func_800D77E4(void) // 0x800D77E4
     packet = GsOUT_PACKET_P;
     poly   = packet;
 
-    i    = 1;
-    col  = 0x3A000000;
-    code = 0x3A;
+    i   = 1;
+    col = 0x3A000000;
 
     for (; i < 25; i++)
     {
@@ -1104,8 +1114,16 @@ void func_800D77E4(void) // 0x800D77E4
             }
 
             setPolyG4(poly);
-            poly->code = (float)sp18; // @hack
-            poly->code = code;
+            
+            // @hack Identical arms needed for match.
+            if (sp18 != 0)
+            {
+                setSemiTrans(poly, 1);
+            }
+            else
+            {
+                setSemiTrans(poly, 1);
+            }
 
             addPrim(ot, poly);
             poly++;

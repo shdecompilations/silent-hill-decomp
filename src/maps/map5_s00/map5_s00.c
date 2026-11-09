@@ -379,9 +379,8 @@ void func_800D5EE8(void) // 0x800D5EE8
     PACKET*          packet;
     s32              col;
     s32              idx;
-    int              code;
 
-    ptr = 0x801E2600;
+    ptr = (s_func_800D5B00*)FS_BUFFER_1;
 
     packet = GsOUT_PACKET_P;
     poly   = packet;
@@ -393,8 +392,7 @@ void func_800D5EE8(void) // 0x800D5EE8
     ot    = g_OrderingTable0[idx].org;
     ot    = &ot[ptr->field_D88 >> 1];
 
-    col  = 0x3A000000;
-    code = 0x3A;
+    col = 0x3A000000;
 
     for (i = 1; i < 81; i++)
     {
@@ -453,8 +451,16 @@ void func_800D5EE8(void) // 0x800D5EE8
             }
 
             setPolyG4(poly);
-            poly->code = (float)sp18; // @hack
-            poly->code = code;
+            
+            // @hack Identical arms needed for match.
+            if (sp18 != 0)
+            {
+                setSemiTrans(poly, 1);
+            }
+            else
+            {
+                setSemiTrans(poly, 1);
+            }
 
             addPrim(ot, poly);
             poly++;

@@ -1293,8 +1293,7 @@ void func_800E08B8(void) // 0x800E08B8
     ot    = g_OrderingTable0[index].org;
     ot    = &ot[ptr->field_48C >> 1];
 
-    col  = 0x3A000000;
-    code = 0x3A;
+    col = 0x3A000000;
 
     for (i = 1; i < 25; i++)
     {
@@ -1353,8 +1352,16 @@ void func_800E08B8(void) // 0x800E08B8
             }
 
             setPolyG4(poly);
-            poly->code = (float)sp18; // @hack
-            poly->code = code;
+            
+            // @hack Identical arms needed for match.
+            if (sp18 != 0)
+            {
+                setSemiTrans(poly, 1);
+            }
+            else
+            {
+                setSemiTrans(poly, 1);
+            }
 
             addPrim(ot, poly);
             poly++;
