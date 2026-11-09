@@ -438,10 +438,8 @@ void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x800D8
             monsterCybil->health       -= monsterCybil->damage.amount;
             monsterCybil->damage.amount = Q12(0.0f);
 
-            monsterCybilProps.field_122 = Q12_ANGLE_NORM_U(
-                ratan2(Q12_TO_Q8(monsterCybil->position.vx - playerChara.position.vx),
-                       Q12_TO_Q8(monsterCybil->position.vz - playerChara.position.vz)) +
-                Q12_ANGLE(360.0f));
+            monsterCybilProps.field_122 = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(monsterCybil->position.vx - playerChara.position.vx),
+                                                               Q12_TO_Q8(monsterCybil->position.vz - playerChara.position.vz)));
 
             Math_ShortestAngleGet(monsterCybil->rotation.vy, monsterCybilProps.field_122, &sp12);
 
@@ -2101,10 +2099,8 @@ void func_800DBE5C(s_SubCharacter* monsterCybil)
         unkAngle1 = ((Rng_Rand16() & 0x1) * Q12_ANGLE(180.0f)) - Q12_ANGLE(45.0f);
     }
 
-    unkAngle0 = Q12_ANGLE_NORM_U(unkAngle1 + 
-        ratan2(Q12_TO_Q8(monsterCybil->position.vx - Q12(20.0f)), 
-               Q12_TO_Q8(monsterCybil->position.vz - Q12(100.0f))) +
-        Q12_ANGLE(360.0f));
+    unkAngle0 = Q12_ANGLE_ABS(unkAngle1 + ratan2(Q12_TO_Q8(monsterCybil->position.vx - Q12(20.0f)),
+                                                 Q12_TO_Q8(monsterCybil->position.vz - Q12(100.0f))));
 
     if (monsterCybil->model.anim.status == ANIM_STATUS(MonsterCybilAnim_1, true))
     {
