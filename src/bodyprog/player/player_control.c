@@ -26,7 +26,8 @@
 // GLOBAL VARIABLES
 // ========================================
 
-s16 D_800AEEDC[][2] = {
+// Collision box top extent + Y offset. TODO: Use a struct?
+static q3_12 g_Harry_FallForwardAnimBoxOffsets[][2] = {
     { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 },
     { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE6B9, 0xEE67 },
     { 0xE70B, 0xEEB9 }, { 0xE75D, 0xEEB9 }, { 0xE7AF, 0xEEB9 }, { 0xE800, 0xEFAF },
@@ -39,7 +40,8 @@ s16 D_800AEEDC[][2] = {
     { 0xE7AF, 0xEFD8 }, { 0xE6E2, 0xEF86 }, { 0xE667, 0xEE67 },
 };
 
-s16 D_800AEF78[][2] = {
+// Collision box top extent + Y offset. TODO: Use a struct?
+static q3_12 g_Harry_FallBackwardAnimBoxOffsets[][2] = {
     { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE6B9, 0xEEE2 }, { 0xE948, 0xF029 },
     { 0xE948, 0xF052 }, { 0xE829, 0xEF86 }, { 0xE99A, 0xEFAF }, { 0xE9EC, 0xF052 },
     { 0xED1F, 0xF400 }, { 0xF0F6, 0xF829 }, { 0xF2E2, 0xF99A }, { 0xF47B, 0xFA15 },
@@ -51,26 +53,26 @@ s16 D_800AEF78[][2] = {
     { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 },
     { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 },
 };
-s16 D_800AF014[] = {
-    0x0000, 0x0000, 0xFFD8, 0xFFAF,
-    0xFF86, 0xFF5D, 0xFF0B, 0xFEB9,
-    0xFE67, 0xFE15, 0xFDC3, 0xFD71,
-    0xFD1F, 0xFCCD, 0xFC7B, 0xFCCD,
-    0xFD1F, 0xFD71, 0xFDC3, 0xFE67,
-    0xFEB9, 0xFF0B, 0xFF5D, 0xFF86,
-    0xFFAF, 0xFFD8, 0x0000, 0x0000,
+
+static q3_12 g_Harry_KickAnimBoxOffsets[] = {
+    Q12(0.0f),   Q12(0.0f),   Q12(-0.01f), Q12(-0.02f),
+    Q12(-0.03f), Q12(-0.04f), Q12(-0.06f), Q12(-0.08f),
+    Q12(-0.1f),  Q12(-0.12f), Q12(-0.14f), Q12(-0.16f),
+    Q12(-0.18f), Q12(-0.2f),  Q12(-0.22f), Q12(-0.2f),
+    Q12(-0.18f), Q12(-0.16f), Q12(-0.14f), Q12(-0.1f),
+    Q12(-0.08f), Q12(-0.06f), Q12(-0.04f), Q12(-0.03f),
+    Q12(-0.02f), Q12(-0.01f), Q12(0.0f),   Q12(0.0f)
 };
 
-s16 D_800AF04C[] = {
-    0x0000, 0x0000, 0xFFD8, 0xFF86,
-    0xFF34, 0xFEE2, 0xFE90, 0xFE3E,
-    0xFDEC, 0xFD9A, 0xFD48, 0xFD1F,
-    0xFD48, 0xFD9A, 0xFE15, 0xFEB9,
-    0xFF5D, 0x0000
+static q3_12 g_Harry_StompAnimBoxOffsets[] = {
+    Q12(0.0f),   Q12(0.0f),   Q12(-0.01f), Q12(-0.03f),
+    Q12(-0.05f), Q12(-0.07f), Q12(-0.09f), Q12(-0.11f),
+    Q12(-0.13f), Q12(-0.15f), Q12(-0.17f), Q12(-0.18f),
+    Q12(-0.17f), Q12(-0.15f), Q12(-0.12f), Q12(-0.08f),
+    Q12(-0.04f), Q12(0.0f)
 };
 
-// Distances used in player code.
-q3_12 D_800AF070[] = {
+static q3_12 g_Harry_DeathAnimCylinderOffsets[] = {
     Q12(0.0f),   Q12(0.04f),  Q12(0.08f),  Q12(0.12f),
     Q12(0.16f),  Q12(0.20f),  Q12(0.24f),  Q12(0.28f),
     Q12(0.32f),  Q12(0.36f),  Q12(0.40f),  Q12(0.44f),
@@ -134,7 +136,7 @@ q3_12  g_Player_FlexRotationY           = Q12_ANGLE(0.0f);
 q3_12  g_Player_FlexRotationX           = Q12_ANGLE(0.0f);
 u8     g_Player_IsInWalkToRunTransition = false;
 u8     g_Player_DisableControl          = false;
-u8     g_Player_MoveStickMag            = 0; // Q1.7
+q1_7   g_Player_MoveStickMag            = Q7(0.0f);
 s8     g_Player_RockDrill_AttackType    = RockDrillAttackType_Center;
 u32    D_800AF218                       = 0; // @unused
 s32    g_Player_TargetNpcIdx            = NO_VALUE;
@@ -368,7 +370,7 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                     {
                         duration = ((ABS(g_Controller0->rawSticks.sticks.leftY + STICK_DEADZONE) * Q12(0.65f) / STICK_DEADZONE) * 16) + Q12(12.0f);
                     }
-                    else if (g_Player_MoveStickMag != 0)
+                    else if (g_Player_MoveStickMag != Q7(0.0f))
                     {
                         duration = ((ABS(g_Player_MoveStickMag - STICK_DEADZONE) * Q12(0.65f) / STICK_DEADZONE) * 16) + Q12(12.0f);
                     }
@@ -391,7 +393,7 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                             duration = Q12(32.0f);
                         }
                     }
-                    else if (g_Player_MoveStickMag != 0)
+                    else if (g_Player_MoveStickMag != Q7(0.0f))
                     {
                         duration = (ABS(g_Player_MoveStickMag - STICK_DEADZONE) * Q12(0.25f)) + Q12(16.0f);
                     }
@@ -404,11 +406,11 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                 case ANIM_STATUS(HarryAnim_WalkBackward, true):
                     if (g_Controller0->rawSticks.sticks.leftY >= STICK_DEADZONE)
                     {
-                        duration = ((ABS(g_Controller0->rawSticks.sticks.leftY - STICK_DEADZONE) * Q12(0.4f) / STICK_DEADZONE) * Q12(1.0f) / 200) + Q12(15.36f);
+                        duration = (((ABS(g_Controller0->rawSticks.sticks.leftY - STICK_DEADZONE) * Q12(0.4f) / STICK_DEADZONE) * Q12(1.0f)) / 200) + Q12(15.36f);
                     }
-                    else if (g_Player_MoveStickMag != 0)
+                    else if (g_Player_MoveStickMag != Q7(0.0f))
                     {
-                        duration = ((ABS(g_Player_MoveStickMag - STICK_DEADZONE) * Q12(0.4f) / STICK_DEADZONE) * Q12(1.0f) / 200) + Q12(15.36f);
+                        duration = (((ABS(g_Player_MoveStickMag - STICK_DEADZONE) * Q12(0.4f) / STICK_DEADZONE) * Q12(1.0f)) / 200) + Q12(15.36f);
                     }
                     else
                     {
@@ -437,10 +439,10 @@ const s_AnimInfo* const D_800297B8 = HARRY_BASE_ANIM_INFOS;
 void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveSpeed, s32 keyframeIdx) // 0x80070B84
 {
     q3_12  unkMoveDist;
-    s32    stickY;
+    q24_7  stickY;
     q3_12* moveDist;
 
-    if (g_Player_MoveStickMag == 0)
+    if (g_Player_MoveStickMag == Q7(0.0f))
     {
         stickY = ABS(g_Controller0->rawSticks.sticks.leftY);
     }
@@ -449,7 +451,7 @@ void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveS
         stickY = g_Player_MoveStickMag;
     }
 
-    baseMoveSpeed = baseMoveSpeed + ((topMoveSpeed - baseMoveSpeed) * (stickY - STICK_DEADZONE) / STICK_DEADZONE);
+    baseMoveSpeed += ((topMoveSpeed - baseMoveSpeed) * (stickY - STICK_DEADZONE)) / STICK_DEADZONE;
 
     // @hack Wrapping in loop required for match.
     do
@@ -477,9 +479,9 @@ void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveS
     while (false); // @hack Required for match.
 }
 
-void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 modeDistBack) // 0x80070CF0
+void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 moveDistBack) // 0x80070CF0
 {
-    s32    stickY;
+    q24_7  stickY;
     q3_12* moveDist;
 
     do
@@ -488,14 +490,14 @@ void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_
             (player->model.anim.keyframeIdx >= 30 && player->model.anim.keyframeIdx < 36))
         {
             stickY      = g_Player_MoveStickMag ? g_Player_MoveStickMag : ABS(g_Controller0->rawSticks.sticks.leftY);
-            moveDistMax = arg1 + ((moveDistMax - arg1) * (stickY - STICK_DEADZONE) / STICK_DEADZONE);
+            moveDistMax = arg1 + (((moveDistMax - arg1) * (stickY - STICK_DEADZONE)) / STICK_DEADZONE);
         }
     }
     while (false); // @hack Required for match.
 
     if (moveDistMax < playerProps.moveSpeed)
     {
-        playerProps.moveSpeed -= modeDistBack;
+        playerProps.moveSpeed -= moveDistBack;
         if (playerProps.moveSpeed < moveDistMax)
         {
             playerProps.moveSpeed = moveDistMax;
@@ -554,25 +556,25 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
 
         if (!(playerProps.flags & PlayerFlag_Unk2))
         {
-            player->field_44.field_0                                     = 1;
+            player->field_44.field_0 = 1;
             playerProps.flags |= PlayerFlag_Unk2;
         }
     }
 
     if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
     {
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx =  Q12_MULT(D_800AF014[player->model.anim.keyframeIdx - 457], Math_Cos(player->rotation.vy));
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = -Q12_MULT(D_800AF014[player->model.anim.keyframeIdx - 457], Math_Sin(player->rotation.vy));
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      =  Q12_MULT(g_Harry_KickAnimBoxOffsets[player->model.anim.keyframeIdx - 457], Math_Cos(player->rotation.vy));
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = -Q12_MULT(g_Harry_KickAnimBoxOffsets[player->model.anim.keyframeIdx - 457], Math_Sin(player->rotation.vy));
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx =  Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz =  Q12(0.0f);
     }
 
     if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
     {
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx =  Q12_MULT(D_800AF04C[player->model.anim.keyframeIdx - 485], Math_Cos(player->rotation.vy));
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = -Q12_MULT(D_800AF04C[player->model.anim.keyframeIdx - 485], Math_Sin(player->rotation.vy));
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      =  Q12_MULT(g_Harry_StompAnimBoxOffsets[player->model.anim.keyframeIdx - 485], Math_Cos(player->rotation.vy));
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = -Q12_MULT(g_Harry_StompAnimBoxOffsets[player->model.anim.keyframeIdx - 485], Math_Sin(player->rotation.vy));
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx =  Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz =  Q12(0.0f);
     }
 
     if (player->model.anim.status == animStatus &&
@@ -584,11 +586,13 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
 
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
         g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx = Q12(0.0f);
-        playerCombat.weaponAttack            = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife);
-        g_SysWork.targetNpcIdx                         = NO_VALUE;
-        playerCombat.isAiming               = false;
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
+        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
+
+        playerCombat.weaponAttack = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE :
+                                                                                              (g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife);
+        g_SysWork.targetNpcIdx    = NO_VALUE;
+        playerCombat.isAiming     = false;
     }
 }
 
@@ -2146,8 +2150,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         player->properties.player.field_10D = 0;
                         if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                         {
-                            playerChara.collision.box.topExtent = D_800AEEDC[player->model.anim.keyframeIdx - 379][0];
-                            playerChara.collision.box.offsetY   = D_800AEEDC[player->model.anim.keyframeIdx - 379][1];
+                            playerChara.collision.box.topExtent = g_Harry_FallForwardAnimBoxOffsets[player->model.anim.keyframeIdx - 379][0];
+                            playerChara.collision.box.offsetY   = g_Harry_FallForwardAnimBoxOffsets[player->model.anim.keyframeIdx - 379][1];
                         }
 
                         if (player->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[45].endKeyframeIdx)
@@ -2173,8 +2177,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                         if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                         {
-                            playerChara.collision.box.topExtent = D_800AEF78[player->model.anim.keyframeIdx - 418][0];
-                            playerChara.collision.box.offsetY   = D_800AEF78[player->model.anim.keyframeIdx - 418][1];
+                            playerChara.collision.box.topExtent = g_Harry_FallBackwardAnimBoxOffsets[player->model.anim.keyframeIdx - 418][0];
+                            playerChara.collision.box.offsetY   = g_Harry_FallBackwardAnimBoxOffsets[player->model.anim.keyframeIdx - 418][1];
                         }
 
                         if (player->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[47].endKeyframeIdx)
@@ -2267,11 +2271,10 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     func_80071620(player->model.anim.status, player, g_MapOverlayHdr.field_38[D_800AF220].time + 32, Sfx_Unk1319);
                 }
 
-                temp_a2 = D_800AF070[player->model.anim.keyframeIdx - g_MapOverlayHdr.field_38[D_800AF220].time];
-
+                temp_a2 = g_Harry_DeathAnimCylinderOffsets[player->model.anim.keyframeIdx - g_MapOverlayHdr.field_38[D_800AF220].time];
                 if (player->model.anim.keyframeIdx != g_MapOverlayHdr.field_38[D_800AF220].keyframeIdx_6)
                 {
-                    var_v1_5 = D_800AF070[(player->model.anim.keyframeIdx + 1) - g_MapOverlayHdr.field_38[D_800AF220].time];
+                    var_v1_5 = g_Harry_DeathAnimCylinderOffsets[(player->model.anim.keyframeIdx + 1) - g_MapOverlayHdr.field_38[D_800AF220].time];
                 }
                 else
                 {
@@ -4560,7 +4563,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
     q19_12                 moveDist;
     s32                    speedZoneType; // `e_SpeedZoneType`
     e_PlayerLowerBodyState lowerBodyMoveState;
-    s32                    var_a3;
+    s32                    moveDistForward;
     s32                    aimState;
 
     #define stillAnim HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)]
@@ -4960,7 +4963,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 // Stopped walking.
                 else
                 {
-                    if (g_Player_MoveStickMag != 0)
+                    if (g_Player_MoveStickMag != Q7(0.0f))
                     {
                         func_80070B84(player, Q12(0.75f), Q12(1.4f), 2);
                     }
@@ -4985,7 +4988,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                     if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighUp)
                     {
-                        g_Player_MoveStickMag = 0;
+                        g_Player_MoveStickMag = Q7(0.0f);
                     }
                 }
             }
@@ -5109,36 +5112,36 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 if (playerProps.moveSpeed < Q12(3.5f))
                 {
-                    var_a3 = TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
+                    moveDistForward = TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
                 }
                 else
                 {
-                    moveOffsetZ  = g_DeltaTime;
-                    moveOffsetZ += (moveOffsetZ < 0) ? 3 : 0;
-                    var_a3       = moveOffsetZ >> 2;
+                    moveOffsetZ     = g_DeltaTime;
+                    moveOffsetZ    += (moveOffsetZ < 0) ? 3 : 0;
+                    moveDistForward = DIV_FAST(moveOffsetZ, 4);
                 }
 
-                func_80070CF0(player, Q12(2.0f), moveOffsetX, var_a3, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
+                func_80070CF0(player, Q12(2.0f), moveOffsetX, moveDistForward, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
             }
             // Stopped running.
             else
             {
-                if (g_Player_MoveStickMag != 0)
+                if (g_Player_MoveStickMag != Q7(0.0f))
                 {
                     moveOffsetX = GET_MOVE_SPEED(speedZoneType);
 
                     if (playerProps.moveSpeed < Q12(3.5f))
                     {
-                        var_a3 = TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
+                        moveDistForward = TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
                     }
                     else
                     {
-                        moveOffsetZ  = g_DeltaTime;
-                        moveOffsetZ += (moveOffsetZ < Q12(0.0f)) ? 3 : Q12(0.0f);
-                        var_a3       = moveOffsetZ >> 2;
+                        moveOffsetZ     = g_DeltaTime;
+                        moveOffsetZ    += (moveOffsetZ < Q12(0.0f)) ? 3 : Q12(0.0f);
+                        moveDistForward = DIV_FAST(moveOffsetZ, 4);
                     }
 
-                    func_80070CF0(player, Q12(2.0f), moveOffsetX, var_a3, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
+                    func_80070CF0(player, Q12(2.0f), moveOffsetX, moveDistForward, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
                 }
                 else if (playerProps.moveSpeed > GET_MOVE_SPEED(speedZoneType))
                 {
@@ -5159,7 +5162,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighUp)
                 {
-                    g_Player_MoveStickMag = 0;
+                    g_Player_MoveStickMag = Q7(0.0f);
                 }
             }
 
@@ -5374,7 +5377,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             // Stop walking backward.
             else
             {
-                if (g_Player_MoveStickMag != 0)
+                if (g_Player_MoveStickMag != Q7(0.0f))
                 {
                     func_80070B84(player, Q12(0.75f), Q12(1.15f), 2);
                 }
@@ -5398,7 +5401,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighDown)
                 {
-                    g_Player_MoveStickMag = 0;
+                    g_Player_MoveStickMag = Q7(0.0f);
                 }
             }
 

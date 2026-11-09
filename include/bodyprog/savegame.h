@@ -116,9 +116,9 @@ typedef struct _OptionsConfig
     /* 0x1C */ s8                 screenPositionX;     /** Range: [-11, 11], default: 0. */
     /* 0x1D */ s8                 screenPositionY;     /** Range: [-8, 8], default: 0. */
     /* 0x1E */ u8                 soundType;           /** `bool` | Stereo: `false`, Monaural: `true`, default: Stereo. */
-    /* 0x1F */ u8                 volumeBgm;           /** Q0.7 | Steps of `Q7(1.0f / 16.0f)`, default: `Q7(1.0f / 8.0f)`. */
-    /* 0x20 */ u8                 volumeSe;            /** Q0.7 | Steps of `Q7(1.0f / 16.0f)`, default: `Q7(1.0f / 8.0f)`. */
-    /* 0x21 */ u8                 vibrationEnabled;    /** Q0.7 | Off: `Q7(0.0f)`, On: `Q7_CLAMPED(1.0f)`, default: On. */
+    /* 0x1F */ q1_7               volumeBgm;           /** Steps of `Q7(1.0f / 16.0f)`, default: `Q7(1.0f / 8.0f)`. */
+    /* 0x20 */ q1_7               volumeSe;            /** Steps of `Q7(1.0f / 16.0f)`, default: `Q7(1.0f / 8.0f)`. */
+    /* 0x21 */ q1_7               vibrationEnabled;    /** Off: `Q7(0.0f)`, On: `Q7_CLAMPED(1.0f)`, default: On. */
     /* 0x22 */ u8                 brightness;          /** Range: [0, 7], default: 3. */
     /* 0x23 */ u8                 extraWeaponCtrl;     /** `bool` | Switch: `false`, Press: `true`, default: Press. */
     /* 0x24 */ u8                 extraBloodColor;     /** `e_BloodColor` | Default: Normal. */

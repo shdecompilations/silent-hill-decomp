@@ -854,16 +854,6 @@ extern q3_12 D_800C4454;
 
 extern s8 D_800C447A;
 
-extern s16 D_800AEEDC[][2]; // Type assumed.
-
-extern s16 D_800AEF78[][2]; //  Type assumed.
-
-extern s16 D_800AF014[];
-
-extern s16 D_800AF04C[];
-
-extern q3_12 D_800AF070[];
-
 extern q3_12 D_800AF1FC[];
 
 extern u8 g_Player_AnimResetRequest; /** `bool` */

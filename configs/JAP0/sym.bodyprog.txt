@@ -587,9 +587,9 @@ WorldGfx_SplitHeadMeshSwap                   = 0x8003E148; // type:func
 WorldGfx_PuppetNurseMeshSwap                 = 0x8003E1D4; // type:func
 WorldGfx_PuppetDoctorMeshSwap                = 0x8003E278; // type:func
 
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 //--- PA: 0x0197BC   VA: 0x8003E31C   subsegment: c, gfx/brightness_menu_line
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 Options_BrightnessMenu_LinesDraw             = 0x8003E31C; // type:func
 
 //----------------------------------------------------------------------
@@ -3107,11 +3107,11 @@ D_800AEDBC                                   = 0x800B117C;
 //----------------------------------------------------------------------------
 //--- PA: 0x08C73C   VA: 0x800B129C   subsegment: .data, player/player_control
 //----------------------------------------------------------------------------
-D_800AEEDC                                   = 0x800B129C;
-D_800AEF78                                   = 0x800B1338;
-D_800AF014                                   = 0x800B13D4;
-D_800AF04C                                   = 0x800B140C;
-D_800AF070                                   = 0x800B1430;
+g_Harry_FallForwardAnimBoxOffsets            = 0x800B129C;
+g_Harry_FallBackwardAnimBoxOffsets           = 0x800B1338;
+g_Harry_KickAnimBoxOffsets                   = 0x800B13D4;
+g_Harry_StompAnimBoxOffsets                  = 0x800B140C;
+g_Harry_DeathAnimCylinderOffsets             = 0x800B1430;
 D_800AF1FC                                   = 0x800B15BC;
 g_Player_GrabReleaseInputTimer               = 0x800B15CC;
 g_Player_FlexRotationY                       = 0x800B15D0;

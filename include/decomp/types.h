@@ -13,7 +13,7 @@ typedef unsigned short     u16;
 typedef unsigned int       u32;
 typedef unsigned long long u64;
 
-typedef signed char        q1_7;   // Q1.7 fixed-point.
+typedef signed char        q0_7;   // Q0.7 fixed-point.
 typedef signed short       q11_4;  // Q11.4 fixed-point.
 typedef signed short       q8_7;   // Q8.7 fixed-point.
 typedef signed short       q7_8;   // Q7.8 fixed-point.
@@ -25,6 +25,7 @@ typedef signed int         q23_8;  // Q23.8 fixed-point.
 typedef signed int         q21_10; // Q21.10 fixed-point.
 typedef signed int         q19_12; // Q19.12 fixed-point.
 typedef signed long long   q51_12; // Q51.12 fixed-point.
+typedef unsigned char      q1_7;   // Q1.7 fixed-point.
 typedef unsigned char      q0_8;   // Q0.8 fixed-point.
 typedef unsigned short     q8_8;   // Q8.8 fixed-point.
 typedef unsigned short     q4_12;  // Q4.12 fixed-point.

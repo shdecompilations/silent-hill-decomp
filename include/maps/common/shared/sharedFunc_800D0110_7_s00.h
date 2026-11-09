@@ -536,11 +536,11 @@ void sharedFunc_800D0110_7_s00(void)
                     }
                     else
                     {
-                        Sd_MidiChannelsVolumeSet(0, 0x7F);
+                        Sd_MidiChannelsVolumeSet(0, Q7_CLAMPED(1.0f));
                         Sd_MidiChannelsVolumeSet(1, 1);
 
                         g_SysWork.bgmLayerVolumes[0] = Q12(1.0f);
-                        g_SysWork.bgmLayerVolumes[1] = 32;
+                        g_SysWork.bgmLayerVolumes[1] = Q12(1.0f / 128.0f);
                     }
                 }
             }

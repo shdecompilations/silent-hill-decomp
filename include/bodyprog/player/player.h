@@ -391,7 +391,7 @@ extern u8 g_Player_IsInWalkToRunTransition;
 /** `bool` */
 extern u8 g_Player_DisableControl;
 
-extern u8 g_Player_MoveStickMag;
+extern q1_7 g_Player_MoveStickMag;
 
 /** @brief `e_RockDrillAttackType` | Rock Drill attack type based on D-Pad input. */
 extern s8 g_Player_RockDrill_AttackType;
@@ -545,7 +545,7 @@ void func_8005CD38(s32* out0, q3_12* out1, const VECTOR3* pos, q3_12 angleMin, q
  *
  * @param chara Player character.
  */
-void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 modeDistBack);
+void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 moveDistBack);
 
 void Player_CharaTurn_0(s_SubCharacter* player, e_PlayerLowerBodyState curState);
 

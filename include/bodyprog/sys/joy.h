@@ -65,24 +65,24 @@ typedef union
     /* 0x0 */ u32 rawData;
               struct
               {
-                  /* 0x0 */ q1_7 rightX;
-                  /* 0x1 */ q1_7 rightY;
-                  /* 0x2 */ q1_7 leftX;
-                  /* 0x3 */ q1_7 leftY;
+                  /* 0x0 */ q0_7 rightX;
+                  /* 0x1 */ q0_7 rightY;
+                  /* 0x2 */ q0_7 leftX;
+                  /* 0x3 */ q0_7 leftY;
     /* 0x4 */ } sticks;
 } s_AnalogSticks;
 
 /** @brief Analog PSX controller state. */
 typedef struct _AnalogController
 {
-    /* 0x0 */ u8  status;
-    /* 0x1 */ u8  receivedBytes : 4; /** Number of bytes received / 2. */
-    /* 0x2 */ u8  terminalType  : 4; /** `e_PadTerminalType` */
-    /* 0x3 */ u16 buttonFlags;       /** `e_ControllerFlags` */
-    /* 0x5 */ u8  rightX;
-    /* 0x6 */ u8  rightY;
-    /* 0x7 */ u8  leftX;
-    /* 0x8 */ u8  leftY;
+    /* 0x0 */ u8   status;
+    /* 0x1 */ u8   receivedBytes : 4; /** Number of bytes received / 2. */
+    /* 0x2 */ u8   terminalType  : 4; /** `e_PadTerminalType` */
+    /* 0x3 */ u16  buttonFlags;       /** `e_ControllerFlags` */
+    /* 0x5 */ q1_7 rightX;
+    /* 0x6 */ q1_7 rightY;
+    /* 0x7 */ q1_7 leftX;
+    /* 0x8 */ q1_7 leftY;
 } s_AnalogController;
 STATIC_ASSERT_SIZEOF(s_AnalogController, 8);
 

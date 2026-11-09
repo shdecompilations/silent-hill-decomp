@@ -390,7 +390,7 @@ void func_800D1A58(void) // 0x800D1A58
             Game_TimerUpdate();
 
             Gfx_CursorDraw((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
-                          8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 12);
+                           8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 12);
 
             if (Pad_ButtonClickedBind(enter))
             {
