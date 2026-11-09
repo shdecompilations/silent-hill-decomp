@@ -682,7 +682,7 @@ WorldGfx_PuppetNurseMeshSwap                 = 0x8003E278; // type:func
 WorldGfx_PuppetDoctorMeshSwap                = 0x8003E31C; // type:func
 
 //-----------------------------------------------------------------------------
-//--- PA: 0x019860   VA: 0x8003E3C0   subsegment: c, gfx/option_brightness_line
+//--- PA: 0x019860   VA: 0x8003E3C0   subsegment: c, gfx/brightness_menu_line
 //-----------------------------------------------------------------------------
 Options_BrightnessMenu_LinesDraw             = 0x8003E3C0; // type:func
 

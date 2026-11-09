@@ -399,6 +399,7 @@ void WorldEnv_StateFromPreset(s_WorldEnvState* arg0, const s_WorldEnvPreset* pre
     }
 }
 
+// https://decomp.me/scratch/XWo1G
 void WorldEnv_Update(void) // 0x8003F170
 {
     MATRIX           viewMat;
@@ -456,7 +457,7 @@ void WorldEnv_Update(void) // 0x8003F170
 
     if (worldEnv->flashEffect)
     {
-        flags            = currentInGameGfx->params.flags;
+        flags                 = currentInGameGfx->params.flags;
         worldEnv->flashEffect = false;
 
         if (flags & WorldEnvFlag_Dark)
@@ -648,7 +649,14 @@ static q19_12 func_8003F6F0(s32 val, s32 min, s32 max)
     #undef Q12_INT_BITS
 }
 
-q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight) // 0x8003F7E4
+/** @brief Computes the weighted average of `a` and `b`.
+ *
+ * @param a First value.
+ * @param b Second value.
+ * @param weight Weight as a fixed-point alpha in Q3.12, range `[0, 4096]`.
+ * @return Weighted average of `a` and `b`.
+ */
+static q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight) // 0x8003F7E4
 {
     return Math_MulFixed(a, Q12(1.0f) - weight, Q12_SHIFT) + Math_MulFixed(b, weight, Q12_SHIFT);
 }
@@ -754,17 +762,17 @@ static void func_8003F838(s_WorldEnvState* target, s_WorldEnvState* envSettings0
     {
         if (weight < Q12(5.0f / 6.0f))
         {
-            weight2                                = Q12_MULT(weight, Q12(1.2f));
-            weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->params.lightMode  = envSettings0->params.lightMode;
+            weight2                           = Q12_MULT(weight, Q12(1.2f));
+            weight2                           = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
+            target->params.lightMode          = envSettings0->params.lightMode;
             target->params.spotLightIntensity = Math_WeightedAverageGet(envSettings0->params.spotLightIntensity, 0, weight2);
         }
         else
         {
-            weight2                                = (weight - Q12(5.0f / 6.0f)) * 6;
-            weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->params.lightMode  = envSettings1->params.lightMode;
-            weight0                                = envSettings1->params.spotLightIntensity;
+            weight2                           = (weight - Q12(5.0f / 6.0f)) * 6;
+            weight2                           = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
+            target->params.lightMode          = envSettings1->params.lightMode;
+            weight0                           = envSettings1->params.spotLightIntensity;
             target->params.spotLightIntensity = Math_WeightedAverageGet(Q12(0.0f), weight0, weight2);
         }
     }
@@ -779,9 +787,9 @@ static void func_8003F838(s_WorldEnvState* target, s_WorldEnvState* envSettings0
         }
         else
         {
-            weight2                                = Q12_MULT(weight - Q12(1.0f / 6.0f), Q12(1.2f));
-            weight2                                = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            target->params.lightMode  = envSettings1->params.lightMode;
+            weight2                           = Q12_MULT(weight - Q12(1.0f / 6.0f), Q12(1.2f));
+            weight2                           = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
+            target->params.lightMode          = envSettings1->params.lightMode;
             target->params.spotLightIntensity = Math_WeightedAverageGet(Q12(0.0f), envSettings1->params.spotLightIntensity, weight2);
         }
     }
@@ -842,8 +850,8 @@ static void func_8003FD38(s_WorldEnvState* target, const s_WorldEnvState* envSet
         target->brightnessIntensity = envSettings1->brightnessIntensity;
     }
 
-    target->fogDistance                    = Math_WeightedAverageGet(envSettings0->fogDistance, envSettings1->fogDistance, weight0);
-    target->params.fogDistance        = Math_WeightedAverageGet(envSettings0->params.fogDistance, envSettings1->params.fogDistance, weight1);
+    target->fogDistance                = Math_WeightedAverageGet(envSettings0->fogDistance, envSettings1->fogDistance, weight0);
+    target->params.fogDistance         = Math_WeightedAverageGet(envSettings0->params.fogDistance, envSettings1->params.fogDistance, weight1);
     target->params.worldLightIntensity = Math_WeightedAverageGet(envSettings0->params.worldLightIntensity, envSettings1->params.worldLightIntensity, weight0);
 
     LoadAverageCol(&envSettings0->params.fogColor.r, &envSettings1->params.fogColor.r, Q12(1.0f) - alphaTo, alphaTo, &target->params.fogColor.r);

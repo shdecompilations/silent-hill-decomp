@@ -70,8 +70,6 @@ typedef enum _WorldEnvFogMode
 #define WorldEnv_IsWorldLit() \
     (!WorldEnv_IsFlashlightAllowed() || WorldEnv_IsFlashlightOn() || !WorldEnv_CanBeInDarkness())
 
-void Options_BrightnessMenu_LinesDraw(s32 brightness);
-
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad(void);
 
@@ -117,18 +115,6 @@ void WorldEnv_TransitionStartFromPresets(const s_WorldEnvPreset* preset0, const 
                                          e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
 void WorldEnv_StateFromPreset(s_WorldEnvState* arg0, const s_WorldEnvPreset* preset);
-
-// https://decomp.me/scratch/XWo1G
-void WorldEnv_Update(void);
-
-/** @brief Computes the weighted average of `a` and `b`.
- *
- * @param a First value.
- * @param b Second value.
- * @param weight Weight as a fixed-point alpha in Q3.12, range `[0, 4096]`.
- * @return Weighted average of `a` and `b`.
- */
-q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight);
 
 void func_8003FE04(const s_WorldEnvPreset* preset0, const s_WorldEnvPreset* preset1, const s_WorldEnvPreset* preset2, q19_12 alphaTo);
 

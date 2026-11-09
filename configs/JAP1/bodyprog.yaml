@@ -178,7 +178,7 @@ segments:
       - [0x13E4C, c, events/game_sys_states]   # }
       - [0x15DA0, c, events/title] # Name convention from SH2/4.
       - [0x16FA4, c, world/world_draw]             # }
-      - [0x19860, c, gfx/option_brightness_line]   # |
+      - [0x19860, c, gfx/brightness_menu_line]     # |
       - [0x19988, c, world/world_effects]          # }
       - [0x1B27C, c, world/collision_trigger]      # }
       - [0x1B2C4, c, view/vc_util]                 # |

@@ -4,8 +4,8 @@
 // TODO:
 // - Rename `sharedFunc_800CDAA8_0_s02` -> `sharedFunc_800D0E34_0_s00`, g_Player_MoveSpeed` -> `sharedData_800E39DC_0_s00`
 
-// Keyframe indexes used for each state
-// Maps can override these by defining the keyframe beforehand, only indexes that change in certain maps are included here.
+// Keyframe indices used for each state
+// Maps can override these by defining the keyframe beforehand, only indices that change in certain maps are included here.
 // (most likely whatever tool they used to create the `g_MapOverlayHdr.harryMapAnimInfos` data also output a header defining these for each map)
 #ifndef KEYFRAME_PlayerState_Unk59
     #define KEYFRAME_PlayerState_Unk59 927

@@ -534,7 +534,6 @@ extern s32 __pad_bss_800C460C;
 /** Displacement offset. */
 extern VECTOR3 D_800C4610;
 
-
 // ==========
 // FUNCTIONS
 // ==========
@@ -643,9 +642,9 @@ bool func_8007F95C(void);
 {                                                                          \
     g_SysWork.playerWork.extra.state          = (playerState);             \
     (playerChara)->model.stateStep            = 0;                         \
-    (playerChara)->model.controlState         = 0;  \
+    (playerChara)->model.controlState         = 0;                         \
     (playerExtra)->model.stateStep            = 0;                         \
-    (playerExtra)->model.controlState         = 0;  \
+    (playerExtra)->model.controlState         = 0;                         \
     g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None; \
     g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None; \
 }

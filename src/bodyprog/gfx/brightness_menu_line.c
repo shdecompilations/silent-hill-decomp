@@ -1,13 +1,8 @@
 #include "game.h"
 
-#include <psyq/libetc.h>
-#include <psyq/libpad.h>
-#include <psyq/strings.h>
-
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/brightness_menu_line.h"
 #include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 
 void Options_BrightnessMenu_LinesDraw(s32 brightness) // 0x8003E5E8
@@ -51,4 +46,6 @@ void Options_BrightnessMenu_LinesDraw(s32 brightness) // 0x8003E5E8
     }
 
     GsOUT_PACKET_P = packet;
+
+    #undef LINE_COUNT
 }

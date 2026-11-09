@@ -53,7 +53,7 @@
 #define BITMASK_RANGE(fromInclusive, toInclusive) \
     (((~0u << (fromInclusive)) & ~(~0u << ((toInclusive) + 1))))
 
-/* Macros for comparing map chunk indexes against a map X/Z position.
+/* Macros for comparing map chunk indices against a map X/Z position.
  *
  * SH1 game world is split to 40x40 meter chunks, terrain loading code and filenames of IPDs (eg. `THR01FF.IPD` for X 1, Z -1)
  * use a rounded-down grid where chunk 0 is anything between 0 to 40, chunk -1 is anything between -40 to 0.
@@ -65,15 +65,15 @@
  * make use of chunk 0), and makes code for any checks for chunk 0 or above +1 of the actual index being checked.
  *
  * To make our code that uses these macros consistent with rest of game code, we make our macro adjust the
- * index being checked for, so the source code using the macros can pass in rounded-down chunk indexes, and that'll
+ * index being checked for, so the source code using the macros can pass in rounded-down chunk indices, and that'll
  * handle adding 1 to any index that's positive/zero.
  * This lets it match the original compiled ASM for positive chunk checks (that showed it checking +1 of the actual chunk index),
- * but lets our C code make use of the same indexes used in the rest of the game.
+ * but lets our C code make use of the same indices used in the rest of the game.
  */
 
 /** @brief Map event chunk index of world coordinate `pos`, never returns chunk 0, see above. */
 #define MAP_CHUNK_IDX(pos) \
-    (((pos) / Q12(40.0f)) + (((pos) > Q12(0.0f)) ? 1 : -1))
+    (((pos) / Q12(CHUNK_SIZE)) + (((pos) > Q12(0.0f)) ? 1 : -1))
 
 /** @brief Converts rounded-down terrain chunk grid index `n` to its equivalent `MAP_CHUNK_IDX` value. */
 #define MAP_CHUNK_IDX_FROM_GRID(n) \
@@ -89,12 +89,12 @@
 #define PLAYER_IN_MAP_CHUNK(x, z) \
     (PLAYER_IN_MAP_CHUNK_X(x) && PLAYER_IN_MAP_CHUNK_Z(z))
 
-/** @brief `CELL_XZ` switch key of terrain chunk (`x`, `z`). indexes offset by 16 to keep both positive? (or maybe `SUBCHUNK_SIZE * 2`?) */
+/** @brief `CELL_XZ` switch key of terrain chunk (`x`, `z`). Indices are offset by 16 to keep both positive? (or maybe `SUBCHUNK_SIZE * 2`?) */
 #define MAP_CHUNK_CELL(x, z) \
     CELL_XZ(MAP_CHUNK_IDX_FROM_GRID(x) + 16, MAP_CHUNK_IDX_FROM_GRID(z) + 16)
 
 /** @brief `MAP_CHUNK_CELL` switch key of the player's current chunk. */
-#define PLAYER_MAP_CHUNK_CELL()                                            \
+#define PLAYER_MAP_CHUNK_CELL()                                          \
     CELL_XZ(MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vx) + 16, \
             MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vz) + 16)
 
@@ -316,7 +316,7 @@ typedef struct _WorldEnvPreset
     /* 0x0  */ u8      flags;                  /** `e_WorldEnvFlags` */
     /* 0x1  */ u8      lightLevelMax;          /** Upper limit on the computed light level of lit vertices. `0xFF` for no limit. */
     /* 0x2  */ u8      lightMode;              /** `e_WorldEnvLightMode` */
-    /* 0x3  */ s8      __pad_3;
+               // 1 byte of padding.
     /* 0x4  */ q3_12   spotLightIntensity;
     /* 0x6  */ q3_12   worldLightIntensity;
     /* 0x8  */ q3_12   worldTintR;
@@ -455,7 +455,7 @@ STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 extern void* g_OvlDynamic;
 extern void* g_OvlBodyprog;
 #if VERSION_REGION_IS(PAL)
-extern void* g_OvlItemLang;
+    extern void* g_OvlItemLang;
 #endif
 
 extern s_SysWork         g_SysWork;
