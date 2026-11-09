@@ -11,7 +11,7 @@ void Parasite_Update(s_SubCharacter* parasite, s_AnmHeader* anmHdr, GsCOORDINATE
         parasite->model.anim.alpha   = Q12(0.0f);
         parasite->model.controlState = ParasiteControl_1;
         parasite->model.stateStep    = 0;
-        Chara_AnimSet(parasite, ANIM_STATUS(1, true), 0);
+        Chara_AnimSet(parasite, ANIM_STATUS(ParasiteAnim_1, true), 0);
     }
 
     Math_MatrixTransform(&parasite->position, &parasite->rotation, boneCoords);

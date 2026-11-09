@@ -277,9 +277,9 @@ void PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                     nurse->health = Q12(0.0f);
                     Savegame_EnemyStateUpdate(nurse);
 
-                    if (nurse->model.anim.status == ANIM_STATUS(14, true))
+                    if (nurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_14, true))
                     {
-                        nurse->model.anim.status = ANIM_STATUS(22, false);
+                        nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_22, false);
                     }
                 }
 
@@ -364,7 +364,7 @@ void PuppetNurse_Control1(s_SubCharacter* nurse)
     {
         if (!nurseProps.field_11E)
         {
-            nurse->model.anim.status = 2;
+            nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_1, false);
         }
         else
         {
@@ -664,7 +664,7 @@ void PuppetNurse_Control8(s_SubCharacter* nurse)
             if (nurseProps.field_104 < 0)
             {
                 nurse->moveSpeed         = Q12(-1.0f);
-                nurse->model.anim.status = ANIM_STATUS(10, false);
+                nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_10, false);
                 nurse->model.stateStep   = 2;
             }
 
@@ -675,7 +675,7 @@ void PuppetNurse_Control8(s_SubCharacter* nurse)
         {
             u16 modelStates[8] = { 9, 9, 9, 6, 6, 9, 7, 7 };
 
-            if (nurse->model.anim.status == ANIM_STATUS(18, false))
+            if (nurse->model.anim.status == ANIM_STATUS(PuppetNurseAnim_18, false))
             {
                 if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                 {
@@ -889,7 +889,7 @@ s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse)
                                        playerChara.position.vz - nurse->position.vz) -
              Q12(0.76f);
     absMag = ABS(mag);
-    if (absMag > Q12(0.03f) && nurse->model.anim.status != ANIM_STATUS(20, false))
+    if (absMag > Q12(0.03f) && nurse->model.anim.status != ANIM_STATUS(PuppetNurseAnim_20, false))
     {
         if (mag > Q12(0.0f))
         {
@@ -986,7 +986,7 @@ void PuppetNurse_Control12(s_SubCharacter* nurse)
     {
         nurse->model.controlState = 9;
         nurse->model.stateStep    = 0;
-        nurse->model.anim.status  = ANIM_STATUS(18, false);
+        nurse->model.anim.status  = ANIM_STATUS(PuppetNurseAnim_18, false);
         return;
     }
 
@@ -1013,14 +1013,14 @@ void PuppetNurse_Control12(s_SubCharacter* nurse)
             nurse->model.stateStep = 1;
 
         case 1:
-            if (animStatus >= ANIM_STATUS(17, false) && animStatus < ANIM_STATUS(18, false))
+            if (animStatus >= ANIM_STATUS(PuppetNurseAnim_17, false) && animStatus < ANIM_STATUS(PuppetNurseAnim_18, false))
             {
-                nurse->model.anim.status = ANIM_STATUS(9, false);
+                nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_9, false);
                 nurse->model.stateStep++;
             }
-            else if (animStatus >= ANIM_STATUS(18, false) && animStatus < ANIM_STATUS(19, false))
+            else if (animStatus >= ANIM_STATUS(PuppetNurseAnim_18, false) && animStatus < ANIM_STATUS(PuppetNurseAnim_19, false))
             {
-                nurse->model.anim.status = ANIM_STATUS(20, false);
+                nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_20, false);
                 nurse->model.stateStep++;
             }
             else
@@ -1057,7 +1057,7 @@ void PuppetNurse_Control12(s_SubCharacter* nurse)
                 }
 
                 nurse->model.stateStep   = 0;
-                nurse->model.anim.status = ANIM_STATUS(18, false);
+                nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_18, false);
             }
 
             sharedFunc_800CF7F4_3_s03(nurse);
@@ -1072,7 +1072,7 @@ void PuppetNurse_Control10(s_SubCharacter* nurse)
     if (!nurse->model.stateStep)
     {
         nurseProps.field_104     = 0;
-        nurse->model.anim.status = ANIM_STATUS(19, false);
+        nurse->model.anim.status = ANIM_STATUS(PuppetNurseAnim_19, false);
         nurse->model.stateStep++;
     }
 
@@ -1086,11 +1086,11 @@ void PuppetNurse_Control10(s_SubCharacter* nurse)
 
         if (Rng_Rand16() & 0x80)
         {
-            animStatus = ANIM_STATUS(7, false);
+            animStatus = ANIM_STATUS(PuppetNurseAnim_7, false);
         }
         else
         {
-            animStatus = ANIM_STATUS(8, false);
+            animStatus = ANIM_STATUS(PuppetNurseAnim_8, false);
         }
 
         nurse->model.anim.status = animStatus;

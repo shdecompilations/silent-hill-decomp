@@ -1,6 +1,16 @@
 #ifndef _MAPS_CHARACTERS_UNKNOWN23_H
 #define _MAPS_CHARACTERS_UNKNOWN23_H
 
+/** @brief Unknown23 character animation indices. */
+typedef enum _Unknown23Anim
+{
+    Unknown23Anim_Still = 0,
+    Unknown23Anim_1     = 1,
+    Unknown23Anim_2     = 2,
+    Unknown23Anim_3     = 3,
+    Unknown23Anim_4     = 4
+} e_Unknown23Anim;
+
 typedef struct
 {
     s32     field_0;

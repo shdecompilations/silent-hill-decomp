@@ -1066,9 +1066,8 @@ bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* airScreamer, VECTOR3* playerPos, 
     }
     else
     {
-        // TODO: Does `ANIM_STATUS_IS_ACTIVE` fit?
-        if ((airScreamer->model.anim.status | 0x1) == 27 ||
-            (airScreamer->model.anim.status | 0x1) == 29)
+        if (ANIM_STATUS(ANIM_STATUS_IDX_GET(airScreamer->model.anim.status), true) == ANIM_STATUS(AirScreamerAnim_StandBiteAttackStart, true) ||
+            ANIM_STATUS(ANIM_STATUS_IDX_GET(airScreamer->model.anim.status), true) == ANIM_STATUS(AirScreamerAnim_StandBiteAttackEnd, true))
         {
             idx = 0;
         }
@@ -5660,7 +5659,7 @@ void AirScreamer_Control_25(s_SubCharacter* airScreamer)
             if (animStatus == ANIM_STATUS(AirScreamerAnim_HoverVariable, true))
             {
                 airScreamer->model.stateStep   = 2;
-                airScreamer->model.anim.status = 4;
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_HoverBiteAttack, false);
             }
             break;
 
@@ -7716,7 +7715,7 @@ void AirScreamer_Control_38(s_SubCharacter* airScreamer)
             if (temp_s7 == 35)
             {
                 var_s4                               = 3;
-                airScreamer->model.anim.status = 32;
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
                 airScreamer->model.stateStep   = 3;
             }
             break;
@@ -7729,7 +7728,7 @@ void AirScreamer_Control_38(s_SubCharacter* airScreamer)
             if (temp_s7 == 35)
             {
                 var_s4                               = 4;
-                airScreamer->model.anim.status = 30;
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
                 airScreamer->model.stateStep   = 5;
             }
             break;
@@ -7898,7 +7897,7 @@ void AirScreamer_Control_39(s_SubCharacter* airScreamer)
             if (temp_s6 == 35)
             {
                 var_s4                               = 2;
-                airScreamer->model.anim.status = 32;
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToWalkForward, false);
                 airScreamer->model.stateStep   = 3;
             }
             break;
@@ -7911,7 +7910,7 @@ void AirScreamer_Control_39(s_SubCharacter* airScreamer)
             if (temp_s6 == 35)
             {
                 var_s4                               = 3;
-                airScreamer->model.anim.status = 30;
+                airScreamer->model.anim.status = ANIM_STATUS(AirScreamerAnim_GlideToHover, false);
                 airScreamer->model.stateStep   = 5;
             }
             break;
@@ -11110,13 +11109,13 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
     temp_t3 = Math_Distance2dGet(&airScreamer->position, &airScreamerProps.targetPosition2);
     temp_s2 = Q12_ANGLE_NORM_S(temp_s2 - airScreamer->rotation.vy);
 
-    temp_a1 = airScreamer->model.anim.status | 1;
+    temp_a1 = ANIM_STATUS(ANIM_STATUS_IDX_GET(airScreamer->model.anim.status), true);
 
-    if (temp_a1 == 0x2D)
+    if (temp_a1 == ANIM_STATUS(AirScreamerAnim_StandIdleToHover, true))
     {
         var_a2 = 0xC;
     }
-    else if (temp_a1 == 0x31)
+    else if (temp_a1 == ANIM_STATUS(AirScreamerAnim_StandIdleToGlide, true))
     {
         var_a2 = 0xD;
     }
@@ -11125,7 +11124,7 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
         var_a2 = 0xB;
     }
 
-    if (temp_a1 == 0x31)
+    if (temp_a1 == ANIM_STATUS(AirScreamerAnim_StandIdleToGlide, true))
     {
         idx1   = 3;
         idx0 = 31;
@@ -11225,11 +11224,11 @@ void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer)
     s32              idx0;
     s_func_800D2E04* ptr;
 
-    temp_s0 = airScreamer->model.anim.status | 1;
+    temp_s0 = ANIM_STATUS(ANIM_STATUS_IDX_GET(airScreamer->model.anim.status), true);
     temp_t1 = func_80080478(&airScreamer->position, &airScreamerProps.targetPosition);
     temp_t1 = Q12_ANGLE_NORM_S(temp_t1 - airScreamer->rotation.vy);
 
-    if (temp_s0 == 45)
+    if (temp_s0 == ANIM_STATUS(AirScreamerAnim_StandIdleToHover, true))
     {
         idx1 = 12;
     }
@@ -11292,7 +11291,7 @@ void sharedFunc_800DF710_2_s00(s_SubCharacter* airScreamer)
     s32              element2;
     s_func_800D2E04* ptr;
 
-    animStatus = airScreamer->model.anim.status | 1; // TODO: Use macro for this.
+    animStatus = ANIM_STATUS(ANIM_STATUS_IDX_GET(airScreamer->model.anim.status), true);
     angle0     = func_80080478(&airScreamer->position, &airScreamerProps.targetPosition);
     angle0     = Q12_ANGLE_NORM_S(angle0 - airScreamer->rotation.vy);
 
@@ -12016,7 +12015,7 @@ void sharedFunc_800E021C_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
     angleToUnk = Q12_ANGLE_NORM_S(angleToUnk - airScreamer->rotation.vy);
 
     temp_t2 -= airScreamer->position.vy;
-    temp_a1  = airScreamer->model.anim.status | 0x1; // TODO: Macro.
+    temp_a1  = ANIM_STATUS(ANIM_STATUS_IDX_GET(airScreamer->model.anim.status), true);
 
     var_t3 = 0;
 

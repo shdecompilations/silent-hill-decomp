@@ -1917,7 +1917,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
             if (groanerProps.field_10E == 0 && groanerProps.field_10F == 0 &&
                 (groaner->health > Q12(0.0f)))
             {
-                if (groaner->model.anim.status == 33)
+                if (groaner->model.anim.status == ANIM_STATUS(GroanerAnim_RunForward, true))
                 {
                     Sfx_WithFlagsPlay(Sfx_Unk1410, &groaner->position, Q8(0.25f), SfxFlag_None);
                     groanerProps.timer_10C = Rng_GenerateInt(Q12(0.5f), Q12(0.6f) - 1);

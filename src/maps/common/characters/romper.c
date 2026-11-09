@@ -1087,7 +1087,7 @@ void Romper_Control_10(s_SubCharacter* romper)
                                           romperProps.targetPositionZ_100 - romper->position.vz);
     }
 
-    if (romper->model.anim.status == 11)
+    if (romper->model.anim.status == ANIM_STATUS(RomperAnim_JumpToIdleEnd, true))
     {
         romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, romperProps.field_124 * 4), Q12(0.0f));
     }

@@ -2089,7 +2089,7 @@ void Twinfeeler_Control_13(s_SubCharacter* twinfeeler) // 0x800D4248
                 twinfeeler->moveSpeed = Q12(0.8877f);
                 func_800D3AE0(twinfeeler, 1);
 
-                twinfeeler->model.anim.status = 4;
+                twinfeeler->model.anim.status = ANIM_STATUS(TwinfeelerAnim_Burrow, false);
                 twinfeeler->model.stateStep++;
             }
             break;

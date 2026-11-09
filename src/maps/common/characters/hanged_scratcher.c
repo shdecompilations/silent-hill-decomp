@@ -546,7 +546,7 @@ void HangedScratcher_Control_4(s_SubCharacter* scratcher)
             {
                 scratcher->model.controlState  = HangedScratcherControl_RunForward;
                 scratcherProps.timer_EA            = Q12(0.0f);
-                scratcher->model.anim.status = ANIM_STATUS(17, false);
+                scratcher->model.anim.status = ANIM_STATUS(HangedScratcherAnim_RunForward, false);
                 g_SysWork.charaGroupFlags[3]           &= ~CharaGroupFlag_1;
             }
             else
@@ -1797,7 +1797,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
     scratcherProps.flags &= ~(HangedScratcherFlag_4 | HangedScratcherFlag_5);
 
     // TODO: Can the `+ 88` etc below be added into the Rng macro calls? Couldn't match with that yet.
-    if (scratcher->model.anim.status == 35)
+    if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_RunForward, true))
     {
         if (ANIM_TIME_RANGE_CHECK(scratcher->model.anim.time, 272, 273))
         {
@@ -1827,7 +1827,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             scratcherProps.field_102 = 0;
         }
     }
-    else if (scratcher->model.anim.status == 37)
+    else if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_WalkForward, true))
     {
         if (ANIM_TIME_RANGE_CHECK(scratcher->model.anim.time, 285, 286))
         {
@@ -1857,7 +1857,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             scratcherProps.field_102 = 0;
         }
     }
-    else if (scratcher->model.anim.status == 3)
+    else if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_JumpDownFromWall, true))
     {
         if (scratcherProps.field_103 < 3)
         {

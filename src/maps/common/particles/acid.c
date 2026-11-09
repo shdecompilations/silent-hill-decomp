@@ -211,11 +211,11 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
 
             if (g_SysWork.npcs[0].model.charaId == Chara_Floatstinger)
             {
-                sub->attackReceived = 60;
+                sub->attackReceived = WEAPON_ATTACK(EquippedWeaponId_Unk60, AttackInputType_Tap);
             }
             else if (g_SysWork.npcs[0].model.charaId == Chara_Twinfeeler)
             {
-                sub->attackReceived = 62;
+                sub->attackReceived = WEAPON_ATTACK(EquippedWeaponId_Unk62, AttackInputType_Tap);
             }
         }
         else

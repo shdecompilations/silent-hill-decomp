@@ -441,7 +441,7 @@ void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x800D8
             monsterCybilProps.field_122 = Q12_ANGLE_NORM_U(
                 ratan2(Q12_TO_Q8(monsterCybil->position.vx - playerChara.position.vx),
                        Q12_TO_Q8(monsterCybil->position.vz - playerChara.position.vz)) +
-                Q12(1.0f));
+                Q12_ANGLE(360.0f));
 
             Math_ShortestAngleGet(monsterCybil->rotation.vy, monsterCybilProps.field_122, &sp12);
 
@@ -852,7 +852,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
                 monsterCybilProps.moveSpeed = Q12(0.0f);
 
-                if (monsterCybil->model.anim.status == 3)
+                if (monsterCybil->model.anim.status == ANIM_STATUS(MonsterCybilAnim_1, true))
                 {
                     if ((u16)monsterCybil->model.anim.keyframeIdx < 24)
                     {
@@ -916,7 +916,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             else
             {
                 monsterCybilProps.moveSpeed = Q12(0.0f);
-                if (monsterCybil->model.anim.status == 3)
+                if (monsterCybil->model.anim.status == ANIM_STATUS(MonsterCybilAnim_1, true))
                 {
                     if ((u16)monsterCybil->model.anim.keyframeIdx < 24)
                     {
@@ -931,7 +931,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case 2:
             if (monsterCybil->model.stateStep == 0)
             {
-                monsterCybil->model.anim.status = 4;
+                monsterCybil->model.anim.status = ANIM_STATUS(MonsterCybilAnim_2, false);
                 monsterCybil->model.stateStep++;
             }
 
@@ -941,7 +941,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case 3:
             if (monsterCybil->model.stateStep == 0)
             {
-                monsterCybil->model.anim.status = 6;
+                monsterCybil->model.anim.status = ANIM_STATUS(MonsterCybilAnim_3, false);
                 monsterCybil->model.stateStep++;
             }
 
@@ -953,7 +953,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (monsterCybil->model.stateStep == 0)
             {
-                monsterCybil->model.anim.status = 16;
+                monsterCybil->model.anim.status = ANIM_STATUS(MonsterCybilAnim_8, false);
                 monsterCybil->model.stateStep++;
             }
 
@@ -971,7 +971,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case 10:
             if (monsterCybil->model.stateStep == 0)
             {
-                monsterCybil->model.anim.status = 20;
+                monsterCybil->model.anim.status = ANIM_STATUS(MonsterCybilAnim_10, false);
                 monsterCybil->model.stateStep++;
             }
 
@@ -981,7 +981,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case 11:
             if (monsterCybil->model.stateStep == 0)
             {
-                monsterCybil->model.anim.status = 23;
+                monsterCybil->model.anim.status = ANIM_STATUS(MonsterCybilAnim_11, true);
                 monsterCybil->model.stateStep++;
                 monsterCybil->model.anim.time        = FP_TO(MONSTER_CYBIL_ANIM_INFOS[23].endKeyframeIdx, Q12_SHIFT);
                 monsterCybil->model.anim.keyframeIdx = MONSTER_CYBIL_ANIM_INFOS[23].endKeyframeIdx;
@@ -1349,7 +1349,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (modelUpper->stateStep == 0)
             {
-                modelUpper->anim.status = 0x18;
+                modelUpper->anim.status = ANIM_STATUS(MonsterCybilAnim_12, false);
                 modelUpper->stateStep++;
             }
 
@@ -1385,7 +1385,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case 1:
             if (monsterCybil->model.stateStep == 0)
             {
-                monsterCybil->model.anim.status = 3;
+                monsterCybil->model.anim.status = ANIM_STATUS(MonsterCybilAnim_1, true);
                 monsterCybil->model.stateStep++;
                 monsterCybil->model.anim.time        = MONSTER_CYBIL_ANIM_INFOS[3].startKeyframeIdx + Q12(3.0f);
                 monsterCybil->model.anim.keyframeIdx = MONSTER_CYBIL_ANIM_INFOS[3].startKeyframeIdx + 3;
@@ -1403,7 +1403,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                     func_800DB748(monsterCybil);
                 }
 
-                if (monsterCybil->model.anim.status == 3)
+                if (monsterCybil->model.anim.status == ANIM_STATUS(MonsterCybilAnim_1, true))
                 {
                     if ((u16)monsterCybil->model.anim.keyframeIdx < 24)
                     {
@@ -2101,8 +2101,10 @@ void func_800DBE5C(s_SubCharacter* monsterCybil)
         unkAngle1 = ((Rng_Rand16() & 0x1) * Q12_ANGLE(180.0f)) - Q12_ANGLE(45.0f);
     }
 
-    // TODO: Use macro.
-    unkAngle0 = Q12_ANGLE_NORM_U(unkAngle1 + ratan2(Q12_TO_Q8(monsterCybil->position.vx - Q12(20.0f)), Q12_TO_Q8(monsterCybil->position.vz - Q12(100.0f))) + Q12(1.0f));
+    unkAngle0 = Q12_ANGLE_NORM_U(unkAngle1 + 
+        ratan2(Q12_TO_Q8(monsterCybil->position.vx - Q12(20.0f)), 
+               Q12_TO_Q8(monsterCybil->position.vz - Q12(100.0f))) +
+        Q12_ANGLE(360.0f));
 
     if (monsterCybil->model.anim.status == ANIM_STATUS(MonsterCybilAnim_1, true))
     {

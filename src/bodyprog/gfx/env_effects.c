@@ -2242,8 +2242,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
     {
         if (ptr->field_38 != NO_VALUE)
         {
-            // TODO: Demagic this.
-            if (weaponAttack == 70)
+            if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Unk70, AttackInputType_Tap))
             {
                 g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = Q12_ANGLE(-90.0f);
                 g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = Q12_ANGLE(90.0f);

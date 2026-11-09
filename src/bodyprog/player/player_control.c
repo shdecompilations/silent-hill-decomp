@@ -1320,8 +1320,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
     Game_TimerUpdate();
 
-    g_Player_PrevMoveSpeed                              = Q12(0.0f);
-    D_800C454C                              = Q12(0.0f);
+    g_Player_PrevMoveSpeed                = Q12(0.0f);
+    D_800C454C                            = Q12(0.0f);
     player->properties.player.field_10C >>= 1;
 
     if (player->flags & CharaFlag_Unk4)
@@ -1417,9 +1417,10 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            if (player->attackReceived != 68 && player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
+            if (player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap) && 
+                player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
             {
-                g_Player_HeadingAngle        = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
+                g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
                 playerProps.moveSpeed = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
             }
 
@@ -1427,7 +1428,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 player->attackReceived = NO_VALUE;
 
-                g_SysWork.targetNpcIdx                                      = NO_VALUE;
+                g_SysWork.targetNpcIdx = NO_VALUE;
                 playerProps.flags &= ~PlayerFlag_DamageReceived;
 
                 Player_ExtraStateSet(player, extra, PlayerState_None);
@@ -1435,7 +1436,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 playerProps.moveSpeed = Q12(0.0f);
             }
 
-            g_Player_PrevMoveSpeed             = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed = playerProps.moveSpeed;
             player->flags         |= CharaFlag_Unk4;
             player->attackReceived = NO_VALUE;
             break;
@@ -2491,7 +2492,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            if (player->attackReceived != 68 && player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
+            if (player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap) && 
+                player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
             {
                 g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) -
                                         player->rotation.vy;
@@ -2877,7 +2879,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 playerCombat.weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack), AttackInputType_Tap);
             }
 
-            playerCombat.weaponAttack += g_Player_MeleeAttackType * 10; // TODO: Macro for this?
+            playerCombat.weaponAttack = WEAPON_ATTACK(playerCombat.weaponAttack, g_Player_MeleeAttackType);
 
             D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[playerCombat.weaponAttack].field_E;
             D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[playerCombat.weaponAttack].field_E +
@@ -7122,14 +7124,14 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             player->damage.position.vy = Q12(0.0f);
             player->damage.position.vx = Q12(0.0f);
 
-            if (player->attackReceived == 47)
+            if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold))
             {
                 g_SysWork.playerWork.player.collision.cylinder.innerRadius = Q12(0.0f);
                 Player_ExtraStateSet(player, extra, PlayerState_InstantDeath);
                 return;
             }
 
-            if (player->attackReceived == 68 ||
+            if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap) ||
                 player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
             {
                 player->damage.amount = Q12(0.0f);
@@ -7175,11 +7177,11 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             {
                 enemyRotY -= Q12_ANGLE(90.0f);
             }
-            else if (player->attackReceived == 69)
+            else if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
             {
                 enemyRotY = Q12_ANGLE(90.0f);
             }
-            else if (player->attackReceived == 68)
+            else if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap))
             {
                 enemyRotY = player->damage.position.vy;
             }
@@ -7286,7 +7288,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     g_Player_HeadingAngle = headingAngle;
 
                 case 68:
-                    if (player->attackReceived != 69)
+                    if (player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
                     {
                         playerProps.moveSpeed = Q12(4.0f);
                         Math_ShortestAngleGet(player->rotation.vy, (s16)player->damage.position.vy, &headingAngle);
@@ -7422,7 +7424,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             g_SysWork.npcIdxs[i] = NO_VALUE;
         }
 
-        if (player->attackReceived == 66)
+        if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap))
         {
             Player_ExtraStateSet(player, extra, PlayerState_Unk36);
         }

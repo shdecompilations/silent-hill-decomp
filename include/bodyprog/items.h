@@ -205,8 +205,10 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Unk56          = 56, // Puppet Nurse attack.
 
     EquippedWeaponId_Unk59          = 59, // Float Stinger attack.
+    EquippedWeaponId_Unk60          = 60, // Float Stinger attack.
 
     EquippedWeaponId_Unk61          = 61, // Twinfeeler attack.
+    EquippedWeaponId_Unk62          = 62, // Twinfeeler attack.
 
     EquippedWeaponId_Unk63          = 63, // Cybil or Monster Cybil attack.
 
@@ -214,6 +216,8 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_RifleShells    = 65, // Monster Cybil attack?
     EquippedWeaponId_ShotgunShells  = 66, // Monster Cybil attack?
 
+    EquippedWeaponId_Unk67          = 67, // Used in M7S03, unknown character.
+    EquippedWeaponId_Unk68          = 68, // Unknown23 attack.
     EquippedWeaponId_Unk69          = 69, // Bloodsucker attack.
     EquippedWeaponId_Unk70          = 70, // Kaufmann attack on Dahlia?
 

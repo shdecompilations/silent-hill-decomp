@@ -265,7 +265,7 @@ void func_800DDDD8(s_SubCharacter* incubus) // 0x800DDDD8
             break;
     }
 
-    if (incubus->model.anim.status == ANIM_STATUS(4, false))
+    if (incubus->model.anim.status == ANIM_STATUS(IncubusAnim_4, false))
     {
         incubus->model.controlState = IncubusControl_5;
         incubus->model.stateStep    = 0;

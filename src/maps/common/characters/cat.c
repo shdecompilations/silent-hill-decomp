@@ -46,7 +46,7 @@ void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoo
     animInfo->playbackFunc(&cat->model, anmHdr, boneCoords, animInfo);
 
     cond = false;
-    if (cat->model.anim.status == ANIM_STATUS(1, true))
+    if (cat->model.anim.status == ANIM_STATUS(CatAnim_Jump, true))
     {
         // TODO: Change `N - X < Yu` into range checks.
         if ((catProps.field_E8 == 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 20) < 3u) ||

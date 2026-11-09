@@ -368,8 +368,7 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
 
     ptr = FS_BUFFER_26;
 
-    // TODO: Decode into `WEAPON_ATTACK` macro.
-    Chara_AttackReceivedSet(&g_SysWork.playerWork.player, 68);
+    Chara_AttackReceivedSet(&g_SysWork.playerWork.player, WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap));
 
     angle                                          = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
     g_SysWork.playerWork.player.damage.amount      = 1;
@@ -464,7 +463,7 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DF
         chara->model.stateStep    = 0;
     }
 
-    Chara_AnimSet(chara, ANIM_STATUS(2, false), 115);
+    Chara_AnimSet(chara, ANIM_STATUS(Unknown23Anim_2, false), 115);
     ModelAnim_AnimInfoSet(&chara->model.anim, UNKKOWN_23_ANIM_INFOS);
 
     Chara_DamageClear(chara);
@@ -558,7 +557,7 @@ void func_800DFEF0(s_SubCharacter* chara) // 0x800DFEF0
         return;
     }
 
-    if (chara->model.anim.status == 8)
+    if (chara->model.anim.status == ANIM_STATUS(Unknown23Anim_4, false))
     {
         chara->model.controlState = 2;
         chara->model.stateStep    = 0;
@@ -907,7 +906,7 @@ void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* bo
 
     Math_MatrixTransform(&chara->position, &chara->rotation, boneCoords);
 
-    if (chara->model.anim.status != ANIM_STATUS(0, false))
+    if (chara->model.anim.status != ANIM_STATUS(Unknown23Anim_Still, false))
     {
         animInfo = &UNKKOWN_23_ANIM_INFOS[chara->model.anim.status];
         animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);

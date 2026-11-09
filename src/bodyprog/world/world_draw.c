@@ -522,16 +522,13 @@ void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECT
 
         // Submit new world object to draw.
         obj            = &g_WorldGfxWork.objects[g_WorldGfxWork.objectCount];
-        obj->rotationX = rotX;
-        obj->rotationY = rotY;
-
-        if (obj->positionZ) {} // @hack Required for match.
-
-        obj->rotationZ = rotZ;
         obj->model     = model;
         obj->positionX = posX;
         obj->positionY = posY;
         obj->positionZ = posZ;
+        obj->rotationX = rotX;
+        obj->rotationY = rotY;
+        obj->rotationZ = rotZ;
 
         g_WorldGfxWork.objectCount++;
     }

@@ -48,7 +48,8 @@ typedef enum _PuppetNurseAnim
     PuppetNurseAnim_18    = 18,
     PuppetNurseAnim_19    = 19,
     PuppetNurseAnim_20    = 20,
-    PuppetNurseAnim_21    = 21
+    PuppetNurseAnim_21    = 21,
+    PuppetNurseAnim_22    = 22
 } e_PuppetNurseAnim;
 
 /** @brief Puppet Nurse or Puppet Doctor character swappable mesh IDs. */
