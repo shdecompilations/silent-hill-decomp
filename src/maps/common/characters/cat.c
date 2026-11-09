@@ -48,17 +48,16 @@ void Cat_Update(s_SubCharacter* cat, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoo
     cond = false;
     if (cat->model.anim.status == ANIM_STATUS(CatAnim_Jump, true))
     {
-        // TODO: Change `N - X < Yu` into range checks.
-        if ((catProps.field_E8 == 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 20) < 3u) ||
-            (catProps.field_E8 != 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 25) < 3u))
+        if ((catProps.field_E8 == 0 && ANIM_TIME_RANGE_CHECK(cat->model.anim.time, 20, 22)) ||
+            (catProps.field_E8 != 0 && ANIM_TIME_RANGE_CHECK(cat->model.anim.time, 25, 27)))
         {
             cond = true;
         }
     }
     else
     {
-        if ((catProps.field_E8 == 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 29) < 3u) ||
-            (catProps.field_E8 != 0 && (FP_FROM(cat->model.anim.time, Q12_SHIFT) - 36) < 3u))
+        if ((catProps.field_E8 == 0 && ANIM_TIME_RANGE_CHECK(cat->model.anim.time, 29, 31)) ||
+            (catProps.field_E8 != 0 && ANIM_TIME_RANGE_CHECK(cat->model.anim.time, 36, 38)))
         {
             cond = true;
         }

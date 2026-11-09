@@ -634,7 +634,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
                                         groaner->rotation.vy);
 
     if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_StandToJumpAttack ||
-        ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 214) < 9u)
+        ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 214, 222))
     {
         unkAngle = TIMESTEP_ANGLE(1, 3);
         if ((angleDeltaToPlayer0 >= Q12_ANGLE(0.0f) && unkAngle <  angleDeltaToPlayer0) ||
@@ -710,7 +710,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
         }
     }
 
-    if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 222)) < 2u)
+    if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 222, 223))
     {
         newPos.vx = groaner->position.vx + groaner->collision.shapeOffsets.cylinder.vx;
         newPos.vy = groaner->position.vy - Q12(0.8f);
@@ -719,13 +719,13 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
                       &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
     }
 
-    if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 222)) < 14u)
+    if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 222, 235))
     {
         groaner->fallSpeed += g_GravitySpeed;
         Chara_MoveSpeedUpdate3(groaner, Q12(0.3f), Q12(0.0f));
     }
 
-    if ((ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model.anim.time, 236)) < 7u)
+    if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 236, 242))
     {
         Chara_MoveSpeedUpdate3(groaner, Q12(1.2f), Q12(0.0f));
     }
