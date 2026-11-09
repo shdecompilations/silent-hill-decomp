@@ -274,4 +274,21 @@ STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
 #define INV_AMMO_WEAPON_ID(ammoId) \
     ((ammoId) - INV_ITEM_GROUP_SIZE)
 
+/** @brief Packs a weapon attack containing a weapon ID and attack input type.
+ *
+ * @param weaponId Weapon ID.
+ * @param attackInputType Attack input type.
+ * @return Packed weapon attack containing a weapon ID and attack input type.
+ */
+#define WEAPON_ATTACK(weaponId, attackInputType) \
+    ((weaponId) + ((attackInputType) * 10))
+
+/** @brief Retrieves the weapon ID from a packed weapon attack.
+ *
+ * @param weaponAttack Packed weapon attack containing a weapon ID and attack input type.
+ * @return Weapon ID.
+ */
+#define WEAPON_ATTACK_ID_GET(weaponAttack) \
+    ((weaponAttack) % 10)
+
 #endif

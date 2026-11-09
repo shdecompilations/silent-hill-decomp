@@ -20,39 +20,6 @@
 #include "bodyprog/sys/joy.h"
 #include "maps/common/characters/harry.h"
 
-/** @brief Packs a weapon attack containing a weapon ID and attack input type.
- *
- * @param weaponId Weapon ID.
- * @param attackInputType Attack input type.
- * @return Packed weapon attack containing a weapon ID and attack input type.
- */
-#define WEAPON_ATTACK(weaponId, attackInputType) \
-    ((weaponId) + ((attackInputType) * 10))
-
-/** @brief Retrieves the weapon ID from a packed weapon attack.
- *
- * @param weaponAttack Packed weapon attack containing a weapon ID and attack input type.
- * @return Weapon ID.
- */
-#define WEAPON_ATTACK_ID_GET(weaponAttack) \
-    ((weaponAttack) % 10)
-
-/** @brief Creates a bitmask with a contiguous range of bits set.
- * For use with `s_PlayerExtra::disabledAnimBoneFlags`.
- *
- * Generates an `unsigned int` mask with all bits in the range `[fromInclusive, toInclusive]` set.
- *
- * For example:
- * - `BITMASK_RANGE(0, 2)` -> 0b000...0111 (decimal 7).
- * - `BITMASK_RANGE(4, 11)` -> 0b000...111111110000 (decimal 4080).
- *
- * @param fromInclusive Index of the lowest bit to set (0 = least significant bit).
- * @param toInclusive Index of the highest bit to set.
- * @return Bitmask with the specified range of bits set to 1 (`unsigned int`).
- */
-#define BITMASK_RANGE(fromInclusive, toInclusive) \
-    (((~0u << (fromInclusive)) & ~(~0u << ((toInclusive) + 1))))
-
 /* Macros for comparing map chunk indices against a map X/Z position.
  *
  * SH1 game world is split to 40x40 meter chunks, terrain loading code and filenames of IPDs (eg. `THR01FF.IPD` for X 1, Z -1)
@@ -101,15 +68,6 @@
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                             \
     (((g_SysWork.playerWork.player.position.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork.player.position.comp - Q12(base)) < Q12(tol)) : \
                                                                               ((Q12(base) - g_SysWork.playerWork.player.position.comp) < Q12(tol)))
-
-#define HAS_FLAG(ptr, idx) \
-    ((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))
-
-#define SET_FLAG(ptr, idx) \
-    ((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
-
-#define CLEAR_FLAG(ptr, idx) \
-    ((((u32*)ptr)[(idx) >> 5] &= ~((1 << 0) << ((idx) & 0x1F))))
 
 /** @brief System flags. TODO: Give this a more specific name. */
 typedef enum _SysFlags
@@ -397,7 +355,7 @@ typedef struct _SysWork
     /* 0x890    */ GsCOORDINATE2    playerBoneCoords[HarryBone_Count];
     /* 0xE30    */ GsCOORDINATE2    unkCoords_E30[5];                       // Might be part of previous array for 5 extra coords which go unused.
     /* 0xFC0    */ GsCOORDINATE2    npcBoneCoordBuffer[NPC_BONE_COUNT_MAX]; /** Contiguous NPC bone coord buffer. */
-    /* 0x2280   */ s8               npcFlagId;                              // 1-based NPC ID for `npcFlags`.
+    /* 0x2280   */ s8               npcFlagId;                              /** 1-based NPC ID for `npcFlags`. */
     /* 0x2281   */ s8               loadingScreenIdx;
     /* 0x2282   */ s8               areaTransitionFlags;                /** `e_AreaTransitionFlags` */
     /* 0x2283   */ s8               sfxPairIdx;                         /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */

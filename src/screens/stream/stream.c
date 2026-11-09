@@ -90,9 +90,10 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
 {
     static s32 g_Debug_MoviePlayerIdx = 0; // 0x801E3F3C
 
+    // @unused Changes to non-existent state `GameState_Unk16` and crashes. Maybe removed debug menu.
     if (Pad_ButtonClickedBind(cancel))
     {
-        Game_StateSetNext(GameState_Unk16); // Changes to non-existent state 22 and crashes. Maybe removed debug menu.
+        Game_StateSetNext(GameState_Unk16);
     }
 
     if (Pad_ButtonPulsed(ControllerFlag_LStickHighLeft))
