@@ -89,6 +89,15 @@
 #define PLAYER_IN_MAP_CHUNK(x, z) \
     (PLAYER_IN_MAP_CHUNK_X(x) && PLAYER_IN_MAP_CHUNK_Z(z))
 
+/** @brief `CELL_XZ` switch key of terrain chunk (`x`, `z`). indexes offset by 16 to keep both positive? (or maybe `SUBCHUNK_SIZE * 2`?) */
+#define MAP_CHUNK_CELL(x, z) \
+    CELL_XZ(MAP_CHUNK_IDX_FROM_GRID(x) + 16, MAP_CHUNK_IDX_FROM_GRID(z) + 16)
+
+/** @brief `MAP_CHUNK_CELL` switch key of the player's current chunk. */
+#define PLAYER_MAP_CHUNK_CELL()                                            \
+    CELL_XZ(MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vx) + 16, \
+            MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vz) + 16)
+
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                             \
     (((g_SysWork.playerWork.player.position.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork.player.position.comp - Q12(base)) < Q12(tol)) : \
                                                                               ((Q12(base) - g_SysWork.playerWork.player.position.comp) < Q12(tol)))

@@ -454,7 +454,6 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     s32      cellX;
     s32      cellZ;
     s32      projCellX1;
-    s32      mapChunkX;
     s32      var_v0_16;
     s32      projCellX0;
     q3_12    angle;
@@ -652,17 +651,11 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                     mapCoordIdxX = MapCoordIdxGet( playerChara.position.vx, Q12(2.0f) - 1, 13,  60);
                     mapCoordIdxZ = MapCoordIdxGet(-playerChara.position.vz, Q12(2.0f) - 1, 13, -85);
 
-                    mapChunkX = playerChara.position.vx / Q12(CHUNK_SIZE);
-                    if ((playerChara.position.vx >  Q12(0.0f) && (mapChunkX + 1) == -4) ||
-                        (playerChara.position.vx <= Q12(0.0f) && (mapChunkX - 1) == -4))
-                    // if (PLAYER_IN_MAP_CHUNK_X(-4)) // TODO: Causing mismatch.
+                    if (PLAYER_IN_MAP_CHUNK(-4, -1))
                     {
-                        if (PLAYER_IN_MAP_CHUNK_Z(-1))
-                        {
-                            mapCoordIdxX += 87;
-                            mapCoordIdxZ += 61;
-                            break;
-                        }
+                        mapCoordIdxX += 87;
+                        mapCoordIdxZ += 61;
+                        break;
                     }
 
                     if (PLAYER_IN_MAP_CHUNK(-5, -1))

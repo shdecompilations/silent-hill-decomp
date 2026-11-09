@@ -3472,10 +3472,6 @@ extern VECTOR3 D_800CC7CC;
 
 void Map_WorldObjectsUpdate(void) // 0x800E5F54
 {
-    s32 cellZ0;
-    s32 cellX0;
-    s32 projCellZ0;
-    s32 projCellX0;
     u16 triggerFlags;
 
     #define playerChara g_SysWork.playerWork.player
@@ -3488,30 +3484,9 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
         func_8003A16C();
     }
 
-    cellZ0 = playerChara.position.vz / Q12(CHUNK_SIZE);
-    cellX0 = playerChara.position.vx / Q12(CHUNK_SIZE);
-
-    if (playerChara.position.vx > Q12(0.0f))
+    switch (PLAYER_MAP_CHUNK_CELL())
     {
-        projCellX0 = cellX0 + 17;
-    }
-    else
-    {
-        projCellX0 = cellX0 + 15;
-    }
-
-    if (playerChara.position.vz > Q12(0.0f))
-    {
-        projCellZ0 = cellZ0 + 17;
-    }
-    else
-    {
-        projCellZ0 = cellZ0 + 15;
-    }
-
-    switch (CELL_XZ(projCellX0, projCellZ0))
-    {
-        case CELL_XZ(17, 19):
+        case MAP_CHUNK_CELL(0, 2):
             func_800E636C();
 
             if (Savegame_EventFlagGet(EventFlag_443))
@@ -3532,7 +3507,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
             }
             break;
 
-        case CELL_XZ(15, 15):
+        case MAP_CHUNK_CELL(-1, -1):
             WorldObjects_Add(&g_WorldObject9.object, &g_WorldObject9.position, &g_WorldObject9.rotation);
 
         default:

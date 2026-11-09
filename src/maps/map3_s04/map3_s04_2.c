@@ -522,37 +522,12 @@ extern VECTOR3 D_800CB370;
 
 void Map_WorldObjectsUpdate(void) // 0x800D3DA4
 {
-    s32    cellZ0;
-    s32    cellX0;
-    s32    projCellZ0;
-    s32    projCellX0;
     s32    i;
     q19_12 drZ;
 
-    cellZ0 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
-    cellX0 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
-
-    if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
+    switch (PLAYER_MAP_CHUNK_CELL())
     {
-        projCellX0 = cellX0 + 17;
-    }
-    else
-    {
-        projCellX0 = cellX0 + 15;
-    }
-
-    if (g_SysWork.playerWork.player.position.vz > Q12(0.0f))
-    {
-        projCellZ0 = cellZ0 + 17;
-    }
-    else
-    {
-        projCellZ0 = cellZ0 + 15;
-    }
-
-    switch (CELL_XZ(projCellX0, projCellZ0))
-    {
-        case CELL_XZ(19, 18):
+        case MAP_CHUNK_CELL(2, 1):
             if (!Savegame_EventFlagGet(EventFlag_M3S04_PickupPlateOfQueen))
             {
                 WorldObjects_Add(&g_WorldObject_Plate.object, &g_WorldObject_Plate.position, &D_800CB35C);
@@ -561,7 +536,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
             WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
             break;
 
-        case CELL_XZ(17, 18):
+        case MAP_CHUNK_CELL(0, 1):
             if (g_SysWork.sysState == SysState_Gameplay && g_WorldObject_Dr->position.vz != Q12(59.1f))
             {
                 drZ = Q12(59.1f);

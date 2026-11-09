@@ -3546,56 +3546,30 @@ static const VECTOR3 D_800CDC58 = { Q12(140.0f), Q12(-1.2f), Q12(-23.5f) };
 
 void Map_WorldObjectsUpdate(void) // 0x800E4528
 {
-    s32 cellZ0;
-    s32 cellX0;
     s32 i;
-    s32 projCellZ0;
-    s32 projCellX0;
 
-
-    cellZ0 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
-    cellX0 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
-
-    if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
+    switch (PLAYER_MAP_CHUNK_CELL())
     {
-        projCellX0 = cellX0 + 17;
-    }
-    else
-    {
-        projCellX0 = cellX0 + 15;
-    }
-
-    if (g_SysWork.playerWork.player.position.vz > Q12(0.0f))
-    {
-        projCellZ0 = cellZ0 + 17;
-    }
-    else
-    {
-        projCellZ0 = cellZ0 + 15;
-    }
-
-    switch (CELL_XZ(projCellX0, projCellZ0))
-    {
-        case CELL_XZ(11, 12):
+        case MAP_CHUNK_CELL(-5, -4):
             if (Savegame_EventFlagGet(EventFlag_569))
             {
                 WorldObjects_Add(&g_WorldObject_Diary.object, &g_WorldObject_Diary.position, &g_WorldObject_Diary.rotation);
             }
             break;
 
-        case CELL_XZ(18, 15):
+        case MAP_CHUNK_CELL(1, -1):
             WorldObjects_Add(&g_WorldObject_KaigaR[Savegame_EventFlagGet(EventFlag_498) ? 1 : 0], &g_WorldObject_UnkPos0, &g_WorldObject_UnkRot0);
             WorldObjects_Add(&g_WorldObject_KaigaL[Savegame_EventFlagGet(EventFlag_499) ? 1 : 0], &g_WorldObject_UnkPos1, &g_WorldObject_UnkRot0);
             break;
 
-        case CELL_XZ(15, 14):
+        case MAP_CHUNK_CELL(-1, -2):
             WorldObjects_Add(&g_WorldObject_Stone.object, &g_WorldObject_Stone.position, &g_WorldObject_Stone.rotation);
             WorldObjects_Add(&g_WorldObject_Window.object, &g_WorldObject_Window.position, &g_WorldObject_Window.rotation);
             WorldObjects_Add(&g_WorldObject_SavePad, &g_WorldObject_UnkPose0.position, &g_WorldObject_UnkPose0.rotation);
             WorldObjects_Add(&g_WorldObject_KeyX2.object, &g_WorldObject_KeyX2.position, &g_WorldObject_KeyX2.rotation);
             break;
 
-        case CELL_XZ(20, 14):
+        case MAP_CHUNK_CELL(3, -2):
             if (Savegame_EventFlagGet(EventFlag_551))
             {
                 WorldObjects_Add(&g_WorldObject_Bed3.object, &g_WorldObject_Bed3.position, &g_WorldObject_Bed3.rotation);
@@ -3606,14 +3580,14 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             break;
 
-        case CELL_XZ(17, 13):
+        case MAP_CHUNK_CELL(0, -3):
             if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupAnkh))
             {
                 WorldObjects_Add(&g_WorldObject_Ank.object, &g_WorldObject_Ank.position, &SVECTOR3_Zero);
             }
             break;
 
-        case CELL_XZ(17, 14):
+        case MAP_CHUNK_CELL(0, -2):
             if (Savegame_EventFlagGet(EventFlag_557))
             {
                 WorldObjects_Add(&g_WorldObject_Ref[1].object, &g_WorldObject_Ref[1].position, &SVECTOR3_Zero);
@@ -3660,7 +3634,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             break;
 
-        case CELL_XZ(18, 14):
+        case MAP_CHUNK_CELL(1, -2):
             if (!Savegame_EventFlagGet(EventFlag_556))
             {
                 WorldObjects_Add(&g_WorldObject_Jelly.object, &g_WorldObject_Jelly.position, &g_WorldObject_Jelly.rotation);
@@ -3671,7 +3645,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             break;
 
-        case CELL_XZ(19, 13):
+        case MAP_CHUNK_CELL(2, -3):
             if (Savegame_EventFlagGet(EventFlag_560))
             {
                 WorldObjects_Add(&g_WorldObject_Wall9.object, &g_WorldObject_Wall9.position, &SVECTOR3_Zero);
@@ -3679,21 +3653,21 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             break;
 
-        case CELL_XZ(17, 15):
+        case MAP_CHUNK_CELL(0, -1):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupAmuletOfSolomon))
             {
                 WorldObjects_Add(&g_WorldObject_Gofu.object, &g_WorldObject_Gofu.position, &SVECTOR3_Zero);
             }
             break;
 
-        case CELL_XZ(15, 13):
+        case MAP_CHUNK_CELL(-1, -3):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupScrewdriver))
             {
                 WorldObjects_Add(&g_WorldObject_Driver.object, &g_WorldObject_Driver.position, &SVECTOR3_Zero);
             }
             break;
 
-        case CELL_XZ(19, 15):
+        case MAP_CHUNK_CELL(2, -1):
             WorldObjects_Add(&g_WorldObject_Zukan.object, &g_WorldObject_Zukan.position, &SVECTOR3_Zero);
             if (Savegame_EventFlagGet(EventFlag_M5S03_SeenSecondNewspaper))
             {
@@ -3701,7 +3675,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             break;
 
-        case CELL_XZ(14, 12):
+        case MAP_CHUNK_CELL(-2, -4):
             if (Savegame_EventFlagGet(EventFlag_486))
             {
                 if (!Savegame_EventFlagGet(EventFlag_M7S02_PickupKeyOfAratron))
@@ -3733,30 +3707,30 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             break;
 
-        case CELL_XZ(12, 12):
+        case MAP_CHUNK_CELL(-4, -4):
             WorldObjects_Add(&g_WorldObject_Kubomi.object, &g_WorldObject_Kubomi.position, &SVECTOR3_Zero);
             break;
 
-        case CELL_XZ(15, 12):
+        case MAP_CHUNK_CELL(-1, -4):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupCamera))
             {
                 WorldObjects_Add(&g_WorldObject_Camera.object, &g_WorldObject_Camera.position, &g_WorldObject_Camera.rotation);
             }
             break;
 
-        case CELL_XZ(21, 13):
+        case MAP_CHUNK_CELL(4, -3):
             WorldObjects_Add(&g_WorldObject_Door.object, &g_WorldObject_Door.position, &g_WorldObject_Door.rotation);
             break;
 
-        case CELL_XZ(15, 15):
-        case CELL_XZ(13, 14):
+        case MAP_CHUNK_CELL(-1, -1):
+        case MAP_CHUNK_CELL(-3, -2):
             for (i = 0; i < 6; i++)
             {
                 WorldObjects_Add(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &SVECTOR3_Zero);
             }
             break;
 
-        case CELL_XZ(11, 13):
+        case MAP_CHUNK_CELL(-5, -3):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupRingOfContract))
             {
                 WorldObjects_Add(&g_WorldObject_Ring.object, &g_WorldObject_Ring.position, &g_WorldObject_Ring.rotation);
@@ -3767,7 +3741,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             }
             break;
 
-        case CELL_XZ(18, 13):
+        case MAP_CHUNK_CELL(1, -3):
             if (Savegame_EventFlagGet(EventFlag_540))
             {
                 WorldObjects_Add(&g_WorldObject_GofuA[0].object, &g_WorldObject_GofuA[0].position, &g_WorldObject_GofuA->rotation);
@@ -3796,7 +3770,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
             WorldObjects_Add(&g_WorldObject_SavePad, &g_WorldObject_UnkPose1.position, &g_WorldObject_UnkPose1.rotation);
             break;
 
-        case CELL_XZ(12, 15):
+        case MAP_CHUNK_CELL(-4, -1):
             if (!Savegame_EventFlagGet(EventFlag_478) && g_SysWork.playerWork.player.position.vz < Q12(-19.0f))
             {
                 Savegame_EventFlagSet(EventFlag_478);

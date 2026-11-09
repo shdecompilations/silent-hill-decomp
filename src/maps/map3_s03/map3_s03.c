@@ -925,11 +925,7 @@ void Map_WorldObjectsInit(void) // 0x800D3EAC
 void Map_WorldObjectsUpdate(void) // 0x800D429C
 {
     VECTOR3 colorsPos;
-    s32     cellZ0;
-    s32     cellX0;
     s32     flags;
-    s32     projCellZ0;
-    s32     projCellX0;
     q19_12  drZ;
     s32     i;
 
@@ -940,30 +936,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         D_800D8428 = 0;
     }
 
-    cellZ0 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
-    cellX0 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
-
-    if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
+    switch (PLAYER_MAP_CHUNK_CELL())
     {
-        projCellX0 = cellX0 + 17;
-    }
-    else
-    {
-        projCellX0 = cellX0 + 15;
-    }
-
-    if (g_SysWork.playerWork.player.position.vz > Q12(0.0f))
-    {
-        projCellZ0 = cellZ0 + 17;
-    }
-    else
-    {
-        projCellZ0 = cellZ0 + 15;
-    }
-
-    switch (CELL_XZ(projCellX0, projCellZ0))
-    {
-        case CELL_XZ(17, 18):
+        case MAP_CHUNK_CELL(0, 1):
             if (g_SysWork.sysState == SysState_Gameplay && (g_WorldObject_Dr->position.vz != Q12(59.1f)))
             {
                 drZ = Q12(59.1f);
@@ -980,7 +955,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             }
             break;
 
-        case CELL_XZ(15, 20):
+        case MAP_CHUNK_CELL(-1, 3):
             colorsPos.vz = Q12(140.0f);
 
             if (Savegame_EventFlagGet(EventFlag_265) ||
@@ -1088,7 +1063,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             }
             break;
 
-        case CELL_XZ(12, 18):
+        case MAP_CHUNK_CELL(-4, 1):
             if (Savegame_EventFlagGet(EventFlag_250))
             {
                 flags |= 1 << 2;
@@ -1123,14 +1098,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             }
             break;
 
-        case CELL_XZ(15, 15):
+        case MAP_CHUNK_CELL(-1, -1):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfCat))
             {
                 WorldObjects_Add(&g_WorldObject_Plate1.object, &g_WorldObject_Plate1.position, &SVECTOR3_Zero);
             }
             break;
 
-        case CELL_XZ(12, 15):
+        case MAP_CHUNK_CELL(-4, -1):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle))
             {
                 WorldObjects_Add(&g_WorldObject_Panel.object, &g_WorldObject_Panel.position, &g_WorldObject_Panel.rotation);
@@ -1145,35 +1120,35 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
             }
             break;
 
-        case CELL_XZ(13, 18):
+        case MAP_CHUNK_CELL(-3, 1):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupLighter))
             {
                 WorldObjects_Add(&g_WorldObject_Lighter.object, &g_WorldObject_Lighter.position, &g_WorldObject_Lighter.rotation);
             }
             break;
 
-        case CELL_XZ(14, 17):
+        case MAP_CHUNK_CELL(-2, 0):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupDisinfectingAlcohol))
             {
                 WorldObjects_Add(&g_WorldObject_Alcohol.object, &g_WorldObject_Alcohol.position, &SVECTOR3_Zero);
             }
             break;
 
-        case CELL_XZ(13, 17):
+        case MAP_CHUNK_CELL(-3, 0):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBasementStoreroomKey))
             {
                 WorldObjects_Add(&g_WorldObject_Key.object, &g_WorldObject_Key.position, &SVECTOR3_Zero);
             }
             break;
 
-        case CELL_XZ(14, 15):
+        case MAP_CHUNK_CELL(-2, -1):
             if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBloodPack))
             {
                 WorldObjects_Add(&g_WorldObject_Blood0.object, &g_WorldObject_Blood0.position, &g_WorldObject_Blood0.rotation);
             }
             break;
 
-        case CELL_XZ(14, 14):
+        case MAP_CHUNK_CELL(-2, -2):
             WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
             break;
     }

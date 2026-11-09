@@ -2119,46 +2119,13 @@ void Map_WorldObjectsInit(void) // 0x800EB908
 
 void Map_WorldObjectsUpdate(void) // 0x800EC080
 {
-    s32 cellX0;
-    s32 cellX1;
-    s32 cellX2;
-    s32 cellZ0;
-    s32 cellZ1;
-    s32 cellZ2;
-    s32 projCellX0;
-    s32 projCellX1;
-    s32 projCellX2;
-    s32 projCellZ0;
-    s32 projCellZ1;
-    s32 projCellZ2;
     s32 flags;
 
     flags = 0;
 
-    cellZ0 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
-    cellX0 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
-
-    if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
+    switch (PLAYER_MAP_CHUNK_CELL())
     {
-        projCellX0 = cellX0 + 17;
-    }
-    else
-    {
-        projCellX0 = cellX0 + 15;
-    }
-
-    if (g_SysWork.playerWork.player.position.vz > Q12(0.0f))
-    {
-        projCellZ0 = cellZ0 + 17;
-    }
-    else
-    {
-        projCellZ0 = cellZ0 + 15;
-    }
-
-    switch (CELL_XZ(projCellX0, projCellZ0))
-    {
-        case CELL_XZ(11, 24):
+        case MAP_CHUNK_CELL(-5, 7):
             if (!Savegame_EventFlagGet(EventFlag_147))
             {
                 WorldObjects_Add(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
@@ -2170,8 +2137,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             }
             break;
 
-        case CELL_XZ(12, 17):
-        case CELL_XZ(12, 15):
+        case MAP_CHUNK_CELL(-4, 0):
+        case MAP_CHUNK_CELL(-4, -1):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_DogHouseNoteFound))
             {
                 WorldObjects_Add(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
@@ -2179,7 +2146,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             }
             break;
 
-        case CELL_XZ(14, 25):
+        case MAP_CHUNK_CELL(-2, 8):
             WorldObjects_Add(&g_WorldObject5[2], &D_800F55DC[1], &D_800F5344);
             WorldObjects_Add(&g_WorldObject5[3], &D_800F55DC[1], &D_800F5344);
 
@@ -2191,7 +2158,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             WorldObjects_Add(&D_800F56EC, &D_800F574C.position, &D_800F574C.rotation);
             break;
 
-        case CELL_XZ(21, 13):
+        case MAP_CHUNK_CELL(4, -3):
             if (Savegame_EventFlagGet(EventFlag_163))
             {
                 flags |= 1 << 2;
@@ -2205,9 +2172,9 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
                 flags |= 1 << 1;
             }
 
-        case CELL_XZ(21, 14):
-        case CELL_XZ(22, 14):
-        case CELL_XZ(22, 13):
+        case MAP_CHUNK_CELL(4, -2):
+        case MAP_CHUNK_CELL(5, -2):
+        case MAP_CHUNK_CELL(5, -3):
             WorldObjects_Add(&g_WorldObject5[0], &D_800F55DC[0], &D_800F5344);
             WorldObjects_Add(&g_WorldObject5[1], &D_800F55DC[0], &D_800F5344);
 
@@ -2226,7 +2193,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             }
             break;
 
-        case CELL_XZ(9, 13):
+        case MAP_CHUNK_CELL(-7, -3):
             WorldObjects_Add(&D_800F535C, &D_800F537C, &D_800F538C);
 
             if (!Savegame_EventFlagGet(EventFlag_170))
@@ -2249,8 +2216,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             }
             break;
 
-        case CELL_XZ(19, 22):
-        case CELL_XZ(20, 22):
+        case MAP_CHUNK_CELL(2, 5):
+        case MAP_CHUNK_CELL(3, 5):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
                 WorldObjects_Add(&g_WorldObjectB->object, &g_WorldObjectB->position, &SVECTOR3_Zero);
@@ -2269,29 +2236,29 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             WorldObjects_Add(&D_800F56EC, &D_800F570C.position, &D_800F570C.rotation);
             break;
 
-        case CELL_XZ(21, 19):
+        case MAP_CHUNK_CELL(4, 2):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
             {
                 WorldObjects_Add(&g_WorldObject4[0].object, &g_WorldObject4[0].position, &g_WorldObject4[0].rotation);
             }
             break;
 
-        case CELL_XZ(11, 26):
+        case MAP_CHUNK_CELL(-5, 9):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfWoodman))
             {
                 WorldObjects_Add(&g_WorldObject4[1].object, &g_WorldObject4[1].position, &g_WorldObject4[1].rotation);
             }
             break;
 
-        case CELL_XZ(19, 15):
+        case MAP_CHUNK_CELL(2, -1):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
             {
                 WorldObjects_Add(&g_WorldObject4[2].object, &g_WorldObject4[2].position, &g_WorldObject4[2].rotation);
             }
             break;
 
-        case CELL_XZ(19, 24):
-        case CELL_XZ(20, 24):
+        case MAP_CHUNK_CELL(2, 7):
+        case MAP_CHUNK_CELL(3, 7):
             WorldObjects_Add(&D_800F56EC, &D_800F572C.position, &D_800F572C.rotation);
             break;
 
@@ -2299,30 +2266,9 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             break;
     }
 
-    cellZ1 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
-    cellX1 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
-
-    if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
+    switch (PLAYER_MAP_CHUNK_CELL())
     {
-        projCellX1 = cellX1 + 17;
-    }
-    else
-    {
-        projCellX1 = cellX1 + 15;
-    }
-
-    if (g_SysWork.playerWork.player.position.vz > Q12(0.0f))
-    {
-        projCellZ1 = cellZ1 + 17;
-    }
-    else
-    {
-        projCellZ1 = cellZ1 + 15;
-    }
-
-    switch (CELL_XZ(projCellX1, projCellZ1))
-    {
-        case CELL_XZ(14, 25):
+        case MAP_CHUNK_CELL(-2, 8):
             if (Savegame_EventFlagGet(EventFlag_164))
             {
                 if (D_800F534C == 0)
@@ -2345,7 +2291,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             }
             break;
 
-        case CELL_XZ(22, 25):
+        case MAP_CHUNK_CELL(5, 8):
             if (Savegame_EventFlagGet(EventFlag_164))
             {
                 if (D_800F534C == 0)
@@ -2377,30 +2323,9 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             break;
     }
 
-    cellZ2 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
-    cellX2 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
-
-    if (g_SysWork.playerWork.player.position.vx > Q12(0.0f))
+    switch (PLAYER_MAP_CHUNK_CELL())
     {
-        projCellX2 = cellX2 + 17;
-    }
-    else
-    {
-        projCellX2 = cellX2 + 15;
-    }
-
-    if (g_SysWork.playerWork.player.position.vz > Q12(0.0f))
-    {
-        projCellZ2 = cellZ2 + 17;
-    }
-    else
-    {
-        projCellZ2 = cellZ2 + 15;
-    }
-
-    switch (CELL_XZ(projCellX2, projCellZ2))
-    {
-        case CELL_XZ(22, 25):
+        case MAP_CHUNK_CELL(5, 8):
             if (D_800F56E4 != 2)
             {
                 WorldEnv_PresetsSet(6, 3);
@@ -2409,8 +2334,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             }
             break;
 
-        case CELL_XZ(19, 22):
-        case CELL_XZ(20, 22):
+        case MAP_CHUNK_CELL(2, 5):
+        case MAP_CHUNK_CELL(3, 5):
             if (!Savegame_EventFlagGet(EventFlag_134) && Savegame_EventFlagGet(EventFlag_159))
             {
                 if (D_800F56E4 != 1)
@@ -2429,8 +2354,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             }
             break;
 
-        case CELL_XZ(19, 24):
-        case CELL_XZ(20, 24):
+        case MAP_CHUNK_CELL(2, 7):
+        case MAP_CHUNK_CELL(3, 7):
             if (D_800F56E4 != 3)
             {
                 WorldEnv_PresetsSet(13, 13);
@@ -2438,8 +2363,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             }
             break;
 
-        case CELL_XZ(13, 13):
-        case CELL_XZ(14, 13):
+        case MAP_CHUNK_CELL(-3, -3):
+        case MAP_CHUNK_CELL(-2, -3):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupChainsaw))
             {
                 WorldObjects_Add(&g_WorldObject_Chainsaw.object, &g_WorldObject_Chainsaw.position, &g_WorldObject_Chainsaw.rotation);
