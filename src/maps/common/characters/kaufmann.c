@@ -161,9 +161,9 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             break;
 
         case KaufmannControl_7:
-            if (kaufmann->model.anim.keyframeIdx >= 95 && g_SysWork.npcs[0].properties.npc.field_120 == 0 && g_SysWork.npcs[0].properties.npc.field_122 == 0)
+            if (kaufmann->model.anim.keyframeIdx >= 95 && g_SysWork.npcs[0].properties.npc.field_120 == 0)
             {
-                *(s32*)&g_SysWork.npcs[0].properties.npc.field_120 = 1;
+                g_SysWork.npcs[0].properties.npc.field_120 = 1;
                 func_8006342C(EquippedWeaponId_Unk70, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), &g_SysWork.npcBoneCoordBuffer[0]);
             }
 
@@ -425,7 +425,7 @@ void Kaufmann_Init(s_SubCharacter* kaufmann)
 {
     Chara_CollisionReset(kaufmann);
 
-    *(s32*)&g_SysWork.npcs[0].properties.npc.field_120 = 0;
+    g_SysWork.npcs[0].properties.npc.field_120 = 0;
 
     sharedData_800D5CF4_3_s00 = 0;
 

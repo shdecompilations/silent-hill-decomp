@@ -2092,9 +2092,9 @@ void func_800E219C(void) // 0x800E219C
             g_SysWork.npcs[0].position.vz = Q12(102.0f);
             g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(157.5f);
 
-            g_SysWork.npcs[0].properties.npc.controlState = 0;
-            g_SysWork.npcs[0].properties.npc.field_EC     = 1;
-            g_SysWork.npcs[0].properties.npc.field_EE     = 1;
+            g_SysWork.npcs[0].properties.monsterCybil.controlState = 0;
+            g_SysWork.npcs[0].properties.monsterCybil.field_EC     = 1;
+            g_SysWork.npcs[0].properties.monsterCybil.field_EE     = 1;
 
             vcReturnPreAutoCamWork(true);
             func_800E15FC(&playerChara, &g_SysWork.npcs[0], true);
@@ -2198,10 +2198,9 @@ void func_800E2724(void) // 0x800E2724
         case 1:
             curStateStep = g_SysWork.sysStateSteps[0];
 
-            // TODO: `Chara_MonsterCybil` properties
-            g_SysWork.npcs[0].properties.npc.controlState = Q12(0.0f);
-            g_SysWork.npcs[0].properties.npc.field_EC     = curStateStep;
-            g_SysWork.npcs[0].properties.npc.field_EE     = curStateStep;
+            g_SysWork.npcs[0].properties.monsterCybil.controlState = Q12(0.0f);
+            g_SysWork.npcs[0].properties.monsterCybil.field_EC     = curStateStep;
+            g_SysWork.npcs[0].properties.monsterCybil.field_EE     = curStateStep;
             func_800D8A90(&g_SysWork.npcs[0]);
 
             Savegame_EventFlagSet(EventFlag_467);
@@ -3580,7 +3579,7 @@ void func_800E636C(void) // 0x800E636C
         D_800ED5B6 += Q12_MULT_PRECISE(g_DeltaTime, D_800EBA30);
         D_800ED5B6  = (Q12_MULT_PRECISE(g_DeltaTime, D_800ED5B4) + D_800ED5B6) & 0xFFF;
 
-        if (g_SysWork.npcs[0].properties.npc.controlState == 1)
+        if (g_SysWork.npcs[0].properties.monsterCybil.controlState == 1)
         {
             if (D_800EBA30 == 0 && g_SysWork.npcs[0].health > Q12(0.0f))
             {
@@ -3600,7 +3599,7 @@ void func_800E636C(void) // 0x800E636C
         }
         else
         {
-            if (g_SysWork.npcs[0].properties.npc.field_EC == 12)
+            if (g_SysWork.npcs[0].properties.monsterCybil.field_EC == 12)
             {
                 D_800EBA30 -= 50;
 
@@ -3667,9 +3666,9 @@ void func_800E636C(void) // 0x800E636C
                 Math_SetSVectorFastSum(&rot, Q12_ANGLE(0.0f), D_800EBAFC[i], Q12_ANGLE(0.0f));
                 WorldObjects_Add(&g_WorldObject0[var_a0_2], &pos, &rot);
 
-                if (i == g_SysWork.npcs[0].properties.npc.field_FE)
+                if (i == g_SysWork.npcs[0].properties.monsterCybil.field_FE)
                 {
-                    g_SysWork.npcs[0].properties.npc.field_100 = pos.vy;
+                    g_SysWork.npcs[0].properties.monsterCybil.field_100 = pos.vy;
                 }
             }
         }

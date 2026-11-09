@@ -10,7 +10,7 @@
 
 // Weird access pattern using `npcs` array instead of function param.
 #define monsterCybilChara g_SysWork.npcs[0]
-#define monsterCybilProps monsterCybilChara.properties.npc
+#define monsterCybilProps monsterCybilChara.properties.monsterCybil
 
 const s32 D_800CB118[24] =
 {
@@ -247,12 +247,12 @@ const s32 D_800CB3A4[4][2] =
 
 void func_800D87B0(s_SubCharacter* monsterCybil) // 0x800D87B0
 {
-    if (monsterCybil->properties.npc.moveSpeed != Q12(0.0f))
+    if (monsterCybil->properties.monsterCybil.moveSpeed != Q12(0.0f))
     {
-        monsterCybil->properties.npc.moveSpeed -= Q12(0.4f);
-        if (monsterCybil->properties.npc.moveSpeed < Q12(0.0f))
+        monsterCybil->properties.monsterCybil.moveSpeed -= Q12(0.4f);
+        if (monsterCybil->properties.monsterCybil.moveSpeed < Q12(0.0f))
         {
-            monsterCybil->properties.npc.moveSpeed = Q12(0.0f);
+            monsterCybil->properties.monsterCybil.moveSpeed = Q12(0.0f);
         }
     }
 
@@ -985,12 +985,12 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybil->model.anim.keyframeIdx = MONSTER_CYBIL_ANIM_INFOS[23].endKeyframeIdx;
             }
 
-            if (monsterCybil->properties.npc.moveSpeed != Q12(0.0f))
+            if (monsterCybil->properties.monsterCybil.moveSpeed != Q12(0.0f))
             {
-                monsterCybil->properties.npc.moveSpeed = monsterCybil->properties.npc.moveSpeed - Q12(0.08f);
-                if (monsterCybil->properties.npc.moveSpeed < Q12(0.0f))
+                monsterCybil->properties.monsterCybil.moveSpeed = monsterCybil->properties.monsterCybil.moveSpeed - Q12(0.08f);
+                if (monsterCybil->properties.monsterCybil.moveSpeed < Q12(0.0f))
                 {
-                    monsterCybil->properties.npc.moveSpeed = Q12(0.0f);
+                    monsterCybil->properties.monsterCybil.moveSpeed = Q12(0.0f);
                 }
             }
 
