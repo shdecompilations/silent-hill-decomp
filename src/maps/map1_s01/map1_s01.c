@@ -601,10 +601,10 @@ void PianoPuzzle_Control(bool playNote) // 0x800D7F18
         return;
     }
 
-    g_PianoCursorX += (g_Controller0->normalizedSticks.sticks_0.leftX * Q12(4.0f)) / 75;
+    g_PianoCursorX += (g_Controller0->normalizedSticks.sticks.leftX * Q12(4.0f)) / 75;
     g_PianoCursorX  = CLAMP_RANGE(g_PianoCursorX, Q12(-89.0f), Q12(85.0f));
 
-    g_PianoCursorY += (g_Controller0->normalizedSticks.sticks_0.leftY * Q12(4.0f)) / 75;
+    g_PianoCursorY += (g_Controller0->normalizedSticks.sticks.leftY * Q12(4.0f)) / 75;
     g_PianoCursorY  = CLAMP_RANGE(g_PianoCursorY, Q12(-71.0f), Q12(84.0f));
 
     Game_TimerUpdate();

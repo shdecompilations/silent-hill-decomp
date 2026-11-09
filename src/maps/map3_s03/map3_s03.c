@@ -381,10 +381,10 @@ void func_800D1A58(void) // 0x800D1A58
         case 8:
             func_800D17F8(8, 0);
 
-            D_800D6BD0 += (g_Controller0->normalizedSticks.sticks_0.leftX << 14) / 75;
+            D_800D6BD0 += (g_Controller0->normalizedSticks.sticks.leftX << 14) / 75;
             D_800D6BD0  = CLAMP_RANGE(D_800D6BD0, Q12(-100.0f), Q12(100.0f));
 
-            D_800D6BD4 += (g_Controller0->normalizedSticks.sticks_0.leftY << 14) / 75;
+            D_800D6BD4 += (g_Controller0->normalizedSticks.sticks.leftY << 14) / 75;
             D_800D6BD4  = CLAMP_RANGE(D_800D6BD4, Q12(-100.0f), Q12(100.0f));
 
             Game_TimerUpdate();
@@ -490,10 +490,10 @@ void func_800D1A58(void) // 0x800D1A58
         case 12:
             func_800D17F8(8, 0);
 
-            D_800D6BD0 += (g_Controller0->normalizedSticks.sticks_0.leftX << 14) / 75;
+            D_800D6BD0 += (g_Controller0->normalizedSticks.sticks.leftX << 14) / 75;
             D_800D6BD0  = CLAMP_RANGE(D_800D6BD0, Q12(-100.0f), Q12(100.0f));
 
-            D_800D6BD4 += (g_Controller0->normalizedSticks.sticks_0.leftY << 14) / 75;
+            D_800D6BD4 += (g_Controller0->normalizedSticks.sticks.leftY << 14) / 75;
             D_800D6BD4  = CLAMP_RANGE(D_800D6BD4, Q12(-100.0f), Q12(100.0f));
 
             Game_TimerUpdate();

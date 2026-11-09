@@ -362,9 +362,9 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
             }
 
             D_800C4454  = CLAMP_LOW(D_800C4454 - 196, 0);
-            screenPosX += (g_Controller0->normalizedSticks.sticks_0.leftX * ((SHRT_MAX / 2) + 1)) / 75;
+            screenPosX += (g_Controller0->normalizedSticks.sticks.leftX * ((SHRT_MAX / 2) + 1)) / 75;
             screenPosX  = CLAMP_RANGE(screenPosX, Q12(0.0f), Q12(SCREEN_WIDTH / 2));
-            screenPosY += (g_Controller0->normalizedSticks.sticks_0.leftY * ((SHRT_MAX / 2) + 1)) / 75;
+            screenPosY += (g_Controller0->normalizedSticks.sticks.leftY * ((SHRT_MAX / 2) + 1)) / 75;
             screenPosY  = CLAMP_RANGE(screenPosY, Q12(0.0f), Q12(SCREEN_HEIGHT / 2));
             break;
 

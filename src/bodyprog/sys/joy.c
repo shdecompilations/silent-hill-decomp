@@ -190,7 +190,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
     }
 
     processedInputFlags       = normalizedAnalogData;
-    cont->rawSticks.rawData_0 = signedRawAnalog;
+    cont->rawSticks.rawData = signedRawAnalog;
 
     // TODO: Demagic remaining hex values.
     if (cont == g_Controller0)
@@ -255,7 +255,7 @@ void ControllerData_AnalogToDigital(s_ControllerData* cont, bool arg1) // 0x8003
         }
     }
 
-    cont->normalizedSticks.rawData_0 = normalizedAnalogData;
+    cont->normalizedSticks.rawData = normalizedAnalogData;
     cont->field_28                   = processedInputFlags;
 }
 

@@ -416,7 +416,7 @@ void Sd_AudioStop(void) // 0x80045FF8
     SdQuit();
 }
 
-u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, q0_8 vol) // 0x80046048
+u8 Sd_SfxPlay(u16 sfxId, q1_7 balance, q0_8 vol) // 0x80046048
 {
     static s16   audioIdx;
     SpuVoiceAttr attr;
@@ -512,7 +512,7 @@ u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, q0_8 vol) // 0x80046048
     return NO_VALUE;
 }
 
-void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x800463C0
+void Sd_SfxAttributesUpdate(u16 sfxId, q1_7 balance, q0_8 vol, s8 pitch) // 0x800463C0
 {
     static s16   audioIdx;
     static u16   audioPitch;
@@ -604,7 +604,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x80
     SpuSetVoiceAttr(&attr);
 }
 
-void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x80046620
+void Sd_SfxWithPitchPlay(u16 sfxId, q1_7 balance, q0_8 vol, s8 pitch) // 0x80046620
 {
     static s16 audioIdx;
     s16        volMin;

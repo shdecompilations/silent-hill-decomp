@@ -652,10 +652,10 @@ void func_800EBA40(void) // 0x800EBA40
         case 4:
             Screen_BackgroundImgDraw(&g_ItemInspectionImg);
 
-            D_800F0354 += (g_Controller0->normalizedSticks.sticks_0.leftX * 16384) / 75;
+            D_800F0354 += (g_Controller0->normalizedSticks.sticks.leftX * 16384) / 75;
             D_800F0354  = CLAMP_RANGE(D_800F0354, Q12(-160.0f), Q12(160.0f));
 
-            D_800F0358 += (g_Controller0->normalizedSticks.sticks_0.leftY * 16384) / 75;
+            D_800F0358 += (g_Controller0->normalizedSticks.sticks.leftY * 16384) / 75;
             D_800F0358  = CLAMP_RANGE(D_800F0358, Q12(-120.0f), Q12(120.0f));
 
             Game_TimerUpdate();

@@ -2541,10 +2541,10 @@ void func_800DFDDC(void) // 0x800DFDDC
         case 9:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
-            sharedData_800E2CA8_7_s01 += (g_Controller0->normalizedSticks.sticks_0.leftX * 16384) / 75;
+            sharedData_800E2CA8_7_s01 += (g_Controller0->normalizedSticks.sticks.leftX * 16384) / 75;
             sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-80.0f), Q12(80.0f));
 
-            sharedData_800E2CAC_7_s01 += (g_Controller0->normalizedSticks.sticks_0.leftY * 16384) / 75;
+            sharedData_800E2CAC_7_s01 += (g_Controller0->normalizedSticks.sticks.leftY * 16384) / 75;
             sharedData_800E2CAC_7_s01  = CLAMP_RANGE(sharedData_800E2CAC_7_s01, Q12(-80.0f), Q12(80.0f));
 
             Game_TimerUpdate();
@@ -3344,10 +3344,10 @@ void func_800E32E0(void) // 0x800E32E0
         case 4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
-            sharedData_800E2CA8_7_s01 += (g_Controller0->normalizedSticks.sticks_0.leftX * 16384) / 75;
+            sharedData_800E2CA8_7_s01 += (g_Controller0->normalizedSticks.sticks.leftX * 16384) / 75;
             sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-120.0f), Q12(120.0f));
 
-            sharedData_800E2CAC_7_s01 += (g_Controller0->normalizedSticks.sticks_0.leftY * 16384) / 75;
+            sharedData_800E2CAC_7_s01 += (g_Controller0->normalizedSticks.sticks.leftY * 16384) / 75;
             sharedData_800E2CAC_7_s01  = CLAMP_RANGE(sharedData_800E2CAC_7_s01, Q12(-120.0f), Q12(120.0f));
 
             Game_TimerUpdate();

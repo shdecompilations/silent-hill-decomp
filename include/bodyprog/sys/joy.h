@@ -62,14 +62,14 @@ typedef enum _ControllerFlags
 /** @brief PSX controller analog stick states. */
 typedef union
 {
-    /* 0x0 */ u32 rawData_0;
+    /* 0x0 */ u32 rawData;
               struct
               {
-                  /* 0x0 */ s8 rightX;
-                  /* 0x1 */ s8 rightY;
-                  /* 0x2 */ s8 leftX;
-                  /* 0x3 */ s8 leftY;
-    /* 0x4 */ } sticks_0; // Normalized range: `[-128, 127]`.
+                  /* 0x0 */ q1_7 rightX;
+                  /* 0x1 */ q1_7 rightY;
+                  /* 0x2 */ q1_7 leftX;
+                  /* 0x3 */ q1_7 leftY;
+    /* 0x4 */ } sticks;
 } s_AnalogSticks;
 
 /** @brief Analog PSX controller state. */

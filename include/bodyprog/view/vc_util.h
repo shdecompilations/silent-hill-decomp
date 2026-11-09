@@ -104,6 +104,6 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p);
  * @param soundPos Sound source position.
  * @return Stereo sound balance, where values affect the left-right channel balance.
  */
-q0_7 Vc_StereoBalanceGet(const VECTOR3* soundPos);
+q1_7 Vc_StereoBalanceGet(const VECTOR3* soundPos);
 
 #endif

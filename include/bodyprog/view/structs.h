@@ -60,8 +60,8 @@ typedef struct _VC_ROAD_DATA
     /* 0x14+0  */ q27_4             ofs_watch_hy   : 8;
     /* 0x14+8  */ u32               lens_flare     : 4; /** `e_LensFlareType` | TODO: Unsure, rough name. */
     /* 0x14+12 */ s16               cam_mv_type    : 4; /** `VC_CAM_MV_TYPE` */
-    /* 0x16    */ q0_7              fix_ang_x;          /** @note Part of union in SH2 `VC_ROAD_DATA`. */
-    /* 0x17    */ q0_7              fix_ang_y;
+    /* 0x16    */ q1_7              fix_ang_x;          /** @note Part of union in SH2 `VC_ROAD_DATA`. */
+    /* 0x17    */ q1_7              fix_ang_y;
 } VC_ROAD_DATA;
 
 /** @brief Rail camera parementers. */

@@ -1876,10 +1876,10 @@ void Inventory_UnavailableMapTextDraw(s32 strIdx) // 0x8004F57C
 
 void Inventory_DirectionalInputSet(void) // 0x8004F5DC
 {
-    if (g_Controller0->rawSticks.sticks_0.leftY < -STICK_DEADZONE ||
-        g_Controller0->rawSticks.sticks_0.leftY >= STICK_DEADZONE ||
-        g_Controller0->rawSticks.sticks_0.leftX < -STICK_DEADZONE ||
-        g_Controller0->rawSticks.sticks_0.leftX >= STICK_DEADZONE)
+    if (g_Controller0->rawSticks.sticks.leftY < -STICK_DEADZONE ||
+        g_Controller0->rawSticks.sticks.leftY >= STICK_DEADZONE ||
+        g_Controller0->rawSticks.sticks.leftX < -STICK_DEADZONE ||
+        g_Controller0->rawSticks.sticks.leftX >= STICK_DEADZONE)
     {
         // Up.
         g_Inventory_IsUpClicked = Pad_ButtonClicked(ControllerFlag_LStickLowUp);

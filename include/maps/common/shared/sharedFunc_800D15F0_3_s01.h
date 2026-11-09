@@ -92,10 +92,10 @@ void sharedFunc_800D15F0_3_s01(void)
 
         case 4:
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            sharedData_800D4D10_3_s01 += (g_Controller0->normalizedSticks.sticks_0.leftX * 16384) / 75;
+            sharedData_800D4D10_3_s01 += (g_Controller0->normalizedSticks.sticks.leftX * 16384) / 75;
             sharedData_800D4D10_3_s01  = CLAMP_RANGE(sharedData_800D4D10_3_s01, Q12(-70.0f), Q12(68.0f));
 
-            sharedData_800D4D14_3_s01 += (g_Controller0->normalizedSticks.sticks_0.leftY * 16384) / 75;
+            sharedData_800D4D14_3_s01 += (g_Controller0->normalizedSticks.sticks.leftY * 16384) / 75;
             sharedData_800D4D14_3_s01  = CLAMP_RANGE(sharedData_800D4D14_3_s01, Q12(-110.0f), Q12(110.0f));
 
             Game_TimerUpdate();

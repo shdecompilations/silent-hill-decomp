@@ -255,7 +255,7 @@ typedef struct _VabInfo
     /* 0x1 */ s8   __pad_1;
     /* 0x2 */ u16  vabProgIdx;  /** See `TYPE_AND_PROG_SFX`. */
     /* 0x4 */ u8   noteIdx;
-    /* 0x5 */ q0_7 volumeMin;   /** Minimun volume required to play the audio. */
+    /* 0x5 */ q1_7 volumeMin;   /** Minimun volume required to play the audio. */
 } s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
@@ -458,7 +458,7 @@ void Sd_AudioStop(void);
  * @param vol Audio volume.
  * @return Audio index in PSX's "Voice" channels.
  */
-u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, q0_8 vol);
+u8 Sd_SfxPlay(u16 sfxId, q1_7 balance, q0_8 vol);
 
 /** @brief Updates attributes from currently playing specified audio.
  *
@@ -467,7 +467,7 @@ u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, q0_8 vol);
  * @param vol Audio volume.
  * @param pitch Target pitch volume.
  */
-void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch);
+void Sd_SfxAttributesUpdate(u16 sfxId, q1_7 balance, q0_8 vol, s8 pitch);
 
 /** @brief Plays audio.
  *
@@ -480,7 +480,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch);
  * @param pitch Target pitch volume.
  * @return Audio index in PSX's "Voice" channels.
  */
-void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch);
+void Sd_SfxWithPitchPlay(u16 sfxId, q1_7 balance, q0_8 vol, s8 pitch);
 
 /** @brief Stops the last VAB audio data playback. */
 void Sd_LastSfxStop(void);
