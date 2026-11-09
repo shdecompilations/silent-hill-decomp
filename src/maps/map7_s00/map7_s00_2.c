@@ -760,9 +760,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D286C
     VECTOR3 pos;
     s32     i;
 
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+    if (PLAYER_IN_MAP_CHUNK(1, -4))
     {
         for (i = 0; i < ARRAY_SIZE(g_WorldObject0); i++)
         {
@@ -776,7 +775,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D286C
         Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, Rng_GenerateUInt(-8, 7));
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+    if (PLAYER_IN_MAP_CHUNK(0, -4))
     {
         WorldObjects_Add(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
 

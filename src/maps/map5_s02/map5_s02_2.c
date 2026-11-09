@@ -896,11 +896,9 @@ void Map_WorldObjectsInit(void) // 0x800D6598
 
 void Map_WorldObjectsUpdate(void) // 0x800D68FC
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
     Collision_TriggerFlagBitsClear(CollisionTriggerFlag_All);
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(3, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_375))
         {
@@ -931,7 +929,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
         WorldObjects_Add(&g_WorldObject_Daly.object, &g_WorldObject_Daly.position, &g_WorldObject_Daly.rotation);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(3, 0))
     {
         WorldObjects_Add(&g_WorldObject_SavePad, &g_WorldObject_UnkPose0.position, &g_WorldObject_UnkPose0.rotation);
 
@@ -941,7 +939,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(3, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink0))
         {
@@ -949,7 +947,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(3, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink1))
         {
@@ -957,7 +955,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(3, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_RifleShells))
         {
@@ -965,7 +963,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(3, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink2))
         {

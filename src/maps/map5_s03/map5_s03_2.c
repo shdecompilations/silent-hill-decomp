@@ -726,11 +726,10 @@ void Map_WorldObjectsInit(void) // 0x800D2A04
 void Map_WorldObjectsUpdate(void) // 0x800D2B68
 {
     s32 triggerFlags;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     triggerFlags = CollisionTriggerFlag_None;
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(2, 1))
     {
         if (Savegame_EventFlagGet(EventFlag_389))
         {
@@ -748,12 +747,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
         Collision_TriggerFlagBitsClear(CollisionTriggerFlag_All);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(1, 1))
     {
         WorldObjects_Add(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad[0].position, &g_WorldObjectPose_SavePad[0].rotation);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(1, 0))
     {
         WorldObjects_Add(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad[1].position, &g_WorldObjectPose_SavePad[1].rotation);
 
@@ -763,7 +762,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(2, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_HealthDrink0))
         {
@@ -771,7 +770,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_ShotgunShells))
         {
@@ -779,7 +778,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_HealthDrink1))
         {

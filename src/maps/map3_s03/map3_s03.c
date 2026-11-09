@@ -932,11 +932,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
     s32     projCellX0;
     q19_12  drZ;
     s32     i;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     flags = 0;
 
-    if (PLAYER_NOT_IN_MAP_CHUNK(vx, 1, -4, -1, -4) || PLAYER_NOT_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (!PLAYER_IN_MAP_CHUNK(-4, 1))
     {
         D_800D8428 = 0;
     }
@@ -1182,7 +1181,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
     Collision_TriggerFlagBitsClear(CollisionTriggerFlag_All);
     Collision_TriggerFlagBitsSet(flags);
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(-4, 1))
     {
         D_800D8490 = 1;
     }
@@ -1196,7 +1195,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S03_FirstAidKit0))
         {
@@ -1204,7 +1203,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    if (PLAYER_IN_MAP_CHUNK(-3, -2))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S03_HealthDrink))
         {
@@ -1212,7 +1211,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(-2, -1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S03_HandgunBullets))
         {
@@ -1220,7 +1219,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(-2, -1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S03_FirstAidKit1))
         {
@@ -1228,7 +1227,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    if (PLAYER_IN_MAP_CHUNK(-2, -2))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S03_ShotgunShells))
         {

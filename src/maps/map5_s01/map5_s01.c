@@ -1159,10 +1159,8 @@ void Map_WorldObjectsInit(void) // 0x800ECB58
 
 void Map_WorldObjectsUpdate(void) // 0x800ECC8C
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
-    if ((PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1)) ||
-        (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0)))
+    if ((PLAYER_IN_MAP_CHUNK(-2, 0)) ||
+        (PLAYER_IN_MAP_CHUNK(-2, -1)))
     {
             if (!Savegame_EventFlagGet(EventFlag_M5S01_PickupMap))
             {
@@ -1170,7 +1168,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
             }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    if (PLAYER_IN_MAP_CHUNK(1, -2))
     {
             if (!Savegame_EventFlagGet(EventFlag_371))
             {
@@ -1178,7 +1176,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
             }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_RifleShells0))
         {
@@ -1186,7 +1184,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_HandgunBullets))
         {
@@ -1194,7 +1192,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_FirstAidKit))
         {
@@ -1202,7 +1200,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -5, -1, -5))
+    if (PLAYER_IN_MAP_CHUNK(-2, -5))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_HealthDrink))
         {
@@ -1210,7 +1208,7 @@ void Map_WorldObjectsUpdate(void) // 0x800ECC8C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -5, -1, -5))
+    if (PLAYER_IN_MAP_CHUNK(-2, -5))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_RifleShells1))
         {

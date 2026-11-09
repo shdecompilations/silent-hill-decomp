@@ -865,7 +865,6 @@ void Map_WorldObjectsInit(void)
 void Map_WorldObjectsUpdate(void)
 {
     s32 i;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     if (!Savegame_EventFlagGet(EventFlag_226))
     {
@@ -873,7 +872,7 @@ void Map_WorldObjectsUpdate(void)
         func_8003A16C();
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    if (PLAYER_IN_MAP_CHUNK(-1, -2))
     {
         if (Savegame_EventFlagGet(EventFlag_71))
         {
@@ -895,7 +894,7 @@ void Map_WorldObjectsUpdate(void)
 
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    if (PLAYER_IN_MAP_CHUNK(-3, -2))
     {
         if (D_800E1180 == 0)
         {
@@ -904,7 +903,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    if (PLAYER_IN_MAP_CHUNK(-2, -2))
     {
         if (D_800E1180 == 1)
         {
@@ -913,12 +912,12 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if (PLAYER_IN_MAP_CHUNK(1, 3))
     {
         WorldObjects_Add(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(0, -1))
     {
         if (Savegame_EventFlagGet(EventFlag_72))
         {
@@ -966,7 +965,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    else if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    else if (PLAYER_IN_MAP_CHUNK(1, -1))
     {
         if (Savegame_EventFlagGet(EventFlag_84))
         {
@@ -989,7 +988,7 @@ void Map_WorldObjectsUpdate(void)
         D_800E1182 = 0;
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(3, 0))
     {
         WorldObjects_Add(&g_WorldObject9.object, &g_WorldObject9.position, &g_WorldObject9.rotation);
 
@@ -999,7 +998,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_PickupMap))
         {
@@ -1007,7 +1006,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_HandgunBullets0))
         {
@@ -1015,7 +1014,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if (PLAYER_IN_MAP_CHUNK(2, 3))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_HandgunBullets1))
         {
@@ -1023,7 +1022,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    if (PLAYER_IN_MAP_CHUNK(3, 2))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_HandgunBullets2))
         {
@@ -1031,7 +1030,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if (PLAYER_IN_MAP_CHUNK(1, 3))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_HealthDrink))
         {
@@ -1039,7 +1038,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if (PLAYER_IN_MAP_CHUNK(1, 3))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_FirstAidKit))
         {

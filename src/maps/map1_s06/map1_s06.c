@@ -504,8 +504,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     VECTOR3 soundPos;
     s32     vol;
 
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_PickupMap))
         {
@@ -513,12 +512,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if (PLAYER_IN_MAP_CHUNK(1, 3))
     {
        WorldObjects_Add(&D_800DAFF4.object, &D_800DAFF4.position, &D_800DAFF4.rotation);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(0, -1))
     {
         WorldObjects_Add(&D_800DAF84.object, &D_800DAF84.position, &SVECTOR3_Zero);
 
@@ -538,7 +537,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
             D_800DAF78 = Q12(0.15f);
         }
     }
-    else if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    else if (PLAYER_IN_MAP_CHUNK(1, -1))
     {
         if (D_800D7761 != 0)
         {
@@ -554,7 +553,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     }
     else
     {
-        if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+        if (PLAYER_IN_MAP_CHUNK(2, 0))
         {
             if (Savegame_EventFlagGet(EventFlag_MapMark_OldTown_SchoolCircle))
             {
@@ -579,7 +578,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(3, 0))
     {
         WorldObjects_Add(&D_800DB024.object, &D_800DB024.position, &D_800DB024.rotation);
     }

@@ -1090,11 +1090,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
 {
     s32    flags;
     q19_12 mag;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     flags = 0;
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(-1, -1))
     {
         flags = func_800D1D40();
         WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
@@ -1105,7 +1104,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
         Savegame_EventFlagClear(EventFlag_406);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(1, -1))
     {
         mag = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - Q12(60.0f),
                                   g_SysWork.playerWork.player.position.vz + Q12(20.0f));
@@ -1180,9 +1179,8 @@ void func_800D1AE4(void) // 0x800D1AE4
     q19_12   angle;
     VECTOR3* vec;
     SVECTOR* svec;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, -1, -1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+    if (PLAYER_IN_MAP_CHUNK(-1, -1))
     {
         if (D_800D4E6E == 0)
         {

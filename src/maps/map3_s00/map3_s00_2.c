@@ -485,9 +485,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
     s32 tmp;
     s32 rand0;
     s32 diff;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    if (PLAYER_IN_MAP_CHUNK(2, 2))
     {
         if (!Savegame_EventFlagGet(EventFlag_198))
         {
@@ -497,7 +496,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
         WorldObjects_Add(&g_WorldObject1[1].object, &g_WorldObject1[1].position, &EMPTY_ROT);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if (PLAYER_IN_MAP_CHUNK(0, 3))
     {
         WorldObjects_Add(&g_WorldObject2.object, &g_WorldObject2.position, &g_WorldObject2.rotation);
 

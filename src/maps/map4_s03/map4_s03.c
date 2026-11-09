@@ -1687,14 +1687,13 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
 {
     q19_12 var_a0; // Angle?
     q19_12 var;    // Angle?
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 6, -1, 6) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(5, -1))
     {
         WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
     }
 
-    if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    if ((PLAYER_IN_MAP_CHUNK_X(3) || PLAYER_IN_MAP_CHUNK_X(4)) && PLAYER_IN_MAP_CHUNK_Z(-3))
     {
         if (Savegame_EventFlagGet(EventFlag_320))
         {
@@ -1743,7 +1742,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         WorldObjects_Add(&g_WorldObject_Fence.object, &g_WorldObject_Fence.position, &g_WorldObject_Fence.rotation);
     }
 
-    if ((PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) || PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4)) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if ((PLAYER_IN_MAP_CHUNK_X(2) || PLAYER_IN_MAP_CHUNK_X(3)) && PLAYER_IN_MAP_CHUNK_Z(3))
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_PickupHuntingRifle))
         {
@@ -1762,7 +1761,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 6, -1, 6) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(5, -1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_FirstAidKit))
         {
@@ -1770,7 +1769,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 6, -1, 6) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(5, -1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_RifleShells0))
         {
@@ -1778,7 +1777,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 6, -1, 6) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(5, -1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S03_RifleShells1))
         {
@@ -1789,10 +1788,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
 
 void func_800DA3E0(void) // 0x800DA3E0
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
-    if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) &&
-        PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if ((PLAYER_IN_MAP_CHUNK_X(3) || PLAYER_IN_MAP_CHUNK_X(4)) &&
+        PLAYER_IN_MAP_CHUNK_Z(1))
     {
         func_800D7718();
         if (D_800E05E0 == 0)
@@ -1831,8 +1828,8 @@ void func_800DA3E0(void) // 0x800DA3E0
         D_800E05E1 = 0;
     }
 
-    if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) &&
-        PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    if ((PLAYER_IN_MAP_CHUNK_X(3) || PLAYER_IN_MAP_CHUNK_X(4)) &&
+        PLAYER_IN_MAP_CHUNK_Z(-3))
     {
         if (vcRetCamMvSmoothF() == 0 && (g_SysWork.playerWork.player.position.vx > Q12(125.8f) || D_800E05E2 == 1))
         {

@@ -153,9 +153,7 @@ void Map_WorldObjectsInit(void)
 
 void Map_WorldObjectsUpdate(void)
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-2, 0))
     {
         WorldObjects_Add(&g_WorldObject_SavePad0.object, &g_WorldObject_SavePad0.position, &g_WorldObject_SavePad0.rotation);
 
@@ -165,7 +163,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
         {
@@ -173,7 +171,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(-3, 1))
     {
         if (!D_800CF280)
         {
@@ -188,7 +186,7 @@ void Map_WorldObjectsUpdate(void)
         D_800CF280 = 0;
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_ShotgunShells0))
         {
@@ -196,7 +194,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets0))
         {
@@ -204,7 +202,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets1))
         {
@@ -212,7 +210,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_ShotgunShells1))
         {
@@ -220,7 +218,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-2, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets2))
         {
@@ -228,7 +226,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(-3, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_HandgunBullets3))
         {
@@ -236,7 +234,7 @@ void Map_WorldObjectsUpdate(void)
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(-3, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S04_RifleShells))
         {

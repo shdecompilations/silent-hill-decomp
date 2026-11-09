@@ -683,14 +683,12 @@ void Map_WorldObjectsInit(void) // 0x800D2D6C
 
 void Map_WorldObjectsUpdate(void) // 0x800D2DF4
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if (PLAYER_IN_MAP_CHUNK(2, 3))
     {
         WorldObjects_Add(&g_WorldObjectSavepad.object, &g_WorldObjectSavepad.position, &g_WorldObjectSavepad.rotation);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    if (PLAYER_IN_MAP_CHUNK(1, 3))
     {
         if (Savegame_EventFlagGet(EventFlag_337) && !Savegame_EventFlagGet(EventFlag_338))
         {

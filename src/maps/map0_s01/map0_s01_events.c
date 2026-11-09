@@ -994,7 +994,6 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
 
 void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
     s32  temp_a1;
     s32  var_a2;
     s32* ptr;
@@ -1113,7 +1112,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
         Savegame_EventFlagSet(EventFlag_52);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
+    if (PLAYER_IN_MAP_CHUNK(0, 6))
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
         {
@@ -1121,7 +1120,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7))
+    if (PLAYER_IN_MAP_CHUNK(0, 6))
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
         {

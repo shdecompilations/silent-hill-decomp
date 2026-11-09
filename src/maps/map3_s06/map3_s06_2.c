@@ -421,11 +421,9 @@ void Map_WorldObjectsInit(void) // 0x800D1804
 
 void Map_WorldObjectsUpdate(void) // 0x800D197C
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 1, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK_X(0))
     {
-        if (PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+        if (PLAYER_IN_MAP_CHUNK_Z(3))
         {
             WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
 
@@ -445,9 +443,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D197C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3))
+    if (PLAYER_IN_MAP_CHUNK_X(2))
     {
-        if (PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+        if (PLAYER_IN_MAP_CHUNK_Z(2))
         {
             if (!Savegame_EventFlagGet(EventFlag_M3S06_PickupAntiqueShopKey) && Savegame_EventFlagGet(EventFlag_297))
             {

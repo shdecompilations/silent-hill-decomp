@@ -53,32 +53,41 @@
 #define BITMASK_RANGE(fromInclusive, toInclusive) \
     (((~0u << (fromInclusive)) & ~(~0u << ((toInclusive) + 1))))
 
-#define MAP_CHUNK_CHECK_VARIABLE_DECL() \
-    s32 __chunkIdx
-
-/** @hack This macro requires a variable `s32 __chunkIdx` to be declared before using it.
- * The macro `MAP_CHUNK_CHECK_VARIABLE_DECL` declares that variable and must be called before this macro.
- * The first argument is `vx` or `vz`, which is used as the component name in `VECTOR3`.
- * @bug Some maps appear to have a bug where the negative position check will never be true because they check
- * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
+/* Macros for comparing map chunk indexes against a map X/Z position.
+ *
+ * SH1 game world is split to 40x40 chunks, terrain loading code and filenames of IPDs (eg. `THR01FF.IPD` for X 1, Z -1)
+ * use a rounded-down grid where chunk 0 is anything between 0 to 40, chunk -1 is anything between -40 to 0.
+ *
+ * The code used in map event/object spawning code number them differently, since these divide positions with
+ * C's truncating division which would give 0 for anything between -40 to 40 (making chunk "0" count as 80 units).
+ * To workaround that the code adds 1 if position is positive, or subtracts 1 for negative (or 0).
+ * This workaround prevents the actual compiled code from seeing any position as chunk 0 (while other parts of game code do
+ * make use of chunk 0), and makes code for any checks for chunk 0 or above +1 of the actual index being checked.
+ *
+ * To make our code that uses these macros consistent with rest of game code, we make our macro adjust the
+ * index being checked for, so the source code using the macros can pass in rounded-down chunk indexes, and that'll
+ * handle adding 1 to any index that's positive/zero.
+ * This lets it match the original compiled ASM for positive chunk checks (that showed it checking +1 of the actual chunk index),
+ * but lets our C code make use of the same indexes used in the rest of the game.
  */
-#define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                \
-    (__chunkIdx = g_SysWork.playerWork.player.position.comp / Q12(40.0f),                        \
-     ((g_SysWork.playerWork.player.position.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
-      (g_SysWork.playerWork.player.position.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
-#define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                            \
-    (__chunkIdx = g_SysWork.playerWork.player.position.comp / Q12(40.0f),                        \
-     ((g_SysWork.playerWork.player.position.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
-      (g_SysWork.playerWork.player.position.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
+/** @brief Map event chunk index of world coordinate `pos`, never returns chunk 0, see above. */
+#define MAP_CHUNK_IDX(pos) \
+    (((pos) / Q12(40.0f)) + (((pos) > Q12(0.0f)) ? 1 : -1))
 
-#define MAP_CHUNK_CHECK_VARIABLE_DECL_2() \
-    s32 __chunkIdx2
+/** @brief Converts rounded-down terrain chunk grid index `n` to its equivalent `MAP_CHUNK_IDX` value. */
+#define MAP_CHUNK_IDX_FROM_GRID(n) \
+    (((n) >= 0) ? ((n) + 1) : (n))
 
-#define PLAYER_IN_MAP_CHUNK_2(comp, x0, x1, x2, x3)                                              \
-    (__chunkIdx2 = g_SysWork.playerWork.player.position.comp / Q12(40.0f),                       \
-     ((g_SysWork.playerWork.player.position.comp >  Q12(0.0f) && (__chunkIdx2 + (x0)) < (x1)) || \
-      (g_SysWork.playerWork.player.position.comp <= Q12(0.0f) && (__chunkIdx2 + (x2)) < (x3))))
+#define PLAYER_IN_MAP_CHUNK_X(x) \
+    (MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vx) == MAP_CHUNK_IDX_FROM_GRID(x))
+
+#define PLAYER_IN_MAP_CHUNK_Z(z) \
+    (MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vz) == MAP_CHUNK_IDX_FROM_GRID(z))
+
+/** @brief Checks if the player is in terrain chunk (`x`, `z`). */
+#define PLAYER_IN_MAP_CHUNK(x, z) \
+    (PLAYER_IN_MAP_CHUNK_X(x) && PLAYER_IN_MAP_CHUNK_Z(z))
 
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                             \
     (((g_SysWork.playerWork.player.position.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork.player.position.comp - Q12(base)) < Q12(tol)) : \

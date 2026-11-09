@@ -330,8 +330,6 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
     s32  temp_a0;
     s32  i;
     s16* ptr;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-    MAP_CHUNK_CHECK_VARIABLE_DECL_2();
 
     if (!Savegame_EventFlagGet(EventFlag_429) && Savegame_EventFlagGet(EventFlag_432))
     {
@@ -341,7 +339,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
 
     Collision_TriggerFlagBitsClear(CollisionTriggerFlag_All);
 
-    if (PLAYER_IN_MAP_CHUNK_2(vx, 1, 0, -1, 0))
+    if (MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vx) < 0)
     {
         if (!Savegame_EventFlagGet(EventFlag_430) && Savegame_EventFlagGet(EventFlag_435))
         {
@@ -374,7 +372,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         Collision_TriggerFlagBitsSet(triggerFlags);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(1, 0))
     {
         temp_a0 = (Rng_Rand16() & 0x1F) + 0x20;
         if (D_800DFEF4 > 0 && D_800DFEF0 > 0 && temp_a0 < D_800DFEF0)
@@ -446,7 +444,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         WorldObjects_Add(&g_WorldObject1.object, &g_WorldObject1.position, &g_WorldObject1.rotation);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(-1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S03_PickupMap))
         {
@@ -477,7 +475,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(0, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S03_HealthDrink0))
         {
@@ -485,7 +483,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(0, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S03_HandgunBullets))
         {
@@ -493,7 +491,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(0, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S03_HealthDrink1))
         {

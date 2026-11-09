@@ -467,7 +467,6 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     s32      temp4;
     LINE_F4* line;
     POLY_G3* poly;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     #define playerChara g_SysWork.playerWork.player
 
@@ -656,9 +655,9 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                     mapChunkX = playerChara.position.vx / Q12(CHUNK_SIZE);
                     if ((playerChara.position.vx >  Q12(0.0f) && (mapChunkX + 1) == -4) ||
                         (playerChara.position.vx <= Q12(0.0f) && (mapChunkX - 1) == -4))
-                    // if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4)) // TODO: Causing mismatch.
+                    // if (PLAYER_IN_MAP_CHUNK_X(-4)) // TODO: Causing mismatch.
                     {
-                        if (PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                        if (PLAYER_IN_MAP_CHUNK_Z(-1))
                         {
                             mapCoordIdxX += 87;
                             mapCoordIdxZ += 61;
@@ -666,7 +665,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                         }
                     }
 
-                    if (PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                    if (PLAYER_IN_MAP_CHUNK(-5, -1))
                     {
                         mapCoordIdxX += 87;
                         mapCoordIdxZ += 61;
@@ -675,13 +674,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                     break;
 
                 case MapIdx_MAP5_S02:
-                    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+                    if (PLAYER_IN_MAP_CHUNK(3, 1))
                     {
                         mapCoordIdxX = 87;
                         mapCoordIdxZ = -56;
                         angle       += Q12_ANGLE(90.0f);
                     }
-                    else if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 1, -1, 1))
+                    else if (PLAYER_IN_MAP_CHUNK(3, 0))
                     {
                         mapCoordIdxX = 54;
                         mapCoordIdxZ = -53;
@@ -721,7 +720,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                     break;
 
                 case MapIdx_MAP6_S01:
-                    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+                    if (PLAYER_IN_MAP_CHUNK(-2, 1))
                     {
                         mapCoordIdxZ = 43;
                     }
@@ -737,11 +736,11 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                     mapCoordIdxX = -55;
                     mapCoordIdxZ =  84;
 
-                    if (!PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2))
+                    if (!PLAYER_IN_MAP_CHUNK_X(1))
                     {
                         angle += Q12_ANGLE(90.0f);
                     }
-                    else if (PLAYER_NOT_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                    else if (!PLAYER_IN_MAP_CHUNK_Z(-1))
                     {
                         angle += Q12_ANGLE(90.0f);
                     }

@@ -1324,9 +1324,7 @@ void Map_WorldObjectsInit(void) // 0x800D49C4
 
 void Map_WorldObjectsUpdate(void) // 0x800D4BA4
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(4, 1))
     {
         if (Savegame_EventFlagGet(EventFlag_302))
         {
@@ -1352,7 +1350,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
         Collision_TriggerFlagBitsClear(CollisionTriggerFlag_All);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(4, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S01_PickupAxe))
         {
@@ -1360,7 +1358,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(0, 1))
     {
         WorldObjects_Add(&WorldObject_D_800D8050.object, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation);
     }

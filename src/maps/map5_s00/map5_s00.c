@@ -1281,9 +1281,7 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
 
 void Map_WorldObjectsUpdate(void) // 0x800D84D8
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    if (PLAYER_IN_MAP_CHUNK(1, -2))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_PickupMap))
         {
@@ -1297,14 +1295,14 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
                            &g_WorldObject_SavePad0.rotation);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    if (PLAYER_IN_MAP_CHUNK(-3, -3))
     {
         WorldObjects_Add(&g_WorldObject_SavePad1.object,
                            &g_WorldObject_SavePad1.position,
                            &g_WorldObject_SavePad1.rotation);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    if (PLAYER_IN_MAP_CHUNK(-3, -2))
     {
         if (!Savegame_EventFlagGet(EventFlag_368))
         {
@@ -1316,7 +1314,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_ShotgunShells))
         {
@@ -1324,7 +1322,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_HealthDrink0))
         {
@@ -1332,7 +1330,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_HandgunBullets0))
         {
@@ -1340,7 +1338,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_RifleShells))
         {
@@ -1348,7 +1346,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(-1, -1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_FirstAidKit0))
         {
@@ -1356,7 +1354,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    if (PLAYER_IN_MAP_CHUNK(-2, -1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_FirstAidKit1))
         {
@@ -1364,7 +1362,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    if (PLAYER_IN_MAP_CHUNK(-2, -3))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_HealthDrink1))
         {
@@ -1372,7 +1370,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    if (PLAYER_IN_MAP_CHUNK(-2, -3))
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_HandgunBullets1))
         {

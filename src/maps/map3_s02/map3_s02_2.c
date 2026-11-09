@@ -347,17 +347,15 @@ void Map_WorldObjectsInit(void) // 0x800D0F8C
 
 void Map_WorldObjectsUpdate(void) // 0x800D0F9C
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
     if (D_800D3154)
     {
-        if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+        if (PLAYER_IN_MAP_CHUNK(3, -4))
         {
             D_800D1FBC = MAX(D_800D1FBC, Q12(10.0f));
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+    if (PLAYER_IN_MAP_CHUNK(2, -4))
     {
         if (D_800D3154)
         {
@@ -371,7 +369,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D0F9C
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+    if (PLAYER_IN_MAP_CHUNK(1, -4))
     {
 
         if (!Savegame_EventFlagGet(EventFlag_234) && g_SysWork.playerWork.player.position.vx < Q12(67.0f))

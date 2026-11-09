@@ -528,7 +528,6 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     s32    projCellX0;
     s32    i;
     q19_12 drZ;
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     cellZ0 = g_SysWork.playerWork.player.position.vz / Q12(CHUNK_SIZE);
     cellX0 = g_SysWork.playerWork.player.position.vx / Q12(CHUNK_SIZE);
@@ -580,7 +579,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
             break;
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(2, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_300))
         {
@@ -598,7 +597,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    if (PLAYER_IN_MAP_CHUNK(3, 2))
     {
         if (!Savegame_EventFlagGet(EventFlag_316))
         {
@@ -623,7 +622,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         SD_Call(Sfx_Unk1529);
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    if (PLAYER_IN_MAP_CHUNK(3, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HealthDrink0))
         {
@@ -631,7 +630,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    if (PLAYER_IN_MAP_CHUNK(2, 2))
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HandgunBullets))
         {

@@ -506,9 +506,7 @@ void Map_WorldObjectsInit(void)
 
 void Map_WorldObjectsUpdate(void) // 0x800CF938
 {
-    MAP_CHUNK_CHECK_VARIABLE_DECL();
-
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(0, 0))
     {
             if (Savegame_EventFlagGet(EventFlag_176) && !Savegame_EventFlagGet(EventFlag_M2S01_PickupFlauros))
             {
@@ -551,7 +549,7 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
         }
     }
 
-    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    if (PLAYER_IN_MAP_CHUNK(0, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
         {
