@@ -2088,8 +2088,7 @@ void Map_WorldObjectsInit(void) // 0x800EB908
 #if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?
     if (Savegame_EventFlagGet(EventFlag_132) && !Savegame_EventFlagGet(EventFlag_M2S00_KGordonDoorOpen))
     {
-        // TODO: Should be `~((1 << 8) | (1 << 6) | (1 << 7));`.
-        g_SavegamePtr->mapEnemyStates[10] &= 0xF3FFFEFF;
+        g_SavegamePtr->mapEnemyStates[10] &= ~((1 << 8) | (1 << 26) | (1 << 27));
     }
 #endif
 
