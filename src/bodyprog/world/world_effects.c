@@ -310,8 +310,8 @@ void func_8003EDA8(void) // 0x8003EDA8
 
 void WorldEnv_SnowRainColorGet(CVECTOR* snowColor, CVECTOR* rainColor) // 0x8003EDB8
 {
-    *snowColor = g_SysWork.worldEnv.transitionCur[WorldEnv_IsFlashlightOn()].params.snowColor;
-    *rainColor = g_SysWork.worldEnv.transitionCur[WorldEnv_IsFlashlightOn()].params.rainColor;
+    *snowColor = g_SysWork.worldEnv.transition[WorldEnv_IsFlashlightOn()].params.snowColor;
+    *rainColor = g_SysWork.worldEnv.transition[WorldEnv_IsFlashlightOn()].params.rainColor;
 }
 
 void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
@@ -321,8 +321,8 @@ void func_8003EE30(s32 arg0, s8* arg1, s32 arg2, s32 arg3) // 0x8003EE30
     g_SysWork.worldEnv.progressStart    = arg2;
     g_SysWork.worldEnv.progressEnd    = arg3;
 
-    g_SysWork.worldEnv.transitionFrom[0] = g_SysWork.worldEnv.transitionCur[0];
-    g_SysWork.worldEnv.transitionFrom[1] = g_SysWork.worldEnv.transitionCur[1];
+    g_SysWork.worldEnv.transitionFrom[0] = g_SysWork.worldEnv.transition[0];
+    g_SysWork.worldEnv.transitionFrom[1] = g_SysWork.worldEnv.transition[1];
 }
 
 void WorldEnv_LoadScreenPresetsSet(s32 arg0, s32 arg1) // 0x8003EEDC
@@ -353,8 +353,8 @@ void WorldEnv_TransitionStartFromPresets(const s_WorldEnvPreset* preset0, const 
     g_SysWork.worldEnv.progressStart = arg4;
     g_SysWork.worldEnv.progressEnd   = arg5;
 
-    g_SysWork.worldEnv.transitionFrom[0] = g_SysWork.worldEnv.transitionCur[0];
-    g_SysWork.worldEnv.transitionFrom[1] = g_SysWork.worldEnv.transitionCur[1];
+    g_SysWork.worldEnv.transitionFrom[0] = g_SysWork.worldEnv.transition[0];
+    g_SysWork.worldEnv.transitionFrom[1] = g_SysWork.worldEnv.transition[1];
 
     WorldEnv_StateFromPreset(&g_SysWork.worldEnv.transitionTo[0], preset0);
     WorldEnv_StateFromPreset(&g_SysWork.worldEnv.transitionTo[1], preset1);
@@ -434,15 +434,15 @@ void WorldEnv_Update(void) // 0x8003F170
 
     if (ptr->progressType == PrimitiveType_None)
     {
-        ptr->transitionCur[0] = ptr->transitionTo[0];
-        ptr->transitionCur[1] = ptr->transitionTo[1];
+        ptr->transition[0] = ptr->transitionTo[0];
+        ptr->transition[1] = ptr->transitionTo[1];
     }
     else
     {
         weight = func_8003F6F0(func_8003F654(ptr), ptr->progressStart, ptr->progressEnd);
 
-        func_8003F838(&ptr->transitionCur[0], &ptr->transitionFrom[0], &ptr->transitionTo[0], weight);
-        func_8003F838(&ptr->transitionCur[1], &ptr->transitionFrom[1], &ptr->transitionTo[1], weight);
+        func_8003F838(&ptr->transition[0], &ptr->transitionFrom[0], &ptr->transitionTo[0], weight);
+        func_8003F838(&ptr->transition[1], &ptr->transitionFrom[1], &ptr->transitionTo[1], weight);
 
         if (weight >= Q12(1.0f))
         {
@@ -450,7 +450,7 @@ void WorldEnv_Update(void) // 0x8003F170
         }
     }
 
-    func_8003F838(&ptr->current, &ptr->transitionCur[0], &ptr->transitionCur[1], ptr->flashlightIntensity);
+    func_8003F838(&ptr->current, &ptr->transition[0], &ptr->transition[1], ptr->flashlightIntensity);
 
     currentInGameGfx = &ptr->current;
 

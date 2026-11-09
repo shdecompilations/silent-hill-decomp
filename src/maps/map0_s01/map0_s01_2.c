@@ -10,7 +10,7 @@
 #include "inline_no_dmpsx.h"
 #include <psyq/gtemac.h>
 
-#include "../src/maps/common/particles/particle_glass.c"
+#include "../src/maps/common/particles/glass.c"
 
 #include "../src/maps/common/particles/particle.c"
 

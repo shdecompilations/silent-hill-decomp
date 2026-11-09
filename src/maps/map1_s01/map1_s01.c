@@ -15,7 +15,7 @@
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/stalker.h"
 
-#include "../src/maps/common/particles/particle_smoke.c"
+#include "../src/maps/common/particles/smoke.c"
 
 #include "../src/maps/common/particles/particle.c"
 

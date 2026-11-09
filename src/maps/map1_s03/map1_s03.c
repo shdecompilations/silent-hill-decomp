@@ -18,7 +18,7 @@
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/stalker.h"
 
-#include "../src/maps/common/particles/particle_water.c"
+#include "../src/maps/common/particles/water.c"
 
 void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
 {
@@ -187,7 +187,7 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
     return true;
 }
 
-#include "../src/maps/common/particles/particle_ufo.c"
+#include "../src/maps/common/particles/ufo.c"
 
 #include "../src/maps/common/particles/particle.c"
 

@@ -17,7 +17,7 @@
 #include "bodyprog/player/player.h"
 #include "maps/common/characters/groaner.h"
 
-#include "../src/maps/common/particles/particle_ufo.c"
+#include "../src/maps/common/particles/ufo.c"
 
 s16 func_800CD20C(void) // 0x800CD20C
 {

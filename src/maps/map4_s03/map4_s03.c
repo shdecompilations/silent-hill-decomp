@@ -14,7 +14,7 @@
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/twinfeeler.h"
 
-#include "../src/maps/common/particles/particle_acid.c"
+#include "../src/maps/common/particles/acid.c"
 
 #include "../src/maps/common/particles/particle.c"
 

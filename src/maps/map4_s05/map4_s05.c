@@ -14,9 +14,9 @@
 #include "maps/common/characters/floatstinger.h"
 #include "maps/common/characters/player.h"
 
-#include "../src/maps/common/particles/particle_acid.c"
+#include "../src/maps/common/particles/acid.c"
 
-#include "../src/maps/common/particles/particle_ufo.c"
+#include "../src/maps/common/particles/ufo.c"
 
 #include "../src/maps/common/particles/particle.c"
 

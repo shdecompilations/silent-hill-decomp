@@ -348,7 +348,7 @@ typedef struct _WorldEnvPreset
 } s_WorldEnvPreset;
 STATIC_ASSERT_SIZEOF(s_WorldEnvPreset, 44);
 
-typedef struct
+typedef struct _WorldEnvState
 {
     /* 0x0  */ s_WorldEnvPreset params;
     /* 0x2C */ q3_12            flashlightLensFlareIntensity;
@@ -357,33 +357,33 @@ typedef struct
 } s_WorldEnvState;
 STATIC_ASSERT_SIZEOF(s_WorldEnvState, 52);
 
-/** @brief Game-side world environment, the lighting and fog presets in use and the flashlight state.
+/** @brief Game-side world environment, lighting and fog presets in use, and flashlight state.
  *
  * Each frame `WorldEnv_Update` works out `current` in two steps:
- * 1. `transitionCur` fades from the old presets (`transitionFrom`) toward the new ones (`transitionTo`).
- * 2. `current` is a mix of the flashlight off and on entries of `transitionCur`, weighted by `flashlightIntensity`.
+ * 1. `transition` fades from the previous presets (`transitionFrom`) toward the new ones (`transitionTo`).
+ * 2. `current` is a mix of the flashlight off and on entries of `transition`, weighted by `flashlightIntensity`.
  *
  * `WorldEnv_Apply` then copies `current` into `g_WorldEnvRenderWork` for drawing.
  *
- * The transitionXXX arrays are indexed by flashlight state: 0 off, 1 on.
+ * The `transition***` arrays are indexed by the flashlight state: 0 off, 1 on.
  */
-typedef struct
+typedef struct _WorldEnvWork
 {
-    /* 0x0   */ s32          progressType;  /** `e_PrimitiveType` of `progressValue`. `PrimitiveType_None`: no transition. */
-    /* 0x4   */ s8*          progressValue; /** Value that drives the transition, usually overlay data. */
-    /* 0x8   */ q19_12       progressStart; /** `progressValue` at which the transition starts. */
-    /* 0xC   */ q19_12       progressEnd;   /** `progressValue` at which the transition completes. */
-    /* 0x10  */ q19_12       visibilityDistance; /** @unused Result of `func_8003FEC0`, never read. */
-    /* 0x14  */ u8           flashEffect;             /** `bool`. Trigger world flash effect (used for weapons). */
+    /* 0x0   */ s32          progressType;            /** `e_PrimitiveType` of `progressValue`. `PrimitiveType_None`: no transition. */
+    /* 0x4   */ s8*          progressValue;           /** Value that drives the transition. Usually overlay data. */
+    /* 0x8   */ q19_12       progressStart;           /** `progressValue` at which the transition starts. */
+    /* 0xC   */ q19_12       progressEnd;             /** `progressValue` at which the transition completes. */
+    /* 0x10  */ q19_12       visibilityDistance;      /** @unused Result of `func_8003FEC0`, never read. */
+    /* 0x14  */ u8           flashEffect;             /** `bool` | Trigger world flash effect (used for weapons). */
     /* 0x15  */ u8           isFlashlightOn;          /** `bool` */
-    /* 0x16  */ u8           isFlashlightUnavailable; /** `bool`. Set when both presets are the same, forces the flashlight off. */
+    /* 0x16  */ u8           isFlashlightUnavailable; /** `bool` | Set when both presets are the same. Forces the flashlight off. */
                 // 1 byte of padding.
     /* 0x18  */ q3_12        flashlightIntensity;
                 // 2 bytes of padding.
-    /* 0x1C  */ s_WorldEnvState transitionCur[2];  /** Blend of `transitionFrom` and `transitionTo`. */
-    /* 0x84  */ s_WorldEnvState transitionTo[2];   /** Most recently selected presets. */
-    /* 0xEC  */ s_WorldEnvState transitionFrom[2]; /** Copy of `transitionCur` taken when a transition starts. */
-    /* 0x154 */ s_WorldEnvState current;           /** Final blended state, read by gameplay code for the environment flags. */
+    /* 0x1C  */ s_WorldEnvState transition[2];        /** Current blend of `transitionFrom` and `transitionTo`. */
+    /* 0x84  */ s_WorldEnvState transitionTo[2];      /** Most recently selected presets. */
+    /* 0xEC  */ s_WorldEnvState transitionFrom[2];    /** Copy of `transition` taken when a transition starts. */
+    /* 0x154 */ s_WorldEnvState current;              /** Final blended state. Read by gameplay code for the environment flags. */
 } s_WorldEnvWork;
 STATIC_ASSERT_SIZEOF(s_WorldEnvWork, 392);
 
@@ -739,9 +739,9 @@ static inline void Game_StateStepIncrement(s32 stepIdx)
  *
  * @param `true`, otherwise `false`.
  */
-#define WorldEnv_CanBeInDarkness() \
-    (g_SysWork.worldEnv.transitionCur[0].params.flags & WorldEnvFlag_Dark || \
-     g_SysWork.worldEnv.transitionCur[1].params.flags & WorldEnvFlag_Dark)
+#define WorldEnv_CanBeInDarkness()                                          \
+    ((g_SysWork.worldEnv.transition[0].params.flags & WorldEnvFlag_Dark) || \
+     (g_SysWork.worldEnv.transition[1].params.flags & WorldEnvFlag_Dark))
 
 /** @brief Checks if the world is lit by any of the following conditions:
  * - The flashlight beign disallowed in a lit area. 

@@ -16,7 +16,7 @@
 #include "maps/common/particle.h"
 #include "maps/common/characters/puppet_nurse.h"
 
-#include "../src/maps/common/particles/particle_glass.c"
+#include "../src/maps/common/particles/glass.c"
 
 #include "../src/maps/common/particles/particle.c"
 

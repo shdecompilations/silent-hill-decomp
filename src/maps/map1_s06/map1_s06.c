@@ -13,7 +13,7 @@
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/split_head.h"
 
-#include "../src/maps/common/particles/particle_drool.c"
+#include "../src/maps/common/particles/drool.c"
 
 #include "../src/maps/common/particles/particle.c"
 

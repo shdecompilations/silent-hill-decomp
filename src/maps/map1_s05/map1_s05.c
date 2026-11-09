@@ -11,9 +11,9 @@
 
 #include "maps/common/characters/split_head.h"
 
-#include "../src/maps/common/particles/particle_fire.c"
+#include "../src/maps/common/particles/fire.c"
 
-#include "../src/maps/common/particles/particle_drool.c"
+#include "../src/maps/common/particles/drool.c"
 
 #include "../src/maps/common/particles/particle.c"
 

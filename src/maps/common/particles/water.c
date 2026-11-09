@@ -31,7 +31,7 @@ void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2)
     }
     else
     {
-        var_s2                                               = var_s2 % sharedData_800E30C8_1_s02.field_78;
+        var_s2                                              = var_s2 % sharedData_800E30C8_1_s02.field_78;
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = 0;
     }
 
