@@ -854,8 +854,6 @@ extern q3_12 D_800C4454;
 
 extern s8 D_800C447A;
 
-extern q3_12 D_800AF1FC[];
-
 extern u8 g_Player_AnimResetRequest; /** `bool` */
 
 extern s_CollisionSurface D_800C4620;

@@ -2708,6 +2708,7 @@ g_Harry_FallBackwardAnimBoxOffsets           = 0x800AEF78;
 g_Harry_KickAnimBoxOffsets                   = 0x800AF014;
 g_Harry_StompAnimBoxOffsets                  = 0x800AF04C;
 g_Harry_DeathAnimCylinderOffsets             = 0x800AF070;
+g_Harry_PinnedAnimCylinderOffsets            = 0x800AF1FC;
 g_Player_GrabReleaseInputTimer               = 0x800AF20C;
 g_Player_FlexRotationY                       = 0x800AF210;
 g_Player_FlexRotationX                       = 0x800AF212;

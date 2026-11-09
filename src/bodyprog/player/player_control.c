@@ -28,30 +28,88 @@
 
 // Collision box top extent + Y offset. TODO: Use a struct?
 static q3_12 g_Harry_FallForwardAnimBoxOffsets[][2] = {
-    { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 },
-    { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE6B9, 0xEE67 },
-    { 0xE70B, 0xEEB9 }, { 0xE75D, 0xEEB9 }, { 0xE7AF, 0xEEB9 }, { 0xE800, 0xEFAF },
-    { 0xE8F6, 0xF052 }, { 0xEA15, 0xF052 }, { 0xEB34, 0xF11F }, { 0xEF34, 0xF59A },
-    { 0xF0F6, 0xF667 }, { 0xF47B, 0xF800 }, { 0xF571, 0xF8A4 }, { 0xF5C3, 0xF948 },
-    { 0xF615, 0xF99A }, { 0xF6E2, 0xFA3E }, { 0xF734, 0xFAE2 }, { 0xF734, 0xFA3E },
-    { 0xF615, 0xF91F }, { 0xF59A, 0xF800 }, { 0xF452, 0xF70B }, { 0xF3D8, 0xF667 },
-    { 0xF2E2, 0xF5C3 }, { 0xF2E2, 0xF5C3 }, { 0xF23E, 0xF4A4 }, { 0xF148, 0xF429 },
-    { 0xF000, 0xF334 }, { 0xED71, 0xF215 }, { 0xEA90, 0xF0F6 }, { 0xE8F6, 0xF07B },
-    { 0xE7AF, 0xEFD8 }, { 0xE6E2, 0xEF86 }, { 0xE667, 0xEE67 },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.58f), Q12(-1.1f)  },
+    { Q12(-1.56f), Q12(-1.08f) },
+    { Q12(-1.54f), Q12(-1.08f) },
+    { Q12(-1.52f), Q12(-1.08f) },
+    { Q12(-1.5f),  Q12(-1.02f) },
+    { Q12(-1.44f), Q12(-0.98f) },
+    { Q12(-1.37f), Q12(-0.98f) },
+    { Q12(-1.3f),  Q12(-0.93f) },
+    { Q12(-1.05f), Q12(-0.65f) },
+    { Q12(-0.94f), Q12(-0.6f)  },
+    { Q12(-0.72f), Q12(-0.5f)  },
+    { Q12(-0.66f), Q12(-0.46f) },
+    { Q12(-0.64f), Q12(-0.42f) },
+    { Q12(-0.62f), Q12(-0.4f)  },
+    { Q12(-0.57f), Q12(-0.36f) },
+    { Q12(-0.55f), Q12(-0.32f) },
+    { Q12(-0.55f), Q12(-0.36f) },
+    { Q12(-0.62f), Q12(-0.43f) },
+    { Q12(-0.65f), Q12(-0.5f)  },
+    { Q12(-0.73f), Q12(-0.56f) },
+    { Q12(-0.76f), Q12(-0.6f)  },
+    { Q12(-0.82f), Q12(-0.64f) },
+    { Q12(-0.82f), Q12(-0.64f) },
+    { Q12(-0.86f), Q12(-0.71f) },
+    { Q12(-0.92f), Q12(-0.74f) },
+    { Q12(-1.0f),  Q12(-0.8f)  },
+    { Q12(-1.16f), Q12(-0.87f) },
+    { Q12(-1.34f), Q12(-0.94f) },
+    { Q12(-1.44f), Q12(-0.97f) },
+    { Q12(-1.52f), Q12(-1.01f) },
+    { Q12(-1.57f), Q12(-1.03f) },
+    { Q12(-1.6f),  Q12(-1.1f)  }
 };
 
 // Collision box top extent + Y offset. TODO: Use a struct?
 static q3_12 g_Harry_FallBackwardAnimBoxOffsets[][2] = {
-    { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE6B9, 0xEEE2 }, { 0xE948, 0xF029 },
-    { 0xE948, 0xF052 }, { 0xE829, 0xEF86 }, { 0xE99A, 0xEFAF }, { 0xE9EC, 0xF052 },
-    { 0xED1F, 0xF400 }, { 0xF0F6, 0xF829 }, { 0xF2E2, 0xF99A }, { 0xF47B, 0xFA15 },
-    { 0xF571, 0xFA90 }, { 0xF571, 0xFA90 }, { 0xF75D, 0xFB34 }, { 0xF75D, 0xFB86 },
-    { 0xF75D, 0xFB86 }, { 0xF800, 0xFC00 }, { 0xF852, 0xFC00 }, { 0xF852, 0xFC00 },
-    { 0xF667, 0xFBD8 }, { 0xF4F6, 0xFB86 }, { 0xF3D8, 0xFAB9 }, { 0xF290, 0xFA15 },
-    { 0xF215, 0xFA15 }, { 0xF148, 0xF9C3 }, { 0xF07B, 0xF852 }, { 0xEDEC, 0xF548 },
-    { 0xEC7B, 0xF400 }, { 0xE91F, 0xF0F6 }, { 0xE70B, 0xEFD8 }, { 0xE6B9, 0xEEB9 },
-    { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 },
-    { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 }, { 0xE667, 0xEE67 },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.58f), Q12(-1.07f) },
+    { Q12(-1.42f), Q12(-0.99f) },
+    { Q12(-1.42f), Q12(-0.98f) },
+    { Q12(-1.49f), Q12(-1.03f) },
+    { Q12(-1.4f),  Q12(-1.02f) },
+    { Q12(-1.38f), Q12(-0.98f) },
+    { Q12(-1.18f), Q12(-0.75f) },
+    { Q12(-0.94f), Q12(-0.49f) },
+    { Q12(-0.82f), Q12(-0.4f)  },
+    { Q12(-0.72f), Q12(-0.37f) },
+    { Q12(-0.66f), Q12(-0.34f) },
+    { Q12(-0.66f), Q12(-0.34f) },
+    { Q12(-0.54f), Q12(-0.3f)  },
+    { Q12(-0.54f), Q12(-0.28f) },
+    { Q12(-0.54f), Q12(-0.28f) },
+    { Q12(-0.5f),  Q12(-0.25f) },
+    { Q12(-0.48f), Q12(-0.25f) },
+    { Q12(-0.48f), Q12(-0.25f) },
+    { Q12(-0.6f),  Q12(-0.26f) },
+    { Q12(-0.69f), Q12(-0.28f) },
+    { Q12(-0.76f), Q12(-0.33f) },
+    { Q12(-0.84f), Q12(-0.37f) },
+    { Q12(-0.87f), Q12(-0.37f) },
+    { Q12(-0.92f), Q12(-0.39f) },
+    { Q12(-0.97f), Q12(-0.48f) },
+    { Q12(-1.13f), Q12(-0.67f) },
+    { Q12(-1.22f), Q12(-0.75f) },
+    { Q12(-1.43f), Q12(-0.94f) },
+    { Q12(-1.56f), Q12(-1.01f) },
+    { Q12(-1.58f), Q12(-1.08f) },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  },
+    { Q12(-1.6f),  Q12(-1.1f)  }
 };
 
 static q3_12 g_Harry_KickAnimBoxOffsets[] = {
@@ -123,10 +181,9 @@ static q3_12 g_Harry_DeathAnimCylinderOffsets[] = {
     Q12(0.30f),  Q12(0.30f),  Q12(0.30f),  Q12(0.30f),
     Q12(0.30f),  Q12(0.30f),  Q12(0.30f),  Q12(0.30f),
     Q12(0.30f),  Q12(0.0f)
-     };
+};
 
-// Distances used in player code.
-q3_12 D_800AF1FC[] = {
+static q3_12 g_Harry_PinnedAnimCylinderOffsets[] = {
     Q12(0.08f), Q12(0.16f), Q12(0.24f), Q12(0.32f),
     Q12(0.4f),  Q12(0.48f), Q12(0.48f), Q12(0.0f)
 };
@@ -240,8 +297,8 @@ s_800AFBF4 D_800AFBF4[11] = {
 
 /** @brief Cached collision point data. Generic collision global used by high-level getters. */
 s_CollisionPoint g_CollisionPointCache = {
-    .position   = {},
-    .surface    = {},
+    .position  = {},
+    .surface   = {},
     .floorType = NO_VALUE
 };
 
@@ -1240,9 +1297,9 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
     q3_12         angle;
     s16           sp1E;
     q19_12        temp_a2;
-    q19_12        cylinderOffsetDist0;
+    q19_12        cylinderOffset0;
     q19_12        var_v1_5;
-    s32           cylinderOffsetDist1;
+    s32           cylinderOffset1;
     q19_12        deltaPosX;
     q19_12        deltaPosZ;
     s32           temp_v1_12;
@@ -1450,11 +1507,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                cylinderOffsetDist0                            = -D_800AF1FC[player->model.anim.keyframeIdx - g_MapOverlayHdr.field_38[D_800AF220].time];
+                cylinderOffset0                                = -g_Harry_PinnedAnimCylinderOffsets[player->model.anim.keyframeIdx - g_MapOverlayHdr.field_38[D_800AF220].time];
                 playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
                 playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffsetDist0, Math_Sin(player->rotation.vy));
-                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffsetDist0, Math_Cos(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffset0, Math_Sin(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffset0, Math_Cos(player->rotation.vy));
             }
 
             if (ABS(headingAngle0) < Q12_ANGLE(11.25f))
@@ -2281,11 +2338,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     var_v1_5 = temp_a2;
                 }
 
-                cylinderOffsetDist1                            = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(player->model.anim.time));
+                cylinderOffset1                                = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(player->model.anim.time));
                 playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
                 playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffsetDist1, Math_Sin(player->rotation.vy));
-                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffsetDist1, Math_Cos(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffset1, Math_Sin(player->rotation.vy));
+                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffset1, Math_Cos(player->rotation.vy));
                 player->collision.cylinder.outerRadius         = Q12(0.3f);
             }
 
