@@ -922,7 +922,7 @@ void Map_WorldObjectsUpdate(void)
         if (Savegame_EventFlagGet(EventFlag_72))
         {
             WorldObjects_Add(&g_WorldObject6[1].object, &g_WorldObject6[1].position, &SVECTOR3_Zero);
-            func_80064F04(&Q12_VECTOR3(20.58f, -1.14f, -17.41f), 0, 0x385); // TODO: Demagic angle.
+            func_80064F04(&Q12_VECTOR3(20.58f, -1.14f, -17.41f), 0, Q12_ANGLE(79.2f));
         }
         else
         {

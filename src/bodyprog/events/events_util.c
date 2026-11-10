@@ -1150,10 +1150,7 @@ void Event_PaperMapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMs
         SCREEN_WIDTH / 2, SCREEN_HEIGHT
     };
 
-    s32 paperMapFlagIdxCpy;
-
-    g_DeltaTime        = Q12(0.0f);
-    paperMapFlagIdxCpy = paperMapFlagIdx;
+    g_DeltaTime = Q12(0.0f);
 
     switch (g_SysWork.sysStateSteps[1])
     {
@@ -1191,35 +1188,38 @@ void Event_PaperMapTake(s32 paperMapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMs
             break;
 
         case 4:
-            paperMapFlagIdxCpy                                         = paperMapFlagIdx >> 5;
-            ((s32*)&g_SavegamePtr->paperMapFlags)[paperMapFlagIdxCpy] |= 1 << (paperMapFlagIdx & 0x1F); // TODO: Maybe union?
+            SET_FLAG(g_SavegamePtr->paperMapFlags, paperMapFlagIdx);
 
-            // TODO: Demagic paper map flags with an enum.
             switch (paperMapFlagIdx)
             {
-                case 6:
-                    g_SavegamePtr->paperMapFlags |= (1 << 5) | (1 << 7) | (1 << 8) | (1 << 9) |
-                                                    (1 << 10) | (1 << 11) | (1 << 12);
+                case PaperMapIdx_FogSchool1F:
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_FogSchoolBF);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_FogSchool2F);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_FogSchoolRF);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltSchoolBF);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltSchool1F);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltSchool2F);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltSchoolRF);
                     break;
 
-                case 17:
-                    g_SavegamePtr->paperMapFlags |= 1 << 18;
-                    g_SavegamePtr->paperMapFlags |= 1 << 19;
-                    g_SavegamePtr->paperMapFlags |= 1 << 21;
-                    g_SavegamePtr->paperMapFlags |= 1 << 22;
-                    g_SavegamePtr->paperMapFlags |= 1 << 23;
+                case PaperMapIdx_FogHospital1F:
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_FogHospital2F);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_FogHospital3F);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltHospital1F);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltHospital2F);
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltHospital3F);
                     break;
 
-                case 16:
-                    g_SavegamePtr->paperMapFlags |= 1 << 20;
+                case PaperMapIdx_FogHospitalBF:
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltHospitalBF);
                     break;
 
-                case 13:
-                    g_SavegamePtr->paperMapFlags |= 1 << 14;
+                case PaperMapIdx_FogSewer1F:
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_FogSewer2F);
                     break;
 
-                case 2:
-                    g_SavegamePtr->paperMapFlags |= 1 << 3;
+                case PaperMapIdx_FogCentralTown:
+                    SET_FLAG(g_SavegamePtr->paperMapFlags, PaperMapIdx_AltCentralTown);
                     break;
             }
 

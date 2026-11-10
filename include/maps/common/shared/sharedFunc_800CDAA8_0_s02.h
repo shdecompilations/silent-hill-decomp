@@ -1507,8 +1507,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             {
                 if (!(playerProps.flags & PlayerFlag_Unk6))
                 {
-                    // TODO: `0x340` is `Q12_ANGLE(73.2f)`?
-                    func_8006342C(EquippedWeaponId_Handgun, 0x340, player->rotation.vy, boneCoords);
+                    func_8006342C(EquippedWeaponId_Handgun, Q12_ANGLE(73.125f), player->rotation.vy, boneCoords);
                     func_8005F6B0(&g_SysWork.npcs[1], &Q12_VECTOR3(140.39f, -0.55f, 22.76f), 3, 3);
                     playerProps.flags |= PlayerFlag_Unk6;
                 }

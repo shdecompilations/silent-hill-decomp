@@ -3,6 +3,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/screen/draw.h"
+#include "screens/options.h"
 
 void Settings_ScreenAndVolUpdate(void) // 0x800333CC
 {
@@ -28,7 +29,7 @@ void Settings_RestoreDefaults(void) // 0x8003342C
 
     Settings_ScreenAndVolUpdate();
 
-    g_GameWork.config.extraBloodColor = 0;
+    g_GameWork.config.extraBloodColor = BloodColor_Normal;
 }
 
 void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480

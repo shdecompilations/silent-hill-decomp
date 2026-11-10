@@ -2140,12 +2140,12 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             Math_SetSVectorFast(&ptr->field_20, -2, -35, 221);
             break;
 
-        case 70: // TODO: `WEAPON_ATTACK`
+        case WEAPON_ATTACK(EquippedWeaponId_Unk70, AttackInputType_Tap):
             D_800C4410 = coord;
             Math_SetSVectorFast(&ptr->field_20, 3, -24, 91);
             break;
 
-        case 63: // TODO: `WEAPON_ATTACK`
+        case WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap):
             D_800C4410 = coord;
             Math_SetSVectorFast(&ptr->field_20, 2, -13, 67);
             break;
@@ -2204,8 +2204,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             }
             break;
 
-        // TODO: What weapon attack?
-        case 70:
+        case WEAPON_ATTACK(EquippedWeaponId_Unk70, AttackInputType_Tap):
             ptr->field_38 = func_8005E7E0(18);
             ptr->field_50 = 3;
 
@@ -2215,8 +2214,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             }
             break;
 
-        // TODO: What weapon attack?
-        case 63:
+        case WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap):
             ptr->field_38 = func_8005E7E0(19);
             ptr->field_50 = 3;
 

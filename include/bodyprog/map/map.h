@@ -559,6 +559,6 @@ extern const s_MapInfo MAP_INFOS[MapType_Count];
  * @return `true` if the paper map has been collected, `false` otherwise.
  */
 #define HAS_PAPER_MAP(paperMapIdx) \
-    ((((u32*)&g_SavegamePtr->paperMapFlags)[(paperMapIdx) / 32] >> ((paperMapIdx) % 32)) & (1 << 0))
+    HAS_FLAG(g_SavegamePtr->paperMapFlags, paperMapIdx)
 
 #endif
