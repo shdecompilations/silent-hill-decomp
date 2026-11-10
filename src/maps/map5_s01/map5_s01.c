@@ -1,12 +1,8 @@
-#include "inline_no_dmpsx.h"
-#include <psyq/gtemac.h>
-
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/gfx/map_effects.h"
-#include "bodyprog/items/camera.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sound_system.h"
@@ -16,7 +12,8 @@
 #include "maps/common/characters/air_screamer.h"
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/romper.h"
-
+#include "inline_no_dmpsx.h"
+#include <psyq/gtemac.h>
 #include "bodyprog/player/player.h"
 #include "maps/common/characters/groaner.h"
 

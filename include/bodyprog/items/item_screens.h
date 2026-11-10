@@ -1,5 +1,7 @@
-#ifndef _BODYPROG_ITEMS_ITEMSCREENS_H
-#define _BODYPROG_ITEMS_ITEMSCREENS_H
+#ifndef _BODYPROG_ITEMSCREENS_H
+#define _BODYPROG_ITEMSCREENS_H
+
+/** @brief Inventory and result screen system. */
 
 // ==========
 // CONSTANTS
@@ -134,13 +136,19 @@ extern s32 g_Inventory_DescriptionRollTimer; // 0x800AE1A0
 // This is done until a way to replicate `common`
 // segment behavior is found.
 
-// camera.c
+// cam.c
 
 extern GsCOORD2PARAM g_ItemScreen_CameraTransform;
+
+/** Packed weapon attack. See `WEAPON_ATTACK`. */
 extern s8 g_ItemScreen_PlayerWeaponAttack;
+
 extern s8 __pad_bss_800C3951[3];
+
 extern s32 g_ItemScreen_ViewDistance;
+
 extern s32 g_ItemScreen_GeomOffsetX;
+
 extern s32 g_ItemScreen_GeomOffsetY;
 
 // 2.c
@@ -244,6 +252,23 @@ extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX];
 // ==========
 // FUNCTIONS
 // ==========
+
+/** Appears to set the camera for items. `itemRot` is always cleared to the identity rotation. */
+void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* itemRot, s32 unused1); // 0x8004BB4C
+
+void GameFs_TmdDataAlloc(s32* buf); // 0x8004BCBC
+
+/** @brief Used for item rotation and scrolling in the inventory.
+ *
+ * Name might be inaccurate as it also appears to be used for the camera.
+ */
+void ItemScreen_ItemRotate(const SVECTOR* itemRot, GsCOORDINATE2* itemCoord); // 0x8004BCDC
+
+void func_8004BD74(s32 displayItemIdx, GsDOBJ2* obj, s32 arg2); // 0x8004BD74
+
+void func_8004BFE8(void); // 0x8004BFE8
+
+void func_8004C040(void); // 0x8004C040
 
 /** @brief Used to correct aim animations when exiting the inventory screen.
  *

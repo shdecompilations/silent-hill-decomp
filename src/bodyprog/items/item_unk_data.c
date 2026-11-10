@@ -102,6 +102,7 @@ s_800AD4C8 D_800AD4C8[70] = {
     { Q12(0.1f),  Q12(0.0f),      0x0006, -103, 1, 153, Chara_Harry, 0x00, 0x00, Q12(0.0f), 0, 99, 6, 2, 2, 0, &D_800AD4C4 },
 };
 
+
 const char* INV_ITEM_NAMES[] = {
 #if VERSION_REGION_IS(NTSCJ)
     "栄養剤",

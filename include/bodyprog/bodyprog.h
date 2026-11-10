@@ -871,6 +871,8 @@ extern s_RayTrace D_800C47F8;
 
 extern s_800C4818 D_800C4818;
 
+extern s32 D_800C48F0;
+
 extern u8 D_800AD480[24];
 
 /** Weapon attacks. */
@@ -1815,6 +1817,8 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q
 void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale);
 
 void Player_FlexRotationYReset(void);
+
+void func_8004BBF4(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR* camRot);
 
 void Settings_ScreenAndVolUpdate(void);
 
