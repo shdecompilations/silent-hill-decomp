@@ -4,12 +4,15 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/screen/data.h"
+#include "bodyprog/items/camera.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/screen/data.h"
 
 GsCOORD2PARAM g_ItemScreen_CameraTransform;
-s8            g_ItemScreen_PlayerWeaponAttack;
+
+/** Packed weapon attack. See `WEAPON_ATTACK`. */
+s8 g_ItemScreen_PlayerWeaponAttack;
 
 s8 __pad_bss_800C3951[3];
 
@@ -184,9 +187,6 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* obj, s32 arg2)  // 0x8004BD74
     }
 }
 
-/** Removing this causes the models of items to appear farther from the camera.
- * `Gfx_Items_ViewPointAdjustment`?
- */
 void func_8004BFE8(void) // 0x8004BFE8
 {
     // Save constant rotation matrix in stack.

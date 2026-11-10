@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_ITEMS_H
-#define _BODYPROG_ITEMS_H
+#ifndef _BODYPROG_ITEMS_ITEMS_H
+#define _BODYPROG_ITEMS_ITEMS_H
 
 #define INV_ITEM_COUNT_MAX  40
 #define INV_ITEM_GROUP_SIZE 32 /** Number of `e_InvItemId`s per `e_InvItemGroup`. */

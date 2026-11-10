@@ -3,16 +3,13 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/items/credits_init.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/items/ranking.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "screens/stf_roll/credits.h"
-
-extern s_CreditTextState   g_CreditTextState;
-extern s_CreditText3dState g_CreditText3dState;
 
 // Seems to be params for each of the games endings.
 // Only looks like index 1 - 4 are used by `map7_s03` though? (which accounts for the 4 different normal endings)

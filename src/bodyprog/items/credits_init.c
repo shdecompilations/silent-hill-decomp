@@ -1,10 +1,8 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/text/text_draw.h"
-#include "bodyprog/items/item_screens.h"
+#include "bodyprog/items/credits_init.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/items/ranking.h"
 #include "main/fsqueue.h"
 #include "screens/stf_roll/credits.h"
 

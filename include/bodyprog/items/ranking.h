@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_RANKING_H
-#define _BODYPROG_RANKING_H
+#ifndef _BODYPROG_ITEMS_RANKING_H
+#define _BODYPROG_ITEMS_RANKING_H
 
 /** @brief Ranking system. */
 
@@ -120,11 +120,5 @@ void func_80091464(void);
 u32 func_8009146C(s32 arg0);
 
 void func_800914C4(s32 arg0, u32 val);
-
-void GameFs_StfRollBinLoad(void);
-
-void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img);
-
-void func_8009185C(s16 arg0, s16 arg1, s32 arg2, q19_12 arg3, q19_12 arg4, q19_12 arg5, q19_12 arg6, q19_12 arg7, s32 arg8, s32 arg9);
 
 #endif
