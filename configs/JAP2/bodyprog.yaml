@@ -561,7 +561,7 @@ segments:
       - [0xA4C68,  o, libpad/padmain, .bss]
       - [0xA4C88,  o, libpad/padcmd, .bss]
       - [0xA4C98,  o, libpad/padportd, .bss]
-      - [0xA4F08,  bss] # waitrc2.o
+      - [0xA4F08,    o, libpad/waitrc2, .bss]
       - [0xA4F10, .bss, libsd/smf_snd]
       - [0xA51E0,  pad]
       - [0xA51E8, .bss, libsd/smf_io]

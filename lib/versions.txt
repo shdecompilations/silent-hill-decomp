@@ -17,3 +17,4 @@ Some objects needed editing to match up with SH:
 - libcd/cdrom.o: reordered weak .bss variables with LIEF script (https://github.com/Vatuu/silent-hill-decomp/issues/142#issuecomment-2957853899)
 - libgs/global.o / libgs/gs_104.o: reordered weak .bss variables
 - libgs/gs_001.o / libgs/gs_123.o: reordered weak .bss variables, fixed code to point to new GsDRAWENV/GsIDMATRIX location
+- libpad/waitrc2.o: reordered weak .bss variables, swapped _startTime (now 0x0) and _waitTime (now 0x4)
