@@ -9,12 +9,22 @@ typedef enum _SfxId
     Sfx_MenuStartGame = Sfx_Base + 1, // `SND/FIRST.VAB`
 
     Sfx_Unk1283 = Sfx_Base + 3,
-
+    Sfx_Unk1284 = Sfx_Base + 4,
+    Sfx_Unk1285 = Sfx_Base + 5,
     Sfx_Unk1286 = Sfx_Base + 6,
-
+    Sfx_Unk1287 = Sfx_Base + 7,
+    Sfx_Unk1288 = Sfx_Base + 8,
+    Sfx_Unk1289 = Sfx_Base + 9,
+    Sfx_Unk1290 = Sfx_Base + 10,
+    Sfx_Unk1291 = Sfx_Base + 11,
+    Sfx_Unk1292 = Sfx_Base + 12,
+    Sfx_Unk1293 = Sfx_Base + 13,
+    Sfx_Unk1294 = Sfx_Base + 14,
+    Sfx_Unk1295 = Sfx_Base + 15,
     Sfx_Unk1296 = Sfx_Base + 16,
     Sfx_Unk1297 = Sfx_Base + 17,
-
+    Sfx_Unk1298 = Sfx_Base + 18,
+    Sfx_Unk1299 = Sfx_Base + 19,
     Sfx_Unk1300 = Sfx_Base + 20,
     Sfx_Unk1301 = Sfx_Base + 21,
     Sfx_Unk1302 = Sfx_Base + 22,

@@ -354,11 +354,8 @@ typedef enum _RockDrillAttackType
 // STRUCTS
 // ========
 
-/** TODO: Maybe `s_PlayerAttack` fits.
- * - `s_WeaponDataInfo` fits better as this struct stores the information of the data
- * used by weapons.
- */
-typedef struct _800AFBF4
+/** @brief Equipped player weapon info. */
+typedef struct _EquippedWeaponInfo
 {
     /* 0x0 */ s16 attackSfx;
     /* 0x2 */ s16 reloadSfx;
@@ -369,8 +366,8 @@ typedef struct _800AFBF4
     /* 0x9 */ u8  field_9;
     /* 0xA */ u8  field_A; // Attack type?
     /* 0xB */ s8  __pad_B;
-} s_800AFBF4;
-STATIC_ASSERT_SIZEOF(s_800AFBF4, 12);
+} s_EquippedWeaponInfo;
+STATIC_ASSERT_SIZEOF(s_EquippedWeaponInfo, 12);
 
 // Used in player lower body state handling.
 typedef struct
@@ -411,7 +408,7 @@ extern s32 g_Player_IsMultiTapAttack;
 /** @brief `e_AttackInputType` | Attack type performed by the player. */
 extern s32 g_Player_MeleeAttackType;
 
-extern s_800AFBF4 D_800AFBF4[11];
+extern s_EquippedWeaponInfo g_Player_EquippedWeaponInfos[11];
 
 extern q19_12 D_800C45DC;
 
@@ -443,7 +440,7 @@ extern u8 g_Player_DisableDamage;
 
 extern u8 __pad_bss_800C4563[13];
 
-extern s_800AFBF4 g_Player_EquippedWeaponInfo;
+extern s_EquippedWeaponInfo g_Player_EquippedWeaponInfo;
 
 /** `g_Player_CutsceneState` could be related to animations that play during cutscenes.
  *

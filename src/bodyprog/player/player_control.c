@@ -195,7 +195,7 @@ u8     g_Player_IsInWalkToRunTransition = false;
 u8     g_Player_DisableControl          = false;
 q1_7   g_Player_MoveStickMag            = Q7(0.0f);
 s8     g_Player_RockDrill_AttackType    = RockDrillAttackType_Center;
-u32    D_800AF218                       = 0; // @unused
+u32    D_800AF218                       = 0; // Unused, maybe padding.
 s32    g_Player_TargetNpcIdx            = NO_VALUE;
 
 /** Related to player. */
@@ -203,11 +203,10 @@ u8 D_800AF220 = 0; // Keyframe index in map overlay header struct.
 
 // 3 bytes of padding.
 
-/** @brief Last weapon selected. While it is being assigned the value of
- * `g_SysWork::playerCombat::weaponAttack` this time it is used to determine
- * the last weapon used in order to load the required animation data.
+/** @brief Previous selected weapon. Set to `g_SysWork::playerCombat::weaponAttack` and used to load the required
+ * animation data.
  */
-s32 g_Player_LastWeaponSelected = NO_VALUE;
+s32 g_Player_PrevSelectedWeapon = NO_VALUE;
 
 // TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
@@ -271,28 +270,30 @@ s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
 };
 // TODO: `GameFs_WeaponInfoUpdate` indicates there should be more.
 
-u8  __padding1[14] = {};
+u8 __pad1[14] = {};
+
 s16 D_800AF5C6 = 0;
 u32 D_800AF5C8[23] = {}; // Padding?
 s16 D_800AF624 = 0;
 s16 D_800AF626 = 0; /** Keyframe index. */
 u32 D_800AF628[368] = {};
+
 s32 g_Player_AttackAnimIdx    = 0;
 s32 g_Player_MeleeAttackType  = 0;
 s32 g_Player_IsMultiTapAttack = 0;
 
-s_800AFBF4 D_800AFBF4[11] = {
+s_EquippedWeaponInfo g_Player_EquippedWeaponInfos[11] = {
     {},
-    { 1293, 0,    0,    64, 62, 63, 0,  52, 0 },
-    { 1294, 0,    0,    64, 62, 63, 0,  52, 0 },
-    { 1295, 0,    0,    64, 62, 63, 0,  52, 0 },
-    { 1301, 0,    0,    64, 62, 63, 0,  52, 0 },
-    { 1303, 0,    0,    64, 58, 59, 0,  20, 0 },
-    { 1283, 1284, 1285, 66, 72, 61, 37, 37, 0 },
-    { 1290, 1291, 1292, 66, 72, 61, 24, 37, 0 },
-    { 1287, 1288, 1289, 66, 72, 61, 23, 37, 0 },
-    { 1299, 0,    0,    66, 72, 61, 0,  37, 0 },
-    { 1298, 0,    0,    64, 62, 63, 0,  52, 0 }
+    { Sfx_Unk1293, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
+    { Sfx_Unk1294, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
+    { Sfx_Unk1295, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
+    { Sfx_Unk1301, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
+    { Sfx_Unk1303, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_Unk29, false),         ANIM_STATUS(HarryAnim_Unk29,         true), 0,  20, 0 },
+    { Sfx_Unk1283, Sfx_Unk1284, Sfx_Unk1285, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(36, false),                      ANIM_STATUS(HarryAnim_Unk30,         true), 37, 37, 0 },
+    { Sfx_Unk1290, Sfx_Unk1291, Sfx_Unk1292, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(36, false),                      ANIM_STATUS(HarryAnim_Unk30,         true), 24, 37, 0 },
+    { Sfx_Unk1287, Sfx_Unk1288, Sfx_Unk1289, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(36, false),                      ANIM_STATUS(HarryAnim_Unk30,         true), 23, 37, 0 },
+    { Sfx_Unk1299, 0,           0,           ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(36, false),                      ANIM_STATUS(HarryAnim_Unk30,         true), 0,  37, 0 },
+    { Sfx_Unk1298, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 }
 };
 
 /** @brief Cached collision point data. Generic collision global used by high-level getters. */
@@ -313,10 +314,13 @@ s32        g_Player_HasActionInput;
 s8         g_Player_PrevAttackReceived;
 u8         g_Player_IsDead;
 u8         g_Player_DisableDamage;
-u8         __pad_bss_800C4563[13];
-s_800AFBF4 g_Player_EquippedWeaponInfo;
-u8         g_Player_CutsceneState;
-u8         __pad_bss_800C457D;
+
+u8 __pad_bss_800C4563[13];
+
+s_EquippedWeaponInfo g_Player_EquippedWeaponInfo;
+u8                   g_Player_CutsceneState;
+
+u8 __pad_bss_800C457D;
 
 u16        g_Player_IsAiming;
 u16        g_Player_IsSteppingLeftTap;
@@ -325,7 +329,9 @@ u16        g_Player_IsTurningLeft;
 u16        g_Player_IsTurningRight;
 
 u8         D_800C4588;
-s8         __pad_bss_800C4589[7];
+
+s8 __pad_bss_800C4589[7];
+
 s_CollisionResult g_Player_CollisionResult;
 
 u16        g_Player_IsSteppingLeftHold;
@@ -368,8 +374,8 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                 case MapIdx_MAP5_S01:
                 case MapIdx_MAP6_S00:
                 case MapIdx_MAP6_S02:
-                    if (g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(128, false) ||
-                        g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(129, false))
+                    if (g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(HarryAnim_Unk128, false) ||
+                        g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(HarryAnim_Unk129, false))
                     {
                         if (playerChara.health <= Q12(0.0f))
                         {
@@ -395,8 +401,8 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
         case PlayerState_OnFloorBehind:
             if (g_SavegamePtr->mapIdx == MapIdx_MAP6_S04)
             {
-                if (g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(132, true) ||
-                    g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(133, false))
+                if (g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(HarryAnim_Unk132, true) ||
+                    g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(HarryAnim_Unk133, false))
                 {
                     if (playerChara.health <= Q12(0.0f))
                     {
@@ -8180,7 +8186,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
             break;
     }
 
-    g_Player_LastWeaponSelected = NO_VALUE;
+    g_Player_PrevSelectedWeapon = NO_VALUE;
     g_GameWork.mapAnimIdx       = NO_VALUE;
 
     g_SavegamePtr->invSlotCount  = CLAMP(g_SavegamePtr->invSlotCount, INV_ITEM_COUNT_MAX / 5, INV_ITEM_COUNT_MAX);
@@ -8326,13 +8332,13 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
     switch (playerCombat.weaponAttack)
     {
         case NO_VALUE:
-            g_Player_EquippedWeaponInfo = D_800AFBF4[0];
+            g_Player_EquippedWeaponInfo = g_Player_EquippedWeaponInfos[0];
             return;
 
         case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
             relAnimInfoIdx                                    = 30;
             relKeyframeIdx                                    = 15;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[1];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[1];
             g_SysWork.playerWork.player.collision.box.field_8 = -0x1030;
             break;
 
@@ -8342,13 +8348,13 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
         case WEAPON_ATTACK(EquippedWeaponId_Axe, AttackInputType_Tap):
             relAnimInfoIdx                                    = 0;
             relKeyframeIdx                                    = 0;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[3];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[3];
             g_SysWork.playerWork.player.collision.box.field_8 = -0xFD0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
-            g_Player_EquippedWeaponInfo = D_800AFBF4[2];
+            g_Player_EquippedWeaponInfo = g_Player_EquippedWeaponInfos[2];
             switch (playerCombat.weaponAttack)
             {
                 case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
@@ -8368,49 +8374,49 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
             relAnimInfoIdx                                    = 50;
             relKeyframeIdx                                    = 25;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[4];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[4];
             g_SysWork.playerWork.player.collision.box.field_8 = -0xE90;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
             relAnimInfoIdx                                    = 64;
             relKeyframeIdx                                    = 32;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[5];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[5];
             g_SysWork.playerWork.player.collision.box.field_8 = -0x12E0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
             relAnimInfoIdx                                    = 40;
             relKeyframeIdx                                    = 20;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[10];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[10];
             g_SysWork.playerWork.player.collision.box.field_8 = -0xF20;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 78;
             relKeyframeIdx                                    = 39;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[6];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[6];
             g_SysWork.playerWork.player.collision.box.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             relAnimInfoIdx                                    = 96;
             relKeyframeIdx                                    = 48;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[7];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[7];
             g_SysWork.playerWork.player.collision.box.field_8 = -0x1180;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 114;
             relKeyframeIdx                                    = 57;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[8];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[8];
             g_SysWork.playerWork.player.collision.box.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
             relAnimInfoIdx                                    = 132;
             relKeyframeIdx                                    = 66;
-            g_Player_EquippedWeaponInfo                       = D_800AFBF4[9];
+            g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[9];
             g_SysWork.playerWork.player.collision.box.field_8 = -0x1610;
             break;
     }
@@ -8425,9 +8431,9 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
         D_800C44F0[i] = D_800294F4[i + relKeyframeIdx];
     }
 
-    if (playerCombat.weaponAttack != NO_VALUE && g_Player_LastWeaponSelected != playerCombat.weaponAttack)
+    if (playerCombat.weaponAttack != NO_VALUE && g_Player_PrevSelectedWeapon != playerCombat.weaponAttack)
     {
-        g_Player_LastWeaponSelected = playerCombat.weaponAttack;
+        g_Player_PrevSelectedWeapon = playerCombat.weaponAttack;
         func_8007F14C(playerCombat.weaponAttack);
 
         switch (playerCombat.weaponAttack)

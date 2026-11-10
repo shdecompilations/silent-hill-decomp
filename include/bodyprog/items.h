@@ -173,7 +173,7 @@ typedef enum _CommonPickupItemId
 
 /** @brief Equipped weapon IDs. Derivative of `e_InvItemId`.
  *
- * TODO: Maybe just "Weapon ID", "equipable item ID", "[something else] item ID"?
+ * TODO: Maybe "attack ID" or "interaction ID" is a better name?
  */
 typedef enum _EquippedWeaponId
 {

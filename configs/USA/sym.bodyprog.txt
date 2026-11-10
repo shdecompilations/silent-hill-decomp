@@ -2717,11 +2717,12 @@ g_Player_DisableControl                      = 0x800AF215;
 g_Player_MoveStickMag                        = 0x800AF216;
 g_Player_RockDrill_AttackType                = 0x800AF217;
 g_Player_TargetNpcIdx                        = 0x800AF21C;
-g_Player_LastWeaponSelected                  = 0x800AF224;
+g_Player_PrevSelectedWeapon                  = 0x800AF224;
 HARRY_BASE_ANIM_INFOS                        = 0x800AF228; // size:0x390
 g_Player_AttackAnimIdx                       = 0x800AFBE8;
 g_Player_MeleeAttackType                     = 0x800AFBEC;
 g_Player_IsMultiTapAttack                    = 0x800AFBF0;
+g_Player_EquippedWeaponInfos                 = 0x800AFBF4;
 g_CollisionPointCache                        = 0x800AFC78; // type:u8 size:0x1C - `s_CollisionPoint` struct. Size likely incomplete
 
 //-------------------------------------------------------------------
