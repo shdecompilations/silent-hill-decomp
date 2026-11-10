@@ -56,13 +56,9 @@ q3_12 Math_AngleNormalizeSigned(q3_12 angle) // 0x8005BF38
 
 bool func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) // 0x8005BF58
 {
-    s32 temp_a0;
     s32 temp_lo;
-    s32 temp_t4;
     s32 var_a2;
     s32 var_t0_5;
-    s32 var_v0_5;
-    s32 new_var;
 
     if (MAX(arg2, arg4) < CLAMP_HIGH(arg6, arg8) || MAX(arg6, arg8) < CLAMP_HIGH(arg2, arg4))
     {
@@ -74,13 +70,8 @@ bool func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5,
         return false;
     }
 
-    var_v0_5 = (arg6 - arg2) >> 6;
-    new_var  = (arg7 - arg3) >> 6;
-    temp_a0  = arg5 - arg3;
-    temp_t4  = arg4 - arg2;
-
-    if (((var_v0_5 * (temp_a0 >> 6)) - (new_var * (temp_t4 >> 6))) > 0 ||
-        ((((arg8 - arg2) >> 6) * (temp_a0 >> 6)) - (((arg9 - arg3) >> 6) * (temp_t4 >> 6))) < 0)
+    if ((((arg6 - arg2) >> 6) * ((arg5 - arg3) >> 6)) - (((arg7 - arg3) >> 6) * ((arg4 - arg2) >> 6)) > 0 ||
+        (((arg8 - arg2) >> 6) * ((arg5 - arg3) >> 6)) - (((arg9 - arg3) >> 6) * ((arg4 - arg2) >> 6)) < 0)
     {
         return false;
     }
@@ -101,7 +92,7 @@ bool func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5,
         }
         else
         {
-            var_t0_5 = (temp_a0 << 9) / temp_t4;
+            var_t0_5 = ((arg5 - arg3) << 9) / (arg4 - arg2);
             var_a2   = (arg3 << 9) - (var_t0_5 * arg2);
 
             if (arg6 == arg8)

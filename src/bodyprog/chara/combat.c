@@ -1227,12 +1227,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
     q20_12      damageAmount;
     s32         var_v1;
     u32         var_s7;
-    s32         var_v0;
     s32         weaponAttack;
     s32         var_a2;
     s32         temp;
-    s64         new_var;
-    s32         temp2;
     s32         x0;
     s32         y0;
     s32         z0;
@@ -1348,18 +1345,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
             break;
     }
 
-    var_s7  = temp_fp->field_C;
-    temp2   = Rng_RandQ12();
-    new_var = var_s0;
-    var_v1  = Q12(4.5f);
-    var_v1  = var_v1 - temp2;
-
-    if (var_v1 < 0)
-    {
-        var_v1 += 3;
-    }
-
-    damageAmount = Q12_MULT_PRECISE(new_var, var_v1 >> 2);
+    var_s7       = temp_fp->field_C;
+    damageAmount = Q12_MULT_PRECISE(var_s0, (Q12(4.5f) - Rng_RandQ12()) / 4);
 
     switch (weaponAttack)
     {

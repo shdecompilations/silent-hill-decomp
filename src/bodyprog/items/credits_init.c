@@ -53,8 +53,8 @@ void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img) // 0x800917C0
 
     Fs_QueueStartReadTim(FILE_TIM_FONT24_TIM, arg0, img);
 
-    g_CreditTextState.uv = ((u8*)&img->tPage)[1]; // `Fs_QueuePostLoadTim` does something similar.
-    tPage                = ((u8*)&img->tPage)[1];
+    g_CreditTextState.uv = img->tPage[1]; // `Fs_QueuePostLoadTim` does something similar.
+    tPage                = img->tPage[1];
 
     g_CreditTextState.tpage  = tPage & 0x10;
     g_CreditTextState.tpage |= tPage & 0xF;

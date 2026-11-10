@@ -318,8 +318,7 @@ void GameBoot_InGameInit(void) // 0x80034FB8
 
 void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {
-    s32  i;
-    s32* mapEnemyStatesPtr;
+    s32 i;
 
     bzero(g_SavegamePtr, sizeof(s_Savegame));
 
@@ -327,17 +326,13 @@ void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
-    mapEnemyStatesPtr = g_SavegamePtr->mapEnemyStates;
-
     g_SavegamePtr->gameDifficulty = difficulty;
     g_SavegamePtr->paperMapIdx    = PaperMapIdx_OldTown;
 
     // Define all enemies from an overlay as alive.
-    // Odd code. Possibly a hack.
     for (i = 0; i < Chara_Count; i++)
     {
-        mapEnemyStatesPtr[44] = NO_VALUE;
-        mapEnemyStatesPtr--;
+        g_SavegamePtr->mapEnemyStates[i] = NO_VALUE;
     }
 
     Game_SavegameResetPlayer();

@@ -2644,7 +2644,7 @@ void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_
 
 void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p) // 0x80084EDC
 {
-    // Last 2 could be compiler-added padding, but are needed for match.
+    // @hack Last 2 could be compiler-added padding, but are needed for match.
     static const s32 ANGLES[] = {
         Q12_ANGLE(0.0f),
         Q12_ANGLE(15.0f),

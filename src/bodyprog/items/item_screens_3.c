@@ -714,7 +714,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     s32       j;
     s32       var_t5;
     s32       var_t6;
-    s32       new_var;
+    s32       new_var; // @hack Needed for match.
     s32       spA0;
     GsOT*     ot0;
     GsOT*     ot1;

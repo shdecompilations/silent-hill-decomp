@@ -56,7 +56,6 @@ void Ranking_EvaluateScore() // 0x8008F94C
     u16 var_v0_5;
     u8  extraOptionsEnabled;
     u8  tempCount;
-    s8* temp3;
 
     g_Ranking_Score                      = 0;
     g_Ranking_GameDifficulty             = g_SavegamePtr->gameDifficulty;
@@ -362,13 +361,7 @@ void Ranking_EvaluateScore() // 0x8008F94C
         var_v1 = 0;
     }
 
-    temp3       = &g_Ranking_Score;
     g_Ranking_Score += var_v1;
-
-    if (temp3 == NULL)
-    {
-        g_Ranking_Score += 0;
-    }
 
     if (var_v1 == 30)
     {

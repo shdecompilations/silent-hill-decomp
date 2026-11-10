@@ -136,7 +136,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
 
 void Screen_BackgroundImgTransition(s_FsImageDesc* imageIn, s_FsImageDesc* imageOut, q3_12 alpha)
 {
-    volatile s32   pad; // Hack
+    volatile s32   __pad; // @hack Unused, pads the stack frame for match.
     s32            i;
     s32            j;
     u32            color;
@@ -188,7 +188,7 @@ void Screen_BackgroundImgTransition(s_FsImageDesc* imageIn, s_FsImageDesc* image
 
 void Screen_BackgroundImgDrawBlackFadeIn(s_FsImageDesc* image)
 {
-    volatile s32 __pad; // Hack.
+    volatile s32 __pad; // @hack Unused, pads the stack frame for match.
     s32          i;
     s32          xOffset;
     u8           tPageY;
