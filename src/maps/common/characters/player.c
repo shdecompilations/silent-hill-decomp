@@ -2,6 +2,13 @@
 #include "bodyprog/player/player.h"
 #include "maps/common/characters/player.h"
 
+#if defined(MAP1_S04)
+// .bss data in maps we've matched .bss for
+// As more maps get matched we can hopefully find proper order for these.
+s32    sharedData_800E39D8_0_s00;
+q19_12 g_Player_MoveSpeed;
+#endif
+
 // Player-related functions kept inside map overlay for some reason.
 //
 // TODO:

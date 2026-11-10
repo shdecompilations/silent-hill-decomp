@@ -11,7 +11,9 @@
 
 #include "maps/common/shared.h"
 
-extern u8 D_800CCF54;
+extern u8 MAP_ROOM_IDXS[];
+
+extern s_BgmLayerLimits D_800CCF54;
 
 extern u16 D_800CCF5C[];
 

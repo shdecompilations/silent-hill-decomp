@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/JAP2/maps/map1_s04
   src_path: src/maps/map1_s04
+  asset_path: asm/JAP2/maps/map1_s04
   build_path: build/JAP2
 
   ld_script_path: linkers/JAP2/maps/map1_s04.ld
@@ -62,14 +63,18 @@ segments:
       # .text section
       - [0x13B0, c, map1_s04_anim_info]
       - [0x13B0, c, header]
-      - [0x13B0, c, map_events]
       - [0x13B0, c, map1_s04]
 
       # .data section
       - [0x3904, .data, map1_s04_anim_info]
-      - [0x3970, data]
-      - [0x3A04, .data, header]
+      - [0x3970, .data, header]
       - [0x3A28, .data, map1_s04]
-      - [0x3A68, .data, map_events]
-      - [0x3A8C, data]
+
+      # .bss section
+      - [0x41BC, .bss, map1_s04]
+
+  # Garbage data left at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0x4AA4
   - [0x4B00]

@@ -1,6 +1,3 @@
-#include "bodyprog/bodyprog.h"
-
-s_EventData MAP_EVENTS[3] = {
     // [0]
     {
         .completeFlag = EventFlag_59,
@@ -20,4 +17,3 @@ s_EventData MAP_EVENTS[3] = {
     {
         .triggerType = EventTriggerType_EndOfArray,
     },
-};

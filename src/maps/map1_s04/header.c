@@ -6,6 +6,33 @@
 
 extern s_AnimInfo HARRY_M1S04_ANIM_INFOS[];
 
+/** Room index per map chunk, indexed by `Map_RoomIdxGet`. */
+u8 MAP_ROOM_IDXS[] = {
+    21,  0, 24, 25, 26, 27,  0,
+    20,  0, 39, 30, 35, 37,  0,
+    22, 40, 38, 31, 34, 36,  0,
+    23, 41, 32, 28, 29,  0, 33,
+     1,  2,  4,  5,  6,  7,  0,
+     2,  3,  8, 11,  0,  9,  0,
+     0,  0, 14, 12, 10, 15,  0,
+     0,  0, 13, 18, 19, 17, 16,
+};
+
+s_BgmLayerLimits D_800CCF54 = {
+    { 128, 128, 128, 128, 128, 128, 128, 128 }
+};
+
+/** BGM layer flags per room index, used by `Map_RoomBgmInit`. */
+u16 D_800CCF5C[] = {
+    0,              BgmFlag_Layer3, BgmFlag_Layer1, BgmFlag_Layer2, BgmFlag_Layer3, BgmFlag_Layer3,
+    BgmFlag_Layer3, BgmFlag_Layer3, BgmFlag_Layer3, BgmFlag_Layer1, BgmFlag_Layer3, BgmFlag_Layer2,
+    BgmFlag_Layer2, BgmFlag_Layer2, BgmFlag_Layer4, BgmFlag_Layer3, BgmFlag_Layer2, BgmFlag_Layer4,
+    BgmFlag_Layer4, BgmFlag_Layer3, 0,              0,              0,              BgmFlag_Layer5,
+    BgmFlag_Layer3, BgmFlag_Layer3, BgmFlag_Layer5, BgmFlag_Layer4, BgmFlag_Layer5, BgmFlag_Layer4,
+    BgmFlag_Layer2, BgmFlag_Layer3, BgmFlag_Layer2, BgmFlag_Layer2, 0,              0,
+    BgmFlag_Layer3, BgmFlag_Layer3, BgmFlag_Layer2, 0,              BgmFlag_Layer2, BgmFlag_Layer3,
+};
+
 void (*g_LoadScreenFuncs[])() = {
     NULL,
     GameBoot_LoadScreen_PlayerRun,

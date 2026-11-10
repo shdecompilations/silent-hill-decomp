@@ -27,6 +27,28 @@
     #include "maps/map5/map5_s01.h"
 #endif
 
+#if defined(MAP1_S04)
+// .bss data in maps we've matched .bss for
+// As more maps get matched we can hopefully find proper order for these.
+e_MapIdx          g_ParticleMapIdx0;
+e_MapIdx          g_ParticleMapIdx1;
+s32               g_Particle_SpeedX;
+s32               g_Particle_SpeedZ;
+s32               sharedData_800DFB6C_0_s00;
+s32               sharedData_800DFB70_0_s00;
+s_MapHdr_field_4C sharedData_800DFB7C_0_s00[MAP_FIELD_4C_COUNT];
+s_BloodSplat      g_Effect_BloodSplats[MAP_BLOOD_SPLAT_COUNT_MAX];
+s_ParticleVectors g_ParticleVectors0;
+s_ParticleVectors g_ParticleVectors1;
+s32               sharedData_800E0CA8_0_s00;
+s32               sharedData_800E0CAC_0_s00;
+u32               sharedData_800E0CB0_0_s00;
+u16               sharedData_800E0CB4_0_s00;
+u16               sharedData_800E0CB6_0_s00;
+u16               sharedData_800E0CB8_0_s00;
+s8                sharedData_800E0CBA_0_s00;
+#endif
+
 // Particle-related functions.
 //
 // TODO:

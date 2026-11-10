@@ -44,7 +44,7 @@ typedef struct _Particle
     /* 0x1F */ u8       type;      /** `e_ParticleType` | TODO: Sometimes absurd values are checked for. */
 } s_Particle;
 
-typedef struct
+typedef struct _ParticleVectors
 {
     /* 0x0  */ VECTOR3 vector_0;
     /* 0xC  */ VECTOR3 viewPosition; /** Q19.12 */
