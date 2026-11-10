@@ -175,7 +175,7 @@ bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328
             continue;
         }
 
-        // Checks if player has ammo.
+        // Check if player has ammo.
         switch (itemId)
         {
             case InvItemId_HuntingRifle:

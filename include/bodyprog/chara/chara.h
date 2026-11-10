@@ -131,7 +131,7 @@ typedef enum _CharaId
     Chara_GreyChildOrMumbler = Chara_Mumbler,
 #endif
 
-    Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
+    Chara_Hack = NO_VALUE // @hack Force enum to be treated as `s32`.
 } e_CharaId;
 
 /** @brief Character damage info. */

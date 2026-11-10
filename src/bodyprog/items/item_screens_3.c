@@ -58,7 +58,7 @@ s8 __pad_bss_800C3E41[7];
 
 GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX];
 
-#include "item_rotations.h"
+#include "bodyprog/items/item_rotations.h"
 
 static u8 g_Items_GunsMaxLoadAmmo[36] = {
     0, 0, 0, 0, 0, 0, 0, 0,

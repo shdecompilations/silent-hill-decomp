@@ -91,7 +91,7 @@ segments:
       - [0x1200,  rodata] # Garbage padding
       - [0x1208, .rodata, text/text_draw]
       - [0x1328,  rodata] # Garbage padding
-      - [0x132C, .rodata, items/item_utils]
+      - [0x132C, .rodata, items/utils]
       - [0x134C, .rodata, items/item_screens_2]
       - [0x1798, .rodata, items/item_screens_3]
       - [0x39C4, pad]
@@ -235,8 +235,8 @@ segments:
       - [0x23ED8,    c, view/vw_main]
       - [0x243C8,    c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25D1C,    c, text/text_draw]
-      - [0x26FB0,    c, items/item_screens_cam]
-      - [0x27528,    c, items/item_utils]
+      - [0x26FB0,    c, items/camera]
+      - [0x27528,    c, items/utils]
       - [0x27E50,    c, items/item_screens_2]
       - [0x2AC04,    c, items/item_screens_3]
       
@@ -571,8 +571,8 @@ segments:
       - [0x9ED08, .bss, view/vw_calc]
       - [0x9ED48, .bss, text/text_draw]
       - [0x9EDC4, pad]
-      - [0x9EDC8, .bss, items/item_screens_cam]
-      - [0x9EE00, .bss, items/item_utils]
+      - [0x9EDC8, .bss, items/camera]
+      - [0x9EE00, .bss, items/utils]
       - [0x9EE04, pad] # Garbage.
       - [0x9EE08, .bss, items/item_screens_2]
       - [0x9EE40, pad] # Garbage.

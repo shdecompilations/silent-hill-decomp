@@ -198,7 +198,7 @@ void Gfx_StringDrawInt(s32 lengthMin, s32 val);
     void func_8004C918(char* str, s32 idx, s32 arg2, s32 arg3);
 #endif
 
-// TODO: Move following funcs to item_screens_cam header.
+// TODO: Move following funcs to camera header.
 #if VERSION_REGION_IS(NTSCJ)
     bool ItemScreen_TmdGsFCallInitTG3(void);
     void ItemScreen_TmdGsFCallInitG3G4(void);

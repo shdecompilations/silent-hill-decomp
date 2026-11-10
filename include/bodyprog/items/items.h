@@ -56,16 +56,19 @@ typedef enum _InvItemGroup
 /** @brief Inventory item IDs. */
 typedef enum _InvItemId
 {
-    // Group 0 (None)
+    /** Group 0: None. */
+
     InvItemId_Empty                 = NO_VALUE,
     InvItemId_Unequipped            = 0,
 
-    // Group 1 (Health Items)
+    /** Group 1: Health items. */
+
     InvItemId_HealthDrink           = 32,
     InvItemId_FirstAidKit           = 33,
     InvItemId_Ampoule               = 34,
 
-    // Group 2 (Keys)
+    /** Group 2: Key items. */
+
     InvItemId_LobbyKey              = 64,
     InvItemId_HouseKey              = 65,
     InvItemId_KeyOfLion             = 66,
@@ -92,7 +95,8 @@ typedef enum _InvItemId
     InvItemId_SewerExitKey          = 87,
     InvItemId_ChannelingStone       = 88,
 
-    // Group 3 (Puzzle Items)
+    /** Group 3: Puzzle items. */
+
     InvItemId_Chemical              = 96,
     InvItemId_GoldMedallion         = 97,
     InvItemId_SilverMedallion       = 98,
@@ -126,7 +130,8 @@ typedef enum _InvItemId
     InvItemId_DaggerOfMelchior      = 126,
     InvItemId_DiskOfOuroboros       = 127,
 
-    // Group 4 (Melee Weapons)
+    /** Group 4: Melee weapon items. */
+
     InvItemId_KitchenKnife          = 128,
     InvItemId_SteelPipe             = 129,
     InvItemId_RockDrill             = 130,
@@ -136,7 +141,8 @@ typedef enum _InvItemId
     InvItemId_Katana                = 134,
     InvItemId_Axe                   = 135,
 
-    // Group 5 (Guns)
+    /** Group 5: Gun items. */
+
     InvItemId_Handgun               = 160,
     InvItemId_HuntingRifle          = 161,
     InvItemId_Shotgun               = 162,
@@ -149,12 +155,14 @@ typedef enum _InvItemId
     InvItemId_CutsceneBaby          = 168,
     InvItemId_CutsceneBloodPack     = 169,
 
-    // Group 6 (Gun Ammo)
+    /** Group 6: Ammo items. */
+
     InvItemId_HandgunBullets        = 192,
     InvItemId_RifleShells           = 193,
     InvItemId_ShotgunShells         = 194,
 
-    // Group 7 (Portable Items)
+    /** Group 7: Portable items. */
+
     InvItemId_Flashlight            = 224,
     InvItemId_PocketRadio           = 225,
     InvItemId_GasolineTank          = 226

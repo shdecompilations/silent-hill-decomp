@@ -837,7 +837,7 @@ func_8004B76C                                = 0x8004B024; // type:func
 Gfx_StringDrawInt                            = 0x8004B2B0; // type:func
 
 //-------------------------------------------------------------------------
-//--- PA: 0x025D38   VA: 0x8004B3C8   subsegment: c, items/item_screens_cam
+//--- PA: 0x025D38   VA: 0x8004B3C8   subsegment: c, items/camera
 //-------------------------------------------------------------------------
 ItemScreen_TmdGsFCallInit                    = 0x8004B3C8; // type:func
 ItemScreen_CameraSet                         = 0x8004B404; // type:func
@@ -849,7 +849,7 @@ func_8004BFE8                                = 0x8004B8A0; // type:func
 func_8004C040                                = 0x8004B8F8; // type:func
 
 //-------------------------------------------------------------------
-//--- PA: 0x0262B0   VA: 0x8004B940   subsegment: c, items/item_utils
+//--- PA: 0x0262B0   VA: 0x8004B940   subsegment: c, items/utils
 //-------------------------------------------------------------------
 Inventory_ExitAnimEquippedItemUpdate         = 0x8004B940; // type:func
 Inventory_GunsAvailableCheck                 = 0x8004BBE0;
@@ -3643,7 +3643,7 @@ D_800C391E                                   = 0x800C2F0E; // type:s16
 D_800C3920                                   = 0x800C2F10;
 
 //----------------------------------------------------------------------------
-//--- PA: 0x09D888   VA: 0x800C2F18   subsegment: .bss, items/item_screens_cam
+//--- PA: 0x09D888   VA: 0x800C2F18   subsegment: .bss, items/camera
 //----------------------------------------------------------------------------
 g_ItemScreen_CameraTransform                 = 0x800C2F18;
 g_ItemScreen_PlayerWeaponAttack              = 0x800C2F40;
