@@ -6,7 +6,7 @@
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/events/events_main.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/item_screens.h"
+#include "bodyprog/items/item_screens.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/screen/vsync.h"

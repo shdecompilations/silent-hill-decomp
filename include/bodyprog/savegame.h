@@ -2,7 +2,7 @@
 #define _BODYPROG_SAVEGAME_H
 
 #include "bodyprog/chara/chara.h"
-#include "bodyprog/items.h"
+#include "bodyprog/items/items.h"
 #include "bodyprog/sys/joy.h"
 
 /** @brief Save location IDs. */

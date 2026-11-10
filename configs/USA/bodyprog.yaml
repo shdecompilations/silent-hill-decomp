@@ -122,7 +122,7 @@ segments:
       - [0x676C, rodata] # Garbage padding
       - [0x6778, .rodata, sys/demo]
       - [0x6794, pad]
-      - [0x679C, .rodata, ranking]
+      - [0x679C, .rodata, items/ranking]
       - [0x6A6C,  rodata] # Garbage padding
       - [0x6A74,       o, libcd/iso9660, .rdata]
       - [0x6C64,       o, libcd/c_011, .rdata]
@@ -279,8 +279,8 @@ segments:
       - [0x67E40,    c, chara/dms]
       - [0x688BC,    c, gfx/water]
       - [0x6A3C0,    c, sys/demo]
-      - [0x6ADEC,    c, ranking]
-      - [0x6CC18,    c, credits_init]
+      - [0x6ADEC,    c, items/ranking]
+      - [0x6CC18,    c, items/credits_init]
       - [0x6CF9C,    o, libapi/a09]
       - [0x6CFAC,    o, libapi/a11]
       - [0x6CFBC,    o, libapi/a39]
@@ -489,8 +489,8 @@ segments:
       - [0x8B1BC, .data, chara/combat]
       - [0x8B1DC, .data, gfx/water]
       - [0x8B258, .data, sys/demo]
-      - [0x8B294, .data, ranking]
-      - [0x8B2A8, .data, credits_init]
+      - [0x8B294, .data, items/ranking]
+      - [0x8B2A8, .data, items/credits_init]
       - [0x8B31C,     o, libcard/init, .data]
       - [0x8B32C,     o, libapi/pad, .data]
       - [0x8B33C,     o, libcd/cdrom, .data]
@@ -610,10 +610,10 @@ segments:
       - [0x9FCB8, .bss, gfx/water]
       - [0x9FCDC, pad]
       - [0x9FCE0, .bss, sys/demo]
-      - [0x9FD40, .bss, ranking]
+      - [0x9FD40, .bss, items/ranking]
       - [0x9FD89]       # Garbage.
       - [0x9FD8C,  pad] # Garbage.
-      - [0x9FD90, .bss, credits_init]
+      - [0x9FD90, .bss, items/credits_init]
       # Hack - For some reason garbage data begins just after a struct definition
       # that grabs 9 bytes and in case of properly defining the file position this causes missalignment issues.
       - [0x9FD94,  pad] # Garbage.

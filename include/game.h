@@ -13,7 +13,7 @@
 #include "bodyprog/chara/model.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/formats/anm.h"
-#include "bodyprog/items.h"
+#include "bodyprog/items/items.h"
 #include "bodyprog/savegame.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/vsync.h"

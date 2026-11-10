@@ -9,7 +9,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/ranking.h"
+#include "bodyprog/items/ranking.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map6/map6_s02.h"

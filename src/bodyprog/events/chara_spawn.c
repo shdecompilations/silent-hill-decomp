@@ -9,7 +9,7 @@
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/game_boot/fs_chara_anim.h"
-#include "bodyprog/item_screens.h"
+#include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sound_system.h"

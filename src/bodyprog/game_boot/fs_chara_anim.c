@@ -13,7 +13,7 @@
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/ranking.h"
+#include "bodyprog/items/ranking.h"
 #include "bodyprog/sound/sound_system.h"
 
 // ========================================

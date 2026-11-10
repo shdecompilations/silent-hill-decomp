@@ -8,7 +8,7 @@
 #include "bodyprog/chara/bone.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/gfx/map_effects.h"
-#include "bodyprog/item_screens.h"
+#include "bodyprog/items/item_screens.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/math/math.h"

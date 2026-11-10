@@ -120,7 +120,7 @@ segments:
       - [0x6498, rodata] # Garbage padding
       - [0x64A4, .rodata, sys/demo]
       - [0x64C0, pad]
-      - [0x64C8, .rodata, ranking]
+      - [0x64C8, .rodata, items/ranking]
       - [0x6798, rodata] # Garbage padding
       - [0x67A0, o, libcd/iso9660, .rdata]
       - [0x6990, o, libcd/type, .rdata]
@@ -222,8 +222,8 @@ segments:
       - [0x69950, c, chara/dms]
       - [0x6A3CC, c, gfx/water]
       - [0x6BED0, c, sys/demo]
-      - [0x6C8FC, c, ranking]
-      - [0x6E728, c, credits_init]
+      - [0x6C8FC, c, items/ranking]
+      - [0x6E728, c, items/credits_init]
       - [0x6EAAC, o, libapi/a09]
       - [0x6EABC, o, libapi/a11]
       - [0x6EACC, o, libapi/a39]
@@ -433,8 +433,8 @@ segments:
       - [0x8D6A0, .data, chara/combat]
       - [0x8D6C0, .data, gfx/water]
       - [0x8D73C, .data, sys/demo]
-      - [0x8D778, .data, ranking]
-      - [0x8D78C, .data, credits_init]
+      - [0x8D778, .data, items/ranking]
+      - [0x8D78C, .data, items/credits_init]
       - [0x8D800, o, libcard/init, .data]
       - [0x8D810, o, libapi/pad, .data]
       - [0x8D820, o, libcd/cdrom, .data]
@@ -532,10 +532,10 @@ segments:
       - [0xA2310, .bss, gfx/water]
       - [0xA2334, pad]
       - [0xA2338, .bss, sys/demo]
-      - [0xA2398, .bss, ranking]
+      - [0xA2398, .bss, items/ranking]
       - [0xA23E1, ]       # Garbage.
       - [0xA23E4, pad] # Garbage.
-      - [0xA23E8, .bss, credits_init]
+      - [0xA23E8, .bss, items/credits_init]
       - [0xA23EC, pad] # Garbage.
       - [0xA23F0, o, libapi/first, .bss]
       - [0xA2420,  o, libapi/pad, .bss]

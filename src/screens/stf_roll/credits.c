@@ -4,7 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/ranking.h"
+#include "bodyprog/items/ranking.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sound_system.h"

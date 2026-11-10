@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/bgm_utils.h"
-#include "bodyprog/item_screens.h"
+#include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sound_system.h"

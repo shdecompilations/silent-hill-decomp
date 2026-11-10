@@ -8,7 +8,7 @@
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/item_screens.h"
+#include "bodyprog/items/item_screens.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s03.h"

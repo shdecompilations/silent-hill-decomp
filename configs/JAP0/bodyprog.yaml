@@ -121,7 +121,7 @@ segments:
       - [0x642C, rodata] # Garbage padding
       - [0x6438, .rodata, sys/demo]
       - [0x6454, pad]
-      - [0x645C, .rodata, ranking]
+      - [0x645C, .rodata, items/ranking]
       - [0x672C, rodata] # Garbage padding
       - [0x6734, o, libcd/iso9660, .rdata]
       - [0x6924, o, libcd/type, .rdata]
@@ -223,8 +223,8 @@ segments:
       - [0x6985C, c, chara/dms]
       - [0x6A2D8, c, gfx/water]
       - [0x6BDDC, c, sys/demo]
-      - [0x6C7D8, c, ranking]
-      - [0x6E604, c, credits_init]
+      - [0x6C7D8, c, items/ranking]
+      - [0x6E604, c, items/credits_init]
 
       # PsyQ libs
       - [0x6e988, o, libapi/a09]
@@ -446,8 +446,8 @@ segments:
       - [0x8D57C, .data, chara/combat]
       - [0x8D59C, .data, gfx/water]
       - [0x8D618, .data, sys/demo]
-      - [0x8D654, .data, ranking]
-      - [0x8D668, .data, credits_init]
+      - [0x8D654, .data, items/ranking]
+      - [0x8D668, .data, items/credits_init]
       - [0x8D6DC, o, libcard/init, .data]
       - [0x8D6EC, o, libapi/pad, .data]
       - [0x8D6FC, o, libcd/cdrom, .data]
@@ -547,10 +547,10 @@ segments:
       - [0xA21E8, .bss, gfx/water]
       - [0xA220C, pad]
       - [0xA2210, .bss, sys/demo]
-      - [0xA2270, .bss, ranking]
+      - [0xA2270, .bss, items/ranking]
       - [0xA22B9]       # Garbage.
       - [0xA22BC, pad] # Garbage.
-      - [0xA22C0, .bss, credits_init]
+      - [0xA22C0, .bss, items/credits_init]
       - [0xA22C4, pad] # Garbage.
       - [0xA22C8, o, libapi/first, .bss]
       - [0xA22F8,  o, libapi/pad, .bss]

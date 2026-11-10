@@ -9,7 +9,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
-#include "bodyprog/item_screens.h"
+#include "bodyprog/items/item_screens.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
