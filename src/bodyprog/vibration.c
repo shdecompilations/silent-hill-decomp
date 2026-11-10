@@ -1,20 +1,14 @@
 #include "game.h"
-#include "inline_no_dmpsx.h"
 
 #include <psyq/libpad.h>
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
-// ========================================
-// VIBRATION HANDLING RELATED
-// ========================================
+// TODO: Move to `bodyprog/libkpad`.
 
 u8 D_800AFD04 = 0;
 u8 D_800AFD05 = 0;

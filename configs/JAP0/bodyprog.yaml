@@ -113,7 +113,7 @@ segments:
       - [0x5A04, rodata] # Garbage padding
       - [0x5A10, .rodata, view/vc_main]
       - [0x5CBC, .rodata, events/events_util]
-      - [0x5DC4, .rodata, bodyprog_80089090]
+      - [0x5DC4, .rodata, vibration]
       - [0x615C, pad]
       - [0x6164, .rodata, chara/combat]
       - [0x6414, rodata] # Garbage padding
@@ -218,7 +218,7 @@ segments:
       - [0x64D84, c, events/bgm_utils]             # }
       - [0x65094, c, events/events_2d_draw_utils]  # }
       - [0x65B58, c, events/chara_spawn]           # }
-      - [0x65F6C, c, bodyprog_80089090]
+      - [0x65F6C, c, vibration]
       - [0x66F34, c, chara/combat]
       - [0x6985C, c, chara/dms]
       - [0x6A2D8, c, gfx/water]
@@ -442,7 +442,7 @@ segments:
       - [0x8BFA0, .data, paper_map/paper_map]
       - [0x8C73C, .data, player/player_control]
       - [0x8D4F4, .data, view/vc_main]
-      - [0x8D564, .data, bodyprog_80089090]
+      - [0x8D564, .data, vibration]
       - [0x8D57C, .data, chara/combat]
       - [0x8D59C, .data, gfx/water]
       - [0x8D618, .data, sys/demo]
