@@ -42,6 +42,13 @@ def _create_config():
     parser.add_argument("config", type = Path)
     parser.add_argument("version", type = str)
     parser.add_argument("--ninja", action="store_true")
+    parser.add_argument("--self-compare", action="store_true",
+                        help="Use the matching build's objects as both target and base. Only code/data still "
+                             "included from asm (marked with .NON_MATCHING symbols) is counted as unmatched.")
+    parser.add_argument("--include-raw-splits", action="store_true",
+                        help="Also create units for splat's raw data/rodata/bss splits, so data not yet "
+                             "migrated to C is counted as unmatched.")
+    parser.add_argument("--output", type = Path, help="Override the config's output path.")
     args = parser.parse_args()
 
     if not args.config.exists() or args.config.is_dir() or args.config.suffix != ".yaml":
@@ -49,15 +56,25 @@ def _create_config():
 
     global is_ninja
     is_ninja = args.ninja or False
-    
+
     global game_version
     game_version = args.version
-    
+
+    global self_compare
+    self_compare = args.self_compare
+
+    global excluded_name
+    excluded_name = RAW_SPLIT_EXCLUDED_NAME if args.include_raw_splits else EXCLUDED_NAME
+
     with open(args.config) as stream:
         try:
-            return yaml.safe_load(stream)
+            config = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             raise exc
+
+    if args.output:
+        config["output"] = str(args.output)
+    return config
 
 def _read_symbols_from_elf(path: Path):
     addr_to_name = {}
@@ -92,16 +109,48 @@ def _normalize_suffixed_symbols(path: Path):
 
 # Skip non-migrated units by suffix
 EXCLUDED_NAME = re.compile(r"\.(data|rodata|sdata|bss)\.s\.o$|\.bin\.o$")
+RAW_SPLIT_EXCLUDED_NAME = re.compile(r"\.bin\.o$")
+
+RAW_SPLIT_LINE = re.compile(r"-\s*\[\s*(0x[0-9A-Fa-f]+)\s*,\s*(rodata|data|sdata|bss|sbss)\s*(?:,\s*([^\]\s]+)\s*)?\].*#.*garbage", re.IGNORECASE)
+
+def _garbage_split_objects(version: str) -> set[str]:
+    """Objects of raw splits commented as garbage in the splat yamls, which hold padding rather than data to migrate."""
+    objects = set()
+    for yaml_path in Path(f"configs/{version}").rglob("*.yaml"):
+        text = yaml_path.read_text()
+        asm_path = re.search(r"^\s*asm_path:\s*(\S+)", text, re.MULTILINE)
+        if not asm_path:
+            continue
+        for match in RAW_SPLIT_LINE.finditer(text):
+            offset, kind, name = match.groups()
+            # Same object naming as tools/get_o_files.py
+            stem = name if name else hex(int(offset, 16))[2:].upper()
+            objects.add(f"build/{version}/{asm_path.group(1)}/data/{stem}.{kind}.s.o")
+    return objects
 
 def _collect_objects(path: Path, config) -> list[Path]:
     ignored = config["ignored_files"]
+    garbage = _garbage_split_objects(game_version) if self_compare else set()
     return [
         path for path in path.rglob("*.o")
-        if not EXCLUDED_NAME.search(path.name) and not any(file in str(path) for file in ignored)
+        if not excluded_name.search(path.name)
+        # Raw splits sit in a data/ folder, e.g. bodyprog/data/libkmath/libkmath.rodata.s.o for bodyprog/libkmath
+        and not any(file in path.as_posix() or file in path.as_posix().replace("/data/", "/") for file in ignored)
+        and path.as_posix() not in garbage
     ]
 
+def _self_compare_roots(version: str) -> list[Path]:
+    # Matching build output: C objects under src/, splat asm objects (raw splits, hasm) under asm/<version>/.
+    return [Path(f"build/{version}/src"), Path(f"build/{version}/asm/{version}")]
+
 def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
-    modified_path = path.relative_to(config["expected_paths"][game_version]).as_posix()
+    if self_compare:
+        root = next(r for r in _self_compare_roots(game_version) if path.is_relative_to(r))
+        modified_path = path.relative_to(root).as_posix()
+        # Raw splits live in a data/ folder next to their overlay's asm, e.g. bodyprog/data/694.rodata.s.o
+        modified_path = re.sub(r"/data/", "/", modified_path)
+    else:
+        modified_path = path.relative_to(config["expected_paths"][game_version]).as_posix()
     if game_version == "ALL":
         modified_path = re.sub(r"^(USA|EUR|JAP[0-2])/", "", str(modified_path))
 
@@ -121,17 +170,26 @@ def main():
     logging.basicConfig(level = logging.INFO)
     config = _create_config()
     
-    expected_objects = _collect_objects(Path(config["expected_paths"][game_version]), config)
-    
+    if self_compare:
+        if game_version == "ALL":
+            raise ValueError("--self-compare needs a single game version.")
+        expected_objects = [obj for root in _self_compare_roots(game_version) for obj in _collect_objects(root, config)]
+    else:
+        expected_objects = _collect_objects(Path(config["expected_paths"][game_version]), config)
+
     ignore_base_paths = ["."]
-    
+
     logging.info(f"Accounting for {len(expected_objects)} objects.")
     units = []
     build_method = str
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
         input_path = Path(processed_path[1]).as_posix()
-        if game_version != "ALL":
+        if self_compare:
+            # Absolute, since this config is written outside the project root.
+            file = file.resolve()
+            base_path = file.as_posix()
+        elif game_version != "ALL":
             base_path = f"build/{game_version}/src/{input_path}.c.o"
         else:
             base_path = f"build{processed_path[2]}src/{input_path}.c.o"
@@ -166,7 +224,7 @@ def main():
         categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
-        json.dump(asdict(Config(True, False, build_method, ["build", f"GAME_VERSION={game_version}", "SKIP_ASM=1", "OBJDIFF_FIX=1"] if build_method != "ninja" and game_version != "ALL" else None, units, categories)), json_file, indent=2)
+        json.dump(asdict(Config(not self_compare, False, build_method, ["build", f"GAME_VERSION={game_version}", "SKIP_ASM=1", "OBJDIFF_FIX=1"] if build_method != "ninja" and game_version != "ALL" else None, units, categories)), json_file, indent=2)
 
 if __name__ == "__main__":
     main()

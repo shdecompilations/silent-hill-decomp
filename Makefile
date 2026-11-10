@@ -631,6 +631,24 @@ report:
 	$(MAKE) BUILD_EXE=1 BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
 	$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
+# Progress report comparing the matching build against itself: any code/data still
+# included as ASM carries a .NON_MATCHING marker which objdiff counts as unmatched.
+# `build` fails on a checksum mismatch, which keeps unmatched C data from counting.
+SELF_REPORT_DIR := $(BUILD_DIR)/objdiff_self
+
+report-self:
+	$(MAKE) GAME_VERSION=$(GAME_VERSION) regenerate
+	$(MAKE) GAME_VERSION=$(GAME_VERSION) build
+	mkdir -p $(SELF_REPORT_DIR)
+	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config-retail.yaml $(GAME_VERSION_DIR) \
+		--self-compare --include-raw-splits --output $(SELF_REPORT_DIR)/objdiff.json
+	$(OBJDIFF) report generate -p $(SELF_REPORT_DIR) > $(BUILD_DIR)/progress.json
+
+# Falls back to the target-vs-base report when the build does not match, so a
+# commit that breaks matching still produces a report.
+report-ci:
+	$(MAKE) GAME_VERSION=$(GAME_VERSION) report-self || $(MAKE) GAME_VERSION=$(GAME_VERSION) report
+
 progress:
 	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
 

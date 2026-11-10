@@ -46,7 +46,7 @@ jobs:
           cp -r -p /files/rom/${{ matrix.version }} rom/
 
       - name: Generate Progress Report
-        run: make GAME_VERSION=${{ matrix.version }} report
+        run: make GAME_VERSION=${{ matrix.version }} report-ci
 
       - name: Upload Progress Report
         uses: actions/upload-artifact@v7
