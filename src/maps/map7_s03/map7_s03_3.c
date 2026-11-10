@@ -467,8 +467,6 @@ void func_800D6804(const VECTOR3* from, const VECTOR3* to) // 0x800D6804
 {
     q19_12           x0;
     q19_12           z0;
-    q19_12           x1;
-    q19_12           z1;
     s_func_800D5EC0* buf;
 
     buf = FS_BUFFER_1;
@@ -478,27 +476,8 @@ void func_800D6804(const VECTOR3* from, const VECTOR3* to) // 0x800D6804
 
     buf->field_A58 = ratan2(x0, z0);
 
-    if (x0 < Q12(0.0f))
-    {
-        x1 = x0 + 3;
-    }
-    else
-    {
-        x1 = x0;
-    }
-
-    x0 = from->vx + (x1 >> 2);
-
-    if (z0 < Q12(0.0f))
-    {
-        z1 = z0 + 3;
-    }
-    else
-    {
-        z1 = z0;
-    }
-
-    z0 = (from->vz + (z1 >> 2));
+    x0 = from->vx + (x0 / 4);
+    z0 = from->vz + (z0 / 4);
 
     buf->field_4.vx = Q12_TO_Q8(x0);
     buf->field_4.vy = Q8(-1.0f);

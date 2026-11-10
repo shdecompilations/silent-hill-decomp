@@ -758,25 +758,12 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                  var_s2--)
             {
                 var_a0_3 = (sp84 * var_s2) + var_s6;
-                if (var_a0_3 < 0)
-                {
-                    var_a0_3 += 3;
-                }
-                temp5 = var_a0_3 >> 2;
+                temp5 = var_a0_3 / 4;
 
                 var_a1 = (sp88 * var_s2) + i;
-                if (var_a1 < 0)
-                {
-                    var_a1 += 3;
-                }
-                temp4 = var_a1 >> 2;
+                temp4 = var_a1 / 4;
 
-                var_s0_2 = (sp8C * var_s2) + var_s3;
-                if (var_s0_2 < 0)
-                {
-                    var_s0_2 += 3;
-                }
-                temp_s0_11 = var_s0_2 >> 2;
+                temp_s0_11 = ((sp8C * var_s2) + var_s3) / 4;
 
                 temp_s0 = ratan2(temp5, temp_s0_11);
 
@@ -787,25 +774,12 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 temp_a0 = &D_800C4758[temp_a1];
 
                 var_v1 = (sp6C * var_s2) + var_fp;
-                if (var_v1 < 0)
-                {
-                    var_v1 += 3;
-                }
-                temp_a0->vx = var_v1 >> 2;
+                temp_a0->vx = var_v1 / 4;
 
-                temp_v0_10 = (sp70 * var_s2) + sp94;
-                if (temp_v0_10 < 0)
-                {
-                    temp_v0_10 += 3;
-                }
-                temp_a0->vy = temp_v0_10 >> 2;
+                temp_a0->vy = ((sp70 * var_s2) + sp94) / 4;
 
                 temp_v0_10 = (sp74 * var_s2) + sp90;
-                if (temp_v0_10 < 0)
-                {
-                    temp_v0_10 += 3;
-                }
-                temp_a0->vz = temp_v0_10 >> 2;
+                temp_a0->vz = temp_v0_10 / 4;
             }
 
             chara->field_44.field_10 = chara->field_44.field_C;
@@ -1872,26 +1846,9 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             }
         }
 
-        var_v0 = sp34;
-        if (var_v0 < 0)
-        {
-            var_v0 += 3;
-        }
-        sp34 -= var_v0 >> 2;
-
-        var_v0 = var_s7;
-        if (var_v0 < 0)
-        {
-            var_v0 += 3;
-        }
-        var_s7 -= var_v0 >> 2;
-
-        var_v0 = var_fp;
-        if (var_v0 < 0)
-        {
-            var_v0 += 3;
-        }
-        var_fp -= var_v0 >> 2;
+        sp34   -= sp34 / 4;
+        var_s7 -= var_s7 / 4;
+        var_fp -= var_fp / 4;
 
         sp34   += countX;
         var_s7 += countY;

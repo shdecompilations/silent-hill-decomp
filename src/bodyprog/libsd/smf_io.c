@@ -125,11 +125,7 @@ void tre_calc(PORT* p) // 0x800A3B20
 
         if (tre_data != 0)
         {
-            if (tre_data < 0)
-            {
-                tre_data += 0xFF;
-            }
-            p->tre_data_3E = tre_data >> 8;
+            p->tre_data_3E = tre_data / 0x100;
         }
         else
         {
@@ -238,12 +234,7 @@ void vib_calc(PORT* p) // 0x800A3D30
 
         if (vib_data != 0)
         {
-            if (vib_data < 0)
-            {
-                vib_data += 0x3FF;
-            }
-
-            p->vib_data_2E = vib_data >> 10;
+            p->vib_data_2E = vib_data / 0x400;
             return;
         }
 
@@ -255,8 +246,7 @@ void random_calc(PORT* p) // 0x800A3E70
 {
     extern u8 random_tbl[];
 
-    s32 rd_data;
-    s8  c_data;
+    s8 c_data;
 
     if (!p->rdms_43)
     {
@@ -277,13 +267,7 @@ void random_calc(PORT* p) // 0x800A3E70
 
     if (c_data)
     {
-        rd_data = c_data * p->rdmdm_45;
-        if (rd_data < 0)
-        {
-            rd_data += 3;
-        }
-
-        p->rdmd_40 = (rd_data >> 2);
+        p->rdmd_40 = (c_data * p->rdmdm_45) / 4;
     }
     else
     {

@@ -2523,15 +2523,7 @@ s32 func_800D4D80(s32 arg0, s32 arg1) // 0x800D4D80
 
 u32 func_800D4DD8(void) // 0x800D4DD8
 {
-    s32 var_v0;
-
-    var_v0 = (g_SysWork.playerWork.player.rotation.vy - 256) & 0xFFF;
-    if (var_v0 < 0)
-    {
-        var_v0 += 0x1FF;
-    }
-
-    return var_v0 >> 9;
+    return ((g_SysWork.playerWork.player.rotation.vy - 256) & 0xFFF) / 0x200;
 }
 
 u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2) // 0x800D4E00
@@ -3122,7 +3114,6 @@ void func_800D5C3C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
 {
     s32             temp_s1;
     s32             undergroundFlag;
-    s32             var_a1;
     s32             i;
     s_SubCharacter* localChara;
 
@@ -3162,16 +3153,7 @@ void func_800D5C3C(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
             pos.vy = Q12(0.0f);
             pos.vz = Q8_TO_Q12(transformMat.t[2]);
 
-            if (i < 0)
-            {
-                var_a1 = i + 3;
-            }
-            else
-            {
-                var_a1 = i;
-            }
-
-            temp_s1 = (var_a1 >> 2) + (i & 0x1);
+            temp_s1 = (i / 4) + (i & 0x1);
 
             func_800D185C(&pos, temp_s1);
 
