@@ -1563,21 +1563,10 @@ void func_800D354C(VECTOR3* arg0) // 0x800D354C
 
     ptr = D_800E0988;
 
-    var_v1 = arg0->vx;
-    if (var_v1 < 0)
-    {
-        var_v1 += 0x3FFFF;
-    }
-    var_v1 = (var_v1 >> 18) << 18;
-
-    var_a0 = arg0->vz;
-    if (var_a0 < 0)
-    {
-        var_a0 += 0x3FFFF;
-    }
-
+    var_v1   = (arg0->vx / Q12(64.0f)) * Q12(64.0f);
+    var_a0   = arg0->vz / Q12(64.0f);
     ptr->x_0 = var_v1;
-    ptr->z_4 = (var_a0 >> 18) << 18;
+    ptr->z_4 = var_a0 * Q12(64.0f);
 
     func_800D078C();
     func_800D0840();

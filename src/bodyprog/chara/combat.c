@@ -348,6 +348,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                temp_s2_2;
     s32                var_s2;
     s32                temp_v0_10;
+    s32                scaledDistSqr;
     s32                temp_v0_4;
     s32                temp_v0_5;
     s32                temp_v0_6;
@@ -577,12 +578,8 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                                     }
                                     else if (temp_s0 <= 0xFFFF)
                                     {
-                                        temp_v0_10 = Q12(temp_s0);
-                                        if (temp_v0_10 < 0)
-                                        {
-                                            temp_v0_10 += 0xFFFF;
-                                        }
-                                        var_s2 = Q12_MULT_PRECISE(var_s2, temp_v0_10 >> 16);
+                                        scaledDistSqr = Q12(temp_s0);
+                                        var_s2        = Q12_MULT_PRECISE(var_s2, scaledDistSqr / 0x10000);
                                     }
                                 }
 

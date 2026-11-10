@@ -284,6 +284,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneC
     s32            var_s2;
     s32            var_s3_2;
     s32            var_v0_2;
+    q19_12         alpha;
     s32            var_v0_4;
     s32            var_v0_5;
     s_FsImageDesc* curImage;
@@ -435,13 +436,9 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneC
                 var_v0_2  = temp_s1_4 + 0x3E7;
                 var_v0_2 -= temp_a0;
                 var_v0_2  = Q12(var_v0_2);
+                alpha     = var_v0_2 / 0x400;
 
-                if (var_v0_2 < 0)
-                {
-                    var_v0_2 += 0x3FF;
-                }
-
-                var_s3_2 += Math_MulFixed(temp_a0 - var_s3_2, var_v0_2 >> 10, Q12_SHIFT);
+                var_s3_2 += Math_MulFixed(temp_a0 - var_s3_2, alpha, Q12_SHIFT);
             }
             else if (temp_s1_4 < temp_a0)
             {
