@@ -1,7 +1,3 @@
-#include "bodyprog/bodyprog.h"
-#include "maps/map2/map2_s04.h"
-
-s_EventData MAP_EVENTS[28] = {
     // [0]
     {
         .completeFlag = EventFlag_M2S04_ShotgunShells0,
@@ -238,4 +234,3 @@ s_EventData MAP_EVENTS[28] = {
     {
         .triggerType = EventTriggerType_EndOfArray,
     },
-};

@@ -2,7 +2,7 @@
 #include "bodyprog/player/player.h"
 #include "maps/common/characters/player.h"
 
-#if defined(MAP1_S04)
+#if defined(MAP1_S04) || defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP4_S00) || defined(MAP4_S06) || defined(MAP6_S05)
 // .bss data in maps we've matched .bss for
 // As more maps get matched we can hopefully find proper order for these.
 s32    sharedData_800E39D8_0_s00;

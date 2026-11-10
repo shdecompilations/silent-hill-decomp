@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/USA/maps/map2_s04
   src_path: src/maps/map2_s04
+  asset_path: asm/USA/maps/map2_s04
   build_path: build/USA
 
   ld_script_path: linkers/USA/maps/map2_s04.ld
@@ -62,7 +63,6 @@ segments:
       # .text section
       - [0x1654, c, map2_s04_anim_info]
       - [0x1654, c, header]
-      - [0x1654, c, map_events]
       - [0x1654, c, map2_s04]
 
       # .data section
@@ -70,6 +70,12 @@ segments:
       - [0x46E8, data]
       - [0x4750, .data, header]
       - [0x48F0, .data, map2_s04]
-      - [0x495C, .data, map_events]
-      - [0x4AAC, data]
+
+      # .bss section
+      - [0x4B38, .bss, map2_s04]
+
+  # Stale data left at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0x5E20
   - [0x5F00]

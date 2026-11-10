@@ -3,9 +3,52 @@
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
+
+// TODO: .bss is emitted in order of first declaration, right now our headers
+// declare externs in semi-random order though.
+// For now we'll declare them before headers in the order they appear in the
+// map .bss, later can hopefully improve order in headers instead.
+extern e_MapIdx                 g_ParticleMapIdx0;
+extern e_MapIdx                 g_ParticleMapIdx1;
+extern s32                      g_Particle_SpeedX;
+extern s32                      g_Particle_SpeedZ;
+extern s32                      sharedData_800DFB6C_0_s00;
+extern s32                      sharedData_800DFB70_0_s00;
+extern s32                      __pad_bss_800CE0C8[2];
+extern s_MapHdr_field_4C        sharedData_800DFB7C_0_s00[];
+extern s_BloodSplat             g_Effect_BloodSplats[];
+extern s8                       __pad_bss_800CF19C[4];
+extern struct _ParticleVectors  g_ParticleVectors0;
+extern s32                      __pad_bss_800CF1CC;
+extern struct _ParticleVectors  g_ParticleVectors1;
+extern s32                      sharedData_800E0CA8_0_s00;
+extern s32                      sharedData_800E0CAC_0_s00;
+extern u32                      sharedData_800E0CB0_0_s00;
+extern u16                      sharedData_800E0CB4_0_s00;
+extern u16                      sharedData_800E0CB6_0_s00;
+extern u16                      sharedData_800E0CB8_0_s00;
+extern s8                       sharedData_800E0CBA_0_s00;
+extern s8                       __pad_bss_800CF20F;
+extern s32                      sharedData_800E39D8_0_s00;
+extern q19_12                   g_Player_MoveSpeed;
+extern s32                      __pad_bss_800CF218[2];
+extern struct _WorldObjectPose  g_WorldObject_SavePad0;
+extern struct _WorldObjectPose  g_WorldObject_Map;
+extern u8                       D_800CF280;
+extern s8                       __pad_bss_800CF281[15];
+extern struct _WorldObjectPose  g_WorldObject_SavePad1;
+extern struct _WorldObjectPose  g_WorldObject_Shotgun;
+extern struct _WorldObjectModel g_CommonWorldObjects[];
+
 #include "maps/map2/map2_s04.h"
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
+
+s32 __pad_bss_800CE0C8[2];
+s8  __pad_bss_800CF19C[4];
+s32 __pad_bss_800CF1CC;
+s8  __pad_bss_800CF20F;
+s32 __pad_bss_800CF218[2];
 
 #include "../src/maps/common/particles/particle.c"
 
@@ -53,6 +96,10 @@ const char* MAP_MESSAGES[] = {
     /* 24 */ "\t机の上は散らかっている ~E ",
     /* 25 */ "\t~C2 ショットガン ~C7 が落ちている ~N\n\t取りますか？ ~S4 "
 #endif
+};
+
+s_EventData MAP_EVENTS[] = {
+#include "map_events.h"
 };
 
 void func_800CCF9C(void) // 0x800CCF9C
@@ -126,13 +173,24 @@ void MapEvent_ShotgunTake(void) // 0x800CD0F8
     Event_ItemTake(InvItemId_Shotgun, SHOTGUN_AMMO_PICKUP_ITEM_COUNT, EventFlag_M1S02_PickupShotgun, MAP_MSG(26));
 }
 
-extern u8 D_800CF280;
-extern s_WorldObjectModel g_CommonWorldObjects[8];
-extern s_WorldObjectPose g_WorldObject_Map;
-extern s_WorldObjectPose g_WorldObject_SavePad0;
-extern s_WorldObjectPose g_WorldObject_SavePad1;
-extern s_WorldObjectPose g_WorldObject_Shotgun;
-extern s_Pose g_CommonWorldObjectPoses[7];
+s_WorldObjectPose  g_WorldObject_SavePad0;
+s_WorldObjectPose  g_WorldObject_Map;
+u8                 D_800CF280;
+s8                 __pad_bss_800CF281[15];
+s_WorldObjectPose  g_WorldObject_SavePad1;
+s_WorldObjectPose  g_WorldObject_Shotgun;
+s_WorldObjectModel g_CommonWorldObjects[6];
+
+s_Pose g_CommonWorldObjectPoses[] = {
+    { { Q12(-17.23f), Q12(-0.4f), Q12(16.73f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(104.0f), Q12_ANGLE(0.0f) } },
+    { { Q12(-18.39f), Q12(-1.4f), Q12(20.87f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(123.0f), Q12_ANGLE(0.0f) } },
+    { { Q12(-18.14f), Q12(-1.4f), Q12(20.81f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(31.0f), Q12_ANGLE(0.0f) } },
+    { { Q12(-59.33f), Q12(-0.815f), Q12(18.27f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(30.0f), Q12_ANGLE(0.0f) } },
+    { { Q12(-60.94f), Q12(-0.815f), Q12(21.27f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(108.0f), Q12_ANGLE(0.0f) } },
+    { { Q12(-102.2f), Q12(-1.4f), Q12(60.86f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(20.0f), Q12_ANGLE(0.0f) } },
+    { { Q12(-98.2f), Q12(-1.4f), Q12(60.9f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(23.0f), Q12_ANGLE(0.0f) } },
+};
+
 
 void Map_WorldObjectsInit(void)
 {

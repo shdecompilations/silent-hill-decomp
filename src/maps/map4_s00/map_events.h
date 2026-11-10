@@ -1,6 +1,3 @@
-#include "bodyprog/bodyprog.h"
-
-s_EventData MAP_EVENTS[2] = {
     // [0]
     {
         .triggerType     = EventTriggerType_Tick,
@@ -12,4 +9,3 @@ s_EventData MAP_EVENTS[2] = {
     {
         .triggerType = EventTriggerType_EndOfArray,
     },
-};

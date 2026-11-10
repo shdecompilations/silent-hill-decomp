@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/JAP1/maps/map4_s06
   src_path: src/maps/map4_s06
+  asset_path: asm/JAP1/maps/map4_s06
   build_path: build/JAP1
 
   ld_script_path: linkers/JAP1/maps/map4_s06.ld
@@ -60,7 +61,6 @@ segments:
       - [0x1050, .rodata, map4_s06]
 
       - [0x1328, c, header]
-      - [0x1328, c, map_events]
       - [0x1328, c, map4_s06_anim_info]
 
       # .text section
@@ -71,6 +71,12 @@ segments:
       - [0x3544, data]
       - [0x35E8, .data, header]
       - [0x3608, .data, map4_s06]
-      - [0x3648, .data, map_events]
-      - [0x3654, data]
+
+      # .bss section
+      - [0x3654, .bss, map4_s06]
+
+  # Stale data left at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0x3F2C
   - [0x4000]

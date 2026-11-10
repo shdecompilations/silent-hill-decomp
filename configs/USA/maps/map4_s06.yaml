@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/USA/maps/map4_s06
   src_path: src/maps/map4_s06
+  asset_path: asm/USA/maps/map4_s06
   build_path: build/USA
 
   ld_script_path: linkers/USA/maps/map4_s06.ld
@@ -60,7 +61,6 @@ segments:
       - [0x1050, .rodata, map4_s06]
 
       - [0x135C, c, header]
-      - [0x135C, c, map_events]
       - [0x135C, c, map4_s06_anim_info]
 
       # .text section
@@ -71,6 +71,12 @@ segments:
       - [0x3578, data]
       - [0x361c, .data, header]
       - [0x363c, .data, map4_s06]
-      - [0x367C, .data, map_events]
-      - [0x3688, data]
+
+      # .bss section
+      - [0x3688, .bss, map4_s06]
+
+  # Stale data left at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0x3F60
   - [0x4000]
