@@ -5,6 +5,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
+#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/gfx/map_effects.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"
@@ -1954,7 +1955,7 @@ void func_800E1D50(void) // 0x800E1D50
             Fs_QueueStartRead(FILE_ANIM_HBM6_S4B_ANM, FS_BUFFER_4);
             Fs_QueueStartRead(FILE_ANIM_PARK_DMS, FS_BUFFER_14);
 
-            D_800A9938 = 0x38630;
+            g_CharaModelAnimsData[0].allocSize = 0x38630;
 
             Fs_QueueWaitForEmpty();
             Dms_HeaderFixOffsets((s_DmsHeader*)FS_BUFFER_14);
@@ -2163,7 +2164,7 @@ void func_800E2724(void) // 0x800E2724
             func_8007E860();
             Fs_QueueStartRead(FILE_ANIM_HBM6_S4B_ANM, FS_BUFFER_4);
 
-            D_800A9938 = 0x38630;
+            g_CharaModelAnimsData[0].allocSize = 0x38630;
 
 #if VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix? PARK.DMS gets loaded in `func_800E1D50` above, maybe it had chance of that load being skipped?
             Fs_QueueStartRead(FILE_ANIM_PARK_DMS, FS_BUFFER_14);
@@ -3179,7 +3180,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             func_8003D01C();
             Player_WeaponAttackRestore();
-            D_800A9938 = 190000;
+            g_CharaModelAnimsData[0].allocSize = 190000;
 
             SD_Call(19);
             func_8008D448();

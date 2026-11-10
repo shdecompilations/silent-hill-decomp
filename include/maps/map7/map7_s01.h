@@ -49,9 +49,6 @@ typedef struct
     s16 field_2;
 } s_800E1690;
 
-/** Character ID. (TODO: Move to `bodyprog.h`)*/
-extern s8 D_800A9945;
-
 extern u16 D_800E14E8;
 
 extern u16     D_800E1500;

@@ -2881,10 +2881,7 @@ g_AmbientVabTaskLoad                         = 0x800ABC48; // type:u16 size:0x50
 //--- PA: 0x087138   VA: 0x800ABC98   subsegment: .data, game_boot/fs_chara_anim
 //------------------------------------------------------------------------------
 g_CharaAnimDataIdxs                          = 0x800ABC98;
-g_CharaModelAnimsData                        = 0x800ABCC8;
-D_800A9938                                   = 0x800ABCD4;
-D_800A9944                                   = 0x800ABCE0;
-D_800A9945                                   = 0x800ABCE1;
+g_CharaModelAnimsData                        = 0x800ABCC8; // size:0x60
 D_800A998C                                   = 0x800ABD28; // type:AnimInfo size:0x10
 
 //------------------------------------------------------------------------

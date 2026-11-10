@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/gfx/map_effects.h"
@@ -3876,7 +3877,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E4528
 
 void func_800E5628(void) // 0x800E5628
 {
-    if (D_800A9945 != 7 || !Chara_ModelLoadedCheck(Chara_Stalker))
+    if (g_CharaModelAnimsData[1].activeCharaId != 7 || !Chara_ModelLoadedCheck(Chara_Stalker))
     {
         Anim_CharaTypeAnimInfoClear();
         Chara_Load(0, 7, g_SysWork.npcBoneCoordBuffer, NO_VALUE, NULL, NULL);

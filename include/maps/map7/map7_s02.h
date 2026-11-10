@@ -148,8 +148,6 @@ extern u8 D_800E9DE8[26][2];
 extern u8 D_800EA4AC[5];
 extern u8 D_800E9E1C[5];
 
-extern s8 D_800A9945;
-
 extern VECTOR3       D_800EA484;
 extern s16           D_800E9EDC;
 extern GsCOORDINATE2 D_800E9EE4;

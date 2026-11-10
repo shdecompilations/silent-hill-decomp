@@ -598,8 +598,6 @@ extern s_FsImageDesc g_Font24AtlasImg;
 
 extern s_WorldEnvPreset WORLD_ENV_PRESETS[21];
 
-extern s_WorldEnvState D_800A952C;
-
 extern s32 D_800A9A20;
 
 /** X. */
@@ -623,10 +621,6 @@ extern s_FsImageDesc D_800A9EB4;
 extern s_FsImageDesc D_800A9EBC;
 
 extern s_FsImageDesc D_800A9EC4;
-
-extern s32 D_800A9938;
-
-extern u8 D_800A9944[];
 
 /** Player anim info? */
 extern s_AnimInfo D_800A998C;
@@ -851,10 +845,6 @@ extern s8 __pad_bss_800C4415[3];
 extern s_800C4418 D_800C4418;
 
 extern q3_12 D_800C4454;
-
-extern s8 D_800C447A;
-
-extern u8 g_Player_AnimResetRequest; /** `bool` */
 
 extern s_CollisionSurface D_800C4620;
 

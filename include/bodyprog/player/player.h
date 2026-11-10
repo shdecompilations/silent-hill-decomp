@@ -410,8 +410,6 @@ extern s32 g_Player_MeleeAttackType;
 
 extern s_EquippedWeaponInfo g_Player_EquippedWeaponInfos[11];
 
-extern q19_12 D_800C45DC;
-
 // ====================
 // GLOBALS (BSS; Hack)
 // ====================
@@ -522,7 +520,9 @@ extern VECTOR3 g_Player_PrevPosition;
 /** @brief Defines if the player is triggering the running action. */
 extern u16 g_Player_IsRunning;
 
-extern s16 __pad_bss_800C4606;
+extern u8 g_Player_AnimResetRequest; /** `bool` */
+
+extern s8 __pad_bss_800C4607;
 
 extern q19_12 g_Player_HeadingAngle;
 

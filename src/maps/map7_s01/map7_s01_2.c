@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/gfx/map_effects.h"
@@ -2612,14 +2613,14 @@ void func_800DEDA4(void) // 0x800DEDA4
 {
     if (!Savegame_EventFlagGet(EventFlag_485))
     {
-        if (D_800A9945 != Chara_GhostChildAlessa || !Chara_ModelLoadedCheck(Chara_GhostChildAlessa))
+        if (g_CharaModelAnimsData[1].activeCharaId != Chara_GhostChildAlessa || !Chara_ModelLoadedCheck(Chara_GhostChildAlessa))
         {
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
         }
     }
-    else if (D_800A9945 == Chara_PuppetNurse)
+    else if (g_CharaModelAnimsData[1].activeCharaId == Chara_PuppetNurse)
     {
         if (!Chara_ModelLoadedCheck(Chara_PuppetNurse))
         {

@@ -19,27 +19,71 @@ g_GameWorkPtr                                = 0x80024D54; // type:u32
 //---------------------------------------------------------------------
 //--- PA: 0x0001FC   VA: 0x80024D5C   subsegment: .rodata, sys/map_info
 //---------------------------------------------------------------------
+WATER_LIGHT_ZONES_0                          = 0x80024D5C;
+WATER_LIGHT_ZONES_1                          = 0x80024D80;
+SPEED_ZONES_THR                              = 0x80024DA4;
+SPEED_ZONES_SP                               = 0x80024DCC;
+SPEED_ZONES_RSR                              = 0x80024E00;
+SPEED_ZONES_RSU                              = 0x80024E20;
+SPEED_ZONES_AP                               = 0x80024E40;
+SPEED_ZONES_DR                               = 0x80024E60;
+SPEED_ZONES_SC                               = 0x80024E74;
+SPEED_ZONES_SU                               = 0x80024ED0;
+SPEED_ZONES_HP                               = 0x80024F2C;
+SPEED_ZONES_HU                               = 0x80024F4C;
+SPEED_ZONES_ER                               = 0x80024FBC;
+SPEED_ZONES_XXX                              = 0x80024FF8;
 MAP_INFOS                                    = 0x8002500C; // type:MapType size:0xF0
 
 //---------------------------------------------------------------------------
 //--- PA: 0x0005BC   VA: 0x8002511C   subsegment: .rodata, sys/settings_reset
 //---------------------------------------------------------------------------
-DEFAULT_CONTROLLER_CONFIGS                   = 0x8002511C;
+DEFAULT_CONTROLLER_CONFIGS.44                = 0x8002511C;
 
 //--------------------------------------------------------------------------
 //--- PA: 0x00075C   VA: 0x800252BC   subsegment: .rodata, events/event_data
 //--------------------------------------------------------------------------
 SFX_PAIRS                                    = 0x800252BC; // type:AreaLoadSfx size:0x64
 
+//---------------------------------------------------------------------
+//--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, events/title
+//---------------------------------------------------------------------
+__pad_rodata_8002547C                        = 0x8002547C;
+STR_OFFSETS_X.49                             = 0x800254EC;
+STR_OFFSETS_X.53                             = 0x8002551C;
+
+//-------------------------------------------------------------------------
+//--- PA: 0x0009C4   VA: 0x80025524   subsegment: .rodata, world/world_draw
+//-------------------------------------------------------------------------
+__pad_rodata_80025524                        = 0x80025524;
+
+//----------------------------------------------------------------------
+//--- PA: 0x001094   VA: 0x80025BF4   subsegment: .rodata, sound/sd_call
+//----------------------------------------------------------------------
+__pad_rodata_80025BF4                        = 0x80025BF4;
+
 //-----------------------------------------------------------------------
 //--- PA: 0x001208   VA: 0x80025D68   subsegment: .rodata, text/text_draw
 //-----------------------------------------------------------------------
+__pad_rodata_80025D68                        = 0x80025D68;
 FONT_12X16_GLYPH_WIDTHS                      = 0x80025D6C;
 STRING_COLORS                                = 0x80025DC0;
+
+//--------------------------------------------------------------------
+//--- PA: 0x00132C   VA: 0x80025E8C   subsegment: .rodata, items/utils
+//--------------------------------------------------------------------
+__pad_rodata_80025E90                        = 0x80025E8C;
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x00134C   VA: 0x80025EAC   subsegment: .rodata, items/item_screens_2
+//-----------------------------------------------------------------------------
+__pad_rodata_80025EAC                        = 0x80025EAC;
+g_rodataData_800262F6                        = 0x800262F7;
 
 //-----------------------------------------------------------------------------
 //--- PA: 0x001798   VA: 0x800262F8   subsegment: .rodata, items/item_screens_3
 //-----------------------------------------------------------------------------
+__pad_rodata_800262F8                        = 0x800262F8;
 INV_ITEM_ROTATIONS                           = 0x800262FC; // type:DVECTOR size:0x380
 LABEL_STR_POS_TABLE                          = 0x80027DD8; // size:0x20
 
@@ -63,6 +107,16 @@ HARRY_WEAPON_ANIM_INFOS                      = 0x80028B94;
 //--- PA: 0x005CE4   VA: 0x8002A844   subsegment: rodata
 //------------------------------------------------------
 hack_D_8002A844_fix                          = 0x8002A844; // type:s32
+
+//---------------------------------------------------------------------
+//--- PA: 0x005CF0   VA: 0x8002A850   subsegment: .rodata, view/vc_main
+//---------------------------------------------------------------------
+ANGLES.160                                   = 0x8002AAE0;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x005F9C   VA: 0x8002AAFC   subsegment: .rodata, events/events_util
+//---------------------------------------------------------------------------
+RECT.104                                     = 0x8002ABA4;
 
 //------------------------------------------------------------------
 //--- PA: 0x0060A4   VA: 0x8002AC04   subsegment: .rodata, vibration
@@ -703,17 +757,17 @@ Gfx_MapMsg_Reset                             = 0x8004B684; // type:func
 Gfx_GlyphSprite_PositionSet                  = 0x8004B6D4;
 Gfx_StringDrawInt                            = 0x8004B9F8; // type:func
 
-//-------------------------------------------------------------------------
+//---------------------------------------------------------------
 //--- PA: 0x026FB0   VA: 0x8004BB10   subsegment: c, items/camera
-//-------------------------------------------------------------------------
+//---------------------------------------------------------------
 ItemScreen_TmdGsFCallInit                    = 0x8004BB10; // type:func
 ItemScreen_CameraSet                         = 0x8004BB4C; // type:func
 GameFs_TmdDataAlloc                          = 0x8004BCBC; // type:func
 ItemScreen_ItemRotate                        = 0x8004BCDC; // type:func
 
-//-------------------------------------------------------------------
+//--------------------------------------------------------------
 //--- PA: 0x027528   VA: 0x8004C088   subsegment: c, items/utils
-//-------------------------------------------------------------------
+//--------------------------------------------------------------
 Inventory_ExitAnimEquippedItemUpdate         = 0x8004C088; // type:func
 Inventory_GunsAvailableCheck                 = 0x8004C328;
 Inventory_HyperBlasterUnlockTest             = 0x8004C45C; // type:func
@@ -2536,7 +2590,19 @@ g_DeathTipImg                                = 0x800A9054; // type:FsImageDesc s
 g_HealthPortraitImg                          = 0x800A905C; // type:FsImageDesc size:8
 g_InventoryKeyItemTextureImg                 = 0x800A9064; // type:FsImageDesc size:8
 g_FirstAidKitItemTextureImg                  = 0x800A906C; // type:FsImageDesc size:8
+D_800A907C                                   = 0x800A907C;
+D_800A9094                                   = 0x800A9094; // size:0x8
 g_Font24AtlasImg                             = 0x800A909C; // type:FsImageDesc size:8
+D_800A90AC                                   = 0x800A90AC;
+D_800A90B4                                   = 0x800A90B4;
+D_800A90BC                                   = 0x800A90BC;
+D_800A90C4                                   = 0x800A90C4;
+D_800A90CC                                   = 0x800A90CC;
+D_800A90D4                                   = 0x800A90D4;
+D_800A90DC                                   = 0x800A90DC;
+D_800A90E4                                   = 0x800A90E4;
+D_800A90EC                                   = 0x800A90EC;
+D_800A90F4                                   = 0x800A90F4;
 
 //--------------------------------------------------------------------------
 //--- PA: 0x08459C   VA: 0x800A90FC   subsegment: .data, sys/chara_data_info
@@ -2546,7 +2612,7 @@ CHARA_FILE_INFOS                             = 0x800A90FC; // type:CharaFileInfo
 //-------------------------------------------------------------------
 //--- PA: 0x08486C   VA: 0x800A93CC   subsegment: .data, sys/map_info
 //-------------------------------------------------------------------
-WORLD_ENV_PRESETS                            = 0x800A93CC;
+WORLD_ENV_PRESETS                            = 0x800A93CC; // size:0x39C
 
 //--------------------------------------------------------------------
 //--- PA: 0x084C08   VA: 0x800A9768   subsegment: .data, sys/game_main
@@ -2562,10 +2628,11 @@ g_GameStateUpdateFuncs                       = 0x800A977C;
 //--------------------------------------------------------------------
 g_SlotElementSelectedIdx                     = 0x800A97D4;
 g_SelectedSaveSlotIdx                        = 0x800A97D6;
+D_800A97D7                                   = 0x800A97D7;
 g_SaveScreen_IsInSaveScreen                  = 0x800A97D8;
-D_800A97DC                                   = 0x800A97DC;
-unavailableMemCardSlotIdx                    = 0x800A97E0;
-fileStatuses                                 = 0x800A97E4;
+D_800A97DC.46                                = 0x800A97DC;
+unavailableMemCardSlotIdx.47                 = 0x800A97E0;
+fileStatuses.48                              = 0x800A97E4;
 
 //--------------------------------------------------------------------------------------
 //--- PA: 0x084CA4   VA: 0x800A9804   subsegment: .data, game_boot/background_sound_init
@@ -2578,7 +2645,7 @@ g_AmbientVabTaskLoad                         = 0x800A98AC; // type:u16 size:0x50
 //--- PA: 0x084D9C   VA: 0x800A98FC   subsegment: .data, game_boot/fs_chara_anim
 //------------------------------------------------------------------------------
 g_CharaAnimDataIdxs                          = 0x800A98FC;
-g_CharaModelAnimsData                        = 0x800A992C;
+g_CharaModelAnimsData                        = 0x800A992C; // size:0x60
 D_800A998C                                   = 0x800A998C; // type:AnimInfo size:0x10
 
 //------------------------------------------------------------------------
@@ -2591,7 +2658,8 @@ g_Bgm_ChannelLimits                          = 0x800A99A4;
 //--- PA: 0x084E4C   VA: 0x800A99AC   subsegment: .data, text/map_msg
 //-------------------------------------------------------------------
 g_MapMsg_CurrentIdx                          = 0x800A99AC; // type:s32
-g_MapMsg_SelectFlashTimer                    = 0x800A99B0; // type:s16
+g_MapMsg_SelectFlashTimer                    = 0x800A99B0; // size:0x2 type:s16
+hack_D_800A99B2_fix                          = 0x800A99B2;
 
 //------------------------------------------------------------------------
 //--- PA: 0x084E54   VA: 0x800A99B4   subsegment: .data, events/event_data
@@ -2605,10 +2673,19 @@ g_MapEventParam                              = 0x800A9A14; // type:u32
 g_MapEventLastUsedItem                       = 0x800A9A18; // type:s32
 g_RadioPitchState                            = 0x800A9A1C;
 
+//-------------------------------------------------------------------------
+//--- PA: 0x084EC0   VA: 0x800A9A20   subsegment: .data, events/events_main
+//-------------------------------------------------------------------------
+D_800A9A20.45                                = 0x800A9A20;
+D_800A9A24.46                                = 0x800A9A24;
+D_800A9A28.47                                = 0x800A9A28;
+
 //-----------------------------------------------------------------------------
 //--- PA: 0x084ECC   VA: 0x800A9A2C   subsegment: .data, events/game_sys_states
 //-----------------------------------------------------------------------------
 g_SysStateFuncs                              = 0x800A9A2C; // type:u32 size:0x3C
+D_800A9A68.50                                = 0x800A9A68;
+D_800A9A6C.65                                = 0x800A9A6C;
 
 //-------------------------------------------------------------------
 //--- PA: 0x084F14   VA: 0x800A9A74   subsegment: .data, events/title
@@ -2617,19 +2694,64 @@ g_MainMenuState                              = 0x800A9A74;
 g_MainMenu_SelectedEntry                     = 0x800A9A78;
 g_MainMenu_VisibleEntryFlags                 = 0x800A9A7C;
 g_Demo_ReproducedCount                       = 0x800A9A80;
-g_MainMenu_NewGameSelectedDifficultyIdx      = 0x800A9A84;
-g_MemCard_PrevSavegameCount                  = 0x800A9A88;
-MAIN_MENU_ENTRY_STRINGS                      = 0x800A9A8C;
-DIFFICULTY_MENU_ENTRY_STRINGS                = 0x800A9AA0;
-RAND.67                                      = 0x800A9EAC;
-FOG_COUNT.68                                 = 0x800A9EB0;
+newGameSelectedDifficultyIdx.40              = 0x800A9A84;
+prevSavegameCount.41                         = 0x800A9A88;
+MAIN_MENU_ENTRY_STRINGS.48                   = 0x800A9A8C;
+DIFFICULTY_MENU_ENTRY_STRINGS.52             = 0x800A9AA0;
+randAngle.66                                 = 0x800A9EAC;
+fogCount.71                                  = 0x800A9EB0;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x085354   VA: 0x800A9EB4   subsegment: .data, world/world_draw
 //-----------------------------------------------------------------------
-IMAGE.81                                     = 0x800A9EB4;
-IMAGE_TIM.86                                 = 0x800A9EBC;
-IMAGE_ETC.87                                 = 0x800A9EC4;
+IMAGE.48                                     = 0x800A9EB4;
+IMAGE_TIM.53                                 = 0x800A9EBC;
+IMAGE_ETC.54                                 = 0x800A9EC4;
+D_800A9ECC.143                               = 0x800A9ECC;
+D_800A9ED0.144                               = 0x800A9ED0;
+D_800A9ED4.145                               = 0x800A9ED4;
+D_800A9ED8.146                               = 0x800A9ED8;
+D_800A9EDC.147                               = 0x800A9EDC;
+D_800A9EE0.148                               = 0x800A9EE0;
+D_800A9EE4.149                               = 0x800A9EE4;
+D_800A9EE8.150                               = 0x800A9EE8;
+D_800A9EEC.151                               = 0x800A9EEC;
+D_800A9EF0.154                               = 0x800A9EF0;
+D_800A9EF4.155                               = 0x800A9EF4;
+D_800A9EF8.156                               = 0x800A9EF8;
+D_800A9EFC.157                               = 0x800A9EFC;
+D_800A9F00.160                               = 0x800A9F00;
+D_800A9F04.161                               = 0x800A9F04;
+D_800A9F08.162                               = 0x800A9F08;
+D_800A9F0C.163                               = 0x800A9F0C;
+D_800A9F10.166                               = 0x800A9F10;
+D_800A9F14.167                               = 0x800A9F14;
+D_800A9F18.168                               = 0x800A9F18;
+D_800A9F1C.169                               = 0x800A9F1C;
+D_800A9F20.172                               = 0x800A9F20;
+D_800A9F24.173                               = 0x800A9F24;
+D_800A9F28.174                               = 0x800A9F28;
+D_800A9F2C.175                               = 0x800A9F2C;
+D_800A9F30.176                               = 0x800A9F30;
+D_800A9F34.177                               = 0x800A9F34;
+D_800A9F38.178                               = 0x800A9F38;
+D_800A9F3C.179                               = 0x800A9F3C;
+D_800A9F40.180                               = 0x800A9F40;
+D_800A9F44.181                               = 0x800A9F44;
+D_800A9F48.184                               = 0x800A9F48;
+D_800A9F4C.185                               = 0x800A9F4C;
+D_800A9F50.188                               = 0x800A9F50;
+D_800A9F54.189                               = 0x800A9F54;
+D_800A9F58.192                               = 0x800A9F58;
+D_800A9F5C.193                               = 0x800A9F5C;
+D_800A9F60.194                               = 0x800A9F60;
+D_800A9F64.195                               = 0x800A9F64;
+D_800A9F68.196                               = 0x800A9F68;
+D_800A9F6C.199                               = 0x800A9F6C;
+D_800A9F70.200                               = 0x800A9F70;
+D_800A9F74.201                               = 0x800A9F74;
+D_800A9F78.202                               = 0x800A9F78;
+D_800A9F7C.203                               = 0x800A9F7C;
 
 //--------------------------------------------------------------------------
 //--- PA: 0x085420   VA: 0x800A9F80   subsegment: .data, world/world_effects
@@ -2641,9 +2763,9 @@ D_800A9F98                                   = 0x800A9F98; // size:0x4
 D_800A9F9C                                   = 0x800A9F9C; // size:0x4
 D_800A9FA0                                   = 0x800A9FA0; // size:0x4
 D_800A9FA4                                   = 0x800A9FA4; // size:0x4
-IMG_FLAME.0                                  = 0x800A9FA8;
-D_800A9FB0.0                                 = 0x800A9FB0;
-Y_ARRAY.0                                    = 0x800A9FB4;
+IMG_FLAME.40                                 = 0x800A9FA8;
+D_800A9FB0.43                                = 0x800A9FB0;
+Y_ARRAY.94                                   = 0x800A9FB4;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x085468   VA: 0x800A9FC8   subsegment: .data, sound/sound_data
@@ -2651,11 +2773,16 @@ Y_ARRAY.0                                    = 0x800A9FB4;
 g_Sd_VabBuffers                              = 0x800A9FC8;
 g_Sd_KdtBuffer                               = 0x800A9FD8;
 D_800A9FDC                                   = 0x800A9FDC;
-g_AudioData                                  = 0x800A9FEC;
+g_AudioData                                  = 0x800A9FEC; // size:0x5F4
 g_Sd_ReverbDepths                            = 0x800AA5E0;
 g_Sd_SongsChannelsForLayers                  = 0x800AA604;
 gSDXATable                                   = 0x800AA894;
 g_Vab_InfoTable                              = 0x800ACAA8;
+
+//-------------------------------------------------------------------
+//--- PA: 0x088920   VA: 0x800AD480   subsegment: .data, view/vw_calc
+//-------------------------------------------------------------------
+D_800AD480.72                                = 0x800AD480;
 
 //---------------------------------------------------------------------
 //--- PA: 0x088938   VA: 0x800AD498   subsegment: .data, text/text_draw
@@ -2693,7 +2820,19 @@ g_BillboardWorks                             = 0x800AE4DC;
 //----------------------------------------------------------------
 //--- PA: 0x089A04   VA: 0x800AE564   subsegment: .data, sound/sfx
 //----------------------------------------------------------------
-g_Pow2NegFracTable                           = 0x800AE564;
+g_Pow2NegFracTable                           = 0x800AE564; // size:0x42
+hack_D_800AE5A6_fix                          = 0x800AE5A6;
+
+//----------------------------------------------------------------------
+//--- PA: 0x089A48   VA: 0x800AE5A8   subsegment: .data, gfx/env_effects
+//----------------------------------------------------------------------
+D_800AE5A8                                   = 0x800AE5A8; // size:0x20
+
+//----------------------------------------------------------------------------
+//--- PA: 0x089BB0   VA: 0x800AE710   subsegment: .data, gfx/bodyprog_800652F4
+//----------------------------------------------------------------------------
+D_800AE73C                                   = 0x800AE73C; // size:0x2
+hack_D_800AE73E_fix                          = 0x800AE73E;
 
 //--------------------------------------------------------------------------
 //--- PA: 0x089BE0   VA: 0x800AE740   subsegment: .data, paper_map/paper_map
@@ -2716,9 +2855,13 @@ g_Player_IsInWalkToRunTransition             = 0x800AF214;
 g_Player_DisableControl                      = 0x800AF215;
 g_Player_MoveStickMag                        = 0x800AF216;
 g_Player_RockDrill_AttackType                = 0x800AF217;
+D_800AF218                                   = 0x800AF218;
 g_Player_TargetNpcIdx                        = 0x800AF21C;
 g_Player_PrevSelectedWeapon                  = 0x800AF224;
 HARRY_BASE_ANIM_INFOS                        = 0x800AF228; // size:0x390
+__pad1                                       = 0x800AF5B8;
+D_800AF5C8                                   = 0x800AF5C8;
+D_800AF628                                   = 0x800AF628;
 g_Player_AttackAnimIdx                       = 0x800AFBE8;
 g_Player_MeleeAttackType                     = 0x800AFBEC;
 g_Player_IsMultiTapAttack                    = 0x800AFBF0;
@@ -2742,11 +2885,13 @@ g_VibScript_StepHandlers                     = 0x800AFD08;
 //----------------------------------------------------------------
 //--- PA: 0x08B1DC   VA: 0x800AFD3C   subsegment: .data, gfx/water
 //----------------------------------------------------------------
-Y_ARRAY_0.251                                = 0x800AFD3C;
-Y_ARRAY_1.252                                = 0x800AFD44;
-Y_ARRAY_2.253                                = 0x800AFD60;
+Y_ARRAY_0.58                                 = 0x800AFD3C;
+Y_ARRAY_1.59                                 = 0x800AFD44;
+Y_ARRAY_2.60                                 = 0x800AFD60;
 img0                                         = 0x800AFD9C;
-svec0.264                                    = 0x800AFDB0;
+D_800AFDA4.69                                = 0x800AFDA4;
+D_800AFDAC.70                                = 0x800AFDAC;
+svec0.73                                     = 0x800AFDB0;
 
 //---------------------------------------------------------------
 //--- PA: 0x08B258   VA: 0x800AFDB8   subsegment: .data, sys/demo
@@ -2754,9 +2899,9 @@ svec0.264                                    = 0x800AFDB0;
 g_Demo_DemoId                                = 0x800AFDB8; // type:s32
 g_Demo_RandSeed                              = 0x800AFDBC; // type:u16
 g_Demo_PlaybackFrames                        = 0x800AFDC0; // type:s32
-DEMO_FILE_INFOS.30                           = 0x800AFDC4; // type:DemoFileInfo size:0x28
+DEMO_FILE_INFOS.40                           = 0x800AFDC4; // type:DemoFileInfo size:0x28
 g_Demo_Play                                  = 0x800AFDEC; // type:s32
-prevScreenFade.69                            = 0x800AFDF0; // type:s32
+prevScreenFade.79                            = 0x800AFDF0; // type:s32
 
 //--------------------------------------------------------------------
 //--- PA: 0x08B294   VA: 0x800AFDF4   subsegment: .data, items/ranking
@@ -3050,6 +3195,7 @@ chantype                                     = 0x800B25C8; // type:s32 static fo
 //--- PA: 0x08DAB0   VA: 0x800B2610   subsegment: .sdata, libkpad/libkpad
 //-----------------------------------------------------------------------
 g_KPad_DualShockAlignData                    = 0x800B2610; // size:0x6
+hack_D_800B2616_fix                          = 0x800B2616;
 
 
 
@@ -3062,17 +3208,18 @@ g_KPad_DualShockAlignData                    = 0x800B2610; // size:0x6
 //--- PA: 0x08DAB8   VA: 0x800B2618   subsegment: .bss, sys/memcard
 //-----------------------------------------------------------------
 fileIdx.80                                   = 0x800B2618;
-readDataErrorAttempt.00                      = 0x800B261C;
-checkSumValidationAttempts.00                = 0x800B2620;
-D_800B2624.00                                = 0x800B2624;
-directoryInfoCpy.00                          = 0x800B2628;
-fileIdx.00                                   = 0x800B2774;
-fileIdxCpy.00                                = 0x800B2778;
-D_800B277C.00                                = 0x800B277C;
+readDataErrorAttempt.81                      = 0x800B261C;
+checkSumValidationAttempts.82                = 0x800B2620;
+D_800B2624.83                                = 0x800B2624;
+directoryInfoCpy.84                          = 0x800B2628;
+fileIdx.89                                   = 0x800B2774;
+fileIdxCpy.92                                = 0x800B2778;
+D_800B277C.93                                = 0x800B277C;
 g_MemCard_SaveHeaderInfo_Slot1               = 0x800B2780;
 g_MemCard_SaveHeaderInfo_Slot2               = 0x800B3680;
 g_MemCard_SaveHeaderInfo_Null                = 0x800B4580;
 g_MemCard_SysAvailibityStatus                = 0x800B5480; // size:0x4
+__pad_bss_800B5484                           = 0x800B5484;
 g_MemCardWork                                = 0x800B5488; // size:0x80
 g_MemCardSaveWork                            = 0x800B5508; // size:0x718
 
@@ -3093,9 +3240,11 @@ g_Screen_PrevFadeProgressState               = 0x800B5C28; // type:s32
 g_ScreenFadeTimestep                         = 0x800B5C30; // type:s32
 g_VBlanks                                    = 0x800B5C34; // type:s32
 g_UncappedVBlanks                            = 0x800B5C38; // type:s32
+__pad_bss_800B5C3C                           = 0x800B5C3C;
 g_OtTags0                                    = 0x800B5C40; // type:u32 size:0x80
 g_DeltaTime                                  = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
 g_OtTags1                                    = 0x800B5CC4; // type:u32 size:0x4000
+__pad_bss_800B9CC4                           = 0x800B9CC4;
 g_GravitySpeed                               = 0x800B9CC8; // type:s32
 g_TickCount                                  = 0x800B9CCC;
 
@@ -3119,11 +3268,13 @@ g_Screen_FadeStatus                          = 0x800BCD0C;
 //-------------------------------------------------------------------
 //--- PA: 0x0981B8   VA: 0x800BCD18   subsegment: .bss, sys/memcard_2
 //-------------------------------------------------------------------
-biggestTotalSaveCountInSlot                  = 0x800BCD18;
-totalElementCountInSlot                      = 0x800BCD20; // allow_duplicated:True
+biggestTotalSaveCountInSlot.44               = 0x800BCD18;
+totalElementCountInSlot.45                   = 0x800BCD20; // allow_duplicated:True
 g_MemCard_SavegameCount                      = 0x800BCD28;
+__pad_bss_800BCD2A                           = 0x800BCD2A;
 g_MemCard_ActiveMemCardSlotSaves             = 0x800BCD2C;
 g_Savegame_ElementCount0                     = 0x800BCD30;
+__pad_bss_800BCD32                           = 0x800BCD32;
 g_MemCard_AllMemCardsStatus                  = 0x800BCD34;
 g_SaveScreen_SaveScreenState                 = 0x800BCD38;
 g_SaveScreen_IsLoadError                     = 0x800BCD39;
@@ -3136,22 +3287,24 @@ g_SelectedDeviceId                           = 0x800BCD40; // size:1
 //-------------------------------------------------------------------------
 //--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: .bss, game_boot/game_boot
 //-------------------------------------------------------------------------
-demoLoadAttemptCount                         = 0x800BCD48;
+demoLoadAttemptCount.42                      = 0x800BCD48;
 
 //-----------------------------------------------------------------------
 //--- PA: 0x0981F0   VA: 0x800BCD50   subsegment: .bss, events/bgm_update
 //-----------------------------------------------------------------------
-bgmChannelsVol.0                             = 0x800BCD50;
+bgmChannelVols.48                            = 0x800BCD50;
+D_800BCD58.61                                = 0x800BCD58;
 g_Bgm_LayersUpdated                          = 0x800BCD5C;
 
 //------------------------------------------------------------------
 //--- PA: 0x098200   VA: 0x800BCD60   subsegment: .bss, text/map_msg
 //------------------------------------------------------------------
-rolloutState.52                              = 0x800BCD60; // type:s32
-menuSelection.53                             = 0x800BCD64; // type:s32
-displayLength.54                             = 0x800BCD68; // type:s32
-activeMapMsgIdx.55                           = 0x800BCD6C; // type:s32
-displayLengthInc.56                          = 0x800BCD70; // type:s32
+rolloutState.40                              = 0x800BCD60; // type:s32
+menuSelection.41                             = 0x800BCD64; // type:s32
+displayLength.42                             = 0x800BCD68; // type:s32
+activeMapMsgIdx.43                           = 0x800BCD6C; // type:s32
+displayLengthInc.44                          = 0x800BCD70; // type:s32
+loadAudio.45                                 = 0x800BCD74;
 g_MapMsg_Select                              = 0x800BCD78; // type:MapMsgSelect size:2
 g_MapMsg_AudioType                           = 0x800BCD7A; // type:u8
 g_MapMsg_SelectCancelIdx                     = 0x800BCD7B; // type:s8
@@ -3159,12 +3312,18 @@ g_MapMsg_SelectCancelIdx                     = 0x800BCD7B; // type:s8
 //----------------------------------------------------------------------------
 //--- PA: 0x098220   VA: 0x800BCD80   subsegment: .bss, events/game_sys_states
 //----------------------------------------------------------------------------
+prevTipIdx.94                                = 0x800BCD80;
+__pad_bss_800BCD81                           = 0x800BCD81;
 g_DeltaTimeCpy                               = 0x800BCD84; // type:s32
-g_ItemEvents                                 = 0x800BCD90; // type:s32 size:0x14
+__pad_bss_800BCD88                           = 0x800BCD88;
+g_ItemEvents                                 = 0x800BCD90; // type:s32 size:0x4
+__pad_bss_800BCD94                           = 0x800BCD94; // size:0x14
 g_RadioNoise                                 = 0x800BCDA8;
 g_MapPoint                                   = 0x800BCDB0;
+__pad_bss_800BCDD0                           = 0x800BCDBC;
 g_ItemTriggerItemIds                         = 0x800BCDC0; // type:s32 size:0x14
 g_MapAreaLoadCounter                         = 0x800BCDD4;
+__pad_bss_800BCDD5                           = 0x800BCDD5;
 g_MapEventData                               = 0x800BCDD8; // type:u32
 
 //------------------------------------------------------------------
@@ -3176,6 +3335,7 @@ vcRefPosSt                                   = 0x800BCDF8; // type:VECTOR3 size:
 //--- PA: 0x0982B4   VA: 0x800BCE14   subsegment: .bss, world/world_draw
 //----------------------------------------------------------------------
 g_CollisionTriggerFlags                      = 0x800BCE14;
+__pad_800BCE14                               = 0x800BCE16;
 g_WorldGfxWork                               = 0x800BCE18; // type:u8 size:0x2DBC
 
 //-----------------------------------------------------------------------------
@@ -3186,29 +3346,53 @@ g_Map_GfxPackets                             = 0x800BFBF0; // size:0x1420
 //---------------------------------------------------------------------
 //--- PA: 0x09C4B0   VA: 0x800C1010   subsegment: .bss, world/world_map
 //---------------------------------------------------------------------
-activeChunksCollData.0                       = 0x800C1010;
+activeChunksCollData.78                      = 0x800C1010;
 g_WorldMapWork                               = 0x800C1020; // type:u8 size:0x58C - size from bzero call
 
 //-------------------------------------------------------------------
 //--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: .bss, sound/sd_call
 //-------------------------------------------------------------------
+i.54                                         = 0x800C15B8;
+audioIdx.61                                  = 0x800C15BC;
+audioIdx.64                                  = 0x800C15BE;
+audioPitch.65                                = 0x800C15C0;
+audioIdx.68                                  = 0x800C15C2;
+vabInfoIdx.75                                = 0x800C15C4;
+vabProgIdxs.76                               = 0x800C15C6;
+pitch.77                                     = 0x800C15C8;
+xaAudioIdx.104                               = 0x800C15CA;
+xaFileOffset.105                             = 0x800C15CC;
+xaAudioIdx.112                               = 0x800C15D0;
+__pad_800C15D2.113                           = 0x800C15D2;
+xaFileOffset.114                             = 0x800C15D4;
+i.129                                        = 0x800C15D8;
+y.130                                        = 0x800C15DC;
+i.133                                        = 0x800C15E0;
+__pad_800C15E4.134                           = 0x800C15E4;
 g_Sd_XaCdLocation                            = 0x800C15E8;
+__pad_bss_800C15EC                           = 0x800C15EC;
 g_Sd_XaCdlInfo                               = 0x800C15F0;
+__pad_bss_800C15F2                           = 0x800C15F4;
 g_AudioPlayingIdxList                        = 0x800C15F8; // type:u16 size:0x30
 g_AudioPlayingPitchList                      = 0x800C1628; // type:s16 size:0x30
-g_Sd_AudioWork                               = 0x800C1658;
+g_Sd_AudioWork                               = 0x800C1658; // size:0x18
 g_Sd_AudioStreamingStates                    = 0x800C1670; // size:0x4
+__pad_bss_800C1674                           = 0x800C1674;
 gSDVolConfig                                 = 0x800C1678; // size:0x10 Original symbol
 g_Sd_XaAudioPlayTracking                     = 0x800C1688;
+__pad_bss_800C1694                           = 0x800C1694;
 g_Sd_VabPlayingInfo                          = 0x800C1698; // size:0x10
 g_Sd_TaskPool                                = 0x800C16A8; // type:u8 size:0x20
 g_Sd_AudioType                               = 0x800C37C8;
+__pad_bss_800C37C9                           = 0x800C37C9;
 g_Sd_FileDataTransferred                     = 0x800C37CC;
 g_Sd_DataLoadAttempts                        = 0x800C37D0;
+__pad_bss_800C37D1                           = 0x800C37D1;
 g_Sd_VabTargetLoad                           = 0x800C37D4;
 g_Sd_KdtTargetLoad                           = 0x800C37D8;
 g_Sd_XaTaskPending                           = 0x800C37DC; // type:u8
-g_Sd_CurrentTask                             = 0x800C37DD;
+g_Sd_CurrentTask                             = 0x800C37DD; // size:0x1
+hack_D_800C37DE_fix                          = 0x800C37DE;
 
 //------------------------------------------------------------------
 //--- PA: 0x09EC80   VA: 0x800C37E0   subsegment: .bss, view/vw_main
@@ -3223,22 +3407,33 @@ VbWvsMatrix                                  = 0x800C3888; // type:MATRIX size:0
 //--------------------------------------------------------------------
 //--- PA: 0x09ED48   VA: 0x800C38A8   subsegment: .bss, text/text_draw
 //--------------------------------------------------------------------
-g_StringPosition                             = 0x800C38A8; // type:DVECTOR
+g_StringPosition                             = 0x800C38A8; // size:0x4 type:DVECTOR
 g_StringPositionX1                           = 0x800C38AC; // type:s32
-g_MapMsg_ActiveLine                          = 0x800C38B0;
+g_MapMsg_ActiveLine                          = 0x800C38B0; // size:0x2
+__pad_bss_800C38B2                           = 0x800C38B2;
 g_MapMsg_WidthIdx                            = 0x800C38B4;
+__pad_bss_800C38B8                           = 0x800C38B8;
 g_MapMsg_Widths                              = 0x800C38C8; // type:s32
-g_MapMsg_GlyphSprite                         = 0x800C38F8;
+g_MapMsg_GlyphSprite                         = 0x800C38F8; // size:0x24
 g_GlyphSpritePositionX                       = 0x800C391C;
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------
 //--- PA: 0x09EDC8   VA: 0x800C3928   subsegment: .bss, items/camera
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------
 g_ItemScreen_CameraTransform                 = 0x800C3928;
 g_ItemScreen_PlayerWeaponAttack              = 0x800C3950;
+__pad_bss_800C3951                           = 0x800C3951;
 g_ItemScreen_ViewDistance                    = 0x800C3954;
 g_ItemScreen_GeomOffsetX                     = 0x800C3958;
 g_ItemScreen_GeomOffsetY                     = 0x800C395C;
+
+//-----------------------------------------------------------------
+//--- PA: 0x09EE00   VA: 0x800C3960   subsegment: .bss, items/utils
+//-----------------------------------------------------------------
+curMapIdx.56                                 = 0x800C3960;
+curVol.57                                    = 0x800C3961;
+curSoundType.58                              = 0x800C3962;
+curFlags.59                                  = 0x800C3963;
 
 //--------------------------------------------------------------------------
 //--- PA: 0x09EE08   VA: 0x800C3968   subsegment: .bss, items/item_screens_2
@@ -3254,6 +3449,7 @@ g_Inventory_IsRightPulsed                    = 0x800C3984; // type:s32
 g_Inventory_IsLeftHeld                       = 0x800C3988; // type:s32
 g_Inventory_IsRightHeld                      = 0x800C398C; // type:s32
 g_Inventory_IsScrolling                      = 0x800C3990;
+g_Inventory_GameDifficulty                   = 0x800C3994;
 g_Inventory_SelectionBordersDraw             = 0x800C3998;
 g_Inventory_PrevSelectionId                  = 0x800C399C;
 
@@ -3263,12 +3459,16 @@ g_Inventory_PrevSelectionId                  = 0x800C399C;
 g_Items_Lights                               = 0x800C39A8;
 g_ItemScreen_CameraCoord                     = 0x800C3AE8;
 g_ItemScreen_CameraRotation                  = 0x800C3B38;
+__pad_bss_800C3B3E                           = 0x800C3B3E;
 g_ItemScreen_CameraView                      = 0x800C3B48;
+__pad_bss_800C3BB0                           = 0x800C3BB0;
 g_Item_MapLoadableItems                      = 0x800C3BB8;
 g_Items_Transforms                           = 0x800C3BE8;
 g_Items_ItemsModelData                       = 0x800C3D78;
 g_Inventory_EquippedItemIdx                  = 0x800C3E34;
+__pad_bss_800C3E38                           = 0x800C3E38;
 g_Ranking_ExtraItemFlags                     = 0x800C3E40;
+__pad_bss_800C3E41                           = 0x800C3E41;
 g_Items_Coords                               = 0x800C3E48;
 
 //---------------------------------------------------------------------------
@@ -3296,22 +3496,44 @@ g_Player_RotationDeltaToTargetX              = 0x800C42D2;
 //---------------------------------------------------------------------
 //--- PA: 0x09F778   VA: 0x800C42D8   subsegment: .bss, gfx/env_effects
 //---------------------------------------------------------------------
-loadedEffectTextureFlags                     = 0x800C42D8;
-D_800C4418                                   = 0x800C4418; // size:0x10
+loadedEffectTextureFlags.46                  = 0x800C42D8;
+__pad_bss_800C42DA.47                        = 0x800C42DA;
+__pad_bss_800C440A                           = 0x800C440A;
+__pad_bss_800C4415                           = 0x800C4415;
+D_800C4418                                   = 0x800C4418; // size:0xE
+hack_D_800C4426_fix                          = 0x800C4426;
+
+//---------------------------------------------------------------------------
+//--- PA: 0x09F8C8   VA: 0x800C4428   subsegment: .bss, gfx/bodyprog_800652F4
+//---------------------------------------------------------------------------
+D_800C4428.48                                = 0x800C4428;
+D_800C4438.49                                = 0x800C4438;
 
 //-------------------------------------------------------------------------
 //--- PA: 0x09F8E8   VA: 0x800C4448   subsegment: .bss, paper_map/paper_map
 //-------------------------------------------------------------------------
-D_800C4449                                   = 0x800C4449; // type:u8
+paperMapIdx.46                               = 0x800C4448;
+markingIdx.47                                = 0x800C4449; // type:u8
+activeMarkingFileIdx.48                      = 0x800C444A;
+__pad_bss_800C444B.49                        = 0x800C444B;
+screenPosX.50                                = 0x800C444C;
+screenPosY.51                                = 0x800C4450;
 
 //-------------------------------------------------------------------------
 //--- PA: 0x09F8F8   VA: 0x800C4458   subsegment: .bss, collision/collision
 //-------------------------------------------------------------------------
-g_ActiveCollisionTriggers                    = 0x800C4478;
+collCharas.70                                = 0x800C4458;
+curCollChara.71                              = 0x800C4474;
+g_ActiveCollisionTriggers                    = 0x800C4478; // size:0x54
 
 //---------------------------------------------------------------------------
 //--- PA: 0x09F970   VA: 0x800C44D0   subsegment: .bss, player/player_control
 //---------------------------------------------------------------------------
+D_800C44D0.80                                = 0x800C44D0;
+D_800C44D4.81                                = 0x800C44D4;
+__pad_bss_800C44D8.105                       = 0x800C44D8;
+attackPos.106                                = 0x800C44E0;
+__pad_bss_800C44EC.107                       = 0x800C44EC;
 D_800C44F0                                   = 0x800C44F0; // size:0x50
 g_Player_TargetEnemyPosition                 = 0x800C4540; 
 g_Player_PrevMoveSpeed                       = 0x800C4550;
@@ -3322,13 +3544,16 @@ g_Player_HasActionInput                      = 0x800C455C;
 g_Player_PrevAttackReceived                  = 0x800C4560;
 g_Player_IsDead                              = 0x800C4561; 
 g_Player_DisableDamage                       = 0x800C4562; 
+__pad_bss_800C4563                           = 0x800C4563;
 g_Player_EquippedWeaponInfo                  = 0x800C4570; // size:12
 g_Player_CutsceneState                       = 0x800C457C;
+__pad_bss_800C457D                           = 0x800C457D;
 g_Player_IsAiming                            = 0x800C457E; 
 g_Player_IsSteppingLeftTap                   = 0x800C4580; 
 g_Player_IsSteppingRightTap                  = 0x800C4582; 
 g_Player_IsTurningLeft                       = 0x800C4584; 
 g_Player_IsTurningRight                      = 0x800C4586; 
+__pad_bss_800C4589                           = 0x800C4589;
 g_Player_CollisionResult                     = 0x800C4590; // size:0x1c
 g_Player_IsSteppingLeftHold                  = 0x800C45AC; 
 g_Player_IsSteppingRightHold                 = 0x800C45AE; 
@@ -3336,12 +3561,20 @@ D_800C45B0                                   = 0x800C45B0; // type:VECTOR3 size:
 g_Player_IsHoldAttack                        = 0x800C45BC; 
 g_Player_IsAttacking                         = 0x800C45BE; 
 g_Player_IsShooting                          = 0x800C45C0; 
+__pad_bss_800C45C2                           = 0x800C45C2;
+D_800C45C8                                   = 0x800C45C8; // size:0x18
+__pad_bss_800C45E0                           = 0x800C45E0;
 g_Player_IsMovingForward                     = 0x800C45E8; 
+__pad_bss_800C45EA                           = 0x800C45EA;
 g_Player_IsMovingBackward                    = 0x800C45F0; 
+__pad_bss_800C45F2                           = 0x800C45F2;
 g_Player_PrevPosition                        = 0x800C45F8; 
 g_Player_IsRunning                           = 0x800C4604; 
 g_Player_AnimResetRequest                    = 0x800C4606;
+__pad_bss_800C4607                           = 0x800C4607;
 g_Player_HeadingAngle                        = 0x800C4608; 
+__pad_bss_800C460C                           = 0x800C460C;
+D_800C4610                                   = 0x800C4610; // size:0xC
 
 //------------------------------------------------------------------
 //--- PA: 0x09FAD0   VA: 0x800C4630   subsegment: .bss, view/vc_main
@@ -3353,8 +3586,23 @@ vcSelfViewTimer                              = 0x800C463C; // type:s32
 //--- PA: 0x09FAE0   VA: 0x800C4640   subsegment: .bss, events/events_util
 //------------------------------------------------------------------------
 g_Event_PathWaypoints                        = 0x800C4640; // size:0xC0
-g_Event_PathWaypointHeadingAngles            = 0x800C4700;
+g_Event_PathWaypointHeadingAngles            = 0x800C4700; // size:0x10
 g_Event_TweenTimers                          = 0x800C4710;
+
+//------------------------------------------------------------------
+//--- PA: 0x09FBC8   VA: 0x800C4728   subsegment: .bss, chara/combat
+//------------------------------------------------------------------
+D_800C4728.60                                = 0x800C4728;
+D_800C4748.61                                = 0x800C4748;
+D_800C4758.62                                = 0x800C4758;
+D_800C4788.83                                = 0x800C4788;
+D_800C47B8.84                                = 0x800C47B8;
+__pad_bss_800C47C4.85                        = 0x800C47C4;
+D_800C47C8.86                                = 0x800C47C8;
+__pad_bss_800C4E0.87                         = 0x800C47E0;
+D_800C47E8.88                                = 0x800C47E8;
+__pad_bss_800C4F4.89                         = 0x800C47F4;
+D_800C47F8.90                                = 0x800C47F8;
 
 //---------------------------------------------------------------
 //--- PA: 0x09FCB8   VA: 0x800C4818   subsegment: .bss, gfx/water
@@ -3366,6 +3614,7 @@ D_800C4818                                   = 0x800C4818; // size:0x24
 //--------------------------------------------------------------
 g_Demo_DemoFileIdx                           = 0x800C4840; // type:s32
 g_Demo_PlayFileIdx                           = 0x800C4844; // type:s32
+__pad_bss_800C4848                           = 0x800C4848;
 g_Demo_OptionsConfigBackup                   = 0x800C4850; // type:ShSaveUserConfig size:0x38
 g_Demo_PrevRandSeed                          = 0x800C4888;
 g_Demo_RandSeedBackup                        = 0x800C488C;
@@ -3403,7 +3652,8 @@ g_Ranking_LongRangeShotPercent               = 0x800C48C8;
 g_Ranking_NoAimingShotPercent                = 0x800C48CC;
 g_Ranking_GameDifficulty                     = 0x800C48D0;
 g_Ranking_ContinueCount                      = 0x800C48D1;
-g_Ranking_TextColors                         = 0x800C48E0; // size:0x8
+__pad_bss_800C48D2                           = 0x800C48D2;
+g_Ranking_TextColors                         = 0x800C48E0; // size:0x9
 
 //---------------------------------------------------------------------
 //--- PA: 0x09FD98   VA: 0x800C48F8   subsegment: o, libapi/first, .bss
@@ -3586,6 +3836,7 @@ _waitTime                                    = 0x800C7414;
 vab_h                                        = 0x800C7418;
 sd_vb_malloc_rec                             = 0x800C75D8;
 sd_seq_loop_mode                             = 0x800C7660;
+__pad_bss_800C7662                           = 0x800C7662;
 sd_tick_mode                                 = 0x800C7664;
 sd_spu_alloc                                 = 0x800C7668; // size:0x80
 
@@ -3593,8 +3844,10 @@ sd_spu_alloc                                 = 0x800C7668; // size:0x80
 //--- PA: 0x0A2B90   VA: 0x800C76F0   subsegment: .bss, libsd/smf_io
 //------------------------------------------------------------------
 s_attr                                       = 0x800C76F0; // size:0x40
+__pad_bss_800C7730                           = 0x800C7730;
 smf_midi                                     = 0x800C7738;
 smf_midi_sound_off                           = 0x800C82B8; // guessed name
+__pad_bss_800C8314                           = 0x800C8314;
 smf_port                                     = 0x800C8318;
 sd_timer_event                               = 0x800C8AF8;
 
