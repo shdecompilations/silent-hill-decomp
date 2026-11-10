@@ -578,9 +578,9 @@ typedef struct
     /* 0x4  */ u8      field_4;
     /* 0x5  */ s8      __pad_5[3];
     /* 0x8  */ s32     field_8;  // } `bool`? | Fields used by `func_8008A3E0`.
-    /* 0xC  */ s16     field_C;  // } Angle?
-    /* 0xE  */ s16     field_E;  // } Angle?
-    /* 0x10 */ s16     field_10; // }
+    /* 0xC  */ q3_12   field_C;  // } Stored XY player rotation to target?
+    /* 0xE  */ q3_12   field_E;  // }
+    /* 0x10 */ s16     field_10; // } Angles?
     /* 0x12 */ s16     field_12; // }
     /* 0x14 */ s32     field_14; // }
     /* 0x18 */ VECTOR3 field_18; // Q19.12 | Set to player attack position.

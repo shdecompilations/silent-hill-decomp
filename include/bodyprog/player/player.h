@@ -424,8 +424,8 @@ extern s_800C44F0 D_800C44F0[10];               /** Table of player keyframe ind
 extern VECTOR3    g_Player_TargetEnemyPosition; /** @brief Q19.12 */
 extern q19_12     D_800C454C;                   /** @brief Player rotation speed. More context is required for a name. */
 extern q19_12     g_Player_PrevMoveSpeed;       // TODO: Unsure if it should be called a "previous" move speed.
-extern s16        D_800C4554;                   // Timer?
-extern s16        D_800C4556;                   // Timer?
+extern q3_12      g_Player_RotationToTargetX;
+extern q3_12      g_Player_RotationToTargetY;
 extern s32        g_Player_HasMoveInput;        /** Determines if input is detected from a movement button or the right analog stick. */
 extern s32        g_Player_HasActionInput;      /** Cancels the idle state if the Action or Run buttons are tapped. */
 extern s8         g_Player_PrevAttackReceived;

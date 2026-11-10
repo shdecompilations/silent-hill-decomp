@@ -101,7 +101,8 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused, q3_12 angle0, q3_12 angle1) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
+                  q3_12 rotToTargetX, q3_12 rotToTargetY) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;
@@ -155,8 +156,8 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
     }
 
     chara->field_44.field_3  = 100;
-    chara->field_44.field_C  = angle0;
-    chara->field_44.field_E  = angle1;
+    chara->field_44.field_C  = rotToTargetX;
+    chara->field_44.field_E  = rotToTargetY;
     chara->field_44.field_18 = *attackPos;
     temp_a1         = func_8008A3E0(chara);
     ret             = NO_VALUE;

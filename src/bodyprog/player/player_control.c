@@ -288,11 +288,11 @@ s_EquippedWeaponInfo g_Player_EquippedWeaponInfos[11] = {
     { Sfx_Unk1294, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
     { Sfx_Unk1295, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
     { Sfx_Unk1301, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
-    { Sfx_Unk1303, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_Unk29, false),         ANIM_STATUS(HarryAnim_Unk29,         true), 0,  20, 0 },
-    { Sfx_Unk1283, Sfx_Unk1284, Sfx_Unk1285, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(36, false),                      ANIM_STATUS(HarryAnim_Unk30,         true), 37, 37, 0 },
-    { Sfx_Unk1290, Sfx_Unk1291, Sfx_Unk1292, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(36, false),                      ANIM_STATUS(HarryAnim_Unk30,         true), 24, 37, 0 },
-    { Sfx_Unk1287, Sfx_Unk1288, Sfx_Unk1289, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(36, false),                      ANIM_STATUS(HarryAnim_Unk30,         true), 23, 37, 0 },
-    { Sfx_Unk1299, 0,           0,           ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(36, false),                      ANIM_STATUS(HarryAnim_Unk30,         true), 0,  37, 0 },
+    { Sfx_Unk1303, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_Unk29,         false), ANIM_STATUS(HarryAnim_Unk29,         true), 0,  20, 0 },
+    { Sfx_Unk1283, Sfx_Unk1284, Sfx_Unk1285, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 37, 37, 0 },
+    { Sfx_Unk1290, Sfx_Unk1291, Sfx_Unk1292, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 24, 37, 0 },
+    { Sfx_Unk1287, Sfx_Unk1288, Sfx_Unk1289, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 23, 37, 0 },
+    { Sfx_Unk1299, 0,           0,           ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 0,  37, 0 },
     { Sfx_Unk1298, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 }
 };
 
@@ -307,8 +307,8 @@ s_800C44F0 D_800C44F0[10];
 VECTOR3    g_Player_TargetEnemyPosition;
 q19_12     D_800C454C;
 q19_12     g_Player_PrevMoveSpeed;
-s16        D_800C4554;
-s16        D_800C4556;
+q3_12      g_Player_RotationToTargetX;
+q3_12      g_Player_RotationToTargetY;
 s32        g_Player_HasMoveInput;
 s32        g_Player_HasActionInput;
 s8         g_Player_PrevAttackReceived;
@@ -2901,12 +2901,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 if (!WorldEnv_IsInDarkness())
                 {
                     func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
+                    func_8005D50C(&g_Player_TargetNpcIdx, &g_Player_RotationToTargetX, &g_Player_RotationToTargetY, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
                 else
                 {
                     func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
+                    func_8005D50C(&g_Player_TargetNpcIdx, &g_Player_RotationToTargetX, &g_Player_RotationToTargetY, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
             }
             else
@@ -2916,8 +2916,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (enemyAttackedIdx == NO_VALUE && enemyAttackedIdx == g_Player_TargetNpcIdx)
             {
-                D_800C4556 = NO_VALUE;
-                D_800C4554 = NO_VALUE;
+                g_Player_RotationToTargetY = NO_VALUE;
+                g_Player_RotationToTargetX = NO_VALUE;
             }
 
             if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
@@ -3203,8 +3203,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
             }
 
-            D_800C4556            = NO_VALUE;
-            D_800C4554            = NO_VALUE;
+            g_Player_RotationToTargetY            = NO_VALUE;
+            g_Player_RotationToTargetX            = NO_VALUE;
             playerProps.field_104 = 0;
             playerProps.flags    &= ~PlayerFlag_Shooting;
             return true;
@@ -7780,7 +7780,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
     VECTOR                handPos;      // Q23.8
     VECTOR                partBeamToQ8; // Q23.8
     SVECTOR               localHandPos;
-    DVECTOR               rotToAttackPos;
+    DVECTOR               rotDeltaToTarget;
     s32                   distToAttackPosSqr;
     q23_8                 offsetToAttackPosX;
     q23_8                 offsetToAttackPosZ;
@@ -7850,7 +7850,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
         {
             if (playerExtra.state == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
             {
-                rotToAttackPos.vx = ratan2((targetNpc.position.vx + targetNpc.collision.shapeOffsets.box.vx) - playerCombat.attackPosition.vx,
+                rotDeltaToTarget.vx = ratan2((targetNpc.position.vx + targetNpc.collision.shapeOffsets.box.vx) - playerCombat.attackPosition.vx,
                                            (targetNpc.position.vz + targetNpc.collision.shapeOffsets.box.vz) - playerCombat.attackPosition.vz);
             }
             else
@@ -7858,11 +7858,11 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                 // @hack Required for match.
                 do { player->angleToTarget = player->rotation.vy; } while (false);
 
-                rotToAttackPos.vx = player->angleToTarget;
+                rotDeltaToTarget.vx = player->angleToTarget;
             }
 
-            rotToAttackPos.vy   = playerProps.field_122;
-            angleDeltaToTargetY = rotToAttackPos.vy;
+            rotDeltaToTarget.vy   = playerProps.field_122;
+            angleDeltaToTargetY = rotDeltaToTarget.vy;
             if (angleDeltaToTargetY >= Q12_ANGLE(33.75f))
             {
                 if (angleDeltaToTargetY > Q12_ANGLE(146.25f))
@@ -7877,7 +7877,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
 
             if (player->field_44.field_0 > 0)
             {
-                func_8006342C(playerCombat.weaponAttack, angleDeltaToTargetY, rotToAttackPos.vx, boneCoords);
+                func_8006342C(playerCombat.weaponAttack, angleDeltaToTargetY, rotDeltaToTarget.vx, boneCoords);
             }
         }
         else
@@ -7964,9 +7964,9 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
             offsetToAttackPosX = Q12_TO_Q8(playerCombat.attackPosition.vx) - handPos.vx;
             offsetToAttackPosZ = Q12_TO_Q8(playerCombat.attackPosition.vz) - handPos.vz;
             distToAttackPosSqr = Math_Vector2MagCalc(offsetToAttackPosX, offsetToAttackPosZ);
-            rotToAttackPos.vx  = ratan2(handPos.vx - Q12_TO_Q8(playerCombat.attackPosition.vx),
+            rotDeltaToTarget.vx  = ratan2(handPos.vx - Q12_TO_Q8(playerCombat.attackPosition.vx),
                                         handPos.vz - Q12_TO_Q8(playerCombat.attackPosition.vz));
-            rotToAttackPos.vy  = ratan2(distToAttackPosSqr, handPos.vy - Q12_TO_Q8(playerCombat.attackPosition.vy));
+            rotDeltaToTarget.vy  = ratan2(distToAttackPosSqr, handPos.vy - Q12_TO_Q8(playerCombat.attackPosition.vy));
         }
 
         // Draw Hyper Blaster beam.
@@ -7999,11 +7999,11 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                 // Set beam rotation.
                 if (g_GameWork.config.extraAutoAiming)
                 {
-                    rotToAttackPos.vx = player->angleToTarget;
+                    rotDeltaToTarget.vx = player->angleToTarget;
                 }
 
                 // Draw beam.
-                g_MapOverlayHdr.particleHyperBlasterBeamDraw(&blasterBeamFrom, &rotToAttackPos.vx, &rotToAttackPos.vy);
+                g_MapOverlayHdr.particleHyperBlasterBeamDraw(&blasterBeamFrom, &rotDeltaToTarget.vx, &rotDeltaToTarget.vy);
             }
         }
 
@@ -8048,22 +8048,22 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
         {
             if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                if (D_800C4554 != NO_VALUE || D_800C4556 != D_800C4554)
+                if (g_Player_RotationToTargetX != NO_VALUE || g_Player_RotationToTargetY != g_Player_RotationToTargetX)
                 {
-                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &attackPos, &unused, D_800C4556, D_800C4554);
+                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &attackPos, &unused, g_Player_RotationToTargetY, g_Player_RotationToTargetX);
                 }
                 else
                 {
-                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &attackPos, &unused, rotToAttackPos.vx, rotToAttackPos.vy);
+                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &attackPos, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
                 }
             }
             else
             {
-                func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &playerCombat.attackPosition, &unused, rotToAttackPos.vx, rotToAttackPos.vy);
+                func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &playerCombat.attackPosition, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
             }
 
-            g_Player_RotationDeltaToTargetX = rotToAttackPos.vx;
-            g_Player_RotationDeltaToTargetY = rotToAttackPos.vy;
+            g_Player_RotationDeltaToTargetX = rotDeltaToTarget.vx;
+            g_Player_RotationDeltaToTargetY = rotDeltaToTarget.vy;
         }
     }
 

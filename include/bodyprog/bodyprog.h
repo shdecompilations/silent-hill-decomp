@@ -1659,7 +1659,8 @@ s32 func_8008A0CC(void);
 s64 func_8008A0D4(void);
 
 /** Anim infos setup for character. */
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused, q3_12 angle0, q3_12 angle1);
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
+                  q3_12 rotToTargetX, q3_12 rotToTargetY);
 
 u32 func_8008A270(s32 idx);
 
