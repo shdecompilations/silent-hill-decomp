@@ -105,7 +105,7 @@ q23_8 Sfx_DistanceAttenuatedVolumeGet(const VECTOR3* pos, q23_8 vol) // 0x8005D9
     q23_8  adjVol;
 
     vwGetViewPosition(&g_Sfx_CameraPosition);
-    g_Sfx_PlayerPosition = &g_SysWork.playerWork.player.position;
+    g_Sfx_PlayerPosition = &PLAYER_CHARA().position;
 
     offsetX      = g_Sfx_CameraPosition.vx - g_Sfx_PlayerPosition->vx;
     offsetY      = g_Sfx_CameraPosition.vy - g_Sfx_PlayerPosition->vy;
@@ -241,9 +241,9 @@ static inline q23_8 AttenuationCalc(s32 vol, VECTOR3* pos, q19_12 falloff)
 {
     q19_12 dist;
 
-    dist = Math_Vector3MagCalcSafe(g_SysWork.playerWork.player.position.vx - pos->vx,
-                                   g_SysWork.playerWork.player.position.vy - pos->vy,
-                                   g_SysWork.playerWork.player.position.vz - pos->vz);
+    dist = Math_Vector3MagCalcSafe(PLAYER_CHARA().position.vx - pos->vx,
+                                   PLAYER_CHARA().position.vy - pos->vy,
+                                   PLAYER_CHARA().position.vz - pos->vz);
     return (vol * dist) / falloff;
 }
 

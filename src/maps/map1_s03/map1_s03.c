@@ -387,7 +387,7 @@ void MapEvent_RoofDrainPuzzleInteract0(void) // 0x800DAA28
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -420,7 +420,7 @@ void MapEvent_RoofDrainPuzzleInteract0(void) // 0x800DAA28
             break;
 
         case 4:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -472,7 +472,7 @@ void MapEvent_RoofDrainPuzzleInteract1(void) // 0x800DABC4
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -547,7 +547,7 @@ void MapEvent_RoofDrainPuzzleInteract1(void) // 0x800DABC4
             break;
 
         case 10:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -702,9 +702,9 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
             sharedData_800E30C8_1_s02.field_64[sharedData_800E30C8_1_s02.field_78] = Q12(0.3f);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-11.45f);
-            g_SysWork.playerWork.player.position.vz = Q12(-12.95f);
-            g_SysWork.playerWork.player.rotation.vy = Q12(0.25f);
+            PLAYER_CHARA().position.vx = Q12(-11.45f);
+            PLAYER_CHARA().position.vz = Q12(-12.95f);
+            PLAYER_CHARA().rotation.vy = Q12(0.25f);
 
             func_8003D03C();
             Player_EmptyWeaponHandSet();
@@ -731,7 +731,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
 
         case 7:
             D_800E20FE++;
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 107);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 107);
             break;
 
         case 8:
@@ -744,7 +744,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
                 func_800CE0CC(2);
             }
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, AnimFlag_Visible);
 
             func_8008D438();
             Event_CameraPositionSet(NULL,
@@ -840,7 +840,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
             break;
 
         case 11:
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
 
             func_8008D448();
             Game_FlashlightAttribsSet();
@@ -868,7 +868,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
 
         case 12:
             D_800E20FE++;
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 108);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 108);
             break;
 
         default:
@@ -895,7 +895,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
         temp_s2 = ratan2((sp78.vy * 16) + Q12(0.7f), (sp78.vz * 16) + Q12(12.92f));
         if (D_800E20FE > 2)
         {
-            var_v0 = FP_FROM(g_SysWork.playerWork.player.model.anim.time, Q12_SHIFT) - Player_AnimGetSomething();
+            var_v0 = FP_FROM(PLAYER_CHARA().model.anim.time, Q12_SHIFT) - Player_AnimGetSomething();
         }
         else
         {
@@ -962,9 +962,9 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
         balance = Vc_StereoBalanceGet(&D_800CBAB0) >> 1;
         vwGetViewPosition(&sp48);
 
-        temp_v1_9 = Math_Vector3MagCalcSafe((((g_SysWork.playerWork.player.position.vx + sp48.vx) >> 1) + Q12(10.2f)),
-                                            ((g_SysWork.playerWork.player.position.vy + sp48.vy) >> 1),
-                                            (((g_SysWork.playerWork.player.position.vz + sp48.vz) >> 1) + Q12(13.35f)));
+        temp_v1_9 = Math_Vector3MagCalcSafe((((PLAYER_CHARA().position.vx + sp48.vx) >> 1) + Q12(10.2f)),
+                                            ((PLAYER_CHARA().position.vy + sp48.vy) >> 1),
+                                            (((PLAYER_CHARA().position.vz + sp48.vz) >> 1) + Q12(13.35f)));
 
         if (temp_v1_9 < Q12(1.0f))
         {
@@ -1165,10 +1165,10 @@ void MapEvent_UnopenedCatLockerInspect(void) // 0x800DC310
 
         case 2:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-59.36f);
-            g_SysWork.playerWork.player.position.vz = Q12(18.37f);
-            g_SysWork.playerWork.player.moveSpeed   = Q12(0.0f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
+            PLAYER_CHARA().position.vx = Q12(-59.36f);
+            PLAYER_CHARA().position.vz = Q12(18.37f);
+            PLAYER_CHARA().moveSpeed   = Q12(0.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(90.0f);
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
@@ -1197,12 +1197,12 @@ void MapEvent_UnopenedCatLockerInspect(void) // 0x800DC310
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 85);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 85);
             break;
 
         case 7:
             Savegame_EventFlagSet(EventFlag_102);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 86, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 86, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -1227,7 +1227,7 @@ void MapEvent_UnopenedCatLockerInspect(void) // 0x800DC310
             break;
 
         case EventState_Skip:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimReset, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimReset, &PLAYER_CHARA(), 0, false);
             Savegame_EventFlagSet(EventFlag_104);
 
             // Warp camera.
@@ -1287,11 +1287,11 @@ void MapEvent_LockerDeadBodyCutscene(void) // 0x800DC780
                                   true);
 
             // Warp player.
-            g_SysWork.playerWork.player.rotation.vy = ratan2(Q12(-61.4f) - g_SysWork.playerWork.player.position.vx,
-                                                             Q12(20.8f)  - g_SysWork.playerWork.player.position.vz);
+            PLAYER_CHARA().rotation.vy = ratan2(Q12(-61.4f) - PLAYER_CHARA().position.vx,
+                                                             Q12(20.8f)  - PLAYER_CHARA().position.vz);
 
             func_8008D438();
-            Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -1316,7 +1316,7 @@ void MapEvent_LockerDeadBodyCutscene(void) // 0x800DC780
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagSet(EventFlag_107);
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
             func_8008D448();
             break;
     }
@@ -1336,7 +1336,7 @@ void MapEvent_LibraryReserveKeyItemTake(void) // 0x800DC9A0
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -1360,7 +1360,7 @@ void MapEvent_LibraryReserveKeyItemTake(void) // 0x800DC9A0
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -1385,7 +1385,7 @@ void MapEvent_RubberBallUse(void) // 0x800DCB54
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -1421,7 +1421,7 @@ void MapEvent_RubberBallUse(void) // 0x800DCB54
             break;
 
         case 10:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -1575,7 +1575,7 @@ void func_800DCDDC(void) // 0x800DCDDC
     D_800E201C += g_DeltaTime;
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_13);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_13);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_13));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
@@ -1637,12 +1637,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                 WorldObjects_Add(&g_WorldObject7.object, &g_WorldObject7.position, &g_WorldObject7.rotation);
             }
 
-            if (g_SysWork.playerWork.player.position.vx < Q12(-57.5f) &&
-                g_SysWork.playerWork.player.position.vz < Q12(21.6f))
+            if (PLAYER_CHARA().position.vx < Q12(-57.5f) &&
+                PLAYER_CHARA().position.vz < Q12(21.6f))
             {
                 if (!Savegame_EventFlagGet(EventFlag_100))
                 {
-                    if (g_SysWork.playerWork.player.position.vx > Q12(-60.0f))
+                    if (PLAYER_CHARA().position.vx > Q12(-60.0f))
                     {
                         if (D_800E62D0 == 2)
                         {
@@ -1651,11 +1651,11 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
 
                         // Warp camera.
                         Event_CameraPositionSet(NULL,
-                                                Q12(-61.18f), Q12(-3.0f), g_SysWork.playerWork.player.position.vz + Q12(0.49f),
+                                                Q12(-61.18f), Q12(-3.0f), PLAYER_CHARA().position.vz + Q12(0.49f),
                                                 Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                                 D_800E62D0 == 0);
                         Event_CameraLookAtSet(NULL,
-                                              Q12(-58.48f), Q12(-0.31f), g_SysWork.playerWork.player.position.vz - Q12(0.72f),
+                                              Q12(-58.48f), Q12(-0.31f), PLAYER_CHARA().position.vz - Q12(0.72f),
                                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                               D_800E62D0 == 0);
 
@@ -1676,15 +1676,15 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                 }
                 else if (Savegame_EventFlagGet(EventFlag_107))
                 {
-                    if (g_SysWork.playerWork.player.position.vz > Q12(18.6f))
+                    if (PLAYER_CHARA().position.vz > Q12(18.6f))
                     {
                         // Warp camera.
                         Event_CameraPositionSet(NULL,
-                                               Q12(-60.27f), Q12(-0.41f), g_SysWork.playerWork.player.position.vz - Q12(2.25f),
+                                               Q12(-60.27f), Q12(-0.41f), PLAYER_CHARA().position.vz - Q12(2.25f),
                                                Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                                D_800E62D0 == 0);
                         Event_CameraLookAtSet(NULL,
-                                              Q12(-59.75f), Q12(-1.09f), g_SysWork.playerWork.player.position.vz + Q12(1.65f),
+                                              Q12(-59.75f), Q12(-1.09f), PLAYER_CHARA().position.vz + Q12(1.65f),
                                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                               D_800E62D0 == 0);
 
@@ -1726,7 +1726,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
                                 Q12(-60.63f), Q12(-4.14f), Q12(17.42f),
                                 Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                 true);
-        if (g_SysWork.playerWork.player.position.vz < Q12(18.5f))
+        if (PLAYER_CHARA().position.vz < Q12(18.5f))
         {
             Event_CameraLookAtSet(NULL,
                                   Q12(-60.0f), Q12(0.0f), Q12(18.5f),
@@ -1736,7 +1736,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
         else
         {
             Event_CameraLookAtSet(NULL,
-                                  Q12(-60.0f), Q12(0.0f), g_SysWork.playerWork.player.position.vz,
+                                  Q12(-60.0f), Q12(0.0f), PLAYER_CHARA().position.vz,
                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                   false);
         }
@@ -1747,7 +1747,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DD688
     if (!Savegame_EventFlagGet(EventFlag_53) &&
         PLAYER_IN_MAP_CHUNK(-3, 3))
     {
-        x = g_SysWork.playerWork.player.position.vx;
+        x = PLAYER_CHARA().position.vx;
         if (x < Q12(-100.0f))
         {
             D_800E638C += g_DeltaTime;
@@ -1881,7 +1881,7 @@ void func_800DE624(void) // 0x800DE624
         Chara_SpawnFlagsSet(Chara_GreyChildOrMumbler, 15, CharaSpawnFlag_0 | CharaSpawnFlag_1);
     }
 
-    playerHealth = g_SysWork.playerWork.player.health;
+    playerHealth = PLAYER_CHARA().health;
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
     {
         playerHealth -= Q12(50.0f);

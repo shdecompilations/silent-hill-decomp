@@ -187,10 +187,8 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
     s16 var_v0_2;
     s32 tmp;
 
-    #define playerChara g_SysWork.playerWork.player
-
-    temp_v0 = Math_AngleNormalizeSigned(ratan2(playerChara.position.vx - incubus->position.vx,
-                                               playerChara.position.vz - incubus->position.vz) -
+    temp_v0 = Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - incubus->position.vx,
+                                               PLAYER_CHARA().position.vz - incubus->position.vz) -
                             incubus->rotation.vy);
     var_v0  = ABS(temp_v0);
 
@@ -207,8 +205,6 @@ void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
             incubus->rotation.vy -= tmp;
         }
     }
-
-    #undef playerChara
 }
 
 void func_800DDDB0(s_SubCharacter* incubus) // 0x800DDDB0
@@ -299,8 +295,6 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
     q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
 
-    #define playerChara g_SysWork.playerWork.player
-
     localIncubus = incubus;
 
     if (incubus->model.stateStep == 0)
@@ -363,7 +357,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
                     func_800DD464(&pos);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, playerChara.position) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, PLAYER_CHARA().position) -
                                                        incubus->rotation.vy));
 
                 if (localIncubusProps.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -438,8 +432,6 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
             incubus->model.stateStep    = 0;
             break;
     }
-
-    #undef playerChara
 }
 
 void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DE2A4
@@ -448,8 +440,6 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
     VECTOR3         pos;
     q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
-
-    #define playerChara g_SysWork.playerWork.player
 
     localIncubus = incubus;
 
@@ -523,7 +513,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
                     func_800DD464(&pos);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, playerChara.position) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, PLAYER_CHARA().position) -
                                                        incubus->rotation.vy));
 
                 if (localIncubusProps.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -607,8 +597,6 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
             incubus->flags             |= CharaFlag_Hit;
             break;
     }
-
-    #undef playerChara
 }
 
 void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DE68C
@@ -618,8 +606,6 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
     VECTOR3         playerPos;
     q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
-
-    #define playerChara g_SysWork.playerWork.player
 
     localIncubus = incubus;
 
@@ -683,7 +669,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
                     func_800DD464(&pos);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, playerChara.position) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(incubus->position, PLAYER_CHARA().position) -
                                                        incubus->rotation.vy));
 
                 if (localIncubusProps.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -706,9 +692,9 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
 
                 ptr          = &D_800F48A8;
-                playerPos.vx = playerChara.position.vx + ptr->velocityX_3C;
-                playerPos.vy = playerChara.position.vy;
-                playerPos.vz = playerChara.position.vz + ptr->velocityZ_40;
+                playerPos.vx = PLAYER_CHARA().position.vx + ptr->velocityX_3C;
+                playerPos.vy = PLAYER_CHARA().position.vy;
+                playerPos.vz = PLAYER_CHARA().position.vz + ptr->velocityZ_40;
 
                 if (!(Rng_Rand16() & 0x10))
                 {
@@ -741,9 +727,9 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
                 pos.vz = Q8_TO_Q12(transformMat.t[2]);
 
                 ptr          = &D_800F48A8;
-                playerPos.vx = playerChara.position.vx + ptr->velocityX_3C;
-                playerPos.vy = playerChara.position.vy;
-                playerPos.vz = playerChara.position.vz + ptr->velocityZ_40;
+                playerPos.vx = PLAYER_CHARA().position.vx + ptr->velocityX_3C;
+                playerPos.vy = PLAYER_CHARA().position.vy;
+                playerPos.vz = PLAYER_CHARA().position.vz + ptr->velocityZ_40;
 
                 if (!(Rng_Rand16() & 0x51))
                 {
@@ -769,8 +755,6 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800D
             incubus->model.stateStep    = 0;
             break;
     }
-
-    #undef playerChara
 }
 
 void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* boneCoords) // 0x800DEA54

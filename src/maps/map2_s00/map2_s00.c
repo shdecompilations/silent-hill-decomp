@@ -384,9 +384,9 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.playerWork.player.position.vx = Q12(-255.78f);
-            g_SysWork.playerWork.player.position.vz = Q12(-107.46f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-45.0f);
+            PLAYER_CHARA().position.vx = Q12(-255.78f);
+            PLAYER_CHARA().position.vz = Q12(-107.46f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-45.0f);
 
             Screen_FadeTimestepReset();
             Event_PaperMapCmd(PaperMapCmd_Load, 1);
@@ -486,7 +486,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -512,7 +512,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -765,7 +765,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -904,7 +904,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 19:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         case 22:
@@ -940,7 +940,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -966,7 +966,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 8:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -991,7 +991,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -1023,7 +1023,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 9:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -1062,7 +1062,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -1103,7 +1103,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 11:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default: // `EventState_Finish`
@@ -1156,7 +1156,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case EventState_2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 59, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 59, false);
             SysWork_StateStepIncrement(0);
 
         case EventState_3:
@@ -1164,7 +1164,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case EventState_4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &PLAYER_CHARA(), 0, false);
             break;
 
         case EventState_Prompt:
@@ -1192,7 +1192,7 @@ void func_800E9A74(void) // 0x800E9A74
             SysWork_StateStepIncrement(0);
 
         case EventState_8:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default: // `EventState_Finish`
@@ -1427,9 +1427,9 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             WorldEnv_PresetsSet(1, 1);
             WorldEnv_TransitionStart(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
 
-            g_SysWork.playerWork.player.position.vx = Q12(147.7f);
-            g_SysWork.playerWork.player.position.vz = Q12(376.5f);
-            g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
+            PLAYER_CHARA().position.vx = Q12(147.7f);
+            PLAYER_CHARA().position.vz = Q12(376.5f);
+            PLAYER_CHARA().rotation.vy = Q12(-0.25f);
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
@@ -1847,9 +1847,9 @@ void func_800EB174(void) // 0x800EB174
                                   true);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-262.39f);
-            g_SysWork.playerWork.player.position.vz = Q12(-104.33f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(45.0f);
+            PLAYER_CHARA().position.vx = Q12(-262.39f);
+            PLAYER_CHARA().position.vz = Q12(-104.33f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(45.0f);
 
             func_8003D03C();
             Player_EmptyWeaponHandSet();
@@ -1915,7 +1915,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             Savegame_EventFlagSet(EventFlag_169);
 
             CutsceneBorder_ForceShow();
-            Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1948,11 +1948,11 @@ void func_800EB3F4(void) // 0x800EB3F4
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, AnimFlag_Visible);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
 
-            if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                g_SysWork.playerCombat.weaponAttack = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack);
+                PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack);
             }
 
             vcReturnPreAutoCamWork(true);
@@ -2161,7 +2161,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EC080
             if (Savegame_EventFlagGet(EventFlag_163))
             {
                 flags |= 1 << 2;
-                if (g_SysWork.playerWork.player.position.vx > Q12(198.0f))
+                if (PLAYER_CHARA().position.vx > Q12(198.0f))
                 {
                     Savegame_EventFlagClear(EventFlag_163);
                 }

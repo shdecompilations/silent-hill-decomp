@@ -101,7 +101,7 @@ void Anim_BonesUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfra
     isPlayer = boneCoords == &g_SysWork.playerBoneCoords[HarryBone_Root];
     if (isPlayer)
     {
-        activeBoneFlags = ~g_SysWork.playerWork.extra.disabledAnimBoneFlags;
+        activeBoneFlags = ~PLAYER_EXTRA().disabledAnimBoneFlags;
     }
     else
     {

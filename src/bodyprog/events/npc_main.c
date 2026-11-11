@@ -103,8 +103,8 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
             curCharaSpawn->flags != CharaSpawnFlag_None &&
             g_SavegamePtr->gameDifficulty >= curCharaSpawn->gameDifficultyMin &&
             func_8008F914(curCharaSpawn->positionX, curCharaSpawn->positionZ) &&
-            !Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(22.0f)) &&
-            (!cond || Math_Distance2dCheck(&g_SysWork.playerWork.player.position, pos, Q12(20.0f))))
+            !Math_Distance2dCheck(&PLAYER_CHARA().position, pos, Q12(22.0f)) &&
+            (!cond || Math_Distance2dCheck(&PLAYER_CHARA().position, pos, Q12(20.0f))))
         {
             while (HAS_FLAG(&g_SysWork.npcFlags, npcIdx))
             {
@@ -216,8 +216,8 @@ void Game_NpcUpdate(void) // 0x80038354
         return NO_VALUE;
     }
 
-    posXShift6 = Q12_TO_Q6(g_SysWork.playerWork.player.position.vx);
-    posZShift6 = Q12_TO_Q6(g_SysWork.playerWork.player.position.vz);
+    posXShift6 = Q12_TO_Q6(PLAYER_CHARA().position.vx);
+    posZShift6 = Q12_TO_Q6(PLAYER_CHARA().position.vz);
 
     Demo_DemoRandSeedBackup();
     Demo_DemoRandSeedRestore();
@@ -271,7 +271,7 @@ void Game_NpcUpdate(void) // 0x80038354
                 if (isLowVisInterior)
                 {
                     // Check X axis.
-                    s32 playerChunk = (g_SysWork.playerWork.player.position.vx + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
+                    s32 playerChunk = (PLAYER_CHARA().position.vx + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
                     s32 npcChunk    = (curNpc->position.vx                     + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
                     if (npcChunk != playerChunk)
                     {
@@ -279,7 +279,7 @@ void Game_NpcUpdate(void) // 0x80038354
                     }
 
                     // Check Z axis.
-                    playerChunk = (g_SysWork.playerWork.player.position.vz + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
+                    playerChunk = (PLAYER_CHARA().position.vz + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
                     npcChunk    = (curNpc->position.vz                     + (Q12(CHUNK_SIZE) * 4)) / Q12(CHUNK_SIZE);
                     if (npcChunk != playerChunk)
                     {

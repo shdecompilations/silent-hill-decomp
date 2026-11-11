@@ -194,7 +194,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
             Collision_TriggerFlagBitsSet(CollisionTriggerFlag_Block);
             Collision_TriggerFlagBitsClear(CollisionTriggerFlag_Objects);
 
-            if (g_SysWork.playerWork.player.position.vz < Q12(-68.0f))
+            if (PLAYER_CHARA().position.vz < Q12(-68.0f))
             {
                 Savegame_EventFlagClear(EventFlag_346);
             }
@@ -210,9 +210,9 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
     {
         if (PLAYER_IN_MAP_CHUNK(-3, 2))
         {
-                if (g_SysWork.playerWork.player.position.vx > Q12(-116.0f))
+                if (PLAYER_CHARA().position.vx > Q12(-116.0f))
                 {
-                    if (g_SysWork.playerWork.player.position.vy > Q12(0.0f))
+                    if (PLAYER_CHARA().position.vy > Q12(0.0f))
                     {
                         if (g_ScreenFadeTimestep > Q12(0.0f))
                         {
@@ -234,8 +234,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EA1C4
         {
             if (D_800F0B2C == Q12(0.0f))
             {
-                if (Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx + Q12(96.0f),
-                                        g_SysWork.playerWork.player.position.vz + Q12(89.0f)) < Q12(4.0f))
+                if (Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx + Q12(96.0f),
+                                        PLAYER_CHARA().position.vz + Q12(89.0f)) < Q12(4.0f))
                 {
                     Sfx_WithFlagsPlay(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), SfxFlag_NoDistAtten);
                     D_800F0B2C = Q12(0.3f);

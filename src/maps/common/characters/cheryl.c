@@ -104,9 +104,6 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
     s8                 pitch1;
     q23_8              distToPlayerSqr;
 
-    #define playerChara g_SysWork.playerWork.player
-    #define playerProps playerChara.properties.player
-
     D_800E3A30 = Q12(0.0f);
 
     switch (cherylProps.controlState)
@@ -156,7 +153,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
             Chara_AnimStateReset(cheryl);
 
-            playerProps.headingAngle = Q12_ANGLE(0.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
             cherylProps.moveDistance_124 = Q12(0.0f);
             break;
 
@@ -175,7 +172,7 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
             Model_AnimStatusSet(&cheryl->model, CherylAnim_WalkForward, false);
             Chara_AnimStateReset(cheryl);
 
-            playerProps.headingAngle = Q12_ANGLE(0.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
             cherylProps.moveDistance_124 = Q12(0.0f);
             break;
     }
@@ -183,8 +180,8 @@ void Cheryl_ControlUpdate(s_SubCharacter* cheryl, GsCOORDINATE2* boneCoords) // 
     Collision_SurfaceGet(&surface, cheryl->position.vx, cheryl->position.vz);
     Player_FootstepSfxGet(surface.floorType, &sfx, &pitch0, &pitch1);
 
-    distToPlayerSqr = SQUARE(Q12_TO_Q8(cheryl->position.vx - playerChara.position.vx)) +
-                      SQUARE(Q12_TO_Q8(cheryl->position.vz - playerChara.position.vz));
+    distToPlayerSqr = SQUARE(Q12_TO_Q8(cheryl->position.vx - PLAYER_CHARA().position.vx)) +
+                      SQUARE(Q12_TO_Q8(cheryl->position.vz - PLAYER_CHARA().position.vz));
 
     if (g_Player_DisableControl)
     {

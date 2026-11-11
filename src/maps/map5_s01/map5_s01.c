@@ -477,8 +477,8 @@ void func_800EB6B0(void) // 0x800EB6B0
     s32    var_v1;
     s32    bgmFlags;
 
-    posX  = g_SysWork.playerWork.player.position.vx;
-    posZ  = g_SysWork.playerWork.player.position.vz;
+    posX  = PLAYER_CHARA().position.vx;
+    posZ  = PLAYER_CHARA().position.vz;
     bgmFlags = D_800EFC80[g_SavegamePtr->mapRoomIdx];
 
     if (g_SavegamePtr->mapRoomIdx == 10)
@@ -774,9 +774,9 @@ void func_800EBF70(void) // 0x800EBF70
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 2, 0, false);
 
-            g_SysWork.playerWork.player.position.vx = Q12(52.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(-57.8f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(107.6f);
+            PLAYER_CHARA().position.vx = Q12(52.0f);
+            PLAYER_CHARA().position.vz = Q12(-57.8f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(107.6f);
 
             camPos.vx = Q12(49.8f);
             camPos.vy = Q12(-1.5f);
@@ -1117,9 +1117,9 @@ void func_800EC42C(void) // 0x800EC42C
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_13);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_13);
 
-        g_SysWork.playerWork.player.position.vx -= Q12(20.0f);
+        PLAYER_CHARA().position.vx -= Q12(20.0f);
 
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_13));
 

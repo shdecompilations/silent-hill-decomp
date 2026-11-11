@@ -206,7 +206,7 @@ s32 Collision_WallResponse(s_CollisionResult* collResult, const VECTOR3* moveOff
         response = true;
 
         // Push player away from drop.
-        if (chara == &g_SysWork.playerWork.player && chara->health > Q12(0.0f))
+        if (chara == &PLAYER_CHARA() && chara->health > Q12(0.0f))
         {
             Collision_WallPush(collResult, &chara->position, chara->position.vy, chara->rotation.vy);
         }
@@ -484,7 +484,7 @@ s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubC
     }
 
     // Collect collidable player.
-    curChara = &g_SysWork.playerWork.player;
+    curChara = &PLAYER_CHARA();
     if (curChara->model.charaId != Chara_None)
     {
         if (curChara->collision.state != CharaCollisionState_Ignore &&

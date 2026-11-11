@@ -27,27 +27,21 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     q19_12 distToPlayer;
     q19_12 result;
 
-    #define playerChara g_SysWork.playerWork.player
-    #define playerProps playerChara.properties.player
-
     distToPlayer = someDist;
     if (distToPlayer == Q12(0.0f))
     {
-        offsetToPlayerX = Q12_TO_Q6(playerChara.position.vx - chara->position.vx);
-        offsetToPlayerZ = Q12_TO_Q6(playerChara.position.vz - chara->position.vz);
+        offsetToPlayerX = Q12_TO_Q6(PLAYER_CHARA().position.vx - chara->position.vx);
+        offsetToPlayerZ = Q12_TO_Q6(PLAYER_CHARA().position.vz - chara->position.vz);
         distToPlayer    = Q6_TO_Q12(Math_Vector2MagCalc(offsetToPlayerX, offsetToPlayerZ));
     }
 
     // TODO: Why `>> 8`? Odd type conversion?
-    result = Q12_MULT(arg2, playerProps.field_10C) - (distToPlayer >> 8);
+    result = Q12_MULT(arg2, PLAYER_PROPS().field_10C) - (distToPlayer >> 8);
     if (result < Q12(0.0f))
     {
         result = Q12(0.0f);
     }
     return result;
-
-    #undef playerChara
-    #undef playerProps
 }
 
 void Collision_CharaCollisionSet(s_SubCharacter* chara, s_CharaKeyframe* keyframe0, s_CharaKeyframe* keyframe1) // 0x80070400

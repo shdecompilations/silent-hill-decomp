@@ -27,8 +27,6 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D6F34
 
-#define playerChara g_SysWork.playerWork.player
-
 void Map_RoomBgmInit(bool arg0) // 0x800D6FE4
 {
     u16 bgmFlags;
@@ -229,9 +227,9 @@ void func_800D7308(void)
 
         case 3:
             // Warp player.
-            playerChara.position.vx = Q12(-59.2f);
-            playerChara.position.vz = Q12(98.9f);
-            playerChara.rotation.vy = Q12_ANGLE(0.0f);
+            PLAYER_CHARA().position.vx = Q12(-59.2f);
+            PLAYER_CHARA().position.vz = Q12(98.9f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(0.0f);
 
             // Warp camera.
             Event_CameraPositionSet(NULL, 
@@ -246,7 +244,7 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 83, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 83, false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -448,9 +446,9 @@ void MapEvent_PianoPuzzleInteract(void) // 0x800D7864
 
         case 11:
             // Warp player.
-            playerChara.position.vx = Q12(-100.0f);
-            playerChara.position.vz = Q12(20.1f);
-            playerChara.rotation.vy = Q12_ANGLE(-22.5f);
+            PLAYER_CHARA().position.vx = Q12(-100.0f);
+            PLAYER_CHARA().position.vz = Q12(20.1f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-22.5f);
 
             Event_WaitTimer(Q12(1.5f), false);
 
@@ -780,7 +778,7 @@ void func_800D857C(void) // 0x800D857C
             break;
 
         case 2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 59, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 59, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -788,7 +786,7 @@ void func_800D857C(void) // 0x800D857C
             break;
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &playerChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &PLAYER_CHARA(), 0, false);
             break;
 
         case 5:
@@ -810,7 +808,7 @@ void func_800D857C(void) // 0x800D857C
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_CharaAnimPlayToEnd(&playerChara, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -889,7 +887,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             g_Cutscene_Timer = Q12(0.0f);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 85, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 85, false);
             func_8003D03C();
             Player_EmptyWeaponHandSet();
             SysWork_StateStepIncrement(0);
@@ -917,7 +915,7 @@ void func_800D87C0(void) // 0x800D87C0
 
             Savegame_EventFlagSet(EventFlag_76);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 122, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 122, false);
             func_800892DC(18, 96);
             Sfx_WithFlagsPlay(Sfx_Unk1437, &Q12_VECTOR3(-59.0f, -0.5f, 18.6f), Q8(0.5f), SfxFlag_None);
             Sfx_WithFlagsPlay(Sfx_Unk1436, &Q12_VECTOR3(-58.8f, -1.2f, 18.8f), Q8(0.5f), SfxFlag_None);
@@ -998,8 +996,8 @@ void func_800D87C0(void) // 0x800D87C0
 
         default:
             g_Cutscene_Timer                         = NO_VALUE;
-            playerChara.position.vx += FP_FROM((Math_Sin(playerChara.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
-            playerChara.position.vz += FP_FROM((Math_Cos(playerChara.rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
+            PLAYER_CHARA().position.vx += FP_FROM((Math_Sin(PLAYER_CHARA().rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
+            PLAYER_CHARA().position.vz += FP_FROM((Math_Cos(PLAYER_CHARA().rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
 
             vcReturnPreAutoCamWork(true);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
@@ -1026,7 +1024,7 @@ void func_800D87C0(void) // 0x800D87C0
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16);
 
         if (g_Cutscene_Timer >= Q12(16.0f))
         {
@@ -1143,7 +1141,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9514
     {
         if (PLAYER_IN_MAP_CHUNK(-4, 1))
         {
-            if (playerChara.position.vx < Q12(-138.5999f))
+            if (PLAYER_CHARA().position.vx < Q12(-138.5999f))
             {
                 if (vcRetCamMvSmoothF() == VC_MV_CHASE)
                 {

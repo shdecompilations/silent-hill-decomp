@@ -50,9 +50,9 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
 
     ptr = PSX_SCRATCH;
 
-    posX             = FP_FROM(g_SysWork.playerWork.player.position.vx, Q12_SHIFT);
-    posY             = FP_FROM(g_SysWork.playerWork.player.position.vy, Q12_SHIFT);
-    posZ             = FP_FROM(g_SysWork.playerWork.player.position.vz, Q12_SHIFT);
+    posX             = FP_FROM(PLAYER_CHARA().position.vx, Q12_SHIFT);
+    posY             = FP_FROM(PLAYER_CHARA().position.vy, Q12_SHIFT);
+    posZ             = FP_FROM(PLAYER_CHARA().position.vz, Q12_SHIFT);
     ptr->field_40.vx = Q8(posX);
     ptr->field_40.vy = Q8(posY);
     ptr->field_40.vz = Q8(posZ);
@@ -161,9 +161,9 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
 
     ptr = PSX_SCRATCH;
 
-    gridPosX         = FP_FROM(g_SysWork.playerWork.player.position.vx, Q12_SHIFT);
-    gridPosY         = FP_FROM(g_SysWork.playerWork.player.position.vy, Q12_SHIFT);
-    gridPosZ         = FP_FROM(g_SysWork.playerWork.player.position.vz, Q12_SHIFT);
+    gridPosX         = FP_FROM(PLAYER_CHARA().position.vx, Q12_SHIFT);
+    gridPosY         = FP_FROM(PLAYER_CHARA().position.vy, Q12_SHIFT);
+    gridPosZ         = FP_FROM(PLAYER_CHARA().position.vz, Q12_SHIFT);
     ptr->field_2C.vx = Q8(gridPosX);
     ptr->field_2C.vy = Q8(gridPosY);
     ptr->field_2C.vz = Q8(gridPosZ);
@@ -253,9 +253,9 @@ void func_80066184(void) // 0x80066184
 
     ptr = PSX_SCRATCH;
 
-    ptr->field_3C.vx = Q12_FLOOR(g_SysWork.playerWork.player.position.vx);
-    ptr->field_3C.vy = Q12_FLOOR(g_SysWork.playerWork.player.position.vy);
-    ptr->field_3C.vz = Q12_FLOOR(g_SysWork.playerWork.player.position.vz);
+    ptr->field_3C.vx = Q12_FLOOR(PLAYER_CHARA().position.vx);
+    ptr->field_3C.vy = Q12_FLOOR(PLAYER_CHARA().position.vy);
+    ptr->field_3C.vz = Q12_FLOOR(PLAYER_CHARA().position.vz);
 
     Vw_WorldScreenMatrixAtPositionGet(&ptr->field_4, ptr->field_3C.vx, ptr->field_3C.vy, ptr->field_3C.vz);
 

@@ -14,6 +14,23 @@
 #define CHARA_FORCE_FREE_ALL 0xFF               /** `Chara_Load` can force free already loaded models to make room for new ones. */
 #define CHARA_LAST_ENEMY_ID  Chara_MonsterCybil /** `e_CharaId` of the last common enemy character. */
 
+/** @brief Returns the `s_SubCharacter` instance for the player character.
+ *
+ * @note Kept as function-style macro to prevent macro from replacing anything named the same, if we decide to rename these.
+ *       e.g. if we had `#define playerChara ...`, that would break things that use `s_SubCharacter* playerChara`
+ *       but `#define playerChara() ...` would only replace function-style uses.
+*/
+#define PLAYER_CHARA()  (g_SysWork.playerWork.player)
+
+/** @brief Returns the player character properties. */
+#define PLAYER_PROPS()  (g_SysWork.playerWork.player.properties.player)
+
+/** @brief Returns the player character extra data. */
+#define PLAYER_EXTRA()  (g_SysWork.playerWork.extra)
+
+/** @brief Returns the player combat data. */
+#define PLAYER_COMBAT() (g_SysWork.playerCombat)
+
 /** @brief Character flags. Used by `s_SubCharacter::flags`. */
 typedef enum _CharaFlags
 {

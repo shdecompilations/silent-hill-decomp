@@ -143,8 +143,6 @@ void Creeper_Init(s_SubCharacter* creeper)
 
 void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
 {
-    #define playerChara g_SysWork.playerWork.player
-
     // Creeper has been hit.
     if (creeper->damage.amount > Q12(0.0f) && creeper->health > Q12(0.0f))
     {
@@ -215,7 +213,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
             creeper->flags             |= CharaFlag_Unk2;
 
             // Stun if heading toward player.
-            if (ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(creeper->position, playerChara.position) -
+            if (ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(creeper->position, PLAYER_CHARA().position) -
                                               creeper->rotation.vy)) < Q12_ANGLE(60.0f))
             {
                 creeper->model.anim.status = ANIM_STATUS(CreeperAnim_StunLoop, false);
@@ -233,8 +231,6 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
     {
         Chara_DamageClear(creeper);
     }
-
-    #undef playerChara
 }
 
 void Creeper_ControlUpdate(s_SubCharacter* creeper)
@@ -379,9 +375,7 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
     q19_12 distToPlayer;
     q19_12 distToTarget;
 
-    #define playerChara g_SysWork.playerWork.player
-
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(creeper->position, playerChara.position) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(creeper->position, PLAYER_CHARA().position) -
                                                    creeper->rotation.vy);
 
     if (((!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed()) && func_8006FD90(creeper, 0, Q12(12.0f), Q12(8.0f))) ||
@@ -389,18 +383,18 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
         ((!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed()) && func_8006FD90(creeper, 1, Q12(4.0f), Q12(12.0f))) ||
         (func_80070360(creeper, 0, Q12(0.5f)) || creeperProps.flags & CreeperFlag_Alerted))
     {
-        creeperProps.targetPositionX = playerChara.position.vx;
-        creeperProps.targetPositionZ = playerChara.position.vz;
+        creeperProps.targetPositionX = PLAYER_CHARA().position.vx;
+        creeperProps.targetPositionZ = PLAYER_CHARA().position.vz;
         creeperProps.flags          &= ~CreeperFlag_TargetPlayer;
     }
 
-    distToPlayer = Math_Vector2MagCalcSafeQ6(playerChara.position.vx - creeper->position.vx,
-                                       playerChara.position.vz - creeper->position.vz);
+    distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - creeper->position.vx,
+                                       PLAYER_CHARA().position.vz - creeper->position.vz);
     distToTarget = Math_Vector2MagCalcSafeQ6(creeperProps.targetPositionX - creeper->position.vx,
                                        creeperProps.targetPositionZ - creeper->position.vz);
 
     if (distToTarget < Q12(1.2f) && !(creeperProps.flags & CreeperFlag_HasAttacked) &&
-        !Los_NpcToPlayerHitCheck(creeper, &playerChara))
+        !Los_NpcToPlayerHitCheck(creeper, &PLAYER_CHARA()))
     {
         if (distToPlayer > Q12(1.2f))
         {
@@ -417,9 +411,9 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
                 creeperProps.attackTimer    = Q12(0.0f);
             }
         }
-        else if (!(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1) && !Chara_HasFlag(&playerChara, CharaFlag_Unk4) &&
+        else if (!(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1) && !Chara_HasFlag(&PLAYER_CHARA(), CharaFlag_Unk4) &&
                  distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < Q12_ANGLE(10.0f) &&
-                 playerChara.health > Q12(0.0f))
+                 PLAYER_CHARA().health > Q12(0.0f))
         {
             creeper->model.controlState   = CreeperControl_Attack;
             creeper->model.anim.status    = ANIM_STATUS(CreeperAnim_AttackStart, false);
@@ -493,8 +487,6 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
             }
         }
     }
-
-    #undef playerChara
 }
 
 void Creeper_ControlAttack(s_SubCharacter* creeper)
@@ -504,9 +496,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
     q19_12  moveSpeed0;
     q19_12  distToPlayer;
 
-    #define playerChara g_SysWork.playerWork.player
-
-    if (Los_NpcToPlayerHitCheck(creeper, &playerChara))
+    if (Los_NpcToPlayerHitCheck(creeper, &PLAYER_CHARA()))
     {
         g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
         creeper->model.controlState   = CreeperControl_WalkForward;
@@ -518,8 +508,8 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         creeper->model.anim.status == ANIM_STATUS(CreeperAnim_Attack, false) ||
         ANIM_TIME_RANGE_CHECK(creeper->model.anim.time, 4, 7))
     {
-        distToPlayer = Math_Vector2MagCalcSafeQ6(playerChara.position.vx - creeper->position.vx,
-                                           playerChara.position.vz - creeper->position.vz);
+        distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - creeper->position.vx,
+                                           PLAYER_CHARA().position.vz - creeper->position.vz);
         if (distToPlayer < Q12(0.4f))
         {
             Chara_MoveSpeedUpdate3(creeper, Q12(16.0f), Q12(0.0f));
@@ -531,9 +521,9 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
             Chara_MoveSpeedUpdate2(creeper, Q12(6.0f), moveSpeed0);
         }
 
-        if (TIMESTEP_ANGLE(1, 2) < ABS(Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position, playerChara.position) - creeper->rotation.vy))))
+        if (TIMESTEP_ANGLE(1, 2) < ABS(Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position, PLAYER_CHARA().position) - creeper->rotation.vy))))
         {
-            if ((Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position, playerChara.position) - creeper->rotation.vy)) << 16) > 0)
+            if ((Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position, PLAYER_CHARA().position) - creeper->rotation.vy)) << 16) > 0)
             {
                 creeper->rotation.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
             }
@@ -544,7 +534,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         }
         else
         {
-            creeper->rotation.vy = Math_AngleBetweenPositionsGet(creeper->position, playerChara.position);
+            creeper->rotation.vy = Math_AngleBetweenPositionsGet(creeper->position, PLAYER_CHARA().position);
         }
 
         creeper->field_44.field_0 = 1;
@@ -559,9 +549,9 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         creeperPos.vy += creeper->collision.box.field_8;
 
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Multitap),
-                      creeper, &creeperPos, &playerChara, creeper->rotation.vy,
+                      creeper, &creeperPos, &PLAYER_CHARA(), creeper->rotation.vy,
                       ratan2(Q12(0.4f),
-                             (playerChara.position.vy + playerChara.collision.box.bottomExtent) -
+                             (PLAYER_CHARA().position.vy + PLAYER_CHARA().collision.box.bottomExtent) -
                              (creeper->position.vy + creeper->collision.box.bottomExtent)));
 
         if (!(creeperProps.flags & CreeperFlag_HasAttacked))
@@ -587,12 +577,10 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         creeper->model.controlState   = CreeperControl_WalkForward;
         creeperProps.attackTimer      = Q12(0.0f);
         creeperProps.angleToTarget    = Los_CharaHeadingAngleGet(creeper, Q12(4.8f),
-                                                              playerChara.position.vx, playerChara.position.vz,
+                                                              PLAYER_CHARA().position.vx, PLAYER_CHARA().position.vz,
                                                               Q12_ANGLE(360.0f), false);
         creeper->field_44.field_0     = 0;
     }
-
-    #undef playerChara
 }
 
 void Creeper_ControlStun(s_SubCharacter* creeper)

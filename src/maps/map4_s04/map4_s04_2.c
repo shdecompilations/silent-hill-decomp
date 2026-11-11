@@ -332,7 +332,7 @@ void func_800D1910(void) // 0x800D1910
             Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 117, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 117, false);
             D_800D37C0 = 0;
 
             WorldEnv_PresetsSet(15, 15);
@@ -341,7 +341,7 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 1:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &PLAYER_CHARA(), 0, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 9, false);
 
             D_800D37C0 = 1;
@@ -353,7 +353,7 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         case 3:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), 0, false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -371,7 +371,7 @@ void func_800D1910(void) // 0x800D1910
             g_Cutscene_Timer               = Q12(24.0f);
             g_WorldObject0.position.vz = Q12(140.8f);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 135, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 135, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -412,7 +412,7 @@ void func_800D1910(void) // 0x800D1910
 
         default:
             // Return to gameplay.
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
@@ -429,7 +429,7 @@ void func_800D1910(void) // 0x800D1910
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
 
         if (D_800D37C0 != 0)
         {
@@ -493,7 +493,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 1:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 11, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -526,7 +526,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             if (g_Cutscene_Timer >= Q12(32.0f) && D_800D37C1 == 0)
             {
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 134, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 134, false);
                 D_800D37C1++;
             }
             break;
@@ -536,13 +536,13 @@ void func_800D23E4(void) // 0x800D23E4
 
             if (g_Cutscene_Timer >= Q12(32.0f) && D_800D37C1 == 0)
             {
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 134, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 134, false);
                 D_800D37C1++;
             }
             break;
 
         case 9:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
 
             g_SysWork.lightIntensity = Q12(1.2f);
@@ -595,8 +595,8 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 20:
-            Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 53, false);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 53, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 21, false);
             SysWork_StateStepIncrement(0);
 
@@ -606,7 +606,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 22:
             Sfx_WithFlagsPlay(Sfx_DoorOpen0, &Q12_VECTOR3(54.6f, -1.2f, 141.5f), Q8(0.5f), SfxFlag_None);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             SysWork_StateStepIncrement(0);
 
         case 23:
@@ -631,7 +631,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             SD_Call(19);
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
 
             func_8003D01C();
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
@@ -656,7 +656,7 @@ void func_800D23E4(void) // 0x800D23E4
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_15);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_15);
         Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", g_Cutscene_Timer, FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_15));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);

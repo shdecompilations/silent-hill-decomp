@@ -392,8 +392,6 @@ void func_800D8A90(s_SubCharacter* monsterCybil) // 0x800D8A90
 
 void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x800D8B14
 {
-    #define playerChara g_SysWork.playerWork.player
-
     u8  sp10;
     s16 sp12;
 
@@ -438,8 +436,8 @@ void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x800D8
             monsterCybil->health       -= monsterCybil->damage.amount;
             monsterCybil->damage.amount = Q12(0.0f);
 
-            monsterCybilProps.field_122 = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(monsterCybil->position.vx - playerChara.position.vx),
-                                                               Q12_TO_Q8(monsterCybil->position.vz - playerChara.position.vz)));
+            monsterCybilProps.field_122 = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(monsterCybil->position.vx - PLAYER_CHARA().position.vx),
+                                                               Q12_TO_Q8(monsterCybil->position.vz - PLAYER_CHARA().position.vz)));
 
             Math_ShortestAngleGet(monsterCybil->rotation.vy, monsterCybilProps.field_122, &sp12);
 
@@ -475,8 +473,6 @@ void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x800D8
             monsterCybilProps.field_10C = Q12(0.0f);
         }
     }
-
-    #undef playerChara
 }
 
 void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINATE2* boneCoords) // 0x800D8D7C
@@ -487,10 +483,8 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
     q19_12      angle0;
     q19_12      moveSpeed;
 
-    #define playerChara g_SysWork.playerWork.player
-
-    monsterCybilProps.distanceToPlayer = Math_Vector2MagCalcSafeQ8(playerChara.position.vx - monsterCybil->position.vx,
-                                                                   playerChara.position.vz - monsterCybil->position.vz);
+    monsterCybilProps.distanceToPlayer = Math_Vector2MagCalcSafeQ8(PLAYER_CHARA().position.vx - monsterCybil->position.vx,
+                                                                   PLAYER_CHARA().position.vz - monsterCybil->position.vz);
 
     monsterCybilProps.field_120 = func_800DB6FC(&monsterCybil->position);
     if (monsterCybilProps.field_120)
@@ -735,8 +729,6 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
     boneCoords->flg = false;
     Math_RotMatrixZxyNegGte(&monsterCybil->rotation, &boneCoords->coord);
-
-    #undef playerChara
 }
 
 void func_800D9790(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x800D9790
@@ -825,8 +817,6 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 {
     s16 temp_v0;
 
-    #define playerChara g_SysWork.playerWork.player
-
     switch (monsterCybilProps.field_EC)
     {
         case 0:
@@ -841,7 +831,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             func_800DC018(monsterCybil);
 
-            if (playerChara.health > Q12(0.0f) && monsterCybilProps.field_116 == 0)
+            if (PLAYER_CHARA().health > Q12(0.0f) && monsterCybilProps.field_116 == 0)
             {
                 if (monsterCybilProps.distanceToPlayer > Q12(0.6f))
                 {
@@ -1070,10 +1060,10 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 modelUpper->anim.keyframeIdx = monsterCybil->model.anim.keyframeIdx;
             }
 
-            if (playerChara.health > 0 && monsterCybilProps.field_116 == 0)
+            if (PLAYER_CHARA().health > 0 && monsterCybilProps.field_116 == 0)
             {
                 if (monsterCybilProps.distanceToPlayer < Q12(0.8f) &&
-                    (g_SysWork.playerWork.extra.state > 50 || g_SysWork.playerWork.extra.state < 47))
+                    (PLAYER_EXTRA().state > 50 || PLAYER_EXTRA().state < 47))
                 {
                     if (monsterCybilProps.field_EE == 1)
                     {
@@ -1084,8 +1074,8 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                     }
                 }
                 else if (monsterCybilProps.field_108 >= Q12(3.0f) &&
-                         (!func_800DB81C(monsterCybil) || g_SysWork.playerWork.extra.state == 47 ||
-                          g_SysWork.playerWork.extra.state == 48))
+                         (!func_800DB81C(monsterCybil) || PLAYER_EXTRA().state == 47 ||
+                          PLAYER_EXTRA().state == 48))
                 {
                     if (monsterCybilProps.distanceToPlayer <= Q12(4.0f))
                     {
@@ -1128,7 +1118,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             if (modelUpper->anim.keyframeIdx == D_800EA776 && D_800EBB48 < monsterCybilProps.freeze)
             {
                 if (monsterCybilProps.field_120 != 0 &&
-                    !(playerChara.flags & (1 << 3)))
+                    !(PLAYER_CHARA().flags & (1 << 3)))
                 {
                     monsterCybilProps.field_114 = 0;
                     monsterCybilProps.field_EE  = 3;
@@ -1183,7 +1173,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                                   WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap),
                                   monsterCybil,
                                   &D_800ED570,
-                                  &playerChara,
+                                  &PLAYER_CHARA(),
                                   monsterCybil->rotation.vy,
                                   monsterCybilProps.field_11A) != NO_VALUE)
                 {
@@ -1261,9 +1251,9 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybil->field_44.field_0 = 0;
             }
 
-            if (func_8008A0E4(monsterCybil->field_44.field_0, WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap), monsterCybil, &D_800ED570, &playerChara, monsterCybil->rotation.vy, 0x400) != -1)
+            if (func_8008A0E4(monsterCybil->field_44.field_0, WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap), monsterCybil, &D_800ED570, &PLAYER_CHARA(), monsterCybil->rotation.vy, 0x400) != -1)
             {
-                playerChara.damage.position.vz = Q12(1.0f);
+                PLAYER_CHARA().damage.position.vz = Q12(1.0f);
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
@@ -1362,8 +1352,6 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
             break;
     }
-
-    #undef playerChara
 }
 
 void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINATE2* boneCoords) // 0x800DA9C8
@@ -1372,8 +1360,6 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
     s32    temp_v0_2;
     s32    var_a1;
     s32    var_s3;
-
-    #define playerChara g_SysWork.playerWork.player
 
     switch (monsterCybilProps.field_EC)
     {
@@ -1391,7 +1377,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             func_800DC018(monsterCybil);
 
-            if (playerChara.health > Q12(0.0f) &&
+            if (PLAYER_CHARA().health > Q12(0.0f) &&
                 monsterCybilProps.field_116 == 0)
             {
                 monsterCybilProps.moveSpeed = Q12(0.0f);
@@ -1482,28 +1468,28 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (monsterCybil->model.anim.status & 1)
             {
-                monsterCybil->model.anim.time        = playerChara.model.anim.time - Q12(832.0f);
-                monsterCybil->model.anim.keyframeIdx = playerChara.model.anim.keyframeIdx - 832;
+                monsterCybil->model.anim.time        = PLAYER_CHARA().model.anim.time - Q12(832.0f);
+                monsterCybil->model.anim.keyframeIdx = PLAYER_CHARA().model.anim.keyframeIdx - 832;
             }
 
             monsterCybilProps.moveSpeed = Q12(0.0f);
             angle                       = Q12_FRACT((u16)monsterCybil->rotation.vy + Q12(1.5f));
 
-            switch (g_SysWork.playerWork.extra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case 32:
-                    var_s3 = playerChara.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.62f));
-                    var_a1 = playerChara.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.62f));
+                    var_s3 = PLAYER_CHARA().position.vx + Q12_MULT(Math_Sin(angle), Q12(0.62f));
+                    var_a1 = PLAYER_CHARA().position.vz + Q12_MULT(Math_Cos(angle), Q12(0.62f));
                     break;
 
                 case 33:
-                    var_s3 = playerChara.position.vx + Q12_MULT(Math_Sin(angle), Q12(0.8f));
-                    var_a1 = playerChara.position.vz + Q12_MULT(Math_Cos(angle), Q12(0.8f));
+                    var_s3 = PLAYER_CHARA().position.vx + Q12_MULT(Math_Sin(angle), Q12(0.8f));
+                    var_a1 = PLAYER_CHARA().position.vz + Q12_MULT(Math_Cos(angle), Q12(0.8f));
                     break;
             }
 
-            if (g_SysWork.playerWork.extra.state == PlayerState_EnemyGrabNeckFront ||
-                g_SysWork.playerWork.extra.state == PlayerState_EnemyGrabNeckBack)
+            if (PLAYER_EXTRA().state == PlayerState_EnemyGrabNeckFront ||
+                PLAYER_EXTRA().state == PlayerState_EnemyGrabNeckBack)
             {
                 if (var_s3 < monsterCybil->position.vx)
                 {
@@ -1578,7 +1564,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 modelUpper->anim.keyframeIdx = monsterCybil->model.anim.keyframeIdx;
             }
 
-            if (playerChara.health > Q12(0.0f) &&
+            if (PLAYER_CHARA().health > Q12(0.0f) &&
                 monsterCybilProps.field_116 == 0 &&
                 monsterCybilProps.distanceToPlayer < Q12(0.8f) &&
                 monsterCybilProps.field_106 > 30)
@@ -1631,13 +1617,13 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                                       WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap),
                                       monsterCybil,
                                       &D_800ED570,
-                                      &playerChara,
+                                      &PLAYER_CHARA(),
                                       monsterCybil->rotation.vy,
                                       Q12_ANGLE(90.0f));
 
             if (temp_v0_2 != NO_VALUE)
             {
-                playerChara.field_40 = monsterCybil->field_40;
+                PLAYER_CHARA().field_40 = monsterCybil->field_40;
             }
 
             if (modelUpper->anim.keyframeIdx == D_800EA7D6)
@@ -1669,21 +1655,21 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (ANIM_STATUS_IS_ACTIVE(modelUpper->anim.status))
             {
-                modelUpper->anim.time        = playerChara.model.anim.time - Q12(832.0f);
-                modelUpper->anim.keyframeIdx = playerChara.model.anim.keyframeIdx - 832;
+                modelUpper->anim.time        = PLAYER_CHARA().model.anim.time - Q12(832.0f);
+                modelUpper->anim.keyframeIdx = PLAYER_CHARA().model.anim.keyframeIdx - 832;
             }
 
-            playerChara.damage.amount = g_DeltaTime * 4;
+            PLAYER_CHARA().damage.amount = g_DeltaTime * 4;
 
-            if (playerChara.field_40 == NO_VALUE ||
-                playerChara.health <= Q12(0.0f) ||
-                playerChara.attackReceived == NO_VALUE)
+            if (PLAYER_CHARA().field_40 == NO_VALUE ||
+                PLAYER_CHARA().health <= Q12(0.0f) ||
+                PLAYER_CHARA().attackReceived == NO_VALUE)
             {
                 monsterCybilProps.field_EE    = 7;
                 monsterCybilProps.field_EC    = 7;
                 modelUpper->stateStep         = 0;
                 monsterCybil->model.stateStep = 0;
-                playerChara.damage.amount     = Q12(0.0f);
+                PLAYER_CHARA().damage.amount     = Q12(0.0f);
             }
 
             if (ANIM_STATUS_IS_ACTIVE(modelUpper->anim.status))
@@ -1744,11 +1730,11 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                               WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap),
                               monsterCybil,
                               &D_800ED570,
-                              &playerChara,
+                              &PLAYER_CHARA(),
                               monsterCybil->rotation.vy,
                               Q12_ANGLE(90.0f)) != NO_VALUE)
             {
-                playerChara.damage.position.vz = Q12(1.0f);
+                PLAYER_CHARA().damage.position.vz = Q12(1.0f);
 
                 if (sharedData_800D16E4_2_s01 == 0)
                 {
@@ -1781,8 +1767,6 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
             break;
     }
-
-    #undef playerChara
 }
 
 void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINATE2* boneCoords) // 0x800DB4CC
@@ -1790,8 +1774,6 @@ void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
     q3_12  angle;
     q19_12 range;
     q19_12 delta;
-
-    #define playerChara g_SysWork.playerWork.player
 
     delta = TIMESTEP_SCALE_30_FPS(g_DeltaTime, 32);
 
@@ -1838,8 +1820,8 @@ void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
         case 2:
         case 3:
-            angle = ratan2(Math_Vector2MagCalc((playerChara.position.vx - D_800ED570.vx) >> 4, (playerChara.position.vz - D_800ED570.vz) >> 4),
-                           (playerChara.position.vy + playerChara.collision.box.offsetY - D_800ED570.vy) >> 4);
+            angle = ratan2(Math_Vector2MagCalc((PLAYER_CHARA().position.vx - D_800ED570.vx) >> 4, (PLAYER_CHARA().position.vz - D_800ED570.vz) >> 4),
+                           (PLAYER_CHARA().position.vy + PLAYER_CHARA().collision.box.offsetY - D_800ED570.vy) >> 4);
 
             if ((angle + delta) < monsterCybilProps.field_11A)
             {
@@ -1857,8 +1839,6 @@ void func_800DB4CC(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             Bone_ExtraRotationSet(&boneCoords[1], 0, 0, -monsterCybilProps.field_118);
             break;
     }
-
-    #undef playerChara
 }
 
 bool func_800DB6FC(VECTOR3* pos) // 0x800DB6FC
@@ -1873,11 +1853,9 @@ void func_800DB748(s_SubCharacter* monsterCybil) // 0x800DB748
     q3_12 angleToPlayer;
     q3_12 shortestAngle;
 
-    #define playerChara g_SysWork.playerWork.player
-
     // TODO: Not sure if `Q12_TO_Q8` makes sense here, maybe this was just a divide by 16 for some reason.
-    angleToPlayer = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(playerChara.position.vx - monsterCybil->position.vx),
-                                         Q12_TO_Q8(playerChara.position.vz - monsterCybil->position.vz)));
+    angleToPlayer = Q12_ANGLE_ABS(ratan2(Q12_TO_Q8(PLAYER_CHARA().position.vx - monsterCybil->position.vx),
+                                         Q12_TO_Q8(PLAYER_CHARA().position.vz - monsterCybil->position.vz)));
 
     Math_ShortestAngleGet(monsterCybil->rotation.vy, angleToPlayer, &shortestAngle);
 
@@ -1920,8 +1898,6 @@ s32 func_800DB930(void) // 0x800DB930
     s32     foundIdx;
     s32     i;
 
-    #define playerChara g_SysWork.playerWork.player
-
     shortestDist = Q12(20.0f);
     foundIdx     = NO_VALUE;
 
@@ -1936,8 +1912,8 @@ s32 func_800DB930(void) // 0x800DB930
             continue;
         }
 
-        dist = Math_Vector2MagCalcSafeQ8(playerChara.position.vx - sp10.vx,
-                                         playerChara.position.vz - sp10.vz);
+        dist = Math_Vector2MagCalcSafeQ8(PLAYER_CHARA().position.vx - sp10.vx,
+                                         PLAYER_CHARA().position.vz - sp10.vz);
         if (dist < shortestDist)
         {
             shortestDist = dist;
@@ -1961,10 +1937,8 @@ s32 func_800DBA48(s_SubCharacter* monsterCybil) // 0x800DBA48
     s32    i;
     q19_12 dist0;
 
-    #define playerChara g_SysWork.playerWork.player
-
-    dist0 = Math_Vector2MagCalcSafeQ8(playerChara.position.vx - Q12(20.0f),
-                                      playerChara.position.vz - Q12(100.0f));
+    dist0 = Math_Vector2MagCalcSafeQ8(PLAYER_CHARA().position.vx - Q12(20.0f),
+                                      PLAYER_CHARA().position.vz - Q12(100.0f));
     if (dist0 > Q12(6.5f))
     {
         var_s0 = 0;
@@ -2010,8 +1984,8 @@ s32 func_800DBA48(s_SubCharacter* monsterCybil) // 0x800DBA48
 
         if (!func_800DB6FC(&sp10))
         {
-            dist = Math_Vector2MagCalcSafeQ8(playerChara.position.vx - sp10.vx,
-                                             playerChara.position.vz - sp10.vz);
+            dist = Math_Vector2MagCalcSafeQ8(PLAYER_CHARA().position.vx - sp10.vx,
+                                             PLAYER_CHARA().position.vz - sp10.vz);
             if (dist < shortestDist)
             {
                 foundIdx = i;
@@ -2051,8 +2025,6 @@ s32 func_800DBA48(s_SubCharacter* monsterCybil) // 0x800DBA48
     }
 
     return 2;
-
-    #undef playerChara
 }
 
 bool func_800DBD64(s_SubCharacter* monsterCybil) // 0x800DBD64

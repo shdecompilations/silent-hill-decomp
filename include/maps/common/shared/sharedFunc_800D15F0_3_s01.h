@@ -213,17 +213,17 @@ void sharedFunc_800D15F0_3_s01(void)
             sharedData_800D4D0C_3_s01.vx = 0;
 
 #ifdef MAP3_S01
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-112.5f);
-            g_SysWork.playerWork.player.position.vx = Q12(58.6f);
-            g_SysWork.playerWork.player.position.vz = Q12(19.4f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-112.5f);
+            PLAYER_CHARA().position.vx = Q12(58.6f);
+            PLAYER_CHARA().position.vz = Q12(19.4f);
 #elif defined(MAP7_S01) || defined(MAP7_S02)
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
-            g_SysWork.playerWork.player.position.vx = Q12(-101.9f);
-            g_SysWork.playerWork.player.position.vz = Q12(-60.3f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-90.0f);
+            PLAYER_CHARA().position.vx = Q12(-101.9f);
+            PLAYER_CHARA().position.vz = Q12(-60.3f);
 #else
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-135.0f);
-            g_SysWork.playerWork.player.position.vx = Q12(18.2f);
-            g_SysWork.playerWork.player.position.vz = Q12(59.7f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-135.0f);
+            PLAYER_CHARA().position.vx = Q12(18.2f);
+            PLAYER_CHARA().position.vz = Q12(59.7f);
 #endif
             SysWork_StateStepSet(0, 8);
             break;

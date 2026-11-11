@@ -18,11 +18,6 @@
 #include "bodyprog/sys/joy.h"
 #include "main/rng.h"
 
-#define playerChara  g_SysWork.playerWork.player
-#define playerProps  playerChara.properties.player
-#define playerExtra  g_SysWork.playerWork.extra
-#define playerCombat g_SysWork.playerCombat
-
 // ========================================
 // GLOBAL VARIABLES
 // ========================================
@@ -204,7 +199,7 @@ u8 D_800AF220 = 0; // Keyframe index in map overlay header struct.
 
 // 3 bytes of padding.
 
-/** @brief Previous selected weapon. Set to `g_SysWork::playerCombat::weaponAttack` and used to load the required
+/** @brief Previous selected weapon. Set to `g_SysWork::PLAYER_COMBAT()::weaponAttack` and used to load the required
  * animation data.
  */
 s32 g_Player_PrevSelectedWeapon = NO_VALUE;
@@ -364,7 +359,7 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
 
     duration = Q12(0.0f);
 
-    switch (playerExtra.state)
+    switch (PLAYER_EXTRA().state)
     {
         case PlayerState_EnemyGrabPinnedFront:
         case PlayerState_EnemyGrabPinnedBack:
@@ -379,13 +374,13 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                     if (g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(HarryAnim_Unk128, false) ||
                         g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(HarryAnim_Unk129, false))
                     {
-                        if (playerChara.health <= Q12(0.0f))
+                        if (PLAYER_CHARA().health <= Q12(0.0f))
                         {
-                            playerProps.afkTimer -= g_DeltaTime;
-                            if (playerProps.afkTimer >= Q12(0.0f))
+                            PLAYER_PROPS().afkTimer -= g_DeltaTime;
+                            if (PLAYER_PROPS().afkTimer >= Q12(0.0f))
                             {
-                                playerProps.afkTimer -= g_DeltaTime;
-                                duration = playerProps.afkTimer;
+                                PLAYER_PROPS().afkTimer -= g_DeltaTime;
+                                duration = PLAYER_PROPS().afkTimer;
                             }
                             else
                             {
@@ -406,14 +401,14 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                 if (g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(HarryAnim_Unk132, true) ||
                     g_MapOverlayHdr.field_38[D_800AF220].status_2 == ANIM_STATUS(HarryAnim_Unk133, false))
                 {
-                    if (playerChara.health <= Q12(0.0f))
+                    if (PLAYER_CHARA().health <= Q12(0.0f))
                     {
-                        playerProps.afkTimer -= g_DeltaTime * 2;
-                        if (playerProps.afkTimer >= Q12(0.0f))
+                        PLAYER_PROPS().afkTimer -= g_DeltaTime * 2;
+                        if (PLAYER_PROPS().afkTimer >= Q12(0.0f))
                         {
-                            playerProps.afkTimer -= g_DeltaTime * 2;
+                            PLAYER_PROPS().afkTimer -= g_DeltaTime * 2;
 
-                            duration = playerProps.afkTimer;
+                            duration = PLAYER_PROPS().afkTimer;
                         }
                         else
                         {
@@ -484,13 +479,13 @@ q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
                     break;
 
                 case ANIM_STATUS(HarryAnim_IdleExhausted, true):
-                    if (playerChara.health < Q12(30.0f))
+                    if (PLAYER_CHARA().health < Q12(30.0f))
                     {
-                        duration = Q12(40.0f) - playerChara.health;
+                        duration = Q12(40.0f) - PLAYER_CHARA().health;
                     }
                     else
                     {
-                        duration = Q12(FP_FROM(playerProps.exhaustionTimer, Q12_SHIFT));
+                        duration = Q12(FP_FROM(PLAYER_PROPS().exhaustionTimer, Q12_SHIFT));
                     }
                     break;
             }
@@ -521,24 +516,24 @@ void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveS
     // @hack Wrapping in loop required for match.
     do
     {
-        if (baseMoveSpeed < playerProps.moveSpeed)
+        if (baseMoveSpeed < PLAYER_PROPS().moveSpeed)
         {
-            unkMoveDist           = playerProps.moveSpeed - ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
-            playerProps.moveSpeed = unkMoveDist;
+            unkMoveDist           = PLAYER_PROPS().moveSpeed - ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
+            PLAYER_PROPS().moveSpeed = unkMoveDist;
             if (unkMoveDist < baseMoveSpeed)
             {
-                playerProps.moveSpeed = baseMoveSpeed;
+                PLAYER_PROPS().moveSpeed = baseMoveSpeed;
             }
         }
-        else if (playerProps.moveSpeed < baseMoveSpeed)
+        else if (PLAYER_PROPS().moveSpeed < baseMoveSpeed)
         {
-            moveDist = &playerProps.moveSpeed;
+            moveDist = &PLAYER_PROPS().moveSpeed;
             if (player->model.anim.keyframeIdx >= keyframeIdx)
             {
-                playerProps.moveSpeed = *moveDist + TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                PLAYER_PROPS().moveSpeed = *moveDist + TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
             }
 
-            playerProps.moveSpeed = CLAMP(*moveDist, Q12(0.0f), baseMoveSpeed);
+            PLAYER_PROPS().moveSpeed = CLAMP(*moveDist, Q12(0.0f), baseMoveSpeed);
         }
     }
     while (false); // @hack Required for match.
@@ -560,21 +555,21 @@ void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_
     }
     while (false); // @hack Required for match.
 
-    if (moveDistMax < playerProps.moveSpeed)
+    if (moveDistMax < PLAYER_PROPS().moveSpeed)
     {
-        playerProps.moveSpeed -= moveDistBack;
-        if (playerProps.moveSpeed < moveDistMax)
+        PLAYER_PROPS().moveSpeed -= moveDistBack;
+        if (PLAYER_PROPS().moveSpeed < moveDistMax)
         {
-            playerProps.moveSpeed = moveDistMax;
+            PLAYER_PROPS().moveSpeed = moveDistMax;
         }
     }
     else
     {
-        moveDist = &playerProps.moveSpeed;
-        if (playerProps.moveSpeed < moveDistMax)
+        moveDist = &PLAYER_PROPS().moveSpeed;
+        if (PLAYER_PROPS().moveSpeed < moveDistMax)
         {
-            playerProps.moveSpeed += moveDistForward;
-            playerProps.moveSpeed  = CLAMP(*moveDist, Q12(0.0f), moveDistMax);
+            PLAYER_PROPS().moveSpeed += moveDistForward;
+            PLAYER_PROPS().moveSpeed  = CLAMP(*moveDist, Q12(0.0f), moveDistMax);
         }
     }
 }
@@ -596,8 +591,8 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
         player->model.stateStep++;
     }
 
-    angleTo = Q12_FRACT(ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - playerCombat.attackPosition.vx,
-                               (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - playerCombat.attackPosition.vz) +
+    angleTo = Q12_FRACT(ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - PLAYER_COMBAT().attackPosition.vx,
+                               (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - PLAYER_COMBAT().attackPosition.vz) +
                           Q12_ANGLE(360.0f));
     player->angleToTarget = angleTo;
     Math_ShortestAngleGet(player->rotation.vy, angleTo, &shortestAngle);
@@ -617,53 +612,53 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
     if (extra->model.anim.keyframeIdx >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + D_800AD4C8[weaponAttack].field_E) &&
         ((HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + D_800AD4C8[weaponAttack].field_E) + D_800AD4C8[weaponAttack].field_F) >= extra->model.anim.keyframeIdx)
     {
-        playerCombat.weaponAttack = weaponAttack;
+        PLAYER_COMBAT().weaponAttack = weaponAttack;
 
-        if (!(playerProps.flags & PlayerFlag_Unk2))
+        if (!(PLAYER_PROPS().flags & PlayerFlag_Unk2))
         {
             player->field_44.field_0 = 1;
-            playerProps.flags |= PlayerFlag_Unk2;
+            PLAYER_PROPS().flags |= PlayerFlag_Unk2;
         }
     }
 
     if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
     {
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      =  Q12_MULT(g_Harry_KickAnimBoxOffsets[player->model.anim.keyframeIdx - 457], Math_Cos(player->rotation.vy));
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = -Q12_MULT(g_Harry_KickAnimBoxOffsets[player->model.anim.keyframeIdx - 457], Math_Sin(player->rotation.vy));
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx =  Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz =  Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.box.vx      =  Q12_MULT(g_Harry_KickAnimBoxOffsets[player->model.anim.keyframeIdx - 457], Math_Cos(player->rotation.vy));
+        PLAYER_CHARA().collision.shapeOffsets.box.vz      = -Q12_MULT(g_Harry_KickAnimBoxOffsets[player->model.anim.keyframeIdx - 457], Math_Sin(player->rotation.vy));
+        PLAYER_CHARA().collision.shapeOffsets.cylinder.vx =  Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.cylinder.vz =  Q12(0.0f);
     }
 
     if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
     {
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      =  Q12_MULT(g_Harry_StompAnimBoxOffsets[player->model.anim.keyframeIdx - 485], Math_Cos(player->rotation.vy));
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = -Q12_MULT(g_Harry_StompAnimBoxOffsets[player->model.anim.keyframeIdx - 485], Math_Sin(player->rotation.vy));
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx =  Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz =  Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.box.vx      =  Q12_MULT(g_Harry_StompAnimBoxOffsets[player->model.anim.keyframeIdx - 485], Math_Cos(player->rotation.vy));
+        PLAYER_CHARA().collision.shapeOffsets.box.vz      = -Q12_MULT(g_Harry_StompAnimBoxOffsets[player->model.anim.keyframeIdx - 485], Math_Sin(player->rotation.vy));
+        PLAYER_CHARA().collision.shapeOffsets.cylinder.vx =  Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.cylinder.vz =  Q12(0.0f);
     }
 
     if (player->model.anim.status == animStatus &&
         player->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[animStatus].endKeyframeIdx)
     {
-        playerProps.flags &= ~PlayerFlag_Unk2;
+        PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;
 
         Player_ExtraStateSet(player, extra, PlayerState_None);
 
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
 
-        playerCombat.weaponAttack = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE :
+        PLAYER_COMBAT().weaponAttack = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE :
                                                                                               (g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife);
         g_SysWork.targetNpcIdx    = NO_VALUE;
-        playerCombat.isAiming     = false;
+        PLAYER_COMBAT().isAiming     = false;
     }
 }
 
 void Player_CharaTurn_0(s_SubCharacter* player, e_PlayerLowerBodyState curState) // 0x800711C4
 {
-    if (playerExtra.upperBodyState == PlayerUpperBodyState_Attack ||
+    if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_Attack ||
         !g_Player_IsSteppingLeftTap || !g_Player_IsSteppingRightTap)
     {
         return;
@@ -671,17 +666,17 @@ void Player_CharaTurn_0(s_SubCharacter* player, e_PlayerLowerBodyState curState)
 
     if (g_Player_IsTurningLeft)
     {
-        playerExtra.lowerBodyState = curState + PlayerLowerBodyState_QuickTurnLeft;
+        PLAYER_EXTRA().lowerBodyState = curState + PlayerLowerBodyState_QuickTurnLeft;
     }
     else
     {
-        playerExtra.lowerBodyState = curState + PlayerLowerBodyState_QuickTurnRight;
+        PLAYER_EXTRA().lowerBodyState = curState + PlayerLowerBodyState_QuickTurnRight;
     }
 }
 
 void Player_CharaTurn_1(s_SubCharacter* player, e_PlayerLowerBodyState curState) // 0x80071224
 {
-    if (playerExtra.upperBodyState == PlayerUpperBodyState_Attack ||
+    if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_Attack ||
         !g_Player_IsSteppingLeftTap || !g_Player_IsSteppingRightTap)
     {
         return;
@@ -689,11 +684,11 @@ void Player_CharaTurn_1(s_SubCharacter* player, e_PlayerLowerBodyState curState)
 
     if (g_Player_IsTurningRight)
     {
-        playerExtra.lowerBodyState = curState + PlayerLowerBodyState_QuickTurnRight;
+        PLAYER_EXTRA().lowerBodyState = curState + PlayerLowerBodyState_QuickTurnRight;
     }
     else
     {
-        playerExtra.lowerBodyState = curState + PlayerLowerBodyState_QuickTurnLeft;
+        PLAYER_EXTRA().lowerBodyState = curState + PlayerLowerBodyState_QuickTurnLeft;
     }
 }
 
@@ -710,8 +705,8 @@ void Player_CharaRotate(s32 speed) // 0x80071284
             D_800C454C = ((-speed * g_DeltaTime) * g_Player_IsTurningLeft) >> 6;
         }
     }
-    else if (playerExtra.lowerBodyState == PlayerLowerBodyState_WalkBackward ||
-             playerExtra.lowerBodyState == PlayerLowerBodyState_AimWalkBackward)
+    else if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_WalkBackward ||
+             PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_AimWalkBackward)
     {
         if (g_Player_IsTurningRight)
         {
@@ -737,7 +732,7 @@ void Player_CharaRotate(s32 speed) // 0x80071284
 
 void Player_MovementStateReset(s_SubCharacter* player, e_PlayerLowerBodyState lowerBodyState) // 0x800713B4
 {
-    if (playerExtra.lowerBodyState != lowerBodyState)
+    if (PLAYER_EXTRA().lowerBodyState != lowerBodyState)
     {
         player->model.stateStep                 = 0;
         player->model.controlState              = 0;
@@ -756,7 +751,7 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe
 
     if (player->model.anim.keyframeIdx >= keyframe1)
     {
-        if (!(playerProps.flags & PlayerFlag_Unk4))
+        if (!(PLAYER_PROPS().flags & PlayerFlag_Unk4))
         {
             if (pitch < 0x20)
             {
@@ -782,18 +777,18 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe
                 player->properties.player.field_10C = pitch + 0x40;
             }
 
-            playerProps.flags |= PlayerFlag_Unk4;
+            PLAYER_PROPS().flags |= PlayerFlag_Unk4;
             return true;
         }
     }
     else
     {
-        playerProps.flags &= ~PlayerFlag_Unk4;
+        PLAYER_PROPS().flags &= ~PlayerFlag_Unk4;
     }
 
     if (player->model.anim.keyframeIdx >= keyframe0)
     {
-        if (!(playerProps.flags & PlayerFlag_Unk5))
+        if (!(PLAYER_PROPS().flags & PlayerFlag_Unk5))
         {
             if (pitch < 32)
             {
@@ -819,13 +814,13 @@ bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe
                 player->properties.player.field_10C = pitch + 64;
             }
 
-            playerProps.flags |= PlayerFlag_Unk5;
+            PLAYER_PROPS().flags |= PlayerFlag_Unk5;
             return true;
         }
     }
     else
     {
-        playerProps.flags &= ~PlayerFlag_Unk5;
+        PLAYER_PROPS().flags &= ~PlayerFlag_Unk5;
     }
 
     return false;
@@ -840,7 +835,7 @@ bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_Sf
 
     if (player->model.anim.keyframeIdx >= keyframeIdx)
     {
-        if (playerProps.flags & PlayerFlag_SfxActive)
+        if (PLAYER_PROPS().flags & PlayerFlag_SfxActive)
         {
             return false;
         }
@@ -881,12 +876,12 @@ bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_Sf
                 break;
         }
 
-        playerProps.flags |= PlayerFlag_SfxActive;
+        PLAYER_PROPS().flags |= PlayerFlag_SfxActive;
         return true;
     }
     else
     {
-        playerProps.flags &= ~PlayerFlag_SfxActive;
+        PLAYER_PROPS().flags &= ~PlayerFlag_SfxActive;
 
         do {} while (false); // @hack Required for match.
 
@@ -898,7 +893,7 @@ void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* c
 {
     s_PlayerExtra* extra;
 
-    extra = &playerExtra;
+    extra = &PLAYER_EXTRA();
 
     if (g_DeltaTime != Q12(0.0f))
     {
@@ -951,9 +946,9 @@ void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* c
 
 static inline void func_80071968_Switch0(void)
 {
-    if (playerCombat.weaponAttack != NO_VALUE)
+    if (PLAYER_COMBAT().weaponAttack != NO_VALUE)
     {
-        switch (playerCombat.weaponAttack)
+        switch (PLAYER_COMBAT().weaponAttack)
         {
             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
@@ -1010,9 +1005,9 @@ static inline void func_80071968_Switch0(void)
 
 static inline void func_80071968_Switch1(void)
 {
-    if (playerCombat.weaponAttack != NO_VALUE)
+    if (PLAYER_COMBAT().weaponAttack != NO_VALUE)
     {
-        switch (playerCombat.weaponAttack)
+        switch (PLAYER_COMBAT().weaponAttack)
         {
             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
@@ -1073,7 +1068,7 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
 {
     s_AnimInfo* animInfo;
 
-    switch (playerExtra.state)
+    switch (PLAYER_EXTRA().state)
     {
         case PlayerState_Unk61:
         case PlayerState_Unk62:
@@ -1135,7 +1130,7 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
             break;
 
         case PlayerState_None:
-            switch (playerExtra.upperBodyState)
+            switch (PLAYER_EXTRA().upperBodyState)
             {
                 case PlayerUpperBodyState_RunForward:
                 case PlayerUpperBodyState_RunRight:
@@ -1265,13 +1260,13 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
     if (!g_Player_IsInWalkToRunTransition)
     {
         // Disable upper body bones before playing anim.
-        playerExtra.disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
+        PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[player->model.anim.status];
         animInfo->playbackFunc(&player->model, anmHdr, coords, animInfo);
 
         // Re-enable upper body bones, disable lower body bones.
-        playerExtra.disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
+        PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[extra->model.anim.status];
         animInfo->playbackFunc(&extra->model, anmHdr, coords, animInfo);
@@ -1279,14 +1274,14 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
     }
 
     // Disable upper body bones before playing anim.
-    playerExtra.disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
+    PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
     player->model.anim.status                     = ANIM_STATUS(HarryAnim_Still, false);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)];
     animInfo->playbackFunc(&player->model, anmHdr, coords, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
-    playerExtra.disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
+    PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model.anim.status];
     animInfo->playbackFunc(&extra->model, anmHdr, coords, animInfo);
@@ -1343,17 +1338,17 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         player->flags &= ~CharaFlag_Unk4;
     }
 
-    if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
+    if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
     {
-        playerProps.gasWeaponPowerTimer -= g_DeltaTime;
+        PLAYER_PROPS().gasWeaponPowerTimer -= g_DeltaTime;
     }
 
-    playerProps.gasWeaponPowerTimer = CLAMP(playerProps.gasWeaponPowerTimer, Q12(0.0f), Q12(60.0f));
+    PLAYER_PROPS().gasWeaponPowerTimer = CLAMP(PLAYER_PROPS().gasWeaponPowerTimer, Q12(0.0f), Q12(60.0f));
 
-    if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-        playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
     {
-        func_8004C564(playerCombat.weaponAttack, (playerProps.gasWeaponPowerTimer != 0) ? 4 : 2);
+        func_8004C564(PLAYER_COMBAT().weaponAttack, (PLAYER_PROPS().gasWeaponPowerTimer != 0) ? 4 : 2);
     }
 
     g_SavegamePtr->healthSaturation -= g_DeltaTime;
@@ -1361,8 +1356,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
     if (g_SavegamePtr->healthSaturation != Q12(0.0f))
     {
-        playerChara.health += g_DeltaTime;
-        playerChara.health  = CLAMP(playerChara.health, Q12(0.0f), Q12(100.0f));
+        PLAYER_CHARA().health += g_DeltaTime;
+        PLAYER_CHARA().health  = CLAMP(PLAYER_CHARA().health, Q12(0.0f), Q12(100.0f));
     }
 
     if (g_SavegamePtr->mapIdx == MapIdx_MAP2_S00)
@@ -1375,12 +1370,12 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         Player_Controller();
     }
 
-    switch (playerExtra.state)
+    switch (PLAYER_EXTRA().state)
     {
         case PlayerState_Idle:
-            playerProps.moveSpeed = Q12(0.0f);
+            PLAYER_PROPS().moveSpeed = Q12(0.0f);
             WorldEnvRender_LightRotationAndIntensityGet(&playerAngles);
-            playerProps.quickTurnHeadingAngle = playerAngles.vy;
+            PLAYER_PROPS().quickTurnHeadingAngle = playerAngles.vy;
 
             if (extra->model.stateStep == 0)
             {
@@ -1406,7 +1401,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         case PlayerState_Combat:
             Player_LowerBodyUpdate(player, extra);
 
-            if (playerExtra.state < (u32)PlayerState_Idle)
+            if (PLAYER_EXTRA().state < (u32)PlayerState_Idle)
             {
                 Player_UpperBodyUpdate(player, extra);
             }
@@ -1415,13 +1410,13 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         case PlayerState_Unk7:
             func_8007FB94(player, extra, ANIM_STATUS(100, false));
 
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
 
-                if (playerProps.moveSpeed < Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed < Q12(0.0f))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -1429,7 +1424,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
             {
                 g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
-                playerProps.moveSpeed = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
+                PLAYER_PROPS().moveSpeed = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
             }
 
             if (extra->model.anim.keyframeIdx == g_MapOverlayHdr.field_38[D_800AF220].keyframeIdx_6)
@@ -1437,14 +1432,14 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 player->attackReceived = NO_VALUE;
 
                 g_SysWork.targetNpcIdx = NO_VALUE;
-                playerProps.flags &= ~PlayerFlag_DamageReceived;
+                PLAYER_PROPS().flags &= ~PlayerFlag_DamageReceived;
 
                 Player_ExtraStateSet(player, extra, PlayerState_None);
 
-                playerProps.moveSpeed = Q12(0.0f);
+                PLAYER_PROPS().moveSpeed = Q12(0.0f);
             }
 
-            g_Player_PrevMoveSpeed = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed = PLAYER_PROPS().moveSpeed;
             player->flags         |= CharaFlag_Unk4;
             player->attackReceived = NO_VALUE;
             break;
@@ -1453,7 +1448,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         case PlayerState_DamageThrownBack:
             thrownState = PlayerState_None;
 
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_DamageThrownFront:
                     animStatus  = ANIM_STATUS(HarryAnim_Unk131, true);
@@ -1474,17 +1469,17 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 player->properties.player.afkTimer = Q12(10.0f);
             }
 
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 3;
+                PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 3;
 
-                if (playerProps.moveSpeed < Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed < Q12(0.0f))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
-            g_Player_PrevMoveSpeed = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed = PLAYER_PROPS().moveSpeed;
             break;
 
         case PlayerState_EnemyGrabPinnedFrontStart:
@@ -1492,7 +1487,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             romperAttackState = PlayerState_None;
             npcIdx            = 0;
 
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_EnemyGrabPinnedFrontStart:
                     animStatus        = ANIM_STATUS(HarryAnim_Unk127, true);
@@ -1509,7 +1504,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     break;
             }
 
-            playerProps.moveSpeed = Q12(0.0f);
+            PLAYER_PROPS().moveSpeed = Q12(0.0f);
             func_8007FB94(player, extra, animStatus);
             player->collision.cylinder.outerRadius = Q12(0.25f);
             player->collision.cylinder.innerRadius = Q12(0.0f);
@@ -1517,15 +1512,15 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
                 cylinderOffset0                                = -g_Harry_PinnedAnimCylinderOffsets[player->model.anim.keyframeIdx - g_MapOverlayHdr.field_38[D_800AF220].time];
-                playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
-                playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffset0, Math_Sin(player->rotation.vy));
-                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffset0, Math_Cos(player->rotation.vy));
+                PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
+                PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+                PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffset0, Math_Sin(player->rotation.vy));
+                PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffset0, Math_Cos(player->rotation.vy));
             }
 
             if (ABS(headingAngle0) < Q12_ANGLE(11.25f))
             {
-                if (playerExtra.state == PlayerState_EnemyGrabPinnedFrontStart)
+                if (PLAYER_EXTRA().state == PlayerState_EnemyGrabPinnedFrontStart)
                 {
                     player->rotation.vy = g_SysWork.npcs[npcIdx].rotation.vy + Q12_ANGLE(180.0f);
                 }
@@ -1568,8 +1563,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
             if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
             {
-                if (playerExtra.state >= PlayerState_EnemyGrabPinnedFrontStart &&
-                    playerExtra.state <  PlayerState_EnemyGrabPinnedFront)
+                if (PLAYER_EXTRA().state >= PlayerState_EnemyGrabPinnedFrontStart &&
+                    PLAYER_EXTRA().state <  PlayerState_EnemyGrabPinnedFront)
                 {
                     temp = Q12(-8.0f);
                     extra->model.anim.time         = (Q12(g_MapOverlayHdr.harryMapAnimInfos[player->model.anim.status - 76].startKeyframeIdx) + model->anim.time) + temp;
@@ -1625,11 +1620,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             grabFreeInputCount    = 0;
             enemyGrabReleaseState = PlayerState_None;
             unkDistThreshold      = Q12(0.0f);
-            playerProps.moveSpeed = Q12(0.0f);
+            PLAYER_PROPS().moveSpeed = Q12(0.0f);
             npcDist               = Q12(0.0f);
 
             // Accommodates player position (for pinned enemy gram and Romper attack) and establishes required input count to get free.
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_OnFloorFront:
                 case PlayerState_OnFloorBehind:
@@ -1646,7 +1641,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         grabFreeInputCount = 3200;
                     }
 
-                    switch (playerExtra.state)
+                    switch (PLAYER_EXTRA().state)
                     {
                         case PlayerState_OnFloorFront:
                             animStatus            = ANIM_STATUS(HarryAnim_Unk132, true);
@@ -1672,7 +1667,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         SysWork_StateSetNext(SysState_GameOver);
 
                         player->health                  = Q12(100.0f);
-                        playerProps.gasWeaponPowerTimer = Q12(0.0f);
+                        PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
                         return;
                     }
                     break;
@@ -1681,7 +1676,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabPinnedBack:
                     unkDistThreshold = Q12(0.65f);
 
-                    switch (playerExtra.state)
+                    switch (PLAYER_EXTRA().state)
                     {
                         case PlayerState_EnemyGrabPinnedFront:
                             if (g_SavegamePtr->gameDifficulty == GameDifficulty_Easy)
@@ -1721,10 +1716,10 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     }
 
                     player->collision.cylinder.outerRadius         = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
+                    PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                    PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                    PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+                    PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
 
                     if (ABS(player->position.vx - D_800C4610.vx) <= Q12(0.05f))
                     {
@@ -1765,7 +1760,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         SysWork_StateSetNext(SysState_GameOver);
 
                         player->health                  = Q12(100.0f);
-                        playerProps.gasWeaponPowerTimer = Q12(0.0f);
+                        PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
                         return;
                     }
                     break;
@@ -1895,7 +1890,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             }
 
             // Accommodates position of player and enemy?
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_EnemyGrabTorsoFront:
                 case PlayerState_EnemyGrabLegsFront:
@@ -1950,7 +1945,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     break;
             }
 
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_EnemyGrabPinnedFront:
                     Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[g_SysWork.npcIdxs[0]].rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
@@ -1969,18 +1964,18 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             }
 
             // If player isn't thrown to floor (Cybil shoot attack).
-            if (!(playerExtra.state >= PlayerState_OnFloorFront &&
-                  playerExtra.state <  PlayerState_GetUpFront))
+            if (!(PLAYER_EXTRA().state >= PlayerState_OnFloorFront &&
+                  PLAYER_EXTRA().state <  PlayerState_GetUpFront))
             {
                 if (unkDistThreshold < npcDist)
                 {
                     g_Player_GrabReleaseInputTimer = grabFreeInputCount;
-                    if (playerExtra.state == PlayerState_EnemyGrabPinnedFront)
+                    if (PLAYER_EXTRA().state == PlayerState_EnemyGrabPinnedFront)
                     {
                         g_SysWork.npcs[g_SysWork.npcIdxs[0]].moveSpeed = Q12(0.0f);
                     }
 
-                    if (playerExtra.state == PlayerState_EnemyGrabPinnedBack)
+                    if (PLAYER_EXTRA().state == PlayerState_EnemyGrabPinnedBack)
                     {
                         g_SysWork.npcs[g_SysWork.npcIdxs[1]].moveSpeed = Q12(0.0f);
                     }
@@ -2009,27 +2004,27 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         case PlayerState_EnemyReleasePinnedBack:
         case PlayerState_GetUpFront:
         case PlayerState_GetUpBack:
-            if (playerExtra.state != PlayerState_FallBackward)
+            if (PLAYER_EXTRA().state != PlayerState_FallBackward)
             {
-                if (playerProps.moveSpeed != Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
                 {
-                    playerProps.moveSpeed -= DIV_FAST(TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)), 2);
-                    if ((playerProps.moveSpeed >> 16) & 1)
+                    PLAYER_PROPS().moveSpeed -= DIV_FAST(TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)), 2);
+                    if ((PLAYER_PROPS().moveSpeed >> 16) & 1)
                     {
-                        playerProps.moveSpeed = Q12(0.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(0.0f);
                     }
                 }
             }
-            else if (playerProps.moveSpeed != Q12(0.0f))
+            else if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= DIV_FAST(TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)), 4);
-                if ((playerProps.moveSpeed >> 16) & 1)
+                PLAYER_PROPS().moveSpeed -= DIV_FAST(TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)), 4);
+                if ((PLAYER_PROPS().moveSpeed >> 16) & 1)
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_GetUpFront:
                     animStatus = ANIM_STATUS(HarryAnim_Unk133, true);
@@ -2084,15 +2079,15 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     break;
             }
 
-            if (!(playerExtra.state >= PlayerState_FallForward && playerExtra.state < PlayerState_KickEnemy))
+            if (!(PLAYER_EXTRA().state >= PlayerState_FallForward && PLAYER_EXTRA().state < PlayerState_KickEnemy))
             {
                 func_8007FB94(player, extra, animStatus);
             }
 
-            g_Player_PrevMoveSpeed = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed = PLAYER_PROPS().moveSpeed;
             player->flags |= CharaFlag_Unk4;
 
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_GetUpFront:
                 case PlayerState_GetUpBack:
@@ -2101,19 +2096,19 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHdr.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        playerProps.flags &= ~PlayerFlag_DamageReceived;
+                        PLAYER_PROPS().flags &= ~PlayerFlag_DamageReceived;
 
                         Player_ExtraStateSet(player, extra, PlayerState_None);
 
-                        playerChara.collision.cylinder.outerRadius     = Q12(0.3f);
-                        playerChara.collision.cylinder.innerRadius     = DEFAULT_PLAYER_CYLINDER_INNER_RADIUS;
-                        playerChara.collision.box.topExtent            = DEFAULT_PLAYER_BOX_TOP;
-                        playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
-                        playerChara.collision.box.bottomExtent         = Q12(0.0f);
-                        playerChara.collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
+                        PLAYER_CHARA().collision.cylinder.outerRadius     = Q12(0.3f);
+                        PLAYER_CHARA().collision.cylinder.innerRadius     = DEFAULT_PLAYER_CYLINDER_INNER_RADIUS;
+                        PLAYER_CHARA().collision.box.topExtent            = DEFAULT_PLAYER_BOX_TOP;
+                        PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
+                        PLAYER_CHARA().collision.box.bottomExtent         = Q12(0.0f);
+                        PLAYER_CHARA().collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
                     }
 
                     player->attackReceived = NO_VALUE;
@@ -2124,10 +2119,10 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyReleasePinnedFront:
                 case PlayerState_EnemyReleasePinnedBack:
                     player->properties.player.afkTimer             = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                    playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
+                    PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                    PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                    PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+                    PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
 
                     if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                     {
@@ -2140,8 +2135,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHdr.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        playerProps.flags &= ~PlayerFlag_DamageReceived;
-                        switch (playerExtra.state)
+                        PLAYER_PROPS().flags &= ~PlayerFlag_DamageReceived;
+                        switch (PLAYER_EXTRA().state)
                         {
                             case PlayerState_EnemyReleasePinnedFront:
                                 Player_ExtraStateSet(player, extra, PlayerState_Unk43);
@@ -2152,11 +2147,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 break;
                         }
 
-                        playerChara.collision.cylinder.outerRadius     = Q12(0.3f);
-                        playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
+                        PLAYER_CHARA().collision.cylinder.outerRadius     = Q12(0.3f);
+                        PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
 
                         player->attackReceived = NO_VALUE;
                     }
@@ -2176,16 +2171,16 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (player->model.anim.keyframeIdx == g_MapOverlayHdr.field_38[D_800AF220].keyframeIdx_6)
                     {
-                        playerProps.flags &= ~PlayerFlag_DamageReceived;
+                        PLAYER_PROPS().flags &= ~PlayerFlag_DamageReceived;
 
                         Player_ExtraStateSet(player, extra, PlayerState_None);
 
                         player->collision.cylinder.outerRadius = Q12(0.3f);
 
-                        playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                        playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+                        PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
                     }
                     break;
 
@@ -2211,13 +2206,13 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         func_80089470();
                     }
 
-                    if (playerExtra.state == PlayerState_FallForward)
+                    if (PLAYER_EXTRA().state == PlayerState_FallForward)
                     {
                         player->properties.player.field_10D = 0;
                         if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                         {
-                            playerChara.collision.box.topExtent = g_Harry_FallForwardAnimBoxOffsets[player->model.anim.keyframeIdx - 379][0];
-                            playerChara.collision.box.offsetY   = g_Harry_FallForwardAnimBoxOffsets[player->model.anim.keyframeIdx - 379][1];
+                            PLAYER_CHARA().collision.box.topExtent = g_Harry_FallForwardAnimBoxOffsets[player->model.anim.keyframeIdx - 379][0];
+                            PLAYER_CHARA().collision.box.offsetY   = g_Harry_FallForwardAnimBoxOffsets[player->model.anim.keyframeIdx - 379][1];
                         }
 
                         if (player->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[45].endKeyframeIdx)
@@ -2231,9 +2226,9 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 Player_ExtraStateSet(player, extra, PlayerState_None);
                             }
 
-                            playerChara.collision.box.topExtent    = DEFAULT_PLAYER_BOX_TOP;
-                            playerChara.collision.box.bottomExtent = Q12(0.0f);
-                            playerChara.collision.box.offsetY      = DEFAULT_PLAYER_BOX_OFFSET_Y;
+                            PLAYER_CHARA().collision.box.topExtent    = DEFAULT_PLAYER_BOX_TOP;
+                            PLAYER_CHARA().collision.box.bottomExtent = Q12(0.0f);
+                            PLAYER_CHARA().collision.box.offsetY      = DEFAULT_PLAYER_BOX_OFFSET_Y;
                             player->collision.cylinder.outerRadius = Q12(0.3f);
                         }
                     }
@@ -2243,8 +2238,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                         if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status))
                         {
-                            playerChara.collision.box.topExtent = g_Harry_FallBackwardAnimBoxOffsets[player->model.anim.keyframeIdx - 418][0];
-                            playerChara.collision.box.offsetY   = g_Harry_FallBackwardAnimBoxOffsets[player->model.anim.keyframeIdx - 418][1];
+                            PLAYER_CHARA().collision.box.topExtent = g_Harry_FallBackwardAnimBoxOffsets[player->model.anim.keyframeIdx - 418][0];
+                            PLAYER_CHARA().collision.box.offsetY   = g_Harry_FallBackwardAnimBoxOffsets[player->model.anim.keyframeIdx - 418][1];
                         }
 
                         if (player->model.anim.keyframeIdx == HARRY_BASE_ANIM_INFOS[47].endKeyframeIdx)
@@ -2258,9 +2253,9 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                                 Player_ExtraStateSet(player, extra, PlayerState_None);
                             }
 
-                            playerChara.collision.box.topExtent    = DEFAULT_PLAYER_BOX_TOP;
-                            playerChara.collision.box.bottomExtent = Q12(0.0f);
-                            playerChara.collision.box.offsetY      = DEFAULT_PLAYER_BOX_OFFSET_Y;
+                            PLAYER_CHARA().collision.box.topExtent    = DEFAULT_PLAYER_BOX_TOP;
+                            PLAYER_CHARA().collision.box.bottomExtent = Q12(0.0f);
+                            PLAYER_CHARA().collision.box.offsetY      = DEFAULT_PLAYER_BOX_OFFSET_Y;
                             player->collision.cylinder.outerRadius = Q12(0.3f);
                         }
                     }
@@ -2316,7 +2311,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 extra->model.controlState++;
                 player->health = Q12(100.0f);
                 player->model.controlState++;
-                playerProps.gasWeaponPowerTimer = Q12(0.0f);
+                PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
                 return;
             }
             break;
@@ -2348,10 +2343,10 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
 
                 cylinderOffset1                                = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(player->model.anim.time));
-                playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
-                playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-                playerChara.collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffset1, Math_Sin(player->rotation.vy));
-                playerChara.collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffset1, Math_Cos(player->rotation.vy));
+                PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
+                PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+                PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12_MULT(cylinderOffset1, Math_Sin(player->rotation.vy));
+                PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12_MULT(cylinderOffset1, Math_Cos(player->rotation.vy));
                 player->collision.cylinder.outerRadius         = Q12(0.3f);
             }
 
@@ -2367,7 +2362,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     extra->model.controlState++;
                     player->health = Q12(100.0f);
                     player->model.controlState++;
-                    playerProps.gasWeaponPowerTimer = Q12(0.0f);
+                    PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
                     return;
                 }
 
@@ -2380,7 +2375,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 extra->model.controlState++;
                 player->health = Q12(100.0f);
                 player->model.controlState++;
-                playerProps.gasWeaponPowerTimer = Q12(0.0f);
+                PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
                 return;
             }
             break;
@@ -2417,7 +2412,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
         case PlayerState_DamageFeetBack:
         case PlayerState_DamagePushBack:
         case PlayerState_DamagePushFront:
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_DamageTorsoBack:
                     func_8007FB94(player, extra, ANIM_STATUS(105, true));
@@ -2452,10 +2447,10 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     break;
             }
 
-            switch (playerExtra.state)
+            switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_DamagePushBack:
-                    Math_ShortestAngleGet(player->rotation.vy, playerProps.field_118, &angle);
+                    Math_ShortestAngleGet(player->rotation.vy, PLAYER_PROPS().field_118, &angle);
 
                     if (ABS(angle) >= Q12_ANGLE(90.0f))
                     {
@@ -2464,7 +2459,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (ABS(angle) < Q12_ANGLE(5.7f))
                     {
-                        player->rotation.vy = playerProps.field_118;
+                        player->rotation.vy = PLAYER_PROPS().field_118;
                     }
                     else
                     {
@@ -2473,7 +2468,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     break;
 
                 case PlayerState_DamagePushFront:
-                    Math_ShortestAngleGet(player->rotation.vy, playerProps.field_118, &sp1E);
+                    Math_ShortestAngleGet(player->rotation.vy, PLAYER_PROPS().field_118, &sp1E);
 
                     if (ABS(sp1E) < Q12_ANGLE(90.0f))
                     {
@@ -2482,7 +2477,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
                     if (ABS(sp1E) >= Q12_ANGLE(174.4f))
                     {
-                        player->rotation.vy = Q12_ANGLE_NORM_U(playerProps.field_118 + Q12_ANGLE(180.0f));
+                        player->rotation.vy = Q12_ANGLE_NORM_U(PLAYER_PROPS().field_118 + Q12_ANGLE(180.0f));
                     }
                     else
                     {
@@ -2491,12 +2486,12 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     break;
             }
 
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 2;
-                if ((playerProps.moveSpeed >> 16) & 0x1)
+                PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f)) >> 2;
+                if ((PLAYER_PROPS().moveSpeed >> 16) & 0x1)
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -2505,7 +2500,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) -
                                         player->rotation.vy;
-                playerProps.moveSpeed = SQUARE(player->damage.position.vx) +
+                PLAYER_PROPS().moveSpeed = SQUARE(player->damage.position.vx) +
                                         SQUARE(player->damage.position.vz) +
                                         SQUARE(player->damage.position.vy);
             }
@@ -2514,14 +2509,14 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 player->attackReceived = NO_VALUE;
                 g_SysWork.targetNpcIdx = NO_VALUE;
-                playerProps.flags     &= ~PlayerFlag_DamageReceived;
+                PLAYER_PROPS().flags     &= ~PlayerFlag_DamageReceived;
 
                 Player_ExtraStateSet(player, extra, PlayerState_None);
 
-                playerProps.moveSpeed = Q12(0.0f);
+                PLAYER_PROPS().moveSpeed = Q12(0.0f);
             }
 
-            g_Player_PrevMoveSpeed     = playerProps.moveSpeed;
+            g_Player_PrevMoveSpeed     = PLAYER_PROPS().moveSpeed;
             player->flags |= CharaFlag_Unk4;
             break;
 
@@ -2549,75 +2544,75 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
     e_PlayerUpperBodyState prevState;
     s_Model*               charaModel;
 
-    prevState  = playerExtra.upperBodyState;
-    charaModel = &g_SysWork.playerWork.player.model;
+    prevState  = PLAYER_EXTRA().upperBodyState;
+    charaModel = &PLAYER_CHARA().model;
 
-    switch (playerExtra.lowerBodyState)
+    switch (PLAYER_EXTRA().lowerBodyState)
     {
         case PlayerLowerBodyState_WalkForward:
-            playerExtra.upperBodyState = PlayerUpperBodyState_WalkForward;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_WalkForward;
 
         default:
             break;
 
         case PlayerLowerBodyState_RunForward:
-            playerExtra.upperBodyState = PlayerUpperBodyState_RunForward;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunForward;
             break;
 
         case PlayerLowerBodyState_WalkBackward:
-            playerExtra.upperBodyState = PlayerUpperBodyState_WalkBackward;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_WalkBackward;
             break;
 
         case PlayerLowerBodyState_SidestepRight:
-            playerExtra.upperBodyState = PlayerUpperBodyState_SidestepRight;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_SidestepRight;
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
-            playerExtra.upperBodyState = PlayerUpperBodyState_SidestepLeft;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_SidestepLeft;
             break;
 
         case PlayerLowerBodyState_RunRight:
-            playerExtra.upperBodyState = PlayerUpperBodyState_RunRight;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunRight;
             break;
 
         case PlayerLowerBodyState_RunLeft:
-            playerExtra.upperBodyState = PlayerUpperBodyState_RunLeft;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunLeft;
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
-            playerExtra.upperBodyState = PlayerUpperBodyState_QuickTurnRight;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_QuickTurnRight;
             break;
 
         case PlayerLowerBodyState_QuickTurnLeft:
-            playerExtra.upperBodyState = PlayerUpperBodyState_QuickTurnLeft;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_QuickTurnLeft;
             break;
 
         case PlayerLowerBodyState_JumpBackward:
-            playerExtra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunJumpBackward;
             break;
 
         case PlayerLowerBodyState_RunForwardWallStop:
-            playerExtra.upperBodyState = PlayerUpperBodyState_RunWallStop;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunWallStop;
             break;
 
         case PlayerLowerBodyState_Stumble:
-            playerExtra.upperBodyState = PlayerUpperBodyState_LowerBodyStumble;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_LowerBodyStumble;
             break;
 
         case PlayerLowerBodyState_RunLeftWallStop:
-            playerExtra.upperBodyState = PlayerUpperBodyState_RunLeftWallStop;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunLeftWallStop;
             break;
 
         case PlayerLowerBodyState_RunRightWallStop:
-            playerExtra.upperBodyState = PlayerUpperBodyState_RunRightWallStop;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunRightWallStop;
             break;
 
         case PlayerLowerBodyState_RunLeftStumble:
-            playerExtra.upperBodyState = PlayerUpperBodyState_RunLeftStumble;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunLeftStumble;
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
-            playerExtra.upperBodyState = PlayerUpperBodyState_SidestepRightStumble;
+            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_SidestepRightStumble;
             break;
 
         case PlayerLowerBodyState_None:
@@ -2625,7 +2620,7 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
             {
                 case 0:
                 case 2:
-                    playerExtra.upperBodyState = PlayerUpperBodyState_None;
+                    PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_None;
                     break;
 
                 case 1:
@@ -2633,45 +2628,45 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
                     {
                         if (g_Player_IsTurningLeft)
                         {
-                            playerExtra.upperBodyState = PlayerUpperBodyState_TurnLeft;
+                            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_TurnLeft;
                         }
                     }
                     else
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_TurnRight;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_TurnRight;
                     }
                     break;
 
                 case 3:
                     if (g_Player_IsTurningLeft)
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_TurnLeft;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_TurnLeft;
                         break;
                     }
 
                     if (!g_Player_IsTurningRight)
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_None;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_None;
                     }
                     break;
 
                 case 4:
                     if (g_Player_IsTurningRight)
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_TurnRight;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_TurnRight;
                         break;
                     }
 
                     if (!g_Player_IsTurningLeft)
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_None;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_None;
                     }
                     break;
             }
             break;
     }
 
-    if (playerExtra.upperBodyState != upperState)
+    if (PLAYER_EXTRA().upperBodyState != upperState)
     {
         extra->model.stateStep    = 0;
         extra->model.controlState = 0;
@@ -2680,7 +2675,7 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
     switch (prevState)
     {
         case PlayerUpperBodyState_WalkForward:
-            if (playerExtra.upperBodyState != PlayerUpperBodyState_RunForward)
+            if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_RunForward)
             {
                 break;
             }
@@ -2692,7 +2687,7 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
             break;
 
         case PlayerUpperBodyState_RunForward:
-            if (playerExtra.upperBodyState != PlayerUpperBodyState_WalkForward)
+            if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_WalkForward)
             {
                 break;
             }
@@ -2716,7 +2711,7 @@ void Player_UpperBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
     stumbleSfxId = (D_800C45C8.floorType == FloorType_10) ? Sfx_Stumble1 : Sfx_Stumble0;
 
-    switch (playerExtra.upperBodyState)
+    switch (PLAYER_EXTRA().upperBodyState)
     {
         case PlayerUpperBodyState_None:
             func_80071620(55, player, 551, Sfx_HarryHeavyBreath);
@@ -2771,9 +2766,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         s32 keyframeIdx1;
         u8  weaponAttack;
 
-        weaponAttack = playerCombat.weaponAttack;
+        weaponAttack = PLAYER_COMBAT().weaponAttack;
 
-        switch (playerCombat.weaponAttack)
+        switch (PLAYER_COMBAT().weaponAttack)
         {
             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
                 keyframeIdx0 = 619;
@@ -2812,9 +2807,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 break;
         }
 
-        if (playerExtra.state == PlayerState_Combat)
+        if (PLAYER_EXTRA().state == PlayerState_Combat)
         {
-            playerProps.field_104 += g_DeltaTime;
+            PLAYER_PROPS().field_104 += g_DeltaTime;
 
             if (!g_GameWork.config.extraWeaponCtrl)
             {
@@ -2842,16 +2837,16 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             g_Player_MeleeAttackType  = 0;
             g_Player_IsMultiTapAttack = 0;
 
-            playerProps.flags &= ~PlayerFlag_Shooting;
-            playerProps.flags &= ~PlayerFlag_Unk6;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Shooting;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Unk6;
 
-            if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType = 0;
                 g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold;
                 D_800AF220               = g_Player_EquippedWeaponInfo.field_A >> 4;
             }
-            else if (g_Player_IsAttacking && playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            else if (g_Player_IsAttacking && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType = 1;
                 g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold - 4;
@@ -2862,7 +2857,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 g_Player_MeleeAttackType = 0;
 
                 // Handle Rock Drill animation.
-                if (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
+                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
                     g_Player_RockDrill_AttackType == RockDrillAttackType_Center)
                 {
                     g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold;
@@ -2882,33 +2877,33 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             extra->model.controlState++;
 
-            if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                playerCombat.weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack), AttackInputType_Tap);
+                PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack), AttackInputType_Tap);
             }
 
-            playerCombat.weaponAttack = WEAPON_ATTACK(playerCombat.weaponAttack, g_Player_MeleeAttackType);
+            PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(PLAYER_COMBAT().weaponAttack, g_Player_MeleeAttackType);
 
-            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[playerCombat.weaponAttack].field_E;
-            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[playerCombat.weaponAttack].field_E +
-                         D_800AD4C8[playerCombat.weaponAttack].field_F;
+            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_E;
+            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_E +
+                         D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_F;
         }
 
         // Used for make continuos/hold shooting smoother?
         if (g_SysWork.targetNpcIdx != NO_VALUE &&
-            playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             if (!g_GameWork.config.extraAutoAiming)
             {
                 if (!WorldEnv_IsInDarkness())
                 {
-                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &g_Player_RotationToTargetX, &g_Player_RotationToTargetY, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
+                    func_8005CD38(&enemyAttackedIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
+                    func_8005D50C(&g_Player_TargetNpcIdx, &g_Player_RotationToTargetX, &g_Player_RotationToTargetY, &PLAYER_COMBAT().attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
                 else
                 {
-                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &g_Player_RotationToTargetX, &g_Player_RotationToTargetY, &playerCombat.attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
+                    func_8005CD38(&enemyAttackedIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
+                    func_8005D50C(&g_Player_TargetNpcIdx, &g_Player_RotationToTargetX, &g_Player_RotationToTargetY, &PLAYER_COMBAT().attackPosition, enemyAttackedIdx, Q12_ANGLE(20.0f));
                 }
             }
             else
@@ -2924,8 +2919,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
             {
-                player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                                         (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) +
+                player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
+                                                         (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) +
                                                   Q12_ANGLE(360.0f));
             }
             else
@@ -2945,17 +2940,17 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (!WorldEnv_IsInDarkness())
                 {
-                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(3.0f), 5);
+                    func_8005CD38(&enemyAttackedIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(3.0f), Q12(3.0f), 5);
                 }
                 else
                 {
-                    func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(1.0f), Q12(1.0f), 5);
+                    func_8005CD38(&enemyAttackedIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(1.0f), Q12(1.0f), 5);
                 }
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
                 {
-                    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                               (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) + Q12(1.0f));
+                    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
+                                               (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) + Q12(1.0f));
 
                     Math_ShortestAngleGet(player->rotation.vy, temp_a1, &ssp20);
                     D_800C454C = g_DeltaTime * 15;
@@ -2978,13 +2973,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             else
             {
                 enemyAttackedIdx = NO_VALUE;
-                playerProps.field_122 = Q12_ANGLE(90.0f);
+                PLAYER_PROPS().field_122 = Q12_ANGLE(90.0f);
                 player->angleToTarget = player->rotation.vy;
             }
 
-            if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                if (playerProps.flags & PlayerFlag_Unk11)
+                if (PLAYER_PROPS().flags & PlayerFlag_Unk11)
                 {
                     if (extra->model.stateStep == 0)
                     {
@@ -3001,7 +2996,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     }
                 }
             }
-            else if (g_Player_IsAttacking && playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            else if (g_Player_IsAttacking && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3009,7 +3004,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.stateStep++;
                 }
             }
-            else if (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
+            else if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
                      g_Player_RockDrill_AttackType == RockDrillAttackType_Center)
             {
                 if (extra->model.stateStep == 0)
@@ -3038,35 +3033,35 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
         // Audio effects for attack animations, no ammo audio and removes ammo value.
         // Additionally trigger some special state for the Rock Drill.
-        if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
-            if (WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx)
                 {
-                    if (!(playerProps.flags & PlayerFlag_Unk2))
+                    if (!(PLAYER_PROPS().flags & PlayerFlag_Unk2))
                     {
                         player->field_44.field_0 = 1;
 
                         Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
 
                         player->properties.player.field_10C = 0x40;
-                        playerProps.flags                  |= PlayerFlag_Unk2;
+                        PLAYER_PROPS().flags                  |= PlayerFlag_Unk2;
                     }
                 }
                 else if (D_800C44D4 < extra->model.anim.keyframeIdx)
                 {
-                    playerProps.flags &= ~PlayerFlag_Unk2;
+                    PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;
                 }
             }
-            else if (playerProps.gasWeaponPowerTimer == Q12(0.0f))
+            else if (PLAYER_PROPS().gasWeaponPowerTimer == Q12(0.0f))
             {
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
-                    !(playerProps.flags & PlayerFlag_Unk2))
+                    !(PLAYER_PROPS().flags & PlayerFlag_Unk2))
                 {
                     player->field_44.field_0 = 1;
-                    playerProps.flags       |= PlayerFlag_Unk2;
+                    PLAYER_PROPS().flags       |= PlayerFlag_Unk2;
                 }
             }
             else
@@ -3082,18 +3077,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         else
         {
             if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
-                !(playerProps.flags & PlayerFlag_Shooting))
+                !(PLAYER_PROPS().flags & PlayerFlag_Shooting))
             {
-                playerProps.flags |= PlayerFlag_Shooting;
+                PLAYER_PROPS().flags |= PlayerFlag_Shooting;
 
-                if (playerCombat.currentWeaponAmmo != 0)
+                if (PLAYER_COMBAT().currentWeaponAmmo != 0)
                 {
                     player->field_44.field_0 = 1;
 
-                    if (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                     {
-                        playerCombat.currentWeaponAmmo--;
-                        g_SavegamePtr->items[playerCombat.weaponInventoryIdx].count--;
+                        PLAYER_COMBAT().currentWeaponAmmo--;
+                        g_SavegamePtr->items[PLAYER_COMBAT().weaponInventoryIdx].count--;
 
                         Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
                     }
@@ -3112,7 +3107,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.anim.keyframeIdx = D_800C44F0[D_800AF220].endKeyframeIdx - 3;
                     extra->model.anim.time        = Q12(D_800C44F0[D_800AF220].endKeyframeIdx - 3);
 
-                    if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim)
+                    if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim)
                     {
                         player->model.anim.keyframeIdx = D_800C44F0[D_800AF220].endKeyframeIdx - 3;
                         player->model.anim.time        = Q12(D_800C44F0[D_800AF220].endKeyframeIdx - 3);
@@ -3124,7 +3119,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         // Finish attack animation.
         // Though more context about `D_800AF220` and `D_800C44F0` is required,
         // they likely indicate if an attack animation has finished.
-        if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             // Attack anim.
             if (extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
@@ -3143,34 +3138,34 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.anim.keyframeIdx = D_800C44F0[0].endKeyframeIdx;
                     extra->model.anim.time        = Q12(extra->model.anim.keyframeIdx);
 
-                    if (playerProps.flags & PlayerFlag_Unk0)
+                    if (PLAYER_PROPS().flags & PlayerFlag_Unk0)
                     {
-                        playerExtra.state          = PlayerState_Combat;
-                        playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
+                        PLAYER_EXTRA().state          = PlayerState_Combat;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_AimTargetLock;
 
-                        if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
+                        if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Attack)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
                         }
                     }
                     else
                     {
-                        playerExtra.state          = PlayerState_None;
-                        playerExtra.upperBodyState = PlayerUpperBodyState_Aim;
+                        PLAYER_EXTRA().state          = PlayerState_None;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Aim;
                         extra->model.controlState  = 
                         extra->model.stateStep     = 0;
 
-                        if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
+                        if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Attack)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
-                            playerProps.flags         &= ~PlayerFlag_Unk10;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
+                            PLAYER_PROPS().flags         &= ~PlayerFlag_Unk10;
                         }
                     }
 
-                    playerProps.field_104     = 0;
-                    playerProps.flags        &= ~PlayerFlag_Unk2;
-                    playerProps.flags        &= ~PlayerFlag_Shooting;
-                    playerCombat.weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack), AttackInputType_Tap);
+                    PLAYER_PROPS().field_104     = 0;
+                    PLAYER_PROPS().flags        &= ~PlayerFlag_Unk2;
+                    PLAYER_PROPS().flags        &= ~PlayerFlag_Shooting;
+                    PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack), AttackInputType_Tap);
                     return true;
                 }
             }
@@ -3180,26 +3175,26 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                   extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk36, true)) &&
                  extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].endKeyframeIdx)
         {
-            if (playerProps.flags & PlayerFlag_Unk0)
+            if (PLAYER_PROPS().flags & PlayerFlag_Unk0)
             {
-                playerExtra.state          = PlayerState_Combat;
-                playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
+                PLAYER_EXTRA().state          = PlayerState_Combat;
+                PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_AimTargetLock;
 
-                if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
+                if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Attack)
                 {
-                    playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
+                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
                 }
             }
             else
             {
-                playerExtra.state          = PlayerState_None;
-                playerExtra.upperBodyState = PlayerUpperBodyState_Aim;
+                PLAYER_EXTRA().state          = PlayerState_None;
+                PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Aim;
                 extra->model.controlState  = extra->model.stateStep = 0;
 
-                if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
+                if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Attack)
                 {
-                    playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
-                    playerProps.flags         &= ~PlayerFlag_Unk10;
+                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
+                    PLAYER_PROPS().flags         &= ~PlayerFlag_Unk10;
                     player->model.controlState = 
                     player->model.stateStep    = 0;
                 }
@@ -3207,17 +3202,17 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             g_Player_RotationToTargetY            = NO_VALUE;
             g_Player_RotationToTargetX            = NO_VALUE;
-            playerProps.field_104 = 0;
-            playerProps.flags    &= ~PlayerFlag_Shooting;
+            PLAYER_PROPS().field_104 = 0;
+            PLAYER_PROPS().flags    &= ~PlayerFlag_Shooting;
             return true;
         }
 
-        playerProps.flags |= PlayerFlag_Unk6;
+        PLAYER_PROPS().flags |= PlayerFlag_Unk6;
 
         // Handles multitap attack.
-        if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
-            if (g_Player_MeleeAttackType == 0 && playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (g_Player_MeleeAttackType == 0 && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx >= keyframeIdx1 &&
                     extra->model.anim.keyframeIdx < keyframeIdx0 &&
@@ -3236,7 +3231,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 extra->model.stateStep = 0;
 
-                if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
+                if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Attack)
                 {
                     player->model.stateStep = 0;
                 }
@@ -3244,7 +3239,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 g_Player_AttackAnimIdx              = g_Player_EquippedWeaponInfo.animAttackHold - 2;
                 D_800AF220                          = (g_Player_EquippedWeaponInfo.field_A >> 4) - 1;
                 g_Player_MeleeAttackType            = 2;
-                playerCombat.weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(weaponAttack), AttackInputType_Multitap);
+                PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(weaponAttack), AttackInputType_Multitap);
 
                 if (extra->model.stateStep == 0)
                 {
@@ -3252,12 +3247,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.stateStep++;
                 }
 
-                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[playerCombat.weaponAttack].field_E;
-                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[playerCombat.weaponAttack].field_E +
-                             D_800AD4C8[playerCombat.weaponAttack].field_F;
+                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_E;
+                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_E +
+                             D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_F;
                 g_Player_IsMultiTapAttack = 0;
 
-                playerProps.flags &= ~PlayerFlag_Unk2;
+                PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;
             }
         }
 
@@ -3266,12 +3261,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
     enemyAttackedIdx = NO_VALUE;
 
-    if (playerExtra.upperBodyState != PlayerUpperBodyState_AimTargetLock && playerExtra.upperBodyState != PlayerUpperBodyState_Attack)
+    if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimTargetLock && PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_Attack)
     {
-        playerProps.field_104 = 0;
+        PLAYER_PROPS().field_104 = 0;
     }
 
-    switch (playerExtra.upperBodyState)
+    switch (PLAYER_EXTRA().upperBodyState)
     {
         case PlayerUpperBodyState_None:
             if ((extra->model.anim.status == ANIM_STATUS(HarryAnim_WalkForward, true) ||
@@ -3318,14 +3313,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
             }
 
-            if (playerExtra.upperBodyState != PlayerUpperBodyState_None)
+            if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_None)
             {
                 player->properties.player.afkTimer = Q12(0.0f);
             }
 
             player->angleToTarget = player->rotation.vy;
 
-            if (playerExtra.upperBodyState == PlayerUpperBodyState_None)
+            if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_None)
             {
                 player->properties.player.afkTimer++;
 
@@ -3335,13 +3330,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     {
                         player->properties.player.afkTimer        = Q12(0.0f);
                           // TODO: `Player_ExtraStateSet` doesn't match?
-                        playerExtra.state          = PlayerState_Idle;
+                        PLAYER_EXTRA().state          = PlayerState_Idle;
                         player->model.controlState                = 
                         player->model.stateStep                   = 0;
                         extra->model.controlState                 = 
                         extra->model.stateStep                    = 0;
-                        playerExtra.upperBodyState = PlayerUpperBodyState_None;
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_None;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                         return true;
                     }
                 }
@@ -3384,7 +3379,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             break;
 
         case PlayerUpperBodyState_RunWallStop:
-            if (playerProps.flags & PlayerFlag_WallStopRight)
+            if (PLAYER_PROPS().flags & PlayerFlag_WallStopRight)
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3613,10 +3608,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         case PlayerUpperBodyState_Aim:
             g_SysWork.targetNpcIdx = NO_VALUE;
 
-            if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
-                if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
+                if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                 {
                     if (player->field_44.field_0 <= 0)
                     {
@@ -3637,10 +3632,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
             }
 
-            playerProps.flags &= ~PlayerFlag_Unk6;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Unk6;
             player->angleToTarget = player->rotation.vy;
 
-            if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 // Aim.
                 if (extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) &&
@@ -3648,11 +3643,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (g_Player_IsAttacking || g_Player_IsShooting)
                     {
-                        playerProps.flags |= PlayerFlag_Unk11;
+                        PLAYER_PROPS().flags |= PlayerFlag_Unk11;
                     }
                     else
                     {
-                        playerProps.flags &= ~PlayerFlag_Unk11;
+                        PLAYER_PROPS().flags &= ~PlayerFlag_Unk11;
 
                         if (extra->model.stateStep == 0)
                         {
@@ -3663,14 +3658,14 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
                 else
                 {
-                    playerProps.flags &= ~PlayerFlag_Unk11;
+                    PLAYER_PROPS().flags &= ~PlayerFlag_Unk11;
                 }
             }
             break;
 
         case PlayerUpperBodyState_AimTargetLock:
-            playerProps.field_104 += g_DeltaTime;
-            playerProps.flags &= ~PlayerFlag_Unk6;
+            PLAYER_PROPS().field_104 += g_DeltaTime;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Unk6;
 
             if (g_Player_IsTurningRight)
             {
@@ -3695,40 +3690,40 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (playerTurn != 0)
             {
-                playerProps.flags                 &= ~PlayerFlag_Unk9;
+                PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk9;
                 player->properties.player.field_F4 = g_Player_FlexRotationX;
 
                 if (!WorldEnv_IsInDarkness())
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(2.0f / 3.0f), Q12(10.0f), playerTurn);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(2.0f / 3.0f), Q12(10.0f), playerTurn);
                 }
                 else
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(1.0f / 3.0f), Q12(3.0f), playerTurn);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(1.0f / 3.0f), Q12(3.0f), playerTurn);
                 }
 
                 if (g_Player_TargetNpcIdx == NO_VALUE)
                 {
-                    playerProps.flags                        &= ~PlayerFlag_Unk12;
+                    PLAYER_PROPS().flags                        &= ~PlayerFlag_Unk12;
                     player->model.stateStep                   = 0;
-                    playerProps.field_122                     = Q12_ANGLE(90.0f);
-                    playerExtra.upperBodyState = PlayerUpperBodyState_Aim;
+                    PLAYER_PROPS().field_122                     = Q12_ANGLE(90.0f);
+                    PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Aim;
                     g_Player_IsShooting                       = false;
-                    playerExtra.state          = PlayerState_None;
+                    PLAYER_EXTRA().state          = PlayerState_None;
                     g_Player_IsAttacking                      = false;
                     extra->model.controlState                 = extra->model.stateStep = 0;
 
-                    if (playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
+                    if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Attack)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
                         player->model.controlState =
                         player->model.stateStep    = 0;
                     }
                 }
                 else
                 {
-                    playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLockSwitch;
-                    playerProps.flags         |= PlayerFlag_Unk12;
+                    PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_AimTargetLockSwitch;
+                    PLAYER_PROPS().flags         |= PlayerFlag_Unk12;
                     extra->model.controlState  =
                     extra->model.stateStep     = 0;
                 }
@@ -3742,17 +3737,17 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     if (g_Player_TargetEnemyPosition.vx != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx ||
                         g_Player_TargetEnemyPosition.vy != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vy ||
                         g_Player_TargetEnemyPosition.vz != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz ||
-                        g_Player_PrevPosition.vx != g_SysWork.playerWork.player.position.vx ||
-                        g_Player_PrevPosition.vy != g_SysWork.playerWork.player.position.vy ||
-                        g_Player_PrevPosition.vz != g_SysWork.playerWork.player.position.vz)
+                        g_Player_PrevPosition.vx != PLAYER_CHARA().position.vx ||
+                        g_Player_PrevPosition.vy != PLAYER_CHARA().position.vy ||
+                        g_Player_PrevPosition.vz != PLAYER_CHARA().position.vz)
                     {
                         if (!WorldEnv_IsInDarkness())
                         {
-                            func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
+                            func_8005CD38(&enemyAttackedIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                         }
                         else
                         {
-                            func_8005CD38(&enemyAttackedIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(25.0f), Q12(3.0f), 0);
+                            func_8005CD38(&enemyAttackedIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(25.0f), Q12(3.0f), 0);
                         }
 
                         g_Player_TargetEnemyPosition = g_SysWork.npcs[g_SysWork.targetNpcIdx].position;
@@ -3770,18 +3765,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx && enemyAttackedIdx != NO_VALUE)
                 {
-                    player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                                       (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz) +
+                    player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
+                                                       (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) +
                                                 Q12_ANGLE(360.0f));
                 }
                 else
                 {
-                    playerProps.flags &= ~PlayerFlag_Unk12;
+                    PLAYER_PROPS().flags &= ~PlayerFlag_Unk12;
                     player->model.stateStep                                  = 0;
-                    playerProps.field_122  = Q12_ANGLE(90.0f);
+                    PLAYER_PROPS().field_122  = Q12_ANGLE(90.0f);
                     g_SysWork.targetNpcIdx                                 = NO_VALUE;
-                    playerExtra.state                      = PlayerState_None;
-                    playerExtra.upperBodyState             = PlayerUpperBodyState_Aim;
+                    PLAYER_EXTRA().state                      = PlayerState_None;
+                    PLAYER_EXTRA().upperBodyState             = PlayerUpperBodyState_Aim;
                     extra->model.controlState                                      = extra->model.stateStep = 0;
                 }
             }
@@ -3795,10 +3790,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         case PlayerUpperBodyState_AimStart:
             player->angleToTarget = player->rotation.vy;
 
-            if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
-                if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
+                if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                 {
                     if (extra->model.stateStep == 0)
                     {
@@ -3812,23 +3807,23 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.stateStep++;
                 }
 
-                if (((playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
+                if (((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model.anim.keyframeIdx >= (D_800C44F0[0].startKeyframeIdx + 5)) ||
-                     (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
+                     (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model.anim.keyframeIdx >= (D_800C44F0[0].startKeyframeIdx + 9))) &&
-                    !(playerProps.flags & PlayerFlag_Unk2))
+                    !(PLAYER_PROPS().flags & PlayerFlag_Unk2))
                 {
-                    playerProps.gasWeaponPowerTimer = Q12(60.0f);
+                    PLAYER_PROPS().gasWeaponPowerTimer = Q12(60.0f);
 
-                    func_8004C564(playerCombat.weaponAttack, 0);
+                    func_8004C564(PLAYER_COMBAT().weaponAttack, 0);
 
                     player->properties.player.field_10C                       = 0x40;
-                    playerProps.flags |= PlayerFlag_Unk2;
+                    PLAYER_PROPS().flags |= PlayerFlag_Unk2;
                 }
             }
-            else if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
+            else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3845,22 +3840,22 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
             }
 
-            if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx ||
                     extra->model.anim.keyframeIdx == D_800C44F0[5].endKeyframeIdx)
                 {
                     if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx)
                     {
-                        func_8004C564(playerCombat.weaponAttack, 1);
+                        func_8004C564(PLAYER_COMBAT().weaponAttack, 1);
                     }
 
-                    playerExtra.upperBodyState             = PlayerUpperBodyState_Aim;
+                    PLAYER_EXTRA().upperBodyState             = PlayerUpperBodyState_Aim;
                     extra->model.controlState                                      = extra->model.stateStep = 0;
-                    playerProps.flags &= ~PlayerFlag_Unk2;
+                    PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;
 
-                    if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
+                    if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                     {
                         player->field_44.field_0 = 1;
                     }
@@ -3871,7 +3866,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx ||
                     extra->model.anim.keyframeIdx == D_800C44F0[1].endKeyframeIdx)
                 {
-                    playerExtra.upperBodyState = PlayerUpperBodyState_Aim;
+                    PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Aim;
                 }
             }
             break;
@@ -3880,26 +3875,26 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         case PlayerUpperBodyState_AimTargetLockSwitch:
             sp22 = 0;
 
-            if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
+            if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
             {
                 if (g_GameWork.config.extraAutoAiming)
                 {
                     if (!WorldEnv_IsInDarkness())
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
                     }
                 }
                 else if (!WorldEnv_IsInDarkness())
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(7.0f), 4);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(3.0f), Q12(7.0f), 4);
                 }
                 else
                 {
-                    func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(0.9f), Q12(2.1f), 4);
+                    func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(0.9f), Q12(2.1f), 4);
                 }
 
                 g_SysWork.targetNpcIdx = g_Player_TargetNpcIdx;
@@ -3929,7 +3924,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             extra->model.controlState++;
 
-            if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
+            if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3945,18 +3940,18 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (g_SysWork.targetNpcIdx == NO_VALUE)
             {
-                playerProps.field_122  = Q12_ANGLE(90.0f);
-                playerExtra.upperBodyState             = PlayerUpperBodyState_Aim;
-                playerExtra.state                      = PlayerState_None;
-                playerProps.flags &= ~PlayerFlag_Unk12;
+                PLAYER_PROPS().field_122  = Q12_ANGLE(90.0f);
+                PLAYER_EXTRA().upperBodyState             = PlayerUpperBodyState_Aim;
+                PLAYER_EXTRA().state                      = PlayerState_None;
+                PLAYER_PROPS().flags &= ~PlayerFlag_Unk12;
                 extra->model.controlState                                      = extra->model.stateStep = 0;
                 break;
             }
 
             if (!g_GameWork.config.extraAutoAiming)
             {
-                temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - g_SysWork.playerWork.player.position.vx,
-                                   (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - g_SysWork.playerWork.player.position.vz);
+                temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
+                                   (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz);
 
                 temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
 
@@ -3989,36 +3984,36 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     D_800C454C            = Q12(0.0f);
                     player->angleToTarget = temp_s1_2;
 
-                    if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
+                    if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                     {
-                        playerProps.flags &= ~PlayerFlag_Unk8;
+                        PLAYER_PROPS().flags &= ~PlayerFlag_Unk8;
                     }
                     else
                     {
-                        playerProps.flags |= PlayerFlag_Unk8;
+                        PLAYER_PROPS().flags |= PlayerFlag_Unk8;
                     }
 
-                    if (playerProps.flags & PlayerFlag_Unk9)
+                    if (PLAYER_PROPS().flags & PlayerFlag_Unk9)
                     {
                         if (extra->model.anim.keyframeIdx == D_800C44F0[4].endKeyframeIdx)
                         {
-                            playerExtra.upperBodyState = PlayerUpperBodyState_Attack;
+                            PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Attack;
 
-                            if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim)
+                            if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                                 player->model.controlState                          =
                                 player->model.stateStep                      = 0;
                             }
 
-                            playerProps.flags &= ~PlayerFlag_Unk9;
+                            PLAYER_PROPS().flags &= ~PlayerFlag_Unk9;
                             extra->model.controlState                                      =
                             extra->model.stateStep                                  = 0;
                         }
                     }
                     else if (extra->model.anim.keyframeIdx == D_800C44F0[4].endKeyframeIdx)
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_AimTargetLock;
                         extra->model.controlState                          =
                         extra->model.stateStep                      = 0;
                     }
@@ -4030,10 +4025,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx +
                                 g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) -
-                               g_SysWork.playerWork.player.position.vx,
+                               PLAYER_CHARA().position.vx,
                                 (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz +
                                  g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) -
-                                g_SysWork.playerWork.player.position.vz);
+                                PLAYER_CHARA().position.vz);
 
             temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
 
@@ -4060,34 +4055,34 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 player->angleToTarget = player->rotation.vy + sp20;
 
-                if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
+                if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                 {
-                    playerProps.flags &= ~PlayerFlag_Unk8;
+                    PLAYER_PROPS().flags &= ~PlayerFlag_Unk8;
                 }
                 else
                 {
-                    playerProps.flags |= PlayerFlag_Unk8;
+                    PLAYER_PROPS().flags |= PlayerFlag_Unk8;
                 }
 
-                if (playerProps.flags & PlayerFlag_Unk9)
+                if (PLAYER_PROPS().flags & PlayerFlag_Unk9)
                 {
                     if (extra->model.anim.keyframeIdx == D_800C44F0[4].endKeyframeIdx)
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_Attack;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Attack;
 
-                        if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim)
+                        if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                             player->model.controlState                = player->model.stateStep = 0;
                         }
 
-                        playerProps.flags        &= ~PlayerFlag_Unk9;
+                        PLAYER_PROPS().flags        &= ~PlayerFlag_Unk9;
                         extra->model.controlState = extra->model.stateStep = 0;
                     }
                 }
                 else if (extra->model.anim.keyframeIdx == D_800C44F0[4].endKeyframeIdx)
                 {
-                    playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLock;
+                    PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_AimTargetLock;
                     extra->model.controlState = extra->model.stateStep = 0;
                 }
             }
@@ -4103,31 +4098,31 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             if (extra->model.anim.keyframeIdx == D_800C44F0[D_800AF220].startKeyframeIdx ||
-                ((playerExtra.lowerBodyState == PlayerLowerBodyState_RunForward || playerExtra.lowerBodyState == PlayerLowerBodyState_RunRight ||
-                  playerExtra.lowerBodyState == PlayerLowerBodyState_RunLeft) &&
+                ((PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_RunForward || PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_RunRight ||
+                  PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_RunLeft) &&
                  (extra->model.anim.keyframeIdx <= D_800C44F0[D_800AF220].endKeyframeIdx)))
             {
-                switch (playerExtra.lowerBodyState)
+                switch (PLAYER_EXTRA().lowerBodyState)
                 {
                     case PlayerLowerBodyState_RunForward:
-                        playerExtra.upperBodyState = PlayerUpperBodyState_RunForward;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunForward;
                         break;
 
                     case PlayerLowerBodyState_RunRight:
-                        playerExtra.upperBodyState = PlayerUpperBodyState_RunRight;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunRight;
                         break;
 
                     case PlayerLowerBodyState_AimRunLeft:
-                        playerExtra.upperBodyState = PlayerUpperBodyState_RunLeft;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunLeft;
                         break;
 
                     default:
-                        playerExtra.upperBodyState = PlayerUpperBodyState_None;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_None;
                         break;
                 }
 
                 extra->model.controlState = extra->model.stateStep = 0;
-                if (playerExtra.lowerBodyState == PlayerLowerBodyState_None)
+                if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_None)
                 {
                     player->model.controlState = player->model.stateStep = 0;
                 }
@@ -4153,49 +4148,49 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             }
 
             if ((D_800AF624 + g_Player_EquippedWeaponInfo.field_9) <= extra->model.anim.keyframeIdx &&
-                !(playerProps.flags & PlayerFlag_Unk2))
+                !(PLAYER_PROPS().flags & PlayerFlag_Unk2))
             {
                 Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.reloadSfx, &player->position, Q8(0.5f), SfxFlag_None);
 
                 player->properties.player.field_10C = 0x20;
-                playerProps.flags                  |= PlayerFlag_Unk2;
+                PLAYER_PROPS().flags                  |= PlayerFlag_Unk2;
             }
 
             if (extra->model.anim.keyframeIdx == D_800AF626)
             {
                 g_Player_TargetNpcIdx                     = NO_VALUE;
-                playerExtra.upperBodyState = PlayerUpperBodyState_Aim;
+                PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Aim;
                 g_SysWork.targetNpcIdx                    = NO_VALUE;
-                playerExtra.state          = PlayerState_None;
-                playerProps.flags                        &= ~PlayerFlag_Unk2;
+                PLAYER_EXTRA().state          = PlayerState_None;
+                PLAYER_PROPS().flags                        &= ~PlayerFlag_Unk2;
                 extra->model.anim.status                  = ANIM_STATUS(HarryAnim_HandgunAim, true);
                 extra->model.anim.keyframeIdx             = 588;
                 extra->model.anim.time                    = Q12(588.0f);
 
-                if (playerExtra.lowerBodyState == PlayerLowerBodyState_Reload)
+                if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Reload)
                 {
-                    playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
+                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
                 }
 
-                if (playerCombat.totalWeaponAmmo != 0)
+                if (PLAYER_COMBAT().totalWeaponAmmo != 0)
                 {
-                    currentAmmoVar = playerCombat.currentWeaponAmmo;
-                    totalAmmoVar   = playerCombat.totalWeaponAmmo;
+                    currentAmmoVar = PLAYER_COMBAT().currentWeaponAmmo;
+                    totalAmmoVar   = PLAYER_COMBAT().totalWeaponAmmo;
 
-                    Items_AmmoReloadCompute(&currentAmmoVar, &totalAmmoVar, playerCombat.weaponAttack);
+                    Items_AmmoReloadCompute(&currentAmmoVar, &totalAmmoVar, PLAYER_COMBAT().weaponAttack);
 
-                    playerCombat.currentWeaponAmmo = currentAmmoVar;
-                    playerCombat.totalWeaponAmmo   = totalAmmoVar;
+                    PLAYER_COMBAT().currentWeaponAmmo = currentAmmoVar;
+                    PLAYER_COMBAT().totalWeaponAmmo   = totalAmmoVar;
 
                     for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
                     {
-                        if (g_SavegamePtr->items[i].id == (playerCombat.weaponAttack + InvItemId_KitchenKnife))
+                        if (g_SavegamePtr->items[i].id == (PLAYER_COMBAT().weaponAttack + InvItemId_KitchenKnife))
                         {
-                            g_SavegamePtr->items[i].count = playerCombat.currentWeaponAmmo;
+                            g_SavegamePtr->items[i].count = PLAYER_COMBAT().currentWeaponAmmo;
                         }
-                        if (g_SavegamePtr->items[i].id == (playerCombat.weaponAttack + InvItemId_Handgun))
+                        if (g_SavegamePtr->items[i].id == (PLAYER_COMBAT().weaponAttack + InvItemId_Handgun))
                         {
-                            g_SavegamePtr->items[i].count = playerCombat.totalWeaponAmmo;
+                            g_SavegamePtr->items[i].count = PLAYER_COMBAT().totalWeaponAmmo;
                         }
                     }
                 }
@@ -4213,7 +4208,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
     s32 i;
 
     // Lock player view onto enemy.
-    switch (playerExtra.upperBodyState)
+    switch (PLAYER_EXTRA().upperBodyState)
     {
         case PlayerUpperBodyState_None:
         case PlayerUpperBodyState_WalkForward:
@@ -4224,12 +4219,12 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
         case PlayerUpperBodyState_TurnLeft:
             if (!g_Player_IsInWalkToRunTransition)
             {
-                if ((g_Player_IsAiming && playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap)) ||
-                    playerCombat.isAiming)
+                if ((g_Player_IsAiming && PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap)) ||
+                    PLAYER_COMBAT().isAiming)
                 {
-                    playerCombat.isAiming = true;
+                    PLAYER_COMBAT().isAiming = true;
 
-                    if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                     {
                         g_Player_TargetNpcIdx = NO_VALUE;
                     }
@@ -4239,75 +4234,75 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                         {
                             if (!WorldEnv_IsInDarkness())
                             {
-                                func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
+                                func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(50.0f), Q12(10.0f), 0);
                             }
                             else
                             {
-                                func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
+                                func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(50.0f), Q12(3.0f), 0);
                             }
                         }
                         else if (!WorldEnv_IsInDarkness())
                         {
-                            func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(7.0f), 4);
+                            func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(3.0f), Q12(7.0f), 4);
                         }
                         else
                         {
-                            func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(0.9f), Q12(2.1f), 4);
+                            func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(0.9f), Q12(2.1f), 4);
                         }
                     }
 
                     g_SysWork.targetNpcIdx = g_Player_TargetNpcIdx;
                     if (g_SysWork.targetNpcIdx == NO_VALUE)
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_AimStart;
-                        playerProps.field_122                     = Q12_ANGLE(90.0f);
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_AimStart;
+                        PLAYER_PROPS().field_122                     = Q12_ANGLE(90.0f);
                     }
                     else
                     {
-                        playerExtra.state          = PlayerState_Combat;
-                        playerExtra.upperBodyState = PlayerUpperBodyState_AimStartTargetLock;
+                        PLAYER_EXTRA().state          = PlayerState_Combat;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_AimStartTargetLock;
                     }
 
-                    if (playerExtra.lowerBodyState == PlayerLowerBodyState_None)
+                    if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_None)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
                         player->model.stateStep    = 0;
                         player->model.controlState = 0;
                     }
-                    else if (playerExtra.lowerBodyState < PlayerLowerBodyState_Aim)
+                    else if (PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim)
                     {
-                        playerExtra.lowerBodyState += PlayerLowerBodyState_Aim;
+                        PLAYER_EXTRA().lowerBodyState += PlayerLowerBodyState_Aim;
                     }
 
                     extra->model.stateStep              = 0;
                     extra->model.controlState           = 0;
                     player->properties.player.field_100 = 0;
 
-                    if (playerCombat.totalWeaponAmmo != 0)
+                    if (PLAYER_COMBAT().totalWeaponAmmo != 0)
                     {
-                        if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                        if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                         {
-                            currentAmmoVar = playerCombat.currentWeaponAmmo;
-                            totalAmmoVar   = playerCombat.totalWeaponAmmo;
+                            currentAmmoVar = PLAYER_COMBAT().currentWeaponAmmo;
+                            totalAmmoVar   = PLAYER_COMBAT().totalWeaponAmmo;
 
-                            Items_AmmoReloadCompute(&currentAmmoVar, &totalAmmoVar, playerCombat.weaponAttack);
+                            Items_AmmoReloadCompute(&currentAmmoVar, &totalAmmoVar, PLAYER_COMBAT().weaponAttack);
 
-                            playerCombat.currentWeaponAmmo = currentAmmoVar;
-                            playerCombat.totalWeaponAmmo   = totalAmmoVar;
+                            PLAYER_COMBAT().currentWeaponAmmo = currentAmmoVar;
+                            PLAYER_COMBAT().totalWeaponAmmo   = totalAmmoVar;
                         }
                     }
 
-                    if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                     {
                         for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
                         {
-                            if (g_SavegamePtr->items[i].id == (playerCombat.weaponAttack + InvItemId_KitchenKnife))
+                            if (g_SavegamePtr->items[i].id == (PLAYER_COMBAT().weaponAttack + InvItemId_KitchenKnife))
                             {
-                                g_SavegamePtr->items[i].count = playerCombat.currentWeaponAmmo;
+                                g_SavegamePtr->items[i].count = PLAYER_COMBAT().currentWeaponAmmo;
                             }
-                            if (g_SavegamePtr->items[i].id == (playerCombat.weaponAttack + InvItemId_Handgun))
+                            if (g_SavegamePtr->items[i].id == (PLAYER_COMBAT().weaponAttack + InvItemId_Handgun))
                             {
-                                g_SavegamePtr->items[i].count = playerCombat.totalWeaponAmmo;
+                                g_SavegamePtr->items[i].count = PLAYER_COMBAT().totalWeaponAmmo;
                             }
                         }
                     }
@@ -4317,7 +4312,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
     }
 
     // Execute finishing move on knocked enemies.
-    switch (playerExtra.upperBodyState)
+    switch (PLAYER_EXTRA().upperBodyState)
     {
         case PlayerUpperBodyState_None:
         case PlayerUpperBodyState_WalkForward:
@@ -4345,7 +4340,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
     }
 
     // Handle aim state.
-    switch (playerExtra.upperBodyState)
+    switch (PLAYER_EXTRA().upperBodyState)
     {
         case PlayerUpperBodyState_Aim:
         case PlayerUpperBodyState_AimTargetLock:
@@ -4354,17 +4349,17 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 (!g_GameWork.config.extraWeaponCtrl &&  g_Player_IsAiming))
             {
                 player->properties.player.field_F4 = 0;
-                playerExtra.upperBodyState         = PlayerUpperBodyState_AimStop;
+                PLAYER_EXTRA().upperBodyState         = PlayerUpperBodyState_AimStop;
                 g_SysWork.targetNpcIdx             = NO_VALUE;
-                playerProps.flags                 &= ~PlayerFlag_Unk0;
-                playerExtra.state                  = PlayerState_None;
-                playerCombat.isAiming              = false;
-                playerProps.flags                 &= ~PlayerFlag_Unk9;
+                PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk0;
+                PLAYER_EXTRA().state                  = PlayerState_None;
+                PLAYER_COMBAT().isAiming              = false;
+                PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk9;
 
-                if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim ||
-                    playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
+                if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim ||
+                    PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Attack)
                 {
-                    playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                     player->model.stateStep                   = 0;
                     player->model.controlState                = 0;
                     extra->model.stateStep                    = 0;
@@ -4372,9 +4367,9 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     break;
                 }
 
-                if (playerExtra.lowerBodyState >= PlayerLowerBodyState_AimWalkForward)
+                if (PLAYER_EXTRA().lowerBodyState >= PlayerLowerBodyState_AimWalkForward)
                 {
-                    playerExtra.lowerBodyState -= PlayerLowerBodyState_Aim;
+                    PLAYER_EXTRA().lowerBodyState -= PlayerLowerBodyState_Aim;
                 }
 
                 extra->model.stateStep    = 0;
@@ -4383,13 +4378,13 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
             }
 
             if ((g_Player_IsAttacking || g_Player_IsShooting) &&
-                playerExtra.lowerBodyState != PlayerLowerBodyState_AimQuickTurnRight &&
-                playerExtra.lowerBodyState != PlayerLowerBodyState_AimQuickTurnLeft)
+                PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_AimQuickTurnRight &&
+                PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_AimQuickTurnLeft)
             {
-                if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                        playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                     {
                         if ((extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
                              extra->model.anim.keyframeIdx != D_800C44F0[0].endKeyframeIdx) &&
@@ -4444,17 +4439,17 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     }
                 }
 
-                playerProps.flags &= ~PlayerFlag_Unk0;
+                PLAYER_PROPS().flags &= ~PlayerFlag_Unk0;
 
-                if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
                     if (!WorldEnv_IsInDarkness())
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(3.0f), Q12(3.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(3.0f), Q12(3.0f), 5);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(1.0f), Q12(1.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(1.0f), Q12(1.0f), 5);
                     }
 
                     g_SysWork.targetNpcIdx = g_Player_TargetNpcIdx;
@@ -4463,33 +4458,33 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 {
                     if (!WorldEnv_IsInDarkness())
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(7.0f), Q12(7.0f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(7.0f), Q12(7.0f), 5);
                     }
                     else
                     {
-                        func_8005CD38(&g_Player_TargetNpcIdx, &playerProps.field_122, &playerCombat.attackPosition, Q12(2.1f), Q12(2.1f), 5);
+                        func_8005CD38(&g_Player_TargetNpcIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12(2.1f), Q12(2.1f), 5);
                     }
                 }
 
                 switch (g_Player_TargetNpcIdx)
                 {
                     default:
-                        if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                        if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                         {
-                            playerExtra.state = PlayerState_Combat;
-                            playerProps.flags               |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
+                            PLAYER_EXTRA().state = PlayerState_Combat;
+                            PLAYER_PROPS().flags               |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
 
                             if (g_SysWork.targetNpcIdx != g_Player_TargetNpcIdx)
                             {
-                                playerExtra.upperBodyState = PlayerUpperBodyState_AimTargetLockSwitch;
+                                PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_AimTargetLockSwitch;
                             }
                             else
                             {
-                                playerExtra.upperBodyState = PlayerUpperBodyState_Attack;
+                                PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Attack;
 
-                                if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim)
+                                if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                                     player->model.stateStep                   = 0;
                                     player->model.controlState                = 0;
                                 }
@@ -4499,42 +4494,42 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                             break;
                         }
 
-                        playerExtra.upperBodyState = PlayerUpperBodyState_Attack;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Attack;
 
-                        if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim)
+                        if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                             player->model.stateStep                   = 0;
                             player->model.controlState                = 0;
                         }
 
                     case NO_VALUE:
-                        playerProps.field_122  = Q12_ANGLE(90.0f);
-                        playerExtra.upperBodyState = PlayerUpperBodyState_Attack;
-                        playerProps.flags                        &= ~PlayerFlag_Unk9;
+                        PLAYER_PROPS().field_122  = Q12_ANGLE(90.0f);
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Attack;
+                        PLAYER_PROPS().flags                        &= ~PlayerFlag_Unk9;
 
-                        if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim)
+                        if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                             player->model.stateStep                   = 0;
                             player->model.controlState                = 0;
                         }
                         break;
                 }
 
-                if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (playerCombat.currentWeaponAmmo == 0 &&
+                    if (PLAYER_COMBAT().currentWeaponAmmo == 0 &&
                         INV_ITEM_GROUP(g_SavegamePtr->equippedWeapon) == InvItemGroup_GunWeapons &&
-                        playerCombat.totalWeaponAmmo != 0)
+                        PLAYER_COMBAT().totalWeaponAmmo != 0)
                     {
-                        playerExtra.upperBodyState = PlayerUpperBodyState_Reload;
-                        playerProps.flags                        &= ~PlayerFlag_Unk9;
+                        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Reload;
+                        PLAYER_PROPS().flags                        &= ~PlayerFlag_Unk9;
 
-                        if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim ||
-                            playerExtra.lowerBodyState == PlayerLowerBodyState_Attack)
+                        if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim ||
+                            PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Attack)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Reload;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Reload;
                             player->model.stateStep                   = 0;
                             player->model.controlState                = 0;
                         }
@@ -4542,15 +4537,15 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 }
                 else
                 {
-                    playerExtra.upperBodyState = PlayerUpperBodyState_Attack;
+                    PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Attack;
 
-                    if (playerExtra.lowerBodyState == PlayerLowerBodyState_Aim ||
-                        WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_SteelPipe ||
-                        WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_Hammer    ||
-                        WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_RockDrill ||
-                        WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_Katana)
+                    if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim ||
+                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_SteelPipe ||
+                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Hammer    ||
+                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_RockDrill ||
+                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Katana)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                         player->model.stateStep                   = 0;
                         player->model.controlState                = 0;
                     }
@@ -4561,7 +4556,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
             }
             else
             {
-                playerProps.flags &= ~PlayerFlag_Unk9;
+                PLAYER_PROPS().flags &= ~PlayerFlag_Unk9;
             }
             break;
     }
@@ -4571,12 +4566,12 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* player, s32 animStatus0,
 {
     q3_12 headingAngleCpy;
 
-    if (playerProps.moveSpeed != Q12(0.0f))
+    if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
     {
-        playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 1;
-        if ((playerProps.moveSpeed >> 16) & (1 << 0))
+        PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 1;
+        if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
         {
-            playerProps.moveSpeed = Q12(0.0f);
+            PLAYER_PROPS().moveSpeed = Q12(0.0f);
         }
     }
 
@@ -4586,26 +4581,26 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* player, s32 animStatus0,
         player->model.stateStep++;
     }
 
-    if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
+    if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
     {
         if (player->model.anim.status == animStatus1 && player->model.anim.keyframeIdx >= keyframeIdx)
         {
-            playerExtra.lowerBodyState = aimState;
+            PLAYER_EXTRA().lowerBodyState = aimState;
             Player_MovementStateReset(player, lowerBodyState);
         }
 
         Player_CharaRotate(2);
     }
 
-    if (playerExtra.lowerBodyState == PlayerLowerBodyState_None)
+    if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_None)
     {
-        playerProps.headingAngle = Q12_ANGLE(0.0f);
+        PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
         g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
     }
     else
     {
         headingAngleCpy          = headingAngle;
-        playerProps.headingAngle = headingAngleCpy;
+        PLAYER_PROPS().headingAngle = headingAngleCpy;
         g_Player_HeadingAngle    = headingAngleCpy;
     }
 }
@@ -4635,7 +4630,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
     #define stillAnim HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)]
 
-    if (playerExtra.lowerBodyState < PlayerLowerBodyState_Aim)
+    if (PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim)
     {
         aimState = 0;
     }
@@ -4652,7 +4647,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
     moveDist           = SquareRoot0(moveOffsetX + moveOffsetZ);
 
     // Track travel distances.
-    switch (playerExtra.lowerBodyState)
+    switch (PLAYER_EXTRA().lowerBodyState)
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
@@ -4677,7 +4672,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             break;
     }
 
-    switch (playerExtra.lowerBodyState)
+    switch (PLAYER_EXTRA().lowerBodyState)
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
@@ -4689,31 +4684,31 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             // Check if player is aiming.
             if (aimState != 0)
             {
-                if (playerProps.moveSpeed != Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
                 {
-                    playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                    if ((playerProps.moveSpeed >> 16) & 1)
+                    PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    if ((PLAYER_PROPS().moveSpeed >> 16) & 1)
                     {
-                        playerProps.moveSpeed = Q12(0.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(0.0f);
                     }
                 }
             }
-            else if (playerProps.moveSpeed != Q12(0.0f))
+            else if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
-                if ((playerProps.moveSpeed >> 16) & 1)
+                PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
+                if ((PLAYER_PROPS().moveSpeed >> 16) & 1)
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
             // Sets animations during specific idle states while aiming or standing.
-            if (playerExtra.lowerBodyState == PlayerLowerBodyState_None)
+            if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_None)
             {
                 // Aim to idle.
-                if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStop)
+                if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStop)
                 {
-                    if (!playerCombat.isAiming && player->model.stateStep == 0)
+                    if (!PLAYER_COMBAT().isAiming && player->model.stateStep == 0)
                     {
                         player->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming;
                         player->model.stateStep++;
@@ -4736,20 +4731,20 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
             else
             {
-                if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStop)
+                if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStop)
                 {
-                    if (!playerCombat.isAiming && player->model.stateStep == 0)
+                    if (!PLAYER_COMBAT().isAiming && player->model.stateStep == 0)
                     {
                         player->model.anim.status = g_Player_EquippedWeaponInfo.animStopAiming;
                         player->model.stateStep++;
                     }
                 }
                 // Melee weapon.
-                else if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                else if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if ((playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                         playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)) &&
-                        playerProps.gasWeaponPowerTimer != Q12(0.0f))
+                    if ((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                         PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)) &&
+                        PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                     {
                         if (player->model.stateStep == 0)
                         {
@@ -4763,7 +4758,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
                 }
-                else if (playerProps.flags & PlayerFlag_Unk6)
+                else if (PLAYER_PROPS().flags & PlayerFlag_Unk6)
                 {
                     if (player->model.stateStep == 0)
                     {
@@ -4771,7 +4766,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
                 }
-                else if (playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
+                else if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStartTargetLock)
                 {
                     if (player->model.stateStep == 0)
                     {
@@ -4779,7 +4774,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
                 }
-                else if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
+                else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
                 {
                     if (player->model.stateStep == 0)
                     {
@@ -4796,11 +4791,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                 }
 
-                playerProps.flags &= ~PlayerFlag_Unk6;
+                PLAYER_PROPS().flags &= ~PlayerFlag_Unk6;
             }
 
             // Set idle to move depending on user input.
-            if (playerExtra.state == PlayerState_Combat) // Aiming at or shooting enemy.
+            if (PLAYER_EXTRA().state == PlayerState_Combat) // Aiming at or shooting enemy.
             {
                 if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status))
@@ -4811,11 +4806,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (g_Player_IsMovingForward)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                         }
                         else if (g_Player_IsMovingBackward)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                         }
                     }
                 }
@@ -4828,7 +4823,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status))
                 {
-                    if ((aimState == 0 && playerProps.moveSpeed == Q12(0.0f))||
+                    if ((aimState == 0 && PLAYER_PROPS().moveSpeed == Q12(0.0f))||
                         player->model.anim.status >= ANIM_STATUS(HarryAnim_Unk29, false) ||
                         player->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx)
                     {
@@ -4838,18 +4833,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             if ((g_Player_IsRunning && lowerBodyMoveState == PlayerLowerBodyState_None) &&
                                 (aimState == 0 || (( g_GameWork.config.extraWeaponCtrl && !g_Player_IsAiming) ||
                                                    (!g_GameWork.config.extraWeaponCtrl &&  g_Player_IsAiming)) &&
-                                 WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_SteelPipe))
+                                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_SteelPipe))
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
                         }
                         else if (g_Player_IsMovingBackward)
                         {
-                            playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
+                            PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
@@ -4859,11 +4854,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             if (g_Player_IsRunning && aimState == 0 &&
                                 lowerBodyMoveState == PlayerLowerBodyState_None)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
                         }
                         else if (g_Player_IsSteppingLeftHold)
@@ -4874,30 +4869,30 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             if (g_Player_IsRunning && aimState == 0 &&
                                 lowerBodyMoveState == PlayerLowerBodyState_None)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
                         }
 
-                        if (aimState == 0 && !playerCombat.isAiming)
+                        if (aimState == 0 && !PLAYER_COMBAT().isAiming)
                         {
                             if (( g_GameWork.config.extraWalkRunCtrl && !g_Player_IsRunning) ||
                                 (!g_GameWork.config.extraWalkRunCtrl &&  g_Player_IsRunning))
                             {
                                 if (g_Player_IsMovingBackward)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
-                                    playerExtra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                    PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunJumpBackward;
                                     extra->model.stateStep     = 0;
                                     extra->model.controlState  = 0;
                                 }
                             }
                         }
 
-                        if (playerExtra.lowerBodyState == aimState && !g_Player_IsInWalkToRunTransition)
+                        if (PLAYER_EXTRA().lowerBodyState == aimState && !g_Player_IsInWalkToRunTransition)
                         {
                             Player_CharaTurn_0(player, aimState);
                         }
@@ -4915,27 +4910,27 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     Player_CharaRotate(7);
                 }
 
-                if (aimState != 0 && playerExtra.upperBodyState == PlayerUpperBodyState_Aim)
+                if (aimState != 0 && PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_Aim)
                 {
                     if (D_800C454C != Q12(0.0f))
                     {
                         // TODO: Convert hex to clean floats. Must have been a fraction based on a constant?
                         // Determine speed if using certain weapons while moving?
-                        switch (playerCombat.weaponAttack)
+                        switch (PLAYER_COMBAT().weaponAttack)
                         {
                             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-                                playerProps.moveSpeed = (u32)(D_800C454C * 0x465) >> 9;
+                                PLAYER_PROPS().moveSpeed = (u32)(D_800C454C * 0x465) >> 9;
                                 break;
 
                             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_Katana,   AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_Axe,      AttackInputType_Tap):
-                                playerProps.moveSpeed = (u32)(D_800C454C * 0x15F9) >> 11;
+                                PLAYER_PROPS().moveSpeed = (u32)(D_800C454C * 0x15F9) >> 11;
                                 break;
 
                             case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
-                                playerProps.moveSpeed = ((u32)(D_800C454C * 0xD2F) >> 10);
+                                PLAYER_PROPS().moveSpeed = ((u32)(D_800C454C * 0xD2F) >> 10);
                                 break;
 
                             case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
@@ -4943,13 +4938,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
                             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                                playerProps.moveSpeed = (-(D_800C454C * 0x87F0) >> 14);
+                                PLAYER_PROPS().moveSpeed = (-(D_800C454C * 0x87F0) >> 14);
                                 break;
                         }
 
                         if (g_DeltaTime != Q12(0.0f))
                         {
-                            playerProps.moveSpeed = ((playerProps.moveSpeed * 0x88) / g_DeltaTime);
+                            PLAYER_PROPS().moveSpeed = ((PLAYER_PROPS().moveSpeed * 0x88) / g_DeltaTime);
                         }
 
                         // Restart timer for idle animation.
@@ -4990,10 +4985,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            if (playerProps.moveSpeed == Q12(0.0f) ||
+            if (PLAYER_PROPS().moveSpeed == Q12(0.0f) ||
                  g_Player_IsTurningLeft || g_Player_IsTurningRight)
             {
-                playerProps.headingAngle = Q12_ANGLE(0.0f);
+                PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
                 g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
             }
             break;
@@ -5006,16 +5001,16 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             if ((g_SysWork.playerStopFlags & PlayerStopFlag_StopWalking) &&
-                playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
+                PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim &&
+                PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop)
             {
-                if (playerProps.moveSpeed != Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
                 {
-                    playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
+                    PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
 
-                    if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                    if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                     {
-                        playerProps.moveSpeed = Q12(0.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(0.0f);
                     }
                 }
             }
@@ -5035,22 +5030,22 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         func_80070B84(player, Q12(0.75f), Q12(1.4f), 2);
                     }
                     // Reduce speed if going too fast while walking.
-                    else if (playerProps.moveSpeed > Q12(1.4f))
+                    else if (PLAYER_PROPS().moveSpeed > Q12(1.4f))
                     {
-                        playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
-                        if (playerProps.moveSpeed < Q12(1.4f))
+                        PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
+                        if (PLAYER_PROPS().moveSpeed < Q12(1.4f))
                         {
-                            playerProps.moveSpeed = Q12(1.4f);
+                            PLAYER_PROPS().moveSpeed = Q12(1.4f);
                         }
                     }
-                    else if (playerProps.moveSpeed < Q12(1.4f))
+                    else if (PLAYER_PROPS().moveSpeed < Q12(1.4f))
                     {
                         if (player->model.anim.keyframeIdx >= 2)
                         {
-                            playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                            PLAYER_PROPS().moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                         }
 
-                        playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.4f));
+                        PLAYER_PROPS().moveSpeed = CLAMP(PLAYER_PROPS().moveSpeed, Q12(0.0f), Q12(1.4f));
                     }
 
                     if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighUp)
@@ -5067,22 +5062,22 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             // Something related to anim and states when aiming or attacking while moving.
-            if (playerExtra.state == PlayerState_Combat)
+            if (PLAYER_EXTRA().state == PlayerState_Combat)
             {
                 if (g_SysWork.playerStopFlags & PlayerStopFlag_StopWalking)
                 {
-                    if ((playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                         playerExtra.upperBodyState != PlayerUpperBodyState_AimStop) ||
+                    if ((PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim &&
+                         PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (player->model.anim.keyframeIdx >= 10 && player->model.anim.keyframeIdx <= 11) ||
                           player->model.anim.keyframeIdx == 22 || player->model.anim.keyframeIdx == 21)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
                     }
                 }
 
                 Player_MovementStateReset(player, aimState | (1 << 0));
 
-                if (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                 {
                     Player_CharaRotate(5);
                 }
@@ -5095,59 +5090,59 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     if (g_Player_IsRunning)
                     {
                         if (aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None &&
-                            (playerExtra.upperBodyState == PlayerUpperBodyState_WalkForward ||
-                             playerExtra.upperBodyState == PlayerUpperBodyState_AimStop))
+                            (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_WalkForward ||
+                             PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStop))
                         {
                             if (player->model.anim.keyframeIdx >= 10 && player->model.anim.keyframeIdx <= 11)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForward;
                                 stillAnim.endKeyframeIdx   = 36;
                                 stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_RunForward, true);
-                                playerProps.flags         |= PlayerFlag_Unk5;
+                                PLAYER_PROPS().flags         |= PlayerFlag_Unk5;
                             }
                             else if (player->model.anim.keyframeIdx >= 21 && player->model.anim.keyframeIdx <= 22)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForward;
                                 stillAnim.endKeyframeIdx   = 26;
                                 stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_RunForward, true);
                             }
                         }
                     }
                 }
-                else if ((playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                          playerExtra.upperBodyState != PlayerUpperBodyState_AimStop) ||
+                else if ((PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim &&
+                          PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (player->model.anim.keyframeIdx >= 10 && player->model.anim.keyframeIdx <= 11) ||
                           player->model.anim.keyframeIdx == 22 || player->model.anim.keyframeIdx == 21)
                 {
                     // Aparently, code intended to change player's state if the player stop walking while either aiming or attacking.
-                    if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                            (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                             playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                            (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                             PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags         |= PlayerFlag_Unk10;
+                            PLAYER_PROPS().flags         |= PlayerFlag_Unk10;
                             player->model.stateStep    = 0;
                             player->model.controlState = 0;
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            playerExtra.lowerBodyState = aimState;
-                            playerProps.flags         &= ~PlayerFlag_Unk10;
+                            PLAYER_EXTRA().lowerBodyState = aimState;
+                            PLAYER_PROPS().flags         &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        playerExtra.lowerBodyState = aimState;
-                        playerProps.flags         &= ~PlayerFlag_Unk10;
+                        PLAYER_EXTRA().lowerBodyState = aimState;
+                        PLAYER_PROPS().flags         &= ~PlayerFlag_Unk10;
                     }
                 }
 
-                if (playerExtra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkForward) &&
+                if (PLAYER_EXTRA().lowerBodyState == (aimState + PlayerLowerBodyState_WalkForward) &&
                     !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(player, aimState);
@@ -5157,10 +5152,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 Player_CharaRotate(5);
             }
 
-            playerProps.headingAngle = Q12_ANGLE(0.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
 
-            if (playerExtra.lowerBodyState == PlayerLowerBodyState_RunForward)
+            if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_RunForward)
             {
                 player->model.anim.status = ANIM_STATUS(HarryAnim_Still, false);
                 player->model.stateStep++;
@@ -5177,7 +5172,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 moveOffsetX = GET_MOVE_SPEED(speedZoneType);
 
-                if (playerProps.moveSpeed < Q12(3.5f))
+                if (PLAYER_PROPS().moveSpeed < Q12(3.5f))
                 {
                     moveDistForward = TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
                 }
@@ -5197,7 +5192,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 {
                     moveOffsetX = GET_MOVE_SPEED(speedZoneType);
 
-                    if (playerProps.moveSpeed < Q12(3.5f))
+                    if (PLAYER_PROPS().moveSpeed < Q12(3.5f))
                     {
                         moveDistForward = TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
                     }
@@ -5210,20 +5205,20 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                     func_80070CF0(player, Q12(2.0f), moveOffsetX, moveDistForward, TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
                 }
-                else if (playerProps.moveSpeed > GET_MOVE_SPEED(speedZoneType))
+                else if (PLAYER_PROPS().moveSpeed > GET_MOVE_SPEED(speedZoneType))
                 {
-                    playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                    if (playerProps.moveSpeed < GET_MOVE_SPEED(speedZoneType))
+                    PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    if (PLAYER_PROPS().moveSpeed < GET_MOVE_SPEED(speedZoneType))
                     {
-                        playerProps.moveSpeed = GET_MOVE_SPEED(speedZoneType);
+                        PLAYER_PROPS().moveSpeed = GET_MOVE_SPEED(speedZoneType);
                     }
                 }
                 else
                 {
-                    if (playerProps.moveSpeed < GET_MOVE_SPEED(speedZoneType))
+                    if (PLAYER_PROPS().moveSpeed < GET_MOVE_SPEED(speedZoneType))
                     {
-                        playerProps.moveSpeed += GET_VAL(playerProps.moveSpeed);
-                        playerProps.moveSpeed  = CLAMP(playerProps.moveSpeed, 0, GET_MOVE_SPEED(speedZoneType));
+                        PLAYER_PROPS().moveSpeed += GET_VAL(PLAYER_PROPS().moveSpeed);
+                        PLAYER_PROPS().moveSpeed  = CLAMP(PLAYER_PROPS().moveSpeed, 0, GET_MOVE_SPEED(speedZoneType));
                     }
                 }
 
@@ -5247,7 +5242,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             // Running.
-            if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock &&
+            if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStartTargetLock &&
                 player->model.anim.status == ANIM_STATUS(HarryAnim_RunForward, true))
             {
                 switch (lowerBodyMoveState)
@@ -5255,19 +5250,19 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     case PlayerLowerBodyState_WalkForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Stumble;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Stumble;
                         }
                         else if (player->model.anim.keyframeIdx >= 30 &&
                                  player->model.anim.keyframeIdx <= 31)
                         {
-                            playerExtra.lowerBodyState = lowerBodyMoveState;
+                            PLAYER_EXTRA().lowerBodyState = lowerBodyMoveState;
                             stillAnim.endKeyframeIdx   = 8;
                             stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         else if (player->model.anim.keyframeIdx >= 41 &&
                                  player->model.anim.keyframeIdx <= 42)
                         {
-                            playerExtra.lowerBodyState = lowerBodyMoveState;
+                            PLAYER_EXTRA().lowerBodyState = lowerBodyMoveState;
                             stillAnim.endKeyframeIdx   = 20;
                             stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
@@ -5276,19 +5271,19 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     case PlayerLowerBodyState_RunForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
                         }
                         else if (player->model.anim.keyframeIdx >= 30 &&
                                  player->model.anim.keyframeIdx <= 31)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_WalkForward;
                             stillAnim.endKeyframeIdx   = 8;
                             stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
                         else if (player->model.anim.keyframeIdx >= 41 &&
                                  player->model.anim.keyframeIdx <= 42)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_WalkForward;
                             stillAnim.endKeyframeIdx   = 20;
                             stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                         }
@@ -5303,33 +5298,33 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                                 if (player->model.anim.keyframeIdx >= 30 &&
                                     player->model.anim.keyframeIdx <= 31)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_WalkForward;
                                     stillAnim.endKeyframeIdx   = 8;
                                     stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                                 else if (player->model.anim.keyframeIdx >= 41 &&
                                          player->model.anim.keyframeIdx <= 42)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_WalkForward;
                                     stillAnim.endKeyframeIdx   = 20;
                                     stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                             }
                             // Set stumble anim if crashed into a wall.
                             else if (player->properties.player.runStepSfxCount >= 5 &&
-                                     playerProps.moveSpeed >= Q12(3.125f))
+                                     PLAYER_PROPS().moveSpeed >= Q12(3.125f))
                             {
                                 if (player->model.anim.keyframeIdx >= 33 &&
                                     player->model.anim.keyframeIdx <= 34)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
-                                    playerProps.flags         &= ~PlayerFlag_WallStopRight;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
+                                    PLAYER_PROPS().flags         &= ~PlayerFlag_WallStopRight;
                                 }
                                 else if (player->model.anim.keyframeIdx >= 43 &&
                                          player->model.anim.keyframeIdx <= 44)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
-                                    playerProps.flags         |= PlayerFlag_WallStopRight;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForwardWallStop;
+                                    PLAYER_PROPS().flags         |= PlayerFlag_WallStopRight;
                                 }
                             }
                             // Change state from run to walk. Difference with first conditional is this only triggers if
@@ -5340,14 +5335,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                                 if (player->model.anim.keyframeIdx >= 30 &&
                                     player->model.anim.keyframeIdx <= 31)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_WalkForward;
                                     stillAnim.endKeyframeIdx   = 8;
                                     stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
                                 else if (player->model.anim.keyframeIdx >= 41 &&
                                          player->model.anim.keyframeIdx <= 42)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_WalkForward;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_WalkForward;
                                     stillAnim.endKeyframeIdx   = 20;
                                     stillAnim.linkStatus       = ANIM_STATUS(HarryAnim_WalkForward, true);
                                 }
@@ -5357,7 +5352,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            if (playerExtra.lowerBodyState != PlayerLowerBodyState_RunForward)
+            if (PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_RunForward)
             {
                 Player_MovementStateReset(player, PlayerLowerBodyState_RunForward);
             }
@@ -5365,9 +5360,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_CharaRotate(4);
 
             g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
-            playerProps.headingAngle = Q12_ANGLE(0.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
 
-            if (playerExtra.lowerBodyState == PlayerLowerBodyState_WalkForward)
+            if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_WalkForward)
             {
                 player->model.anim.status = ANIM_STATUS(HarryAnim_Still, false);
                 player->model.stateStep++;
@@ -5376,17 +5371,17 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             break;
 
         case PlayerLowerBodyState_RunForwardWallStop:
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 1;
-                if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 1;
+                if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
             // Depending on frame of gait cycle, set left or right wall stop anim variant.
-            if (playerProps.flags & PlayerFlag_WallStopRight)
+            if (PLAYER_PROPS().flags & PlayerFlag_WallStopRight)
             {
                 if (player->model.stateStep == 0)
                 {
@@ -5400,14 +5395,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
+            if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
                 if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true) &&
                     player->model.anim.keyframeIdx >= 168 ||
                     player->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true) &&
                     player->model.anim.keyframeIdx >= 158)
                 {
-                    playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                     Player_MovementStateReset(player, PlayerLowerBodyState_RunForwardWallStop);
                 }
 
@@ -5423,15 +5418,15 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             if ((g_SysWork.playerStopFlags & PlayerStopFlag_StopRunning) &&
-                playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
+                PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim &&
+                PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop)
             {
-                if (playerProps.moveSpeed != Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
                 {
-                    playerProps.moveSpeed -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
-                    if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                    PLAYER_PROPS().moveSpeed -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
+                    if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                     {
-                        playerProps.moveSpeed = Q12(0.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(0.0f);
                     }
                 }
             }
@@ -5448,22 +5443,22 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 {
                     func_80070B84(player, Q12(0.75f), Q12(1.15f), 2);
                 }
-                else if (playerProps.moveSpeed > Q12(1.15f))
+                else if (PLAYER_PROPS().moveSpeed > Q12(1.15f))
                 {
-                    playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
-                    if (playerProps.moveSpeed < Q12(1.15f))
+                    PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2;
+                    if (PLAYER_PROPS().moveSpeed < Q12(1.15f))
                     {
-                        playerProps.moveSpeed = Q12(1.15f);
+                        PLAYER_PROPS().moveSpeed = Q12(1.15f);
                     }
                 }
-                else if (playerProps.moveSpeed < Q12(1.15f))
+                else if (PLAYER_PROPS().moveSpeed < Q12(1.15f))
                 {
                     if (player->model.anim.keyframeIdx >= 2)
                     {
-                        playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                        PLAYER_PROPS().moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                     }
 
-                    playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.15f));
+                    PLAYER_PROPS().moveSpeed = CLAMP(PLAYER_PROPS().moveSpeed, Q12(0.0f), Q12(1.15f));
                 }
 
                 if (g_Controller0->buttonFlags.held & ControllerFlag_LStickHighDown)
@@ -5478,24 +5473,24 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (playerExtra.state == PlayerState_Combat)
+            if (PLAYER_EXTRA().state == PlayerState_Combat)
             {
                 if (g_SysWork.playerStopFlags & PlayerStopFlag_StopRunning)
                 {
-                    if ((playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                         playerExtra.upperBodyState != PlayerUpperBodyState_AimStop) ||
+                    if ((PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim &&
+                         PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (player->model.anim.keyframeIdx >= 56 &&
                           player->model.anim.keyframeIdx <= 57) ||
                          player->model.anim.keyframeIdx == 67 ||
                          player->model.anim.keyframeIdx == 66)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_Aim;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Aim;
                     }
                 }
 
                 Player_MovementStateReset(player, aimState + PlayerLowerBodyState_WalkBackward);
 
-                if (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                 {
                     Player_CharaRotate(5);
                 }
@@ -5508,54 +5503,54 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                           player->model.anim.keyframeIdx <= 67) ||
                          player->model.anim.keyframeIdx == 46 ||
                          player->model.anim.keyframeIdx == 47) &&
-                        aimState == 0 && playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
+                        aimState == 0 && PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop)
                     {
                         if (( g_GameWork.config.extraWalkRunCtrl && !g_Player_IsRunning) ||
                             (!g_GameWork.config.extraWalkRunCtrl &&  g_Player_IsRunning))
                         {
                             if (g_Player_IsMovingBackward)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
-                                playerExtra.upperBodyState = PlayerUpperBodyState_RunJumpBackward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_RunJumpBackward;
                                 extra->model.stateStep     = 0;
                                 extra->model.controlState  = 0;
                             }
                         }
                     }
                 }
-                else if ((playerExtra.lowerBodyState < PlayerLowerBodyState_Aim &&
-                          playerExtra.upperBodyState != PlayerUpperBodyState_AimStop) ||
+                else if ((PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim &&
+                          PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop) ||
                          (player->model.anim.keyframeIdx >= 56 && player->model.anim.keyframeIdx <= 57) ||
                           player->model.anim.keyframeIdx == 67 || player->model.anim.keyframeIdx == 66)
                 {
-                    if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags         |= PlayerFlag_Unk10;
+                            PLAYER_PROPS().flags         |= PlayerFlag_Unk10;
                             player->model.stateStep    = 0;
                             player->model.controlState = 0;
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            playerExtra.lowerBodyState = aimState;
-                            playerProps.flags         &= ~PlayerFlag_Unk10;
+                            PLAYER_EXTRA().lowerBodyState = aimState;
+                            PLAYER_PROPS().flags         &= ~PlayerFlag_Unk10;
                         }
                     }
                     else
                     {
-                        playerExtra.lowerBodyState = aimState;
-                        playerProps.flags         &= ~PlayerFlag_Unk10;
+                        PLAYER_EXTRA().lowerBodyState = aimState;
+                        PLAYER_PROPS().flags         &= ~PlayerFlag_Unk10;
                     }
                 }
 
-                if (playerExtra.lowerBodyState == (aimState + PlayerLowerBodyState_WalkBackward) &&
+                if (PLAYER_EXTRA().lowerBodyState == (aimState + PlayerLowerBodyState_WalkBackward) &&
                     !g_Player_IsInWalkToRunTransition)
                 {
                     Player_CharaTurn_0(player, aimState);
@@ -5565,18 +5560,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 Player_CharaRotate(4);
             }
 
-            playerProps.headingAngle = Q12_ANGLE(180.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(180.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(180.0f);
             break;
 
         case PlayerLowerBodyState_SidestepRight:
         case PlayerLowerBodyState_AimSidestepRight:
-            if (playerProps.moveSpeed > Q12(1.25f))
+            if (PLAYER_PROPS().moveSpeed > Q12(1.25f))
             {
-                playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
-                if (playerProps.moveSpeed < Q12(1.25f))
+                PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f)));
+                if (PLAYER_PROPS().moveSpeed < Q12(1.25f))
                 {
-                    playerProps.moveSpeed = Q12(1.25f);
+                    PLAYER_PROPS().moveSpeed = Q12(1.25f);
                 }
             }
             else
@@ -5584,14 +5579,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 if (player->model.anim.keyframeIdx >= 100 &&
                     player->model.anim.keyframeIdx <= 111)
                 {
-                    playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    PLAYER_PROPS().moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
                 else if (player->model.anim.keyframeIdx >= 112)
                 {
-                    playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
 
-                playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.25f));
+                PLAYER_PROPS().moveSpeed = CLAMP(PLAYER_PROPS().moveSpeed, Q12(0.0f), Q12(1.25f));
             }
 
             if (player->model.stateStep == 0)
@@ -5607,36 +5602,36 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 // If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingRightHold)
                 {
-                    if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         // Some melee weapons allow attack while sidestepping.
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags         |= PlayerFlag_Unk10;
+                            PLAYER_PROPS().flags         |= PlayerFlag_Unk10;
                             player->model.stateStep    = 0;
                             player->model.controlState = 0;
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            playerExtra.lowerBodyState = aimState;
+                            PLAYER_EXTRA().lowerBodyState = aimState;
                         }
                     }
                     else
                     {
-                        playerExtra.lowerBodyState = aimState;
+                        PLAYER_EXTRA().lowerBodyState = aimState;
                     }
                 }
                 else if (g_Player_IsRunning && aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None)
                 {
-                    if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
+                    if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunRight;
                     }
                 }
             }
@@ -5645,18 +5640,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_MovementStateReset(player, aimState + PlayerLowerBodyState_SidestepRight);
             Player_CharaRotate(3);
 
-            playerProps.headingAngle = Q12_ANGLE(90.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
         case PlayerLowerBodyState_AimSidestepLeft:
-            if (playerProps.moveSpeed > Q12(1.25f))
+            if (PLAYER_PROPS().moveSpeed > Q12(1.25f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                if (playerProps.moveSpeed < Q12(1.25f))
+                PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                if (PLAYER_PROPS().moveSpeed < Q12(1.25f))
                 {
-                    playerProps.moveSpeed = Q12(1.25f);
+                    PLAYER_PROPS().moveSpeed = Q12(1.25f);
                 }
             }
             else
@@ -5664,14 +5659,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 if (player->model.anim.keyframeIdx >= 75 &&
                     player->model.anim.keyframeIdx <= 86)
                 {
-                    playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    PLAYER_PROPS().moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
                 else if (player->model.anim.keyframeIdx >= 87)
                 {
-                    playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
                 }
 
-                playerProps.moveSpeed = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(1.25f));
+                PLAYER_PROPS().moveSpeed = CLAMP(PLAYER_PROPS().moveSpeed, Q12(0.0f), Q12(1.25f));
             }
 
             if (player->model.stateStep == 0)
@@ -5687,35 +5682,35 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 // If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingLeftHold)
                 {
-                    if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              playerCombat.weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
                              extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
-                            playerProps.flags         |= PlayerFlag_Unk10;
+                            PLAYER_PROPS().flags         |= PlayerFlag_Unk10;
                             player->model.stateStep    = 0;
                             player->model.controlState = 0;
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_Attack;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                         }
                         else
                         {
-                            playerExtra.lowerBodyState = aimState;
+                            PLAYER_EXTRA().lowerBodyState = aimState;
                         }
                     }
                     else
                     {
-                        playerExtra.lowerBodyState = aimState;
+                        PLAYER_EXTRA().lowerBodyState = aimState;
                     }
                 }
                 else if (g_Player_IsRunning && aimState == 0 && lowerBodyMoveState == PlayerLowerBodyState_None)
                 {
-                    if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
+                    if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunLeft;
                     }
                 }
             }
@@ -5724,24 +5719,24 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_MovementStateReset(player, aimState + PlayerLowerBodyState_SidestepLeft);
             Player_CharaRotate(3);
 
-            playerProps.headingAngle = Q12_ANGLE(-90.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(-90.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(-90.0f);
             break;
 
         case PlayerLowerBodyState_RunRight:
             player->properties.player.exhaustionTimer += g_DeltaTime;
-            if (playerProps.moveSpeed > Q12(3.1739f))
+            if (PLAYER_PROPS().moveSpeed > Q12(3.1739f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                if (playerProps.moveSpeed < Q12(3.1739f))
+                PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                if (PLAYER_PROPS().moveSpeed < Q12(3.1739f))
                 {
-                    playerProps.moveSpeed = Q12(3.1739f);
+                    PLAYER_PROPS().moveSpeed = Q12(3.1739f);
                 }
             }
-            else if (playerProps.moveSpeed < Q12(3.1739f))
+            else if (PLAYER_PROPS().moveSpeed < Q12(3.1739f))
             {
-                playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
-                playerProps.moveSpeed  = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(3.1739f));
+                PLAYER_PROPS().moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
+                PLAYER_PROPS().moveSpeed  = CLAMP(PLAYER_PROPS().moveSpeed, Q12(0.0f), Q12(3.1739f));
             }
 
             if (player->model.stateStep == 0)
@@ -5757,21 +5752,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->fallSpeed = Q12(-1.0f);
             }
 
-            if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
+            if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
                 switch (lowerBodyMoveState)
                 {
                     case PlayerLowerBodyState_WalkForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunRightStumble;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunRightStumble;
                         }
                         else
                         {
                             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                 player->model.anim.keyframeIdx >= 147)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
@@ -5779,32 +5774,32 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     case PlayerLowerBodyState_RunForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
                         }
                         else
                         {
                             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                 player->model.anim.keyframeIdx >= 147)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
 
                     default:
                         if (player->properties.player.runStepSfxCount >= 5 &&
-                            playerProps.moveSpeed >= Q12(3.125f))
+                            PLAYER_PROPS().moveSpeed >= Q12(3.125f))
                         {
                             if (player->model.anim.keyframeIdx >= 144 && (!g_Player_IsRunning || !g_Player_IsSteppingRightHold))
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunRightWallStop;
                             }
                         }
                         else if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRight, true) &&
                                  player->model.anim.keyframeIdx >= 147 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingRightHold))
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                         }
                         break;
                 }
@@ -5813,24 +5808,24 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_MovementStateReset(player, PlayerLowerBodyState_RunRight);
             Player_CharaRotate(4);
 
-            playerProps.headingAngle = Q12_ANGLE(90.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_RunLeft:
             player->properties.player.exhaustionTimer += g_DeltaTime;
-            if (playerProps.moveSpeed > Q12(3.1739f))
+            if (PLAYER_PROPS().moveSpeed > Q12(3.1739f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                if (playerProps.moveSpeed < Q12(3.1739f))
+                PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                if (PLAYER_PROPS().moveSpeed < Q12(3.1739f))
                 {
-                    playerProps.moveSpeed = Q12(3.1739f);
+                    PLAYER_PROPS().moveSpeed = Q12(3.1739f);
                 }
             }
-            else if (playerProps.moveSpeed < Q12(3.1739f))
+            else if (PLAYER_PROPS().moveSpeed < Q12(3.1739f))
             {
-                playerProps.moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
-                playerProps.moveSpeed  = CLAMP(playerProps.moveSpeed, Q12(0.0f), Q12(3.1739f));
+                PLAYER_PROPS().moveSpeed += TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.75f));
+                PLAYER_PROPS().moveSpeed  = CLAMP(PLAYER_PROPS().moveSpeed, Q12(0.0f), Q12(3.1739f));
             }
 
             if (player->model.stateStep == 0)
@@ -5846,21 +5841,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->fallSpeed = Q12(-1.0f);
             }
 
-            if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
+            if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStartTargetLock)
             {
                 switch (lowerBodyMoveState)
                 {
                     case PlayerLowerBodyState_WalkForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeftStumble;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunLeftStumble;
                         }
                         else
                         {
                             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                 player->model.anim.keyframeIdx >= 132)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
@@ -5868,33 +5863,33 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     case PlayerLowerBodyState_RunForward:
                         if (player->properties.player.runDistance >= RUN_STUMBLE_TRIGGER_DIST)
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
                         }
                         else
                         {
                             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                 player->model.anim.keyframeIdx >= 132)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                             }
                         }
                         break;
 
                     default:
                         if (player->properties.player.runStepSfxCount >= 5 &&
-                            playerProps.moveSpeed >= Q12(3.125f))
+                            PLAYER_PROPS().moveSpeed >= Q12(3.125f))
                         {
                             if (player->model.anim.keyframeIdx > 128 &&
                                 (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunLeftWallStop;
                             }
                         }
                         else if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeft, true) &&
                                  player->model.anim.keyframeIdx >= 132 &&
                                  (!g_Player_IsRunning || !g_Player_IsSteppingLeftHold))
                         {
-                            playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                            PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                         }
                         break;
                 }
@@ -5903,7 +5898,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             Player_MovementStateReset(player, PlayerLowerBodyState_RunLeft);
             Player_CharaRotate(4);
 
-            playerProps.headingAngle = Q12_ANGLE(-90.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(-90.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(-90.0f);
             break;
 
@@ -5911,18 +5906,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
         case PlayerLowerBodyState_AimQuickTurnRight:
             g_Player_HeadingAngle = Q12_ANGLE(0.0f);
 
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
-                if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
             if (player->model.controlState == 0)
             {
-                playerProps.quickTurnHeadingAngle = player->rotation.vy;
+                PLAYER_PROPS().quickTurnHeadingAngle = player->rotation.vy;
             }
 
             if (player->model.stateStep == 0)
@@ -5946,12 +5941,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 D_800C454C = Q12(0.0f);
             }
 
-            if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) > (Q12_ANGLE(180.0f) - ((s32)(g_DeltaTime * 24) >> 4)))
+            if (ABS_DIFF(PLAYER_PROPS().quickTurnHeadingAngle, player->rotation.vy) > (Q12_ANGLE(180.0f) - ((s32)(g_DeltaTime * 24) >> 4)))
             {
-                if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
+                if (ABS_DIFF(PLAYER_PROPS().quickTurnHeadingAngle, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    player->rotation.vy   = playerProps.quickTurnHeadingAngle + Q12_ANGLE(180.0f);
-                    playerProps.moveSpeed = Q12(1.4f);
+                    player->rotation.vy   = PLAYER_PROPS().quickTurnHeadingAngle + Q12_ANGLE(180.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(1.4f);
                     D_800C454C            = Q12(0.0f);
 
                     // State change.
@@ -5961,11 +5956,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
 
                             player->model.stateStep    = 0;
@@ -5975,11 +5970,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_JumpBackward;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                             }
 
                             player->model.stateStep    = 0;
@@ -5991,11 +5986,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
 
                             player->model.stateStep    = 0;
@@ -6007,11 +6002,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
 
                             player->model.stateStep    = 0;
@@ -6019,7 +6014,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         }
                         else if (player->model.anim.keyframeIdx >= 216)
                         {
-                            playerExtra.lowerBodyState = aimState;
+                            PLAYER_EXTRA().lowerBodyState = aimState;
                             player->model.stateStep    = 0;
                             player->model.controlState = 0;
                         }
@@ -6027,7 +6022,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            playerProps.headingAngle = Q12_ANGLE(0.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
             break;
 
@@ -6035,18 +6030,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
         case PlayerLowerBodyState_AimQuickTurnLeft:
             g_Player_HeadingAngle = Q12_ANGLE(0.0f);
 
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
-                if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.5f));
+                if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
             if (player->model.controlState == 0)
             {
-                playerProps.quickTurnHeadingAngle = player->rotation.vy;
+                PLAYER_PROPS().quickTurnHeadingAngle = player->rotation.vy;
             }
 
             if (player->model.stateStep == 0)
@@ -6070,12 +6065,12 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 D_800C454C = Q12(0.0f);
             }
 
-            if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) > (Q12_ANGLE(180.0f) - ((g_DeltaTime * 24) >> 4)))
+            if (ABS_DIFF(PLAYER_PROPS().quickTurnHeadingAngle, player->rotation.vy) > (Q12_ANGLE(180.0f) - ((g_DeltaTime * 24) >> 4)))
             {
-                if (ABS_DIFF(playerProps.quickTurnHeadingAngle, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
+                if (ABS_DIFF(PLAYER_PROPS().quickTurnHeadingAngle, player->rotation.vy) < (((g_DeltaTime * 24) >> 4) + Q12_ANGLE(180.0f)))
                 {
-                    player->rotation.vy   = playerProps.quickTurnHeadingAngle + Q12_ANGLE(180.0f);
-                    playerProps.moveSpeed = Q12(1.4f);
+                    player->rotation.vy   = PLAYER_PROPS().quickTurnHeadingAngle + Q12_ANGLE(180.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(1.4f);
                     D_800C454C            = Q12(0.0f);
 
                     // State change.
@@ -6085,11 +6080,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunForward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_WalkForward;
                             }
 
                             player->model.stateStep    = 0;
@@ -6099,11 +6094,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         {
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_JumpBackward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_JumpBackward;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_WalkBackward;
                             }
 
                             player->model.stateStep    = 0;
@@ -6115,11 +6110,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunRight;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunRight;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_SidestepRight;
                             }
 
                             player->model.stateStep    = 0;
@@ -6131,11 +6126,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                             if (g_Player_IsRunning && aimState == 0)
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_RunLeft;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunLeft;
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
+                                PLAYER_EXTRA().lowerBodyState = aimState + PlayerLowerBodyState_SidestepLeft;
                             }
 
                             player->model.stateStep    = 0;
@@ -6143,7 +6138,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         }
                         else if (player->model.anim.keyframeIdx >= 229)
                         {
-                            playerExtra.lowerBodyState = aimState;
+                            PLAYER_EXTRA().lowerBodyState = aimState;
                             player->model.stateStep    = 0;
                             player->model.controlState = 0;
                         }
@@ -6151,7 +6146,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            playerProps.headingAngle = Q12_ANGLE(0.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
             break;
 
@@ -6173,21 +6168,21 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
 
                 player->model.controlState++;
-                playerProps.moveSpeed  = Q12(2.25f);
+                PLAYER_PROPS().moveSpeed  = Q12(2.25f);
                 g_Player_PrevMoveSpeed = Q12(2.25f);
             }
             else
             {
-                if (playerProps.moveSpeed != Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
                 {
-                    playerProps.moveSpeed -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
-                    if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                    PLAYER_PROPS().moveSpeed -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2);
+                    if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                     {
-                        playerProps.moveSpeed = Q12(0.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(0.0f);
                     }
                 }
 
-                g_Player_PrevMoveSpeed = playerProps.moveSpeed;
+                g_Player_PrevMoveSpeed = PLAYER_PROPS().moveSpeed;
             }
 
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_JumpBackward, true) &&
@@ -6197,38 +6192,38 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 {
                     Player_ExtraStateSet(player, extra, PlayerState_FallBackward);
 
-                    playerProps.moveSpeed = Q12(1.25f);
+                    PLAYER_PROPS().moveSpeed = Q12(1.25f);
                 }
                 else
                 {
-                    playerExtra.lowerBodyState = aimState;
+                    PLAYER_EXTRA().lowerBodyState = aimState;
                     player->model.stateStep    = 0;
                     player->model.controlState = 0;
                     player->fallSpeed          = Q12(0.0f);
                 }
             }
 
-            playerProps.headingAngle = Q12_ANGLE(180.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(180.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(180.0f);
             break;
 
         case PlayerLowerBodyState_Stumble:
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2) / 3;
-                if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                PLAYER_PROPS().moveSpeed -= ((TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 2) / 3;
+                if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
             if (D_800C45C8.field_14 <= Q12(0.5f) &&
-                playerProps.moveSpeed != Q12(0.0f))
+                PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 4;
-                if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) * 4;
+                if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
@@ -6241,7 +6236,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunForwardStumble, true) &&
                 player->model.anim.keyframeIdx == 179)
             {
-                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, PlayerLowerBodyState_Stumble);
             }
             break;
@@ -6255,18 +6250,18 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             break;
 
         case PlayerLowerBodyState_RunLeftStumble:
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 2;
-                if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 2;
+                if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
             if (D_800C45C8.field_14 < Q12(0.3401f))
             {
-                playerProps.moveSpeed = Q12(0.0f);
+                PLAYER_PROPS().moveSpeed = Q12(0.0f);
             }
 
             if (player->model.stateStep == 0)
@@ -6278,34 +6273,34 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunLeftStumble, true) &&
                 player->model.anim.keyframeIdx == 349)
             {
-                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, 15);
             }
 
-            if (playerExtra.lowerBodyState != PlayerLowerBodyState_None)
+            if (PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_None)
             {
-                playerProps.headingAngle = Q12_ANGLE(-90.0f);
+                PLAYER_PROPS().headingAngle = Q12_ANGLE(-90.0f);
                 g_Player_HeadingAngle    = Q12_ANGLE(-90.0f);
                 break;
             }
 
-            playerProps.headingAngle = Q12_ANGLE(0.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
-            if (playerProps.moveSpeed != Q12(0.0f))
+            if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
             {
-                playerProps.moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 2;
-                if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                PLAYER_PROPS().moveSpeed -= (TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f))) >> 2;
+                if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                 {
-                    playerProps.moveSpeed = Q12(0.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(0.0f);
                 }
             }
 
             if (D_800C45C8.field_14 < Q12(0.3401f))
             {
-                playerProps.moveSpeed = Q12(0.0f);
+                PLAYER_PROPS().moveSpeed = Q12(0.0f);
             }
 
             if (player->model.stateStep == 0)
@@ -6317,72 +6312,72 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             if (player->model.anim.status == ANIM_STATUS(HarryAnim_RunRightStumble, true) &&
                 player->model.anim.keyframeIdx == 378)
             {
-                playerExtra.lowerBodyState = PlayerLowerBodyState_None;
+                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
                 Player_MovementStateReset(player, 16);
             }
 
-            if (playerExtra.lowerBodyState == PlayerLowerBodyState_None)
+            if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_None)
             {
-                playerProps.headingAngle = Q12_ANGLE(0.0f);
+                PLAYER_PROPS().headingAngle = Q12_ANGLE(0.0f);
                 g_Player_HeadingAngle    = Q12_ANGLE(0.0f);
                 break;
             }
 
-            playerProps.headingAngle = Q12_ANGLE(90.0f);
+            PLAYER_PROPS().headingAngle = Q12_ANGLE(90.0f);
             g_Player_HeadingAngle    = Q12_ANGLE(90.0f);
             break;
 
         case PlayerLowerBodyState_Attack:
             // If weapon is katana.
-            if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_Katana)
+            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Katana)
             {
-                if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Hold))
+                if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Hold))
                 {
-                    if (playerProps.moveSpeed == Q12(0.0f) &&
+                    if (PLAYER_PROPS().moveSpeed == Q12(0.0f) &&
                         (extra->model.anim.keyframeIdx >= D_800C44F0[D_800AF220].startKeyframeIdx + 7))
                     {
-                        playerProps.moveSpeed = Q12(5.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(5.0f);
                         g_Player_HeadingAngle = Q12_ANGLE(0.0f);
                     }
                 }
                 else if (player->model.stateStep == 0 && !g_Player_IsAttacking)
                 {
-                    playerProps.moveSpeed = Q12(5.0f);
+                    PLAYER_PROPS().moveSpeed = Q12(5.0f);
                     g_Player_HeadingAngle = Q12_ANGLE(0.0f);
                 }
             }
 
-            if (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_Katana)
+            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Katana)
             {
-                if (playerProps.moveSpeed != Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
                 {
-                    playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, 0x444);
-                    if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                    PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, 0x444);
+                    if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                     {
-                        playerProps.moveSpeed = Q12(0.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(0.0f);
                     }
                 }
             }
             else
             {
-                if (playerProps.moveSpeed != Q12(0.0f))
+                if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
                 {
-                    playerProps.moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
-                    if ((playerProps.moveSpeed >> 16) & (1 << 0))
+                    PLAYER_PROPS().moveSpeed -= TIMESTEP_SCALE_30_FPS(g_DeltaTime, Q12(0.4f));
+                    if ((PLAYER_PROPS().moveSpeed >> 16) & (1 << 0))
                     {
-                        playerProps.moveSpeed = Q12(0.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(0.0f);
                     }
                 }
             }
 
             if (g_SysWork.targetNpcIdx == NO_VALUE ||
-                playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
                 {
-                    if (playerProps.flags & PlayerFlag_Unk11)
+                    if (PLAYER_PROPS().flags & PlayerFlag_Unk11)
                     {
                         if (player->model.stateStep == 0)
                         {
@@ -6399,10 +6394,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         }
                     }
                 }
-                else if (playerProps.flags & PlayerFlag_Unk10)
+                else if (PLAYER_PROPS().flags & PlayerFlag_Unk10)
                 {
-                    if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                        playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
+                        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                     {
                         if (player->model.stateStep == 0)
                         {
@@ -6425,7 +6420,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
                 }
-                else if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
                 {
                     if (g_Player_RockDrill_AttackType == RockDrillAttackType_Up)
                     {
@@ -6485,11 +6480,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) ||
-                (WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) != EquippedWeaponId_SteelPipe &&
-                 WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) != EquippedWeaponId_Hammer    &&
-                 WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) != EquippedWeaponId_RockDrill &&
-                 WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) != EquippedWeaponId_Katana))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) ||
+                (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != EquippedWeaponId_SteelPipe &&
+                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != EquippedWeaponId_Hammer    &&
+                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != EquippedWeaponId_RockDrill &&
+                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != EquippedWeaponId_Katana))
             {
                 if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status)  &&
@@ -6500,32 +6495,32 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     {
                         if (g_Player_IsMovingBackward)
                         {
-                            if (playerProps.moveSpeed == Q12(0.0f))
+                            if (PLAYER_PROPS().moveSpeed == Q12(0.0f))
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                             }
                         }
-                        else if (playerExtra.state != PlayerState_Combat)
+                        else if (PLAYER_EXTRA().state != PlayerState_Combat)
                         {
                             if (!g_Player_IsSteppingRightHold)
                             {
                                 if (g_Player_IsSteppingLeftHold)
                                 {
-                                    playerExtra.lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
+                                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
                                 }
                             }
                             else
                             {
-                                playerExtra.lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
+                                PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
                             }
                         }
                     }
                     else
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                     }
 
-                    if (playerExtra.lowerBodyState != PlayerLowerBodyState_Attack)
+                    if (PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_Attack)
                     {
                         Player_MovementStateReset(player, PlayerLowerBodyState_Aim);
                         break;
@@ -6548,28 +6543,28 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             {
                 if (g_Player_IsMovingForward)
                 {
-                    playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkForward;
+                    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimWalkForward;
                 }
                 else if (g_Player_IsMovingBackward)
                 {
-                    if (playerProps.moveSpeed == Q12(0.0f))
+                    if (PLAYER_PROPS().moveSpeed == Q12(0.0f))
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimWalkBackward;
                     }
                 }
-                else if (playerExtra.state != PlayerState_Combat)
+                else if (PLAYER_EXTRA().state != PlayerState_Combat)
                 {
                     if (g_Player_IsSteppingRightHold)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimSidestepRight;
                     }
                     else if (g_Player_IsSteppingLeftHold)
                     {
-                        playerExtra.lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
+                        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_AimSidestepLeft;
                     }
                 }
 
-                if (playerExtra.lowerBodyState != PlayerLowerBodyState_Reload)
+                if (PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_Reload)
                 {
                     Player_MovementStateReset(player, PlayerLowerBodyState_Aim);
                 }
@@ -6591,13 +6586,13 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     Player_FootstepSfxGet(g_Player_CollisionResult.surface.floorType, &sfxId, &pitch0, &pitch1);
 
     // This entire conditional is the reason why movement stop working when removing this function call.
-    if (playerExtra.lowerBodyState != PlayerLowerBodyState_JumpBackward &&
-        playerExtra.lowerBodyState != PlayerLowerBodyState_Reload)
+    if (PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_JumpBackward &&
+        PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_Reload)
     {
-        g_Player_PrevMoveSpeed = playerProps.moveSpeed;
+        g_Player_PrevMoveSpeed = PLAYER_PROPS().moveSpeed;
     }
 
-    switch (playerExtra.lowerBodyState)
+    switch (PLAYER_EXTRA().lowerBodyState)
     {
         case PlayerLowerBodyState_RunForward:
         case PlayerLowerBodyState_RunRight:
@@ -6639,22 +6634,22 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
     }
 
     // Plays movement sounds.
-    switch (playerExtra.lowerBodyState)
+    switch (PLAYER_EXTRA().lowerBodyState)
     {
         case PlayerLowerBodyState_None:
         case PlayerLowerBodyState_Aim:
             // Turn right.
-            if (playerExtra.upperBodyState == PlayerUpperBodyState_TurnRight)
+            if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_TurnRight)
             {
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_TurnRight, true), player, 204, 200, sfxId, pitch0);
             }
             // Turn left.
-            else if (playerExtra.upperBodyState == PlayerUpperBodyState_TurnLeft)
+            else if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_TurnLeft)
             {
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_TurnLeft, true), player, 187, 191, sfxId, pitch0);
             }
 
-            if ((playerProps.flags & PlayerFlag_Moving) &&
+            if ((PLAYER_PROPS().flags & PlayerFlag_Moving) &&
                 ((player->model.anim.status >= ANIM_STATUS(HarryAnim_Idle, true) &&
                   player->model.anim.status <= ANIM_STATUS(HarryAnim_IdleExhausted, false)) ||
                  player->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true)))
@@ -6662,16 +6657,16 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Sfx_WithPitchPlay(sfxId, &player->position, Q8_CLAMPED(0.095f), pitch0);
 
                 player->properties.player.field_10C                        = pitch0 + 0x10;
-                playerProps.flags &= ~PlayerFlag_Moving;
+                PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             }
 
             if (player->model.anim.keyframeIdx == 246 &&
-                !(playerProps.flags & PlayerFlag_Unk5))
+                !(PLAYER_PROPS().flags & PlayerFlag_Unk5))
             {
                 Sfx_WithPitchPlay(sfxId, &player->position, Q8(0.5f), pitch1);
 
                 player->properties.player.field_10C                       = pitch1 + 0x20;
-                playerProps.flags |= PlayerFlag_Unk5;
+                PLAYER_PROPS().flags |= PlayerFlag_Unk5;
             }
             break;
 
@@ -6681,13 +6676,13 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_WalkBackward:
         case PlayerLowerBodyState_AimWalkBackward:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_WalkBackward, true), player, 52, 63, sfxId, pitch0);
-            playerProps.flags |= PlayerFlag_Moving;
+            PLAYER_PROPS().flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_AimWalkForward:
         case PlayerLowerBodyState_WalkForward:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_WalkForward, true), player, 18, 6, sfxId, pitch0);
-            playerProps.flags |= PlayerFlag_Moving;
+            PLAYER_PROPS().flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunForward:
@@ -6696,17 +6691,17 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 player->properties.player.runStepSfxCount++;
             }
 
-            playerProps.flags |= PlayerFlag_Moving;
+            PLAYER_PROPS().flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_SidestepRight:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_SidestepRight, true), player, 118, 108, sfxId, pitch0);
-            playerProps.flags |= PlayerFlag_Moving;
+            PLAYER_PROPS().flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_SidestepLeft, true), player, 93, 83, sfxId, pitch0);
-            playerProps.flags |= PlayerFlag_Moving;
+            PLAYER_PROPS().flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRight:
@@ -6715,7 +6710,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 player->properties.player.runStepSfxCount++;
             }
 
-            playerProps.flags |= PlayerFlag_Moving;
+            PLAYER_PROPS().flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeft:
@@ -6724,11 +6719,11 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 player->properties.player.runStepSfxCount++;
             }
 
-            playerProps.flags |= PlayerFlag_Moving;
+            PLAYER_PROPS().flags |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunForwardWallStop:
-            if (playerProps.flags & PlayerFlag_WallStopRight)
+            if (PLAYER_PROPS().flags & PlayerFlag_WallStopRight)
             {
                 if (player->model.anim.keyframeIdx < 152)
                 {
@@ -6751,7 +6746,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 }
             }
 
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeftWallStop:
@@ -6764,7 +6759,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), player, 327, 324, sfxId, pitch1);
             }
 
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRightWallStop:
@@ -6777,7 +6772,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightWallStop, true), player, 353, 356, sfxId, pitch1);
             }
 
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_Stumble:
@@ -6790,7 +6785,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardStumble, true), player, 176, 174, sfxId, pitch1);
             }
 
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunLeftStumble:
@@ -6807,7 +6802,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftStumble, true), player, 356, 346, sfxId, pitch1);
             }
 
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRightStumble:
@@ -6824,26 +6819,26 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightStumble, true), player, 385, 375, sfxId, pitch1);
             }
 
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_QuickTurnLeft:
         case PlayerLowerBodyState_AimQuickTurnLeft:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_QuickTurnLeft, true), player, 222, 224, sfxId, pitch0);
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
         case PlayerLowerBodyState_AimQuickTurnRight:
             Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_QuickTurnRight, true), player, 209, 211, sfxId, pitch0);
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_JumpBackward:
         case PlayerLowerBodyState_Unk31:
             if (player->model.anim.keyframeIdx < 243)
             {
-                playerProps.flags &= ~PlayerFlag_Unk5;
+                PLAYER_PROPS().flags &= ~PlayerFlag_Unk5;
             }
 
             if (player->position.vy == g_Player_CollisionResult.surface.floorHeight)
@@ -6851,7 +6846,7 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007B924
                 Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_JumpBackward, true), player, 243, 245, sfxId, pitch1);
             }
 
-            playerProps.flags &= ~PlayerFlag_Moving;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Moving;
             break;
     }
 }
@@ -6960,9 +6955,9 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
     player->position.vy += g_Player_CollisionResult.offset.vy;
     player->position.vz += g_Player_CollisionResult.offset.vz;
 
-    if (playerExtra.upperBodyState == PlayerUpperBodyState_RunForward ||
-        playerExtra.upperBodyState == PlayerUpperBodyState_RunRight   ||
-        playerExtra.upperBodyState == PlayerUpperBodyState_RunLeft)
+    if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_RunForward ||
+        PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_RunRight   ||
+        PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_RunLeft)
     {
         player->properties.player.runDistance += Math_Vector3MagCalc(g_Player_CollisionResult.offset.vx,
                                                                      g_Player_CollisionResult.offset.vy,
@@ -6996,8 +6991,8 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
                                              player->position.vz - g_Player_PrevPosition.vz) +
                                       Q12_ANGLE(360.0f));
 
-    if (!(playerExtra.state >= PlayerState_FallForward &&
-          playerExtra.state <  PlayerState_KickEnemy))
+    if (!(PLAYER_EXTRA().state >= PlayerState_FallForward &&
+          PLAYER_EXTRA().state <  PlayerState_KickEnemy))
     {
         if (!g_Player_IsInWalkToRunTransition)
         {
@@ -7007,7 +7002,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
                 if (ABS_DIFF(player->rotation.vy, adjMoveOffsetZ) >= Q12_ANGLE(90.0f) &&
                     ABS_DIFF(player->rotation.vy, adjMoveOffsetZ) <  Q12_ANGLE(270.0f))
                 {
-                    if (playerExtra.lowerBodyState != PlayerLowerBodyState_JumpBackward)
+                    if (PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_JumpBackward)
                     {
                         Player_ExtraStateSet(player, extra, PlayerState_FallBackward);
                     }
@@ -7017,7 +7012,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
                     Player_ExtraStateSet(player, extra, PlayerState_FallForward);
                 }
 
-                playerCombat.isAiming = false;
+                PLAYER_COMBAT().isAiming = false;
             }
         }
     }
@@ -7068,7 +7063,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         return;
     }
 
-    switch (playerExtra.state)
+    switch (PLAYER_EXTRA().state)
     {
         case PlayerState_FallForward:
         case PlayerState_FallBackward:
@@ -7096,16 +7091,16 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         case PlayerState_OnFloorFront:
         case PlayerState_OnFloorBehind:
             // Related to enemy grabbing.
-            if (player->damage.amount != Q12(0.0f) && !(playerProps.flags & PlayerFlag_DamageReceived))
+            if (player->damage.amount != Q12(0.0f) && !(PLAYER_PROPS().flags & PlayerFlag_DamageReceived))
             {
-                playerProps.flags |= PlayerFlag_DamageReceived;
+                PLAYER_PROPS().flags |= PlayerFlag_DamageReceived;
                 Sfx_WithFlagsPlay(sfxId, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
                 player->properties.player.field_10C = 64;
             }
 
             if (player->damage.amount == Q12(0.0f))
             {
-                playerProps.flags &= ~PlayerFlag_DamageReceived;
+                PLAYER_PROPS().flags &= ~PlayerFlag_DamageReceived;
             }
 
             func_80089494();
@@ -7134,7 +7129,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
             if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold))
             {
-                g_SysWork.playerWork.player.collision.cylinder.innerRadius = Q12(0.0f);
+                PLAYER_CHARA().collision.cylinder.innerRadius = Q12(0.0f);
                 Player_ExtraStateSet(player, extra, PlayerState_InstantDeath);
                 return;
             }
@@ -7165,16 +7160,16 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             }
 
             g_SysWork.targetNpcIdx    = NO_VALUE;
-            playerCombat.weaponAttack = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE :
+            PLAYER_COMBAT().weaponAttack = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE :
                                                                                                   (g_SavegamePtr->equippedWeapon - InvItemId_KitchenKnife);
 
-            if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
             {
                 func_8004C564(2, 3);
             }
 
-            if (playerExtra.state >= PlayerState_FallForward &&
-                playerExtra.state <  PlayerState_Unk7)
+            if (PLAYER_EXTRA().state >= PlayerState_FallForward &&
+                PLAYER_EXTRA().state <  PlayerState_Unk7)
             {
                 Player_CollisionReset();
             }
@@ -7203,7 +7198,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     break;
 
                 case 63:
-                    playerProps.moveSpeed = Q12(1.5f);
+                    PLAYER_PROPS().moveSpeed = Q12(1.5f);
                     Math_ShortestAngleGet(player->rotation.vy, attacker.rotation.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
@@ -7291,14 +7286,14 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     return;
 
                 case 69:
-                    playerProps.moveSpeed = Q12(1.6f);
+                    PLAYER_PROPS().moveSpeed = Q12(1.6f);
                     Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE(90.0f), &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
                 case 68:
                     if (player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
                     {
-                        playerProps.moveSpeed = Q12(4.0f);
+                        PLAYER_PROPS().moveSpeed = Q12(4.0f);
                         Math_ShortestAngleGet(player->rotation.vy, (s16)player->damage.position.vy, &headingAngle);
                         g_Player_HeadingAngle = headingAngle;
                     }
@@ -7355,20 +7350,20 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     break;
             }
 
-            if ((u32)playerExtra.state >= PlayerState_FallForward)
+            if ((u32)PLAYER_EXTRA().state >= PlayerState_FallForward)
             {
                 player->properties.player.afkTimer = Q12(0.0f);
                 player->properties.player.field_F4 = 0;
-                playerProps.flags                 &= ~PlayerFlag_Unk12;
-                playerCombat.isAiming              = false;
-                playerProps.flags                 &= ~PlayerFlag_Unk9;
+                PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk12;
+                PLAYER_COMBAT().isAiming              = false;
+                PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk9;
                 player->field_44.field_0           = NO_VALUE;
             }
             break;
     }
 
     // Clear damage if dead and return early.
-    if (playerExtra.state == PlayerState_Death)
+    if (PLAYER_EXTRA().state == PlayerState_Death)
     {
         Chara_DamageClear(player);
         return;
@@ -7377,11 +7372,11 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
     // Apply damage.
     if (player->damage.amount != Q12(0.0f))
     {
-        playerProps.flags &= ~PlayerFlag_Unk2;
-        if (!(playerProps.flags & PlayerFlag_DamageReceived))
+        PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;
+        if (!(PLAYER_PROPS().flags & PlayerFlag_DamageReceived))
         {
             Sfx_WithFlagsPlay(sfxId, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
-            playerProps.flags |= PlayerFlag_DamageReceived;
+            PLAYER_PROPS().flags |= PlayerFlag_DamageReceived;
             player->properties.player.field_10C = 0x40;
         }
 
@@ -7416,12 +7411,12 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
     }
 
     if (player->health <= Q12(0.0f) &&
-        playerExtra.state != PlayerState_Death                &&
-        playerExtra.state != PlayerState_Unk36                &&
-        playerExtra.state != PlayerState_EnemyGrabPinnedFront &&
-        playerExtra.state != PlayerState_EnemyGrabPinnedBack  &&
-        playerExtra.state != PlayerState_OnFloorFront         &&
-        playerExtra.state != PlayerState_OnFloorBehind        &&
+        PLAYER_EXTRA().state != PlayerState_Death                &&
+        PLAYER_EXTRA().state != PlayerState_Unk36                &&
+        PLAYER_EXTRA().state != PlayerState_EnemyGrabPinnedFront &&
+        PLAYER_EXTRA().state != PlayerState_EnemyGrabPinnedBack  &&
+        PLAYER_EXTRA().state != PlayerState_OnFloorFront         &&
+        PLAYER_EXTRA().state != PlayerState_OnFloorBehind        &&
         !g_Player_IsInWalkToRunTransition)
     {
         player->field_40                     = NO_VALUE;
@@ -7457,10 +7452,10 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
     s32    var_a3;
     q19_12 var_v1;
 
-    switch (playerExtra.state)
+    switch (PLAYER_EXTRA().state)
     {
         case PlayerState_Combat:
-            switch (playerCombat.weaponAttack)
+            switch (PLAYER_COMBAT().weaponAttack)
             {
                 case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
                     var_a2 = 20;
@@ -7488,15 +7483,15 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
                     break;
             }
 
-            if (playerExtra.upperBodyState == PlayerUpperBodyState_Reload ||
-                playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_Reload ||
+                PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 g_Player_FlexRotationX = Q12_ANGLE(0.0f);
                 g_Player_FlexRotationY = Q12_ANGLE(0.0f);
             }
             else
             {
-                g_Player_FlexRotationX = playerProps.field_122 - Q12_ANGLE(90.0f);
+                g_Player_FlexRotationX = PLAYER_PROPS().field_122 - Q12_ANGLE(90.0f);
 
                 if (ABS(player->angleToTarget - player->rotation.vy) > Q12_ANGLE(180.0f))
                 {
@@ -7515,10 +7510,10 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
                 }
 
                 if (player->properties.player.field_100 != 0 ||
-                    playerExtra.upperBodyState == PlayerUpperBodyState_AimStartTargetLock ||
-                    playerExtra.upperBodyState == PlayerUpperBodyState_AimTargetLockSwitch)
+                    PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimStartTargetLock ||
+                    PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_AimTargetLockSwitch)
                 {
-                    if (playerProps.flags & PlayerFlag_Unk8)
+                    if (PLAYER_PROPS().flags & PlayerFlag_Unk8)
                     {
                         var_v1 = Q12_ANGLE(0.0f);
                     }
@@ -7671,8 +7666,8 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             break;
 
         default:
-            if (playerExtra.state >= PlayerState_Reset &&
-                playerExtra.state <  PlayerState_Unk59)
+            if (PLAYER_EXTRA().state >= PlayerState_Reset &&
+                PLAYER_EXTRA().state <  PlayerState_Unk59)
             {
                 Bone_ExtraRotationSet(&boneCoords[HarryBone_Head], Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), g_Player_FlexRotationY);
             }
@@ -7684,7 +7679,7 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             break;
     }
 
-    if (g_SysWork.enablePlayerMatchAnim && playerExtra.state < PlayerState_Unk58)
+    if (g_SysWork.enablePlayerMatchAnim && PLAYER_EXTRA().state < PlayerState_Unk58)
     {
         Bone_ExtraRotationSet(&g_SysWork.playerBoneCoords[HarryBone_RightUpperArm], Q12_ANGLE(0.0f),   Q12_ANGLE(63.3f), Q12_ANGLE(-8.8f));
         Bone_ExtraRotationSet(&g_SysWork.playerBoneCoords[HarryBone_RightForearm],  Q12_ANGLE(-14.1f), Q12_ANGLE(22.5f), Q12_ANGLE(-30.8f));
@@ -7711,10 +7706,10 @@ s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1) // 0x
     q3_12      angle;
     q4_12      angleDelta;
 
-    moveSpeed0  = DIV_FAST(playerProps.moveSpeed, 8);
+    moveSpeed0  = DIV_FAST(PLAYER_PROPS().moveSpeed, 8);
     moveSpeed0 += Q12(0.75f);
     moveSpeed1  = Q12(-0.6f);
-    moveSpeed1 -= DIV_FAST(playerProps.moveSpeed, 16);
+    moveSpeed1 -= DIV_FAST(PLAYER_PROPS().moveSpeed, 16);
 
     offsetX0 = Q12_MULT(Math_Cos(player->headingAngle), Q12(0.2f));
     offsetZ0 = Q12_MULT(Math_Sin(player->headingAngle), Q12(0.2f));
@@ -7798,12 +7793,12 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
     #define targetNpc g_SysWork.npcs[g_Player_TargetNpcIdx]
     #define unused    g_SysWork.npcs[0]
 
-    model = &playerExtra.model;
+    model = &PLAYER_EXTRA().model;
 
     // Ranged attack.
-    if (playerExtra.lowerBodyState < PlayerLowerBodyState_Aim)
+    if (PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim)
     {
-        attackPos0     = &playerCombat.attackPosition;
+        attackPos0     = &PLAYER_COMBAT().attackPosition;
         attackPos0->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[0]);
         attackPos0->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[1]);
         attackPos0->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[2]);
@@ -7811,19 +7806,19 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
     // Melee attack.
     else
     {
-        switch (playerCombat.weaponAttack)
+        switch (PLAYER_COMBAT().weaponAttack)
         {
             case NO_VALUE:
             case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
-                attackPos1     = &playerCombat.attackPosition;
+                attackPos1     = &PLAYER_COMBAT().attackPosition;
                 attackPos1->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[0]);
                 attackPos1->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[1]);
                 attackPos1->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[2]);
                 break;
 
             default:
-                attackPos2     = &playerCombat.attackPosition;
+                attackPos2     = &PLAYER_COMBAT().attackPosition;
                 attackPos2->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[0]);
                 attackPos2->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[1]);
                 attackPos2->vz = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightHand].workm.t[2]);
@@ -7831,29 +7826,29 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
         }
     }
 
-    if (playerProps.gasWeaponPowerTimer != Q12(0.0f))
+    if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
     {
         g_SysWork.sysStateStepData[1]++;
 
-        if (playerProps.moveSpeed >= Q12(3.1739f) || (g_SysWork.sysStateStepData[1] % 2))
+        if (PLAYER_PROPS().moveSpeed >= Q12(3.1739f) || (g_SysWork.sysStateStepData[1] % 2))
         {
             func_8006342C(g_SavegamePtr->equippedWeapon - InvItemId_KitchenKnife,
                           Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), boneCoords);
         }
     }
 
-    if (!(playerExtra.state >= PlayerState_Unk7 && playerExtra.state < PlayerState_Unk51) &&
-        ((playerExtra.state >= PlayerState_None && playerExtra.state < PlayerState_Idle) ||
-         playerExtra.state == PlayerState_KickEnemy ||
-         playerExtra.state == PlayerState_StompEnemy))
+    if (!(PLAYER_EXTRA().state >= PlayerState_Unk7 && PLAYER_EXTRA().state < PlayerState_Unk51) &&
+        ((PLAYER_EXTRA().state >= PlayerState_None && PLAYER_EXTRA().state < PlayerState_Idle) ||
+         PLAYER_EXTRA().state == PlayerState_KickEnemy ||
+         PLAYER_EXTRA().state == PlayerState_StompEnemy))
     {
-        if (playerCombat.weaponAttack >= EquippedWeaponId_Handgun &&
-            playerExtra.lowerBodyState >= PlayerLowerBodyState_Aim)
+        if (PLAYER_COMBAT().weaponAttack >= EquippedWeaponId_Handgun &&
+            PLAYER_EXTRA().lowerBodyState >= PlayerLowerBodyState_Aim)
         {
-            if (playerExtra.state == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
+            if (PLAYER_EXTRA().state == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
             {
-                rotDeltaToTarget.vx = ratan2((targetNpc.position.vx + targetNpc.collision.shapeOffsets.box.vx) - playerCombat.attackPosition.vx,
-                                           (targetNpc.position.vz + targetNpc.collision.shapeOffsets.box.vz) - playerCombat.attackPosition.vz);
+                rotDeltaToTarget.vx = ratan2((targetNpc.position.vx + targetNpc.collision.shapeOffsets.box.vx) - PLAYER_COMBAT().attackPosition.vx,
+                                           (targetNpc.position.vz + targetNpc.collision.shapeOffsets.box.vz) - PLAYER_COMBAT().attackPosition.vz);
             }
             else
             {
@@ -7863,7 +7858,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                 rotDeltaToTarget.vx = player->angleToTarget;
             }
 
-            rotDeltaToTarget.vy   = playerProps.field_122;
+            rotDeltaToTarget.vy   = PLAYER_PROPS().field_122;
             angleDeltaToTargetY = rotDeltaToTarget.vy;
             if (angleDeltaToTargetY >= Q12_ANGLE(33.75f))
             {
@@ -7879,12 +7874,12 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
 
             if (player->field_44.field_0 > 0)
             {
-                func_8006342C(playerCombat.weaponAttack, angleDeltaToTargetY, rotDeltaToTarget.vx, boneCoords);
+                func_8006342C(PLAYER_COMBAT().weaponAttack, angleDeltaToTargetY, rotDeltaToTarget.vx, boneCoords);
             }
         }
         else
         {
-            switch (playerCombat.weaponAttack)
+            switch (PLAYER_COMBAT().weaponAttack)
             {
                 case NO_VALUE:
                 case EquippedWeaponId_Kick:
@@ -7895,7 +7890,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                     break;
 
                 default:
-                    if (playerExtra.lowerBodyState < PlayerLowerBodyState_Aim)
+                    if (PLAYER_EXTRA().lowerBodyState < PlayerLowerBodyState_Aim)
                     {
                         // Compute transformation matrix for right foot.
                         Math_SetSVectorFast(&localHandPos, 0, 60, 134);
@@ -7903,51 +7898,51 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                     }
                     else
                     {
-                        switch (WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack))
+                        switch (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack))
                         {
                             case EquippedWeaponId_KitchenKnife:
-                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF),
-                                                       -FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.0185f), Q12_SHIFT - 1),
-                                                        Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.0185f)) >> 1);
+                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0xF),
+                                                       -FP_MULTIPLY(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, Q12(0.0185f), Q12_SHIFT - 1),
+                                                        Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, Q12(0.0185f)) >> 1);
                                 break;
 
                             case EquippedWeaponId_SteelPipe:
-                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF),
-                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.055f)) >> 1),
-                                                        FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.011f), Q12_SHIFT - 2));
+                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0xF),
+                                                       -(Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, Q12(0.055f)) >> 1),
+                                                        FP_MULTIPLY(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, Q12(0.011f), Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Chainsaw:
                                 Math_SetSVectorFastSum(&localHandPos,
-                                                        Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1,
-                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.033f)) >> 1),
-                                                        (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.121f)) >> 1));
+                                                        Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0xF) >> 1,
+                                                       -(Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, Q12(0.033f)) >> 1),
+                                                        (Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, Q12(0.121f)) >> 1));
                                 break;
 
                             case EquippedWeaponId_RockDrill:
                                 Math_SetSVectorFastSum(&localHandPos,
                                                         Q12(0.0f),
-                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.011f))),
-                                                        FP_MULTIPLY(D_800AD4C8[playerCombat.weaponAttack].field_0, Q12(0.011f), Q12_SHIFT - 2));
+                                                       -(Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, Q12(0.011f))),
+                                                        FP_MULTIPLY(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, Q12(0.011f), Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Axe:
                                 Math_SetSVectorFastSum(&localHandPos,
                                                          Q12(0.0f),
-                                                        -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x2C1) >> 1),
-                                                         Q12_MULT((u32)D_800AD4C8[playerCombat.weaponAttack].field_0, 0xC3));
+                                                        -(Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0x2C1) >> 1),
+                                                         Q12_MULT((u32)D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0xC3));
                                 break;
 
                             case EquippedWeaponId_Hammer:
-                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1),
-                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x69)),
-                                                        Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x13B) >> 1);
+                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0xF) >> 1),
+                                                       -(Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0x69)),
+                                                        Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0x13B) >> 1);
                                 break;
 
                             case EquippedWeaponId_Katana:
-                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF) >> 1),
-                                                       -(Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0x13B) >> 1),
-                                                        Q12_MULT(D_800AD4C8[playerCombat.weaponAttack].field_0, 0xF));
+                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0xF) >> 1),
+                                                       -(Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0x13B) >> 1),
+                                                        Q12_MULT(D_800AD4C8[PLAYER_COMBAT().weaponAttack].field_0, 0xF));
                                 break;
                         }
 
@@ -7963,23 +7958,23 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
             gte_ldv0(&localHandPos);
             gte_rt();
             gte_stlvnl(&handPos);
-            offsetToAttackPosX = Q12_TO_Q8(playerCombat.attackPosition.vx) - handPos.vx;
-            offsetToAttackPosZ = Q12_TO_Q8(playerCombat.attackPosition.vz) - handPos.vz;
+            offsetToAttackPosX = Q12_TO_Q8(PLAYER_COMBAT().attackPosition.vx) - handPos.vx;
+            offsetToAttackPosZ = Q12_TO_Q8(PLAYER_COMBAT().attackPosition.vz) - handPos.vz;
             distToAttackPosSqr = Math_Vector2MagCalc(offsetToAttackPosX, offsetToAttackPosZ);
-            rotDeltaToTarget.vx  = ratan2(handPos.vx - Q12_TO_Q8(playerCombat.attackPosition.vx),
-                                        handPos.vz - Q12_TO_Q8(playerCombat.attackPosition.vz));
-            rotDeltaToTarget.vy  = ratan2(distToAttackPosSqr, handPos.vy - Q12_TO_Q8(playerCombat.attackPosition.vy));
+            rotDeltaToTarget.vx  = ratan2(handPos.vx - Q12_TO_Q8(PLAYER_COMBAT().attackPosition.vx),
+                                        handPos.vz - Q12_TO_Q8(PLAYER_COMBAT().attackPosition.vz));
+            rotDeltaToTarget.vy  = ratan2(distToAttackPosSqr, handPos.vy - Q12_TO_Q8(PLAYER_COMBAT().attackPosition.vy));
         }
 
         // Draw Hyper Blaster beam.
-        if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap) &&
-            playerCombat.isAiming &&
+        if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap) &&
+            PLAYER_COMBAT().isAiming &&
             model->anim.status >= ANIM_STATUS(HarryAnim_HandgunAim, true) &&
             model->anim.keyframeIdx >= 574)
         {
-            if (playerExtra.state < PlayerState_Idle)
+            if (PLAYER_EXTRA().state < PlayerState_Idle)
             {
-                if (playerExtra.state == PlayerState_None && g_SysWork.targetNpcIdx != NO_VALUE)
+                if (PLAYER_EXTRA().state == PlayerState_None && g_SysWork.targetNpcIdx != NO_VALUE)
                 {
                     g_SysWork.targetNpcIdx = NO_VALUE;
                 }
@@ -8010,11 +8005,11 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
         }
 
         // Draw particle beam.
-        if (playerExtra.state < PlayerState_Idle)
+        if (PLAYER_EXTRA().state < PlayerState_Idle)
         {
-            if ((playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
+            if ((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
                  model->anim.keyframeIdx >= 572 && model->anim.keyframeIdx < 584) ||
-                (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
+                (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                  player->model.anim.keyframeIdx >= 577 && model->anim.keyframeIdx < 583))
             {
                 // Compute beam start position.
@@ -8046,22 +8041,22 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
             }
         }
 
-        if (playerExtra.upperBodyState != PlayerUpperBodyState_AimStop)
+        if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop)
         {
-            if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 if (g_Player_RotationToTargetX != NO_VALUE || g_Player_RotationToTargetY != g_Player_RotationToTargetX)
                 {
-                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &attackPos, &unused, g_Player_RotationToTargetY, g_Player_RotationToTargetX);
+                    func_8008A0E4(player->field_44.field_0, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, g_Player_RotationToTargetY, g_Player_RotationToTargetX);
                 }
                 else
                 {
-                    func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &attackPos, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
+                    func_8008A0E4(player->field_44.field_0, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
                 }
             }
             else
             {
-                func_8008A0E4(player->field_44.field_0, playerCombat.weaponAttack, player, &playerCombat.attackPosition, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
+                func_8008A0E4(player->field_44.field_0, PLAYER_COMBAT().weaponAttack, player, &PLAYER_COMBAT().attackPosition, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
             }
 
             g_Player_RotationDeltaToTargetX = rotDeltaToTarget.vx;
@@ -8069,7 +8064,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
         }
     }
 
-    attackPos = playerCombat.attackPosition;
+    attackPos = PLAYER_COMBAT().attackPosition;
 
     #undef targetNpc
     #undef unused
@@ -8112,20 +8107,20 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
 
     SysWork_SavegameReadPlayer();
 
-    g_SysWork.playerWork.player.model.charaId                  = Chara_Harry;
-    playerExtra.model.charaId                                  = Chara_Harry;
-    g_SysWork.playerWork.player.collision.cylinder.outerRadius = Q12(0.3f);
-    g_SysWork.playerWork.player.collision.cylinder.innerRadius = DEFAULT_PLAYER_CYLINDER_INNER_RADIUS;
+    PLAYER_CHARA().model.charaId                  = Chara_Harry;
+    PLAYER_EXTRA().model.charaId                                  = Chara_Harry;
+    PLAYER_CHARA().collision.cylinder.outerRadius = Q12(0.3f);
+    PLAYER_CHARA().collision.cylinder.innerRadius = DEFAULT_PLAYER_CYLINDER_INNER_RADIUS;
 
-    extraModel = &g_SysWork.playerWork.player.model;
-    model      = &playerExtra.model;
+    extraModel = &PLAYER_CHARA().model;
+    model      = &PLAYER_EXTRA().model;
 
     g_SysWork.enablePlayerMatchAnim = false;
 
     extraModel->anim.flags |= AnimFlag_Unlocked | AnimFlag_Visible;
     model->anim.flags      |= AnimFlag_Unlocked | AnimFlag_Visible;
 
-    g_SysWork.playerWork.player.collision.state = CharaCollisionState_Npc;
+    PLAYER_CHARA().collision.state = CharaCollisionState_Npc;
     g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon;
 
     itemGroupId = INV_ITEM_GROUP(g_SavegamePtr->equippedWeapon);
@@ -8135,13 +8130,13 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     {
         for (i = 0; g_SavegamePtr->items[i].id != g_SavegamePtr->equippedWeapon && i < INV_ITEM_COUNT_MAX; i++);
 
-        playerCombat.weaponAttack       = g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife;
-        playerCombat.currentWeaponAmmo  = g_SavegamePtr->items[i].count;
-        playerCombat.weaponInventoryIdx = i;
+        PLAYER_COMBAT().weaponAttack       = g_SavegamePtr->equippedWeapon + InvItemId_KitchenKnife;
+        PLAYER_COMBAT().currentWeaponAmmo  = g_SavegamePtr->items[i].count;
+        PLAYER_COMBAT().weaponInventoryIdx = i;
 
         if (itemGroupId == InvItemGroup_MeleeWeapons)
         {
-            playerCombat.totalWeaponAmmo = 0;
+            PLAYER_COMBAT().totalWeaponAmmo = 0;
         }
         else
         {
@@ -8151,23 +8146,23 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
 
             if (i == INV_ITEM_COUNT_MAX)
             {
-                playerCombat.totalWeaponAmmo = 0;
+                PLAYER_COMBAT().totalWeaponAmmo = 0;
             }
             else
             {
-                playerCombat.totalWeaponAmmo = (s8)g_SavegamePtr->items[i].count;
+                PLAYER_COMBAT().totalWeaponAmmo = (s8)g_SavegamePtr->items[i].count;
             }
         }
     }
     else
     {
-        playerCombat.weaponAttack       = NO_VALUE;
-        playerCombat.currentWeaponAmmo  = 0;
-        playerCombat.totalWeaponAmmo    = 0;
-        playerCombat.weaponInventoryIdx = NO_VALUE;
+        PLAYER_COMBAT().weaponAttack       = NO_VALUE;
+        PLAYER_COMBAT().currentWeaponAmmo  = 0;
+        PLAYER_COMBAT().totalWeaponAmmo    = 0;
+        PLAYER_COMBAT().weaponInventoryIdx = NO_VALUE;
     }
 
-    playerCombat.isAiming          = false;
+    PLAYER_COMBAT().isAiming          = false;
     g_Player_GrabReleaseInputTimer = Q12(0.0f);
     D_800C4588                     = 0;
     g_Player_CutsceneState             = PlayerCutsceneState_RunForward;
@@ -8192,7 +8187,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     g_GameWork.mapAnimIdx       = NO_VALUE;
 
     g_SavegamePtr->invSlotCount  = CLAMP(g_SavegamePtr->invSlotCount, INV_ITEM_COUNT_MAX / 5, INV_ITEM_COUNT_MAX);
-    g_SysWork.playerWork.player.health = CLAMP(g_SysWork.playerWork.player.health, 1, Q12(100.0f));
+    PLAYER_CHARA().health = CLAMP(PLAYER_CHARA().health, 1, Q12(100.0f));
 }
 
 void func_8007E860(void) // 0x8007E860
@@ -8213,7 +8208,7 @@ void func_8007E8C0(void) // 0x8007E8C0
     s_AnimInfo*     animInfos;
     s_SubCharacter* player;
 
-    player    = &g_SysWork.playerWork.player;
+    player    = &PLAYER_CHARA();
     animInfos = g_MapOverlayHdr.harryMapAnimInfos;
 
     for (i = 76; animInfos->playbackFunc != NULL; i++, animInfos++)
@@ -8240,14 +8235,14 @@ void func_8007E9C4(void) // 0x8007E9C4
 {
     s_SubCharacter* player;
 
-    player = &g_SysWork.playerWork.player;
+    player = &PLAYER_CHARA();
 
     g_Player_IsInWalkToRunTransition = false;
-    playerExtra.state                = PlayerState_None;
-    playerExtra.upperBodyState       = PlayerUpperBodyState_None;
-    playerExtra.lowerBodyState       = PlayerLowerBodyState_None;
-    playerExtra.model.stateStep      = 0;
-    playerExtra.model.controlState   = 0;
+    PLAYER_EXTRA().state                = PlayerState_None;
+    PLAYER_EXTRA().upperBodyState       = PlayerUpperBodyState_None;
+    PLAYER_EXTRA().lowerBodyState       = PlayerLowerBodyState_None;
+    PLAYER_EXTRA().model.stateStep      = 0;
+    PLAYER_EXTRA().model.controlState   = 0;
 
     player->model.stateStep     = 0;
     player->model.controlState  = 0;
@@ -8255,7 +8250,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_FlexRotationY      = Q12_ANGLE(0.0f);
     g_Player_FlexRotationX      = Q12_ANGLE(0.0f);
     g_Player_PrevAttackReceived = NO_VALUE;
-    playerCombat.isAiming       = false;
+    PLAYER_COMBAT().isAiming       = false;
 
     func_8004C564(0, NO_VALUE);
 
@@ -8331,7 +8326,7 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
 
     g_SysWork.targetNpcIdx = NO_VALUE;
 
-    switch (playerCombat.weaponAttack)
+    switch (PLAYER_COMBAT().weaponAttack)
     {
         case NO_VALUE:
             g_Player_EquippedWeaponInfo = g_Player_EquippedWeaponInfos[0];
@@ -8341,7 +8336,7 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
             relAnimInfoIdx                                    = 30;
             relKeyframeIdx                                    = 15;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[1];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0x1030;
+            PLAYER_CHARA().collision.box.field_8 = -0x1030;
             break;
 
         default:
@@ -8351,13 +8346,13 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
             relAnimInfoIdx                                    = 0;
             relKeyframeIdx                                    = 0;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[3];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0xFD0;
+            PLAYER_CHARA().collision.box.field_8 = -0xFD0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
             g_Player_EquippedWeaponInfo = g_Player_EquippedWeaponInfos[2];
-            switch (playerCombat.weaponAttack)
+            switch (PLAYER_COMBAT().weaponAttack)
             {
                 case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
                     relAnimInfoIdx = 10;
@@ -8370,56 +8365,56 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
                     break;
             }
 
-            g_SysWork.playerWork.player.collision.box.field_8 = -0xEC0;
+            PLAYER_CHARA().collision.box.field_8 = -0xEC0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
             relAnimInfoIdx                                    = 50;
             relKeyframeIdx                                    = 25;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[4];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0xE90;
+            PLAYER_CHARA().collision.box.field_8 = -0xE90;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
             relAnimInfoIdx                                    = 64;
             relKeyframeIdx                                    = 32;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[5];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0x12E0;
+            PLAYER_CHARA().collision.box.field_8 = -0x12E0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
             relAnimInfoIdx                                    = 40;
             relKeyframeIdx                                    = 20;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[10];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0xF20;
+            PLAYER_CHARA().collision.box.field_8 = -0xF20;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 78;
             relKeyframeIdx                                    = 39;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[6];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0x1600;
+            PLAYER_CHARA().collision.box.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             relAnimInfoIdx                                    = 96;
             relKeyframeIdx                                    = 48;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[7];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0x1180;
+            PLAYER_CHARA().collision.box.field_8 = -0x1180;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 114;
             relKeyframeIdx                                    = 57;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[8];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0x1600;
+            PLAYER_CHARA().collision.box.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
             relAnimInfoIdx                                    = 132;
             relKeyframeIdx                                    = 66;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[9];
-            g_SysWork.playerWork.player.collision.box.field_8 = -0x1610;
+            PLAYER_CHARA().collision.box.field_8 = -0x1610;
             break;
     }
 
@@ -8433,12 +8428,12 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
         D_800C44F0[i] = D_800294F4[i + relKeyframeIdx];
     }
 
-    if (playerCombat.weaponAttack != NO_VALUE && g_Player_PrevSelectedWeapon != playerCombat.weaponAttack)
+    if (PLAYER_COMBAT().weaponAttack != NO_VALUE && g_Player_PrevSelectedWeapon != PLAYER_COMBAT().weaponAttack)
     {
-        g_Player_PrevSelectedWeapon = playerCombat.weaponAttack;
-        func_8007F14C(playerCombat.weaponAttack);
+        g_Player_PrevSelectedWeapon = PLAYER_COMBAT().weaponAttack;
+        func_8007F14C(PLAYER_COMBAT().weaponAttack);
 
-        switch (playerCombat.weaponAttack)
+        switch (PLAYER_COMBAT().weaponAttack)
         {
             case EquippedWeaponId_KitchenKnife:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP3_ANM, FS_BUFFER_12);
@@ -8550,9 +8545,9 @@ void Player_DisableDamage(u8* isPlayerDead, u8 disableDamage) // 0x8007F250
 
 bool Player_IsAttacking(void) // 0x8007F26C
 {
-    if (playerExtra.upperBodyState == PlayerUpperBodyState_Attack ||
-        playerExtra.state == PlayerState_KickEnemy ||
-        playerExtra.state == PlayerState_StompEnemy)
+    if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_Attack ||
+        PLAYER_EXTRA().state == PlayerState_KickEnemy ||
+        PLAYER_EXTRA().state == PlayerState_StompEnemy)
     {
         return true;
     }
@@ -8562,12 +8557,12 @@ bool Player_IsAttacking(void) // 0x8007F26C
 
 bool Player_IsBusy(void) // 0x8007F2AC
 {
-    if (g_SysWork.playerWork.player.health <= Q12(0.0f) ||
-        playerCombat.isAiming ||
-        playerExtra.state == PlayerState_KickEnemy ||
-        playerExtra.state == PlayerState_StompEnemy ||
-        (playerExtra.state >= PlayerState_Unk7 &&
-         playerExtra.state <= PlayerState_GetUpBack))
+    if (PLAYER_CHARA().health <= Q12(0.0f) ||
+        PLAYER_COMBAT().isAiming ||
+        PLAYER_EXTRA().state == PlayerState_KickEnemy ||
+        PLAYER_EXTRA().state == PlayerState_StompEnemy ||
+        (PLAYER_EXTRA().state >= PlayerState_Unk7 &&
+         PLAYER_EXTRA().state <= PlayerState_GetUpBack))
     {
         return true;
     }
@@ -8577,7 +8572,7 @@ bool Player_IsBusy(void) // 0x8007F2AC
 
 s16 Player_AnimGetSomething(void) // 0x8007F308
 {
-    return HARRY_BASE_ANIM_INFOS[g_SysWork.playerWork.player.model.anim.status].startKeyframeIdx;
+    return HARRY_BASE_ANIM_INFOS[PLAYER_CHARA().model.anim.status].startKeyframeIdx;
 }
 
 void Player_Controller(void) // 0x8007F32C
@@ -8645,8 +8640,8 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsAiming = g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.aim;
     }
 
-    if (playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-        playerExtra.lowerBodyState >= PlayerLowerBodyState_Aim)
+    if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+        PLAYER_EXTRA().lowerBodyState >= PlayerLowerBodyState_Aim)
     {
         g_Player_IsShooting  = g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.action;
         g_Player_IsAttacking = g_Player_IsShooting;
@@ -8680,7 +8675,7 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsHoldAttack = false;
     }
 
-    if (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
     {
         switch (Inventory_HyperBlasterFunctionalTest())
         {
@@ -8700,11 +8695,11 @@ void Player_Controller(void) // 0x8007F32C
     }
 
     // This conditional makes it impossible to move when aiming with specific weapons.
-    if (playerCombat.isAiming && (playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap) ||
-                                            (playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                                             (WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_Hammer    ||
-                                              WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_RockDrill ||
-                                              WEAPON_ATTACK_ID_GET(playerCombat.weaponAttack) == EquippedWeaponId_Katana))))
+    if (PLAYER_COMBAT().isAiming && (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap) ||
+                                            (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                                             (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Hammer    ||
+                                              WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_RockDrill ||
+                                              WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Katana))))
     {
         if (g_Player_IsMovingForward)
         {
@@ -8745,12 +8740,12 @@ bool func_8007F95C(void) // 0x8007F95C
         return false;
     }
 
-    pos0.vx = g_SysWork.playerWork.player.position.vx;
-    pos0.vy = g_SysWork.playerWork.player.position.vy;
-    pos0.vz = g_SysWork.playerWork.player.position.vz;
+    pos0.vx = PLAYER_CHARA().position.vx;
+    pos0.vy = PLAYER_CHARA().position.vy;
+    pos0.vz = PLAYER_CHARA().position.vz;
 
-    if (!playerCombat.isAiming ||
-        playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+    if (!PLAYER_COMBAT().isAiming ||
+        PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
         for (i = 0, curNpc0 = g_SysWork.npcs, curNpc1 = g_SysWork.npcs;
              i < ARRAY_SIZE(g_SysWork.npcs);
@@ -8782,7 +8777,7 @@ bool func_8007F95C(void) // 0x8007F95C
                 if (!Math_Distance2dCheck(&pos0, &pos1, radius) && ABS(pos1.vy - pos0.vy) < Q12(0.3f) &&
                     curNpc0->health > Q12(0.0f) && (curNpc0->flags & CharaFlag_Unk2))
                 {
-                    Math_ShortestAngleGet(g_SysWork.playerWork.player.rotation.vy,
+                    Math_ShortestAngleGet(PLAYER_CHARA().rotation.vy,
                                           Q12_ANGLE_NORM_U(ratan2(pos1.vx - pos0.vx, pos1.vz - pos0.vz) + Q12_ANGLE(360.0f)),
                                           &sp30);
 
@@ -8904,12 +8899,12 @@ void func_8007FC48(s_SubCharacter* chara, s_PlayerExtra* extra, s32 animStatus) 
 
 s32 func_8007FD2C(void) // 0x8007FD2C
 {
-    return playerProps.field_104;
+    return PLAYER_PROPS().field_104;
 }
 
 q19_12 Game_GasWeaponPowerTimerValue(void) // 0x8007FD3C
 {
-    return playerProps.gasWeaponPowerTimer;
+    return PLAYER_PROPS().gasWeaponPowerTimer;
 }
 
 void func_8007FD4C(bool resetColl) // 0x8007FD4C
@@ -8917,12 +8912,12 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
     s32             i;
     s_SubCharacter* player;
 
-    player = &g_SysWork.playerWork.player;
+    player = &PLAYER_CHARA();
 
     g_Player_GrabReleaseInputTimer = Q12(0.0f);
     player->field_40               = NO_VALUE;
 
-    playerProps.flags &= ~PlayerFlag_DamageReceived;
+    PLAYER_PROPS().flags &= ~PlayerFlag_DamageReceived;
 
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcIdxs); i++)
     {
@@ -8931,18 +8926,18 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
 
     if (resetColl)
     {
-        g_SysWork.playerWork.player.collision.cylinder.outerRadius = Q12(0.3f);
-        g_SysWork.playerWork.player.collision.cylinder.innerRadius = DEFAULT_PLAYER_CYLINDER_INNER_RADIUS;
+        PLAYER_CHARA().collision.cylinder.outerRadius = Q12(0.3f);
+        PLAYER_CHARA().collision.cylinder.innerRadius = DEFAULT_PLAYER_CYLINDER_INNER_RADIUS;
 
         // TODO: Doesn't match?
         //Player_CollisionReset();
-        g_SysWork.playerWork.player.collision.box.topExtent            = DEFAULT_PLAYER_BOX_TOP;
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vz      = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.shapeOffsets.box.vx      = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.box.bottomExtent         = Q12(0.0f);
-        g_SysWork.playerWork.player.collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
+        PLAYER_CHARA().collision.box.topExtent            = DEFAULT_PLAYER_BOX_TOP;
+        PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+        PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
+        PLAYER_CHARA().collision.box.bottomExtent         = Q12(0.0f);
+        PLAYER_CHARA().collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
     }
 }
 
@@ -8971,8 +8966,8 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
             switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP2_S00:
-                    if (g_SysWork.playerWork.player.position.vx >= Q12(95.0f)  && g_SysWork.playerWork.player.position.vx <= Q12(105.0f) &&
-                        g_SysWork.playerWork.player.position.vz >= Q12(-33.0f) && g_SysWork.playerWork.player.position.vz <= Q12(-28.0f))
+                    if (PLAYER_CHARA().position.vx >= Q12(95.0f)  && PLAYER_CHARA().position.vx <= Q12(105.0f) &&
+                        PLAYER_CHARA().position.vz >= Q12(-33.0f) && PLAYER_CHARA().position.vz <= Q12(-28.0f))
                     {
                         *sfxId = Sfx_Unk1389;
                     }
@@ -9034,7 +9029,7 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
             switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 20:
-                    if (g_SysWork.playerWork.player.position.vy > Q12(0.0f))
+                    if (PLAYER_CHARA().position.vy > Q12(0.0f))
                     {
                         *sfxId = Sfx_FootstepMetal1;
                     }
@@ -9050,25 +9045,25 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
             break;
 
         case MapIdx_MAP4_S03:
-            if ((g_SysWork.playerWork.player.position.vx >= Q12(165.0f)   &&
-                 g_SysWork.playerWork.player.position.vz >= Q12(58.5f)    && g_SysWork.playerWork.player.position.vz <= Q12(61.5f)) ||
-                (g_SysWork.playerWork.player.position.vx <= Q12(112.1f)   &&
-                 g_SysWork.playerWork.player.position.vz >= Q12(-101.45f) && g_SysWork.playerWork.player.position.vz <= Q12(-98.5f)))
+            if ((PLAYER_CHARA().position.vx >= Q12(165.0f)   &&
+                 PLAYER_CHARA().position.vz >= Q12(58.5f)    && PLAYER_CHARA().position.vz <= Q12(61.5f)) ||
+                (PLAYER_CHARA().position.vx <= Q12(112.1f)   &&
+                 PLAYER_CHARA().position.vz >= Q12(-101.45f) && PLAYER_CHARA().position.vz <= Q12(-98.5f)))
             {
                 *sfxId = Sfx_Unk1565;
             }
 
         case MapIdx_MAP6_S00:
-            if ((g_SysWork.playerWork.player.position.vx >= Q12(-160.1f)  && g_SysWork.playerWork.player.position.vx <= Q12(-158.5f)  &&
-                 g_SysWork.playerWork.player.position.vz >= Q12(26.8f)    && g_SysWork.playerWork.player.position.vz <= Q12(27.4f))   ||
-                (g_SysWork.playerWork.player.position.vx >= Q12(-160.1f)  && g_SysWork.playerWork.player.position.vx <= Q12(-158.5f)  &&
-                 g_SysWork.playerWork.player.position.vz >= Q12(16.8f)    && g_SysWork.playerWork.player.position.vz <= Q12(17.5f))   ||
-                (g_SysWork.playerWork.player.position.vx >= Q12(-170.0f)  && g_SysWork.playerWork.player.position.vx <= Q12(-165.8f)  &&
-                 g_SysWork.playerWork.player.position.vz >= Q12(-16.4f)   && g_SysWork.playerWork.player.position.vz <= Q12(-14.35f)) ||
-                (g_SysWork.playerWork.player.position.vx >= Q12(-172.7f)  && g_SysWork.playerWork.player.position.vx <= Q12(-170.9f)  &&
-                 g_SysWork.playerWork.player.position.vz >= Q12(-24.9f)   && g_SysWork.playerWork.player.position.vz <= Q12(-21.25f)) ||
-                (g_SysWork.playerWork.player.position.vx >= Q12(-170.28f) && g_SysWork.playerWork.player.position.vx <= Q12(-165.85f) &&
-                 g_SysWork.playerWork.player.position.vz >= Q12(-35.4f)   && g_SysWork.playerWork.player.position.vz <= Q12(-34.35f)))
+            if ((PLAYER_CHARA().position.vx >= Q12(-160.1f)  && PLAYER_CHARA().position.vx <= Q12(-158.5f)  &&
+                 PLAYER_CHARA().position.vz >= Q12(26.8f)    && PLAYER_CHARA().position.vz <= Q12(27.4f))   ||
+                (PLAYER_CHARA().position.vx >= Q12(-160.1f)  && PLAYER_CHARA().position.vx <= Q12(-158.5f)  &&
+                 PLAYER_CHARA().position.vz >= Q12(16.8f)    && PLAYER_CHARA().position.vz <= Q12(17.5f))   ||
+                (PLAYER_CHARA().position.vx >= Q12(-170.0f)  && PLAYER_CHARA().position.vx <= Q12(-165.8f)  &&
+                 PLAYER_CHARA().position.vz >= Q12(-16.4f)   && PLAYER_CHARA().position.vz <= Q12(-14.35f)) ||
+                (PLAYER_CHARA().position.vx >= Q12(-172.7f)  && PLAYER_CHARA().position.vx <= Q12(-170.9f)  &&
+                 PLAYER_CHARA().position.vz >= Q12(-24.9f)   && PLAYER_CHARA().position.vz <= Q12(-21.25f)) ||
+                (PLAYER_CHARA().position.vx >= Q12(-170.28f) && PLAYER_CHARA().position.vx <= Q12(-165.85f) &&
+                 PLAYER_CHARA().position.vz >= Q12(-35.4f)   && PLAYER_CHARA().position.vz <= Q12(-34.35f)))
             {
                 *sfxId = Sfx_Unk1600;
             }

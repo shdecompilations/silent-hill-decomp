@@ -190,7 +190,7 @@ void Bloodsucker_Control_2(s_SubCharacter* bloodsucker)
         bloodsucker->model.anim.status = (bloodsucker->model.stateStep * 2) + 22;
     }
 
-    if (g_SysWork.playerWork.player.position.vx < Q12(-140.75f))
+    if (PLAYER_CHARA().position.vx < Q12(-140.75f))
     {
         bloodsucker->model.controlState = BloodsuckerControl_3;
     }
@@ -206,7 +206,7 @@ void Bloodsucker_Control_3(s_SubCharacter* bloodsucker)
         bloodsucker->model.anim.status = (bloodsucker->model.stateStep * 2) + 8;
     }
 
-    if (g_SysWork.playerWork.player.position.vx > Q12(-140.5f))
+    if (PLAYER_CHARA().position.vx > Q12(-140.5f))
     {
         bloodsucker->model.controlState = BloodsuckerControl_2;
     }
@@ -296,5 +296,5 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
 
     bloodsucker->field_44.field_0 = 1;
 
-    func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap), bloodsucker, &scratchData->field_38, &g_SysWork.playerWork.player, Q12_ANGLE(90.0f), Q12_ANGLE(90.0f));
+    func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap), bloodsucker, &scratchData->field_38, &PLAYER_CHARA(), Q12_ANGLE(90.0f), Q12_ANGLE(90.0f));
 }

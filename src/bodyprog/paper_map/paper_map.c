@@ -458,8 +458,6 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     LINE_F4* line;
     POLY_G3* poly;
 
-    #define playerChara g_SysWork.playerWork.player
-
     // Check if paper map is valid.
     if (g_SavegamePtr->paperMapIdx != paperMapIdx)
     {
@@ -467,11 +465,11 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     }
 
     // Compute player cell.
-    cellX = CELL_GET(playerChara.position.vx);
-    cellZ = CELL_GET(playerChara.position.vz);
+    cellX = CELL_GET(PLAYER_CHARA().position.vx);
+    cellZ = CELL_GET(PLAYER_CHARA().position.vz);
 
     mapCoordIdxX = SHRT_MAX;
-    angle        = playerChara.rotation.vy;
+    angle        = PLAYER_CHARA().rotation.vy;
     mapCoordIdxZ = SHRT_MAX;
 
     switch (paperMapIdx)
@@ -482,8 +480,8 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                 case MapIdx_MAP2_S00:
                     if (cellZ < 4 || (cellZ < 6 && (cellX >= -1 && cellX < 1)))
                     {
-                        mapCoordIdxX = (playerChara.position.vx / Q12(2.0f)) + 19;
-                        mapCoordIdxZ = (-playerChara.position.vz / Q12(2.0f)) + 1;
+                        mapCoordIdxX = (PLAYER_CHARA().position.vx / Q12(2.0f)) + 19;
+                        mapCoordIdxZ = (-PLAYER_CHARA().position.vz / Q12(2.0f)) + 1;
                         break;
                     }
 
@@ -595,13 +593,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
             if (cellX == -2 && cellZ == 0)
             {
                 angle       += Q12_ANGLE(180.0f);
-                mapCoordIdxX = D_800AE774[2][2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(-0.2f));
-                mapCoordIdxZ = D_800AE774[2][2][1] + (((playerChara.position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(0.2f));
+                mapCoordIdxX = D_800AE774[2][2][0] + (((PLAYER_CHARA().position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(-0.2f));
+                mapCoordIdxZ = D_800AE774[2][2][1] + (((PLAYER_CHARA().position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(0.2f));
             }
             else
             {
-                mapCoordIdxX = D_800AE774[cellX + 4][cellZ + 2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(0.2f));
-                mapCoordIdxZ = D_800AE774[cellX + 4][cellZ + 2][1] + (((playerChara.position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(-0.2f));
+                mapCoordIdxX = D_800AE774[cellX + 4][cellZ + 2][0] + (((PLAYER_CHARA().position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(0.2f));
+                mapCoordIdxZ = D_800AE774[cellX + 4][cellZ + 2][1] + (((PLAYER_CHARA().position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / Q12(-0.2f));
             }
             break;
 
@@ -609,24 +607,24 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
         case PaperMapIdx_FogHospital1F:
         case PaperMapIdx_FogHospital2F:
         case PaperMapIdx_FogHospital3F:
-            mapCoordIdxX = D_800AE7E4[cellX + 1][cellZ + 2][0] + (((playerChara.position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / 0x222); // TODO: Demagic into clean float.
-            mapCoordIdxZ = D_800AE7E4[cellX + 1][cellZ + 2][1] + ((((playerChara.position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) * 6) / Q12(-0.8f));
+            mapCoordIdxX = D_800AE7E4[cellX + 1][cellZ + 2][0] + (((PLAYER_CHARA().position.vx - (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / 0x222); // TODO: Demagic into clean float.
+            mapCoordIdxZ = D_800AE7E4[cellX + 1][cellZ + 2][1] + ((((PLAYER_CHARA().position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) * 6) / Q12(-0.8f));
             break;
 
         case PaperMapIdx_AltHospitalBF:
         case PaperMapIdx_AltHospital1F:
         case PaperMapIdx_AltHospital2F:
         case PaperMapIdx_AltHospital3F:
-            mapCoordIdxX = D_800AE820[cellX + 4][cellZ + 4][0] + (((playerChara.position.vx -  (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / 0x222);
-            mapCoordIdxZ = D_800AE820[cellX + 4][cellZ + 4][1] + ((((playerChara.position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) * 6) / Q12(-0.8f));
+            mapCoordIdxX = D_800AE820[cellX + 4][cellZ + 4][0] + (((PLAYER_CHARA().position.vx -  (cellX * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) / 0x222);
+            mapCoordIdxZ = D_800AE820[cellX + 4][cellZ + 4][1] + ((((PLAYER_CHARA().position.vz - (cellZ * Q12(CHUNK_SIZE))) - (Q12(CHUNK_SIZE) / 2)) * 6) / Q12(-0.8f));
             break;
 
         case PaperMapIdx_ResortTown:
             switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP5_S01:
-                    mapCoordIdxX = (playerChara.position.vx / Q12(2.0f)) + 60;
-                    mapCoordIdxZ = (-playerChara.position.vz / Q12(2.0f)) - 85;
+                    mapCoordIdxX = (PLAYER_CHARA().position.vx / Q12(2.0f)) + 60;
+                    mapCoordIdxZ = (-PLAYER_CHARA().position.vz / Q12(2.0f)) - 85;
 
                     if (PLAYER_IN_MAP_CHUNK(-4, -1) || PLAYER_IN_MAP_CHUNK(-5, -1))
                     {
@@ -677,8 +675,8 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
                     break;
 
                 case MapIdx_MAP6_S00:
-                    mapCoordIdxX = (playerChara.position.vx / Q12(2.0f)) + 0;
-                    mapCoordIdxZ = (-playerChara.position.vz / Q12(2.0f)) + 55;
+                    mapCoordIdxX = (PLAYER_CHARA().position.vx / Q12(2.0f)) + 0;
+                    mapCoordIdxZ = (-PLAYER_CHARA().position.vz / Q12(2.0f)) + 55;
                     break;
 
                 case MapIdx_MAP6_S01:
@@ -738,13 +736,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
 
                         case MAP_IDX(-3, 4):
                         case MAP_IDX(-3, 5):
-                            mapCoordIdxX = (playerChara.position.vx / Q12(1.0f)) + 80;
-                            mapCoordIdxZ = ((Q12(280.0f) - playerChara.position.vz) / Q12(1.0f)) + 0;
+                            mapCoordIdxX = (PLAYER_CHARA().position.vx / Q12(1.0f)) + 80;
+                            mapCoordIdxZ = ((Q12(280.0f) - PLAYER_CHARA().position.vz) / Q12(1.0f)) + 0;
                             break;
 
                         default:
-                            mapCoordIdxX = (playerChara.position.vx / Q12(1.0f)) + 80;
-                            mapCoordIdxZ = (-playerChara.position.vz / Q12(1.0f)) + 0;
+                            mapCoordIdxX = (PLAYER_CHARA().position.vx / Q12(1.0f)) + 80;
+                            mapCoordIdxZ = (-PLAYER_CHARA().position.vz / Q12(1.0f)) + 0;
                             break;
                     }
                     break;
@@ -802,20 +800,20 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
             break;
 
         case PaperMapIdx_FogSewer1F:
-            mapCoordIdxX = (-playerChara.position.vz / Q12(0.5f)) + 0;
-            mapCoordIdxZ = (-playerChara.position.vx / Q12(0.5f)) + 40;
+            mapCoordIdxX = (-PLAYER_CHARA().position.vz / Q12(0.5f)) + 0;
+            mapCoordIdxZ = (-PLAYER_CHARA().position.vx / Q12(0.5f)) + 40;
             angle       -= Q12_ANGLE(90.0f);
             break;
 
         case PaperMapIdx_FogSewer2F:
-            mapCoordIdxX = (-playerChara.position.vz / Q12(0.5f)) - 80;
-            mapCoordIdxZ = (-playerChara.position.vx / Q12(0.5f)) - 140;
+            mapCoordIdxX = (-PLAYER_CHARA().position.vz / Q12(0.5f)) - 80;
+            mapCoordIdxZ = (-PLAYER_CHARA().position.vx / Q12(0.5f)) - 140;
             angle       -= Q12_ANGLE(90.0f);
             break;
 
         case PaperMapIdx_AltSewer:
-            mapCoordIdxX = (-playerChara.position.vx / Q12(0.5f)) + 55;
-            mapCoordIdxZ = (playerChara.position.vz / Q12(0.5f)) - 80;
+            mapCoordIdxX = (-PLAYER_CHARA().position.vx / Q12(0.5f)) + 55;
+            mapCoordIdxZ = (PLAYER_CHARA().position.vz / Q12(0.5f)) - 80;
             angle       += Q12_ANGLE(180.0f);
             break;
 
@@ -875,8 +873,6 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale) // 0x8006791
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
     GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_G3);
     return temp_s4;
-
-    #undef playerChara
 }
 
 bool func_80068CC0(s32 arg0) // 0x80068CC0

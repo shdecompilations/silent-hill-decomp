@@ -47,10 +47,10 @@
     (((n) >= 0) ? ((n) + 1) : (n))
 
 #define PLAYER_IN_MAP_CHUNK_X(x) \
-    (MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vx) == MAP_CHUNK_IDX_FROM_GRID(x))
+    (MAP_CHUNK_IDX(PLAYER_CHARA().position.vx) == MAP_CHUNK_IDX_FROM_GRID(x))
 
 #define PLAYER_IN_MAP_CHUNK_Z(z) \
-    (MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vz) == MAP_CHUNK_IDX_FROM_GRID(z))
+    (MAP_CHUNK_IDX(PLAYER_CHARA().position.vz) == MAP_CHUNK_IDX_FROM_GRID(z))
 
 /** @brief Checks if the player is in terrain chunk (`x`, `z`). */
 #define PLAYER_IN_MAP_CHUNK(x, z) \
@@ -62,12 +62,12 @@
 
 /** @brief `MAP_CHUNK_CELL` switch key of the player's current chunk. */
 #define PLAYER_MAP_CHUNK_CELL()                                          \
-    CELL_XZ(MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vx) + 16, \
-            MAP_CHUNK_IDX(g_SysWork.playerWork.player.position.vz) + 16)
+    CELL_XZ(MAP_CHUNK_IDX(PLAYER_CHARA().position.vx) + 16, \
+            MAP_CHUNK_IDX(PLAYER_CHARA().position.vz) + 16)
 
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                             \
-    (((g_SysWork.playerWork.player.position.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork.player.position.comp - Q12(base)) < Q12(tol)) : \
-                                                                              ((Q12(base) - g_SysWork.playerWork.player.position.comp) < Q12(tol)))
+    (((PLAYER_CHARA().position.comp - Q12(base)) >= Q12(0.0f)) ? ((PLAYER_CHARA().position.comp - Q12(base)) < Q12(tol)) : \
+                                                                              ((Q12(base) - PLAYER_CHARA().position.comp) < Q12(tol)))
 
 /** @brief System flags. TODO: Give this a more specific name. */
 typedef enum _SysFlags

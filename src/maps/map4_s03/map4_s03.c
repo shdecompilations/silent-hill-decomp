@@ -112,8 +112,6 @@ void func_800D6774(void) // 0x800D6774
     VECTOR3            vec;
     s32                i;
 
-    #define playerChara g_SysWork.playerWork.player
-
     // Skip.
     if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 11)
@@ -127,7 +125,7 @@ void func_800D6774(void) // 0x800D6774
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(120.5f), Q12(-9.5f), Q12(137.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL,
-                                  playerChara.position.vx, playerChara.position.vy, playerChara.position.vz,
+                                  PLAYER_CHARA().position.vx, PLAYER_CHARA().position.vy, PLAYER_CHARA().position.vz,
                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             D_800DB9E0 = Q12(0.0f);
@@ -181,18 +179,18 @@ void func_800D6774(void) // 0x800D6774
 
             if (Savegame_EventFlagGet(EventFlag_322))
             {
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 129, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 129, false);
             }
             else
             {
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 128, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 128, false);
             }
 
-            Collision_SurfaceGet(&surface, playerChara.position.vx, playerChara.position.vz);
+            Collision_SurfaceGet(&surface, PLAYER_CHARA().position.vx, PLAYER_CHARA().position.vz);
             CutsceneBorder_ForceShow();
             Screen_FadeTimestepReset();
 
-            playerChara.position.vy = surface.floorHeight;
+            PLAYER_CHARA().position.vy = surface.floorHeight;
 
             Sfx_WithFlagsPlay(Sfx_Unk1556, &Q12_VECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), SfxFlag_None);
             func_80089470();
@@ -201,7 +199,7 @@ void func_800D6774(void) // 0x800D6774
 
         case 1:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, Q12(0.0f), false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &playerChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &PLAYER_CHARA(), 0, false);
             break;
 
         case 2:
@@ -218,15 +216,15 @@ void func_800D6774(void) // 0x800D6774
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &playerChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), 0, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &playerChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &PLAYER_CHARA(), 0, false);
             break;
 
         case 7:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 123, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 123, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -236,10 +234,10 @@ void func_800D6774(void) // 0x800D6774
         case 9:
             Player_ControlUnfreeze(true);
             Player_ControlFreeze();
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 52, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 52, false);
 
-            playerChara.position.vx += Q12(0.5f);
-            playerChara.rotation.vy += Q12_ANGLE(45.0f);
+            PLAYER_CHARA().position.vx += Q12(0.5f);
+            PLAYER_CHARA().rotation.vy += Q12_ANGLE(45.0f);
 
             SysWork_StateStepIncrement(0);
 
@@ -268,9 +266,9 @@ void func_800D6774(void) // 0x800D6774
 
         case 13:
             // Warp player.
-            playerChara.position.vx = Q12(120.0f);
-            playerChara.position.vz = Q12(141.5f);
-            playerChara.rotation.vy = Q12_ANGLE(-45.0f);
+            PLAYER_CHARA().position.vx = Q12(120.0f);
+            PLAYER_CHARA().position.vz = Q12(141.5f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-45.0f);
 
             Savegame_EventFlagSet(EventFlag_329);
 
@@ -292,8 +290,6 @@ void func_800D6774(void) // 0x800D6774
             func_8003A16C();
             break;
     }
-
-    #undef playerChara
 }
 
 void func_800D6F24(void) // 0x800D6F24
@@ -303,8 +299,6 @@ void func_800D6F24(void) // 0x800D6F24
     s32   var_a2;
     s32   var_v0;
     void* var_s0;
-
-    #define playerChara g_SysWork.playerWork.player
 
     // Skip.
     if (Pad_ButtonClickedBind(skip) &&
@@ -329,9 +323,9 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 3:
-            playerChara.position.vx = Q12(124.4f);
-            playerChara.position.vz = Q12(140.9f);
-            playerChara.rotation.vy = Q12_ANGLE(90.0f);
+            PLAYER_CHARA().position.vx = Q12(124.4f);
+            PLAYER_CHARA().position.vz = Q12(140.9f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(90.0f);
 
             Event_CameraPositionSet(NULL, Q12(122.1f), Q12(-4.34f), Q12(141.87f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(125.65f), Q12(-2.74f), Q12(140.95f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -364,8 +358,8 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 8:
-            playerChara.position.vx = Q12(126.86f);
-            playerChara.position.vz = Q12(140.36f);
+            PLAYER_CHARA().position.vx = Q12(126.86f);
+            PLAYER_CHARA().position.vz = Q12(140.36f);
 
             Event_CameraPositionSet(NULL, Q12(122.55f), Q12(-2.1f), Q12(138.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(126.39f), Q12(-1.73f), Q12(139.56f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -383,9 +377,9 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 10:
-            playerChara.position.vx = Q12(126.86f);
-            playerChara.position.vz = Q12(140.36f);
-            playerChara.rotation.vy = Q12_ANGLE(90.0f);
+            PLAYER_CHARA().position.vx = Q12(126.86f);
+            PLAYER_CHARA().position.vz = Q12(140.36f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(90.0f);
 
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
@@ -406,8 +400,6 @@ void func_800D6F24(void) // 0x800D6F24
             func_8003A16C();
             break;
     }
-
-    #undef playerChara
 }
 
 s16 func_800D7394(void) // 0x800D7394
@@ -1499,11 +1491,11 @@ void func_800D8FC0(void) // 0x800D8FC0
             Fs_QueueStartSeek(FILE_1ST_NO_BLOCK_TIM);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(162.77f);
-            g_SysWork.playerWork.player.position.vz = Q12(55.43f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
+            PLAYER_CHARA().position.vx = Q12(162.77f);
+            PLAYER_CHARA().position.vz = Q12(55.43f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
             func_8008D438();
 
             // Warp camera.
@@ -1543,9 +1535,9 @@ void func_800D8FC0(void) // 0x800D8FC0
             Savegame_EventFlagSet(EventFlag_330);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(162.77f);
-            g_SysWork.playerWork.player.position.vz = Q12(55.43f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
+            PLAYER_CHARA().position.vx = Q12(162.77f);
+            PLAYER_CHARA().position.vz = Q12(55.43f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
             break;
     }
 }
@@ -1569,7 +1561,7 @@ void func_800D960C(void) // 0x800D960C
             func_800D76BC(2);
             D_800DB9E2 = 0;
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
 
             func_8008D448();
             SysWork_StateStepIncrement(0);
@@ -1701,7 +1693,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D9BB0
             {
                 Sfx_WithFlagsPlay(Sfx_Unk1555, &Q12_VECTOR3(130.5f, 0.0f, -93.0f), Q8(0.5f), SfxFlag_None);
 
-                g_SysWork.playerWork.player.fallSpeed += Q12(1.0f);
+                PLAYER_CHARA().fallSpeed += Q12(1.0f);
                 D_800E05AE += Q12(1.0f);
             }
 
@@ -1831,7 +1823,7 @@ void func_800DA3E0(void) // 0x800DA3E0
     if ((PLAYER_IN_MAP_CHUNK_X(3) || PLAYER_IN_MAP_CHUNK_X(4)) &&
         PLAYER_IN_MAP_CHUNK_Z(-3))
     {
-        if (vcRetCamMvSmoothF() == 0 && (g_SysWork.playerWork.player.position.vx > Q12(125.8f) || D_800E05E2 == 1))
+        if (vcRetCamMvSmoothF() == 0 && (PLAYER_CHARA().position.vx > Q12(125.8f) || D_800E05E2 == 1))
         {
             if (D_800E05E2 != 0)
             {

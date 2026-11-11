@@ -311,7 +311,7 @@ void func_800D2668(void) // 0x800D2668
 
         case 1:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -378,7 +378,7 @@ void func_800D2668(void) // 0x800D2668
             SysWork_StateStepIncrement(0);
 
         case 17:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 0x7D, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 0x7D, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 8, false);
             SD_Call(Sfx_Unk1522);
 
@@ -477,7 +477,7 @@ void func_800D2668(void) // 0x800D2668
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_11);
         Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", g_Cutscene_Timer, FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_11));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
@@ -558,8 +558,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_300))
         {
-            if (g_SysWork.playerWork.player.position.vx > Q12(101.5f) &&
-                g_SysWork.playerWork.player.position.vz > Q12(59.0f))
+            if (PLAYER_CHARA().position.vx > Q12(101.5f) &&
+                PLAYER_CHARA().position.vz > Q12(59.0f))
             {
                 Sfx_WithFlagsPlay(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_300);
@@ -576,7 +576,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_316))
         {
-            if (Savegame_EventFlagGet(EventFlag_301) && g_SysWork.playerWork.player.position.vz > Q12(104.0f))
+            if (Savegame_EventFlagGet(EventFlag_301) && PLAYER_CHARA().position.vz > Q12(104.0f))
             {
                 if (!Vw_AabbVisibleInScreenCheck(Q12(139.0f), Q12(142.0f), Q12(-3.0f), Q12(0.0f), Q12(98.8f), Q12(99.0f)))
                 {
@@ -585,7 +585,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
                 }
             }
 
-            if (g_SysWork.playerWork.player.position.vz < Q12(100.0f))
+            if (PLAYER_CHARA().position.vz < Q12(100.0f))
             {
                 Savegame_EventFlagSet(EventFlag_301);
             }

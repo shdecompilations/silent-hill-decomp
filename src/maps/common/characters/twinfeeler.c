@@ -2111,8 +2111,8 @@ void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1) // 0x800D43AC
         var_s1 = 170;
     }
 
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - twinfeeler->position.vx,
-                                                          g_SysWork.playerWork.player.position.vz - twinfeeler->position.vz) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - twinfeeler->position.vx,
+                                                          PLAYER_CHARA().position.vz - twinfeeler->position.vz) -
                                                    twinfeeler->rotation.vy);
 
     if ((u32)ABS(angleDeltaToPlayer) > 56) // TODO: Needs casting to `u32`.
@@ -2156,8 +2156,8 @@ q19_12 func_800D4488(VECTOR3* arg0, s32 arg1) // 0x800D4488
     temp_s3 = temp3 + temp2;
     temp_s3 = temp_s3 * newVar;
 
-    angle = ratan2(g_SysWork.playerWork.player.position.vx - temp_s4,
-                   g_SysWork.playerWork.player.position.vz - temp_s3);
+    angle = ratan2(PLAYER_CHARA().position.vx - temp_s4,
+                   PLAYER_CHARA().position.vz - temp_s3);
 
     sinAngle = Math_Sin(angle);
     temp_v1  = temp_s3 - Math_Cos(angle);
@@ -2290,9 +2290,9 @@ void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords)
                 from.vx = Q8_TO_Q12(transformMat.t[0]);
                 from.vy = Q8_TO_Q12(transformMat.t[1]);
                 from.vz = Q8_TO_Q12(transformMat.t[2]);
-                to.vx   = g_SysWork.playerWork.player.position.vx;
-                to.vy   = g_SysWork.playerWork.player.position.vy - Q12(1.0f);
-                to.vz   = g_SysWork.playerWork.player.position.vz;
+                to.vx   = PLAYER_CHARA().position.vx;
+                to.vy   = PLAYER_CHARA().position.vy - Q12(1.0f);
+                to.vz   = PLAYER_CHARA().position.vz;
                 Twinfeeler_AcidThrow(&from, &to);
 
                 twinfeeler->model.stateStep++;
@@ -2391,7 +2391,7 @@ void Twinfeeler_ControlAttack(s_SubCharacter* chara, GsCOORDINATE2* boneCoords)
         headPos.vy = Q8_TO_Q12(transformMat.t[1]);
         headPos.vz = Q8_TO_Q12(transformMat.t[2]);
 
-        Twinfeeler_AcidThrow(&headPos, &g_SysWork.playerWork.player.position);
+        Twinfeeler_AcidThrow(&headPos, &PLAYER_CHARA().position);
 
         chara->moveSpeed = Q12(0.0f);
         chara->model.stateStep++;
@@ -2512,7 +2512,7 @@ s32 func_800D4D80(s32 arg0, s32 arg1) // 0x800D4D80
 
 u32 func_800D4DD8(void) // 0x800D4DD8
 {
-    return ((g_SysWork.playerWork.player.rotation.vy - 256) & 0xFFF) / 0x200;
+    return ((PLAYER_CHARA().rotation.vy - 256) & 0xFFF) / 0x200;
 }
 
 u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2) // 0x800D4E00
@@ -2543,8 +2543,8 @@ s32 func_800D4E78(s32 arg0, s32 arg1) // 0x800D4E78
     temp_s2  = Q12_MULT_PRECISE(Math_Sin(arg1), temp_s0);
     var_v0_2 = Q12_MULT_PRECISE(Math_Cos(arg1), temp_s0);
 
-    var_s2  = var_v0_2 + g_SysWork.playerWork.player.position.vz;
-    var_s0  = g_SysWork.playerWork.player.position.vx + temp_s2;
+    var_s2  = var_v0_2 + PLAYER_CHARA().position.vz;
+    var_s0  = PLAYER_CHARA().position.vx + temp_s2;
     temp_a3 = var_s0 >> 4;
 
     var_a2 = temp_a3 - 0x7100;
@@ -2607,13 +2607,13 @@ void Twinfeeler_Control_3(s_SubCharacter* twinfeeler) // 0x800D4FC0
     if (twinfeelerProps.digTimer < Q12(0.0f))
     {
         temp_v0 = func_800D4488(&twinfeeler->position,
-                                func_800D4E78(g_SysWork.playerWork.player.moveSpeed, g_SysWork.playerWork.player.headingAngle) & 0xFFFF);
+                                func_800D4E78(PLAYER_CHARA().moveSpeed, PLAYER_CHARA().headingAngle) & 0xFFFF);
 
         twinfeeler->headingAngle = temp_v0;
         twinfeeler->rotation.vy  = temp_v0;
 
-        angleDeltaToPlayer = Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork.player.position.vx - twinfeeler->position.vx,
-                                                               g_SysWork.playerWork.player.position.vz - twinfeeler->position.vz) -
+        angleDeltaToPlayer = Math_AngleNormalizeSigned((ratan2(PLAYER_CHARA().position.vx - twinfeeler->position.vx,
+                                                               PLAYER_CHARA().position.vz - twinfeeler->position.vz) -
                                                         temp_v0));
 
         angleDeltaToPlayer = ABS(angleDeltaToPlayer);
@@ -2848,7 +2848,7 @@ void func_800D54B4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
         pos.vy = posX;
         pos.vz = posZ;
 
-        if (func_8008A0E4(1, var_s0, twinfeeler, &pos, &g_SysWork.playerWork.player, twinfeeler->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, var_s0, twinfeeler, &pos, &PLAYER_CHARA(), twinfeeler->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             localChara->properties.twinfeeler.flags |= TwinfeelerFlag_0;
         }

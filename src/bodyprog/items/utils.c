@@ -7,10 +7,6 @@
 #include "bodyprog/player/player.h"
 #include "bodyprog/math/math.h"
 
-#define playerChara g_SysWork.playerWork.player
-#define playerExtra g_SysWork.playerWork.extra
-#define playerProps playerChara.properties.player
-
 static const s32 __pad_rodata_80025E90 = 0;
 
 void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
@@ -26,32 +22,32 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 
     Game_PlayerMovementsReset();
 
-    playerState = playerExtra.state;
+    playerState = PLAYER_EXTRA().state;
 
-    if (playerExtra.state < PlayerState_Idle &&
+    if (PLAYER_EXTRA().state < PlayerState_Idle &&
         playerState >= PlayerState_None)
     {
-        if (g_ItemScreen_PlayerWeaponAttack != g_SysWork.playerCombat.weaponAttack)
+        if (g_ItemScreen_PlayerWeaponAttack != PLAYER_COMBAT().weaponAttack)
         {
-            g_SysWork.playerCombat.isAiming = false;
+            PLAYER_COMBAT().isAiming = false;
         }
 
         weaponId = WEAPON_ATTACK_ID_GET(g_ItemScreen_PlayerWeaponAttack);
         if (weaponId == EquippedWeaponId_Chainsaw &&
-            g_SysWork.playerCombat.weaponAttack != weaponId)
+            PLAYER_COMBAT().weaponAttack != weaponId)
         {
             goto Inventory_ExitAnimEquippedItemUpdate_block; // TODO: Remove goto if possible.
         }
 
         if (weaponId == EquippedWeaponId_RockDrill &&
-            g_SysWork.playerCombat.weaponAttack != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
+            PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
-            playerChara.field_44.field_0    = 0;
-            playerProps.gasWeaponPowerTimer = Q12(0.0f);
+            PLAYER_CHARA().field_44.field_0    = 0;
+            PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
         }
 
-        switch (playerExtra.lowerBodyState)
+        switch (PLAYER_EXTRA().lowerBodyState)
         {
             case PlayerLowerBodyState_QuickTurnRight:
             case PlayerLowerBodyState_QuickTurnLeft:
@@ -62,61 +58,61 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 
             default:
 
-                if (playerExtra.state == PlayerState_Combat &&
-                    g_ItemScreen_PlayerWeaponAttack != g_SysWork.playerCombat.weaponAttack)
+                if (PLAYER_EXTRA().state == PlayerState_Combat &&
+                    g_ItemScreen_PlayerWeaponAttack != PLAYER_COMBAT().weaponAttack)
                 {
-                    playerExtra.state = PlayerState_None;
-                    playerProps.flags = PlayerFlag_None;
+                    PLAYER_EXTRA().state = PlayerState_None;
+                    PLAYER_PROPS().flags = PlayerFlag_None;
                 }
 
-                if (playerExtra.lowerBodyState >= PlayerLowerBodyState_Aim &&
-                    g_SysWork.playerCombat.weaponAttack != NO_VALUE &&
-                    g_ItemScreen_PlayerWeaponAttack == g_SysWork.playerCombat.weaponAttack)
+                if (PLAYER_EXTRA().lowerBodyState >= PlayerLowerBodyState_Aim &&
+                    PLAYER_COMBAT().weaponAttack != NO_VALUE &&
+                    g_ItemScreen_PlayerWeaponAttack == PLAYER_COMBAT().weaponAttack)
                 {
-                    extraModelPtr0 = &playerExtra.model;
+                    extraModelPtr0 = &PLAYER_EXTRA().model;
                     if (extraModelPtr0->anim.status >= ANIM_STATUS(33, false))
                     {
-                        modelPtr0                      = &playerChara.model;
+                        modelPtr0                      = &PLAYER_CHARA().model;
                         extraModelPtr0->anim.status   -= 10;
-                        playerChara.model.controlState = 0;
-                        playerChara.model.stateStep    = 0;
-                        playerExtra.model.controlState = 0;
-                        playerExtra.model.stateStep    = 0;
+                        PLAYER_CHARA().model.controlState = 0;
+                        PLAYER_CHARA().model.stateStep    = 0;
+                        PLAYER_EXTRA().model.controlState = 0;
+                        PLAYER_EXTRA().model.stateStep    = 0;
                         modelPtr0->anim.status        -= 10;
                     }
                 }
                 else
                 {
-                    modelPtr1      = &playerChara.model;
-                    extraModelPtr1 = &playerExtra.model;
+                    modelPtr1      = &PLAYER_CHARA().model;
+                    extraModelPtr1 = &PLAYER_EXTRA().model;
 
                     modelPtr1->anim.status           = ANIM_STATUS(HarryAnim_TransitionToStill, true);
                     modelPtr1->anim.keyframeIdx      = 0;
                     extraModelPtr1->anim.status      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
                     extraModelPtr1->anim.keyframeIdx = 0;
 
-                    playerChara.model.controlState = 0;
-                    playerChara.model.stateStep    = 0;
-                    playerExtra.upperBodyState     = PlayerUpperBodyState_None;
-                    playerExtra.lowerBodyState     = PlayerLowerBodyState_None;
-                    playerExtra.model.controlState = 0;
-                    playerExtra.model.stateStep    = 0;
+                    PLAYER_CHARA().model.controlState = 0;
+                    PLAYER_CHARA().model.stateStep    = 0;
+                    PLAYER_EXTRA().upperBodyState     = PlayerUpperBodyState_None;
+                    PLAYER_EXTRA().lowerBodyState     = PlayerLowerBodyState_None;
+                    PLAYER_EXTRA().model.controlState = 0;
+                    PLAYER_EXTRA().model.stateStep    = 0;
                 }
 
-                playerProps.moveSpeed = Q12(0.0f);
-                playerProps.afkTimer  = Q12(0.0f);
+                PLAYER_PROPS().moveSpeed = Q12(0.0f);
+                PLAYER_PROPS().afkTimer  = Q12(0.0f);
         }
     }
 
-    modelPtr3      = &playerChara.model;
-    extraModelPtr2 = &playerExtra.model;
+    modelPtr3      = &PLAYER_CHARA().model;
+    extraModelPtr2 = &PLAYER_EXTRA().model;
 
     // Set animation alpha.
     modelPtr3->anim.alpha      = Q12(1.0f);
     extraModelPtr2->anim.alpha = Q12(1.0f);
 
     // Disable upper body bones.
-    playerExtra.disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
+    PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
 
     // Set animation time.
     modelPtr3->anim.time      = Q12(modelPtr3->anim.keyframeIdx);
@@ -125,7 +121,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     Anim_BonesUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, modelPtr3->anim.keyframeIdx, modelPtr3->anim.keyframeIdx, Q12(1.0f));
 
     // Re-enable upper body bones, disable lower body bones.
-    playerExtra.disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
+    PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
     Anim_BonesUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, extraModelPtr2->anim.keyframeIdx, extraModelPtr2->anim.keyframeIdx, Q12(1.0f));
     func_8004C040();
@@ -154,11 +150,11 @@ bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328
             hasShotgun = true;
         }
 
-        if (g_SysWork.playerCombat.weaponInventoryIdx != NO_VALUE && itemIdx == g_SysWork.playerCombat.weaponInventoryIdx)
+        if (PLAYER_COMBAT().weaponInventoryIdx != NO_VALUE && itemIdx == PLAYER_COMBAT().weaponInventoryIdx)
         {
             if (itemId >= InvItemId_Handgun && itemId <= InvItemId_Shotgun)
             {
-                if (g_SysWork.playerCombat.currentWeaponAmmo != 0)
+                if (PLAYER_COMBAT().currentWeaponAmmo != 0)
                 {
                     return true;
                 }
@@ -288,7 +284,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
 
             func_8008B398();
 
-            playerProps.gasWeaponPowerTimer = Q12(0.0f);
+            PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
             break;
 
         case 0:
@@ -338,8 +334,8 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
 
                     curFlags                        = 0;
                     curSoundType                    = 0;
-                    playerProps.gasWeaponPowerTimer = Q12(0.0f);
-                    playerChara.field_44.field_0    = 0;
+                    PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
+                    PLAYER_CHARA().field_44.field_0    = 0;
                 }
             }
             break;
@@ -352,7 +348,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                     func_8008B438(0, 0, 0);
                     func_8008B3E4(Q8(0.0f));
 
-                    playerProps.gasWeaponPowerTimer = Q12(0.0f);
+                    PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
                     curFlags                       -= 2;
                 }
             }

@@ -571,11 +571,11 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
 /** @brief Main update function for player logic. */
 void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
-/** @brief Updates `g_SysWork.playerWork.extra.upperBodyState` and prepares
+/** @brief Updates `PLAYER_EXTRA().upperBodyState` and prepares
  * transitions between running to and from walking animations.
  *
  * @param extra Pointer to `s_PlayerExtra` struct.
- * @param upperState Check if `g_SysWork.playerWork.extra.upperBodyState` is not the same being input in order to clear animation status.
+ * @param upperState Check if `PLAYER_EXTRA().upperBodyState` is not the same being input in order to clear animation status.
  * @param unused @unused Possibly animation index.
  * @param arg3 Player turn state. Only affects turn animations.
  * * 0 and 2: Idle state.
@@ -637,13 +637,13 @@ bool func_8007F95C(void);
 
 #define Player_ExtraStateSet(playerChara, playerExtra, playerState)        \
 {                                                                          \
-    g_SysWork.playerWork.extra.state          = (playerState);             \
+    PLAYER_EXTRA().state          = (playerState);             \
     (playerChara)->model.stateStep            = 0;                         \
     (playerChara)->model.controlState         = 0;                         \
     (playerExtra)->model.stateStep            = 0;                         \
     (playerExtra)->model.controlState         = 0;                         \
-    g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None; \
-    g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None; \
+    PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_None; \
+    PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None; \
 }
 
 /** @brief Sets the given animation flag for both the player character data and extra player data.
@@ -655,8 +655,8 @@ static inline void Player_AnimFlagsSet(u32 flags)
     s_SubCharacter* chara;
     s_PlayerExtra*  extra;
 
-    extra = &g_SysWork.playerWork.extra;
-    chara = &g_SysWork.playerWork.player;
+    extra = &PLAYER_EXTRA();
+    chara = &PLAYER_CHARA();
 
     extra->model.anim.flags |= flags;
     chara->model.anim.flags |= flags;
@@ -668,27 +668,23 @@ static inline void Player_AnimFlagsSet(u32 flags)
  */
 #define Player_AnimFlagsClear(clearFlags)                      \
 {                                                              \
-    s_PlayerExtra*  playerExtra = &g_SysWork.playerWork.extra; \
-    s_SubCharacter* playerChara = &g_SysWork.playerWork.player;\
+    s_PlayerExtra*  extra = &PLAYER_EXTRA(); \
+    s_SubCharacter* chara = &PLAYER_CHARA();\
                                                                \
-    playerExtra->model.anim.flags &= ~(clearFlags);            \
-    playerChara->model.anim.flags &= ~(clearFlags);            \
+    extra->model.anim.flags &= ~(clearFlags);            \
+    chara->model.anim.flags &= ~(clearFlags);            \
 }
 
 /** @brief Resets the player character's collision shapes. */
 static inline void Player_CollisionReset()
 {
-    #define playerChara g_SysWork.playerWork.player
-
-    playerChara.collision.box.topExtent            = DEFAULT_PLAYER_BOX_TOP;
-    playerChara.collision.box.bottomExtent         = Q12(0.0f);
-    playerChara.collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
-    playerChara.collision.shapeOffsets.cylinder.vz = Q12(0.0f);
-    playerChara.collision.shapeOffsets.cylinder.vx = Q12(0.0f);
-    playerChara.collision.shapeOffsets.box.vz      = Q12(0.0f);
-    playerChara.collision.shapeOffsets.box.vx      = Q12(0.0f);
-
-    #undef playerChara
+    PLAYER_CHARA().collision.box.topExtent            = DEFAULT_PLAYER_BOX_TOP;
+    PLAYER_CHARA().collision.box.bottomExtent         = Q12(0.0f);
+    PLAYER_CHARA().collision.box.offsetY              = DEFAULT_PLAYER_BOX_OFFSET_Y;
+    PLAYER_CHARA().collision.shapeOffsets.cylinder.vz = Q12(0.0f);
+    PLAYER_CHARA().collision.shapeOffsets.cylinder.vx = Q12(0.0f);
+    PLAYER_CHARA().collision.shapeOffsets.box.vz      = Q12(0.0f);
+    PLAYER_CHARA().collision.shapeOffsets.box.vx      = Q12(0.0f);
 }
 
 /** @brief Resets the extra player parameters state if `g_Player_AnimResetRequest` is set.

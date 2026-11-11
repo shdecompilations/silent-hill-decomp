@@ -44,8 +44,6 @@ void GameBoot_InGameStartup(void) // 0x80034964
     // Makes up to 5 attemps. If the load fails, the timer used to check if a demo should be triggered is restarted.
     static s32 demoLoadAttemptCount;
 
-    #define playerChara g_SysWork.playerWork.player
-
     // Handle boot startup step.
     switch (g_GameWork.gameStateSteps[0])
     {
@@ -151,7 +149,7 @@ void GameBoot_InGameStartup(void) // 0x80034964
                 WorldGfx_MapReset();
             }
 
-            WorldGfx_MapInit(&g_MapOverlayHdr, playerChara.position.vx, playerChara.position.vz);
+            WorldGfx_MapInit(&g_MapOverlayHdr, PLAYER_CHARA().position.vx, PLAYER_CHARA().position.vz);
             if (g_SysWork.processFlags == ProcessFlag_OverlayTransition)
             {
                 Game_RadioSoundStop();
@@ -230,7 +228,6 @@ void GameBoot_InGameStartup(void) // 0x80034964
     }
 
     #undef DEMO_LOAD_ATTEMPT_COUNT_MAX
-    #undef playerChara
 }
 
 /** @brief Initalizes drawing of the loading screen. */
@@ -263,9 +260,7 @@ static void GameBoot_NpcClear(void) // 0x80034EC8
 
 static void GameBoot_NpcInit(void) // 0x80034F18
 {
-    #define playerChara g_SysWork.playerWork.player
-
-    vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
+    vcSetCameraUseWarp(&PLAYER_CHARA().position, g_SysWork.cameraAngleY);
     func_8005E70C();
 
     if (g_SysWork.field_234A)
@@ -277,21 +272,17 @@ static void GameBoot_NpcInit(void) // 0x80034F18
     GameBoot_NpcClear();
     Game_NpcRoomInitSpawn(false);
     Game_PlayerHeightUpdate();
-
-    #undef playerChara
 }
 
 void GameBoot_InGameInit(void) // 0x80034FB8
 {
     s32 mapOvlId;
 
-    #define playerChara g_SysWork.playerWork.player
-
     mapOvlId = g_SavegamePtr->mapIdx;
 
-    vcInitCamera(&g_MapOverlayHdr, &playerChara.position);
+    vcInitCamera(&g_MapOverlayHdr, &PLAYER_CHARA().position);
 
-    vcSetCameraUseWarp(&playerChara.position, g_SysWork.cameraAngleY);
+    vcSetCameraUseWarp(&PLAYER_CHARA().position, g_SysWork.cameraAngleY);
     World_CollisionTriggersSet(&g_MapOverlayHdr);
     GameBoot_WorldEnvInit(0);
     WorldGfx_CharaModelProcessAllLoads();
@@ -313,8 +304,6 @@ void GameBoot_InGameInit(void) // 0x80034FB8
     GameFs_Tim00TIMLoad();
     Fs_QueueWaitForEmpty();
     GameFs_MapItemsModelLoad(mapOvlId);
-
-    #undef playerChara
 }
 
 void GameBoot_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
@@ -395,9 +384,9 @@ void GameBoot_MapLoad(s32 mapIdx) // 0x8003521C
                                   ProcessFlag_Continue |
                                   ProcessFlag_BootDemo))
     {
-        WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
+        WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
     }
-    Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat.weaponAttack);
+    Gfx_PlayerHeldItemAttach(PLAYER_COMBAT().weaponAttack);
 }
 
 #if VERSION_REGION_IS(PAL)

@@ -23,8 +23,6 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D7748
 
-#define playerChara g_SysWork.playerWork.player
-
 void Map_RoomBgmInit(bool arg0) // 0x800D77F8
 {
     u16 bgmFlags;
@@ -520,20 +518,20 @@ void func_800D85D8(void) // 0x800D85D8
                                   true);
 
             // Warp player.
-            playerChara.position.vy = Q12(-2.3f);
-            playerChara.rotation.vy = Q12_ANGLE(0.0f);
+            PLAYER_CHARA().position.vy = Q12(-2.3f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(0.0f);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 88, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 88, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
             Event_WaitTimer(Q12(3.5f), false);
-            playerChara.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
+            PLAYER_CHARA().position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             break;
 
         case 4:
-            playerChara.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
+            PLAYER_CHARA().position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.3f));
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
             break;
 
@@ -541,10 +539,10 @@ void func_800D85D8(void) // 0x800D85D8
             if (Savegame_EventFlagGet(EventFlag_78))
             {
                 // Warp player.
-                playerChara.position.vx = Q12(-60.0f);
-                playerChara.position.vy = Q12(0.0f);
-                playerChara.position.vz = Q12(-63.7f);
-                playerChara.rotation.vy = Q12_ANGLE(0.0f);
+                PLAYER_CHARA().position.vx = Q12(-60.0f);
+                PLAYER_CHARA().position.vy = Q12(0.0f);
+                PLAYER_CHARA().position.vz = Q12(-63.7f);
+                PLAYER_CHARA().rotation.vy = Q12_ANGLE(0.0f);
 
                 Savegame_EventFlagClear(EventFlag_184);
                 Savegame_EventFlagClear(EventFlag_78);
@@ -552,10 +550,10 @@ void func_800D85D8(void) // 0x800D85D8
             else if (Savegame_EventFlagGet(EventFlag_81))
             {
                 // Warp player.
-                playerChara.position.vx = Q12(-60.0f);
-                playerChara.position.vy = Q12(0.6f);
-                playerChara.position.vz = Q12(-56.3f);
-                playerChara.rotation.vy = Q12_ANGLE(180.0f);
+                PLAYER_CHARA().position.vx = Q12(-60.0f);
+                PLAYER_CHARA().position.vy = Q12(0.6f);
+                PLAYER_CHARA().position.vz = Q12(-56.3f);
+                PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
 
                 Savegame_EventFlagClear(EventFlag_185);
                 Savegame_EventFlagClear(EventFlag_81);
@@ -614,13 +612,13 @@ void func_800D8948(void) // 0x800D8948
                                   true);
 
             // Warp player.
-            playerChara.position.vx = Q12(-56.34f);
-            playerChara.position.vy = Q12(-2.276f);
-            playerChara.position.vz = Q12(-55.1f);
-            playerChara.rotation.vy = Q12_ANGLE(0.0f);
+            PLAYER_CHARA().position.vx = Q12(-56.34f);
+            PLAYER_CHARA().position.vy = Q12(-2.276f);
+            PLAYER_CHARA().position.vz = Q12(-55.1f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(0.0f);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 87, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 87, false);
 
             if (g_MapEventData->mapPointIdx == 16)
             {
@@ -637,13 +635,13 @@ void func_800D8948(void) // 0x800D8948
             Event_WaitTimer(Q12(3.5f), false);
 
             // Warp player.
-            playerChara.rotation.vy = Q12_ANGLE(0.0f);
-            playerChara.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(0.0f);
+            PLAYER_CHARA().position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
             break;
 
         case 5:
             // Warp player.
-            playerChara.position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
+            PLAYER_CHARA().position.vy += Q12_MULT_PRECISE(g_DeltaTime, Q12(-0.3f));
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
             break;
@@ -654,7 +652,7 @@ void func_800D8948(void) // 0x800D8948
             SysWork_StateSetNext(SysState_Gameplay);
 
             // Warp player.
-            playerChara.position.vy = Q12(0.0f);
+            PLAYER_CHARA().position.vy = Q12(0.0f);
             break;
         }
 }

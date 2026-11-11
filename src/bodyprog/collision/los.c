@@ -139,18 +139,18 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     q19_12  distMult;
     q19_12  distMax;
 
-    if (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                         g_SysWork.playerWork.player.position.vz - chara->position.vz) -
+    if (Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - chara->position.vx,
+                                         PLAYER_CHARA().position.vz - chara->position.vz) -
                                   chara->rotation.vy) < Q12_ANGLE(0.0f))
     {
-        distMult = (Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                                     g_SysWork.playerWork.player.position.vz - chara->position.vz) -
+        distMult = (Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - chara->position.vx,
+                                                     PLAYER_CHARA().position.vz - chara->position.vz) -
                                               chara->rotation.vy) * 2) + Q12_ANGLE(360.0f);
     }
     else
     {
-        distMult = (Q12_ANGLE(180.0f) - Math_AngleNormalizeSigned((ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                                                          g_SysWork.playerWork.player.position.vz - chara->position.vz) -
+        distMult = (Q12_ANGLE(180.0f) - Math_AngleNormalizeSigned((ratan2(PLAYER_CHARA().position.vx - chara->position.vx,
+                                                                          PLAYER_CHARA().position.vz - chara->position.vz) -
                                                                    chara->rotation.vy))) * 2;
     }
 
@@ -159,8 +159,8 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
         distMult = Q12_MULT_PRECISE(distMult, i);
     }
 
-    dist = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                     g_SysWork.playerWork.player.position.vz - chara->position.vz);
+    dist = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - chara->position.vx,
+                                     PLAYER_CHARA().position.vz - chara->position.vz);
     distMax = baseDistMax + Q12_MULT_PRECISE(distStep, distMult);
     if (distMax < dist)
     {
@@ -170,18 +170,18 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     pos.vx = chara->position.vx;
     pos.vz = chara->position.vz;
 
-    offset.vx = g_SysWork.playerWork.player.position.vx - chara->position.vx;
-    offset.vz = g_SysWork.playerWork.player.position.vz - chara->position.vz;
+    offset.vx = PLAYER_CHARA().position.vx - chara->position.vx;
+    offset.vz = PLAYER_CHARA().position.vz - chara->position.vz;
 
     if (!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed())
     {
         offset.vy = Q12(0.0f);
-        pos.vy    = g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.topExtent;
+        pos.vy    = PLAYER_CHARA().position.vy + PLAYER_CHARA().collision.box.topExtent;
     }
     else
     {
         pos.vy    = chara->position.vy + chara->collision.box.offsetY;
-        offset.vy = (g_SysWork.playerWork.player.position.vy + g_SysWork.playerWork.player.collision.box.offsetY) -
+        offset.vy = (PLAYER_CHARA().position.vy + PLAYER_CHARA().collision.box.offsetY) -
                     (chara->position.vy - chara->collision.box.offsetY);
     }
 

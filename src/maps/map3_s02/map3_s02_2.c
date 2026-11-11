@@ -339,7 +339,7 @@ void func_800D0608(void) // 0x800D0608
             g_SysWork.lensFlareBoneCoord = NULL;
             g_SysWork.lightIntensity     = Q12(0.7f);
 
-            Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
 
             func_8008D438();
             WorldEnv_PresetsSet(16, 16);
@@ -371,7 +371,7 @@ void func_800D0608(void) // 0x800D0608
 
             SysWork_StateSetNext(SysState_Gameplay);
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
 
             func_8008D448();
             Game_FlashlightAttribsSet();
@@ -425,7 +425,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D0F9C
             D_800D1FBC = MAX(D_800D1FBC, Q12_MULT_PRECISE(func_800D1354(), Q12(24.0f)) + Q12(25.0f));
         }
 
-        if (!Savegame_EventFlagGet(EventFlag_233) && g_SysWork.playerWork.player.position.vz < Q12(-129.0f))
+        if (!Savegame_EventFlagGet(EventFlag_233) && PLAYER_CHARA().position.vz < Q12(-129.0f))
         {
             Savegame_EventFlagSet(EventFlag_233);
             Sfx_WithFlagsPlay(Sfx_Unk1523, &D_800CAAF8, Q8(0.5f), SfxFlag_None);
@@ -435,7 +435,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D0F9C
     if (PLAYER_IN_MAP_CHUNK(1, -4))
     {
 
-        if (!Savegame_EventFlagGet(EventFlag_234) && g_SysWork.playerWork.player.position.vx < Q12(67.0f))
+        if (!Savegame_EventFlagGet(EventFlag_234) && PLAYER_CHARA().position.vx < Q12(67.0f))
         {
             Savegame_EventFlagSet(EventFlag_234);
             Sfx_WithFlagsPlay(Sfx_Unk1523, &Q12_VECTOR3(69.6f, -1.2f, -138.4f), Q8(0.5f), SfxFlag_None);
@@ -452,12 +452,12 @@ s16 func_800D1354(void) // 0x800D1354
     s32 var1;
     s32 var;
 
-    x = g_SysWork.playerWork.player.position.vx - Q12(95.2f);
-    z = g_SysWork.playerWork.player.position.vz + Q12(140.0f);
+    x = PLAYER_CHARA().position.vx - Q12(95.2f);
+    z = PLAYER_CHARA().position.vz + Q12(140.0f);
     cos0 = Math_Cos(Math_AngleNormalizeSigned((ratan2(x, z) - ratan2(Q12(4.8f) + 1, Q12(12.8f) + 1))));
 
-    tmp0 = FP_FROM(cos0 * Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - Q12(95.2f),
-                                                    g_SysWork.playerWork.player.position.vz + Q12(140.0f)),
+    tmp0 = FP_FROM(cos0 * Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - Q12(95.2f),
+                                                    PLAYER_CHARA().position.vz + Q12(140.0f)),
                    Q12_SHIFT);
     var1 = Q12_DIV(tmp0, Q6_TO_Q12(SquareRoot0(0xBAC52)));
     var = MIN(var1, Q8(16.0f));

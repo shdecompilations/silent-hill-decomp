@@ -159,7 +159,6 @@ void func_800D0B64(void) // 0x800D0B64
         EventState_Skip = 27
     } e_EventState;
 
-    #define playerChara g_SysWork.playerWork.player
     #define lisaChara g_SysWork.npcs[0]
 
     // Skip.
@@ -219,7 +218,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 3:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 135, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 135, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &lisaChara, 9, false);
             SysWork_StateStepIncrement(0);
 
@@ -241,7 +240,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 8:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 136, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 136, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -266,7 +265,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 13:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 137, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 137, false);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -278,7 +277,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 16:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 138, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 138, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &lisaChara, 16, false);
             SysWork_StateStepIncrement(0);
 
@@ -289,7 +288,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 18:
             Chara_ModelCharaIdClear(&lisaChara, 0, 0);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 139, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 139, false);
 
             Math_Vector3Set(&g_SysWork.lightPosition, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
 
@@ -320,7 +319,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 24:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             g_SysWork.lightIntensity = Q12(0.6f);
             SysWork_StateStepIncrement(0);
 
@@ -365,14 +364,14 @@ void func_800D0B64(void) // 0x800D0B64
 
             func_8003D01C();
             Player_WeaponAttackRestore();
-            playerChara.position.vx = Q12(17.8f);
-            playerChara.position.vz = Q12(-137.7f);
+            PLAYER_CHARA().position.vx = Q12(17.8f);
+            PLAYER_CHARA().position.vz = Q12(-137.7f);
             break;
     }
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
 
         if (g_SysWork.sysStateSteps[0] < 18)
         {
@@ -528,9 +527,9 @@ void func_800D1604(void) // 0x800D1604
             Event_CameraLookAtSet(NULL, Q12(56.92f), Q12(-4.5f), Q12(-141.99f), 0, 0, 0, 0, true);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(57.45f);
-            g_SysWork.playerWork.player.position.vz = Q12(-139.05f);
-            g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
+            PLAYER_CHARA().position.vx = Q12(57.45f);
+            PLAYER_CHARA().position.vz = Q12(-139.05f);
+            PLAYER_CHARA().rotation.vy = Q12(-0.25f);
             Game_TurnFlashlightOn();
 
             Savegame_EventFlagSet(EventFlag_475);
@@ -606,16 +605,16 @@ void func_800D1604(void) // 0x800D1604
 
         case 7:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(57.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(-139.05f);
+            PLAYER_CHARA().position.vx = Q12(57.0f);
+            PLAYER_CHARA().position.vz = Q12(-139.05f);
 
             // Warp camera.
-            Event_CameraPositionSet(NULL, Q12(58.5f), Q12(-2.9f), g_SysWork.playerWork.player.position.vz, 0, 0, 0, 0, true);
-            Event_CameraLookAtSet(NULL, g_SysWork.playerWork.player.position.vx - Q12(1.6f), Q12(-0.3f), g_SysWork.playerWork.player.position.vz, 0, 0, 0, 0, true);
+            Event_CameraPositionSet(NULL, Q12(58.5f), Q12(-2.9f), PLAYER_CHARA().position.vz, 0, 0, 0, 0, true);
+            Event_CameraLookAtSet(NULL, PLAYER_CHARA().position.vx - Q12(1.6f), Q12(-0.3f), PLAYER_CHARA().position.vz, 0, 0, 0, 0, true);
 
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-90.0f), Q12(51.8f), Q12(-139.05f));
 
-            g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
+            PLAYER_CHARA().rotation.vy = Q12(-0.25f);
             D_800D31DC[1]                                   = 0;
             D_800D31DC[0]                                   = 0;
 
@@ -624,7 +623,7 @@ void func_800D1604(void) // 0x800D1604
         case 8:
             Event_PathWaypointExecutePlayer(53, 1, false);
             Event_DisplayMapMsgWithAudio(43, &g_Cutscene_MapMsgAudioIdx, &D_800D31C4);
-            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
+            Event_CameraLookAtSet(&PLAYER_CHARA().position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
 
             g_DeltaTime >>= 2;
 
@@ -634,7 +633,7 @@ void func_800D1604(void) // 0x800D1604
         case 9:
             Event_PathWaypointExecutePlayer(53, 1, false);
             Event_DisplayMapMsgWithAudio(43, &g_Cutscene_MapMsgAudioIdx, &D_800D31C4);
-            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
+            Event_CameraLookAtSet(&PLAYER_CHARA().position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
 
             g_DeltaTime >>= 2;
             D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.55f)), Q12(0.3f));
@@ -654,7 +653,7 @@ void func_800D1604(void) // 0x800D1604
 
         case 10:
             Event_PathWaypointExecutePlayer(53, 1, false);
-            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
+            Event_CameraLookAtSet(&PLAYER_CHARA().position, Q12(-1.6f), Q12(-0.3f), 0, 0, 0, 0, 0, false);
 
             g_DeltaTime >>= 2;
             D_800D31DC[0] = MIN(D_800D31DC[0] + Q12_MULT_PRECISE(g_DeltaTime, Q12(0.55f)), Q12(0.3f));

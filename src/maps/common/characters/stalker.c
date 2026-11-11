@@ -211,7 +211,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
             {
                 stalkerProps.timer_10C = Q12(0.0f);
 
-                angle = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
+                angle = ABS(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, PLAYER_CHARA().position) -
                                           stalker->rotation.vy));
 
                 if (stalkerProps.flags & StalkerFlag_6)
@@ -537,17 +537,17 @@ void Stalker_ControlUpdate(s_SubCharacter* stalker)
             sharedData_800E3A0C_0_s00[i] = sharedData_800E3A0C_0_s00[i - 1];
         }
 
-        sharedData_800E39EC_0_s00[0] = FP_TO(Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - sharedData_800E39E4_0_s00,
-                                                                       g_SysWork.playerWork.player.position.vz - sharedData_800E39E8_0_s00), Q12_SHIFT) / g_DeltaTime;
-        sharedData_800E3A0C_0_s00[0] = ratan2(g_SysWork.playerWork.player.position.vx - sharedData_800E39E4_0_s00, g_SysWork.playerWork.player.position.vz - sharedData_800E39E8_0_s00);
-        sharedData_800E39E4_0_s00    = g_SysWork.playerWork.player.position.vx;
-        sharedData_800E39E8_0_s00    = g_SysWork.playerWork.player.position.vz;
+        sharedData_800E39EC_0_s00[0] = FP_TO(Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - sharedData_800E39E4_0_s00,
+                                                                       PLAYER_CHARA().position.vz - sharedData_800E39E8_0_s00), Q12_SHIFT) / g_DeltaTime;
+        sharedData_800E3A0C_0_s00[0] = ratan2(PLAYER_CHARA().position.vx - sharedData_800E39E4_0_s00, PLAYER_CHARA().position.vz - sharedData_800E39E8_0_s00);
+        sharedData_800E39E4_0_s00    = PLAYER_CHARA().position.vx;
+        sharedData_800E39E8_0_s00    = PLAYER_CHARA().position.vz;
 
         if (sharedData_800DD5A6_0_s00 != 5)
         {
             sharedData_800DD5A6_0_s00++;
-            g_Stalker_TargetPositionX = g_SysWork.playerWork.player.position.vx;
-            g_Stalker_TargetPositionZ = g_SysWork.playerWork.player.position.vz;
+            g_Stalker_TargetPositionX = PLAYER_CHARA().position.vx;
+            g_Stalker_TargetPositionZ = PLAYER_CHARA().position.vz;
         }
         else
         {
@@ -566,8 +566,8 @@ void Stalker_ControlUpdate(s_SubCharacter* stalker)
             }
 
             temp_s1                   = sharedData_800E39EC_0_s00[0] + (angle1 >> 2);
-            g_Stalker_TargetPositionX = ((temp_s1 * Math_Sin(angle)) >> 14) + g_SysWork.playerWork.player.position.vx;
-            g_Stalker_TargetPositionZ = ((temp_s1 * Math_Cos(angle)) >> 14) + g_SysWork.playerWork.player.position.vz;
+            g_Stalker_TargetPositionX = ((temp_s1 * Math_Sin(angle)) >> 14) + PLAYER_CHARA().position.vx;
+            g_Stalker_TargetPositionZ = ((temp_s1 * Math_Cos(angle)) >> 14) + PLAYER_CHARA().position.vz;
         }
     }
 
@@ -655,13 +655,13 @@ void Stalker_Control_2(s_SubCharacter* stalker)
     }
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) &&
-        !Los_NpcToPlayerHitCheck(stalker, &g_SysWork.playerWork.player))
+        !Los_NpcToPlayerHitCheck(stalker, &PLAYER_CHARA()))
     {
         stalkerProps.timer_F8 = Q12(0.0f);
 
         if (stalkerProps.flags & StalkerFlag_WarpRotation)
         {
-            stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position);
+            stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, PLAYER_CHARA().position);
         }
         else
         {
@@ -706,7 +706,7 @@ void Stalker_Control_2(s_SubCharacter* stalker)
             if ( distToPlayer < Q12(0.9f) &&
                 (distToPlayer > Q12(0.7f) || !Rng_GenerateInt(0, 3))) // 1 in 4 chance.
             {
-                if (ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
+                if (ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && PLAYER_CHARA().health > Q12(0.0f))
                 {
                     stalker->model.controlState = StalkerControl_5;
                     g_SysWork.charaGroupFlags[3] |= CharaGroupFlag_1;
@@ -753,12 +753,12 @@ void Stalker_Control_2(s_SubCharacter* stalker)
         {
             if (ABS(angleDeltaToPlayer) < Q12_ANGLE(60.0f))
             {
-                if (g_SysWork.playerWork.player.health > Q12(0.0f))
+                if (PLAYER_CHARA().health > Q12(0.0f))
                 {
                     stalker->model.controlState = StalkerControl_6;
 
                     // Grab player in front or behind.
-                    grabAngleDelta = Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - stalker->rotation.vy);
+                    grabAngleDelta = Math_AngleNormalizeSigned(PLAYER_CHARA().rotation.vy - stalker->rotation.vy);
                     if (ABS(grabAngleDelta) > Q12_ANGLE(90.0f))
                     {
                         stalker->model.anim.status = ANIM_STATUS(StalkerAnim_34, false);
@@ -789,8 +789,8 @@ void Stalker_Control_2(s_SubCharacter* stalker)
         {
             stalkerProps.targetHeadingAngle = Los_CharaHeadingAngleGet(stalker,
                                                                         Q12(2.0f),
-                                                                        g_SysWork.playerWork.player.position.vx,
-                                                                        g_SysWork.playerWork.player.position.vz,
+                                                                        PLAYER_CHARA().position.vx,
+                                                                        PLAYER_CHARA().position.vz,
                                                                         Q12(1.0f),
                                                                         true);
             if (stalkerProps.targetHeadingAngle == Q12_ANGLE(360.0f))
@@ -920,7 +920,7 @@ void Stalker_Control_3(s_SubCharacter* stalker)
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_30, true) &&
         !(stalkerProps.flags & StalkerFlag_Falling) &&
-        !Los_NpcToPlayerHitCheck(stalker, &g_SysWork.playerWork.player))
+        !Los_NpcToPlayerHitCheck(stalker, &PLAYER_CHARA()))
     {
         stalkerProps.timer_F8 = Q12(0.0f);
 
@@ -962,13 +962,13 @@ void Stalker_Control_3(s_SubCharacter* stalker)
         }
 
         if ((g_SysWork.charaGroupFlags[3] & CharaGroupFlag_0) || func_80070320() ||
-            ABS(stalker->position.vy - g_SysWork.playerWork.player.position.vy) > Q12(0.3f) ||
+            ABS(stalker->position.vy - PLAYER_CHARA().position.vy) > Q12(0.3f) ||
             ( (stalkerProps.flags & StalkerFlag_2) &&  Rng_GenerateInt(0, 3)) || // 3 in 4 chance?
             (!(stalkerProps.flags & StalkerFlag_2) && !Rng_GenerateInt(0, 3)))   // 1 in 4 chance.
         {
-            if (!(g_SysWork.playerWork.player.flags & CharaFlag_Unk4) &&
+            if (!(PLAYER_CHARA().flags & CharaFlag_Unk4) &&
                 distToPlayer < Q12(0.9f) && (distToPlayer > Q12(0.7f) || !Rng_GenerateInt(0, 3)) && // 1 in 4 chance.
-                ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
+                ABS(angleDeltaToPlayer) < Q12_ANGLE(90.0f) && PLAYER_CHARA().health > Q12(0.0f))
             {
                 stalker->model.controlState = StalkerControl_5;
                 g_SysWork.charaGroupFlags[3] |= CharaGroupFlag_1;
@@ -1013,14 +1013,14 @@ void Stalker_Control_3(s_SubCharacter* stalker)
                 stalker->model.controlState = StalkerControl_4;
             }
         }
-        else if (!(g_SysWork.playerWork.player.flags & CharaFlag_Unk4) &&
+        else if (!(PLAYER_CHARA().flags & CharaFlag_Unk4) &&
                  distToPlayer < Q12(1.0f) && distToPlayer > Q12(0.5f) &&
-                 ABS(angleDeltaToPlayer) < Q12_ANGLE(60.0f) && g_SysWork.playerWork.player.health > Q12(0.0f))
+                 ABS(angleDeltaToPlayer) < Q12_ANGLE(60.0f) && PLAYER_CHARA().health > Q12(0.0f))
         {
             stalker->model.controlState = StalkerControl_6;
 
             // Grab player in front or behind.
-            grabAngleDelta = Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - stalker->rotation.vy);
+            grabAngleDelta = Math_AngleNormalizeSigned(PLAYER_CHARA().rotation.vy - stalker->rotation.vy);
             if (ABS(grabAngleDelta) > Q12_ANGLE(90.0f))
             {
                 stalker->model.anim.status = ANIM_STATUS(StalkerAnim_34, false);
@@ -1114,8 +1114,8 @@ void Stalker_Control_4(s_SubCharacter* stalker)
     q19_12 deltaX;
     q19_12 deltaZ;
 
-    distToPlayer = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
-                                       g_SysWork.playerWork.player.position.vz - stalker->position.vz);
+    distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - stalker->position.vx,
+                                       PLAYER_CHARA().position.vz - stalker->position.vz);
 
     if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())
     {
@@ -1226,7 +1226,7 @@ void Stalker_Control_4(s_SubCharacter* stalker)
             stalkerProps.flags &= ~StalkerFlag_4;
         }
 
-        if (distToPlayer < Q12(2.0f) && distToPlayer < dist1 && !Los_NpcToPlayerHitCheck(stalker, &g_SysWork.playerWork.player))
+        if (distToPlayer < Q12(2.0f) && distToPlayer < dist1 && !Los_NpcToPlayerHitCheck(stalker, &PLAYER_CHARA()))
         {
             stalkerProps.timer_F8  = Q12(5.0f);
             stalkerProps.flags |= StalkerFlag_0;
@@ -1240,8 +1240,8 @@ void Stalker_Control_4(s_SubCharacter* stalker)
         {
             if (condCombo)
             {
-                stalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
-                stalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+                stalkerProps.targetPositionX = PLAYER_CHARA().position.vx;
+                stalkerProps.targetPositionZ = PLAYER_CHARA().position.vz;
                 stalkerProps.timer_116          = Q12(0.0f);
             }
 
@@ -1312,12 +1312,12 @@ void Stalker_Control_5(s_SubCharacter* stalker)
     }
     else if (ANIM_TIME_RANGE_CHECK(stalker->model.anim.time, 50, 61))
     {
-        distToPlayer = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
-                                           g_SysWork.playerWork.player.position.vz - stalker->position.vz);
+        distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - stalker->position.vx,
+                                           PLAYER_CHARA().position.vz - stalker->position.vz);
 
         for (i = 0; i < 6; i++)
         {
-            angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
+            angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, PLAYER_CHARA().position) -
                                                stalker->rotation.vy);
             angle1             = TIMESTEP_ANGLE(3, 3); // @hack `(g_DeltaTime / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
             if ((angleDeltaToPlayer >= Q12_ANGLE(0.0f) && angle1 <  angleDeltaToPlayer) ||
@@ -1369,12 +1369,12 @@ void Stalker_Control_6(s_SubCharacter* stalker)
     stalker->collision.state = CharaCollisionState_Npc;
     Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
 
-    distToPlayer = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
-                               g_SysWork.playerWork.player.position.vz - stalker->position.vz);
+    distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - stalker->position.vx,
+                               PLAYER_CHARA().position.vz - stalker->position.vz);
 
     moveSpeed = Q12(0.0f);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
-                                              g_SysWork.playerWork.player.position.vz - stalker->position.vz) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - stalker->position.vx,
+                                              PLAYER_CHARA().position.vz - stalker->position.vz) -
                                        stalker->rotation.vy);
 
     if (ABS(angleDeltaToPlayer) < Q12_ANGLE(45.0f))
@@ -1403,8 +1403,8 @@ void Stalker_Control_6(s_SubCharacter* stalker)
             }
         }
 
-        angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
-                                                  g_SysWork.playerWork.player.position.vz - stalker->position.vz) -
+        angleDeltaToPlayer = Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - stalker->position.vx,
+                                                  PLAYER_CHARA().position.vz - stalker->position.vz) -
                                            stalker->rotation.vy);
     }
 
@@ -1433,9 +1433,9 @@ void Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.relAnimTime_104 = Q12(0.0f);
         }
 
-        stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position);
+        stalker->rotation.vy = Math_AngleBetweenPositionsGet(stalker->position, PLAYER_CHARA().position);
 
-        if (g_SysWork.playerWork.player.attackReceived == NO_VALUE)
+        if (PLAYER_CHARA().attackReceived == NO_VALUE)
         {
             g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_0;
             animStatus                    = stalker->model.anim.status;
@@ -1453,7 +1453,7 @@ void Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.timer_F8 += g_DeltaTime;
             if (stalkerProps.timer_F8 > Q12(1.5f))
             {
-                g_SysWork.playerWork.player.damage.amount += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
+                PLAYER_CHARA().damage.amount += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
                 stalkerProps.timer_F8              = Rng_Rand16() % Q12(0.5f);
             }
         }
@@ -1629,8 +1629,8 @@ void Stalker_Control_8(s_SubCharacter* stalker)
 
     if (cond || func_80070360(stalker, Q12(0.0f), Q12(1.0f)))
     {
-        stalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
-        stalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+        stalkerProps.targetPositionX = PLAYER_CHARA().position.vx;
+        stalkerProps.targetPositionZ = PLAYER_CHARA().position.vz;
     }
 
     #undef BASE_DIST_MAX
@@ -1849,9 +1849,9 @@ void Stalker_Control_12(s_SubCharacter* stalker)
     q3_12  angleDeltaToPlayer;
     s32    cond; // Not `bool`?
 
-    distToPlayer       = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
-                                             g_SysWork.playerWork.player.position.vz - stalker->position.vz);
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
+    distToPlayer       = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - stalker->position.vx,
+                                             PLAYER_CHARA().position.vz - stalker->position.vz);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, PLAYER_CHARA().position) -
                                        stalker->rotation.vy);
 
     if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())
@@ -1873,8 +1873,8 @@ void Stalker_Control_12(s_SubCharacter* stalker)
         return;
     }
 
-    stalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
-    stalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+    stalkerProps.targetPositionX = PLAYER_CHARA().position.vx;
+    stalkerProps.targetPositionZ = PLAYER_CHARA().position.vz;
 
     if (distToPlayer < Q12(1.2f) && angleDeltaToPlayer < Q12_ANGLE(180.0f))
     {
@@ -2122,7 +2122,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
         ptr->position_38.vz = stalker->position.vz;
 
         // TODO: What's weapon attack 48?
-        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk48, AttackInputType_Tap), stalker, &ptr->position_38, &g_SysWork.playerWork.player,
+        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk48, AttackInputType_Tap), stalker, &ptr->position_38, &PLAYER_CHARA(),
                       ratan2(ptr->field_20.vx - stalker->position.vx, ptr->field_20.vz - stalker->position.vz),
                       ratan2(Math_Vector2MagCalcSafeQ6(stalker->position.vx - ptr->field_20.vx,
                                                  stalker->position.vz - ptr->field_20.vz),
@@ -2134,10 +2134,10 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     if (stalker->model.controlState == StalkerControl_2 ||
         stalker->model.controlState == StalkerControl_3)
     {
-        ptr->angle_46 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, g_SysWork.playerWork.player.position) -
+        ptr->angle_46 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(stalker->position, PLAYER_CHARA().position) -
                                       stalker->rotation.vy);
-        temp          = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - stalker->position.vx,
-                                            g_SysWork.playerWork.player.position.vz - stalker->position.vz);
+        temp          = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - stalker->position.vx,
+                                            PLAYER_CHARA().position.vz - stalker->position.vz);
 
         if (temp < Q12(3.0f) && ABS(ptr->angle_46) < Q12_ANGLE(45.0f))
         {

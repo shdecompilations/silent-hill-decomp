@@ -202,7 +202,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
     {
         sharedData_800DFB7C_0_s00[idx].field_B++;
 
-        if (trace.hasHit && trace.character == &g_SysWork.playerWork.player)
+        if (trace.hasHit && trace.character == &PLAYER_CHARA())
         {
             sub = trace.character;
 

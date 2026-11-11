@@ -41,11 +41,11 @@ void Map_RoomBgmInit(bool arg0)
                     }
                     else
                     {
-                        if (g_SysWork.playerWork.player.position.vy > Q12(-0.5f))
+                        if (PLAYER_CHARA().position.vy > Q12(-0.5f))
                         {
                             sharedData_800ED420_4_s02 = (1 << 1) | (1 << 3) | (1 << 8);
                         }
-                        else if (g_SysWork.playerWork.player.position.vy < Q12(-2.5f))
+                        else if (PLAYER_CHARA().position.vy < Q12(-2.5f))
                         {
                             sharedData_800ED420_4_s02 = (1 << 1) | (1 << 4) | (1 << 8);
                         }
@@ -151,7 +151,7 @@ void Map_RoomBgmInit(bool arg0)
 
         if (!Savegame_EventFlagGet(EventFlag_314))
         {
-            if (g_SysWork.playerWork.player.position.vz < Q12(CHUNK_SIZE))
+            if (PLAYER_CHARA().position.vz < Q12(CHUNK_SIZE))
             {
                 Savegame_EventFlagSet(EventFlag_314);
             }

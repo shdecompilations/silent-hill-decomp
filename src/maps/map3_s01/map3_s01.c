@@ -147,7 +147,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -182,7 +182,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 10:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -216,7 +216,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             break;
 
         case EventState_2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case EventState_SfxId:
@@ -228,7 +228,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             break;
 
         case EventState_5:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:

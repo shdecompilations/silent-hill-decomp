@@ -113,7 +113,7 @@ void Map_RoomBgmInit_CondFalse(void)
             case 3:
                 bgmFlags = 4;
 
-                dist = Math_Distance2dGet(&g_SysWork.playerWork.player.position, &sharedData_800EB750_6_s04);
+                dist = Math_Distance2dGet(&PLAYER_CHARA().position, &sharedData_800EB750_6_s04);
                 if (dist < Q12(10.0f))
                 {
                     dist = Q12(1.0f / 32.0f);

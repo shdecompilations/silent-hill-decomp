@@ -96,7 +96,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
     q19_12  targetX;
     q19_12  targetZ;
 
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position, g_SysWork.playerWork.player.position) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position, PLAYER_CHARA().position) -
                                        larvalStalker->rotation.vy);
     distToTarget       = Math_Vector2MagCalcSafeQ6(larvalStalkerProps.targetPositionX - larvalStalker->position.vx,
                                              larvalStalkerProps.targetPositionZ - larvalStalker->position.vz);
@@ -124,11 +124,11 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
         distStep = Q12(1.5f);
     }
 
-    if (Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - larvalStalker->position.vx,
-                            g_SysWork.playerWork.player.position.vz - larvalStalker->position.vz) < ((baseDistMax * 2) + distStep))
+    if (Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - larvalStalker->position.vx,
+                            PLAYER_CHARA().position.vz - larvalStalker->position.vz) < ((baseDistMax * 2) + distStep))
     {
-        larvalStalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
-        larvalStalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+        larvalStalkerProps.targetPositionX = PLAYER_CHARA().position.vx;
+        larvalStalkerProps.targetPositionZ = PLAYER_CHARA().position.vz;
     }
 
     // Handle control state.
@@ -235,11 +235,11 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             }
 
             if (distToTarget >= (FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT) + Q12(2.0f)) ||
-                g_SysWork.playerWork.player.moveSpeed <= ((larvalStalkerProps.field_EA * Q12(1.5f) )+ Q12(0.5f)))
+                PLAYER_CHARA().moveSpeed <= ((larvalStalkerProps.field_EA * Q12(1.5f) )+ Q12(0.5f)))
             {
                 if (Q12_ANGLE(45.0f) > ABS(angleDeltaToPlayer) &&
                     (distToTarget < ((larvalStalker->collision.cylinder.outerRadius + Q12(0.05f)) +
-                                     g_SysWork.playerWork.player.collision.cylinder.outerRadius)))
+                                     PLAYER_CHARA().collision.cylinder.outerRadius)))
                 {
                     if (!Rng_GenerateInt(0, 7)) // 1 in 8 chance.
                     {
@@ -315,17 +315,17 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                         Sfx_WithFlagsPlay(0, &larvalStalker->position, Q8(0.5f), SfxFlag_None);
                         larvalStalkerProps.timer_EC = Q12(0.0f);
 
-                        if (g_SysWork.playerWork.player.field_40 == NO_VALUE)
+                        if (PLAYER_CHARA().field_40 == NO_VALUE)
                         {
-                            g_SysWork.playerWork.player.field_40 = Chara_NpcIdxGet(larvalStalker);
+                            PLAYER_CHARA().field_40 = Chara_NpcIdxGet(larvalStalker);
                         }
 
-                        Chara_AttackReceivedSet(&g_SysWork.playerWork.player, WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap));
-                        g_SysWork.playerWork.player.damage.amount += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].field_4, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
+                        Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap));
+                        PLAYER_CHARA().damage.amount += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].field_4, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
                     }
                 }
 
-                angleDeltaToPlayer = Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - larvalStalker->rotation.vy);
+                angleDeltaToPlayer = Math_AngleNormalizeSigned(PLAYER_CHARA().rotation.vy - larvalStalker->rotation.vy);
                 if (Q12_ANGLE(90.0f) < ABS(angleDeltaToPlayer))
                 {
                     if (distToTarget >= Q12(0.29004f))
@@ -369,7 +369,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                     }
                 }
 
-                if (Chara_AttackReceivedGet(&g_SysWork.playerWork.player) == NO_VALUE)
+                if (Chara_AttackReceivedGet(&PLAYER_CHARA()) == NO_VALUE)
                 {
                     g_SysWork.charaGroupFlags[3]     &= ~CharaGroupFlag_0;
                     larvalStalker->model.anim.status  = ANIM_STATUS(LarvalStalkerAnim_StunBackToIdle, false);
@@ -388,7 +388,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             else
             {
                 if (distToTarget < ((larvalStalker->collision.cylinder.outerRadius + Q12(0.02f)) +
-                                    g_SysWork.playerWork.player.collision.cylinder.outerRadius))
+                                    PLAYER_CHARA().collision.cylinder.outerRadius))
                 {
                     Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
                 }
@@ -396,7 +396,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 pos     = larvalStalker->position;
                 pos.vy += larvalStalker->collision.box.field_8;
 
-                if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Multitap), larvalStalker, &pos, &g_SysWork.playerWork.player, larvalStalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+                if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Multitap), larvalStalker, &pos, &PLAYER_CHARA(), larvalStalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
                 {
                     larvalStalkerProps.timer_EC = Q12(0.0f);
                     larvalStalkerProps.flags_E8 |= LarvalStalkerFlag_6;
@@ -454,7 +454,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_Idle:
-            if (Los_NpcToPlayerHitCheck(larvalStalker, &g_SysWork.playerWork.player) || (distStep * 2) < distToTarget)
+            if (Los_NpcToPlayerHitCheck(larvalStalker, &PLAYER_CHARA()) || (distStep * 2) < distToTarget)
             {
                 larvalStalker->model.controlState = LarvalStalkerControl_3;
 
@@ -512,7 +512,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 else
                 {
                     if (distToTarget < (FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT) + Q12(2.0f)) &&
-                        g_SysWork.playerWork.player.moveSpeed > ((larvalStalkerProps.field_EA * Q12(1.5f)) + Q12(0.5f)))
+                        PLAYER_CHARA().moveSpeed > ((larvalStalkerProps.field_EA * Q12(1.5f)) + Q12(0.5f)))
                     {
                         larvalStalker->model.controlState = LarvalStalkerControl_8;
 
@@ -866,8 +866,8 @@ void LarvalStalker_Init(s_SubCharacter* larvalStalker)
     larvalStalker->headingAngle    = larvalStalker->rotation.vy;
 
     Chara_PropsClear(larvalStalker);
-    larvalStalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
-    larvalStalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+    larvalStalkerProps.targetPositionX = PLAYER_CHARA().position.vx;
+    larvalStalkerProps.targetPositionZ = PLAYER_CHARA().position.vz;
 }
 
 void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
@@ -894,8 +894,8 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
     larvalStalker->headingAngle          = ratan2(larvalStalker->damage.position.vx, larvalStalker->damage.position.vz);
 
     larvalStalkerProps.flags_E8       |= LarvalStalkerFlag_1;
-    larvalStalkerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
-    larvalStalkerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+    larvalStalkerProps.targetPositionX = PLAYER_CHARA().position.vx;
+    larvalStalkerProps.targetPositionZ = PLAYER_CHARA().position.vz;
 
     if (larvalStalker->model.controlState == LarvalStalkerControl_11)
     {
@@ -915,15 +915,15 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
     }
     else
     {
-        if (Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position, g_SysWork.playerWork.player.position) -
+        if (Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position, PLAYER_CHARA().position) -
                           larvalStalker->rotation.vy) < Q12_ANGLE(0.0f))
         {
-            angle = -Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position, g_SysWork.playerWork.player.position) -
+            angle = -Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position, PLAYER_CHARA().position) -
                                    larvalStalker->rotation.vy);
         }
         else
         {
-            angle = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position, g_SysWork.playerWork.player.position) -
+            angle = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(larvalStalker->position, PLAYER_CHARA().position) -
                                   larvalStalker->rotation.vy);
         }
 

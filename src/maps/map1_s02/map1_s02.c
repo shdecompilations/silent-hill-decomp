@@ -35,8 +35,6 @@ void GameBoot_LoadScreen_StageString(void) {}
 
 #include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800DA16C
 
-#define playerChara g_SysWork.playerWork.player.position
-
 const char* MAP_MESSAGES[] = {
     #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
@@ -289,8 +287,8 @@ void func_800DA384(void) // 0x800DA384
             Particle_EnvironmentSet(6, 127);
             Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
 
-            playerChara.vx = Q12(-13.3f);
-            playerChara.vz = Q12(-68.1f);
+            PLAYER_CHARA().position.vx = Q12(-13.3f);
+            PLAYER_CHARA().position.vz = Q12(-68.1f);
 
             Event_PathWaypointSet(true, 0, 0, Q12_ANGLE(-45.0f), Q12(-18.18f), Q12(-62.24f));
             Savegame_EventFlagClear(EventFlag_92);
@@ -316,7 +314,7 @@ void func_800DA384(void) // 0x800DA384
             break;
 
         case 5:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 74);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 74);
             break;
 
         case 6:
@@ -344,10 +342,10 @@ void func_800DA384(void) // 0x800DA384
             if (isSkipped)
             {
                 // Warp player.
-                playerChara.vx = Q12(-18.18f);
-                playerChara.vy = Q12(0.0f);
-                playerChara.vz = Q12(-62.24f);
-                g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-45.0f);
+                PLAYER_CHARA().position.vx = Q12(-18.18f);
+                PLAYER_CHARA().position.vy = Q12(0.0f);
+                PLAYER_CHARA().position.vz = Q12(-62.24f);
+                PLAYER_CHARA().rotation.vy = Q12_ANGLE(-45.0f);
 
                 // Restore player control.
                 Player_ControlUnfreeze(true);
@@ -608,9 +606,9 @@ void func_800DB058(void) // 0x800DB058
             CutsceneBorder_ForceShow();
 
             // Warp player.
-            playerChara.vx = Q12(56.5f);
-            playerChara.vz = Q12(19.3f);
-            g_SysWork.playerWork.player.rotation.vy = Q12(-0.25f);
+            PLAYER_CHARA().position.vx = Q12(56.5f);
+            PLAYER_CHARA().position.vz = Q12(19.3f);
+            PLAYER_CHARA().rotation.vy = Q12(-0.25f);
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
@@ -635,7 +633,7 @@ void func_800DB058(void) // 0x800DB058
             break;
 
         case 3:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 94);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 94);
             break;
 
         case 4:
@@ -651,7 +649,7 @@ void func_800DB058(void) // 0x800DB058
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 95);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 95);
             break;
 
         case 8:
@@ -752,7 +750,7 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
             break;
 
         case 7:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 97, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 97, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -762,11 +760,11 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
         case 9:
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                                    playerChara.vx + Q12(4.0f), Q12(-1.5f), playerChara.vz,
+                                    PLAYER_CHARA().position.vx + Q12(4.0f), Q12(-1.5f), PLAYER_CHARA().position.vz,
                                     Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                     true);
             Event_CameraLookAtSet(NULL,
-                                  playerChara.vx, Q12(-1.0f), playerChara.vz,
+                                  PLAYER_CHARA().position.vx, Q12(-1.0f), PLAYER_CHARA().position.vz,
                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                   true);
 
@@ -793,7 +791,7 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
             break;
 
         case 13:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &PLAYER_CHARA(), 0, false);
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio54);
             break;
 
@@ -806,11 +804,11 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                                    playerChara.vx + Q12(4.0f) + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 0), Q12(-1.5f), playerChara.vz,
+                                    PLAYER_CHARA().position.vx + Q12(4.0f) + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 0), Q12(-1.5f), PLAYER_CHARA().position.vz,
                                     Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                     false);
             Event_CameraLookAtSet(NULL,
-                                  playerChara.vx + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 3), Q12(-1.0f), playerChara.vz,
+                                  PLAYER_CHARA().position.vx + Event_TweenLinear(Q12(-2.8f), Q12(6.5f), 3), Q12(-1.0f), PLAYER_CHARA().position.vz,
                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                   false);
             break;
@@ -833,7 +831,7 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
             break;
 
         case 18:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 98, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 98, false);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -841,12 +839,12 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
             break;
 
         case 20:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &PLAYER_CHARA(), 0, false);
             Event_DisplayMapMsg(false, 35, 0, 0, 0, false); // "That was Cheryl's voice. I know it."
             break;
 
         case 21:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), 0, false);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -861,7 +859,7 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
             Player_WeaponAttackRestore();
             SD_Call(19);
 
-            D_800E1FD4 = WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
+            D_800E1FD4 = WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
             SD_Call(Sfx_Unk1457);
@@ -884,14 +882,14 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
 
         case 28:
             SD_Call(19);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), 0, false);
 
             if (!D_800E1FD8)
             {
                 Player_WeaponAttackRestore();
             }
 
-            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
+            WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
             func_8003D01C();
 
             // Warp camera.
@@ -905,9 +903,9 @@ void MapEvent_CutscenePhoneCall(void) // 0x800DB368
                                   true);
 
             // Warp player.
-            playerChara.vx = Q12(20.3f);
-            playerChara.vz = Q12(143.5f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
+            PLAYER_CHARA().position.vx = Q12(20.3f);
+            PLAYER_CHARA().position.vz = Q12(143.5f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-90.0f);
 
             Fs_QueueWaitForEmpty();
             CutsceneBorder_Reset();
@@ -944,7 +942,7 @@ void func_800DBB7C(void) // 0x800DBB7C
             break;
 
         case 2:
-            Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
 
             func_8008D438();
 
@@ -1024,7 +1022,7 @@ void func_800DBB7C(void) // 0x800DBB7C
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
             func_8008D448();
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
@@ -1055,7 +1053,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         case 2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 59, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 59, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -1063,7 +1061,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             break;
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &PLAYER_CHARA(), 0, false);
             break;
 
         case 5:
@@ -1085,7 +1083,7 @@ void func_800DBFC8(void) // 0x800DBFC8
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -1335,7 +1333,7 @@ void func_800DCF00(void) // 0x800DCF00
             break;
 
         case 3:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 106, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 106, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1374,7 +1372,7 @@ void func_800DCF00(void) // 0x800DCF00
         var_t0     = MIN(var_t0, Q12(0.4f));
         D_800E1FE4 = var_t0;
 
-        playerChara.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
+        PLAYER_CHARA().position.vy += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
         g_WorldObject_BoxHide.position.vy              += Q12_MULT_PRECISE(g_DeltaTime, D_800E1FE4);
     }
 }
@@ -1393,7 +1391,7 @@ void MapEvent_ClassroomKeyItemTake(void) // 0x800DD208
             break;
 
         case 2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 59, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 59, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -1401,7 +1399,7 @@ void MapEvent_ClassroomKeyItemTake(void) // 0x800DD208
             break;
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &PLAYER_CHARA(), 0, false);
             break;
 
         case 5:
@@ -1423,7 +1421,7 @@ void MapEvent_ClassroomKeyItemTake(void) // 0x800DD208
             SysWork_StateStepIncrement(0);
 
         case 8:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:

@@ -1971,11 +1971,11 @@ void func_800E1D50(void) // 0x800E1D50
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 2, Q12(0.0f), false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 113, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 113, false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1995,14 +1995,14 @@ void func_800E1D50(void) // 0x800E1D50
             vcReturnPreAutoCamWork(true);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12(1.0f / 32.0f), 3);
-            func_800E15FC(&g_SysWork.playerWork.player, &g_SysWork.npcs[0], true);
+            func_800E15FC(&PLAYER_CHARA(), &g_SysWork.npcs[0], true);
             Savegame_EventFlagSet(EventFlag_441);
             break;
     }
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
@@ -2019,8 +2019,6 @@ void func_800E219C(void) // 0x800E219C
 {
     VECTOR3  lightIntPos;
     SVECTOR3 unused;
-
-    #define playerChara g_SysWork.playerWork.player
 
     if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] >= 2 && g_SysWork.sysStateSteps[0] < 8)
@@ -2045,7 +2043,7 @@ void func_800E219C(void) // 0x800E219C
             g_SysWork.lensFlareBoneCoord = NULL;
 
         case 1:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 168, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 168, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 9, false);
             SysWork_StateStepIncrement(0);
 
@@ -2055,7 +2053,7 @@ void func_800E219C(void) // 0x800E219C
 
         case 3:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 10, false);
-            Model_AnimFlagsClear(&playerChara.model, 2);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -2067,8 +2065,8 @@ void func_800E219C(void) // 0x800E219C
             break;
 
         case 6:
-            Model_AnimFlagsSet(&playerChara.model, 2);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 167, false);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 167, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 11, false);
             SysWork_StateStepIncrement(0);
 
@@ -2084,9 +2082,9 @@ void func_800E219C(void) // 0x800E219C
             g_Cutscene_Timer = NO_VALUE;
 
             // Warp player.
-            playerChara.position.vx = Q12(25.0f);
-            playerChara.position.vz = Q12(100.0f);
-            playerChara.rotation.vy = Q12_ANGLE(337.5f);
+            PLAYER_CHARA().position.vx = Q12(25.0f);
+            PLAYER_CHARA().position.vz = Q12(100.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(337.5f);
 
             // Warp NPC.
             g_SysWork.npcs[0].position.vx = Q12(24.0f);
@@ -2098,7 +2096,7 @@ void func_800E219C(void) // 0x800E219C
             g_SysWork.npcs[0].properties.monsterCybil.field_EE     = 1;
 
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&playerChara, &g_SysWork.npcs[0], true);
+            func_800E15FC(&PLAYER_CHARA(), &g_SysWork.npcs[0], true);
             Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
@@ -2112,7 +2110,7 @@ void func_800E219C(void) // 0x800E219C
 
             Savegame_EventFlagSet(EventFlag_443);
 
-            Model_AnimFlagsSet(&playerChara.model, 2);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
             func_800D8A90(&g_SysWork.npcs[0]);
             func_8003A16C();
 
@@ -2123,7 +2121,7 @@ void func_800E219C(void) // 0x800E219C
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         // Get "HERO" position.
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
 
         // Get "MSB" position
         Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "MSB", g_Cutscene_Timer, FS_BUFFER_14);
@@ -2143,15 +2141,11 @@ void func_800E219C(void) // 0x800E219C
         g_SysWork.lightRotation.vy =  ratan2(lightIntPos.vx - g_SysWork.lightPosition.vx, lightIntPos.vz - g_SysWork.lightPosition.vz);
         g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
     }
-
-    #undef playerChara
 }
 
 void func_800E2724(void) // 0x800E2724
 {
     s32 curStateStep;
-
-    #define playerChara g_SysWork.playerWork.player
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -2184,9 +2178,9 @@ void func_800E2724(void) // 0x800E2724
             Event_CameraLookAtSet(NULL, Q12(23.78f), Q12(-1.04f), Q12(101.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player to start position.
-            playerChara.position.vx = Q12(25.0f);
-            playerChara.position.vz = Q12(100.0f);
-            playerChara.rotation.vy = Q12_ANGLE(337.5f);
+            PLAYER_CHARA().position.vx = Q12(25.0f);
+            PLAYER_CHARA().position.vz = Q12(100.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(337.5f);
 
             // Warp Monster Cybil character to start position.
             g_SysWork.npcs[0].position.vx = Q12(24.0f);
@@ -2210,20 +2204,16 @@ void func_800E2724(void) // 0x800E2724
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&playerChara, &g_SysWork.npcs[0], true);
+            func_800E15FC(&PLAYER_CHARA(), &g_SysWork.npcs[0], true);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             break;
     }
-
-    #undef playerChara
 }
 
 void func_800E2950(void) // 0x800E2950
 {
     VECTOR3 camPos;
     VECTOR3 camLookAt;
-
-    #define playerChara g_SysWork.playerWork.player
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -2239,9 +2229,9 @@ void func_800E2950(void) // 0x800E2950
             Game_TurnFlashlightOn();
 
             // Warp player.
-            playerChara.position.vx = Q12(23.0f);
-            playerChara.position.vz = Q12(103.0f);
-            playerChara.rotation.vy = Q12_ANGLE(135.0f);
+            PLAYER_CHARA().position.vx = Q12(23.0f);
+            PLAYER_CHARA().position.vz = Q12(103.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(135.0f);
 
             // Warp NPC.
             g_SysWork.npcs[0].position.vx = Q12(18.0f);
@@ -2287,7 +2277,7 @@ void func_800E2950(void) // 0x800E2950
 
         default:
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&playerChara, &g_SysWork.npcs[0], true);
+            func_800E15FC(&PLAYER_CHARA(), &g_SysWork.npcs[0], true);
             Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
@@ -2300,8 +2290,6 @@ void func_800E2950(void) // 0x800E2950
             Savegame_EventFlagSet(EventFlag_445);
             break;
     }
-
-    #undef playerChara
 }
 
 void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
@@ -2309,8 +2297,6 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
     VECTOR3         lightIntPos;
     SVECTOR3        unused;
     s_SubCharacter* player;
-
-    #define playerChara g_SysWork.playerWork.player
 
     // Skip.
     if (Pad_ButtonClickedBind(skip) &&
@@ -2353,7 +2339,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
         case 3:
             SD_Call(16);
             SD_Call(19);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 162, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 162, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 7, false);
             SysWork_StateStepIncrement(0);
 
@@ -2361,7 +2347,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(96.0f), Q12(131.0f), false, false);
 
             // Possible inline?
-            player = &playerChara;
+            player = &PLAYER_CHARA();
             if (player->model.anim.keyframeIdx > 1282)
             {
                 Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, player, 0, false);
@@ -2371,7 +2357,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
 
         case 5:
             // Possible inline?
-            player = &playerChara;
+            player = &PLAYER_CHARA();
             if (player->model.anim.keyframeIdx > 1282)
             {
                 Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, player, 0, false);
@@ -2380,7 +2366,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             SysWork_StateStepIncrement(0);
 
         case 6:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &playerChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), 0, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -2418,7 +2404,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
     if (g_Cutscene_Timer > Q12(96.0f))
     {
         // Get "HERO" position.
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
 
         // Get "MSB" position
         Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "MSB", g_Cutscene_Timer, FS_BUFFER_14);
@@ -2451,8 +2437,6 @@ void func_800E3244(void) // 0x800E3244
     SVECTOR3 lintRot;
     q19_12   posX;
     q19_12   lookAtX;
-
-    #define playerChara g_SysWork.playerWork.player
 
     // Skip.
     if (Pad_ButtonClickedBind(skip) &&
@@ -2502,7 +2486,7 @@ void func_800E3244(void) // 0x800E3244
             SysWork_StateStepIncrement(0);
 
         case 1:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 170, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 170, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 8, false);
             SysWork_StateStepIncrement(0);
 
@@ -2515,7 +2499,7 @@ void func_800E3244(void) // 0x800E3244
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 185, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 185, false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -2526,7 +2510,7 @@ void func_800E3244(void) // 0x800E3244
             g_Cutscene_Timer = Q12(59.0f);
 
             Chara_ProcessLoads();
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 160, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 160, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
             Savegame_EventFlagSet(EventFlag_462);
 
@@ -2557,7 +2541,7 @@ void func_800E3244(void) // 0x800E3244
 
             g_Cutscene_Timer = Q12(186.0f);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 163, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 163, false);
             func_800E7944(3);
             SysWork_StateStepIncrement(0);
 
@@ -2570,7 +2554,7 @@ void func_800E3244(void) // 0x800E3244
             g_Cutscene_Timer = Q12(195.0f);
 
             ModelAnim_StatusIncrement(&g_SysWork.npcs[1].model.anim);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 151, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 151, false);
             SysWork_StateStepIncrement(0);
 
         case 13:
@@ -2590,7 +2574,7 @@ void func_800E3244(void) // 0x800E3244
             g_Cutscene_Timer = Q12(216.0f);
 
             Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 161, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 161, false);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -2629,7 +2613,7 @@ void func_800E3244(void) // 0x800E3244
         case 21:
             D_800ED5B4 = -0x7A;
 
-            Model_AnimFlagsClear(&playerChara.model, (1<<1));
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, (1<<1));
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
 
             g_Cutscene_Timer = NO_VALUE;
@@ -2677,7 +2661,7 @@ void func_800E3244(void) // 0x800E3244
             g_Cutscene_Timer = NO_VALUE;
 
             Player_WeaponAttackRestore();
-            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
+            WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -2696,7 +2680,7 @@ void func_800E3244(void) // 0x800E3244
 
             Sd_SfxStop(Sfx_Unk1625);
             Sd_SfxStop(Sfx_Unk1624);
-            Model_AnimFlagsSet(&playerChara.model, (1<<1));
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, (1<<1));
             break;
     }
 
@@ -2717,7 +2701,7 @@ void func_800E3244(void) // 0x800E3244
 
     if (g_Cutscene_Timer > Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
         Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "MSB", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
         Dms_CharacterTransformGet(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "ICU", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_14);
 
@@ -2732,8 +2716,6 @@ void func_800E3244(void) // 0x800E3244
         g_SysWork.lightRotation.vy = ratan2(lintPos.vx - g_SysWork.lightPosition.vx, lintPos.vz - g_SysWork.lightPosition.vz);
         g_SysWork.lightRotation.vz = Q12_ANGLE(0.0f);
     }
-
-    #undef playerChara
 }
 
 void func_800E3EF4(void) // 0x800E3EF4
@@ -2754,8 +2736,6 @@ void func_800E3EF4(void) // 0x800E3EF4
     SVECTOR3      unused;
     s_FsImageDesc sp30;
     s32           i;
-
-    #define playerChara g_SysWork.playerWork.player
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
@@ -2802,7 +2782,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 1, false);
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -2831,7 +2811,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 8:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 149, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 149, false);
 
             D_800EBAA8 = true;
 
@@ -2867,7 +2847,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 15:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 150, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 150, false);
             func_800DFC94(&g_Cutscene_Timer);
 
             g_SysWork.lightIntensity = Q12(0.8f);
@@ -2888,7 +2868,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 19:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 152, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 152, false);
             func_800DFD08();
             func_800DEC3C(&g_WorldObject_SFlauros.position, &g_WorldObject_SFlauros.rotation);
 
@@ -2908,7 +2888,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 22:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 188, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 188, false);
 
             g_SysWork.lightIntensity = Q12(0.6f);
             D_800EBB61           = 1;
@@ -2933,7 +2913,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             Sfx_WithFlagsPlay(Sfx_Unk1636, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
             func_800DED30();
             func_800DEF50(&g_SysWork.npcs[1].position, &g_SysWork.npcBoneCoordBuffer[30], &g_Cutscene_Timer);
-            Chara_Spawn(Chara_Flauros, 0, playerChara.position.vx + Q12(1.0f), playerChara.position.vz, Q8(0.5f), 3);
+            Chara_Spawn(Chara_Flauros, 0, PLAYER_CHARA().position.vx + Q12(1.0f), PLAYER_CHARA().position.vz, Q8(0.5f), 3);
 
             D_800EBB61 = 2;
 
@@ -2952,7 +2932,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 29:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[1], 0, 0);
 
             D_800EBB61 = 1;
@@ -3006,7 +2986,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 39:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 53, false);
             func_800DF618();
             D_800EBB61 = 0;
             SysWork_StateStepIncrement(0);
@@ -3016,7 +2996,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 41:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             g_SysWork.lightIntensity = Q12(0.6f);
             SysWork_StateStepIncrement(0);
 
@@ -3084,7 +3064,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 50:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 9, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 12, false);
 
@@ -3128,7 +3108,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 59:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 123, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 123, false);
             g_SysWork.lightIntensity = Q12(1.0f);
             SysWork_StateStepIncrement(0);
 
@@ -3225,7 +3205,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_14));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
@@ -3271,8 +3251,6 @@ void func_800E3EF4(void) // 0x800E3EF4
     {
         func_800E0FAC(g_Cutscene_Timer);
     }
-
-    #undef playerChara
 }
 
 void func_800E558C(void) // 0x800E558C
@@ -3289,8 +3267,6 @@ void func_800E558C(void) // 0x800E558C
 
     g_GteScratchData_func_800DD2D4* scratchData;
     s32                             i;
-
-    #define playerChara g_SysWork.playerWork.player
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
@@ -3335,7 +3311,7 @@ void func_800E558C(void) // 0x800E558C
             break;
 
         case 1:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 53, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -3346,8 +3322,8 @@ void func_800E558C(void) // 0x800E558C
 
         case 3:
             Chara_ProcessLoads();
-            Chara_Spawn(Chara_Alessa, 0, playerChara.position.vx + Q12(1.0f), playerChara.position.vz, Q12_ANGLE(11.3f), 3);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 70, false);
+            Chara_Spawn(Chara_Alessa, 0, PLAYER_CHARA().position.vx + Q12(1.0f), PLAYER_CHARA().position.vz, Q12_ANGLE(11.3f), 3);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 70, false);
 
             g_SysWork.lightIntensity = Q12(2.5f);
 
@@ -3369,7 +3345,7 @@ void func_800E558C(void) // 0x800E558C
             if (g_SysWork.npcs[0].model.charaId != Chara_Alessa)
             {
                 Chara_ProcessLoads();
-                Chara_Spawn(Chara_Alessa, 0, playerChara.position.vx + Q12(1.0f), playerChara.position.vz, Q12_ANGLE(11.3f), 3);
+                Chara_Spawn(Chara_Alessa, 0, PLAYER_CHARA().position.vx + Q12(1.0f), PLAYER_CHARA().position.vz, Q12_ANGLE(11.3f), 3);
             }
 
             SysWork_StateStepIncrement(0);
@@ -3426,12 +3402,12 @@ void func_800E558C(void) // 0x800E558C
         if (g_SysWork.sysStateSteps[0] >= 4)
         {
             Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARSIA", g_Cutscene_Timer, FS_BUFFER_14);
-            Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
-            playerChara.rotation.vy += Q12_ANGLE(22.5f);
+            Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
+            PLAYER_CHARA().rotation.vy += Q12_ANGLE(22.5f);
         }
         else
         {
-            Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
+            Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_14);
         }
     }
 }
@@ -3481,8 +3457,6 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 {
     u16 triggerFlags;
 
-    #define playerChara g_SysWork.playerWork.player
-
     triggerFlags = CollisionTriggerFlag_None;
 
     if (!Savegame_EventFlagGet(EventFlag_466))
@@ -3502,7 +3476,7 @@ void Map_WorldObjectsUpdate(void) // 0x800E5F54
 
                 if (g_SysWork.sysState != SysState_EventCallback)
                 {
-                    func_800E15FC(&playerChara, &g_SysWork.npcs[0], false);
+                    func_800E15FC(&PLAYER_CHARA(), &g_SysWork.npcs[0], false);
                 }
             }
 
@@ -3571,8 +3545,6 @@ void func_800E636C(void) // 0x800E636C
     q19_12   curAngle;
     s32      temp_t1;
 
-    #define playerChara g_SysWork.playerWork.player
-
     if (!Savegame_EventFlagGet(EventFlag_443) || Savegame_EventFlagGet(EventFlag_467))
     {
         temp_t1 = D_800EBA30;
@@ -3606,7 +3578,7 @@ void func_800E636C(void) // 0x800E636C
 
                 if (temp_t1 == 0 && D_800EBA30 < 0)
                 {
-                    if (playerChara.properties.player.moveSpeed > Q12(3.0f))
+                    if (PLAYER_CHARA().properties.player.moveSpeed > Q12(3.0f))
                     {
                         Player_DamageFeetFront();
                     }
@@ -3621,7 +3593,7 @@ void func_800E636C(void) // 0x800E636C
 
                 if (temp_t1 < 0 && D_800EBA30 >= 0)
                 {
-                    if (playerChara.properties.player.moveSpeed > Q12(3.0f))
+                    if (PLAYER_CHARA().properties.player.moveSpeed > Q12(3.0f))
                     {
                         Player_DamageFeetFront();
                     }
@@ -3964,8 +3936,6 @@ void func_800E75B8(s32 arg0, const VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) /
     s32 balance;
     int new_var;
 
-    #define playerChara g_SysWork.playerWork.player
-
     // Compute audio balance.
     balance = Vc_StereoBalanceGet(pos);
     if (arg4 == 2)
@@ -4004,12 +3974,10 @@ void func_800E75B8(s32 arg0, const VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) /
     max     = UCHAR_MAX;
     new_var = 1;
 
-    Sd_SfxAttributesUpdate(arg0, balance, CLAMP_CUSTOM((arg2 * Math_Vector3MagCalcSafe(playerChara.position.vx - pos->vx,
-                                                                                  playerChara.position.vy - pos->vy,
-                                                                                  playerChara.position.vz - pos->vz)) /
+    Sd_SfxAttributesUpdate(arg0, balance, CLAMP_CUSTOM((arg2 * Math_Vector3MagCalcSafe(PLAYER_CHARA().position.vx - pos->vx,
+                                                                                  PLAYER_CHARA().position.vy - pos->vy,
+                                                                                  PLAYER_CHARA().position.vz - pos->vz)) /
                                                         arg3, arg2, 0, max, new_var), 0);
-
-    #undef playerChara
 }
 
 void func_800E7944(u32 arg0) // 0x800E7944

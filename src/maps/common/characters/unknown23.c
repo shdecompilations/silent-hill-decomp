@@ -368,11 +368,11 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
 
     ptr = FS_BUFFER_26;
 
-    Chara_AttackReceivedSet(&g_SysWork.playerWork.player, WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap));
+    Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap));
 
     angle                                          = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
-    g_SysWork.playerWork.player.damage.amount      = 1;
-    g_SysWork.playerWork.player.damage.position.vy = angle;
+    PLAYER_CHARA().damage.amount      = 1;
+    PLAYER_CHARA().damage.position.vy = angle;
     ptr->field_588                                 = angle;
 
     D_800F3DB8 = 1;
@@ -381,7 +381,7 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
     ptr->field_4.vy = Q12_TO_Q8(arg0->vy) - Q8(1.3f);
     ptr->field_4.vz = Q12_TO_Q8(arg0->vz);
 
-    Sfx_WithFlagsPlay(Sfx_Unk1673, &g_SysWork.playerWork.player.position, Q8(0.5f), SfxFlag_None);
+    Sfx_WithFlagsPlay(Sfx_Unk1673, &PLAYER_CHARA().position, Q8(0.5f), SfxFlag_None);
 }
 
 s32 func_800DFB04(void) // 0x800DFB04
@@ -529,8 +529,8 @@ void func_800DFE10(s_SubCharacter* chara) // 0x800DFE10
     s16 var_v0_2;
     s32 tmp;
 
-    temp_v0 = Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                                               g_SysWork.playerWork.player.position.vz - chara->position.vz) -
+    temp_v0 = Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - chara->position.vx,
+                                               PLAYER_CHARA().position.vz - chara->position.vz) -
                                         chara->rotation.vy);
     var_v0  = ABS(temp_v0);
 
@@ -683,7 +683,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFF
                     func_800DD464(&pos);
                 }
 
-                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(chara->position, g_SysWork.playerWork.player.position) -
+                angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(chara->position, PLAYER_CHARA().position) -
                                                        chara->rotation.vy));
 
                 if (localUnknown23Props.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
@@ -883,11 +883,11 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800E06
         func_800DFF60(chara, boneCoords);
     }
 
-    dist = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - chara->position.vx,
-                               g_SysWork.playerWork.player.position.vz - chara->position.vz);
+    dist = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - chara->position.vx,
+                               PLAYER_CHARA().position.vz - chara->position.vz);
     if (dist < Q12(2.5f) && func_800DFB04() == 0)
     {
-        func_800DFA48(&g_SysWork.playerWork.player.position, &chara->position);
+        func_800DFA48(&PLAYER_CHARA().position, &chara->position);
     }
 }
 

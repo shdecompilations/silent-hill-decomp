@@ -70,12 +70,12 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
 
     ptr = PSX_SCRATCH;
 
-    if (g_SysWork.playerWork.player.position.vx > Q12(-80.0f))
+    if (PLAYER_CHARA().position.vx > Q12(-80.0f))
     {
         return false;
     }
 
-    if (g_SysWork.playerWork.player.position.vz < Q12(0.0f))
+    if (PLAYER_CHARA().position.vz < Q12(0.0f))
     {
         return false;
     }
@@ -757,7 +757,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -797,9 +797,9 @@ void func_800D6B00(void) // 0x800D6B00
             Event_InvItemCmd(InvItemCmd_AddItem, InvItemId_SewerExitKey, 1, false);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-92.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(7.7f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
+            PLAYER_CHARA().position.vx = Q12(-92.0f);
+            PLAYER_CHARA().position.vz = Q12(7.7f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(0.0f);
 
             for (i = 0; i < ARRAY_SIZE(D_800DAB7C); i++)
             {
@@ -839,7 +839,7 @@ void func_800D6B00(void) // 0x800D6B00
         case 14:
             if (D_800DAB78 < Q12(1.5f) && (D_800DAB78 + g_DeltaTime) > Q12(1.5f))
             {
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 114, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 114, false);
             }
 
             D_800DAB78 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.6f);
@@ -887,7 +887,7 @@ void func_800D6B00(void) // 0x800D6B00
             g_SysWork.npcs[D_800DAB7C[2]].position.vz     += Q12(-1.2493f);
             g_SysWork.npcs[D_800DAB7C[2]].rotation.vy      = Q12_ANGLE(0.0f);
 
-            g_SysWork.playerWork.player.position.vz += Q12(-1.2f);
+            PLAYER_CHARA().position.vz += Q12(-1.2f);
 
             // Return to gameplay.
             Player_ControlUnfreeze(true);
@@ -895,7 +895,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         case 16:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -921,24 +921,24 @@ void func_800D732C(void) // 0x800D732C
         case 0:
             // Warp player.
             Player_ControlFreeze();
-            g_SysWork.playerWork.player.position.vx = Q12(56.789f);
-            g_SysWork.playerWork.player.position.vy = Q12(-2.02f);
-            g_SysWork.playerWork.player.position.vz = Q12(60.02f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
+            PLAYER_CHARA().position.vx = Q12(56.789f);
+            PLAYER_CHARA().position.vy = Q12(-2.02f);
+            PLAYER_CHARA().position.vz = Q12(60.02f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(58.49f), Q12(1.18f), Q12(59.07f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(56.67f), Q12(-2.3f), Q12(59.86f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 88, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 88, false);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
             // Move player.
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
 
             Event_WaitTimer(Q12(3.8f), false);
             break;
@@ -947,7 +947,7 @@ void func_800D732C(void) // 0x800D732C
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
 
             // Move player.
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             break;
 
         default:
@@ -956,10 +956,10 @@ void func_800D732C(void) // 0x800D732C
             SysWork_StateSetNext(SysState_Gameplay);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(16.7f);
-            g_SysWork.playerWork.player.position.vy = Q12(0.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(52.0f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
+            PLAYER_CHARA().position.vx = Q12(16.7f);
+            PLAYER_CHARA().position.vy = Q12(0.0f);
+            PLAYER_CHARA().position.vz = Q12(52.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(90.0f);
 
             vcReturnPreAutoCamWork(true);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
@@ -1004,29 +1004,29 @@ void func_800D75FC(void) // 0x800D75FC
 
         case 3:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(56.773f);
-            g_SysWork.playerWork.player.position.vy = Q12(-1.444f);
-            g_SysWork.playerWork.player.position.vz = Q12(60.036f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
+            PLAYER_CHARA().position.vx = Q12(56.773f);
+            PLAYER_CHARA().position.vy = Q12(-1.444f);
+            PLAYER_CHARA().position.vz = Q12(60.036f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(57.29f), Q12(-0.86f), Q12(59.36f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(55.07f), Q12(-4.0f), Q12(60.29f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 87, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 87, false);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
             Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
             break;
 
         default:
@@ -1076,29 +1076,29 @@ void func_800D7940(void) // 0x800D7940
 
         case 3:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(56.769f);
-            g_SysWork.playerWork.player.position.vy = Q12(-2.07f);
-            g_SysWork.playerWork.player.position.vz = Q12(60.012f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
+            PLAYER_CHARA().position.vx = Q12(56.769f);
+            PLAYER_CHARA().position.vy = Q12(-2.07f);
+            PLAYER_CHARA().position.vz = Q12(60.012f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(57.09f), Q12(-5.76f), Q12(60.59f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(55.96f), Q12(-2.01f), Q12(59.78f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 88, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 88, false);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             break;
 
         default:
@@ -1139,29 +1139,29 @@ void func_800D7C84(void) // 0x800D7C84
 
         case 3:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-22.234f);
-            g_SysWork.playerWork.player.position.vy = Q12(-1.734f);
-            g_SysWork.playerWork.player.position.vz = Q12(60.508f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
+            PLAYER_CHARA().position.vx = Q12(-22.234f);
+            PLAYER_CHARA().position.vy = Q12(-1.734f);
+            PLAYER_CHARA().position.vz = Q12(60.508f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(-20.39f), Q12(-3.84f), Q12(63.99f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(-22.56f), Q12(-2.83f), Q12(60.78f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 87, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 87, false);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
             Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, -0.4f);
             break;
 
         default:
@@ -1202,29 +1202,29 @@ void func_800D7F88(void) // 0x800D7F88
 
         case 3:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-22.245f);
-            g_SysWork.playerWork.player.position.vy = Q12(-2.439f);
-            g_SysWork.playerWork.player.position.vz = Q12(60.488f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(-90.0f);
+            PLAYER_CHARA().position.vx = Q12(-22.245f);
+            PLAYER_CHARA().position.vy = Q12(-2.439f);
+            PLAYER_CHARA().position.vz = Q12(60.488f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(-90.0f);
             Game_TurnFlashlightOn();
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(-21.29f), Q12(-0.04f), Q12(62.13f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(-22.91f), Q12(-3.23f), Q12(60.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 88, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 88, false);
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.37f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.37f);
             Event_WaitTimer(Q12(3.8f), false);
             break;
 
         case 5:
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork.player.position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
+            PLAYER_CHARA().position.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.4f);
             break;
 
         default:
@@ -1312,7 +1312,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_368))
         {
-            if (Savegame_EventFlagGet(EventFlag_354) && (g_SysWork.playerWork.player.position.vz < Q12(-66.0f)))
+            if (Savegame_EventFlagGet(EventFlag_354) && (PLAYER_CHARA().position.vz < Q12(-66.0f)))
             {
                 Sfx_WithFlagsPlay(Sfx_Unk1585, &D_800CB0CC, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_368);

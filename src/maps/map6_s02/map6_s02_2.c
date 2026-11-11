@@ -179,17 +179,17 @@ void func_800CF0B8(void) // 0x800CF0B8
             Savegame_EventFlagSet(EventFlag_412);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f)), 0.9f) + Q12(60.0f);
-            g_SysWork.playerWork.player.position.vy = Q12(1.64f);
-            g_SysWork.playerWork.player.position.vz = Q12_MULT_FLOAT(Math_Cos(Q12_ANGLE(135.0f)), 0.9f) - Q12(20.0f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(45.0f);
+            PLAYER_CHARA().position.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f)), 0.9f) + Q12(60.0f);
+            PLAYER_CHARA().position.vy = Q12(1.64f);
+            PLAYER_CHARA().position.vz = Q12_MULT_FLOAT(Math_Cos(Q12_ANGLE(135.0f)), 0.9f) - Q12(20.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(45.0f);
 
             D_800D4E09 = 1;
             break;
 
         case 1:
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 53, false);
             Chara_Load(0, Chara_Alessa, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             SysWork_StateStepIncrement(0);
 
@@ -197,9 +197,9 @@ void func_800CF0B8(void) // 0x800CF0B8
             g_SysWork.sysStateStepData[0] += g_DeltaTime;
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f) - (g_SysWork.sysStateStepData[0] >> 2)), 0.9f) + Q12(60.0f);
-            g_SysWork.playerWork.player.position.vz = Q12_MULT_FLOAT(Math_Cos(Q12_ANGLE(135.0f) - (g_SysWork.sysStateStepData[0] >> 2)), 0.9f) - Q12(20.0f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(45.0f) - (g_SysWork.sysStateStepData[0] >> 2);
+            PLAYER_CHARA().position.vx = Q12_MULT_FLOAT(Math_Sin(Q12_ANGLE(135.0f) - (g_SysWork.sysStateStepData[0] >> 2)), 0.9f) + Q12(60.0f);
+            PLAYER_CHARA().position.vz = Q12_MULT_FLOAT(Math_Cos(Q12_ANGLE(135.0f) - (g_SysWork.sysStateStepData[0] >> 2)), 0.9f) - Q12(20.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(45.0f) - (g_SysWork.sysStateStepData[0] >> 2);
 
             if ((g_SysWork.sysStateStepData[0] >> 2) > Q12_ANGLE(140.7f))
             {
@@ -208,7 +208,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             break;
 
         case 3:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 52, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 52, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -216,7 +216,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 71, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 71, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -235,11 +235,11 @@ void func_800CF0B8(void) // 0x800CF0B8
             Event_CameraLookAtSet(NULL, Q12(57.96f), Q12(-5.03f), Q12(-24.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(59.6f);
-            g_SysWork.playerWork.player.position.vz = Q12(-19.0f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
+            PLAYER_CHARA().position.vx = Q12(59.6f);
+            PLAYER_CHARA().position.vz = Q12(-19.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 1, false);
 
             Savegame_EventFlagSet(EventFlag_412);
@@ -256,10 +256,10 @@ void func_800CF0B8(void) // 0x800CF0B8
             Event_CameraLookAtSet(NULL, Q12(59.23f), Q12(-1.24f), Q12(-19.93f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(59.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(-19.5f);
-            g_SysWork.playerWork.player.rotation.vy = ratan2(g_SysWork.npcs[0].position.vx - g_SysWork.playerWork.player.position.vx,
-                                                                g_SysWork.npcs[0].position.vz - g_SysWork.playerWork.player.position.vz);
+            PLAYER_CHARA().position.vx = Q12(59.0f);
+            PLAYER_CHARA().position.vz = Q12(-19.5f);
+            PLAYER_CHARA().rotation.vy = ratan2(g_SysWork.npcs[0].position.vx - PLAYER_CHARA().position.vx,
+                                                                g_SysWork.npcs[0].position.vz - PLAYER_CHARA().position.vz);
 
             WorldGfx_CharaModelTransparentSet(Chara_Alessa, true);
             Savegame_EventFlagSet(EventFlag_412);
@@ -276,7 +276,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             break;
 
         case 13:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 111, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 111, false);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -303,7 +303,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             SysWork_StateStepIncrement(0);
 
         case 17:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &PLAYER_CHARA(), 0, false);
             break;
 
         case 18:
@@ -311,7 +311,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             Event_CameraPositionSet(NULL, Q12(64.87f), Q12(-5.4f), Q12(-14.82f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(62.29f), Q12(-3.36f), Q12(-17.09f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             func_8003D01C();
             Player_WeaponAttackRestore();
 
@@ -342,9 +342,9 @@ void func_800CF0B8(void) // 0x800CF0B8
             }
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(59.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(-19.5f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(164.1f);
+            PLAYER_CHARA().position.vx = Q12(59.0f);
+            PLAYER_CHARA().position.vz = Q12(-19.5f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(164.1f);
 
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
             Player_ControlUnfreeze(true);
@@ -591,7 +591,7 @@ void func_800CFC34(void) // 0x800CFC34
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         // TODO: Remove null chars from "HERO" once later rodata is added.
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_13);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_13);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_13));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
@@ -1106,12 +1106,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D1718
 
     if (PLAYER_IN_MAP_CHUNK(1, -1))
     {
-        mag = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - Q12(60.0f),
-                                  g_SysWork.playerWork.player.position.vz + Q12(20.0f));
+        mag = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - Q12(60.0f),
+                                  PLAYER_CHARA().position.vz + Q12(20.0f));
         if (mag < Q12(1.4f))
         {
-            if (ratan2(g_SysWork.playerWork.player.position.vx - Q12(60.0f),
-                       g_SysWork.playerWork.player.position.vz + Q12(20.0f)) > Q12_ANGLE(67.5f))
+            if (ratan2(PLAYER_CHARA().position.vx - Q12(60.0f),
+                       PLAYER_CHARA().position.vz + Q12(20.0f)) > Q12_ANGLE(67.5f))
             {
                 Savegame_EventFlagSet(EventFlag_407);
                 D_800D4E6C = 6;
@@ -1185,32 +1185,32 @@ void func_800D1AE4(void) // 0x800D1AE4
         if (D_800D4E6E == 0)
         {
             Game_TurnFlashlightOn();
-            func_800CED74(&g_SysWork.playerWork.player, true);
+            func_800CED74(&PLAYER_CHARA(), true);
 
             D_800D4E6E = 1;
         }
 
         g_SysWork.lightIntensity = Q12(0.7f);
 
-        if (g_SysWork.playerWork.player.position.vy > Q12(2.84f))
+        if (PLAYER_CHARA().position.vy > Q12(2.84f))
         {
             angle                             = Q12_ANGLE(0.0f);
-            g_SysWork.lightIntensity = (((g_SysWork.playerWork.player.position.vy - Q12(2.84f)) * Q12(0.4f)) / (Q12(1.16f) + 1)) + Q12(0.7f);
+            g_SysWork.lightIntensity = (((PLAYER_CHARA().position.vy - Q12(2.84f)) * Q12(0.4f)) / (Q12(1.16f) + 1)) + Q12(0.7f);
         }
         else
         {
-            angle = ratan2(g_SysWork.playerWork.player.position.vx + Q12(20.0f),
-                           g_SysWork.playerWork.player.position.vz + Q12(20.0f));
+            angle = ratan2(PLAYER_CHARA().position.vx + Q12(20.0f),
+                           PLAYER_CHARA().position.vz + Q12(20.0f));
         }
 
-        func_800CED74(&g_SysWork.playerWork.player, false);
+        func_800CED74(&PLAYER_CHARA(), false);
 
         temp_s2 = angle + Q12_ANGLE(70.0f);
 
         vec = &g_SysWork.lightPosition;
 
         vec->vx = Q12_MULT(Math_Sin(temp_s2), Q12(0.55f)) - Q12(20.0f);
-        vec->vy = MIN(g_SysWork.playerWork.player.position.vy - Q12(1.6f), Q12(0.5f));
+        vec->vy = MIN(PLAYER_CHARA().position.vy - Q12(1.6f), Q12(0.5f));
         vec->vz = Q12_MULT(Math_Cos(temp_s2), Q12(0.55f)) - Q12(20.0f);
 
         svec = &g_SysWork.lightRotation;
@@ -1227,8 +1227,8 @@ s32 func_800D1D40(void) // 0x800D1D40
 {
     q19_12 angle;
 
-    angle = ratan2(g_SysWork.playerWork.player.position.vx + Q12(20.0f),
-                   g_SysWork.playerWork.player.position.vz + Q12(20.0f));
+    angle = ratan2(PLAYER_CHARA().position.vx + Q12(20.0f),
+                   PLAYER_CHARA().position.vz + Q12(20.0f));
 
     if (D_800D4E6C == 0)
     {
@@ -1785,7 +1785,7 @@ void func_800D32D0(void) // 0x800D32D0
     {
         case 0:
             Player_ControlFreeze();
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &PLAYER_CHARA(), 0, false);
 
             g_SysWork.sysStateSteps[0]++;
             break;

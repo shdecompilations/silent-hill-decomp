@@ -295,7 +295,7 @@ void WorldGfx_MapReset(void) // 0x8003C30C
 void WorldGfx_IpdSamplePointStore(void) // 0x8003C368
 {
     g_WorldGfxWork.useStoredPoint = true;
-    g_WorldGfxWork.ipdSamplePoint = g_SysWork.playerWork.player.position;
+    g_WorldGfxWork.ipdSamplePoint = PLAYER_CHARA().position;
 }
 
 void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
@@ -323,7 +323,7 @@ void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
     u8              mapFlags;
     s_SubCharacter* player;
 
-    player = &g_SysWork.playerWork.player;
+    player = &PLAYER_CHARA();
 
     if (g_WorldGfxWork.useStoredPoint)
     {
@@ -479,8 +479,8 @@ void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECT
             GameFs_CommonItemsTextureLoad();
 
             modelLoc = WorldMap_ObjectModelLocationGet(model, &model->metadata,
-                                                       g_SysWork.playerWork.player.position.vx,
-                                                       g_SysWork.playerWork.player.position.vz);
+                                                       PLAYER_CHARA().position.vx,
+                                                       PLAYER_CHARA().position.vz);
             if (modelLoc == WorldModelLocation_None)
             {
                 if (Lm_ModelFind(model, &g_WorldGfxWork.itemLmHdr, &model->metadata))

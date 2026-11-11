@@ -98,7 +98,7 @@ void Event_CharaAnimCmdExecute(e_CharaAnimCmd cmd, s_SubCharacter* chara, s32 an
 {
     s32  playbackState;
 
-    #define isPlayer (chara == &g_SysWork.playerWork.player)
+    #define isPlayer (chara == &PLAYER_CHARA())
 
     switch (cmd)
     {
@@ -458,9 +458,9 @@ void Event_PathWaypointSet(bool isAbs, s32 charaSlotIdx, s32 waypointIdx, q3_12 
 {
     if (isAbs == false)
     {
-        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vx = g_SysWork.playerWork.player.position.vx + posX;
-        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
-        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vz = g_SysWork.playerWork.player.position.vz + posZ;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vx = PLAYER_CHARA().position.vx + posX;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vy = PLAYER_CHARA().position.vy;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vz = PLAYER_CHARA().position.vz + posZ;
 
         // @bug `headingAngle` is stored per `charaSlotIdx`, not per waypoint.
         // Event code often calls `Event_PathWaypointSet` multiple times in a single tick
@@ -473,7 +473,7 @@ void Event_PathWaypointSet(bool isAbs, s32 charaSlotIdx, s32 waypointIdx, q3_12 
     else if (isAbs == true)
     {
         g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vx = posX;
-        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vy = g_SysWork.playerWork.player.position.vy;
+        g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vy = PLAYER_CHARA().position.vy;
         g_Event_PathWaypoints[charaSlotIdx][waypointIdx].vz = posZ;
 
         g_Event_PathWaypointHeadingAngles[charaSlotIdx] = headingAngle;

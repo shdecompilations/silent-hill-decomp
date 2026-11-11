@@ -97,10 +97,10 @@ void func_800D5614(void) // 0x800D5614
             D_800D7760         = 0;
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(21.55f);
-            g_SysWork.playerWork.player.position.vz = Q12(-14.6f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
-            Model_AnimFlagsClear(&g_SysWork.playerWork.player.model, 2);
+            PLAYER_CHARA().position.vx = Q12(21.55f);
+            PLAYER_CHARA().position.vz = Q12(-14.6f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
+            Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
@@ -150,10 +150,10 @@ void func_800D5614(void) // 0x800D5614
 
         case 7:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(21.45f);
-            g_SysWork.playerWork.player.position.vz = Q12(-15.26f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
+            PLAYER_CHARA().position.vx = Q12(21.45f);
+            PLAYER_CHARA().position.vz = Q12(-15.26f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
@@ -200,9 +200,9 @@ void func_800D5614(void) // 0x800D5614
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(21.45f);
-            g_SysWork.playerWork.player.position.vz = Q12(-15.26f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(180.0f);
+            PLAYER_CHARA().position.vx = Q12(21.45f);
+            PLAYER_CHARA().position.vz = Q12(-15.26f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
@@ -214,7 +214,7 @@ void func_800D5614(void) // 0x800D5614
                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                   true);
 
-            Model_AnimFlagsSet(&g_SysWork.playerWork.player.model, 2);
+            Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
             Game_TurnFlashlightOn();
 
             Savegame_EventFlagSet(EventFlag_143);
@@ -254,7 +254,7 @@ void func_800D5B98(void) // 0x800D5B98
             break;
 
         case 2:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 59);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 59);
             break;
 
         case 3:
@@ -280,7 +280,7 @@ void func_800D5B98(void) // 0x800D5B98
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 60);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 60);
             break;
 
         default:
@@ -335,9 +335,9 @@ void func_800D5DD8(void) // 0x800D5DD8
             Screen_FadeTimestepReset();
 
             CutsceneBorder_ForceShow();
-            g_SysWork.playerWork.player.position.vx = Q12(109.2f);
-            g_SysWork.playerWork.player.position.vz = Q12(43.2f);
-            g_SysWork.playerWork.player.rotation.vy = Q12(0.4553f);
+            PLAYER_CHARA().position.vx = Q12(109.2f);
+            PLAYER_CHARA().position.vz = Q12(43.2f);
+            PLAYER_CHARA().rotation.vy = Q12(0.4553f);
 
             D_800D778E = g_SavegamePtr->paperMapIdx;
             g_SavegamePtr->paperMapIdx = 1;
@@ -548,7 +548,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
 
         if (!Savegame_EventFlagGet(EventFlag_142))
         {
-            D_800DAF78 = Q12_MULT_FLOAT_PRECISE(g_SysWork.playerWork.player.position.vy, -0.2f) + Q12(0.25f);
+            D_800DAF78 = Q12_MULT_FLOAT_PRECISE(PLAYER_CHARA().position.vy, -0.2f) + Q12(0.25f);
         }
     }
     else
@@ -598,9 +598,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
     }
 
     // Set sound position.
-    soundPos.vx = g_SysWork.playerWork.player.position.vx;
-    soundPos.vy = g_SysWork.playerWork.player.position.vy;
-    soundPos.vz = g_SysWork.playerWork.player.position.vz - Q12(16.0f);
+    soundPos.vx = PLAYER_CHARA().position.vx;
+    soundPos.vy = PLAYER_CHARA().position.vy;
+    soundPos.vz = PLAYER_CHARA().position.vz - Q12(16.0f);
 
     D_800DB055 = Vc_StereoBalanceGet(&soundPos);
     if (D_800DB054 < D_800DB055)
@@ -619,8 +619,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D6578
 
 void func_800D6C88(void) // 0x800D6C88
 {
-    if (g_SysWork.playerWork.player.position.vx == Q12(21.45f) &&
-        g_SysWork.playerWork.player.position.vz == Q12(-15.26f))
+    if (PLAYER_CHARA().position.vx == Q12(21.45f) &&
+        PLAYER_CHARA().position.vz == Q12(-15.26f))
     {
         // Warp camera.
         Event_CameraPositionSet(NULL,

@@ -97,7 +97,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.sysState != SysState_Gameplay && g_SysWork.playerWork.player.health <= Q12(0.0f))
+    if (g_SysWork.sysState != SysState_Gameplay && PLAYER_CHARA().health <= Q12(0.0f))
     {
         SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -161,7 +161,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         Demo_DemoRandSeedRestore();
 
-        player = &g_SysWork.playerWork.player;
+        player = &PLAYER_CHARA();
         Player_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords);
 
         Demo_DemoRandSeedRestore();
@@ -176,10 +176,10 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         if (player->model.anim.flags & AnimFlag_Visible)
         {
-            WorldGfx_CharaDraw(Chara_Harry, g_SysWork.playerBoneCoords, 1, g_SysWork.playerWork.player.timer_C6, 0);
-            Chara_Flag8Clear(&g_SysWork.playerWork.player);
+            WorldGfx_CharaDraw(Chara_Harry, g_SysWork.playerBoneCoords, 1, PLAYER_CHARA().timer_C6, 0);
+            Chara_Flag8Clear(&PLAYER_CHARA());
             Player_CombatUpdate(&g_SysWork.playerWork, g_SysWork.playerBoneCoords);
-            func_8008A3AC(&g_SysWork.playerWork.player);
+            func_8008A3AC(&PLAYER_CHARA());
         }
 
         Demo_DemoRandSeedRestore();
@@ -196,7 +196,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
 {
     s_SubCharacter* player;
 
-    player = &g_SysWork.playerWork.player;
+    player = &PLAYER_CHARA();
 
     Event_Update(player->attackReceived != NO_VALUE);
     Game_MapRoomIdxUpdate();
@@ -229,7 +229,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.playerWork.player.health <= Q12(0.0f))
+    if (PLAYER_CHARA().health <= Q12(0.0f))
     {
         return;
     }
@@ -362,7 +362,7 @@ void func_8003943C(void) // 0x8003943C
     s32 val0;
     s32 val1;
 
-    #define isRockDrillAttack (g_SysWork.playerCombat.weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+    #define isRockDrillAttack (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
 
     func_8008B3E4(0);
 
@@ -632,8 +632,8 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     if (g_MapPoint.triggerParam1 == 1)
     {
         mapPoint              = &g_MapOverlayHdr.mapPoints[g_MapEventData->mapPointIdx];
-        offsetZ               = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ;
-        g_MapPoint.positionX += g_SysWork.playerWork.player.position.vx - mapPoint->positionX;
+        offsetZ               = PLAYER_CHARA().position.vz - mapPoint->positionZ;
+        g_MapPoint.positionX += PLAYER_CHARA().position.vx - mapPoint->positionX;
         g_MapPoint.positionZ += offsetZ;
     }
 
@@ -753,10 +753,10 @@ void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
     save = g_SavegamePtr;
 
     save->locationId      = g_MapEventParam;
-    save->playerPositionX = g_SysWork.playerWork.player.position.vx;
-    save->playerPositionZ = g_SysWork.playerWork.player.position.vz;
-    save->playerRotationY = g_SysWork.playerWork.player.rotation.vy;
-    save->playerHealth    = g_SysWork.playerWork.player.health;
+    save->playerPositionX = PLAYER_CHARA().position.vx;
+    save->playerPositionZ = PLAYER_CHARA().position.vz;
+    save->playerRotationY = PLAYER_CHARA().rotation.vy;
+    save->playerHealth    = PLAYER_CHARA().health;
 }
 
 void func_8003A16C(void) // 0x8003A16C
@@ -772,10 +772,10 @@ void func_8003A16C(void) // 0x8003A16C
 
 void SysWork_SavegameReadPlayer(void) // 0x8003A1F4
 {
-    g_SysWork.playerWork.player.position.vx = g_SavegamePtr->playerPositionX;
-    g_SysWork.playerWork.player.position.vz = g_SavegamePtr->playerPositionZ;
-    g_SysWork.playerWork.player.rotation.vy = g_SavegamePtr->playerRotationY;
-    g_SysWork.playerWork.player.health      = g_SavegamePtr->playerHealth;
+    PLAYER_CHARA().position.vx = g_SavegamePtr->playerPositionX;
+    PLAYER_CHARA().position.vz = g_SavegamePtr->playerPositionZ;
+    PLAYER_CHARA().rotation.vy = g_SavegamePtr->playerRotationY;
+    PLAYER_CHARA().health      = g_SavegamePtr->playerHealth;
 }
 
 void SysState_SaveMenu_Update(void) // 0x8003A230

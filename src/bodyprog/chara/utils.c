@@ -22,7 +22,7 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
 
     i = 0;
 
-    if (chara == &g_SysWork.playerWork.player)
+    if (chara == &PLAYER_CHARA())
     {
         return ARRAY_SIZE(g_SysWork.npcs);
     }
@@ -219,7 +219,7 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
             }
 
             angles2[count] = ratan2(boxPos.vx - posX, boxPos.vz - posZ);
-            if (angleMin < ABS(Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy - angles2[count])))
+            if (angleMin < ABS(Math_AngleNormalizeSigned(PLAYER_CHARA().rotation.vy - angles2[count])))
             {
                 continue;
             }
@@ -231,7 +231,7 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
                     continue;
                 }
 
-                angles2[count] = Math_AngleNormalizeSigned(angles2[count] - g_SysWork.playerWork.player.angleToTarget);
+                angles2[count] = Math_AngleNormalizeSigned(angles2[count] - PLAYER_CHARA().angleToTarget);
 
                 if (mode == 1 && angles2[count] < 0)
                 {
@@ -246,15 +246,15 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
         }
         else
         {
-            curPos.vx = posX + Q12_MULT(angleMin, Math_Sin(g_SysWork.playerWork.player.rotation.vy));
-            curPos.vz = posZ + Q12_MULT(angleMin, Math_Cos(g_SysWork.playerWork.player.rotation.vy));
+            curPos.vx = posX + Q12_MULT(angleMin, Math_Sin(PLAYER_CHARA().rotation.vy));
+            curPos.vz = posZ + Q12_MULT(angleMin, Math_Cos(PLAYER_CHARA().rotation.vy));
             if (Math_SqrMagCalcToQ6(distMin) < (Math_SqrMagCalcToQ6(curPos.vx - boxPos.vx) +
                                                 Math_SqrMagCalcToQ6(curPos.vz - boxPos.vz)))
             {
                 continue;
             }
 
-            angles2[count] = Math_AngleNormalizeSigned(ratan2(boxPos.vx - posX, boxPos.vz - posZ) - g_SysWork.playerWork.player.rotation.vy);
+            angles2[count] = Math_AngleNormalizeSigned(ratan2(boxPos.vx - posX, boxPos.vz - posZ) - PLAYER_CHARA().rotation.vy);
 
             if (mode != 3)
             {
@@ -373,7 +373,7 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
         offset.vy = (g_SysWork.npcs[j].position.vy + g_SysWork.npcs[j].collision.box.offsetY)         - posY;
         offset.vz = (g_SysWork.npcs[j].position.vz + g_SysWork.npcs[j].collision.shapeOffsets.box.vz) - posZ;
 
-        if (Ray_GeomAndCharaTraceGet(&trace, &from, &offset, &g_SysWork.playerWork.player) &&
+        if (Ray_GeomAndCharaTraceGet(&trace, &from, &offset, &PLAYER_CHARA()) &&
             trace.character == &g_SysWork.npcs[j])
         {
             break;
@@ -459,7 +459,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, 
         }
 
         // Track closer targetable NPC.
-        if (Ray_GeomAndCharaTraceGet(&trace, attackPos, &offsetToTarget, &g_SysWork.playerWork.player) &&
+        if (Ray_GeomAndCharaTraceGet(&trace, attackPos, &offsetToTarget, &PLAYER_CHARA()) &&
             trace.character == &g_SysWork.npcs[i])
         {
             *targetNpcIdx = i;

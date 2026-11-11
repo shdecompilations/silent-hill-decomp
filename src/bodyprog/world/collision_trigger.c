@@ -22,9 +22,5 @@ void World_CollisionTriggersSet(s_MapOverlayHdr* overlayHeader) // 0x80040004
 
 void World_NearbyPlayerCollisionTriggersGet(void) // 0x80040014
 {
-    #define playerChara g_SysWork.playerWork.player
-
-    Collision_NearbyTriggersGet(playerChara.position.vx, playerChara.position.vz, g_WorldGfxWork.collisionTriggers);
-
-    #undef playerChara
+    Collision_NearbyTriggersGet(PLAYER_CHARA().position.vx, PLAYER_CHARA().position.vz, g_WorldGfxWork.collisionTriggers);
 };

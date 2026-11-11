@@ -149,7 +149,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
     }
 
     // Continue music at reduced volume if player is dead.
-    if (g_SysWork.playerWork.player.health <= Q12(0.0f) || g_SysWork.sysState == SysState_GameOver)
+    if (PLAYER_CHARA().health <= Q12(0.0f) || g_SysWork.sysState == SysState_GameOver)
     {
         flagsCpy &= BgmFlag_KeepAlive;
         flagsCpy |= BgmFlag_Layer1;
@@ -376,10 +376,8 @@ void Game_MapRoomIdxUpdate(void) // 0x80036420
     q19_12 posZ;
     s8     newMapRoomIdx;
 
-    #define playerChara g_SysWork.playerWork.player
-
-    posX = playerChara.position.vx;
-    posZ = playerChara.position.vz;
+    posX = PLAYER_CHARA().position.vx;
+    posZ = PLAYER_CHARA().position.vz;
 
     // Set map room index based on current player position.
     if (g_MapOverlayHdr.mapRoomIdxGet == NULL)
@@ -391,8 +389,6 @@ void Game_MapRoomIdxUpdate(void) // 0x80036420
         newMapRoomIdx = g_MapOverlayHdr.mapRoomIdxGet(posX, posZ);
     }
     g_SavegamePtr->mapRoomIdx = newMapRoomIdx;
-
-    #undef playerChara
 }
 
 s32 func_8003647C(void) // 0x8003647C

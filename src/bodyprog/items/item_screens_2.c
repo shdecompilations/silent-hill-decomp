@@ -152,7 +152,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                     break;
             }
 
-            g_SysWork.playerWork.extra.lastUsedItem = InvItemId_Unequipped;
+            PLAYER_EXTRA().lastUsedItem = InvItemId_Unequipped;
             g_GameWork.background2dColor.r          = 0;
             g_GameWork.background2dColor.g          = 0;
             g_GameWork.background2dColor.b          = 0;
@@ -257,7 +257,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
 
                 g_SavegamePtr->invSlotCount = func_8004F190(g_SavegamePtr);
 
-                WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
+                WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
                 func_8003D01C();
                 Fs_QueueWaitForEmpty();
 
@@ -608,7 +608,7 @@ void Inventory_Update(void) // 0x8004D518
             {
                 g_Inventory_SelectionBordersDraw = 1;
 
-                if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
                 {
                     g_Inventory_SelectionId = InvSelectionId_EquippedItem;
                     Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
@@ -685,7 +685,7 @@ void Inventory_Update(void) // 0x8004D518
                 g_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_CmdSelectedIdx       = 0;
 
-                if (g_SavegamePtr->items[g_SysWork.playerCombat.weaponInventoryIdx].command != InvCmdId_Unk11)
+                if (g_SavegamePtr->items[PLAYER_COMBAT().weaponInventoryIdx].command != InvCmdId_Unk11)
                 {
                     g_Inventory_SelectionId = InvSelectionId_EquippedItemCmd;
                     Sd_SfxPlay(Sfx_MenuConfirm, Q7(0.0f), Q7(0.5f));
@@ -862,7 +862,7 @@ void Inventory_Update(void) // 0x8004D518
             }
             else
             {
-                curItemIdx = g_SysWork.playerCombat.weaponInventoryIdx;
+                curItemIdx = PLAYER_COMBAT().weaponInventoryIdx;
             }
 
             switch (g_SavegamePtr->items[curItemIdx].command)
@@ -1081,7 +1081,7 @@ void Inventory_Update(void) // 0x8004D518
                     case InvCmdId_Reload:
                         g_Inventory_SelectionBordersDraw = 1;
 
-                        if (curItemIdx != g_SysWork.playerCombat.weaponInventoryIdx)
+                        if (curItemIdx != PLAYER_COMBAT().weaponInventoryIdx)
                         {
                             Game_StateStepSet(1, 8);
                         }
@@ -1099,7 +1099,7 @@ void Inventory_Update(void) // 0x8004D518
                             g_Inventory_SelectionId         = InvSelectionId_EquippedItem;
                             Game_StateStepSet(1, 5);
                         }
-                        else if (curItemIdx != g_SysWork.playerCombat.weaponInventoryIdx)
+                        else if (curItemIdx != PLAYER_COMBAT().weaponInventoryIdx)
                         {
                             Game_StateStepSet(1, 8);
                         }
@@ -1117,7 +1117,7 @@ void Inventory_Update(void) // 0x8004D518
                             g_Inventory_SelectionId         = InvSelectionId_EquippedItem;
                             Game_StateStepSet(1, 6);
                         }
-                        else if (curItemIdx != g_SysWork.playerCombat.weaponInventoryIdx)
+                        else if (curItemIdx != PLAYER_COMBAT().weaponInventoryIdx)
                         {
                             Game_StateStepSet(1, 8);
                         }
@@ -1166,16 +1166,13 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
         #define CHARA_ID_CHECK true
     #endif
 
-    #define playerChara g_SysWork.playerWork.player
-    #define playerExtra g_SysWork.playerWork.extra
-
     Game_StateStepSet(1, 12);
 
     if (g_SavegamePtr->mapIdx == MapIdx_MAP6_S04)
     {
-        if ((CHARA_ID_CHECK && !Math_Distance2dCheck(&playerChara.position, &g_SysWork.npcs[0].position, Q12(0.7f))) &&
-            ABS(playerChara.position.vy - g_SysWork.npcs[0].position.vy) < Q12(0.3f) &&
-            playerExtra.state == PlayerState_None &&
+        if ((CHARA_ID_CHECK && !Math_Distance2dCheck(&PLAYER_CHARA().position, &g_SysWork.npcs[0].position, Q12(0.7f))) &&
+            ABS(PLAYER_CHARA().position.vy - g_SysWork.npcs[0].position.vy) < Q12(0.3f) &&
+            PLAYER_EXTRA().state == PlayerState_None &&
             g_SavegamePtr->items[inventoryItemIdx].id == InvItemId_UnknownLiquid)
         {
             g_Inventory_SelectionBordersDraw = 1;
@@ -1201,15 +1198,13 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
                 Game_StateStepSet(1, 11);
 
                 Game_TurnFlashlightOn();
-                playerExtra.lastUsedItem = g_ItemTriggerItemIds[i];
+                PLAYER_EXTRA().lastUsedItem = g_ItemTriggerItemIds[i];
                 break;
             }
         }
     }
 
     #undef CHARA_ID_CHECK
-    #undef playerChara
-    #undef playerExtra
 }
 
 #if VERSION_IS(EUR)
@@ -1263,7 +1258,7 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
     }
     else
     {
-        idx = g_SysWork.playerCombat.weaponInventoryIdx;
+        idx = PLAYER_COMBAT().weaponInventoryIdx;
     }
 
     switch (g_SavegamePtr->items[idx].command)
@@ -1733,7 +1728,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
         {
             if (g_SavegamePtr->items[i].id == g_SavegamePtr->equippedWeapon)
             {
-                g_SysWork.playerCombat.weaponInventoryIdx = i;
+                PLAYER_COMBAT().weaponInventoryIdx = i;
 
                 if (g_SavegamePtr->equippedWeapon >= InvItemId_Handgun)
                 {
@@ -1741,7 +1736,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
                     {
                         if (g_SavegamePtr->items[j].id == INV_WEAPON_AMMO_ID(g_SavegamePtr->items[i].id))
                         {
-                            g_SysWork.playerCombat.totalWeaponAmmo = g_SavegamePtr->items[j].count;
+                            PLAYER_COMBAT().totalWeaponAmmo = g_SavegamePtr->items[j].count;
 
                             j = INV_ITEM_COUNT_MAX + 1;
                         }
@@ -1749,7 +1744,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
 
                     if (j == INV_ITEM_COUNT_MAX)
                     {
-                        g_SysWork.playerCombat.totalWeaponAmmo = 0;
+                        PLAYER_COMBAT().totalWeaponAmmo = 0;
                     }
                 }
 

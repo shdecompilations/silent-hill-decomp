@@ -53,7 +53,7 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
     GsCOORDINATE2* boneCoords;
 
     boneCoords = g_SysWork.playerBoneCoords;
-    model      = &g_SysWork.playerWork.player.model;
+    model      = &PLAYER_CHARA().model;
 
     if (g_SysWork.sysState == SysState_Gameplay)
     {
@@ -62,17 +62,17 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
             AreaLoad_UpdatePlayerPosition();
         }
 
-        vcInitCamera(&g_MapOverlayHdr, &g_SysWork.playerWork.player.position);
+        vcInitCamera(&g_MapOverlayHdr, &PLAYER_CHARA().position);
         World_CollisionTriggersSet(&g_MapOverlayHdr);
 
         camLookAt.vy = Q12(-0.6f);
-        camLookAt.vx = g_SysWork.playerWork.player.position.vx;
-        camLookAt.vz = g_SysWork.playerWork.player.position.vz;
+        camLookAt.vx = PLAYER_CHARA().position.vx;
+        camLookAt.vz = PLAYER_CHARA().position.vz;
 
         vcUserWatchTarget(&camLookAt, NULL, true);
 
-        camLookAt.vx -= Math_Sin(g_SysWork.playerWork.player.rotation.vy - Q12_ANGLE(22.5f)) * 2;
-        temp          = Math_Cos(g_SysWork.playerWork.player.rotation.vy - Q12_ANGLE(22.5f));
+        camLookAt.vx -= Math_Sin(PLAYER_CHARA().rotation.vy - Q12_ANGLE(22.5f)) * 2;
+        temp          = Math_Cos(PLAYER_CHARA().rotation.vy - Q12_ANGLE(22.5f));
         camLookAt.vy  = Q12(-1.0f);
         camLookAt.vz -= temp * 2;
 
@@ -81,19 +81,19 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         WorldEnv_LoadScreenPresetsSet(0, 0);
 
         model->anim.flags                           |= AnimFlag_Visible;
-        g_SysWork.playerWork.extra.disabledAnimBoneFlags = 0;
+        PLAYER_EXTRA().disabledAnimBoneFlags = 0;
         model->anim.flags                           |= AnimFlag_Unlocked | AnimFlag_Visible;
         model->anim.time                             = Q12(26.0f);
-        g_SysWork.playerWork.player.position.vy      = Q12(0.2f);
+        PLAYER_CHARA().position.vy      = Q12(0.2f);
 
         D_800A998C.status = model->anim.status;
 
-        Math_MatrixTransform(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, boneCoords);
+        Math_MatrixTransform(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, boneCoords);
         g_SysWork.sysState++;
     }
 
     Anim_PlayLoop(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
     vcMoveAndSetCamera(true, false, false, false, false, false, false, false);
     WorldEnv_Update();
-    WorldGfx_CharaDraw(Chara_Harry, boneCoords, 1, g_SysWork.playerWork.player.timer_C6, 0);
+    WorldGfx_CharaDraw(Chara_Harry, boneCoords, 1, PLAYER_CHARA().timer_C6, 0);
 }

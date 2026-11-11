@@ -177,7 +177,7 @@ void func_800EB11C(void) // 0x800EB11C
             D_800F0044 = 0;
             g_Cutscene_Timer = Q12(0.0f);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 53, false);
             Game_TurnFlashlightOn();
 
             Particle_EnvironmentSet(2, 127);
@@ -200,7 +200,7 @@ void func_800EB11C(void) // 0x800EB11C
 
         case 3:
             g_Cutscene_Timer = Q12(23.0f);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 52, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 52, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -208,7 +208,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 126, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 126, false);
             Savegame_EventFlagSet(EventFlag_413);
             SysWork_StateStepIncrement(0);
 
@@ -222,7 +222,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 8:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 133, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 133, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -230,7 +230,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 10:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 114, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 114, false);
             Savegame_EventFlagSet(EventFlag_402);
             Particle_EnvironmentSet(6, 127);
             Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
@@ -264,7 +264,7 @@ void func_800EB11C(void) // 0x800EB11C
             break;
 
         case 17:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 127, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 127, false);
             Savegame_EventFlagSet(EventFlag_415);
             SysWork_StateStepIncrement(0);
 
@@ -362,7 +362,7 @@ void func_800EB11C(void) // 0x800EB11C
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_15);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_15));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
@@ -519,9 +519,9 @@ void func_800EC4B4(s32 arg0) // 0x800EC4B4
     ptr2 = FS_BUFFER_1;
     ptr  = PSX_SCRATCH;
 
-    posX = FP_FROM(g_SysWork.playerWork.player.position.vx, Q12_SHIFT);
-    posY = FP_FROM(g_SysWork.playerWork.player.position.vy, Q12_SHIFT);
-    posZ = FP_FROM(g_SysWork.playerWork.player.position.vz, Q12_SHIFT);
+    posX = FP_FROM(PLAYER_CHARA().position.vx, Q12_SHIFT);
+    posY = FP_FROM(PLAYER_CHARA().position.vy, Q12_SHIFT);
+    posZ = FP_FROM(PLAYER_CHARA().position.vz, Q12_SHIFT);
 
     ptr->field_5C.vx = posX << 8;
     ptr->field_5C.vy = posY << 8;

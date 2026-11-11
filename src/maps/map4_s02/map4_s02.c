@@ -94,7 +94,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
         {
             Collision_TriggerFlagBitsSet(4);
 
-            if (g_SysWork.playerWork.player.position.vz < Q12(-68.0f))
+            if (PLAYER_CHARA().position.vz < Q12(-68.0f))
             {
                 Savegame_EventFlagClear(EventFlag_346);
             }
@@ -149,7 +149,7 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
         }
 
         // @hack
-        tmp1 = (g_SysWork.playerWork.player.position.vx / ((s32)(40.0f * Q12(1.0f))));
+        tmp1 = (PLAYER_CHARA().position.vx / ((s32)(40.0f * Q12(1.0f))));
 
         objRot.vx = D_800ED8B0[i];
 
@@ -168,8 +168,8 @@ void Map_WorldObjectsUpdate(void) // 0x800EA3F0
     }
     else
     {
-        dist0 = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(27.5f));
-        dist1 = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - Q12(61.0f), g_SysWork.playerWork.player.position.vz - Q12(17.5f));
+        dist0 = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - Q12(61.0f), PLAYER_CHARA().position.vz - Q12(27.5f));
+        dist1 = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - Q12(61.0f), PLAYER_CHARA().position.vz - Q12(17.5f));
         if (dist1 >= dist0)
         {
             tmp0 = dist0;

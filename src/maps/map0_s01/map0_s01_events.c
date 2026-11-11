@@ -184,14 +184,14 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 77, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 77, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             sharedFunc_800D2E6C_0_s00();
             SysWork_StateStepIncrement(0);
             break;
 
         case 3:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, NULL, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &PLAYER_CHARA(), NULL, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -199,7 +199,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, NULL, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), NULL, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -216,7 +216,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 9:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 78, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 78, false);
             D_800DE250 = 1;
             SysWork_StateStepIncrement(0);
 
@@ -251,7 +251,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             if (D_800DE251 == 0 && g_Cutscene_Timer > Q12(38.0f))
             {
                 Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 10, false);
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 110, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 110, false);
 
                 D_800DE251++;
             }
@@ -282,7 +282,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 18:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 93, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 93, false);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -290,7 +290,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 20:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 53, false);
             SysWork_StateStepIncrement(0);
 
         case 21:
@@ -310,7 +310,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 24:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 71, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 71, false);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -319,7 +319,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 26:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 8, 0);
             SysWork_StateStepIncrement(0);
 
@@ -375,7 +375,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 38:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 9, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 0x4C, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 0x4C, false);
             SysWork_StateStepIncrement(0);
 
         case 39:
@@ -396,7 +396,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 43:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             g_Cutscene_Timer = Q12(297.0f);
             SysWork_StateStepIncrement(0);
 
@@ -405,7 +405,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 45:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 90, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 90, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &cybilChara, 1, false);
             SysWork_StateStepIncrement(0);
 
@@ -466,7 +466,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_11));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_11);
 
         if (D_800DE250 != 0)
         {
@@ -574,7 +574,6 @@ const VECTOR3 D_800CCA58 = { Q12(0.8f), Q12(-1.8f), Q12(264.1f) };
 
 void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 {
-    #define playerChara      g_SysWork.playerWork.player
     #define airScreamerChara g_SysWork.npcs[0]
 
     switch (g_SysWork.sysStateSteps[0])
@@ -591,9 +590,9 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             Savegame_EventFlagSet(EventFlag_52);
 
             // Warp player.
-            playerChara.position.vx = Q12(1.3f);
-            playerChara.position.vz = Q12(269.7f);
-            playerChara.rotation.vy = Q12_ANGLE(5.0f);
+            PLAYER_CHARA().position.vx = Q12(1.3f);
+            PLAYER_CHARA().position.vz = Q12(269.7f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(5.0f);
 
             g_Cutscene_Timer = Q12(26.0f);
 
@@ -611,7 +610,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 3:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 91, 0);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 91, 0);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -635,7 +634,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 8:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 92, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 92, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -655,7 +654,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 11:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 53, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 53, false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -667,7 +666,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 13:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &playerChara, 89, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 89, false);
 
             D_800E23A1 = 0xE0;
             Savegame_EventFlagSet(EventFlag_46);
@@ -743,7 +742,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara.position, &playerChara.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_11);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_11);
 
         if (g_SysWork.sysStateSteps[0] >= 20)
         {
@@ -757,7 +756,6 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
     }
 
-    #undef playerChara
     #undef airScreamerChara
 }
 
@@ -777,7 +775,6 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
 {
     static const RECT IMG_BUFFER_RECT = { 320, 256, 160, 240 };
 
-    #define playerChara      g_SysWork.playerWork.player
     #define airScreamerChara g_SysWork.npcs[0]
 
     switch (g_SysWork.sysStateSteps[0])
@@ -857,9 +854,9 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
 
             // Warp player.
-            playerChara.position.vx = Q12(4.585938f);
-            playerChara.position.vz = Q12(267.285156f);
-            playerChara.rotation.vy = Q12_ANGLE(90.0f);
+            PLAYER_CHARA().position.vx = Q12(4.585938f);
+            PLAYER_CHARA().position.vz = Q12(267.285156f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(90.0f);
 
             // Set flags.
             SysWork_NpcFlagSet(0);
@@ -878,7 +875,6 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             break;
     }
 
-    #undef playerChara
     #undef airScreamerChara
 }
 
@@ -998,7 +994,6 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     s32  var_a2;
     s32* ptr;
 
-    #define playerChara      g_SysWork.playerWork.player
     #define airScreamerChara g_SysWork.npcs[0]
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
@@ -1064,8 +1059,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
                                       g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
 
             if (g_Cutscene_Timer >= Q12(25.0f) ||
-                ABS(playerChara.position.vx - Q12(4.586f)) > Q12(0.7f) ||
-                ABS(playerChara.position.vz - Q12(267.2852f)) > Q12(0.7f))
+                ABS(PLAYER_CHARA().position.vx - Q12(4.586f)) > Q12(0.7f) ||
+                ABS(PLAYER_CHARA().position.vz - Q12(267.2852f)) > Q12(0.7f))
             {
                 Savegame_EventFlagSet(EventFlag_42);
                 vcReturnPreAutoCamWork(true);
@@ -1074,9 +1069,9 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
                 airScreamerChara.position.vz = Q12(280.0f);
             }
         }
-        else if (playerChara.position.vx != Q12(4.586f) ||
-                 playerChara.position.vz != Q12(267.2852f) ||
-                 playerChara.rotation.vy != Q12_ANGLE(90.0f) ||
+        else if (PLAYER_CHARA().position.vx != Q12(4.586f) ||
+                 PLAYER_CHARA().position.vz != Q12(267.2852f) ||
+                 PLAYER_CHARA().rotation.vy != Q12_ANGLE(90.0f) ||
                  D_800E2560 > Q12(7.5f))
         {
             Savegame_EventFlagSet(EventFlag_41);
@@ -1128,7 +1123,6 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
         }
     }
 
-    #undef playerChara
     #undef airScreamerChara
 }
 

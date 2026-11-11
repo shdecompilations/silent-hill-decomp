@@ -36,16 +36,16 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
     // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventData` from `g_ItemEvents`.
     // After processing, the field is cleared and item trigger IDs are reset.
     // (Multi-item events likely repopulate the trigger IDs below based on whichever events are still active?)
-    if (g_SysWork.playerWork.extra.lastUsedItem != InvItemId_Unequipped)
+    if (PLAYER_EXTRA().lastUsedItem != InvItemId_Unequipped)
     {
-        for (i = 0; g_SysWork.playerWork.extra.lastUsedItem != g_ItemTriggerItemIds[i]; i++);
+        for (i = 0; PLAYER_EXTRA().lastUsedItem != g_ItemTriggerItemIds[i]; i++);
 
         g_MapEventData         = g_ItemEvents[i];
-        g_MapEventLastUsedItem = g_SysWork.playerWork.extra.lastUsedItem;
+        g_MapEventLastUsedItem = PLAYER_EXTRA().lastUsedItem;
         g_MapEventSysState     = g_MapEventData->sysState;
         g_MapEventParam        = g_MapEventData->eventParam;
 
-        g_SysWork.playerWork.extra.lastUsedItem = InvItemId_Unequipped;
+        PLAYER_EXTRA().lastUsedItem = InvItemId_Unequipped;
         Event_ItemTriggersClear();
         return;
     }
@@ -122,12 +122,12 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
                 pointRadiusX = mapPoint->triggerParam0 * Q12(0.25f);
                 pointRadiusZ = mapPoint->triggerParam1 * Q12(0.25f);
 
-                if (ABS(g_SysWork.playerWork.player.position.vx - pointPosX) > pointRadiusX)
+                if (ABS(PLAYER_CHARA().position.vx - pointPosX) > pointRadiusX)
                 {
                     continue;
                 }
 
-                if (ABS(g_SysWork.playerWork.player.position.vz - pointPosZ) > pointRadiusZ)
+                if (ABS(PLAYER_CHARA().position.vz - pointPosZ) > pointRadiusZ)
                 {
                     continue;
                 }
@@ -224,9 +224,9 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
 
     if (g_TickCount > D_800A9A20)
     {
-        rotY       = g_SysWork.playerWork.player.rotation.vy;
-        D_800A9A24 = g_SysWork.playerWork.player.position.vx - DIV_FAST(Math_Sin(rotY), 8);
-        D_800A9A28 = g_SysWork.playerWork.player.position.vz - DIV_FAST(Math_Cos(rotY), 8);
+        rotY       = PLAYER_CHARA().rotation.vy;
+        D_800A9A24 = PLAYER_CHARA().position.vx - DIV_FAST(Math_Sin(rotY), 8);
+        D_800A9A28 = PLAYER_CHARA().position.vz - DIV_FAST(Math_Cos(rotY), 8);
         D_800A9A20 = g_TickCount;
     }
 
@@ -247,7 +247,7 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
         return false;
     }
 
-    deltaRotY = g_SysWork.playerWork.player.rotation.vy - ratan2(deltaX, deltaZ);
+    deltaRotY = PLAYER_CHARA().rotation.vy - ratan2(deltaX, deltaZ);
     if (deltaRotY >= Q12_ANGLE(180.0f))
     {
         deltaRotY -= Q12_ANGLE(360.0f);
@@ -279,13 +279,13 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     s32    scaledSinPlayerRotY;
     s32    scaledCosRotY;
 
-    halfSinRotY   = DIV_FAST(Math_Sin(g_SysWork.playerWork.player.rotation.vy), 2);
+    halfSinRotY   = DIV_FAST(Math_Sin(PLAYER_CHARA().rotation.vy), 2);
     scaledCosRotY = -Math_Cos(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0)) * mapPoint->triggerParam1;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
     temp_a0_2 = DIV_FAST(scaledCosRotY, 16);
-    deltaX    = mapPoint->positionX - g_SysWork.playerWork.player.position.vx;
+    deltaX    = mapPoint->positionX - PLAYER_CHARA().position.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
 
@@ -304,14 +304,14 @@ bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
     {
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
-            halfCosPlayerRotY   = DIV_FAST(Math_Cos(g_SysWork.playerWork.player.rotation.vy), 2);
+            halfCosPlayerRotY   = DIV_FAST(Math_Cos(PLAYER_CHARA().rotation.vy), 2);
             scaledSinPlayerRotY = Math_Sin(Q12_ANGLE_FROM_Q8(mapPoint->triggerParam0)) *
                                   mapPoint->triggerParam1;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
             temp_a0_2 = DIV_FAST(scaledSinPlayerRotY, 16);
-            deltaZ    = mapPoint->positionZ - g_SysWork.playerWork.player.position.vz;
+            deltaZ    = mapPoint->positionZ - PLAYER_CHARA().position.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;
 
@@ -356,13 +356,13 @@ bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
 
     shift8Field_7 = mapPoint->triggerParam1 << 8;
 
-    deltaX = g_SysWork.playerWork.player.position.vx - mapPoint->positionX;
+    deltaX = PLAYER_CHARA().position.vx - mapPoint->positionX;
     if (mapPoint->triggerParam1 << 9 < ABS(deltaX))
     {
         return false;
     }
 
-    deltaZ = g_SysWork.playerWork.player.position.vz - mapPoint->positionZ;
+    deltaZ = PLAYER_CHARA().position.vz - mapPoint->positionZ;
     scale  = 2;
     if ((shift8Field_7 * scale) < ABS(deltaZ))
     {

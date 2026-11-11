@@ -13,7 +13,6 @@
 
 #define nurseProps      nurse->properties.puppetNurse
 #define localNurseProps localNurse->properties.puppetNurse
-#define playerChara     g_SysWork.playerWork.player
 
 s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse)
 {
@@ -303,12 +302,12 @@ void PuppetNurse_Move(s_SubCharacter* nurse)
     q19_12 distAbs;
     q19_12 limit;
 
-    distToPlayer = Math_Vector2MagCalcSafeQ6(playerChara.position.vx - nurse->position.vx,
-                                             playerChara.position.vz - nurse->position.vz) -
+    distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - nurse->position.vx,
+                                             PLAYER_CHARA().position.vz - nurse->position.vz) -
                    Q12(0.76f);
     distAbs      = ABS(distToPlayer);
 
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, playerChara.position) -
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, PLAYER_CHARA().position) -
                                                    nurse->rotation.vy);
     absAngle           = ABS(angleDeltaToPlayer);
 
@@ -396,7 +395,7 @@ void PuppetNurse_Control1(s_SubCharacter* nurse)
         localNurse->model.stateStep    = 0;
     }
 
-    if (nurseProps.field_11E && playerChara.attackReceived == NO_VALUE)
+    if (nurseProps.field_11E && PLAYER_CHARA().attackReceived == NO_VALUE)
     {
         localNurse->model.controlState = PuppetNurseControl_8;
         localNurse->model.stateStep    = 0;
@@ -483,12 +482,12 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
     q19_12 limit;
 
     distSubtract          = Q12(0.78f);
-    angleDeltaToPlayer    = Math_AngleNormalizeSigned(ratan2(playerChara.position.vx - nurse->position.vx,
-                                                             playerChara.position.vz - nurse->position.vz) -
+    angleDeltaToPlayer    = Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - nurse->position.vx,
+                                                             PLAYER_CHARA().position.vz - nurse->position.vz) -
                                                       nurse->rotation.vy);
     absAngleDeltaToPlayer = ABS(angleDeltaToPlayer);
 
-    headingAngleDeltaFromPlayer = Math_AngleNormalizeSigned(playerChara.rotation.vy - nurse->rotation.vy);
+    headingAngleDeltaFromPlayer = Math_AngleNormalizeSigned(PLAYER_CHARA().rotation.vy - nurse->rotation.vy);
     headingAngleDeltaFromPlayer = ABS(headingAngleDeltaFromPlayer);
 
     if (headingAngleDeltaFromPlayer > Q12_ANGLE(90.0f))
@@ -496,8 +495,8 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
         distSubtract = Q12(0.85f);
     }
 
-    dist    = Math_Vector2MagCalcSafeQ6(playerChara.position.vx - nurse->position.vx,
-                                        playerChara.position.vz - nurse->position.vz) - distSubtract;
+    dist    = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - nurse->position.vx,
+                                        PLAYER_CHARA().position.vz - nurse->position.vz) - distSubtract;
     distAbs = ABS(dist);
 
     if (dist > Q12(0.5f))
@@ -590,7 +589,7 @@ void PuppetNurse_Control5(s_SubCharacter* nurse)
     }
     else if (controlState == 2)
     {
-        if (Chara_AttackReceivedGet(&playerChara) == NO_VALUE)
+        if (Chara_AttackReceivedGet(&PLAYER_CHARA()) == NO_VALUE)
         {
             nurse->model.controlState = PuppetNurseControl_8;
             nurse->model.stateStep    = 0;
@@ -599,7 +598,7 @@ void PuppetNurse_Control5(s_SubCharacter* nurse)
 
         if (nurseProps.field_104 >= Q12(1.5f))
         {
-            playerChara.damage.amount += Q12(D_800AD4C8[EquippedWeaponId_Unk56].field_4);
+            PLAYER_CHARA().damage.amount += Q12(D_800AD4C8[EquippedWeaponId_Unk56].field_4);
             nurseProps.field_104                       = 0;
         }
     }
@@ -647,7 +646,7 @@ void PuppetNurse_Control8(s_SubCharacter* nurse)
     switch (nurse->model.stateStep)
     {
         case 0:
-            angle = Math_AngleNormalizeSigned((playerChara.rotation.vy - nurse->rotation.vy) - Q12_ANGLE(90.0f));
+            angle = Math_AngleNormalizeSigned((PLAYER_CHARA().rotation.vy - nurse->rotation.vy) - Q12_ANGLE(90.0f));
             if (angle < Q12_ANGLE(0.0f))
             {
                 nurseProps.field_104 = -angle;
@@ -762,8 +761,8 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
     // @note Did they forget to make it an if?
     Rng_Rand16();
     localNurseProps.field_11C = Los_CharaHeadingAngleGet(nurse, Q12(1.0f),
-                                                      playerChara.position.vx,
-                                                      playerChara.position.vz,
+                                                      PLAYER_CHARA().position.vx,
+                                                      PLAYER_CHARA().position.vz,
                                                       Q12_ANGLE(360.0f), true);
 
     angle = Math_AngleNormalizeSigned(localNurseProps.field_11C - nurse->rotation.vy);
@@ -812,10 +811,10 @@ void PuppetNurse_Control9(s_SubCharacter* nurse)
 
     localNurse = nurse;
 
-    dist   = Math_Vector2MagCalcSafeQ6(playerChara.position.vx - nurse->position.vx,
-                                       playerChara.position.vz - nurse->position.vz);
+    dist   = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - nurse->position.vx,
+                                       PLAYER_CHARA().position.vz - nurse->position.vz);
 
-    angle    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, playerChara.position) -
+    angle    = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, PLAYER_CHARA().position) -
                                          nurse->rotation.vy);
     angleAbs = ABS(angle);
 
@@ -852,7 +851,7 @@ void PuppetNurse_Control9(s_SubCharacter* nurse)
                 sharedFunc_800CF0B4_3_s03(nurse);
 
                 if (dist < Q12_MULT_PRECISE(localNurseProps.field_124->field_8, Q12(3.0f)) &&
-                    angleAbs < Q12_ANGLE(60.0f) && playerChara.health > Q12(0.0f))
+                    angleAbs < Q12_ANGLE(60.0f) && PLAYER_CHARA().health > Q12(0.0f))
                 {
                     nurse->model.controlState = PuppetNurseControl_12;
                     nurse->model.stateStep    = 0;
@@ -885,8 +884,8 @@ s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse)
     q19_12 absMag;
     q19_12 limit;
 
-    mag    = Math_Vector2MagCalcSafeQ6(playerChara.position.vx - nurse->position.vx,
-                                       playerChara.position.vz - nurse->position.vz) -
+    mag    = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - nurse->position.vx,
+                                       PLAYER_CHARA().position.vz - nurse->position.vz) -
              Q12(0.76f);
     absMag = ABS(mag);
     if (absMag > Q12(0.03f) && nurse->model.anim.status != ANIM_STATUS(PuppetNurseAnim_20, false))
@@ -919,8 +918,8 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse)
     if (Rng_GenerateUInt(0, Q8(1.0f) - 1) >= Q8(0.5f))
     {
         nurseProps.field_11C = Los_CharaHeadingAngleGet(nurse, Q12(1.0f),
-                                                     playerChara.position.vx,
-                                                     playerChara.position.vz,
+                                                     PLAYER_CHARA().position.vx,
+                                                     PLAYER_CHARA().position.vz,
                                                      Q12_ANGLE(360.0f), true);
     }
 
@@ -973,16 +972,16 @@ void PuppetNurse_Control12(s_SubCharacter* nurse)
     s_SubCharacter* localNurse;
 
     animStatus         = nurse->model.anim.status;
-    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, playerChara.position) - nurse->rotation.vy);
+    angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(nurse->position, PLAYER_CHARA().position) - nurse->rotation.vy);
     angleDeltaAbs      = abs(angleDeltaToPlayer);
 
-    distToPlayer = Math_Vector2MagCalcSafeQ6((playerChara.position.vx - nurse->position.vx),
-                                             (playerChara.position.vz - nurse->position.vz));
+    distToPlayer = Math_Vector2MagCalcSafeQ6((PLAYER_CHARA().position.vx - nurse->position.vx),
+                                             (PLAYER_CHARA().position.vz - nurse->position.vz));
 
     distToPlayer = Q12_MULT_FLOAT_PRECISE(distToPlayer, 1.1f);
     cond         = sharedFunc_800CF294_3_s03(nurse, distToPlayer);
 
-    if (playerChara.health < Q12(0.0f) || !cond)
+    if (PLAYER_CHARA().health < Q12(0.0f) || !cond)
     {
         nurse->model.controlState = 9;
         nurse->model.stateStep    = 0;
@@ -1045,7 +1044,7 @@ void PuppetNurse_Control12(s_SubCharacter* nurse)
             }
             else if (distToPlayer < Q12(0.15f))
             {
-                if (!(playerChara.flags & 8))
+                if (!(PLAYER_CHARA().flags & 8))
                 {
                     localNurseProps.field_11E = false;
                     nurse->model.controlState = 1;
@@ -1076,8 +1075,8 @@ void PuppetNurse_Control10(s_SubCharacter* nurse)
         nurse->model.stateStep++;
     }
 
-    dist   = Math_Vector2MagCalcSafeQ6(playerChara.position.vx - nurse->position.vx,
-                                       playerChara.position.vz - nurse->position.vz);
+    dist   = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - nurse->position.vx,
+                                       PLAYER_CHARA().position.vz - nurse->position.vz);
 
     if (sharedFunc_800CF294_3_s03(nurse, dist))
     {
@@ -1136,8 +1135,8 @@ void PuppetNurse_Control11(s_SubCharacter* nurse)
         }
     }
 
-    dist   = Math_Vector2MagCalcSafeQ6(playerChara.position.vx - nurse->position.vx,
-                                       playerChara.position.vz - nurse->position.vz);
+    dist   = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - nurse->position.vx,
+                                       PLAYER_CHARA().position.vz - nurse->position.vz);
 
     if (sharedFunc_800CF294_3_s03(nurse, dist))
     {
@@ -1286,7 +1285,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
             weaponAttack = EquippedWeaponId_Unk56;
         }
 
-        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &playerChara, nurse->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &PLAYER_CHARA(), nurse->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             localNurseProps.flags_122 |= PuppetNurseFlag_0;
         }

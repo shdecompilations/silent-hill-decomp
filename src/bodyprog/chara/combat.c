@@ -122,7 +122,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
         return NO_VALUE;
     }
 
-    if (chara == &g_SysWork.playerWork.player)
+    if (chara == &PLAYER_CHARA())
     {
         baseAnimInfos = D_800297B8;
         mapAnimInfos  = g_MapOverlayHdr.harryMapAnimInfos;
@@ -131,7 +131,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false); // TODO: 38 is the first Harry anim after base anims. Make a constant?
         modelAnim->mapAnimInfos       = mapAnimInfos;
 
-        modelAnim                     = &g_SysWork.playerWork.extra.model.anim;
+        modelAnim                     = &PLAYER_EXTRA().model.anim;
         modelAnim->baseAnimInfos      = baseAnimInfos;
         modelAnim->mapAnimInfos       = mapAnimInfos;
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false);
@@ -162,7 +162,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
     temp_a1         = func_8008A3E0(chara);
     ret             = NO_VALUE;
 
-    if (chara == &g_SysWork.playerWork.player)
+    if (chara == &PLAYER_CHARA())
     {
         count    = 6;
         var_v0_2 = 1;
@@ -191,7 +191,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
 
     if (chara->model.charaId != Chara_Harry)
     {
-        if (g_SysWork.playerWork.player.attackReceived != NO_VALUE)
+        if (PLAYER_CHARA().attackReceived != NO_VALUE)
         {
             ret = 0;
         }
@@ -407,7 +407,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     temp_s1 = sp1C->field_10;
 
-    if (chara == &g_SysWork.playerWork.player)
+    if (chara == &PLAYER_CHARA())
     {
         var_s0 = &((s_PlayerWork*)chara)->extra.model.anim;
     }
@@ -1091,22 +1091,22 @@ bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType) // 0x8008B474
         // NOTE: Sfx_WithFlagsPlay calls Sfx_WithFlagsAndPitchPlay. `soundType` is `pitch` when calling `Sfx_WithFlagsAndPitchPlay` directly.
         if (unkVol > Q12(256.0f))
         {
-            Sfx_WithFlagsPlay(sfxId, &g_SysWork.playerWork.player.position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
+            Sfx_WithFlagsPlay(sfxId, &PLAYER_CHARA().position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
         }
         else
         {
-            Sfx_WithFlagsPlay(sfxId, &g_SysWork.playerWork.player.position, Q8_CLAMPED(0.0f), soundType);
+            Sfx_WithFlagsPlay(sfxId, &PLAYER_CHARA().position, Q8_CLAMPED(0.0f), soundType);
         }
     }
     else
     {
         if (unkVol > Q12(256.0f))
         {
-            Sfx_WithFlagsAndPitchPlay(sfxId, &g_SysWork.playerWork.player.position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
+            Sfx_WithFlagsAndPitchPlay(sfxId, &PLAYER_CHARA().position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
         }
         else
         {
-            Sfx_WithFlagsAndPitchPlay(sfxId, &g_SysWork.playerWork.player.position, 0, 4, soundType);
+            Sfx_WithFlagsAndPitchPlay(sfxId, &PLAYER_CHARA().position, 0, 4, soundType);
         }
     }
 
@@ -1218,7 +1218,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
     sp14         = attacker->field_44.field_8;
     offsetZ       = arg3;
 
-    if (target == &g_SysWork.playerWork.player)
+    if (target == &PLAYER_CHARA())
     {
         sp10             = NO_VALUE;
         target->field_40 = (((s32)((u32)((u8*)attacker - sizeof(s_PlayerWork)) - (u32)target) * -0x6EB3E453) >> 3);
@@ -1344,7 +1344,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
             break;
 
         default:
-            if (target != &g_SysWork.playerWork.player && !(target->flags & CharaFlag_Hit))
+            if (target != &PLAYER_CHARA() && !(target->flags & CharaFlag_Hit))
             {
                 damageAmount *= 4;
             }
@@ -1683,7 +1683,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         sp4C -= *(u16*)&arg2->field_A >> 1;
     }
 
-    if (chara == &g_SysWork.playerWork.player)
+    if (chara == &PLAYER_CHARA())
     {
         chara0 = (u8*)chara + sizeof(s_PlayerWork);
         var_v0 = 6;
@@ -1691,7 +1691,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     }
     else
     {
-        chara0 = &g_SysWork.playerWork.player;
+        chara0 = &PLAYER_CHARA();
         var_v0 = 1;
         var_v1 = -1;
     }
@@ -1713,7 +1713,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     for (i = var_v0; i > 0; i--, chara1++, sp18 *= 2)
     {
         if (g_SysWork.sysState == SysState_GameOver ||
-            g_SysWork.playerWork.player.health <= Q12(0.0f) ||
+            PLAYER_CHARA().health <= Q12(0.0f) ||
             chara1 == chara ||
             chara1->model.charaId == Chara_None ||
             chara1->health < Q12(0.0f) ||

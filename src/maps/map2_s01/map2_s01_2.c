@@ -224,7 +224,6 @@ void func_800CED88(void) // 0x800CED88
     s_SubCharacter* dahlia;
 
     #define dahliaChara (&g_SysWork.npcs[0])
-    #define playerChara (&g_SysWork.playerWork.player)
 
     if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
@@ -249,7 +248,7 @@ void func_800CED88(void) // 0x800CED88
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, playerChara, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, dahliaChara, 0, false);
             func_8003D03C();
 
@@ -276,7 +275,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, playerChara, 113, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 113, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -312,7 +311,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 8:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimReset, playerChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimReset, &PLAYER_CHARA(), 0, false);
             Event_WaitTimer(Q12(0.8f), false);
             break;
 
@@ -411,7 +410,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 23:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, playerChara, 111, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 111, false);
             SysWork_StateStepIncrement(0);
 
         case 24:
@@ -528,7 +527,7 @@ void func_800CED88(void) // 0x800CED88
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&playerChara->position, (SVECTOR3*)&playerChara->rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, (SVECTOR3*)&PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
         Dms_CharacterTransformGet(&dahliaChara->position, (SVECTOR3*)&dahliaChara->rotation, "DAHLIA", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);

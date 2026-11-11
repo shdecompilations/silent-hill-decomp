@@ -44,13 +44,13 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
     q3_12              adjMoveOffsetZ;
 
     cond = false;
-    if (g_SysWork.playerWork.extra.state < PlayerState_Unk58)
+    if (PLAYER_EXTRA().state < PlayerState_Unk58)
     {
         cond = true;
     }
 
 #if defined(MAP0_S00)
-    else if (g_SysWork.playerWork.extra.state == PlayerState_Unk74)
+    else if (PLAYER_EXTRA().state == PlayerState_Unk74)
     {
         cond = g_SavegamePtr->mapIdx == MapIdx_MAP1_S02;
     }
@@ -63,7 +63,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
     else
     {
-        switch (g_SysWork.playerWork.extra.state)
+        switch (PLAYER_EXTRA().state)
         {
 #ifdef HAS_PlayerState_Unk128
             case PlayerState_Unk128:
@@ -121,7 +121,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 #endif
 
 #if defined(MAP0_S01)
-    if (g_SysWork.playerWork.extra.state == PlayerState_WalkForward)
+    if (PLAYER_EXTRA().state == PlayerState_WalkForward)
     {
         cond = false;
     }
@@ -204,9 +204,9 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         player->position.vx += offset.vx;
         player->position.vz += offset.vz;
 
-        if (g_SysWork.playerWork.extra.state < PlayerState_Unk87 ||
-            (g_SysWork.playerWork.extra.state >= PlayerState_Unk89 &&
-             g_SysWork.playerWork.extra.state != PlayerState_Unk106))
+        if (PLAYER_EXTRA().state < PlayerState_Unk87 ||
+            (PLAYER_EXTRA().state >= PlayerState_Unk89 &&
+             PLAYER_EXTRA().state != PlayerState_Unk106))
         {
             player->position.vy = Q12(0.0f);
         }
@@ -230,7 +230,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* player, s_PlayerExtra* extra, GsC
 
 void Player_CutsceneWeaponUnequip(void)
 {
-    g_SysWork.playerCombat.weaponAttack = NO_VALUE;
+    PLAYER_COMBAT().weaponAttack = NO_VALUE;
     g_SavegamePtr->equippedWeapon       = InvItemId_Unequipped;
 
     Player_ControlFreeze();
@@ -247,8 +247,8 @@ void Player_ControlFreeze(void)
     s_PlayerExtra*  playerExtra;
     s_SubCharacter* playerChara;
 
-    playerExtra = &g_SysWork.playerWork.extra;
-    playerChara = &g_SysWork.playerWork.player;
+    playerExtra = &PLAYER_EXTRA();
+    playerChara = &PLAYER_CHARA();
 
     g_Player_PrevWeaponAttack = NO_VALUE;
 
@@ -281,14 +281,14 @@ void Player_ControlFreeze(void)
 
     sharedData_800E39D8_0_s00 = 0;
 
-    playerChara->collision.cylinder.innerRadius                  = Q12(0.0f);
-    g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
-    playerChara->flags                                      |= CharaFlag_Unk4;
-    playerChara->collision.state                             = CharaCollisionState_4;
+    playerChara->collision.cylinder.innerRadius  = Q12(0.0f);
+    PLAYER_PROPS().flags                        |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
+    playerChara->flags                          |= CharaFlag_Unk4;
+    playerChara->collision.state                 = CharaCollisionState_4;
 
-    if (g_SysWork.playerCombat.weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
-        g_SysWork.playerCombat.weaponAttack = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack);
+        PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack);
     }
 }
 
@@ -299,14 +299,14 @@ void Player_ControlUnfreeze(bool setIdle)
 
     g_Player_DisableControl = false;
 
-    extra  = &g_SysWork.playerWork.extra;
-    player = &g_SysWork.playerWork.player;
+    extra  = &PLAYER_EXTRA();
+    player = &PLAYER_CHARA();
 
     if (setIdle)
     {
-        g_SysWork.playerWork.extra.state          = PlayerState_None;
-        g_SysWork.playerWork.extra.upperBodyState = PlayerUpperBodyState_None;
-        g_SysWork.playerWork.extra.lowerBodyState = PlayerLowerBodyState_None;
+        PLAYER_EXTRA().state          = PlayerState_None;
+        PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_None;
+        PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_None;
 
         // TODO: Will `Chara_AnimSet` work here?
         player->model.anim.status      = ANIM_STATUS(HarryAnim_Idle, true);
@@ -346,14 +346,14 @@ void Player_ControlUnfreeze(bool setIdle)
     g_Player_IsSteppingLeftHold  = false;
     g_Player_IsTurningLeft       = false;
 
-    g_SysWork.playerCombat.isAiming = false;
+    PLAYER_COMBAT().isAiming = false;
 
     player->collision.cylinder.innerRadius = DEFAULT_PLAYER_CYLINDER_INNER_RADIUS;
     Player_CollisionReset();
-    g_SysWork.playerWork.player.properties.player.flags &= ~(PlayerFlag_Unk2 |
-                                                             PlayerFlag_SfxActive |
-                                                             PlayerFlag_DamageReceived |
-                                                             PlayerFlag_Moving);
+    PLAYER_PROPS().flags &= ~(PlayerFlag_Unk2 |
+                              PlayerFlag_SfxActive |
+                              PlayerFlag_DamageReceived |
+                              PlayerFlag_Moving);
 
     player->flags          &= ~CharaFlag_Unk4;
     player->collision.state = CharaCollisionState_Npc;
@@ -385,8 +385,8 @@ bool Player_PathWaypointExecute(s32 playerExtraState, VECTOR3* vec, q3_12 angle,
     s_PlayerExtra*  playerExtra;
 
     angle       = Q12_ANGLE_ABS(angle);
-    playerExtra = &g_SysWork.playerWork.extra;
-    playerChara = &g_SysWork.playerWork.player;
+    playerExtra = &PLAYER_EXTRA();
+    playerChara = &PLAYER_CHARA();
     localVec    = vec;
 
     g_Player_FlexRotationY = Q12_ANGLE(0.0f);
@@ -584,10 +584,10 @@ bool Player_PathWaypointExecute(s32 playerExtraState, VECTOR3* vec, q3_12 angle,
             break;
 
         case 8:
-            g_Player_AnimResetRequest                                                              = true;
-            sharedData_800E39E0_0_s00                                               = 0;
-            D_800C4588                                                              = 0;
-            g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
+            g_Player_AnimResetRequest = true;
+            sharedData_800E39E0_0_s00 = 0;
+            D_800C4588                = 0;
+            PLAYER_PROPS().moveSpeed  = Q12(0.0f);
             return true;
     }
 #endif
@@ -599,10 +599,10 @@ void Player_AnimStateSet(s32 playerExtraState)
     s_SubCharacter* player;
     s_PlayerExtra*  extra;
 
-    extra  = &g_SysWork.playerWork.extra;
-    player = &g_SysWork.playerWork.player;
+    extra  = &PLAYER_EXTRA();
+    player = &PLAYER_CHARA();
 
-    g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
+    PLAYER_PROPS().moveSpeed = Q12(0.0f);
 
     g_Player_AnimResetRequest = false;
 
@@ -640,7 +640,7 @@ void Player_AnimLock(void)
 
 s32 Player_AnimIsLocked(void)
 {
-    return ~(g_SysWork.playerWork.player.model.anim.flags & AnimFlag_Unlocked);
+    return ~(PLAYER_CHARA().model.anim.flags & AnimFlag_Unlocked);
 }
 
 void Player_AnimUnlock(void)
@@ -654,7 +654,7 @@ s32 Player_AnimPlaybackStateGet(void)
     s_AnimInfo* animInfo;
 
     // NOTE: There are 37 base anims for Harry. 38 and beyond are map-specific.
-    model    = &g_SysWork.playerWork.player.model;
+    model    = &PLAYER_CHARA().model;
     animInfo = &g_MapOverlayHdr.harryMapAnimInfos[model->anim.status - ANIM_STATUS(38, false)];
 
     if (animInfo->playbackFunc == Anim_PlayOnce)
@@ -684,21 +684,21 @@ s32 Player_AnimPlaybackStateGet(void)
 
 bool Player_MoveSpeedIsZero(void)
 {
-    return g_SysWork.playerWork.player.properties.player.moveSpeed == Q12(0.0f);
+    return PLAYER_PROPS().moveSpeed == Q12(0.0f);
 }
 
 void Player_MoveSpeedClear(void)
 {
-    g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
+    PLAYER_PROPS().moveSpeed = Q12(0.0f);
 }
 
 void sharedFunc_800D2E6C_0_s00(void)
 {
 #if defined(MAP0_S01)
-    g_SysWork.playerCombat.weaponAttack = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
-    WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
+    PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
+    WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
 
-    g_SysWork.playerCombat.weaponAttack = NO_VALUE;
+    PLAYER_COMBAT().weaponAttack = NO_VALUE;
 
     func_8003D03C();
 #endif
@@ -710,18 +710,14 @@ void Player_FallBackward(void)
     s_SubCharacter* player;
     s_PlayerExtra*  playerExtra;
 
-    #define playerProps g_SysWork.playerWork.player.properties.player
+    player      = &PLAYER_CHARA();
+    playerExtra = &PLAYER_EXTRA();
 
-    player      = &g_SysWork.playerWork.player;
-    playerExtra = &g_SysWork.playerWork.extra;
-
-    playerProps.moveSpeed = Q12(2.3f);
-    playerProps.headingAngle     = Q12_ANGLE(180.0f);
-    g_Player_HeadingAngle        = Q12_ANGLE(180.0f);
+    PLAYER_PROPS().moveSpeed    = Q12(2.3f);
+    PLAYER_PROPS().headingAngle = Q12_ANGLE(180.0f);
+    g_Player_HeadingAngle       = Q12_ANGLE(180.0f);
 
     Player_ExtraStateSet(player, playerExtra, PlayerState_FallBackward);
-
-    #undef playerProps
 #endif
 }
 
@@ -733,8 +729,8 @@ void Player_DamageFeetFront(void)
     s_SubCharacter* playerChara;
     s_PlayerExtra*  playerExtra;
 
-    playerChara = &g_SysWork.playerWork.player;
-    playerExtra = &g_SysWork.playerWork.extra;
+    playerChara = &PLAYER_CHARA();
+    playerExtra = &PLAYER_EXTRA();
 
     Sfx_WithFlagsPlay(Sfx_HarryFallGasp, &playerChara->position, Q8(1.0f / 8.0f), SfxFlag_None);
 
@@ -751,8 +747,8 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     s_SubCharacter* playerChara;
     s_PlayerExtra*  playerExtra;
 
-    playerChara = &g_SysWork.playerWork.player;
-    playerExtra = &g_SysWork.playerWork.extra;
+    playerChara = &PLAYER_CHARA();
+    playerExtra = &PLAYER_EXTRA();
 
     if (vec->vx == 0 && vec->vz == 0)
     {
@@ -763,7 +759,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     }
     else
     {
-        g_SysWork.playerWork.player.properties.player.field_118 = Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz));
+        PLAYER_PROPS().field_118 = Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz));
     }
 
     if (posX == Q12(0.0f) && posZ == Q12(0.0f))
@@ -785,15 +781,15 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 
     if (vecSqr > Q12(0.75f))
     {
-        if (g_SysWork.playerWork.extra.state <  PlayerState_DamagePushBack ||
-            g_SysWork.playerWork.extra.state >= PlayerState_Unk31)
+        if (PLAYER_EXTRA().state <  PlayerState_DamagePushBack ||
+            PLAYER_EXTRA().state >= PlayerState_Unk31)
         {
             angle = Q12_ANGLE_ABS(Q12_ANGLE_ABS(ratan2(vec->vx, vec->vz)) - (u16)playerChara->rotation.vy);
 
             if (D_800D587C > Q12(1.75f))
             {
-                if (g_SysWork.playerWork.extra.state >= 23 &&
-                    g_SysWork.playerWork.extra.state <  27)
+                if (PLAYER_EXTRA().state >= 23 &&
+                    PLAYER_EXTRA().state <  27)
                 {
                     playerChara->model.stateStep    = 0;
                     playerChara->model.controlState = 0;
@@ -813,10 +809,10 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
                 Sfx_WithFlagsPlay(Sfx_Unk1326, &playerChara->position, Q8(1.0f / 8.0f), SfxFlag_None);
             }
-            else if ((g_SysWork.playerWork.extra.state <  PlayerState_DamageTorsoBack ||
-                      g_SysWork.playerWork.extra.state >= PlayerState_DamageFeetFront) &&
-                     g_SysWork.playerWork.extra.state != PlayerState_DamagePushBack &&
-                     g_SysWork.playerWork.extra.state != PlayerState_DamagePushFront)
+            else if ((PLAYER_EXTRA().state <  PlayerState_DamageTorsoBack ||
+                      PLAYER_EXTRA().state >= PlayerState_DamageFeetFront) &&
+                     PLAYER_EXTRA().state != PlayerState_DamagePushBack &&
+                     PLAYER_EXTRA().state != PlayerState_DamagePushFront)
             {
                 if (angle >= Q12_ANGLE(45.0f) && angle < Q12_ANGLE(135.0f))
                 {
@@ -838,14 +834,14 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
             }
 
-            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Unk12;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Unk12;
 
             playerChara->properties.player.afkTimer = Q12(0.0f);
             playerChara->properties.player.field_F4 = 0;
-            g_SysWork.playerCombat.isAiming         = false;
+            PLAYER_COMBAT().isAiming         = false;
             playerChara->field_44.field_0           = NO_VALUE;
 
-            g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Unk9;
+            PLAYER_PROPS().flags &= ~PlayerFlag_Unk9;
 
             playerChara->field_44.field_0 = NO_VALUE; // Redundant set needed for match.
         }
@@ -860,18 +856,18 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
         playerChara->damage.amount = SquareRoot0(vecSqr) * 64;
     }
 
-    if (!(g_SysWork.playerWork.player.properties.player.flags & PlayerFlag_DamageReceived) &&
+    if (!(PLAYER_PROPS().flags & PlayerFlag_DamageReceived) &&
         vecSqr > Q12(0.75f) && vecSqr <= Q12(1.75f))
     {
         Sfx_WithFlagsPlay(Sfx_Unk1327, &playerChara->position, Q8(1.0f / 8.0f), SfxFlag_None);
 
         playerChara->properties.player.field_10C = 64;
-        g_SysWork.playerWork.player.properties.player.flags |= PlayerFlag_DamageReceived;
+        PLAYER_PROPS().flags |= PlayerFlag_DamageReceived;
     }
 
     if (playerChara->damage.amount != Q12(0.0f))
     {
-        g_SysWork.playerWork.player.properties.player.flags &= ~PlayerFlag_Unk2;
+        PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;
 
         playerChara->health -= playerChara->damage.amount;
         func_800893D0(playerChara->damage.amount);
@@ -888,12 +884,12 @@ bool sharedFunc_800D2E94_0_s00(void)
 
     npc = &g_SysWork.npcs[5];
 
-    if (g_SysWork.playerWork.player.position.vx < Q12(-255.0f) &&
-        g_SysWork.playerWork.player.position.vz > Q12(-110.0f) &&
-        g_SysWork.playerWork.player.position.vz < Q12(-100.0f))
+    if (PLAYER_CHARA().position.vx < Q12(-255.0f) &&
+        PLAYER_CHARA().position.vz > Q12(-110.0f) &&
+        PLAYER_CHARA().position.vz < Q12(-100.0f))
     {
-        playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - g_SysWork.playerWork.player.position.vx) +
-                                 SQUARE(Q12(-104.0f) - g_SysWork.playerWork.player.position.vz));
+        playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - PLAYER_CHARA().position.vx) +
+                                 SQUARE(Q12(-104.0f) - PLAYER_CHARA().position.vz));
 
         if (npc->model.controlState == 0 || npc->model.stateStep == 0)
         {
@@ -924,7 +920,7 @@ bool sharedFunc_800D2E94_0_s00(void)
         {
             if (playerDist < Q12(2.0f) &&
                 Savegame_EventFlagGet(EventFlag_167) && !Savegame_EventFlagGet(EventFlag_168) &&
-                g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
+                PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
             {
                 npc->model.charaId = Chara_Padlock;
             }
@@ -955,13 +951,13 @@ bool sharedFunc_800D2E94_0_s00(void)
 
         if (npc->damage.amount != Q12(0.0f))
         {
-            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat.weaponAttack) == EquippedWeaponId_KitchenKnife)
+            if (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_KitchenKnife)
             {
                 npc->damage.amount >>= 1;
             }
 
             // Apply `damageReceived` to character health.
-            if (g_SysWork.playerCombat.weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 npc->health = NO_VALUE;
             }
@@ -1004,9 +1000,9 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     q3_12   angle0;
     bool    isInFront;
 
-    g_SysWork.playerWork.player.properties.player.moveSpeed = Q12(0.0f);
-    g_SysWork.playerWork.player.headingAngle                = Q12_ANGLE(0.0f);
-    isInFront                                               = Math_AngleFrontCheck(*angle, g_SysWork.playerWork.player.rotation.vy);
+    PLAYER_PROPS().moveSpeed = Q12(0.0f);
+    PLAYER_CHARA().headingAngle                = Q12_ANGLE(0.0f);
+    isInFront                                               = Math_AngleFrontCheck(*angle, PLAYER_CHARA().rotation.vy);
 
     // @hack Permuter find, needed for match.
     angle--;
@@ -1023,20 +1019,20 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
         D_800C4610.vz = *offsetZ + FP_FROM((-Math_Sin(*angle) * -0xCB) + (Math_Cos(*angle) * 0x3C6), Q12_SHIFT);
     }
 
-    headingAngle = g_SysWork.playerWork.player.headingAngle;
+    headingAngle = PLAYER_CHARA().headingAngle;
     vec.vx       = Math_Sin(headingAngle); // @unused
     vec.vx       = Q12(0.0f);
     vec.vz       = Math_Cos(headingAngle); // @unused
     vec.vz       = Q12(0.0f);
 
-    vec.vx = D_800C4610.vx - g_SysWork.playerWork.player.position.vx;
-    vec.vz = D_800C4610.vz - g_SysWork.playerWork.player.position.vz;
-    vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork.player.fallSpeed, g_DeltaTime);
+    vec.vx = D_800C4610.vx - PLAYER_CHARA().position.vx;
+    vec.vz = D_800C4610.vz - PLAYER_CHARA().position.vz;
+    vec.vy = Q12_MULT_PRECISE(PLAYER_CHARA().fallSpeed, g_DeltaTime);
 
-    Collision_WallDetect(&g_Player_CollisionResult, &vec, &g_SysWork.playerWork.player);
+    Collision_WallDetect(&g_Player_CollisionResult, &vec, &PLAYER_CHARA());
 
-    D_800C4610.vx = g_SysWork.playerWork.player.position.vx + g_Player_CollisionResult.offset.vx;
-    D_800C4610.vz = g_SysWork.playerWork.player.position.vz + g_Player_CollisionResult.offset.vz;
+    D_800C4610.vx = PLAYER_CHARA().position.vx + g_Player_CollisionResult.offset.vx;
+    D_800C4610.vz = PLAYER_CHARA().position.vz + g_Player_CollisionResult.offset.vz;
 
     // TODO: Convert hex to float or fraction.
     if (!isInFront)
@@ -1056,15 +1052,15 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 
 s32 Player_PropertyField10DGet(void)
 {
-    return g_SysWork.playerWork.player.properties.player.field_10D;
+    return PLAYER_PROPS().field_10D;
 }
 
 void Player_EmptyWeaponHandSet(void)
 {
     u8 prevWeaponAttack;
 
-    prevWeaponAttack                    = g_SysWork.playerCombat.weaponAttack;
-    g_SysWork.playerCombat.weaponAttack = NO_VALUE;
+    prevWeaponAttack                    = PLAYER_COMBAT().weaponAttack;
+    PLAYER_COMBAT().weaponAttack = NO_VALUE;
     g_Player_PrevWeaponAttack           = prevWeaponAttack;
 
     WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandEmpty));
@@ -1072,6 +1068,6 @@ void Player_EmptyWeaponHandSet(void)
 
 void Player_WeaponAttackRestore(void)
 {
-    g_SysWork.playerCombat.weaponAttack = g_Player_PrevWeaponAttack;
+    PLAYER_COMBAT().weaponAttack = g_Player_PrevWeaponAttack;
 }
 

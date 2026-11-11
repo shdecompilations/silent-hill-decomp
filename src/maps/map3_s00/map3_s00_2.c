@@ -215,7 +215,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 6:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 7, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 0x73, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 0x73, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -284,7 +284,7 @@ void func_800D0CF8(void) // 0x800D0CF8
         case 15:
             g_Cutscene_Timer = Q12(110.0f);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
             SysWork_StateStepIncrement(0);
 
@@ -361,7 +361,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 26:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 0x48, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 0x48, false);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -382,7 +382,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 28:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 10, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             SysWork_StateStepIncrement(0);
 
         case 29:
@@ -457,7 +457,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader* )FS_BUFFER_15);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader* )FS_BUFFER_15);
         Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
@@ -514,11 +514,11 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
             WorldObjects_Add(&g_WorldObject5.object, &g_WorldObject5.position, &g_WorldObject5.rotation);
         }
 
-        if (!Savegame_EventFlagGet(EventFlag_200) && (g_SysWork.playerWork.player.position.vx < Q12(24.0f)))
+        if (!Savegame_EventFlagGet(EventFlag_200) && (PLAYER_CHARA().position.vx < Q12(24.0f)))
         {
             tmp = Rng_Rand16() % Q12(3.0f);
             rand0 = tmp;
-            diff = g_SysWork.playerWork.player.position.vx - Q12(24.0f);
+            diff = PLAYER_CHARA().position.vx - Q12(24.0f);
 
             if (diff >= 0)
             {
@@ -526,7 +526,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
             }
             else
             {
-                x = (Q12(24.0f) - g_SysWork.playerWork.player.position.vx) / 3;
+                x = (Q12(24.0f) - PLAYER_CHARA().position.vx) / 3;
             }
 
             if (rand0 < Math_Sin(x))

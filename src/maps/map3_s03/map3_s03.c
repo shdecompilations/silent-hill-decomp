@@ -659,13 +659,13 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 146, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 146, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, true, 2, Q12(0.0f), false);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-62.38f);
-            g_SysWork.playerWork.player.position.vz = Q12(-59.66f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(320.9f);
+            PLAYER_CHARA().position.vx = Q12(-62.38f);
+            PLAYER_CHARA().position.vz = Q12(-59.66f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(320.9f);
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(-61.03f), Q12(-2.14f), Q12(-62.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -715,12 +715,12 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 11:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 147, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 147, false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 12:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &PLAYER_CHARA(), 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -733,7 +733,7 @@ void func_800D27F4(void) // 0x800D27F4
             SysWork_StateStepIncrement(0);
 
         case 15:
-            Event_CharaAnimUnlockPlayToEnd(&g_SysWork.playerWork.player);
+            Event_CharaAnimUnlockPlayToEnd(&PLAYER_CHARA());
             break;
 
         default:
@@ -788,16 +788,16 @@ void func_800D2CDC(void) // 0x800D2CDC
 
         case 2:
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-139.7f);
-            g_SysWork.playerWork.player.position.vy = Q12(0.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(61.4f);
-            g_SysWork.playerWork.player.rotation.vy = ratan2(Q12(-2.0f), Q12(-1.2f));
+            PLAYER_CHARA().position.vx = Q12(-139.7f);
+            PLAYER_CHARA().position.vy = Q12(0.0f);
+            PLAYER_CHARA().position.vz = Q12(61.4f);
+            PLAYER_CHARA().rotation.vy = ratan2(Q12(-2.0f), Q12(-1.2f));
 
             WorldGfx_PlayerHeldItemSet(InvItemId_CutsceneBloodPack);
             Fs_QueueWaitForEmpty();
 
             func_8003D01C();
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 154, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 154, false);
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(-139.3f), Q12(-2.9f), Q12(65.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -807,7 +807,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             break;
 
         case 3:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &PLAYER_CHARA(), 0, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -815,7 +815,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), 0, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -829,12 +829,12 @@ void func_800D2CDC(void) // 0x800D2CDC
                 g_SysWork.npcs[i].model.controlState = state;
             }
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 51, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
 
             func_800625F4(&Q12_VECTOR3(-141.7f, 0.0f, 60.2f), 110, 15, 0);
             func_800625F4(&Q12_VECTOR3(-141.7f, 0.0f, 60.2f), 100, 15, 0);
             func_8003D03C();
-            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat);
+            WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(-140.45f), Q12(0.03f), Q12(59.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -1113,7 +1113,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D429C
 
             if (!Savegame_EventFlagGet(EventFlag_239) &&
                 Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle) &&
-                g_SysWork.playerWork.player.position.vz > Q12(-18.2f))
+                PLAYER_CHARA().position.vz > Q12(-18.2f))
             {
                 Sfx_WithFlagsPlay(Sfx_Unk1528, &Q12_VECTOR3(-140.0f, -1.2f, -23.5f), Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_239);

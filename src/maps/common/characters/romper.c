@@ -294,12 +294,12 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
     if (unkHealth < romper->health)
     {
-        romperProps.targetPositionX_FC  = g_SysWork.playerWork.player.position.vx;
-        romperProps.targetPositionZ_100 = g_SysWork.playerWork.player.position.vz;
+        romperProps.targetPositionX_FC  = PLAYER_CHARA().position.vx;
+        romperProps.targetPositionZ_100 = PLAYER_CHARA().position.vz;
         romperProps.field_10E     = 0;
 
-        romperProps.rotationY_F2 = ratan2(g_SysWork.playerWork.player.position.vx - romper->position.vx,
-                                          g_SysWork.playerWork.player.position.vz - romper->position.vz);
+        romperProps.rotationY_F2 = ratan2(PLAYER_CHARA().position.vx - romper->position.vx,
+                                          PLAYER_CHARA().position.vz - romper->position.vz);
 
         switch (romper->model.anim.status)
         {
@@ -567,11 +567,11 @@ void Romper_Control_3(s_SubCharacter* romper)
 
     if (var_s0)
     {
-        romperProps.targetPositionX_FC = g_SysWork.playerWork.player.position.vx +
-                                                    (Q12_MULT(g_SysWork.playerWork.player.moveSpeed, Math_Sin(g_SysWork.playerWork.player.headingAngle)) >> 1);
+        romperProps.targetPositionX_FC = PLAYER_CHARA().position.vx +
+                                                    (Q12_MULT(PLAYER_CHARA().moveSpeed, Math_Sin(PLAYER_CHARA().headingAngle)) >> 1);
 
-        romperProps.targetPositionZ_100 = g_SysWork.playerWork.player.position.vz +
-                                                     (Q12_MULT(g_SysWork.playerWork.player.moveSpeed, Math_Cos(g_SysWork.playerWork.player.headingAngle)) >> 1);
+        romperProps.targetPositionZ_100 = PLAYER_CHARA().position.vz +
+                                                     (Q12_MULT(PLAYER_CHARA().moveSpeed, Math_Cos(PLAYER_CHARA().headingAngle)) >> 1);
         romperProps.field_10E = 0;
     }
     else
@@ -596,7 +596,7 @@ void Romper_Control_3(s_SubCharacter* romper)
     distToTarget = Math_Vector2MagCalcSafeQ6(romper->position.vx - romperProps.targetPositionX_FC,
                                        romper->position.vz - romperProps.targetPositionZ_100);
 
-    cond = Los_NpcToPlayerHitCheck(romper, &g_SysWork.playerWork.player);
+    cond = Los_NpcToPlayerHitCheck(romper, &PLAYER_CHARA());
 
     if (!(romperProps.flags & RomperFlag_3))
     {
@@ -701,12 +701,12 @@ void Romper_Control_3(s_SubCharacter* romper)
         }
     }
 
-    if (g_SysWork.playerWork.player.health <= Q12(0.0f))
+    if (PLAYER_CHARA().health <= Q12(0.0f))
     {
         return;
     }
 
-    player = &g_SysWork.playerWork.player;
+    player = &PLAYER_CHARA();
 
     if (player->flags & RomperFlag_3)
     {
@@ -720,8 +720,8 @@ void Romper_Control_3(s_SubCharacter* romper)
     }
 
     if (romper->fallSpeed != Q12(0.0f) || distToTarget <= Q12(0.3f) || distToTarget >= Q12(3.2f) ||
-        (romper->position.vy - g_SysWork.playerWork.player.position.vy) >= Q12(1.0f) ||
-        (romper->position.vy - g_SysWork.playerWork.player.position.vy) <= Q12(-1.2f))
+        (romper->position.vy - PLAYER_CHARA().position.vy) >= Q12(1.0f) ||
+        (romper->position.vy - PLAYER_CHARA().position.vy) <= Q12(-1.2f))
     {
         return;
     }
@@ -731,8 +731,8 @@ void Romper_Control_3(s_SubCharacter* romper)
         return;
     }
 
-    if (ABS(Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - romper->position.vx,
-                                             g_SysWork.playerWork.player.position.vz - romper->position.vz) -
+    if (ABS(Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - romper->position.vx,
+                                             PLAYER_CHARA().position.vz - romper->position.vz) -
                                       romper->rotation.vy)) < Q12_ANGLE(30.0f))
     {
         romper->model.controlState    = RomperControl_Jump;
@@ -772,8 +772,8 @@ void Romper_Control_4(s_SubCharacter* romper)
 
     if (var_s0 != 0)
     {
-        romperProps.targetPositionX_FC  = g_SysWork.playerWork.player.position.vx;
-        romperProps.targetPositionZ_100 = g_SysWork.playerWork.player.position.vz;
+        romperProps.targetPositionX_FC  = PLAYER_CHARA().position.vx;
+        romperProps.targetPositionZ_100 = PLAYER_CHARA().position.vz;
         romperProps.field_10E     = 0;
     }
     else
@@ -787,8 +787,8 @@ void Romper_Control_4(s_SubCharacter* romper)
     {
         romperProps.rotationY_F2 = Q12_ANGLE(0.0f);
 
-        if (Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - romper->position.vx,
-                                g_SysWork.playerWork.player.position.vz - romper->position.vz) >= Q12_ANGLE(180.0f))
+        if (Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - romper->position.vx,
+                                PLAYER_CHARA().position.vz - romper->position.vz) >= Q12_ANGLE(180.0f))
         {
             romperProps.rotationY_F2 = Los_CharaHeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
                                                                               romperProps.targetPositionZ_100, Q12(1.0f), true);
@@ -904,11 +904,11 @@ void Romper_ControlJump(s_SubCharacter* romper)
         var_s3 = Q12(0.5f);
     }
 
-    temp_v0                                   = Q12_MULT(g_SysWork.playerWork.player.moveSpeed, Math_Sin(g_SysWork.playerWork.player.headingAngle));
-    romperProps.targetPositionX_FC = g_SysWork.playerWork.player.position.vx + Q12_MULT_PRECISE(temp_v0, var_s3);
+    temp_v0                                   = Q12_MULT(PLAYER_CHARA().moveSpeed, Math_Sin(PLAYER_CHARA().headingAngle));
+    romperProps.targetPositionX_FC = PLAYER_CHARA().position.vx + Q12_MULT_PRECISE(temp_v0, var_s3);
 
-    temp_a1                                    = Q12_MULT(g_SysWork.playerWork.player.moveSpeed, Math_Cos(g_SysWork.playerWork.player.headingAngle));
-    romperProps.targetPositionZ_100 = g_SysWork.playerWork.player.position.vz + Q12_MULT_PRECISE(temp_a1, var_s3);
+    temp_a1                                    = Q12_MULT(PLAYER_CHARA().moveSpeed, Math_Cos(PLAYER_CHARA().headingAngle));
+    romperProps.targetPositionZ_100 = PLAYER_CHARA().position.vz + Q12_MULT_PRECISE(temp_a1, var_s3);
 
     temp_v0_3 = ratan2(romperProps.targetPositionX_FC - romper->position.vx, romperProps.targetPositionZ_100 - romper->position.vz);
     unkAngle   = temp_v0_3;
@@ -961,7 +961,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
             var_a0_2          = CLAMP_LOW(temp_v1_5, Q12(0.3f));
             romper->moveSpeed = var_a0_2 << 1;
 
-            Collision_SurfaceGet(&surface, g_SysWork.playerWork.player.position.vx, g_SysWork.playerWork.player.position.vz);
+            Collision_SurfaceGet(&surface, PLAYER_CHARA().position.vx, PLAYER_CHARA().position.vz);
             temp = surface.floorHeight - Q12(0.8f);
 
             romper->fallSpeed  = (temp << 1) - Q12(2.45f);
@@ -980,7 +980,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
             pos.vy = romper->position.vy;
             pos.vz = romper->position.vz;
 
-            if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Multitap), romper, &pos, &g_SysWork.playerWork.player, romper->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+            if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Multitap), romper, &pos, &PLAYER_CHARA(), romper->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
             {
                 romper->model.anim.status = ANIM_STATUS(RomperAnim_JumpToIdleStart, false);
                 romper->model.controlState  = RomperControl_10;
@@ -1106,7 +1106,7 @@ void Romper_Control_10(s_SubCharacter* romper)
         romperProps.field_104 = 0;
     }
 
-    player = &g_SysWork.playerWork.player;
+    player = &PLAYER_CHARA();
 
     if (player->attackReceived == NO_VALUE)
     {
@@ -1123,14 +1123,14 @@ void Romper_Control_10(s_SubCharacter* romper)
     {
         romperProps.flags &= ~RomperFlag_6;
 
-        g_SysWork.playerWork.player.damage.amount += (FP_TO(D_800AD4C8[55].field_4, Q12_SHIFT) *
+        PLAYER_CHARA().damage.amount += (FP_TO(D_800AD4C8[55].field_4, Q12_SHIFT) *
                                                                Rng_GenerateUInt(85, 116)) / 100;
 
         sp10.vx = romper->position.vx + FP_FROM(FP_TO(Math_Sin(romper->rotation.vy) >> 1, Q12_SHIFT), Q12_SHIFT);
         sp10.vy = romper->position.vy - Q12(0.1f);
         sp10.vz = romper->position.vz + FP_FROM(FP_TO(Math_Cos(romper->rotation.vy) >> 1, Q12_SHIFT), Q12_SHIFT);
 
-        func_8005F6B0(&g_SysWork.playerWork.player, &sp10, 4, 9);
+        func_8005F6B0(&PLAYER_CHARA(), &sp10, 4, 9);
 
         romperProps.field_11A = 1;
     }
@@ -1202,9 +1202,9 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
                 if (romper->model.controlState == RomperControl_10)
                 {
                     romper->position.vy += collResult.offset.vy;
-                    if (g_SysWork.playerWork.player.position.vy < romper->position.vy)
+                    if (PLAYER_CHARA().position.vy < romper->position.vy)
                     {
-                        romper->position.vy = g_SysWork.playerWork.player.position.vy;
+                        romper->position.vy = PLAYER_CHARA().position.vy;
                         romper->fallSpeed   = Q12(0.0f);
                     }
                 }
@@ -1694,16 +1694,16 @@ void sharedFunc_800E9714_2_s02(s_SubCharacter* romper)
     headingAngle  = romper->rotation.vy;
     moveDist      = Q12_MULT_PRECISE(temp_v0_4, temp_v0);
 
-    if (moveDist >= Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - romper->position.vx,
-                                        g_SysWork.playerWork.player.position.vz - romper->position.vz))
+    if (moveDist >= Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - romper->position.vx,
+                                        PLAYER_CHARA().position.vz - romper->position.vz))
     {
         newPosX = romper->position.vx + Q12_MULT(moveDist, Math_Sin(headingAngle));
         newPosZ = romper->position.vz + Q12_MULT(moveDist, Math_Cos(headingAngle));
     }
     else
     {
-        newPosX = g_SysWork.playerWork.player.position.vx;
-        newPosZ = g_SysWork.playerWork.player.position.vz;
+        newPosX = PLAYER_CHARA().position.vx;
+        newPosZ = PLAYER_CHARA().position.vz;
     }
 
     sharedFunc_800D2E9C_0_s00(&newPosX, &newPosZ, &headingAngle);
@@ -1721,8 +1721,8 @@ void sharedFunc_800E9714_2_s02(s_SubCharacter* romper)
         moveSpeedStep = Q12(32.0f);
     }
 
-    romperProps.rotationY_F2  = ratan2(g_SysWork.playerWork.player.position.vx - romper->position.vx,
-                                       g_SysWork.playerWork.player.position.vz - romper->position.vz);
+    romperProps.rotationY_F2  = ratan2(PLAYER_CHARA().position.vx - romper->position.vx,
+                                       PLAYER_CHARA().position.vz - romper->position.vz);
     romperProps.field_124     = moveSpeedStep;
     romperProps.targetPositionX_FC  = newPosX;
     romperProps.targetPositionZ_100 = newPosZ;

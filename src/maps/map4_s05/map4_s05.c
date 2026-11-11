@@ -63,9 +63,9 @@ void func_800D61AC(void) // 0x800D61AC
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < 12)
     {
         // Warp player.
-        g_SysWork.playerWork.player.position.vx = Q12(-120.0f);
-        g_SysWork.playerWork.player.position.vz = Q12(109.0f);
-        g_SysWork.playerWork.player.rotation.vy = Q12(0.25f);
+        PLAYER_CHARA().position.vx = Q12(-120.0f);
+        PLAYER_CHARA().position.vz = Q12(109.0f);
+        PLAYER_CHARA().rotation.vy = Q12(0.25f);
 
         // Warp NPC.
         g_SysWork.npcs[0].position.vx = Q12(-114.5f);
@@ -84,10 +84,10 @@ void func_800D61AC(void) // 0x800D61AC
             Game_TurnFlashlightOn();
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vy = Q12(4.5f);
-            g_SysWork.playerWork.player.position.vx = Q12(-115.5f);
-            g_SysWork.playerWork.player.position.vz = Q12(106.65f);
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(0.0f);
+            PLAYER_CHARA().position.vy = Q12(4.5f);
+            PLAYER_CHARA().position.vx = Q12(-115.5f);
+            PLAYER_CHARA().position.vz = Q12(106.65f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(0.0f);
             CutsceneBorder_ForceShow();
 
             Event_PathWaypointSet(true, 0, 0, 0, Q12(-115.5f), Q12(110.0f));
@@ -114,10 +114,10 @@ void func_800D61AC(void) // 0x800D61AC
         case 3:
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                                    g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f),
+                                    PLAYER_CHARA().position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f),
                                     Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                     true);
-            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position,
+            Event_CameraLookAtSet(&PLAYER_CHARA().position,
                                   Q12(0.0f), Q12(-1.5f), Q12(0.0f),
                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                   true);
@@ -127,10 +127,10 @@ void func_800D61AC(void) // 0x800D61AC
         case 4:
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                                    g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f),
+                                    PLAYER_CHARA().position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f),
                                     Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                     true);
-            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position,
+            Event_CameraLookAtSet(&PLAYER_CHARA().position,
                                   Q12(0.0f), Q12(-1.5f), Q12(0.0f),
                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                   false);
@@ -146,10 +146,10 @@ void func_800D61AC(void) // 0x800D61AC
         case 6:
             // Warp camera.
             Event_CameraPositionSet(NULL,
-                                    g_SysWork.playerWork.player.position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f),
+                                    PLAYER_CHARA().position.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f),
                                     Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                     true);
-            Event_CameraLookAtSet(&g_SysWork.playerWork.player.position,
+            Event_CameraLookAtSet(&PLAYER_CHARA().position,
                                   Q12(0.0f), Q12(-1.5f), Q12(0.0f),
                                   Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
                                   false);
@@ -166,12 +166,12 @@ void func_800D61AC(void) // 0x800D61AC
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_CharaAnimPlayToEnd(&g_SysWork.playerWork.player, 109);
+            Event_CharaAnimPlayToEnd(&PLAYER_CHARA(), 109);
             break;
 
         case 10:
             // Warp player.
-            g_SysWork.playerWork.player.rotation.vy = Q12_ANGLE(90.0f);
+            PLAYER_CHARA().rotation.vy = Q12_ANGLE(90.0f);
 
             // Warp NPC.
             g_SysWork.npcs[0].position.vx     = Q12(-114.5f);
@@ -229,12 +229,12 @@ void func_800D6800(void) // 0x800D6800
         case 2:
             CutsceneBorder_ForceShow();
 
-            MAP_POINTS[14].positionX = g_SysWork.playerWork.player.position.vx;
-            MAP_POINTS[14].positionZ = g_SysWork.playerWork.player.position.vz;
+            MAP_POINTS[14].positionX = PLAYER_CHARA().position.vx;
+            MAP_POINTS[14].positionZ = PLAYER_CHARA().position.vz;
             // TODO: Likely wrong union field.
-            MAP_POINTS[14].triggerParam0 = ((u32)Math_AngleNormalizeSigned(g_SysWork.playerWork.player.rotation.vy) + Q12(1.0f)) >> 4;
+            MAP_POINTS[14].triggerParam0 = ((u32)Math_AngleNormalizeSigned(PLAYER_CHARA().rotation.vy) + Q12(1.0f)) >> 4;
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 52, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 52, false);
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
@@ -254,14 +254,14 @@ void func_800D6800(void) // 0x800D6800
             SysWork_StateStepIncrement(0);
 
         case 3:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &PLAYER_CHARA(), 0, false);
             Event_WaitTimer(Q12(3.5f), false);
 
             // Warp player.
-            g_SysWork.playerWork.player.position.vx = Q12(-120.0f);
-            g_SysWork.playerWork.player.position.vy = Q12(2.0f);
-            g_SysWork.playerWork.player.position.vz = Q12(104.0f);
-            g_SysWork.playerWork.player.rotation.vy = 0;
+            PLAYER_CHARA().position.vx = Q12(-120.0f);
+            PLAYER_CHARA().position.vy = Q12(2.0f);
+            PLAYER_CHARA().position.vz = Q12(104.0f);
+            PLAYER_CHARA().rotation.vy = 0;
 
             // Warp NPC.
             g_SysWork.npcs[0].position.vx = Q12(-120.0f);
@@ -288,7 +288,7 @@ void func_800D6800(void) // 0x800D6800
             break;
 
         default:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.playerWork.player, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &PLAYER_CHARA(), 0, false);
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -478,7 +478,7 @@ void func_800D6BC0(void) // 0x800D6BC0
 
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
-        Dms_CharacterTransformGet(&g_SysWork.playerWork.player.position, &g_SysWork.playerWork.player.rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_19);
+        Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_19);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_19));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
@@ -544,7 +544,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
         {
             Collision_TriggerFlagBitsSet(CollisionTriggerFlag_Block);
 
-            if (g_SysWork.playerWork.player.position.vz < Q12(212.0f))
+            if (PLAYER_CHARA().position.vz < Q12(212.0f))
             {
                 Savegame_EventFlagClear(EventFlag_346);
             }

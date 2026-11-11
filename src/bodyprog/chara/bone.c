@@ -419,10 +419,10 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneC
         temp_s1_2 = g_SysWork.playerBoneCoords[1].coord.t[1];
         temp_s1_2 = CLAMP(temp_s1_2, Q8(-2.0f), Q8(0.0f));
 
-        temp_s1_2 += Q12_TO_Q8(g_SysWork.playerWork.player.position.vy);
-        temp_s1_3  = Math_MulFixed(Q12_TO_Q8(g_SysWork.playerWork.player.position.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
+        temp_s1_2 += Q12_TO_Q8(PLAYER_CHARA().position.vy);
+        temp_s1_3  = Math_MulFixed(Q12_TO_Q8(PLAYER_CHARA().position.vx), GsWSMATRIX.m[2][0], Q12_SHIFT);
         temp_s0    = Math_MulFixed(temp_s1_2, GsWSMATRIX.m[2][1], Q12_SHIFT);
-        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(Q12_TO_Q8(g_SysWork.playerWork.player.position.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
+        temp_s1_4  = ((temp_s1_3 + temp_s0) + Math_MulFixed(Q12_TO_Q8(PLAYER_CHARA().position.vz), GsWSMATRIX.m[2][2], Q12_SHIFT)) + GsWSMATRIX.t[2];
 
         var_s3_2 = (var_s4 + var_s3) >> 1;
         temp_v1  = var_s3_2 - ((var_s3 - var_s4) >> 1);

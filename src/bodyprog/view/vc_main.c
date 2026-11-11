@@ -934,7 +934,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                     set_active_data_f = false;
                     if (sc_p == &g_SysWork.npcs[g_SysWork.targetNpcIdx])
                     {
-                        set_active_data_f = g_SysWork.playerCombat.isAiming > false;
+                        set_active_data_f = PLAYER_COMBAT().isAiming > false;
                     }
                 }
             }
@@ -1390,8 +1390,6 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
 {
     VECTOR3 far_watch_pos; // Q19.12
 
-    #define playerChara g_SysWork.playerWork.player
-
     vcMakeFarWatchTgtPos(&far_watch_pos, w_p, cur_rd_area_size);
     if (cam_mv_type != VC_MV_SELF_VIEW)
     {
@@ -1409,14 +1407,12 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos, &w_p->watch_tgt_ang_z, self_view_eff_rate,
-                                     w_p, &g_SysWork.playerBoneCoords[HarryBone_Head].workm, playerChara.model.anim.status);
+                                     w_p, &g_SysWork.playerBoneCoords[HarryBone_Head].workm, PLAYER_CHARA().model.anim.status);
 
     if (w_p->watch_tgt_pos.vy > w_p->watch_tgt_max_y)
     {
         w_p->watch_tgt_pos.vy = w_p->watch_tgt_max_y;
     }
-
-    #undef playerChara
 }
 
 void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_WORK* w_p,
@@ -1510,8 +1506,6 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     q19_12     corrected_angle_y;
     s_SysWork* sys_work;
 
-    #define playerChara g_SysWork.playerWork.player
-
     delta_x = watch_tgt_pos->vx - w_p->cam_pos.vx;
     delta_y = watch_tgt_pos->vy - w_p->cam_pos.vy;
     delta_z = watch_tgt_pos->vz - w_p->cam_pos.vz;
@@ -1558,14 +1552,14 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             break;
 
         default:
-            cam_ang.vy = playerChara.rotation.vy;
+            cam_ang.vy = PLAYER_CHARA().rotation.vy;
             break;
 
         case ANIM_STATUS(HarryAnim_LookAround, false):
         case ANIM_STATUS(HarryAnim_LookAround, true):
             if (w_p->nearest_enemy != NULL)
             {
-                cam_ang.vy = playerChara.rotation.vy;
+                cam_ang.vy = PLAYER_CHARA().rotation.vy;
             }
             else
             {
@@ -1594,7 +1588,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
                 corrected_angle_y = angle_delta_y;
             }
 
-            cam_ang.vy = playerChara.rotation.vy + corrected_angle_y;
+            cam_ang.vy = PLAYER_CHARA().rotation.vy + corrected_angle_y;
             break;
 
         case ANIM_STATUS(HarryAnim_WalkForward, false):
@@ -1619,7 +1613,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
                 corrected_angle_y = Q12_ANGLE(-10.0f);
             }
 
-            cam_ang.vy = playerChara.rotation.vy + corrected_angle_y;
+            cam_ang.vy = PLAYER_CHARA().rotation.vy + corrected_angle_y;
             break;
     }
 
@@ -1653,7 +1647,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
         case ANIM_STATUS(HarryAnim_TurnLeft, true):
         case ANIM_STATUS(HarryAnim_TurnRight, false):
         case ANIM_STATUS(HarryAnim_TurnRight, true):
-            temp_dir = (playerChara.rotation.vy >> 7) & 0xF;
+            temp_dir = (PLAYER_CHARA().rotation.vy >> 7) & 0xF;
             if (temp_dir == 0 || temp_dir == 5)
             {
                 cam_ang.vx -= Q12_ANGLE(1.0f);
@@ -1696,8 +1690,6 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     watch_tgt_pos->vx += Math_MulFixed(new_x - watch_tgt_pos->vx, effect_rate, Q12_SHIFT);
     watch_tgt_pos->vy += Math_MulFixed(new_y - watch_tgt_pos->vy, effect_rate, Q12_SHIFT);
     watch_tgt_pos->vz += Math_MulFixed(new_z - watch_tgt_pos->vz, effect_rate, Q12_SHIFT);
-
-    #undef playerChara
 }
 
 void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size) // 0x800832B4

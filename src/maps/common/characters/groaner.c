@@ -162,8 +162,8 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
         groanerProps.field_10F = 4;
     }
 
-    groanerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
-    groanerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+    groanerProps.targetPositionX = PLAYER_CHARA().position.vx;
+    groanerProps.targetPositionZ = PLAYER_CHARA().position.vz;
     groanerProps.flags.val16[0] |= GroanerFlag_7;
 
     groaner->health = MAX(groaner->health - groaner->damage.amount, Q12(0.0f));
@@ -177,7 +177,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        newHeadingAngle = g_SysWork.playerWork.player.rotation.vy;
+        newHeadingAngle = PLAYER_CHARA().rotation.vy;
     }
 
     unkAngle = Math_AngleNormalizeSigned((newHeadingAngle - groaner->rotation.vy) + Q12_ANGLE(180.0f));
@@ -322,16 +322,16 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
     #define getIndex() \
         ((((!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())) * 2) + ((!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed())))
 
-    if (func_80070360(groaner, Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
-            g_SysWork.playerWork.player.position.vz - groaner->position.vz), UNK_VAL) != 0 ||
+    if (func_80070360(groaner, Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - groaner->position.vx,
+            PLAYER_CHARA().position.vz - groaner->position.vz), UNK_VAL) != 0 ||
         func_8006FD90(groaner, 1, sharedData_800EEE3C_2_s00[getIndex()].field_0, sharedData_800EEE3C_2_s00[getIndex()].field_4))
     {
         groanerProps.flags.val16[0] |= GroanerFlag_7;
 
         if (groanerProps.flags.val16[0] & GroanerFlag_5)
         {
-            groanerProps.targetPositionX = g_SysWork.playerWork.player.position.vx;
-            groanerProps.targetPositionZ = g_SysWork.playerWork.player.position.vz;
+            groanerProps.targetPositionX = PLAYER_CHARA().position.vx;
+            groanerProps.targetPositionZ = PLAYER_CHARA().position.vz;
         }
     }
     else
@@ -459,13 +459,13 @@ void Groaner_ControlRunForward(s_SubCharacter* groaner)
         groanerProps.flags.val16[0] |= GroanerFlag_8;
     }
 
-    distToPlayer    = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
-                                          g_SysWork.playerWork.player.position.vz - groaner->position.vz);
+    distToPlayer    = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - groaner->position.vx,
+                                          PLAYER_CHARA().position.vz - groaner->position.vz);
     distToPlayerMax = Rng_GenerateInt(Q12(4.0f), Q12(8.0f) - 1);
-    hasLosToPlayer  = Los_NpcToPlayerHitCheck(groaner, &g_SysWork.playerWork.player);
+    hasLosToPlayer  = Los_NpcToPlayerHitCheck(groaner, &PLAYER_CHARA());
     if (distToPlayer < distToPlayerMax && !hasLosToPlayer)
     {
-        groanerProps.angleToTarget = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
+        groanerProps.angleToTarget = Math_AngleBetweenPositionsGet(groaner->position, PLAYER_CHARA().position);
     }
     else
     {
@@ -569,16 +569,16 @@ void Groaner_ControlRunForward(s_SubCharacter* groaner)
 
     if (cond && !hasLosToPlayer)
     {
-        if (!Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) &&
+        if (!Chara_HasFlag(&PLAYER_CHARA(), CharaFlag_Unk4) &&
             !(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1) &&
-            g_SysWork.playerWork.player.health > Q12(0.0f) &&
+            PLAYER_CHARA().health > Q12(0.0f) &&
             g_SysWork.sysState == SysState_Gameplay &&
-            (groaner->position.vy - g_SysWork.playerWork.player.position.vy) > Q12(-0.8f))
+            (groaner->position.vy - PLAYER_CHARA().position.vy) > Q12(-0.8f))
         {
-            if (groaner->position.vy - g_SysWork.playerWork.player.position.vy < Q12(0.8f))
+            if (groaner->position.vy - PLAYER_CHARA().position.vy < Q12(0.8f))
             {
-                if (ABS(Math_AngleNormalizeSigned(ratan2(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
-                                                         g_SysWork.playerWork.player.position.vz - groaner->position.vz) -
+                if (ABS(Math_AngleNormalizeSigned(ratan2(PLAYER_CHARA().position.vx - groaner->position.vx,
+                                                         PLAYER_CHARA().position.vz - groaner->position.vz) -
                                                   groaner->rotation.vy)) < Q12_ANGLE(30.0f))
                 {
                     g_SysWork.charaGroupFlags[3] |= CharaGroupFlag_1;
@@ -592,9 +592,9 @@ void Groaner_ControlRunForward(s_SubCharacter* groaner)
 
     if (distToPlayer < Q12(1.2f))
     {
-        if (Chara_HasFlag(&g_SysWork.playerWork.player, CharaFlag_Unk4) ||
+        if (Chara_HasFlag(&PLAYER_CHARA(), CharaFlag_Unk4) ||
             (g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1) ||
-            g_SysWork.playerWork.player.health <= Q12(0.0f) ||
+            PLAYER_CHARA().health <= Q12(0.0f) ||
             g_SysWork.sysState != SysState_Gameplay ||
             !Rng_GenerateInt(0, 15)) // 1 in 16 chance.
         {
@@ -627,10 +627,10 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
     s32     temp1;
     s32     temp2;
 
-    distToPlayer = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
-                                             g_SysWork.playerWork.player.position.vz - groaner->position.vz);
+    distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - groaner->position.vx,
+                                             PLAYER_CHARA().position.vz - groaner->position.vz);
 
-    angleDeltaToPlayer0 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position) -
+    angleDeltaToPlayer0 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position, PLAYER_CHARA().position) -
                                         groaner->rotation.vy);
 
     if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_StandToJumpAttack ||
@@ -649,7 +649,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
                 groaner->rotation.vy -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.25f));
             }
 
-            angleDeltaToPlayer1 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position) -
+            angleDeltaToPlayer1 = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(groaner->position, PLAYER_CHARA().position) -
                                                 groaner->rotation.vy);
 
             rotMax = TIMESTEP_ANGLE(1, 3);
@@ -667,12 +667,12 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
             }
             else
             {
-                groaner->rotation.vy = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
+                groaner->rotation.vy = Math_AngleBetweenPositionsGet(groaner->position, PLAYER_CHARA().position);
             }
         }
         else
         {
-            groaner->rotation.vy = Math_AngleBetweenPositionsGet(groaner->position, g_SysWork.playerWork.player.position);
+            groaner->rotation.vy = Math_AngleBetweenPositionsGet(groaner->position, PLAYER_CHARA().position);
         }
         groaner->headingAngle = groaner->rotation.vy;
     }
@@ -699,11 +699,11 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
         if (!(groanerProps.flags.val16[0] & GroanerFlag_Jumping))
         {
             groanerProps.flags.val16[0] |= GroanerFlag_Jumping;
-            var_v0                       = g_SysWork.playerWork.player.collision.cylinder.innerRadius + Q12(0.14f);
+            var_v0                       = PLAYER_CHARA().collision.cylinder.innerRadius + Q12(0.14f);
             var_v0                       = (distToPlayer - var_v0) << 1;
             groaner->moveSpeed           = MIN(var_v0, Q12(4.5f));
 
-            deltaHeadingAngleToPlayer = g_SysWork.playerWork.player.position.vy - groaner->position.vy;
+            deltaHeadingAngleToPlayer = PLAYER_CHARA().position.vy - groaner->position.vy;
             groaner->field_44.field_0 = 1;
             groanerProps.field_10F    = 2;
             groaner->fallSpeed        = Q12_MULT_PRECISE(deltaHeadingAngleToPlayer - Q12(1.4f), Q12(2.35f));
@@ -716,7 +716,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
         newPos.vy = groaner->position.vy - Q12(0.8f);
         newPos.vz = groaner->position.vz + groaner->collision.shapeOffsets.cylinder.vz;
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Hold), groaner, &newPos,
-                      &g_SysWork.playerWork.player, groaner->rotation.vy, Q12_ANGLE(90.0f));
+                      &PLAYER_CHARA(), groaner->rotation.vy, Q12_ANGLE(90.0f));
     }
 
     if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 222, 235))
@@ -850,8 +850,8 @@ void Groaner_Control4(s_SubCharacter* groaner)
         }
     }
 
-    distToPlayer = Math_Vector2MagCalcSafeQ6(g_SysWork.playerWork.player.position.vx - groaner->position.vx,
-                                             g_SysWork.playerWork.player.position.vz - groaner->position.vz);
+    distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - groaner->position.vx,
+                                             PLAYER_CHARA().position.vz - groaner->position.vz);
     if (distToPlayer > Q12(3.5f))
     {
         if (distToPlayer > Q12(5.25f))

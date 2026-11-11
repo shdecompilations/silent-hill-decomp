@@ -393,9 +393,9 @@ void func_8005E89C(void) // 0x8005E89C
 
     ptr = PSX_SCRATCH;
 
-    posX            = FP_FROM(g_SysWork.playerWork.player.position.vx, Q12_SHIFT);
-    posY            = FP_FROM(g_SysWork.playerWork.player.position.vy, Q12_SHIFT);
-    posZ            = FP_FROM(g_SysWork.playerWork.player.position.vz, Q12_SHIFT);
+    posX            = FP_FROM(PLAYER_CHARA().position.vx, Q12_SHIFT);
+    posY            = FP_FROM(PLAYER_CHARA().position.vy, Q12_SHIFT);
+    posZ            = FP_FROM(PLAYER_CHARA().position.vz, Q12_SHIFT);
     ptr->field_0.vx = Q8(posX);
     ptr->field_0.vy = Q8(posY);
     ptr->field_0.vz = Q8(posZ);
@@ -517,7 +517,7 @@ void func_8005E89C(void) // 0x8005E89C
         {
             if (D_800C42E8[i].field_1 == 6)
             {
-                chara = &g_SysWork.playerWork.player;
+                chara = &PLAYER_CHARA();
             }
             else
             {
