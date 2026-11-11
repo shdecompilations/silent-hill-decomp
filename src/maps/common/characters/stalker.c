@@ -1453,7 +1453,7 @@ void Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.timer_F8 += g_DeltaTime;
             if (stalkerProps.timer_F8 > Q12(1.5f))
             {
-                PLAYER_CHARA().damage.amount += (FP_TO(D_800AD4C8[50].damage, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
+                PLAYER_CHARA().damage.amount += (FP_TO(g_Items_WeaponAttackInfo[50].damage, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
                 stalkerProps.timer_F8              = Rng_Rand16() % Q12(0.5f);
             }
         }

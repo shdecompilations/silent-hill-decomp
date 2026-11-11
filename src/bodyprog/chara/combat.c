@@ -234,7 +234,7 @@ u32 func_8008A270(s32 idx) // 0x8008A270
     }
 #endif
 
-    return D_800AD4C8[idx].activeStartKeyframe;
+    return g_Items_WeaponAttackInfo[idx].activeStartKeyframe;
 }
 
 u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
@@ -257,7 +257,7 @@ u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
         }
     }
 
-    return D_800AD4C8[arg0].activeKeyframeCount;
+    return g_Items_WeaponAttackInfo[arg0].activeKeyframeCount;
 }
 
 s32 func_8008A35C(s_AttackInfo* arg0, s32 arg1) // 0x8008A35C
@@ -403,7 +403,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     sp18 = 0;
 
-    sp1C = &D_800AD4C8[sp14];
+    sp1C = &g_Items_WeaponAttackInfo[sp14];
 
     temp_s1 = sp1C->kind;
 
@@ -947,7 +947,7 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
         base->field_24[i + 1].vz = vz2;
     }
 
-    ptr = &D_800AD4C8[idx46];
+    ptr = &g_Items_WeaponAttackInfo[idx46];
 
     temp_s2 = ptr->maxRange;
     temp_s0 = ptr->minRange;
@@ -1213,7 +1213,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
     s_AttackInfo* temp_fp;
 
     weaponAttack = (u8)attacker->field_44.field_2;
-    temp_fp      = &D_800AD4C8[weaponAttack];
+    temp_fp      = &g_Items_WeaponAttackInfo[weaponAttack];
     offsetY       = temp_fp->kind;
     sp14         = attacker->field_44.field_8;
     offsetZ       = arg3;

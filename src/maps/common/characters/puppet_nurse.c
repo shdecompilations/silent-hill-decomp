@@ -27,7 +27,7 @@ s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse)
         weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Hold) &&
         weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Multitap))
     {
-        idx = D_800AD4C8[weaponAttack].kind;
+        idx = g_Items_WeaponAttackInfo[weaponAttack].kind;
         return g_PuppetNurseHurtSfxIdxs[idx];
     }
 
@@ -598,7 +598,7 @@ void PuppetNurse_Control5(s_SubCharacter* nurse)
 
         if (nurseProps.field_104 >= Q12(1.5f))
         {
-            PLAYER_CHARA().damage.amount += Q12(D_800AD4C8[EquippedWeaponId_Unk56].damage);
+            PLAYER_CHARA().damage.amount += Q12(g_Items_WeaponAttackInfo[EquippedWeaponId_Unk56].damage);
             nurseProps.field_104                       = 0;
         }
     }

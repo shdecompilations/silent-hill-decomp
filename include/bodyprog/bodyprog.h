@@ -777,7 +777,7 @@ extern s32 D_800C48F0;
 extern u8 D_800AD480[24];
 
 /** Weapon attacks. */
-extern s_AttackInfo D_800AD4C8[70];
+extern s_AttackInfo g_Items_WeaponAttackInfo[70];
 
 extern const s_MapOverlayHdr g_MapOverlayHdr; // 0x800C957C
 

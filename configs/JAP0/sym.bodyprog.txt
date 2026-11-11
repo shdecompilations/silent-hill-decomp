@@ -3021,11 +3021,15 @@ g_StringLayerIdx                             = 0x800AF838;
 g_StringColorId_JP                           = 0x800AF83C; // type:s16
 STRING_COLORS_JP                             = 0x800AF840;
 
-//---------------------------------------------------------------------------
-//--- PA: 0x08AD00   VA: 0x800AF860   subsegment: .data, items/item_screens_3
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x08AD00   VA: 0x800AF860   subsegment: .data, items/weapon_data
+//------------------------------------------------------------------------
 g_Items_GunsMaxLoadAmmo                      = 0x800AF860;
-D_800AD4C8                                   = 0x800AF888; // size:0x690
+g_Items_WeaponAttackInfo                     = 0x800AF888; // size:0x690
+
+//---------------------------------------------------------------------------
+//--- PA: 0x08B3B8   VA: 0x800AFF18   subsegment: .data, items/item_screens_3
+//---------------------------------------------------------------------------
 g_Inventory_CmdSelectedIdx                   = 0x800AFF18; // type:s32
 g_Inventory_SelectionId                      = 0x800AFF1C; // type:u32
 INV_ITEM_NAMES                               = 0x800AFF20; // type:u32 size:0x30C
