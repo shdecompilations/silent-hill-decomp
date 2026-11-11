@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_WORLD_WORLDEFFECTS_H
-#define _BODYPROG_WORLD_WORLDEFFECTS_H
+#ifndef _BODYPROG_WORLD_EFFECTS_H
+#define _BODYPROG_WORLD_EFFECTS_H
 
 /** @brief World environment flags. Used by `s_WorldEnvPreset::flags`. */
 typedef enum _WorldEnvFlags

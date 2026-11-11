@@ -211,7 +211,7 @@ segments:
       # `g_SysWork.worldEnv` Seems to be handling the processing and update of in-game graphics.
       # The information mainly surround about map environmental graphic information, fundamentally
       # the lighting, the fog and apparently any currently playing effect which code is at the map overlay.
-      # This variable DOES NOT handle game drawing for the most part, the code at `bodyprog_80040B74.c` and
+      # This variable DOES NOT handle game drawing for the most part, the code at `lighting.c` and
       # `bodyprog_bone_80044F14.c` does handle drawing of a lighting overlay effect and characters,
       # however, all the information here (including the water effect that for reason isn't handle
       # in these files) is processed and then through functions will be simplified and passed to
@@ -226,7 +226,7 @@ segments:
       - [0x19BB0,    c, world/effects]          # }
       - [0x1B4A4,    c, world/collision_trigger]      # }
       - [0x1B4EC,    c, view/vc_util]                 # |
-      - [0x1C014,    c, world/bodyprog_80040B74]      # } lighting_overlap.c?
+      - [0x1C014,    c, world/lighting]      # } lighting_overlap.c?
       - [0x1CF7C,    c, world/map]              # }
       - [0x1FA44,    c, chara/anim] # }
       - [0x203B4,    c, chara/bone] # }
@@ -560,7 +560,7 @@ segments:
       - [0x982A4,  pad] # Unused
       - [0x982B4, .bss, world/draw]
       - [0x9B074,  pad] # Garbage.
-      - [0x9B090, .bss, world/bodyprog_80040B74]
+      - [0x9B090, .bss, world/lighting]
       - [0x9C4B0, .bss, world/map]
       - [0x9CA4C,  pad] # Garbage.
       - [0x9CA50, .bss, chara/bone]

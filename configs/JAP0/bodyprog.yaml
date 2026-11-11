@@ -183,7 +183,7 @@ segments:
       - [0x198E4, c, world/effects]          # }
       - [0x1B1D8, c, world/collision_trigger]      # }
       - [0x1B220, c, view/vc_util]                 # |
-      - [0x1BD48, c, world/bodyprog_80040B74]      # } lighting_overlap.c?
+      - [0x1BD48, c, world/lighting]      # } lighting_overlap.c?
       - [0x1CCB0, c, world/map]              # }
       - [0x1F778, c, chara/anim] # }
       - [0x200E8, c, chara/bone] # }
@@ -509,7 +509,7 @@ segments:
       - [0x9A7D4, pad] # Unused
       - [0x9A7E4, .bss, world/draw]
       - [0x9D5A4, pad] # Garbage.
-      - [0x9D5C0, .bss, world/bodyprog_80040B74]
+      - [0x9D5C0, .bss, world/lighting]
       - [0x9E9E0, .bss, world/map]
       - [0x9EF7C, pad] # Garbage.
       - [0x9EF80, .bss, chara/bone]

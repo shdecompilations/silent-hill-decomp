@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_WORLD_WORLDDRAW_H
-#define _BODYPROG_WORLD_WORLDDRAW_H
+#ifndef _BODYPROG_WORLD_DRAW_H
+#define _BODYPROG_WORLD_DRAW_H
 
 s32 Map_TypeGet(void);
 

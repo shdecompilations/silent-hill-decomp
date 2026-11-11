@@ -741,9 +741,9 @@ vcSetRefPosAndCamPosAngByPad                 = 0x800404AC; // type:func
 Vc_StereoBalanceGet                          = 0x8004083C; // type:func
 nullsub_80040B6C                             = 0x80040944; // type:func
 
-//--------------------------------------------------------------------------
-//--- PA: 0x01BDEC   VA: 0x8004094C   subsegment: c, world/bodyprog_80040B74
-//--------------------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x01BDEC   VA: 0x8004094C   subsegment: c, world/lighting
+//-----------------------------------------------------------------
 Chara_ModelLoadedCheck                       = 0x8004094C; // type:func
 func_80040BAC                                = 0x80040984; // type:func
 WorldEnvRender_WorldLightTintParamSet        = 0x80040C54; // type:func
@@ -3600,9 +3600,9 @@ vcRefPosSt                                   = 0x800BF450; // type:VECTOR3 size:
 g_CollisionTriggerFlags                      = 0x800BF46C;
 g_WorldGfxWork                               = 0x800BF470; // type:u8 size:0x2DBC
 
-//-----------------------------------------------------------------------------
-//--- PA: 0x09D6E8   VA: 0x800C2248   subsegment: .bss, world/bodyprog_80040B74
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x09D6E8   VA: 0x800C2248   subsegment: .bss, world/lighting
+//--------------------------------------------------------------------
 g_Map_GfxPackets                             = 0x800C2248; // size:0x1420
 
 //---------------------------------------------------------------
