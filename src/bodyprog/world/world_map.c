@@ -4,6 +4,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/world/world_map.h"
 #include "bodyprog/gfx/billboard.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
