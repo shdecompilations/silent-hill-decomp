@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/events/title.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/screen/data.h"

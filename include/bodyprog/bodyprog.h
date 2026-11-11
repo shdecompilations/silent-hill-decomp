@@ -12,6 +12,7 @@
 #include "bodyprog/chara/spawn.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/events_util.h"
+#include "bodyprog/events/title.h"
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
@@ -69,26 +70,6 @@ typedef enum _EffectTextureFlags
     EffectTextureFlag_Blood        = 1 << 6,
     EffectTextureFlag_WarmTest     = 1 << 7  /** @unused Test lens flare? */
 } e_EffectTextureFlags;
-
-typedef enum _MainMenuEntry
-{
-    MainMenuEntry_Load     = 0,
-    MainMenuEntry_Continue = 1,
-    MainMenuEntry_Start    = 2,
-    MainMenuEntry_Option   = 3,
-    MainMenuEntry_Extra    = 4, /** @unused The extra options menu may have been accessible via the main menu. */
-
-    MainMenuEntry_Count    = 5
-} e_MainMenuEntry;
-
-typedef enum _MainMenuState
-{
-    MainMenuState_Start              = 0,
-    MainMenuState_Main               = 1,
-    MainMenuState_LoadGame           = 2,
-    MainMenuState_DifficultySelector = 3,
-    MainMenuState_NewGameStart       = 4
-} e_MainMenuState;
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
 typedef enum _PrimitiveType
@@ -640,9 +621,6 @@ extern void (*g_SysStateFuncs[])(void);
 
 extern s32 D_800A9A68;
 
-/** Counts the amount of times that demos has been play in the current game session. */
-extern s8 g_Demo_ReproducedCount;
-
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
 extern s32 D_800A9ECC;
@@ -801,9 +779,6 @@ extern u16 D_800BCCB2;
 extern s32 g_Bgm_LayersUpdated;
 
 extern s32 D_800BCD84;
-
-/** Related to main menu fog randomization. */
-extern s8* D_800BCDE0; // Type assumed.
 
 /** Angles. */
 extern s16 D_800BCDE8[8];
@@ -1619,8 +1594,6 @@ void SysState_GameOver_Update(void);
 // Main menu functions - TODO: Maybe a split around here?
 // ====================
 
-void MainMenu_SelectedOptionIdxReset(void);
-
 void func_8003ECBC(void);
 
 void func_8003ECE4(void);
@@ -1800,7 +1773,6 @@ void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
 
 // TODO: Move these to new headers.
 
-void GameState_MainMenu_Update(void);
 void GameState_InGame_Update(void);
 void GameState_MapEvent_Update(void);
 void GameState_PaperMapScreen_Update(void);

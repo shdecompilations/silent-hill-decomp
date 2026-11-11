@@ -1,6 +1,9 @@
 #ifndef _BODYPROG_WORLD_MAP_H
 #define _BODYPROG_WORLD_MAP_H
 
+// TODO: Better name for this file might be "terrain"? A "map" is already a whole unit of data containing the level,
+// maybe committing to the the concept of a "map's terrain layout" would make things clearer.
+
 /** @brief Initializes map data and chunks.
  *
  * @param lmHdr LM header.
