@@ -1,9 +1,14 @@
 #ifndef _BODYPROG_GAMEBOOT_GAMEBOOT_H
 #define _BODYPROG_GAMEBOOT_GAMEBOOT_H
 
-// ==========
-// FUNCTIONS
-// ==========
+/** @brief Loading screen IDs. */
+typedef enum _LoadingScreenId
+{
+    LoadingScreenId_None              = 0,
+    LoadingScreenId_PlayerRun         = 1,
+    LoadingScreenId_BackgroundTexture = 2,
+    LoadingScreenId_StageString       = 3
+} e_LoadingScreenId;
 
 /** @brief Handles the loading screen game state. */
 void GameState_LoadScreen_Update(void);

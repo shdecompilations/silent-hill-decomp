@@ -85,14 +85,6 @@ typedef enum _PrimitiveType
     PrimitiveType_S32  = 5
 } e_PrimitiveType;
 
-typedef enum _LoadingScreenId
-{
-    LoadingScreenId_None              = 0,
-    LoadingScreenId_PlayerRun         = 1,
-    LoadingScreenId_BackgroundTexture = 2,
-    LoadingScreenId_StageString       = 3
-} e_LoadingScreenId;
-
 // ================
 // UNKNOWN STRUCTS
 // ================
@@ -186,21 +178,6 @@ typedef struct _RadioNoise
     /* 0x3 */ s8 unused_3; /** @unused */
 } s_RadioNoise;
 STATIC_ASSERT_SIZEOF(s_RadioNoise, 4);
-
-typedef struct
-{
-    /* 0x0  */ u8      field_0; // `bool`?
-    /* 0x1  */ u8      field_1; // `bool`?
-    /* 0x2  */ u8      field_2; // `bool`?
-    /* 0x3  */ u8      field_3;
-    /* 0x4  */ s8      unk_4[4];
-    /* 0x8  */ s16     field_8;
-    /* 0xA  */ s16     field_A;
-    /* 0xC  */ VECTOR3 field_C; // Q19.12
-    /* 0x18 */ s8      unk_18[4];
-    /* 0x1C */ s32     field_1C;
-    /* 0x20 */ q19_12  field_20;
-} s_800C4818;
 
 typedef struct
 {
@@ -841,8 +818,6 @@ extern VECTOR3 D_800C47C8[];
 extern VECTOR3 D_800C47E8;
 
 extern s_RayTrace D_800C47F8;
-
-extern s_800C4818 D_800C4818;
 
 extern s32 D_800C48F0;
 

@@ -1,6 +1,23 @@
 #ifndef _BODYPROG_GFX_WATER_H
 #define _BODYPROG_GFX_WATER_H
 
+typedef struct
+{
+    /* 0x0  */ u8      field_0; // `bool`?
+    /* 0x1  */ u8      field_1; // `bool`?
+    /* 0x2  */ u8      field_2; // `bool`?
+    /* 0x3  */ u8      field_3;
+    /* 0x4  */ s8      unk_4[4];
+    /* 0x8  */ s16     field_8;
+    /* 0xA  */ s16     field_A;
+    /* 0xC  */ VECTOR3 field_C; // Q19.12
+    /* 0x18 */ s8      unk_18[4];
+    /* 0x1C */ s32     field_1C;
+    /* 0x20 */ q19_12  field_20;
+} s_800C4818;
+
+extern s_800C4818 D_800C4818;
+
 void func_8008D41C(void);
 
 void func_8008D438(void);

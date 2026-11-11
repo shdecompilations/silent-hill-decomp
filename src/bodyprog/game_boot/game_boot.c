@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/radio.h"
@@ -14,7 +15,7 @@
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/world/collision_trigger.h"
 
-void GameState_LoadScreen_Update(void)
+void GameState_LoadScreen_Update(void) // 0x800348E8
 {
     #define LOAD_COUNT_MAX 20
 
@@ -36,7 +37,7 @@ void GameState_LoadScreen_Update(void)
     #undef LOAD_COUNT_MAX
 }
 
-void GameBoot_InGameStartup(void)
+void GameBoot_InGameStartup(void) // 0x80034964
 {
     #define DEMO_LOAD_ATTEMPT_COUNT_MAX 5
 
