@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/world/collision_trigger.h"
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/text/text_draw.h"

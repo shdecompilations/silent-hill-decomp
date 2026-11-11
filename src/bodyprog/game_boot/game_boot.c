@@ -7,12 +7,12 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/events/bgm_update.h"
-#include "bodyprog/world/collision_trigger.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sound_system.h"
+#include "bodyprog/world/collision_trigger.h"
 
 void GameState_LoadScreen_Update(void)
 {

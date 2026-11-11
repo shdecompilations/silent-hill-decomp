@@ -5,11 +5,11 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/world/collision_trigger.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/view/vc_main.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/world/collision_trigger.h"
 #include "maps/common/characters/harry.h"
 
 /** @brief Updates the transformation of a character's root bone.

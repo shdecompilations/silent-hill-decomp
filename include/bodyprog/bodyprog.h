@@ -12,6 +12,7 @@
 #include "bodyprog/chara/spawn.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/events_util.h"
+#include "bodyprog/events/game_sys_states.h"
 #include "bodyprog/events/title.h"
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
@@ -868,13 +869,6 @@ void GameFs_LoadingTextDraw(void);
 
 void func_80032D1C(void);
 
-void func_8003943C(void);
-
-/** `SysState_Fmv` update function.
- * Movie to play is decided by `2072 - g_MapEventParam`
- * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
-void SysState_Fmv_Update(void);
-
 /** @brief Frees a character model.
  *
  * @param model Character model to release.
@@ -1515,12 +1509,6 @@ void Settings_RestoreControlDefaults(s32 configIdx);
 
 void nullsub_800334C8(void);
 
-/** @brief Updates the savegame buffer with current player info (position, rotation, health, event index). */
-void SysWork_SavegameUpdatePlayer(void);
-
-/** @brief Updates SysWork with player info from the savegame buffer (position, rotation, health). */
-void SysWork_SavegameReadPlayer(void);
-
 /** @brief Handles a warm game reboot. */
 void Game_WarmBoot(void);
 
@@ -1547,48 +1535,8 @@ void func_800803FC(VECTOR3* pos, s32 idx);
 /** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
 void Input_SelectClickSet(void);
 
-void SysState_Gameplay_Update(void);
-
-void SysState_GamePaused_Update(void);
-
-void SysState_OptionsMenu_Update(void);
-
-void func_8003943C(void);
-
-void SysState_StatusMenu_Update(void);
-
-void GameState_LoadStatusScreen_Update(void);
-
-void SysState_MapScreen_Update(void);
-
-void SysState_Fmv_Update(void);
-
-void SysState_LoadArea_Update(void);
-
-void AreaLoad_UpdatePlayerPosition(void);
-
-/** @brief Plays door sound when transitioning areas.
- * Reduntant code. `SysState_LoadArea_Update` also performs this same code
- * in the exact way this function is doing it.
- */
-void AreaLoad_TransitionSound(void);
-
-s8 AreaLoad_TransitionFlags(void);
-
-void SysState_ReadMessage_Update(void);
-
 /** @brief Updates the active autosave savegame entry with the most recent savegame. */
 void SysWork_AutosaveUpdate(void);
-
-void SysState_SaveMenu_Update(void);
-
-void SysState_EventCallback_Update(void);
-
-void SysState_EventSetFlag_Update(void);
-
-void SysState_EventPlaySound_Update(void);
-
-void SysState_GameOver_Update(void);
 
 // ====================
 // Main menu functions - TODO: Maybe a split around here?
@@ -1771,11 +1719,6 @@ void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
                                  q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
                                  q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight);
 
-// TODO: Move these to new headers.
-
-void GameState_InGame_Update(void);
-void GameState_MapEvent_Update(void);
 void GameState_PaperMapScreen_Update(void);
-void GameState_LoadMapScreen_Update(void);
 
 #endif
