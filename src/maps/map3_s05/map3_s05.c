@@ -40,7 +40,7 @@ void func_800D57E8(void) // 0x800D57E8
 
     if (g_MapEventData->mapPointIdx == 25)
     {
-        Event_DisplayMapMsgWithSfx(11, Sfx_Unk1350, &sfxPos);
+        Event_DisplayMapMsgWithSfx(11, Sfx_DoorLocked2, &sfxPos);
     }
     else
     {

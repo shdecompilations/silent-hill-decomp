@@ -417,6 +417,6 @@ void Map_WorldObjectsUpdate(void) // 0x800CCE38
 
     if (Pad_ButtonClicked(ControllerFlag_R3))
     {
-        SD_Call(Sfx_Unk1343);
+        SD_Call(Sfx_DoorPuzzleUnlocked);
     }
 }

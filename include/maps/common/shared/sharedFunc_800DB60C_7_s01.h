@@ -169,7 +169,7 @@ void sharedFunc_800DB60C_7_s01(void)
             break;
 
         case 6:
-            SD_Call(Sfx_Unk1343);
+            SD_Call(Sfx_DoorPuzzleUnlocked);
 
             if (!Savegame_EventFlagGet(EventFlag_493))
             {

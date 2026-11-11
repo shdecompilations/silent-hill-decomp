@@ -451,7 +451,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 27:
-            Sfx_WithFlagsPlay(Sfx_Unk1323, &Q12_VECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorOpenM2S01, &Q12_VECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 28:
@@ -459,7 +459,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 29:
-            Sfx_WithFlagsPlay(Sfx_Unk1324, &Q12_VECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorCloseM2S01, &Q12_VECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), SfxFlag_None);
             Chara_ModelCharaIdClear(dahliaChara, 0, 0);
             SysWork_StateStepIncrement(0);
 

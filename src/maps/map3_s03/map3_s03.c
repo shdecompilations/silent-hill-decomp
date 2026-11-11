@@ -465,7 +465,7 @@ void func_800D1A58(void) // 0x800D1A58
             {
                 if (Savegame_EventFlagGet(EventFlag_MapMark_713))
                 {
-                    SD_Call(Sfx_Unk1343);
+                    SD_Call(Sfx_DoorPuzzleUnlocked);
                 }
 
                 SysWork_StateStepSet(0, 16);

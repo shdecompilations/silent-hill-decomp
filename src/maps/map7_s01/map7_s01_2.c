@@ -502,7 +502,7 @@ void func_800D7A60(void) // 0x800D7A60
 
             g_SysWork.lightIntensity = Q12(0.8f);
 
-            Sfx_WithFlagsPlay(Sfx_Unk1336, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorOpenM7S01, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -512,7 +512,7 @@ void func_800D7A60(void) // 0x800D7A60
         case 8:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 158, false);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
-            Sfx_WithFlagsPlay(Sfx_Unk1337, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorCloseM7S01, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -1165,7 +1165,7 @@ void func_800D94DC(void) // 0x800D94DC
             break;
 
         case 6:
-            SD_Call(Sfx_Unk1343);
+            SD_Call(Sfx_DoorPuzzleUnlocked);
             SysWork_StateStepIncrement(0);
 
         case 5:

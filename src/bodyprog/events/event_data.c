@@ -9,7 +9,7 @@
 const s_AreaLoadSfx SFX_PAIRS[25] = {
     { Sfx_Base, Sfx_Base },
     { Sfx_DoorOpen0, Sfx_DoorClose0 },
-    { Sfx_Unk1323, Sfx_Unk1324 },
+    { Sfx_DoorOpenM2S01, Sfx_DoorCloseM2S01 },
     { Sfx_Unk1418, Sfx_Base },
     { Sfx_Unk1354, Sfx_Base },
     { Sfx_Unk1387, Sfx_Base },
@@ -19,18 +19,18 @@ const s_AreaLoadSfx SFX_PAIRS[25] = {
     { Sfx_Unk1604, Sfx_Unk1605 },
     { Sfx_Unk1609, Sfx_Unk1610 },
     { Sfx_Unk1396, Sfx_Unk1397 },
-    { Sfx_Unk1336, Sfx_Unk1337 },
-    { Sfx_Unk1338, Sfx_Unk1339 },
-    { Sfx_Unk1340, Sfx_Unk1341 },
+    { Sfx_DoorOpenM7S01, Sfx_DoorCloseM7S01 },
+    { Sfx_DoorOpenUnk1338, Sfx_DoorCloseUnk1339 },
+    { Sfx_DoorOpenUnk1340, Sfx_DoorCloseUnk1341 },
     { Sfx_Unk1601, Sfx_Unk1602 },
     { Sfx_Unk1490, Sfx_Unk1491 },
     { Sfx_Unk1431, Sfx_Unk1432 },
     { Sfx_Unk1398, Sfx_Unk1399 },
     { Sfx_Unk1504, Sfx_Unk1505 },
     { Sfx_DoorOpen0, Sfx_Base },
-    { Sfx_Unk1323, Sfx_Base },
-    { Sfx_Base, Sfx_Unk1324 },
-    { Sfx_Unk1351, Sfx_Unk1352 },
+    { Sfx_DoorOpenM2S01, Sfx_Base },
+    { Sfx_Base, Sfx_DoorCloseM2S01 },
+    { Sfx_DoorOpenUnk1351, Sfx_DoorCloseUnk1352 },
     { Sfx_Unk1487, Sfx_Base }
 };
 

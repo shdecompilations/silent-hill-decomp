@@ -637,7 +637,7 @@ void func_800DAA4C(void) // 0x800DAA4C
 
             g_SysWork.lightIntensity = Q12(0.8f);
 
-            Sfx_WithFlagsPlay(Sfx_Unk1336, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorOpenM7S01, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -647,7 +647,7 @@ void func_800DAA4C(void) // 0x800DAA4C
         case 8:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.playerWork.player, 158, false);
             Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
-            Sfx_WithFlagsPlay(Sfx_Unk1337, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorCloseM7S01, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -3237,7 +3237,7 @@ void func_800E2DEC(void) // 0x800E2DEC
             break;
 
         case 6:
-            Sfx_WithFlagsPlay(Sfx_Unk1343, &Q12_VECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorPuzzleUnlocked, &Q12_VECTOR3(60.0f, -1.2f, -96.0f), Q8(0.5f), SfxFlag_None);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -3416,7 +3416,7 @@ void func_800E32E0(void) // 0x800E32E0
             break;
 
         case 6:
-            SD_Call(Sfx_Unk1343);
+            SD_Call(Sfx_DoorPuzzleUnlocked);
             SysWork_StateStepIncrement(0);
 
         case 7:

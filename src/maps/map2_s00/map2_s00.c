@@ -1818,7 +1818,7 @@ void func_800EB174(void) // 0x800EB174
             sfxPos.vy = Q12(-1.2f);
             sfxPos.vz = MAP_POINTS[g_MapEventData->mapPointIdx].positionZ;
 
-            Sfx_WithFlagsPlay(Sfx_Unk1349, &sfxPos, Q8(0.5f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_DoorLocked1, &sfxPos, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
         case 1:

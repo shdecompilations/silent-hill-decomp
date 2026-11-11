@@ -2206,7 +2206,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     if (extra->model.controlState == 0 && player->position.vy >= player->properties.player.floorHeight)
                     {
                         extra->model.controlState++;
-                        Sfx_WithFlagsPlay(Sfx_Unk1317, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
+                        Sfx_WithFlagsPlay(Sfx_HarryFallGasp, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
                         player->properties.player.field_10C = 128;
                         func_80089470();
                     }
@@ -8954,7 +8954,7 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
     {
         case FloorType_8:
             mapIdx = g_SavegamePtr->mapIdx;
-            *sfxId = Sfx_Unk1330;
+            *sfxId = Sfx_FootstepUnk1330;
 
             // @hack Odd redundant load of `mapIdx`, likely there was some optimized-out code above that left side-effects?
             // This just sets `mapIdx` to `g_SavegamePtr->mapIdx` (again).
@@ -9009,7 +9009,7 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
             }
             else
             {
-                *sfxId = Sfx_Unk1331;
+                *sfxId = Sfx_FootstepUnk1331;
             }
             break;
 
@@ -9033,14 +9033,14 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
                 case 20:
                     if (g_SysWork.playerWork.player.position.vy > Q12(0.0f))
                     {
-                        *sfxId = Sfx_Unk1346;
+                        *sfxId = Sfx_FootstepMetal1;
                     }
                     break;
 
                 case 21:
                     if (floorType != FloorType_1)
                     {
-                        *sfxId = Sfx_Unk1346;
+                        *sfxId = Sfx_FootstepMetal1;
                     }
                     break;
             }

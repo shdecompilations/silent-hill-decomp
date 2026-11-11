@@ -5,13 +5,13 @@ void MapEvent_DoorLocked(void)
 #if defined(MAP1_S02)
     if (g_MapEventData->mapPointIdx == 27)
     {
-        Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1349, &sfxPos);
+        Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked1, &sfxPos);
         return;
     }
 #elif defined(MAP2_S00)
     if (g_MapEventData->mapPointIdx == 57 || g_MapEventData->mapPointIdx == 58)
     {
-        Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1349, &sfxPos);
+        Event_DisplayMapMsgWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked1, &sfxPos);
         return;
     }
 #elif defined(MAP3_S02)

@@ -736,7 +736,7 @@ void Player_DamageFeetFront(void)
     playerChara = &g_SysWork.playerWork.player;
     playerExtra = &g_SysWork.playerWork.extra;
 
-    Sfx_WithFlagsPlay(Sfx_Unk1317, &playerChara->position, Q8(1.0f / 8.0f), SfxFlag_None);
+    Sfx_WithFlagsPlay(Sfx_HarryFallGasp, &playerChara->position, Q8(1.0f / 8.0f), SfxFlag_None);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_DamageFeetFront);
 #endif
