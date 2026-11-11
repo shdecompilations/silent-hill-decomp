@@ -61,9 +61,9 @@ g_CreditEmptyLine           = 0x801E558C; // size:1
 g_CreditList                = 0x801E5590;
 D_801E5BD0                  = 0x801E5BD0;
 D_801E5C20                  = 0x801E5C20;
-D_801E5C24                  = 0x801E5C24; // size:0x200
-g_CreditsColorTable         = 0x801E5E24; // size:0x1C
-g_CreditsColorTable3d       = 0x801E5E40; // size:0x1C
+g_Credits_Widths            = 0x801E5C24; // size:0x200
+g_Credits_Colors            = 0x801E5E24; // size:0x1C
+g_Credits_Colors3d          = 0x801E5E40; // size:0x1C
 D_801E5E5C                  = 0x801E5E5C;
 D_801E5E6C                  = 0x801E5E6C;
 

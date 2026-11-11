@@ -21,9 +21,9 @@
 #include "maps/common/characters/incubus.h"
 #include "maps/common/characters/kaufmann.h"
 #include "maps/common/characters/unknown23.h"
-#include "screens/stf_roll/credits.h"
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
+#include "screens/stf_roll/credits.h"
 
 #include "../src/maps/common/particles/particle.c"
 

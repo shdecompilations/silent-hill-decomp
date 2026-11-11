@@ -385,7 +385,7 @@ s32 D_801E5C20 = 400;
 
 #include "widthtable.h"
 
-s32 g_CreditsColorTable[7] = {
+s32 g_Credits_Colors[7] = {
     0x64FF0000,
     0x640000FF,
     0x64FF00FF,
@@ -395,7 +395,7 @@ s32 g_CreditsColorTable[7] = {
     0x64FFFFFF,
 };
 
-s32 g_CreditsColorTable3d[7] = {
+s32 g_Credits_Colors3d[7] = {
     0x2CFF0000,
     0x2C0000FF,
     0x2CFF00FF,
@@ -1018,8 +1018,8 @@ void Credits_TextDraw(char* str) // 0x801E4394
     u32       nextChar;
     u8*       strPtr;
     u8*       scanPtr;
-    s16*      widthTable;
-    s32*      colorTable;
+    s16*      widths;
+    s32*      colors;
     PACKET*   packet;
     SPRT*     sprite;
     SPRT_16*  sprite16;
@@ -1031,8 +1031,8 @@ void Credits_TextDraw(char* str) // 0x801E4394
     textY      = g_CreditTextState.textY;
     leftMargin = g_CreditTextState.leftMargin;
     lineHeight = g_CreditTextState.lineHeight;
-    widthTable = g_CreditTextState.widthTable;
-    colorTable = g_CreditTextState.colorTable;
+    widths = g_CreditTextState.widths;
+    colors = g_CreditTextState.colors;
     packet     = GsOUT_PACKET_P;
     blendFlag  = (u8)g_CreditTextState.semiTrans;
     charCode   = *strPtr;
@@ -1042,7 +1042,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
 
     while (charCode != 0)
     {
-        charWidth = widthTable[charCode];
+        charWidth = widths[charCode];
 
         // Normal font.
         if (charCode >= '!' && charCode < 133)
@@ -1095,7 +1095,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
             // Change font color.
             else if (charCode >= 1 && charCode < 8)
             {
-                colorCode = colorTable[charCode - 1] | ((u8)g_CreditTextState.semiTrans << 25);
+                colorCode = colors[charCode - 1] | ((u8)g_CreditTextState.semiTrans << 25);
             }
             // Change font width table?
             else if (charCode >= 208 && charCode < 216)
@@ -1130,13 +1130,13 @@ void Credits_TextDraw(char* str) // 0x801E4394
                         continue;
                     }
 
-                    widthSum += widthTable[nextChar];
+                    widthSum += widths[nextChar];
                 }
 
-                (&widthTable[charCode])[16] = widthSum / 2;
-                (&widthTable[charCode])[32] = -(&widthTable[charCode])[16];
-                (&widthTable[charCode])[24] = widthSum;
-                (&widthTable[charCode])[40] = -(&widthTable[charCode])[24];
+                (&widths[charCode])[16] = widthSum / 2;
+                (&widths[charCode])[32] = -(&widths[charCode])[16];
+                (&widths[charCode])[24] = widthSum;
+                (&widths[charCode])[40] = -(&widths[charCode])[24];
             }
         }
 
@@ -1301,8 +1301,8 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
 
     u32       clut       = (u16)g_CreditText3dState.sub_0.clut;
     u32       tPage      = g_CreditText3dState.sub_0.tpage;
-    s16*      widthTable = g_CreditText3dState.sub_0.widthTable;
-    s32*      colorTable = g_CreditText3dState.sub_0.colorTable;
+    s16*      widths = g_CreditText3dState.sub_0.widths;
+    s32*      colors = g_CreditText3dState.sub_0.colors;
     u32       blendFlag  = (u8)g_CreditText3dState.sub_0.semiTrans << 25;
     s32       charWidth;
     bool      textXChanged;
@@ -1354,7 +1354,7 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
             }
         }
 
-        charWidth = widthTable[charCode];
+        charWidth = widths[charCode];
 
         // Normal font.
         if (charCode >= 33 && charCode < 133)
@@ -1399,7 +1399,7 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
         // Change font color.
         else if (charCode >= 1 && charCode < 8)
         {
-            colorCode = colorTable[charCode - 1] | ((u8)g_CreditText3dState.sub_0.semiTrans << 25);
+            colorCode = colors[charCode - 1] | ((u8)g_CreditText3dState.sub_0.semiTrans << 25);
         }
         // Change font width table?
         else if (charCode >= 208 && charCode < 216)
@@ -1442,18 +1442,18 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
                     {
                         nextChar = D_801E5E6C[nextChar - 184];
                     }
-                    widthSum += (widthTable[nextChar] * 2) / 3;
+                    widthSum += (widths[nextChar] * 2) / 3;
                 }
                 else
                 {
-                    widthSum += widthTable[nextChar];
+                    widthSum += widths[nextChar];
                 }
             }
 
-            (&widthTable[charCode])[16] = widthSum / 2;
-            (&widthTable[charCode])[32] = -(&widthTable[charCode])[16];
-            (&widthTable[charCode])[24] = widthSum;
-            (&widthTable[charCode])[40] = -(&widthTable[charCode])[24];
+            (&widths[charCode])[16] = widthSum / 2;
+            (&widths[charCode])[32] = -(&widths[charCode])[16];
+            (&widths[charCode])[24] = widthSum;
+            (&widths[charCode])[40] = -(&widths[charCode])[24];
         }
 
         textXChanged = false;

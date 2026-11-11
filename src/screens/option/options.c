@@ -13,7 +13,7 @@
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/text/text_debug_draw.h"
 #include "bodyprog/text/text_draw.h"
-#include "screens/options.h"
+#include "screens/options/options.h"
 #include "screens/stream/stream.h"
 
 #if VERSION_REGION_IS(PAL)

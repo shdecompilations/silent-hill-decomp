@@ -9,7 +9,7 @@
 #include "bodyprog/screen/fade.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "screens/saveload.h"
+#include "screens/saveload/saveload.h"
 
 #define SAVE_FLASH_TIMER_MAX 40
 #define SLOT_COLUMN_OFFSET   150

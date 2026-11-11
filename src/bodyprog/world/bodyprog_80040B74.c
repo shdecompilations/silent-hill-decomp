@@ -135,7 +135,7 @@ void func_80040BAC(void) // 0x80040BAC
 
 void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x80040E7C
 {
-    u32      colorTable[4];
+    u32      colors[4];
     s32      j;
     s32      i;
     s32      k;
@@ -149,10 +149,10 @@ void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightP
 
     packet = &g_Map_GfxPackets;
 
-    colorTable[0] = COLOR_RGB(0, 0, 0);
-    colorTable[1] = COLOR_RGB(worldTintR / 3, worldTintG / 3, worldTintB / 3);
-    colorTable[2] = COLOR_RGB((worldTintR * 2) / 3, (worldTintG * 2) / 3, (worldTintB * 2) / 3);
-    colorTable[3] = COLOR_RGB(worldTintR, worldTintG, worldTintB);
+    colors[0] = COLOR_RGB(0, 0, 0);
+    colors[1] = COLOR_RGB(worldTintR / 3, worldTintG / 3, worldTintB / 3);
+    colors[2] = COLOR_RGB((worldTintR * 2) / 3, (worldTintG * 2) / 3, (worldTintB * 2) / 3);
+    colors[3] = COLOR_RGB(worldTintR, worldTintG, worldTintB);
 
     for (i = 0; i < 2; i++,
         packet += (sizeof(DR_TPAGE) * 2)       +
@@ -168,9 +168,9 @@ void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightP
         for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
         {
             *(s32*)&poly_g3->r0 = lightPointColor + (poly_g3->code << 24);
-            *(s32*)&poly_g3->r1 = colorTable[0];
-            *(s32*)&poly_g3->r2 = colorTable[0];
-            *(s32*)&poly_f4->r0 = colorTable[3] + (poly_f4->code << 24);
+            *(s32*)&poly_g3->r1 = colors[0];
+            *(s32*)&poly_g3->r2 = colors[0];
+            *(s32*)&poly_f4->r0 = colors[3] + (poly_f4->code << 24);
         }
 
         poly_g4 = packet + (sizeof(DR_TPAGE) * 2) +
@@ -180,10 +180,10 @@ void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightP
         {
             for (j = 0; j < 16; j++, poly_g4++)
             {
-                *(s32*)&poly_g4->r0 = colorTable[k] + (poly_g4->code << 24);
-                *(s32*)&poly_g4->r1 = colorTable[k];
-                *(s32*)&poly_g4->r2 = colorTable[k + 1];
-                *(s32*)&poly_g4->r3 = colorTable[k + 1];
+                *(s32*)&poly_g4->r0 = colors[k] + (poly_g4->code << 24);
+                *(s32*)&poly_g4->r1 = colors[k];
+                *(s32*)&poly_g4->r2 = colors[k + 1];
+                *(s32*)&poly_g4->r3 = colors[k + 1];
             }
         }
     }

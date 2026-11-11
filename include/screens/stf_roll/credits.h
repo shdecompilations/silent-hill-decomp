@@ -21,7 +21,7 @@
 #define CREDITS_CODE_OFFSET_NEG_128 '\x1F'
 
 /** @brief Used for normal credits screen. */
-typedef struct
+typedef struct _CreditTextState
 {
     /* 0x0  */ s16  textX;      /** Prim vertex X. */
     /* 0x2  */ s16  textY;      /** Prim vertex Y. */
@@ -29,16 +29,16 @@ typedef struct
     /* 0x6  */ s8   lineHeight; /** Height? */
     /* 0x7  */ s8   semiTrans;  /** `bool` | Blend flag. */
     /* 0x8  */ s32  color;      /** Rgb24 color + code. */
-    /* 0xC  */ s16* widthTable; /** Points to 0x801E5C24, data size 400. */
-    /* 0x10 */ s32* colorTable; /** Points to 0x801E5E24, data size 28, rgb24 + code. */
+    /* 0xC  */ s16* widths;     /** Points to `g_Credits_Widths`. */
+    /* 0x10 */ s32* colors;     /** Points to `g_Credits_Colors`. */
     /* 0x14 */ u16  tpage;      /** Tpage for `setDrawTPage`, calculated from `uv` with `Credits_TextBlendSet`. */
     /* 0x16 */ s16  clut;       /** Clut XY. */
-    /* 0x18 */ u32  uv;         /** Texture UV, tpageXY might be more accurate?. */
+    /* 0x18 */ u32  uv;         /** Texture UV. TODO: `tPageXy` might be more accurate?. */
 } s_CreditTextState;
 STATIC_ASSERT_SIZEOF(s_CreditTextState, 28);
 
 /** @brief Used for UFO ending credits screen. */
-typedef struct
+typedef struct _CreditText3dState
 {
     /* 0x0  */ s_CreditTextState sub_0;
     /* 0x1C */ s32        field_1C;
@@ -77,11 +77,11 @@ extern char D_801E5BD0[]; // KCET string.
 
 extern s32 D_801E5C20;
 
-extern s16 D_801E5C24[256];
+extern s16 g_Credits_Widths[256];
 
-extern s32 g_CreditsColorTable[7];
+extern s32 g_Credits_Colors[7];
 
-extern s32 g_CreditsColorTable3d[7];
+extern s32 g_Credits_Colors3d[7];
 
 extern u8 D_801E5E5C[];
 

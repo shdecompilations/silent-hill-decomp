@@ -13,16 +13,16 @@ s32 D_800C48F0;
 s_CreditTextState g_CreditTextState = {
     .lineHeight = 24,
     .color      = COLOR_RGBC(255, 255, 255, PRIM_RECT | RECT_TEXTURE),
-    .widthTable = D_801E5C24,
-    .colorTable = g_CreditsColorTable
+    .widths     = g_Credits_Widths,
+    .colors     = g_Credits_Colors
 };
 
 s_CreditText3dState g_CreditText3dState = {
     .sub_0 = {
         .lineHeight = 24,
         .color      = COLOR_RGBC(255, 255, 255, RECT_TEXTURE | RECT_SIZE_1 | PRIM_POLY),
-        .widthTable = D_801E5C24,
-        .colorTable = g_CreditsColorTable3d
+        .widths     = g_Credits_Widths,
+        .colors     = g_Credits_Colors3d
     },
     .field_1C = Q12(1.0f),
     .field_24 = 240,
