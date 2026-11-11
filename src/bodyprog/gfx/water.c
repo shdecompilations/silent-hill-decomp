@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/water.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/items/item_screens.h"
@@ -22,10 +23,6 @@
 #endif
 
 s_800C4818 D_800C4818;
-
-// ========================================
-// WATER EFFECT
-// ========================================
 
 void func_8008D41C(void) // 0x8008D41C
 {
