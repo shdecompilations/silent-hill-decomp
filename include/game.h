@@ -265,7 +265,7 @@ typedef struct _PlayerCombat
 } s_PlayerCombat;
 STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
-// TODO: Move world env structs to `world/world_effects.h.
+// TODO: Move world env structs to `world/effects.h.
 //============================================================================
 
 /** @brief World environment preset. Contains fog, lighting and tint settings. */

@@ -5,9 +5,9 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/world/world_draw.h"
+#include "bodyprog/world/draw.h"
 #include "bodyprog/chara/bone.h"
-#include "bodyprog/world/world_effects.h"
+#include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/screen/data.h"

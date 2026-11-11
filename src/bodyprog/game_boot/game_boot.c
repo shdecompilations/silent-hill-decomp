@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/events/bgm_update.h"
-#include "bodyprog/events/collision_trigger.h"
+#include "bodyprog/world/collision_trigger.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/screen/data.h"

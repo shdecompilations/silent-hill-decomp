@@ -83,9 +83,9 @@ segments:
       - [0x818,  .rodata, events/game_sys_states]
       - [0x91C,  .rodata, events/title]
       - [0x9BF,   rodata] # Garbage padding
-      - [0x9C4,  .rodata, world/world_draw]
+      - [0x9C4,  .rodata, world/draw]
       - [0x1050, pad]
-      - [0x1054, .rodata, world/world_effects]
+      - [0x1054, .rodata, world/effects]
       - [0x1084,  rodata] # Garbage padding
       - [0x1094, .rodata, sound/sd_call]
       - [0x1200,  rodata] # Garbage padding
@@ -221,13 +221,13 @@ segments:
       # accidentally modify values as in rare occasions is used to access to some current in-game graphic data.
       #
       # Please note this are presumptions, this system is considerably complex.
-      - [0x160E4,    c, world/world_draw]             # }
+      - [0x160E4,    c, world/draw]             # }
       - [0x189A0,    c, gfx/brightness_menu_line]     # |
-      - [0x18AC8,    c, world/world_effects]          # }
+      - [0x18AC8,    c, world/effects]          # }
       - [0x1A3B4,    c, world/collision_trigger]      # }
       - [0x1A3FC,    c, view/vc_util]                 # |
       - [0x1AF1C,    c, world/bodyprog_80040B74]      # } lighting_overlap.c?
-      - [0x1BE84,    c, world/world_map]              # }
+      - [0x1BE84,    c, world/map]              # }
       - [0x1E958,    c, chara/anim] # }
       - [0x1F2C8,    c, chara/bone] # }
       
@@ -470,8 +470,8 @@ segments:
       - [0x83F90, .data, events/events_main]
       - [0x83F9C, .data, events/game_sys_states]
       - [0x83FE4, .data, events/title]
-      - [0x84424, .data, world/world_draw]
-      - [0x844E8, .data, world/world_effects]
+      - [0x84424, .data, world/draw]
+      - [0x844E8, .data, world/effects]
       - [0x84530, .data, sound/sound_data]
       - [0x879E8, .data, view/vw_calc]
       - [0x87A00, .data, text/text_draw]
@@ -555,13 +555,13 @@ segments:
       - [0x96D3C,  pad] # Garbage.
       - [0x96D40, .bss, events/title]
       - [0x96D44,  pad] # Garbage.
-      - [0x96D48, .bss, world/world_effects]
+      - [0x96D48, .bss, world/effects]
       - [0x96D58, .bss, view/vc_util]
       - [0x96D64,  pad] # Unused
-      - [0x96D74, .bss, world/world_draw]
+      - [0x96D74, .bss, world/draw]
       - [0x99B34,  pad] # Garbage.
       - [0x99B50, .bss, world/bodyprog_80040B74]
-      - [0x9AF70, .bss, world/world_map]
+      - [0x9AF70, .bss, world/map]
       - [0x9B50C,  pad] # Garbage.
       - [0x9B510, .bss, chara/bone]
       - [0x9B514,  pad] # Garbage.

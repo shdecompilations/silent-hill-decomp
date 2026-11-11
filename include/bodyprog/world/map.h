@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_WORLD_WORLDMAP_H
-#define _BODYPROG_WORLD_WORLDMAP_H
+#ifndef _BODYPROG_WORLD_MAP_H
+#define _BODYPROG_WORLD_MAP_H
 
 /** @brief Initializes map data and chunks.
  *

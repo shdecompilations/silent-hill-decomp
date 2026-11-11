@@ -25,8 +25,8 @@
 #include "bodyprog/sound/sfx_id_enum.h"
 #include "bodyprog/text/map_msg.h"
 #include "bodyprog/view/vw_system.h"
-#include "bodyprog/world/world_draw.h"
-#include "bodyprog/world/world_map.h"
+#include "bodyprog/world/draw.h"
+#include "bodyprog/world/map.h"
 #include "main/fsqueue.h"
 
 // ======

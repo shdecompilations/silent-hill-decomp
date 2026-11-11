@@ -6,7 +6,7 @@
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/world/world_effects.h"
+#include "bodyprog/world/effects.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/text/text_draw.h"

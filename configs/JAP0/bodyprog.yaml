@@ -83,9 +83,9 @@ segments:
       - [0x804, .rodata, events/game_sys_states]
       - [0x908, .rodata, events/title]
       - [0x9AC, rodata] # Garbage padding
-      - [0x9B0, .rodata, world/world_draw]
+      - [0x9B0, .rodata, world/draw]
       - [0x103C, pad]
-      - [0x1040, .rodata, world/world_effects]
+      - [0x1040, .rodata, world/effects]
       - [0x1070, rodata] # Garbage padding
       - [0x1080, .rodata, sound/sd_call]
       - [0x11EC, rodata] # Garbage padding
@@ -178,13 +178,13 @@ segments:
       - [0x12F98, c, events/npc_main]          # }
       - [0x13DA8, c, events/game_sys_states]   # }
       - [0x15CFC, c, events/title] # Name convention from SH2/4.
-      - [0x16F00, c, world/world_draw]             # }
+      - [0x16F00, c, world/draw]             # }
       - [0x197BC, c, gfx/brightness_menu_line]     # |
-      - [0x198E4, c, world/world_effects]          # }
+      - [0x198E4, c, world/effects]          # }
       - [0x1B1D8, c, world/collision_trigger]      # }
       - [0x1B220, c, view/vc_util]                 # |
       - [0x1BD48, c, world/bodyprog_80040B74]      # } lighting_overlap.c?
-      - [0x1CCB0, c, world/world_map]              # }
+      - [0x1CCB0, c, world/map]              # }
       - [0x1F778, c, chara/anim] # }
       - [0x200E8, c, chara/bone] # }
       - [0x20C50, c, sound/sd_call]
@@ -427,8 +427,8 @@ segments:
       - [0x8725C, .data, events/events_main]
       - [0x87268, .data, events/game_sys_states]
       - [0x872B0, .data, events/title]
-      - [0x876F0, .data, world/world_draw]
-      - [0x877BC, .data, world/world_effects]
+      - [0x876F0, .data, world/draw]
+      - [0x877BC, .data, world/effects]
       - [0x87804, .data, sound/sound_data]
       - [0x8ACBC, .data, view/vw_calc]
       - [0x8ACD4, .data, text/text_draw]
@@ -504,13 +504,13 @@ segments:
       - [0x9A7AC, pad] # Garbage.
       - [0x9A7B0, .bss, events/title]
       - [0x9A7B4, pad] # Garbage.
-      - [0x9A7B8, .bss, world/world_effects]
+      - [0x9A7B8, .bss, world/effects]
       - [0x9A7C8, .bss, view/vc_util]
       - [0x9A7D4, pad] # Unused
-      - [0x9A7E4, .bss, world/world_draw]
+      - [0x9A7E4, .bss, world/draw]
       - [0x9D5A4, pad] # Garbage.
       - [0x9D5C0, .bss, world/bodyprog_80040B74]
-      - [0x9E9E0, .bss, world/world_map]
+      - [0x9E9E0, .bss, world/map]
       - [0x9EF7C, pad] # Garbage.
       - [0x9EF80, .bss, chara/bone]
       - [0x9EF84, pad] # Garbage.

@@ -5,7 +5,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/events/npc_main.h"
-#include "bodyprog/world/world_effects.h"
+#include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "main/rng.h"

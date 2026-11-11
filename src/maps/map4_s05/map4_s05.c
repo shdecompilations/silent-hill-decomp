@@ -4,7 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
-#include "bodyprog/world/world_effects.h"
+#include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/sound/sound_system.h"
