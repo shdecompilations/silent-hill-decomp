@@ -321,7 +321,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                         }
 
                         Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap));
-                        PLAYER_CHARA().damage.amount += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].field_4, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
+                        PLAYER_CHARA().damage.amount += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].damage, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
                     }
                 }
 

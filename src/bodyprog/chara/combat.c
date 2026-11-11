@@ -234,7 +234,7 @@ u32 func_8008A270(s32 idx) // 0x8008A270
     }
 #endif
 
-    return D_800AD4C8[idx].field_E;
+    return D_800AD4C8[idx].activeStartKeyframe;
 }
 
 u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
@@ -257,17 +257,17 @@ u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
         }
     }
 
-    return D_800AD4C8[arg0].field_F;
+    return D_800AD4C8[arg0].activeKeyframeCount;
 }
 
-s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1) // 0x8008A35C
+s32 func_8008A35C(s_AttackInfo* arg0, s32 arg1) // 0x8008A35C
 {
     s32 var;
     s32 res;
 
-    var = arg0->field_E + arg0->field_F;
+    var = arg0->activeStartKeyframe + arg0->activeKeyframeCount;
     res = 0;
-    if (arg1 >= arg0->field_E)
+    if (arg1 >= arg0->activeStartKeyframe)
     {
         res = (arg1 < var);
     }
@@ -299,7 +299,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                sp10;
     s32                sp14;
     s32                sp18;
-    s_800AD4C8*        sp1C;
+    s_AttackInfo*      sp1C;
     s32                sp20;
     s32                sp24;
     s32                sp28;
@@ -309,7 +309,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     u32                sp38;
     s32                sp3C;
     u32                sp40;
-    s32                charaId;
+    s32                pelletCount;
     s32                sp48;
     s32                sp4C;
     s32                sp50;
@@ -405,7 +405,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     sp1C = &D_800AD4C8[sp14];
 
-    temp_s1 = sp1C->field_10;
+    temp_s1 = sp1C->kind;
 
     if (chara == &PLAYER_CHARA())
     {
@@ -470,13 +470,13 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
         {
             sp3C = chara->field_44.field_3;
             sp40 = chara->field_44.field_4;
-            sp34 = *(u16*)&sp1C->field_6;
+            sp34 = sp1C->hitCheck.shot.interval;
 
-            sp54 = sp1C->field_0;
+            sp54 = sp1C->maxRange;
 
             if (sp34 != 0)
             {
-                sp38 = sp1C->field_8;
+                sp38 = sp1C->hitCheck.shot.maxShots;
                 if (sp38 == 0)
                 {
                     sp38 = 1;
@@ -487,19 +487,19 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 sp38 = 1;
             }
 
-            sp50 = sp1C->field_B;
+            sp50 = sp1C->hitCheck.shot.spread;
             sp4C = sp50 >> 4;
-            sp48 = sp1C->field_A;
+            sp48 = sp1C->hitCheck.shot.inaccuracy;
             sp4C--;
             sp4C &= 0xF;
             sp50  = D_800AFD1C[sp50 & 0xF];
             sp4C++;
-            charaId = sp1C->charaId_9;
+            pelletCount = sp1C->hitCheck.shot.pelletCount;
             sp4C = sp4C * sp50;
 
-            if (sp34 == 0 && charaId == Chara_Harry)
+            if (sp34 == 0 && pelletCount == 1)
             {
-                if (chara->model.charaId == charaId)
+                if (chara->model.charaId == Chara_Harry)
                 {
                     var_a0_2 = func_8007FD2C();
                 }
@@ -625,7 +625,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                  sp3C != 0 && sp40 < sp38 && sp28 >= i;
                  i += sp34, sp40++, sp3C--)
             {
-                for (j = charaId; j > 0; j--)
+                for (j = pelletCount; j > 0; j--)
                 {
                     temp_v0_10 = Rng_RandQ12();
                     temp_s2_2  = Q12_MULT_PRECISE(sp48, temp_v0_10);
@@ -922,7 +922,7 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
     s32                vx3;
     s32                vy3;
     s32                vz3;
-    s_800AD4C8*        ptr;
+    s_AttackInfo*      ptr;
     s_SubCharacter_44* base;
 
     base  = &chara->field_44;
@@ -949,8 +949,8 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
 
     ptr = &D_800AD4C8[idx46];
 
-    temp_s2 = ptr->field_0;
-    temp_s0 = ptr->field_2;
+    temp_s2 = ptr->maxRange;
+    temp_s0 = ptr->minRange;
 
     vx3 = chara->field_44.field_18.vx;
     vy3 = chara->field_44.field_18.vy;
@@ -1210,11 +1210,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
     s32         x2;
     s32         y2;
     s32         z2;
-    s_800AD4C8* temp_fp;
+    s_AttackInfo* temp_fp;
 
     weaponAttack = (u8)attacker->field_44.field_2;
     temp_fp      = &D_800AD4C8[weaponAttack];
-    offsetY       = temp_fp->field_10;
+    offsetY       = temp_fp->kind;
     sp14         = attacker->field_44.field_8;
     offsetZ       = arg3;
 
@@ -1269,7 +1269,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         }
     }
 
-    var_s0 = Q12(temp_fp->field_4);
+    var_s0 = Q12(temp_fp->damage);
 
     switch (weaponAttack)
     {
@@ -1316,7 +1316,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
             break;
     }
 
-    var_s7       = temp_fp->field_C;
+    var_s7       = temp_fp->shock;
     damageAmount = Q12_MULT_PRECISE(var_s0, (Q12(4.5f) - Rng_RandQ12()) / 4);
 
     switch (weaponAttack)
@@ -1433,7 +1433,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
     if (damageAmount | var_s7)
     {
-        var_a2 = temp_fp->field_12;
+        var_a2 = temp_fp->impactSfxGroup;
 
         if (var_a2 > 0 && var_a2 < 8)
         {
@@ -1533,7 +1533,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
     return sp10;
 }
 
-s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg3) // 0x8008BF84
+s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* arg2, s32 arg3) // 0x8008BF84
 {
     s_SubCharacter*   chara1;
     s32               sp14;
@@ -1657,9 +1657,9 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         sp4C = temp_a0;
     }
 
-    temp_v1   = *(u16*)&arg2->field_6;
-    temp_a0_2 = *(u16*)&arg2->field_8;
-    temp_a2   = *(u16*)&arg2->field_A;
+    temp_v1   = arg2->hitCheck.fight.sizeX;
+    temp_a0_2 = arg2->hitCheck.fight.sizeY;
+    temp_a2   = arg2->hitCheck.fight.sizeZ;
 
     var_v0    = (sp38 - sp44);
     temp_v0_7 = (sp3C - sp48);
@@ -1667,20 +1667,20 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
     if (var_v0 < temp_v1)
     {
-        sp38 += *(u16*)&arg2->field_6 >> 1;
-        sp44 -= *(u16*)&arg2->field_6 >> 1;
+        sp38 += arg2->hitCheck.fight.sizeX >> 1;
+        sp44 -= arg2->hitCheck.fight.sizeX >> 1;
     }
 
     if (temp_v0_7 < temp_a0_2)
     {
-        sp3C += *(u16*)&arg2->field_8 >> 1;
-        sp48 -= *(u16*)&arg2->field_8 >> 1;
+        sp3C += arg2->hitCheck.fight.sizeY >> 1;
+        sp48 -= arg2->hitCheck.fight.sizeY >> 1;
     }
 
     if (var_v0_6 < temp_a2)
     {
-        sp40 += *(u16*)&arg2->field_A >> 1;
-        sp4C -= *(u16*)&arg2->field_A >> 1;
+        sp40 += arg2->hitCheck.fight.sizeZ >> 1;
+        sp4C -= arg2->hitCheck.fight.sizeZ >> 1;
     }
 
     if (chara == &PLAYER_CHARA())

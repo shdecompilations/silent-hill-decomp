@@ -122,28 +122,61 @@ typedef struct
     /* 0x0 */ s16 field_0; // Flags?
 } s_8008D850;
 
-/** Related to weapon attacks. Stats, SFX IDs, damange values, etc.? */
+/** @brief Melee hit box for an attack. SH2: `shBattleFight`. */
 typedef struct
 {
-    /* 0x0  */ q4_12 field_0;
-    /* 0x2  */ q3_12 field_2;
-    /* 0x4  */ u16   field_4; // Related to damage. Multiplier?
-    /* 0x6  */ s8    field_6; // Accessed by `func_8008BF84` as `u16`
-    /* 0x7  */ s8    unk_7;
-    /* 0x8  */ u8    field_8;   // Accessed by `func_8008BF84` as `u16`
-    /* 0x9  */ u8    charaId_9; /** `e_CharaId` */
-    /* 0xA  */ u8    field_A;   // Accessed by `func_8008BF84` as `u16`
-    /* 0xB  */ u8    field_B;
-    /* 0xC  */ q4_12 field_C;
-    /* 0xE  */ u8    field_E;  // Keyframe index offset?
-    /* 0xF  */ u8    field_F;  // Keyframe index offset?
-    /* 0x10 */ u8    field_10; // State.
-    /* 0x11 */ u8    field_11;
-    /* 0x12 */ u8    field_12; // SFX ID subgroup. Uses values 0-4.
+    /* 0x0 */ q4_12 sizeX; // SH2: `test_a`.
+    /* 0x2 */ q4_12 sizeY; // SH2: `test_b`.
+    /* 0x4 */ q4_12 sizeZ; // SH2: `test_c`.
+} s_AttackFight;
+
+/** @brief Gunshot parameters for an attack. SH2: `shBattleShot`. */
+typedef struct
+{
+    /* 0x0 */ q4_12 interval;    // Animation time between shots.
+    /* 0x2 */ u8    maxShots;    // 0 is treated as 1.
+    /* 0x3 */ u8    pelletCount; // Rays traced per shot.
+    /* 0x4 */ u8    inaccuracy;
+    /* 0x5 */ u8    spread;      // Low nibble: `D_800AFD1C` index, high nibble: step count.
+} s_AttackShot;
+
+/** @brief Attack definition, indexed by `WEAPON_ATTACK` value.
+ * Struct contents match very closely to SH2 `shBattleInfo` struct, though with fields reordered.
+ * (some PS2 compilers do reorder structs to improve packing iirc)
+ * The shBattleInfo struct even has some fields (sd/eff) that go completely unused in SH2, left set to 0.
+ * In our struct they do get used as sound index though, good indication SH2 struct was heldover from something older.
+ * Sadly code in SH2 that uses this struct seems completely different/reworked to use some kind of attack queue system, too bad.
+*/
+typedef struct
+{
+    /* 0x0  */ q4_12 maxRange; // SH2: `max_range`.
+    /* 0x2  */ q3_12 minRange; // SH2: `min_range`.
+    /* 0x4  */ u16   damage;   // SH2: `ap`. Game code converts to Q12 later.
+    /* 0x6  */ union
+               {
+                   s_AttackFight fight;
+                   s_AttackShot  shot;
+               } hitCheck;     // SH2: `hit_check`. `shot` when `kind` is 3, otherwise `fight`.
+    /* 0xC  */ q4_12 shock;    // SH2: `sp`. Scales the push applied to `s_CharaDamage::position`.
+    /* 0xE  */ u8    activeStartKeyframe; // SH2: `atk_start`.
+    /* 0xF  */ u8    activeKeyframeCount; // SH2: `atk_end`, stored as a length. 99: rest of the animation.
+    /* 0x10 */ u8    kind;           // SH2: `kind`. 1: melee hitting every frame, 2: melee stopping on first hit, 3: gunshot, 4-6: enemy only. TODO: Enum.
+    /* 0x11 */ u8    hurtSfxType;    // SH2: `sd`. Player hurt SFX?
+    /* 0x12 */ u8    impactSfxGroup; // SH2: `eff`. Impact SFX per target, uses values 0-4.
     /* 0x13 */ s8    __pad_13;
     /* 0x14 */ u32*  unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
-} s_800AD4C8;
-STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
+} s_AttackInfo;
+STATIC_ASSERT_SIZEOF(s_AttackInfo, 24);
+
+/** @brief Initializer for `s_AttackInfo::hitCheck` as a melee hit box. */
+#define ATTACK_FIGHT(sizeX, sizeY, sizeZ) \
+    { Q12(sizeX), Q12(sizeY), Q12(sizeZ) }
+
+/** @brief Initializer for `s_AttackInfo::hitCheck` as gunshot parameters.
+ * (union initializer fills `fight`, so the `s_AttackShot` fields are packed into its three halfwords.)
+ */
+#define ATTACK_SHOT(interval, maxShots, pelletCount, inaccuracy, spread) \
+    { Q12(interval), (maxShots) | ((pelletCount) << 8), (inaccuracy) | ((spread) << 8) }
 
 /** @brief Radio noise data for nearby enemies. */
 typedef struct _RadioNoise
@@ -744,7 +777,7 @@ extern s32 D_800C48F0;
 extern u8 D_800AD480[24];
 
 /** Weapon attacks. */
-extern s_800AD4C8 D_800AD4C8[70];
+extern s_AttackInfo D_800AD4C8[70];
 
 extern const s_MapOverlayHdr g_MapOverlayHdr; // 0x800C957C
 
@@ -1186,7 +1219,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
 
 u32 func_8008A270(s32 idx);
 
-s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1);
+s32 func_8008A35C(s_AttackInfo* arg0, s32 arg1);
 
 void Chara_Flag8Clear(s_SubCharacter* chara);
 
@@ -1217,7 +1250,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar);
 /** Main attack handling function. */
 s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* attackPos, s32 arg3);
 
-s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg3);
+s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* arg2, s32 arg3);
 
 s32 func_8008D850(void);
 
