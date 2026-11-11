@@ -141,9 +141,9 @@ typedef struct
 } s_AttackShot;
 
 /** @brief Attack definition, indexed by `WEAPON_ATTACK` value.
- * Struct contents match very closely to SH2 `shBattleInfo` struct, though with fields reordered.
+ * Struct contents match very closely to SH2 `shAttackInfo` struct, though with fields reordered.
  * (some PS2 compilers do reorder structs to improve packing iirc)
- * The shBattleInfo struct even has some fields (sd/eff) that go completely unused in SH2, left set to 0.
+ * The shAttackInfo struct even has some fields (sd/eff) that go completely unused in SH2, left set to 0.
  * In our struct they do get used as sound index though, good indication SH2 struct was heldover from something older.
  * Sadly code in SH2 that uses this struct seems completely different/reworked to use some kind of attack queue system, too bad.
 */
