@@ -6,6 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/paper_map/paper_map.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/math/math.h"
@@ -20,7 +21,7 @@
 // I think this is save file flags related to
 // placing the markings on the map.
 /** `[1]` contains relative paper map file indices. */
-u8 D_800AE740[][2] = {
+static u8 D_800AE740[][2] = {
     { 0x00, 0x00 },
     { 0x00, 0x00 },
     { 0x00, 0x00 },
@@ -47,10 +48,10 @@ u8 D_800AE740[][2] = {
     { 0x00, 0x16 }
 };
 
-bool D_800AE770 = false; // Used by `GameState_PaperMapScreen_Update`.
+static bool D_800AE770 = false; // Used by `GameState_PaperMapScreen_Update`.
 
 // `D_800AE774`. `D_800AE7E4`, `D_800AE820` are used by `func_80067914`. TODO: Use `DVECTOR` for these?
-s8 D_800AE774[8][7][2] = {
+static s8 D_800AE774[8][7][2] = {
     { { 0, 0 }, { 0, 0 }, { -43, 90 }, { -48, 72 }, { -51, 42 }, { -48, -32 }, { -47, 68 } },
     { { 0, 0 }, { 0, 0 }, { -1, 82 }, { -33, -2 }, { -8, -80 }, { 64, -80 }, { 0, 0 } },
     { { 0, 0 }, { -36, -74 }, { 72, 80 }, { 37, 1 }, { 28, -80 }, { 104, -75 }, { 0, 0 } },
@@ -61,7 +62,7 @@ s8 D_800AE774[8][7][2] = {
     { { 0, 0 }, { 0, 0 }, { 32, 56 }, { 107, 32 }, { 117, -32 }, { 89, -80 }, { 64, 1 } }
 };
 
-s8 D_800AE7E4[5][6][2] = {
+static s8 D_800AE7E4[5][6][2] = {
     { { 0, 0 }, { 60, -83 }, { 87, -81 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
     { { 0, 0 }, { 98, -36 }, { 68, -19 }, { 102, -1 }, { 0, 0 }, { -53, -25 } },
     { { 0, 0 }, { 59, -40 }, { 111, -84 }, { 104, 41 }, { 32, 11 }, { 0, 0 } },
@@ -69,7 +70,7 @@ s8 D_800AE7E4[5][6][2] = {
     { { 0, 0 }, { 104, -25 }, { 104, -24 }, { 0, 0 }, { -10, -41 }, { 0, 0 } }
 };
 
-s8 D_800AE820[8][8][2] = {
+static s8 D_800AE820[8][8][2] = {
     { { 0, 0 }, { 32, 11 }, { -40, 48 }, { -5, 72 }, { 62, 71 }, { -39, -62 }, { 68, -66 }, { 0, 0 } },
     { { 0, 0 }, { 68, -66 }, { -40, -66 }, { 0, 0 }, { 98, 79 }, { -35, -3 }, { 60, 1 }, { 0, 0 } },
     { { 0, 0 }, { 68, 38 }, { -40, -12 }, { 56, 78 }, { 110, 24 }, { 0, 0 }, { 14, -13 }, { 0, 0 } },
@@ -80,7 +81,7 @@ s8 D_800AE820[8][8][2] = {
     { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 103, -23 }, { 68, -24 }, { 101, -5 }, { 41, 86 }, { 0, 0 } }
 };
 
-u32 D_800AE8A0[327] = {
+static u32 D_800AE8A0[327] = {
     0x00000000, 0x1F0F0000, 0x1F0F0010, 0x1F0F0020,
     0x1F0F0030, 0x1F0F0040, 0x1F0F0050, 0x1F0F0060,
     0x2F1F7050, 0x1F1F2020, 0x1F1F2040, 0x3F1F4000,
@@ -166,7 +167,7 @@ u32 D_800AE8A0[327] = {
 };
 
 // Used by `func_80068E0C`. Contains pointers to the table above.
-s_800AEDBC D_800AEDBC[] = {
+static s_800AEDBC D_800AEDBC[] = {
     {},
     { &D_800AE8A0[0],   &D_800AE8A0[18],  0x0363, 0x03A8 },
     { &D_800AE8A0[52],  &D_800AE8A0[61],  0x03AF, 0x03BE },

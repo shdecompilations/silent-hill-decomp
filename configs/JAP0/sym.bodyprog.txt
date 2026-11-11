@@ -587,9 +587,9 @@ WorldGfx_SplitHeadMeshSwap                   = 0x8003E148; // type:func
 WorldGfx_PuppetNurseMeshSwap                 = 0x8003E1D4; // type:func
 WorldGfx_PuppetDoctorMeshSwap                = 0x8003E278; // type:func
 
-//---------------------------------------------------------------------------
-//--- PA: 0x0197BC   VA: 0x8003E31C   subsegment: c, gfx/brightness_menu_line
-//---------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//--- PA: 0x0197BC   VA: 0x8003E31C   subsegment: c, gfx/brightness_menu_lines
+//----------------------------------------------------------------------------
 Options_BrightnessMenu_LinesDraw             = 0x8003E31C; // type:func
 
 //----------------------------------------------------------------

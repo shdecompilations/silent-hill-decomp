@@ -6,6 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/env_effects.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
@@ -100,10 +101,6 @@ GsCOORDINATE2* D_800C4410;
 s8             D_800C4414; /** Flags. */
 s8             __pad_bss_800C4415[3];
 s_800C4418     D_800C4418;
-
-// ========================================
-// ENVIRONMENT EFFECTS HANDLING
-// ========================================
 
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {

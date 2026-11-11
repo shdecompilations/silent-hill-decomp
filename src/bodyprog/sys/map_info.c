@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/sys/map_info.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 
@@ -385,7 +386,7 @@ s_WorldEnvPreset WORLD_ENV_PRESETS[21] = {
     }
 };
 
-const static s_WaterZone WATER_LIGHT_ZONES_0[] = {
+static const s_WaterZone WATER_LIGHT_ZONES_0[] = {
     { true, 8, Q4(-120.0f), Q4(80.0f), Q4(-120.0f), Q4(40.0f) },
 #if !VERSION_IS(JAP0)
     { true, 8, Q4(0.0f),    Q4(40.0f), Q4(0.0f),    Q4(80.0f) },
@@ -393,20 +394,20 @@ const static s_WaterZone WATER_LIGHT_ZONES_0[] = {
     {}
 };
 
-const static s_WaterZone WATER_LIGHT_ZONES_1[] = {
+static const s_WaterZone WATER_LIGHT_ZONES_1[] = {
     { true, 8, Q4(-160.0f), Q4(40.0f),  Q4(-160.0f), Q4(160.0f) },
     { true, 8, Q4(-160.0f), Q4(160.0f), Q4(-160.0f), Q4(40.0f)  },
     {}
 };
 
-const static s_SpeedZone SPEED_ZONES_THR[] = {
+static const s_SpeedZone SPEED_ZONES_THR[] = {
     { SpeedZoneType_Fast,   Q4(-320.0f), Q4(280.0f), Q4(-240.0f), Q4(200.0f) },
     { SpeedZoneType_Fast,   Q4(-40.0f),  Q4(40.0f),  Q4(200.0f),  Q4(240.0f) },
     { SpeedZoneType_Normal, Q4(-280.0f), Q4(-80.0f), Q4(200.0f),  Q4(400.0f) },
     { NO_VALUE,             Q4(0.0f),    Q4(0.0f),   Q4(0.0f),    Q4(0.0f)   }
 };
 
-const static s_SpeedZone SPEED_ZONES_SP[] = {
+static const s_SpeedZone SPEED_ZONES_SP[] = {
     { SpeedZoneType_Fast,   Q4(-240.0f), Q4(80.0f),  Q4(-120.0f), Q4(40.0f)  },
     { SpeedZoneType_Fast,   Q4(-40.0f),  Q4(80.0f),  Q4(40.0f),   Q4(120.0f) },
     { SpeedZoneType_Normal, Q4(-160.0f), Q4(-80.0f), Q4(80.0f),   Q4(240.0f) },
@@ -416,7 +417,7 @@ const static s_SpeedZone SPEED_ZONES_SP[] = {
 
 // 2 bytes of padding.
 
-const static s_SpeedZone SPEED_ZONES_RSR[] = {
+static const s_SpeedZone SPEED_ZONES_RSR[] = {
     { SpeedZoneType_Fast,   Q4(-120.0f), Q4(80.0f),   Q4(-200.0f), Q4(40.0f) },
     { SpeedZoneType_Normal, Q4(-200.0f), Q4(-120.0f), Q4(-40.0f),  Q4(0.0f)  },
     { NO_VALUE,             Q4(0.0f),    Q4(0.0f),    Q4(0.0f),    Q4(0.0f)  }
@@ -424,7 +425,7 @@ const static s_SpeedZone SPEED_ZONES_RSR[] = {
 
 // 2 bytes of padding.
 
-const static s_SpeedZone SPEED_ZONES_RSU[] = {
+static const s_SpeedZone SPEED_ZONES_RSU[] = {
     { SpeedZoneType_Fast,   Q4(-200.0f), Q4(0.0f),   Q4(40.0f),  Q4(160.0f) },
     { SpeedZoneType_Normal, Q4(-200.0f), Q4(-80.0f), Q4(-80.0f), Q4(40.0f)  },
     { NO_VALUE,             Q4(0.0f),    Q4(0.0f),   Q4(0.0f),   Q4(0.0f)   }
@@ -432,7 +433,7 @@ const static s_SpeedZone SPEED_ZONES_RSU[] = {
 
 // 2 bytes of padding.
 
-const static s_SpeedZone SPEED_ZONES_AP[] = {
+static const s_SpeedZone SPEED_ZONES_AP[] = {
     { SpeedZoneType_Fast,   Q4(-80.0f), Q4(40.0f), Q4(-120.0f), Q4(40.0f)  },
     { SpeedZoneType_Normal, Q4(0.0f),   Q4(40.0f), Q4(80.0f),   Q4(120.0f) },
     { NO_VALUE,             Q4(0.0f),   Q4(0.0f),  Q4(0.0f),    Q4(0.0f)   }
@@ -440,12 +441,12 @@ const static s_SpeedZone SPEED_ZONES_AP[] = {
 
 // 2 bytes of padding.
 
-const static s_SpeedZone SPEED_ZONES_DR[] = {
+static const s_SpeedZone SPEED_ZONES_DR[] = {
     { SpeedZoneType_Normal, Q4(-800.0f), Q4(840.0f), Q4(-800.0f), Q4(840.0f) },
     { NO_VALUE,             Q4(0.0f),    Q4(0.0f),   Q4(0.0f),    Q4(0.0f)   }
 };
 
-const static s_SpeedZone SPEED_ZONES_SC[] = {
+static const s_SpeedZone SPEED_ZONES_SC[] = {
     { SpeedZoneType_Normal, Q4(-120.0f), Q4(-40.0f), Q4(40.0f),  Q4(80.0f)  },
     { SpeedZoneType_Normal, Q4(-40.0f),  Q4(0.0f),   Q4(160.0f), Q4(200.0f) },
     { SpeedZoneType_Normal, Q4(-40.0f),  Q4(0.0f),   Q4(0.0f),   Q4(40.0f)  },
@@ -459,7 +460,7 @@ const static s_SpeedZone SPEED_ZONES_SC[] = {
 
 // 2 bytes of padding.
 
-const static s_SpeedZone SPEED_ZONES_SU[] = {
+static const s_SpeedZone SPEED_ZONES_SU[] = {
     { SpeedZoneType_Normal, Q4(-120.0f), Q4(-40.0f), Q4(40.0f),  Q4(80.0f)  },
     { SpeedZoneType_Normal, Q4(-40.0f),  Q4(0.0f),   Q4(160.0f), Q4(200.0f) },
     { SpeedZoneType_Normal, Q4(-40.0f),  Q4(0.0f),   Q4(0.0f),   Q4(40.0f)  },
@@ -473,7 +474,7 @@ const static s_SpeedZone SPEED_ZONES_SU[] = {
 
 // 2 bytes of padding.
 
-const static s_SpeedZone SPEED_ZONES_HP[] = {
+static const s_SpeedZone SPEED_ZONES_HP[] = {
     { SpeedZoneType_Normal, Q4(0.0f), Q4(40.0f), Q4(120.0f), Q4(160.0f) },
     { SpeedZoneType_Normal, Q4(0.0f), Q4(40.0f), Q4(0.0f),   Q4(40.0f)  },
     { NO_VALUE,             Q4(0.0f), Q4(0.0f),  Q4(0.0f),   Q4(0.0f)   }
@@ -481,7 +482,7 @@ const static s_SpeedZone SPEED_ZONES_HP[] = {
 
 // 2 bytes of padding.
 
-const static s_SpeedZone SPEED_ZONES_HU[] = {
+static const s_SpeedZone SPEED_ZONES_HU[] = {
     { SpeedZoneType_Normal, Q4(80.0f),   Q4(120.0f),  Q4(120.0f),  Q4(160.0f)  },
     { SpeedZoneType_Normal, Q4(0.0f),    Q4(40.0f),   Q4(0.0f),    Q4(40.0f)   },
     { SpeedZoneType_Normal, Q4(120.0f),  Q4(160.0f),  Q4(0.0f),    Q4(40.0f)   },
@@ -497,7 +498,7 @@ const static s_SpeedZone SPEED_ZONES_HU[] = {
 
 // 2 bytes of padding.
 
-const static s_SpeedZone SPEED_ZONES_ER[] = {
+static const s_SpeedZone SPEED_ZONES_ER[] = {
     { SpeedZoneType_Normal, Q4(-80.0f),  Q4(-40.0f), Q4(-40.0f),  Q4(0.0f)    },
     { SpeedZoneType_Normal, Q4(-120.0f), Q4(-40.0f), Q4(-120.0f), Q4(-80.0f)  },
     { SpeedZoneType_Normal, Q4(-120.0f), Q4(-80.0f), Q4(-160.0f), Q4(-120.0f) },
@@ -506,7 +507,7 @@ const static s_SpeedZone SPEED_ZONES_ER[] = {
     { NO_VALUE,             Q4(0.0f),    Q4(0.0f),   Q4(0.0f),    Q4(0.0f)    }
 };
 
-const static s_SpeedZone SPEED_ZONES_XXX[] = {
+static const s_SpeedZone SPEED_ZONES_XXX[] = {
     { SpeedZoneType_Fast, Q4(-800.0f), Q4(840.0f), Q4(-800.0f), Q4(840.0f) },
     { NO_VALUE,           Q4(0.0f),    Q4(0.0f),   Q4(0.0f),    Q4(0.0f)   }
 };

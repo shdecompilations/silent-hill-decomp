@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/collision/trigger.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/view/vw_main.h"
@@ -17,7 +18,7 @@
  * @return Trigger height (Q19.12).
  */
 #define TRIGGER_HEIGHT_GET(steps) \
-    ((-Q12(steps) >> 1) - Q12(1.5f))
+    (DIV_FAST(-Q12(steps), 2) - Q12(1.5f))
 
 void Collision_TriggerQuery(q19_12* result, q19_12 posX, q19_12 posZ, q19_12 offsetX, q19_12 offsetZ) // 0x8006F250
 {

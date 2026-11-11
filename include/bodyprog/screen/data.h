@@ -110,6 +110,35 @@ extern q19_12 g_DeltaTimeRaw;
 
 extern s32 g_IntervalVBlanks;
 
+extern s_FsImageDesc g_Font16AtlasImg;
+extern s_FsImageDesc g_KonamiLogoImg;
+extern s_FsImageDesc g_KcetLogoImg;
+extern s_FsImageDesc g_TitleImg;
+extern s_FsImageDesc g_PaperMapImg;
+extern s_FsImageDesc g_PaperMapMarkingAtlasImg;
+extern s_FsImageDesc g_ItemInspectionImg;
+extern s_FsImageDesc g_LoadingScreenImg;
+extern s_FsImageDesc g_ControllerButtonAtlasImg;
+extern s_FsImageDesc g_BrightnessScreenImg0;
+extern s_FsImageDesc g_BrightnessScreenImg1;
+extern s_FsImageDesc g_DeathTipImg;
+extern s_FsImageDesc g_HealthPortraitImg;
+extern s_FsImageDesc g_InventoryKeyItemTextureImg;
+extern s_FsImageDesc g_FirstAidKitItemTextureImg;
+
+/** Some intentory item texture (`ITEM/TIM07.TIM`). */
+extern s_FsImageDesc D_800A9074;
+
+extern s_FsImageDesc D_800A907C;
+
+extern s_FsImageDesc D_800A9084;
+
+extern s_FsImageDesc D_800A908C;
+
+extern s_FsImageDesc D_800A9094;
+
+extern s_FsImageDesc g_Font24AtlasImg;
+
 // ====================
 // GLOBALS (BSS; Hack)
 // ====================

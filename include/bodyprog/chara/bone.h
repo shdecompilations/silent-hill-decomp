@@ -1,6 +1,13 @@
 #ifndef _BODYPROG_CHARA_BONE_H
 #define _BODYPROG_CHARA_BONE_H
 
+/** @brief Bone hierarchy types. */
+typedef enum _BoneHierarchy
+{
+    BoneHierarchy_MultiModel = -3,
+    BoneHierarchy_End        = -2
+} e_BoneHierarchy;
+
 /** Something related to player weapon position. Takes coords to arm bones. */
 void Bone_ExtraRotationSet(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY);
 

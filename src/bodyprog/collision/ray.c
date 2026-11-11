@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/collision/ray.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"

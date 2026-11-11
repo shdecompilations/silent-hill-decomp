@@ -19,14 +19,17 @@
 #include "bodyprog/formats/model.h"
 #include "bodyprog/formats/texture.h"
 #include "bodyprog/formats/tmd.h"
+#include "bodyprog/gfx/env_effects.h"
 #include "bodyprog/gfx/water.h"
 #include "bodyprog/gfx/world.h"
 #include "bodyprog/gfx/world_object.h"
 #include "bodyprog/map/map.h"
 #include "bodyprog/map/terrain.h"
+#include "bodyprog/paper_map/paper_map.h"
 #include "bodyprog/player/player_control.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/sound/sfx_id_enum.h"
+#include "bodyprog/sys/map_info.h"
 #include "bodyprog/text/map_msg.h"
 #include "bodyprog/view/vw_system.h"
 #include "bodyprog/world/draw.h"
@@ -46,33 +49,6 @@ typedef enum _SfxFlags
     SfxFlag_NoDistAtten   = 1 << 1, /** No distance attenuation. */
     SfxFlag_UpdateAttribs = 1 << 2  /** @unused Update attributes. */
 } e_SfxFlags;
-
-// Used by `func_8006E490` and `func_8006E150`.
-typedef enum _OrientationFlags
-{
-    OrientationFlags_None    = 0,
-    OrientationFlags_InvertX = 1 << 0,
-    OrientationFlags_InvertZ = 1 << 1,
-    OrientationFlags_SwapXz  = 1 << 2
-} e_OrientationFlags;
-
-typedef enum _BoneHierarchy
-{
-    BoneHierarchy_MultiModel = -3,
-    BoneHierarchy_End        = -2
-} e_BoneHierarchy;
-
-typedef enum _EffectTextureFlags
-{
-    EffectTextureFlag_None         = 0,
-    EffectTextureFlag_Glass        = 1 << 1, /** Broken glass in the cafe Air Screamer cutscene. */
-    EffectTextureFlag_WaterRefract = 1 << 2, /** Water waves and light reflection in the sewer. */
-    EffectTextureFlag_Water        = 1 << 3,
-    EffectTextureFlag_Fire         = 1 << 4,
-    EffectTextureFlag_Ef           = 1 << 5, // TODO: Rename. Looks like stringy flesh?
-    EffectTextureFlag_Blood        = 1 << 6,
-    EffectTextureFlag_WarmTest     = 1 << 7  /** @unused Test lens flare? */
-} e_EffectTextureFlags;
 
 /** Used by `func_8003F654` to cast a specific field to the desired type. */
 typedef enum _PrimitiveType
@@ -238,31 +214,6 @@ typedef struct
                      } s_1;
     /* 0x3DC */ } u;
 } s_GteScratchData2;
-
-// Paper map marking info?
-typedef struct
-{
-    /* 0x0 */ u8 field_0;
-    /* 0x1 */ u8 field_1;
-    /* 0x2 */ u8 field_2;
-    /* 0x3 */ u8 field_3; // Map marking sprite height?
-} s_800AE8A0_0;
-typedef struct // Maybe the same? Both related to `s_800AEDBC`.
-{
-    /* 0x0 */ s8 field_0;
-    /* 0x1 */ s8 field_1;
-    /* 0x2 */ u8 field_2;
-    /* 0x3 */ u8 field_3;
-} s_800AE8A0_4;
-
-/** Paper map marking graphic data? */
-typedef struct
-{
-    /* 0x0 */ POLY_FT4*    field_0;
-    /* 0x4 */ s_800AE8A0_0 field_4;
-    /* 0x8 */ s_800AE8A0_4 field_8;
-    /* 0xC */ s32          field_C; // Count.
-} s_func_80068E0C;
 
 typedef struct
 {
@@ -532,37 +483,6 @@ extern const s_800C44F0 D_800294F4[];
 extern const s_AnimInfo* D_800297B8;
 
 extern u_Filename D_8002B2CC;
-
-extern s_FsImageDesc g_Font16AtlasImg;
-extern s_FsImageDesc g_KonamiLogoImg;
-extern s_FsImageDesc g_KcetLogoImg;
-extern s_FsImageDesc g_TitleImg;
-extern s_FsImageDesc g_PaperMapImg;
-extern s_FsImageDesc g_PaperMapMarkingAtlasImg;
-extern s_FsImageDesc g_ItemInspectionImg;
-extern s_FsImageDesc g_LoadingScreenImg;
-extern s_FsImageDesc g_ControllerButtonAtlasImg;
-extern s_FsImageDesc g_BrightnessScreenImg0;
-extern s_FsImageDesc g_BrightnessScreenImg1;
-extern s_FsImageDesc g_DeathTipImg;
-extern s_FsImageDesc g_HealthPortraitImg;
-extern s_FsImageDesc g_InventoryKeyItemTextureImg;
-extern s_FsImageDesc g_FirstAidKitItemTextureImg;
-
-/** Some intentory item texture (`ITEM/TIM07.TIM`). */
-extern s_FsImageDesc D_800A9074;
-
-extern s_FsImageDesc D_800A907C;
-
-extern s_FsImageDesc D_800A9084;
-
-extern s_FsImageDesc D_800A908C;
-
-extern s_FsImageDesc D_800A9094;
-
-extern s_FsImageDesc g_Font24AtlasImg;
-
-extern s_WorldEnvPreset WORLD_ENV_PRESETS[21];
 
 extern s32 D_800A9A20;
 
@@ -1237,25 +1157,6 @@ s32 Chara_MovementUpdate0(s_SubCharacter* chara, s_CollisionResult* collResult);
 /** Checks `floorType`. */
 bool func_8005F680(s_CollisionSurface* surface);
 
-/** Related to camera collision? */
-void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3);
-
-void Map_EffectTexturesLoad(s32 mapIdx);
-
-void func_8005E414(s32 orgIdx);
-
-/** @brief Does something with `unkTable1_4C`, clears blood splats and initialize drawn of objects. */
-void func_8005E650(s32 mapId);
-
-void func_8005E70C(void);
-
-s32 func_8005E7E0(s32 arg0);
-
-// Crucial for displaying particle effects. (Not general enviroments. Blood, shoot effects)
-void func_8005E89C(void);
-
-s32 func_8005F55C(s32 arg0);
-
 void Game_MapRoomIdxUpdate(void);
 
 /** @unused */
@@ -1385,34 +1286,11 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
 
 q19_12 func_8005C7B0(q19_12 angle);
 
-void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3);
-
-bool func_80062708(POLY_FT4** poly, s32 idx);
-
-bool func_80063A50(POLY_FT4** poly, s32 idx);
-
-// Important for drawing gun smoke effect.
-bool func_80064334(POLY_FT4** poly, s32 idx);
-
-/** Displays gunfire effects. */
-void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coord);
-
 s32 Chara_MovementUpdate1(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
 
 /** Computes something for a targeted NPC. */
 bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, const VECTOR3* attackPos,
                    u32 npcIdx, q19_12 angleConstraint);
-
-bool func_80060044(POLY_FT4** poly, s32 idx);
-
-bool func_800611C0(POLY_FT4** poly, s32 idx);
-
-/** Spawns blood effect? */
-void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3);
-
-void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 arg2);
-
-bool func_80064FC0(POLY_FT4** polys, s32 idx);
 
 /** @unused */
 void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
@@ -1427,15 +1305,6 @@ void func_80066D90(void);
 void func_80066E40(void);
 
 void func_80066E7C(void);
-
-s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale);
-
-bool func_80068CC0(s32 arg0);
-
-/** Paper map func. Seems to draw map marking sprites. */
-bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q4_12 scale);
-
-void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale);
 
 void Player_FlexRotationYReset(void);
 
@@ -1477,10 +1346,6 @@ void Input_SelectClickSet(void);
 
 /** @brief Updates the active autosave savegame entry with the most recent savegame. */
 void SysWork_AutosaveUpdate(void);
-
-// ====================
-// Main menu functions - TODO: Maybe a split around here?
-// ====================
 
 void func_8003ECBC(void);
 
@@ -1527,7 +1392,5 @@ u32 func_8008A2E0(s32 arg0);
 void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
                                  q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
                                  q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight);
-
-void GameState_PaperMapScreen_Update(void);
 
 #endif

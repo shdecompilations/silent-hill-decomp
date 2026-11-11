@@ -20,13 +20,13 @@
  *       e.g. if we had `#define playerChara ...`, that would break things that use `s_SubCharacter* playerChara`
  *       but `#define playerChara() ...` would only replace function-style uses.
 */
-#define PLAYER_CHARA()  (g_SysWork.playerWork.player)
+#define PLAYER_CHARA() (g_SysWork.playerWork.player)
 
 /** @brief Returns the player character properties. */
-#define PLAYER_PROPS()  (g_SysWork.playerWork.player.properties.player)
+#define PLAYER_PROPS() (g_SysWork.playerWork.player.properties.player)
 
 /** @brief Returns the player character extra data. */
-#define PLAYER_EXTRA()  (g_SysWork.playerWork.extra)
+#define PLAYER_EXTRA() (g_SysWork.playerWork.extra)
 
 /** @brief Returns the player combat data. */
 #define PLAYER_COMBAT() (g_SysWork.playerCombat)

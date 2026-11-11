@@ -8949,8 +8949,8 @@ void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1)
             // @hack Redundant switch needed for match. This allows emitting a dupe `g_SavegamePtr->mapIdx`
             // load in the ASM that goes unused, before setting `*sfxId = Sfx_FootstepUnk1330`.
             // MapIdx cases are just guesses that allow the dupe to be emitted.
-            // Unknown whether original code might have had something similar (maybe at one point would set
-            // different sfxId values, but was later changed to same one)
+            // Unknown whether original code might have had something similar. Maybe at one point would set
+            // different `sfxId` values, but was later changed to the same one.
             switch (g_SavegamePtr->mapIdx)
             {
                 case MapIdx_MAP0_S01:

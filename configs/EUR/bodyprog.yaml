@@ -222,7 +222,7 @@ segments:
       #
       # Please note this are presumptions, this system is considerably complex.
       - [0x160E4,    c, world/draw]             # }
-      - [0x189A0,    c, gfx/brightness_menu_line]     # |
+      - [0x189A0,    c, gfx/brightness_menu_lines]     # |
       - [0x18AC8,    c, world/effects]          # }
       - [0x1A3B4,    c, world/collision_trigger]      # }
       - [0x1A3FC,    c, view/vc_util]                 # |

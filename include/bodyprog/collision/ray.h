@@ -4,6 +4,15 @@
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/ipd.h"
 
+// Used by `func_8006E490` and `func_8006E150`.
+typedef enum _OrientationFlags
+{
+    OrientationFlags_None    = 0,
+    OrientationFlags_InvertX = 1 << 0,
+    OrientationFlags_InvertZ = 1 << 1,
+    OrientationFlags_SwapXz  = 1 << 2
+} e_OrientationFlags;
+
 typedef struct
 {
     s8         unk_0[8];

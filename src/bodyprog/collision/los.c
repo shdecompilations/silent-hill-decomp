@@ -3,6 +3,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/collision/los.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"

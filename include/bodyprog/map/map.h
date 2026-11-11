@@ -551,8 +551,6 @@ typedef struct _MapOverlayHdr
 } s_MapOverlayHdr;
 STATIC_ASSERT_SIZEOF(s_MapOverlayHdr, 4172);
 
-extern const s_MapInfo MAP_INFOS[MapType_Count];
-
 /** @brief Checks if a paper map has been collected.
  *
  * @param paperMapIdx Paper map index.
