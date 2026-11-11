@@ -239,6 +239,7 @@ segments:
       - [0x262B0,    c, items/utils]
       - [0x26BD8,    c, items/item_screens_2]
       - [0x299E8,    c, items/item_screens_3]
+      - [auto,       c, items/item_unk_data]
       
       - [0x2F3AC,    c, gfx/bodyprog_80055028]
       - [0x30638,    c, gfx/materials]
@@ -475,7 +476,8 @@ segments:
       - [0x84530, .data, sound/sound_data]
       - [0x879E8, .data, view/vw_calc]
       - [0x87A00, .data, text/text_draw]
-      - [0x87A0C, .data, items/item_screens_3]
+      - [0x87A0C, .data, items/item_unk_data]
+      - [0x880C4, .data, items/item_screens_3]
       - [0x8811C, .data, gfx/bodyprog_80055028]
       - [0x8816C, .data, gfx/billboard]
       - [0x88488, .data, bodyprog_math_8005BF38]
