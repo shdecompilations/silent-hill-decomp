@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
-#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/world/world_effects.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sound_system.h"

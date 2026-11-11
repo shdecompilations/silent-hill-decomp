@@ -3,7 +3,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/bgm_utils.h"
-#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/world/world_effects.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/memcard.h"

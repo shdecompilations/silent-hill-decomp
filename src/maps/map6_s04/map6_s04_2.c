@@ -6,7 +6,7 @@
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/game_boot/fs_chara_anim.h"
-#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/world/world_effects.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/items/item_screens.h"

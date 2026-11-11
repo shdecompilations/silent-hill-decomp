@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/collision_trigger.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/world/world_effects.h"
 #include "bodyprog/view/vc_main.h"
 #include "bodyprog/math/math.h"
 #include "maps/common/characters/harry.h"

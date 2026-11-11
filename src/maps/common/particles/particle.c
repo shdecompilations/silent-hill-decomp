@@ -2,7 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/event_data.h"
-#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/world/world_effects.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/common/shared.h"

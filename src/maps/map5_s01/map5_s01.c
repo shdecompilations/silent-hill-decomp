@@ -2,7 +2,7 @@
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/events/radio.h"
-#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/world/world_effects.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sound_system.h"

@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/bone.h"
-#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/world/world_effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/screen/data.h"

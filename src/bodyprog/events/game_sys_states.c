@@ -11,7 +11,7 @@
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/sys/demo.h"
-#include "bodyprog/gfx/map_effects.h"
+#include "bodyprog/world/world_effects.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/memcard.h"
