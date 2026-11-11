@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/JAP2/maps/map1_s05
   src_path: src/maps/map1_s05
+  asset_path: asm/JAP2/maps/map1_s05
   build_path: build/JAP2
 
   ld_script_path: linkers/JAP2/maps/map1_s05.ld
@@ -72,5 +73,12 @@ segments:
       - [0xC6C4, data]
       - [0xC6C4, .data, map_events]
       - [0xC6F4, .data, map1_s05]
-      - [0xC730, data]
+
+      # .bss section
+      - [0xC730, .bss, map1_s05]
+
+  # Garbage data left at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0xF148
   - [0xF200]

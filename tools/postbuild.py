@@ -77,6 +77,9 @@ PATCHES = {
         "VIN/OPTION.BIN": [
             (0x742, b'\x40\x10') # options (.rodata)
         ],
+        "VIN/MAP3_S02.BIN": [
+            (0x9BDD, b'\x5B\x00\x5B') # map3_s02_2 (.bss)
+        ],
         "VIN/MAP3_S06.BIN": [
             (0x1D65, b'\x65\x74\x5F') # map3_s06_2 (.rodata)
         ],
@@ -200,6 +203,9 @@ PATCHES = {
         "VIN/MAP2_S03.BIN": [
             (0x1356, b'\xB0\xAF') # map2_s03 (.rodata)
         ],
+        "VIN/MAP3_S02.BIN": [
+            (0x9B95, b'\x57\x03\x78') # map3_s02_2 (.bss)
+        ],
         "VIN/MAP3_S06.BIN": [
             (0x1CA5, b'\x4A\x30\x28') # map3_s06_2 (.rodata)
         ],
@@ -280,6 +286,9 @@ PATCHES = {
         "VIN/MAP2_S03.BIN": [
             (0x1356, b'\xB0\xAF') # map2_s03 (.rodata)
         ],
+        "VIN/MAP3_S02.BIN": [
+            (0x9B95, b'\x57\x03\x78') # map3_s02_2 (.bss)
+        ],
         "VIN/MAP3_S06.BIN": [
             (0x1CA5, b'\x4A\x30\x28') # map3_s06_2 (.rodata)
         ],
@@ -357,6 +366,9 @@ PATCHES = {
         ],
         "VIN/MAP2_S03.BIN": [
             (0x1356, b'\xB0\xAF') # map2_s03 (.rodata)
+        ],
+        "VIN/MAP3_S02.BIN": [
+            (0x9B95, b'\x57\x03\x78') # map3_s02_2 (.bss)
         ],
         "VIN/MAP3_S06.BIN": [
             (0x1CA5, b'\x4A\x30\x28') # map3_s06_2 (.rodata)

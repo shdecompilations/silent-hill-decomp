@@ -5,6 +5,18 @@
 #include "maps/common/shared.h"
 #include "maps/common/characters/split_head.h"
 
+#if defined(MAP1_S05)
+// .bss data in maps we've matched .bss for
+u8             sharedData_800D5CF8_1_s05[9];
+u8             sharedData_800D5D08_1_s05[9];
+GsCOORDINATE2* sharedData_800D8610_1_s05;
+q3_12          g_SplitHead_MovementOffsetX;
+q3_12          g_SplitHead_MovementOffsetZ;
+VECTOR3        sharedData_800D8618_1_s05[9];
+q19_12         sharedData_800D8684_1_s05;
+q19_12         sharedData_800D8688_1_s05;
+#endif
+
 #define splitHeadProps splitHead->properties.splitHead
 
 void SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)

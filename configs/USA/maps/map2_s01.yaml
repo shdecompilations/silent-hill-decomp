@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/USA/maps/map2_s01
   src_path: src/maps/map2_s01
+  asset_path: asm/USA/maps/map2_s01
   build_path: build/USA
 
   ld_script_path: linkers/USA/maps/map2_s01.ld
@@ -62,7 +63,6 @@ segments:
       # .text section
       - [0x1A98, c, map2_s01_anim_info]
       - [0x1A98, c, header]
-      - [0x1A98, c, map_events]
       - [0x1A98, c, map2_s01_2]
 
       # .data section
@@ -70,6 +70,12 @@ segments:
       - [0x6874, data] # TODO: Dahlia anim info, other data
       - [0x6C24, .data, header]
       - [0x6D84, .data, map2_s01_2]
-      - [0x6E34, .data, map_events]
-      - [0x6F84, data]
+
+      # .bss section
+      - [0x6FC4, .bss, map2_s01_2]
+
+  # Zero padding at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0x82BC
   - [0x8300]

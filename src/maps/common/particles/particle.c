@@ -27,7 +27,7 @@
     #include "maps/map5/map5_s01.h"
 #endif
 
-#if defined(MAP1_S04) || defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP4_S00) || defined(MAP4_S06) || defined(MAP6_S05)
+#if defined(MAP1_S04) || defined(MAP1_S05) || defined(MAP2_S01) || defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP3_S02) || defined(MAP4_S00) || defined(MAP4_S06) || defined(MAP6_S05)
 // .bss data in maps we've matched .bss for
 // As more maps get matched we can hopefully find proper order for these.
 e_MapIdx          g_ParticleMapIdx0;

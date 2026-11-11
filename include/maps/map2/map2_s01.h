@@ -29,8 +29,6 @@
 
 #include "maps/common/shared.h"
 
-extern u16 g_Cutscene_MapMsgAudioCmds[20];
-extern q19_12 g_Cutscene_Timer;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
 extern u8 g_Cutscene_MapMsgAudioIdx;

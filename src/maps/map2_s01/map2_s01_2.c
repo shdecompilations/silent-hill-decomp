@@ -7,10 +7,66 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
+
+// TODO: .bss is emitted in order of first declaration, right now our headers
+// declare externs in semi-random order though.
+// For now we'll declare them before headers in the order they appear in the
+// map .bss, later can hopefully improve order in headers instead.
+extern e_MapIdx                  g_ParticleMapIdx0;
+extern e_MapIdx                  g_ParticleMapIdx1;
+extern s32                       __pad_bss_800D0544[2];
+extern VECTOR3                   g_CameraPositionTarget;
+extern s32                       __pad_bss_800D0558;
+extern VECTOR3                   g_CameraLookAtTarget;
+extern u8                        g_Cutscene_MapMsgAudioIdx;
+extern s8                        __pad_bss_800D0569[3];
+extern s32                       g_Particle_SpeedX;
+extern s32                       g_Particle_SpeedZ;
+extern s32                       sharedData_800DFB6C_0_s00;
+extern s32                       sharedData_800DFB70_0_s00;
+extern s_MapHdr_field_4C         sharedData_800DFB7C_0_s00[];
+extern s_BloodSplat              g_Effect_BloodSplats[];
+extern s8                        __pad_bss_800D1648[4];
+extern struct _ParticleVectors   g_ParticleVectors0;
+extern s32                       __pad_bss_800D1678;
+extern struct _ParticleVectors   g_ParticleVectors1;
+extern s32                       sharedData_800E0CA8_0_s00;
+extern s32                       sharedData_800E0CAC_0_s00;
+extern u32                       sharedData_800E0CB0_0_s00;
+extern u16                       sharedData_800E0CB4_0_s00;
+extern u16                       sharedData_800E0CB6_0_s00;
+extern u16                       sharedData_800E0CB8_0_s00;
+extern s8                        sharedData_800E0CBA_0_s00;
+extern s8                        __pad_bss_800D16BB;
+extern struct _CollisionResult   sharedData_800E39BC_0_s00;
+extern s32                       sharedData_800E39D8_0_s00;
+extern q19_12                    g_Player_MoveSpeed;
+extern s32                       sharedData_800D16E0_2_s01;
+extern u8                        sharedData_800D16E4_2_s01;
+extern s8                        __pad_bss_800D16E5[7];
+extern struct _WorldObjectPose   g_WorldObject_Key;
+extern struct _WorldObjectPose   g_WorldObject_Item;
+extern struct _WorldObjectPose   g_WorldObject_SavePad;
+extern u8                        D_800D177C;
+extern s8                        __pad_bss_800D177D[15];
+extern struct _WorldObjectModel  g_CommonWorldObjects[];
+
 #include "maps/map2/map2_s01.h"
 #include "maps/common/characters/dahlia.h"
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
+
+VECTOR3 g_CameraPositionTarget;
+VECTOR3 g_CameraLookAtTarget;
+u8      g_Cutscene_MapMsgAudioIdx;
+
+s32 __pad_bss_800D0544[2];
+s32 __pad_bss_800D0558;
+s8  __pad_bss_800D0569[3];
+s8  __pad_bss_800D1648[4];
+s32 __pad_bss_800D1678;
+s8  __pad_bss_800D16BB;
+s8  __pad_bss_800D16E5[7];
 
 #include "../src/maps/common/particles/particle.c"
 
@@ -126,6 +182,17 @@ const char* MAP_MESSAGES[] = {
     /* 42 */ "\tロウソク立てがある ~N\n\t特に気になることはない ~E "
 #endif
 };
+
+s_EventData MAP_EVENTS[] = {
+#include "map_events.h"
+};
+
+u16 g_Cutscene_MapMsgAudioCmds[] = {
+    0x104E, 0x1039, 0x1051, 0x104C, 0x1047, 0x1055, 0x1050, 0x1046, 0x1049, 0x1052,
+    0x103E, 0x104B, 0x103C, 0x1042, 0x1040, 0x1043, 0x103F, 0x1044, 0x103A, 0x104A,
+};
+
+q19_12 g_Cutscene_Timer = NO_VALUE;
 
 void func_800CED44(void) // 0x800CED44
 {
@@ -479,12 +546,16 @@ void func_800CF7C4(void) // 0x800CF7C4
     Event_ItemTake(InvItemId_DrawbridgeKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M2S01_PickupDrawbridgeKey, 36);
 }
 
-extern u8 D_800D177C;
-extern s_WorldObjectModel g_CommonWorldObjects[6];
-extern s_WorldObjectPose g_WorldObject_SavePad;
-extern s_WorldObjectPose g_WorldObject_Key;
-extern s_WorldObjectPose g_WorldObject_Item;
-extern s_Pose g_CommonWorldObjectPoses[1];
+s_WorldObjectPose  g_WorldObject_Key;
+s_WorldObjectPose  g_WorldObject_Item;
+s_WorldObjectPose  g_WorldObject_SavePad;
+u8                 D_800D177C;
+s8                 __pad_bss_800D177D[15];
+s_WorldObjectModel g_CommonWorldObjects[6];
+
+s_Pose g_CommonWorldObjectPoses[] = {
+    { { Q12(15.5f), Q12(-1.12f), Q12(25.25f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) } },
+};
 
 void Map_WorldObjectsInit(void)
 {

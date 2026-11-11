@@ -2,11 +2,15 @@
 #include "bodyprog/player/player.h"
 #include "maps/common/characters/player.h"
 
-#if defined(MAP1_S04) || defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP4_S00) || defined(MAP4_S06) || defined(MAP6_S05)
+#if defined(MAP1_S04) || defined(MAP1_S05) || defined(MAP2_S01) || defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP3_S02) || defined(MAP4_S00) || defined(MAP4_S06) || defined(MAP6_S05)
 // .bss data in maps we've matched .bss for
 // As more maps get matched we can hopefully find proper order for these.
 s32    sharedData_800E39D8_0_s00;
 q19_12 g_Player_MoveSpeed;
+#endif
+
+#if defined(MAP2_S01)
+s_CollisionResult sharedData_800E39BC_0_s00;
 #endif
 
 // Player-related functions kept inside map overlay for some reason.

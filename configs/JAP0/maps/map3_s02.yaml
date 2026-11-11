@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/JAP0/maps/map3_s02
   src_path: src/maps/map3_s02
+  asset_path: asm/JAP0/maps/map3_s02
   build_path: build/JAP0
 
   ld_script_path: linkers/JAP0/maps/map3_s02.ld
@@ -60,7 +61,6 @@ segments:
       - [0x1050, .rodata, map3_s02_2]
 
       - [0x1598, c, header]
-      - [0x1598, c, map_events]
       - [0x1598, c, map3_s02_anim_info]
 
       # .text section
@@ -71,6 +71,12 @@ segments:
       - [0x8074, data]
       - [0x87D4, .data, header]
       - [0x88BC, .data, map3_s02_2]
-      - [0x8900, .data, map_events]
-      - [0x89FC, data]
+
+      # .bss section
+      - [0x8A24, .bss, map3_s02_2]
+
+  # Garbage data left at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0x9B98
   - [0x9C00]

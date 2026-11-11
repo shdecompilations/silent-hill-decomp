@@ -4,6 +4,11 @@
 #include "maps/common/shared.h"
 #include "maps/common/characters/alessa.h"
 
+#if defined(MAP3_S02)
+// .bss data in maps we've matched .bss for
+s32 sharedData_800D3150_3_s02;
+#endif
+
 /** AI code for `Chara_Alessa`
  *
  * Included in:

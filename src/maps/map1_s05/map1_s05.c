@@ -2,6 +2,55 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
+
+// TODO: .bss is emitted in order of first declaration, right now our headers
+// declare externs in semi-random order though.
+// For now we'll declare them before headers in the order they appear in the
+// map .bss, later can hopefully improve order in headers instead.
+extern e_MapIdx                     g_ParticleMapIdx0;
+extern e_MapIdx                     g_ParticleMapIdx1;
+extern s32                          __pad_bss_800D5CF0[2];
+extern u8                           sharedData_800D5CF8_1_s05[9];
+extern s8                           __pad_bss_800D5D01[7];
+extern u8                           sharedData_800D5D08_1_s05[9];
+extern u8                           D_800D5D11;
+extern s8                           __pad_bss_800D5D12[2];
+extern s32                          g_Particle_SpeedX;
+extern s32                          g_Particle_SpeedZ;
+extern s32                          sharedData_800DFB6C_0_s00;
+extern s32                          sharedData_800DFB70_0_s00;
+extern s32                          __pad_bss_800D5D24;
+extern s_MapHdr_field_4C            sharedData_800DFB7C_0_s00[];
+extern s_BloodSplat                 g_Effect_BloodSplats[];
+extern s8                           __pad_bss_800D8564[4];
+extern struct _MapHeader_field_5C   sharedData_800D8568_1_s05;
+extern s32                          __pad_bss_800D8590[2];
+extern struct _ParticleVectors      g_ParticleVectors0;
+extern s32                          __pad_bss_800D85C4;
+extern struct _ParticleVectors      g_ParticleVectors1;
+extern s32                          sharedData_800E0CA8_0_s00;
+extern s32                          sharedData_800E0CAC_0_s00;
+extern u32                          sharedData_800E0CB0_0_s00;
+extern u16                          sharedData_800E0CB4_0_s00;
+extern u16                          sharedData_800E0CB6_0_s00;
+extern u16                          sharedData_800E0CB8_0_s00;
+extern s8                           sharedData_800E0CBA_0_s00;
+extern s8                           __pad_bss_800D8607;
+extern s32                          sharedData_800E39D8_0_s00;
+extern q19_12                       g_Player_MoveSpeed;
+extern GsCOORDINATE2*               sharedData_800D8610_1_s05;
+extern q3_12                        g_SplitHead_MovementOffsetX;
+extern q3_12                        g_SplitHead_MovementOffsetZ;
+extern VECTOR3                      sharedData_800D8618_1_s05[];
+extern q19_12                       sharedData_800D8684_1_s05;
+extern q19_12                       sharedData_800D8688_1_s05;
+extern s32                          __pad_bss_800D868C[3];
+extern struct _WorldObjectPose      g_WorldObject0;
+extern struct _WorldObjectPose      g_WorldObject1;
+extern s16                          D_800D86F8[2];
+extern u8                           D_800D86FC[2];
+extern u8                           D_800D86FE;
+
 #include "maps/map1/map1_s05.h"
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
@@ -10,6 +59,23 @@
 #include <psyq/gtemac.h>
 
 #include "maps/common/characters/split_head.h"
+
+u8                D_800D5D11;
+s_WorldObjectPose g_WorldObject0;
+s_WorldObjectPose g_WorldObject1;
+s16               D_800D86F8[2];
+u8                D_800D86FC[2];
+u8                D_800D86FE;
+
+s32 __pad_bss_800D5CF0[2];
+s8  __pad_bss_800D5D01[7];
+s8  __pad_bss_800D5D12[2];
+s32 __pad_bss_800D5D24;
+s8  __pad_bss_800D8564[4];
+s32 __pad_bss_800D8590[2];
+s32 __pad_bss_800D85C4;
+s8  __pad_bss_800D8607;
+s32 __pad_bss_800D868C[3];
 
 #include "../src/maps/common/particles/fire.c"
 
@@ -344,5 +410,5 @@ void Map_WorldObjectsUpdate(void) // 0x800D5400
         }
     }
 
-    Sfx_WithFalloffAndPitchPlay(Sfx_Unk1478, &Q12_VECTOR3(19.7f, -1.5f, -19.1f), Q8(0.5f) - Q12_MULT_PRECISE(D_800D8578, Q8(0.5f)), Q12(16.0f), 0);
+    Sfx_WithFalloffAndPitchPlay(Sfx_Unk1478, &Q12_VECTOR3(19.7f, -1.5f, -19.1f), Q8(0.5f) - Q12_MULT_PRECISE(sharedData_800D8568_1_s05.field_10, Q8(0.5f)), Q12(16.0f), 0);
 }

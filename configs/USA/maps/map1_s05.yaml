@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/USA/maps/map1_s05
   src_path: src/maps/map1_s05
+  asset_path: asm/USA/maps/map1_s05
   build_path: build/USA
 
   ld_script_path: linkers/USA/maps/map1_s05.ld
@@ -68,9 +69,15 @@ segments:
       # .data section
       - [0xC10C, .data, map1_s05_anim_info]
       - [0xC27C, data]
-      - [0xc6cc, .data, header]
-      - [0xC704, data]
+      - [0xC6CC, .data, header]
       - [0xC704, .data, map_events]
       - [0xC734, .data, map1_s05]
-      - [0xC770, data]
+
+      # .bss section
+      - [0xC770, .bss, map1_s05]
+
+  # Garbage data left at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0xF188
   - [0xF200]

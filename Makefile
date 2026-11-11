@@ -169,7 +169,7 @@ SILENT_ASSETS_FLAGS := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$
 INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -ftb "$(ASSETS_DIR)/$(GAME_VERSION)/filetable.c.inc" -b $(OUT_DIR) -xml "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" -o $(ROM_DIR)
 
 # Targets that will run tools/postbuild.py after being linked & extracted from ELF.
-TARGET_POSTBUILD := main bodyprog screens/b_konami screens/stf_roll screens/stream screens/option maps/map3_s06 maps/map4_s05 maps/map5_s01 maps/map6_s01 maps/map1_s04 maps/map4_s00 maps/map4_s06 maps/map6_s05 maps/map2_s03
+TARGET_POSTBUILD := main bodyprog screens/b_konami screens/stf_roll screens/stream screens/option maps/map3_s02 maps/map3_s06 maps/map4_s05 maps/map5_s01 maps/map6_s01 maps/map1_s04 maps/map4_s00 maps/map4_s06 maps/map6_s05 maps/map2_s03
 
 # Adjusts compiler and assembler flags based on source file location.
 # - Files under main executable paths use -G8; overlay files use -G0.

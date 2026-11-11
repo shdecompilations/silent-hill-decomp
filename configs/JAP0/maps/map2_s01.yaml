@@ -9,6 +9,7 @@ options:
 
   asm_path: asm/JAP0/maps/map2_s01
   src_path: src/maps/map2_s01
+  asset_path: asm/JAP0/maps/map2_s01
   build_path: build/JAP0
 
   ld_script_path: linkers/JAP0/maps/map2_s01.ld
@@ -62,7 +63,6 @@ segments:
       # .text section
       - [0x1A00, c, map2_s01_anim_info]
       - [0x1A00, c, header]
-      - [0x1A00, c, map_events]
       - [0x1A00, c, map2_s01_2]
 
       # .data section
@@ -70,6 +70,12 @@ segments:
       - [0x67DC, data] # TODO: Dahlia anim info, other data
       - [0x6B8C, .data, header]
       - [0x6CEC, .data, map2_s01_2]
-      - [0x6D98, .data, map_events]
-      - [0x6EE8, data]
+
+      # .bss section
+      - [0x6F28, .bss, map2_s01_2]
+
+  # Zero padding at the end of the file.
+  - name: footer_data
+    type: bin
+    start: 0x8220
   - [0x8300]

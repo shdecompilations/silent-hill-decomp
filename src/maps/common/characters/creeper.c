@@ -6,6 +6,11 @@
 #include "maps/common/shared.h"
 #include "maps/common/characters/creeper.h"
 
+#if defined(MAP3_S02)
+// .bss data in maps we've matched .bss for
+s8 sharedData_800E57CC_1_s02;
+#endif
+
 #define creeperProps creeper->properties.creeper
 
 void Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords)

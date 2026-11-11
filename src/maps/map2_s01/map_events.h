@@ -1,7 +1,3 @@
-#include "bodyprog/bodyprog.h"
-#include "maps/map2/map2_s01.h"
-
-s_EventData MAP_EVENTS[28] = {
     // [0]
     {
         .completeFlag = EventFlag_M2S01_HealthDrink,
@@ -233,4 +229,3 @@ s_EventData MAP_EVENTS[28] = {
     {
         .triggerType = EventTriggerType_EndOfArray,
     },
-};

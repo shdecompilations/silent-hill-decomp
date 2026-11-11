@@ -17,8 +17,6 @@ extern u8 D_800D5C3C;
 
 extern u8 D_800D5D11;
 
-extern s16 D_800D8578;
-
 extern s_WorldObjectPose g_WorldObject0; // 0x800D8698
 extern s_WorldObjectPose g_WorldObject1; // 0x800D86C8
 

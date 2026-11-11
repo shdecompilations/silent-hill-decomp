@@ -74,7 +74,7 @@ segments:
       # .bss section
       - [0x3790, .bss, map6_s05]
 
-  # Stale data left at the end of the file.
+  # Garbage data left at the end of the file.
   - name: footer_data
     type: bin
     start: 0x4068

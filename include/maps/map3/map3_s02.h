@@ -11,12 +11,6 @@
 
 #include "maps/common/shared.h"
 
-extern s32 D_800D1FBC;
-
-extern RECT D_800D1FC0[2];
-extern RECT D_800D1FD0;
-extern DVECTOR D_800D1FD8[2];
-extern DVECTOR D_800D1FE0;
 extern s32 D_800D1FEC;
 
 extern u8 D_800D3154;

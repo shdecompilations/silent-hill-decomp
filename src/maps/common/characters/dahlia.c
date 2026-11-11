@@ -5,6 +5,12 @@
 #include "maps/common/shared.h"
 #include "maps/common/characters/dahlia.h"
 
+#if defined(MAP2_S01)
+// .bss data in maps we've matched .bss for
+s32 sharedData_800D16E0_2_s01;
+u8  sharedData_800D16E4_2_s01;
+#endif
+
 /** AI code for `Chara_Dahlia`
  *
  * Included in:
