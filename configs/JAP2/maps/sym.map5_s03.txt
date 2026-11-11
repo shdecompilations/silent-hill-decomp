@@ -164,7 +164,7 @@ g_MapEventFuncs                 = 0x800D5E04;
 //-----------------------------------------------------------------
 //--- PA: 0x00A260   VA: 0x800D5E30   subsegment: .data, map5_s03_2
 //-----------------------------------------------------------------
-MAP_MESSAGES                    = 0x800D5E30; // type:u32 size:0x110
+MAP_MESSAGES                    = 0x800D5E30; // type:u32 size:0x108
 
 //-----------------------------------------------------------------
 //--- PA: 0x00A368   VA: 0x800D5F38   subsegment: .data, map_events
@@ -186,11 +186,10 @@ g_Particle_SpeedX               = 0x800D61CC; // type:s32
 g_Particle_SpeedZ               = 0x800D61D0; // type:s32
 sharedData_800DFB6C_0_s00       = 0x800D61D4; // type:s32
 sharedData_800DFB70_0_s00       = 0x800D61D8; // type:s32
-sharedData_800DFB7C_0_s00       = 0x800D61DC;
-g_Effect_BloodSplats            = 0x800D6D9C;
-g_ParticleVectors0              = 0x800D6E0C; // type:ParticleVectors
-g_Particle_RotationY            = 0x800D6E2E; // type:s16
-g_ParticleVectors1              = 0x800D6E3C; // type:ParticleVectors
+sharedData_800DFB7C_0_s00       = 0x800D61DC; // size:0xBB8
+g_Effect_BloodSplats            = 0x800D6D9C; // size:0x64
+g_ParticleVectors0              = 0x800D6E0C; // size:0x2C type:ParticleVectors
+g_ParticleVectors1              = 0x800D6E3C; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00       = 0x800D6E68; // type:s32
 sharedData_800E0CAC_0_s00       = 0x800D6E6C; // type:s32
 sharedData_800E0CB0_0_s00       = 0x800D6E70; // type:u32
@@ -198,7 +197,7 @@ sharedData_800E0CB4_0_s00       = 0x800D6E74; // type:u16
 sharedData_800E0CB6_0_s00       = 0x800D6E76; // type:u16
 sharedData_800E0CB8_0_s00       = 0x800D6E78; // type:u16
 sharedData_800E0CBA_0_s00       = 0x800D6E7A; // type:s8
-g_Particles                     = 0x800D6E7C;
+g_Particles                     = 0x800D6E7C; // size:0x2580
 g_Particle_Position             = 0x800D93FC; // type:VECTOR3 size:0xC
 D_800D6E84                      = 0x800D9408;
 g_Particle_PrevPosition         = 0x800D940C; // type:VECTOR3 size:0xC

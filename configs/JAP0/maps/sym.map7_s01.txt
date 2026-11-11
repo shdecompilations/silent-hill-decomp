@@ -275,7 +275,7 @@ g_MapEventFuncs                  = 0x800E2C2C;
 //-----------------------------------------------------------------
 //--- PA: 0x017240   VA: 0x800E2CE8   subsegment: .data, map7_s01_2
 //-----------------------------------------------------------------
-MAP_MESSAGES                     = 0x800E2CE8; // type:u32 size:0x184
+MAP_MESSAGES                     = 0x800E2CE8; // type:u32 size:0x178
 
 //-----------------------------------------------------------------
 //--- PA: 0x0173B8   VA: 0x800E2E60   subsegment: .data, map_events
@@ -320,11 +320,11 @@ g_Particle_SpeedX                = 0x800E39A8;
 g_Particle_SpeedZ                = 0x800E39AC;
 sharedData_800DFB6C_0_s00        = 0x800E39B0; // type:s32
 sharedData_800DFB70_0_s00        = 0x800E39B4; // type:s32
-sharedData_800DFB7C_0_s00        = 0x800E39C4;
-g_Effect_BloodSplats             = 0x800E4D54;
+sharedData_800DFB7C_0_s00        = 0x800E39C4; // size:0x1388
+g_Effect_BloodSplats             = 0x800E4D54; // size:0x12C
 sharedData_800DFB10_0_s01        = 0x800E4E84; // type:VECTOR3
-g_ParticleVectors0               = 0x800E4EB4; // type:ParticleVectors
-g_ParticleVectors1               = 0x800E4EE4; // type:ParticleVectors
+g_ParticleVectors0               = 0x800E4EB4; // size:0x2C type:ParticleVectors
+g_ParticleVectors1               = 0x800E4EE4; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00        = 0x800E4F10; // type:s32
 sharedData_800E0CAC_0_s00        = 0x800E4F14; // type:s32
 sharedData_800E0CB0_0_s00        = 0x800E4F18; // type:u32

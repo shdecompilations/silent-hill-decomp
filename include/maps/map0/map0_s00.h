@@ -49,11 +49,6 @@ typedef struct
     u8 field_2;
 } s_800DFB48;
 
-typedef struct
-{
-    s32 field_0;
-} s_800E0C74;
-
 /** `bool` */
 extern u8 D_800DD593;
 
@@ -104,10 +99,6 @@ extern u8 D_800DFB61;
 extern u8 D_800DF2F8;
 
 extern s16 D_800DF300[];
-
-extern s16 D_800E0C64;
-
-extern s_800E0C74 D_800E0C74;
 
 extern VECTOR3 D_800E32DC[4];
 

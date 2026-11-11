@@ -106,8 +106,6 @@ extern u8 g_ParticleCameraMoved;
 
 extern u8 sharedData_800DD592_0_s00;
 
-extern s16 g_Particle_RotationY;
-
 extern VECTOR3 g_Particle_Position;     // Q19_12
 extern VECTOR3 g_Particle_PrevPosition; // Q19_12
 extern q3_12   g_Particle_PrevRotationY;

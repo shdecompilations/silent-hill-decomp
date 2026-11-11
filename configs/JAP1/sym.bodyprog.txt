@@ -3103,7 +3103,6 @@ g_Sd_VabBuffers                              = 0x800AC488;
 g_Sd_KdtBuffer                               = 0x800AC498;
 D_800A9FDC                                   = 0x800AC49C;
 g_AudioData                                  = 0x800AC4AC; // size:0x5F4
-D_800AA274                                   = 0x800AC734;
 g_Sd_ReverbDepths                            = 0x800ACAA0;
 g_Sd_SongsChannelsForLayers                  = 0x800ACAC4;
 gSDXATable                                   = 0x800ACD54;
@@ -3916,9 +3915,7 @@ g_Ranking_LongRangeShotPercent               = 0x800C6F20;
 g_Ranking_NoAimingShotPercent                = 0x800C6F24;
 g_Ranking_GameDifficulty                     = 0x800C6F28;
 g_Ranking_ContinueCount                      = 0x800C6F29;
-g_Ranking_TextColors                         = 0x800C6F38; // size:0x8
-D_800C48E7                                   = 0x800C6F3F;
-D_800C48E8                                   = 0x800C6F40;
+g_Ranking_TextColors                         = 0x800C6F38; // size:0x9
 
 //------------------------------------------------------------------------
 //--- PA: 0x0A23E8   VA: 0x800C6F48   subsegment: .bss, items/credits_init
@@ -4056,7 +4053,6 @@ _LC                                          = 0x800C95B8;
 //--- PA: 0x0A4A78   VA: 0x800C95D8   subsegment: o, libgs/gs_123, .bss
 //---------------------------------------------------------------------
 GsIDMATRIX                                   = 0x800C95F8; // type:MATRIX size:0x20
-D_800C94E0                                   = 0x800C9608;
 GsWSMATRIX                                   = 0x800C9618; // type:MATRIX size:0x20
 GsIDMATRIX2                                  = 0x800C9638; // type:MATRIX size:0x20
 
@@ -4120,8 +4116,6 @@ sd_spu_alloc                                 = 0x800C9CC0; // size:0x80
 //--- PA: 0x0A51E8   VA: 0x800C9D48   subsegment: .bss, libsd/smf_io
 //------------------------------------------------------------------
 s_attr                                       = 0x800C9D48; // size:0x40
-D_800C9C28                                   = 0x800C9D50;
-D_800C9C34                                   = 0x800C9D5C;
 smf_midi                                     = 0x800C9D90;
 smf_midi_sound_off                           = 0x800CA910; // guessed name
 smf_port                                     = 0x800CA970;

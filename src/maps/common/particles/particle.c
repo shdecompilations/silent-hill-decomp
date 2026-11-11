@@ -641,7 +641,7 @@ bool Particle_CameraMovedCheck(void)
 
     dist = SquareRoot0(SQUARE(ABS_DIFF(g_Particle_Position.vx, g_Particle_PrevPosition.vx)) +
                        SQUARE(ABS_DIFF(g_Particle_Position.vz, g_Particle_PrevPosition.vz)));
-    rotY = ABS_DIFF(g_Particle_PrevRotationY, g_Particle_RotationY);
+    rotY = ABS_DIFF(g_Particle_PrevRotationY, g_ParticleVectors0.viewRotation.vy);
     if (dist > 10000 || rotY > Q12_ANGLE(45.0f))
     {
         return true;
@@ -1450,7 +1450,7 @@ bool Particle_Update(s_Particle* partHead)
     // Stores XZ position and Y rotation.
     g_Particle_PrevPosition.vx = prevPos.vx;
     g_Particle_PrevPosition.vz = prevPos.vz;
-    g_Particle_PrevRotationY   = g_Particle_RotationY;
+    g_Particle_PrevRotationY   = g_ParticleVectors0.viewRotation.vy;
     return false;
 }
 
@@ -1482,7 +1482,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
 
     if (!Game_FlashlightIsOn())
     {
-        D_800E0C64 = -0x400;
+        g_ParticleVectors0.svec_18.vx = -0x400;
     }
 
     temp_s4 = func_800CC8FC(&sp90, &sp120, &sp50);
@@ -1557,10 +1557,10 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
         { 0x0B, 0x06 },
     };
 
-    temp_s4 = D_800E0C74.field_0 >> 6;
-    temp_s7 = D_800E0C74.field_0 >> 3;
-    temp_a0 = D_800E0C74.field_0 / 20;
-    temp_s5 = D_800E0C74.field_0 / 12;
+    temp_s4 = g_ParticleVectors0.field_28 >> 6;
+    temp_s7 = g_ParticleVectors0.field_28 >> 3;
+    temp_a0 = g_ParticleVectors0.field_28 / 20;
+    temp_s5 = g_ParticleVectors0.field_28 / 12;
 
     for (i = 0; i < 6; i++)
     {

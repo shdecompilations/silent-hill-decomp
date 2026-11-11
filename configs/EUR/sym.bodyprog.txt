@@ -2925,7 +2925,7 @@ g_AmbientVabTaskLoad                         = 0x800A948C; // type:u16 size:0x50
 //------------------------------------------------------------------------------
 g_CharaAnimDataIdxs                          = 0x800A94DC;
 g_CharaModelAnimsData                        = 0x800A950C; // size:0x60
-g_MapLanguageBaseIds                         = 0x800A957C; // size:0x14
+g_MapLanguageBaseIds                         = 0x800A957C; // size:0x4
 g_ItemLanguageFileIds                        = 0x800A9580; // size:0x14
 D_800A998C                                   = 0x800A9594; // type:AnimInfo size:0x10
 
@@ -3019,7 +3019,7 @@ D_800AD4C4                                   = 0x800AD0C0;
 D_800AD4C8                                   = 0x800AD0C4; // size:0x690
 g_Inventory_CmdSelectedIdx                   = 0x800AD754; // type:s32
 g_Inventory_SelectionId                      = 0x800AD758; // type:u32
-INV_ITEM_NAMES                               = 0x800AD75C; // type:u32 size:0x30C
+INV_ITEM_NAMES                               = 0x800AD75C; // type:u32 size:0x14
 D_800AE178                                   = 0x800AD770;
 g_Inventory_SelectedItemIdx                  = 0x800AD774;
 g_Items_DisplayedCount                       = 0x800AD778;
@@ -3158,7 +3158,7 @@ svec0.264                                    = 0x800AF3A8;
 g_Demo_DemoId                                = 0x800AF3B0; // type:s32
 g_Demo_RandSeed                              = 0x800AF3B4; // type:u16
 g_Demo_PlaybackFrames                        = 0x800AF3B8; // type:s32
-DEMO_FILE_INFOS.30                           = 0x800AF3BC; // type:DemoFileInfo size:0x28
+DEMO_FILE_INFOS.30                           = 0x800AF3BC; // type:DemoFileInfo size:0x20
 g_Demo_Play                                  = 0x800AF3DC; // type:s32
 prevScreenFade.69                            = 0x800AF3E0; // type:s32
 

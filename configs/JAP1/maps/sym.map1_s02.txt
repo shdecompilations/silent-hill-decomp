@@ -232,7 +232,7 @@ g_MapEventFuncs                         = 0x800E3DDC;
 //---------------------------------------------------------------
 //--- PA: 0x018264   VA: 0x800E3E34   subsegment: .data, map1_s02
 //---------------------------------------------------------------
-MAP_MESSAGES                            = 0x800E3E34; // type:u32 size:0xDC
+MAP_MESSAGES                            = 0x800E3E34; // type:u32 size:0xD8
 
 //-----------------------------------------------------------------
 //--- PA: 0x01833C   VA: 0x800E3F0C   subsegment: .data, map_events
@@ -261,13 +261,12 @@ g_Particle_SpeedX                       = 0x800E45C4; // type:s32
 g_Particle_SpeedZ                       = 0x800E45C8; // type:s32
 sharedData_800DFB6C_0_s00               = 0x800E45CC; // type:s32
 sharedData_800DFB70_0_s00               = 0x800E45D0; // type:s32
-sharedData_800DFB7C_0_s00               = 0x800E45D4;
-g_Effect_BloodSplats                    = 0x800E5574;
+sharedData_800DFB7C_0_s00               = 0x800E45D4; // size:0xFA0
+g_Effect_BloodSplats                    = 0x800E5574; // size:0x12C
 sharedData_800E30C8_1_s02               = 0x800E56A4;
 D_800E3140                              = 0x800E571C;
-g_ParticleVectors0                      = 0x800E5724; // type:ParticleVectors
-g_Particle_RotationY                    = 0x800E5746; // type:s16
-g_ParticleVectors1                      = 0x800E5754; // type:ParticleVectors
+g_ParticleVectors0                      = 0x800E5724; // size:0x2C type:ParticleVectors
+g_ParticleVectors1                      = 0x800E5754; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00               = 0x800E5780; // type:s32
 sharedData_800E0CAC_0_s00               = 0x800E5784; // type:s32
 sharedData_800E0CB0_0_s00               = 0x800E5788; // type:u32
@@ -275,7 +274,7 @@ sharedData_800E0CB4_0_s00               = 0x800E578C; // type:u16
 sharedData_800E0CB6_0_s00               = 0x800E578E; // type:u16
 sharedData_800E0CB8_0_s00               = 0x800E5790; // type:u16
 sharedData_800E0CBA_0_s00               = 0x800E5792; // type:s8
-g_Particles                             = 0x800E5794;
+g_Particles                             = 0x800E5794; // size:0x2580
 g_Particle_Position                     = 0x800E7D14; // type:VECTOR3 size:0xC
 D_800E5744                              = 0x800E7D20;
 g_Particle_PrevPosition                 = 0x800E7D24; // type:VECTOR3 size:0xC
@@ -308,8 +307,8 @@ g_WorldObject_Door2Hi                   = 0x800E7E44; // type:WorldObjectDesc si
 g_WorldObject_Door1Hi                   = 0x800E7E74; // type:WorldObjectDesc size:0x30
 g_WorldObject_BoxHide                   = 0x800E7EA4; // type:WorldObjectDescNoRot size:0x28
 D_800E58F0                              = 0x800E7ECC;
-g_WorldObjectC                          = 0x800E7ED4; // type:WorldObjectDesc size:0x30
-g_ObjPosC                               = 0x800E7EF4; // type:VECTOR3 size:0x1C
+g_WorldObjectC                          = 0x800E7ED4; // type:WorldObjectDesc size:0x20
+g_ObjPosC                               = 0x800E7EF4; // type:VECTOR3 size:0x10
 D_800E5928                              = 0x800E7F04;
 D_800E5934                              = 0x800E7F10;
 g_ObjRotC                               = 0x800E7F14; // type:SVECTOR3 size:0x10

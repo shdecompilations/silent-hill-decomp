@@ -3800,9 +3800,7 @@ g_Ranking_LongRangeShotPercent               = 0x800C6DF8;
 g_Ranking_NoAimingShotPercent                = 0x800C6DFC;
 g_Ranking_GameDifficulty                     = 0x800C6E00;
 g_Ranking_ContinueCount                      = 0x800C6E01;
-g_Ranking_TextColors                         = 0x800C6E10; // size:0x8
-D_800C48E7                                   = 0x800C6E17;
-D_800C48E8                                   = 0x800C6E18;
+g_Ranking_TextColors                         = 0x800C6E10; // size:0x9
 
 //------------------------------------------------------------------------
 //--- PA: 0x0A22C0   VA: 0x800C6E20   subsegment: .bss, items/credits_init

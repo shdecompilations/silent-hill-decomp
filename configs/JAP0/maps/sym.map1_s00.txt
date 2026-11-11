@@ -220,7 +220,7 @@ g_MapEventFuncs                            = 0x800DF5E4;
 //---------------------------------------------------------------
 //--- PA: 0x013B9C   VA: 0x800DF644   subsegment: .data, map1_s00
 //---------------------------------------------------------------
-MAP_MESSAGES                               = 0x800DF644; // type:u32 size:0xA0
+MAP_MESSAGES                               = 0x800DF644; // type:u32 size:0x9C
 
 //-----------------------------------------------------------------
 //--- PA: 0x013C38   VA: 0x800DF6E0   subsegment: .data, map_events
@@ -238,11 +238,10 @@ g_Particle_SpeedX                          = 0x800DFC0C; // type:s32
 g_Particle_SpeedZ                          = 0x800DFC10; // type:s32
 sharedData_800DFB6C_0_s00                  = 0x800DFC14; // type:s32
 sharedData_800DFB70_0_s00                  = 0x800DFC18; // type:s32
-sharedData_800DFB7C_0_s00                  = 0x800DFC24;
-g_Effect_BloodSplats                       = 0x800E0BC4;
-g_ParticleVectors0                         = 0x800E0CF4; // type:ParticleVectors
-g_Particle_RotationY                       = 0x800E0D16; // type:s16
-g_ParticleVectors1                         = 0x800E0D24; // type:ParticleVectors
+sharedData_800DFB7C_0_s00                  = 0x800DFC24; // size:0xFA0
+g_Effect_BloodSplats                       = 0x800E0BC4; // size:0x12C
+g_ParticleVectors0                         = 0x800E0CF4; // size:0x2C type:ParticleVectors
+g_ParticleVectors1                         = 0x800E0D24; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00                  = 0x800E0D50; // type:s32
 sharedData_800E0CAC_0_s00                  = 0x800E0D54; // type:s32
 sharedData_800E0CB0_0_s00                  = 0x800E0D58; // type:u32
@@ -250,7 +249,7 @@ sharedData_800E0CB4_0_s00                  = 0x800E0D5C; // type:u16
 sharedData_800E0CB6_0_s00                  = 0x800E0D5E; // type:u16
 sharedData_800E0CB8_0_s00                  = 0x800E0D60; // type:u16
 sharedData_800E0CBA_0_s00                  = 0x800E0D62; // type:s8
-g_Particles                                = 0x800E0D64;
+g_Particles                                = 0x800E0D64; // size:0x2580
 g_Particle_Position                        = 0x800E32E4; // type:VECTOR3 size:0xC
 D_800E0E6C                                 = 0x800E32F0;
 g_Particle_PrevPosition                    = 0x800E32F4; // type:VECTOR3 size:0xC
