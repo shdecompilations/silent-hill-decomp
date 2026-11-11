@@ -91,8 +91,8 @@ void func_800D6704(void) // 0x800D6704
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
         // Break on the first enemy character.
-        if (g_SysWork.npcs[i].model.charaId >= Chara_Harry &&
-            g_SysWork.npcs[i].model.charaId <= CHARA_LAST_ENEMY_ID)
+        if (NPC_CHARA(i).model.charaId >= Chara_Harry &&
+            NPC_CHARA(i).model.charaId <= CHARA_LAST_ENEMY_ID)
         {
             break;
         }
@@ -207,7 +207,7 @@ void func_800D6774(void) // 0x800D6774
             break;
 
         case 3:
-            func_800D3FB0(&g_SysWork.npcs[0]);
+            func_800D3FB0(&NPC_CHARA(0));
             Savegame_EventFlagSet(EventFlag_329);
             SysWork_StateStepIncrement(0);
 
@@ -259,8 +259,8 @@ void func_800D6774(void) // 0x800D6774
                 Event_CameraPositionSet(NULL, Q12(119.87f), Q12(-3.4f), Q12(138.71f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
                 Event_CameraLookAtSet(NULL, Q12(119.13f), Q12(-1.49f), Q12(142.15f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-                func_800D3E18(&g_SysWork.npcs[0]);
-                func_800D4000(&g_SysWork.npcs[0]);
+                func_800D3E18(&NPC_CHARA(0));
+                func_800D4000(&NPC_CHARA(0));
             }
             break;
 
@@ -285,7 +285,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateSetNext(SysState_Gameplay);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
-            func_800D4000(&g_SysWork.npcs[0]);
+            func_800D4000(&NPC_CHARA(0));
             Savegame_EventFlagSet(EventFlag_324);
             func_8003A16C();
             break;
@@ -334,7 +334,7 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 4:
-            func_800D3FD8(&g_SysWork.npcs[0]);
+            func_800D3FD8(&NPC_CHARA(0));
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -342,7 +342,7 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         case 6:
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
 
             Savegame_EventFlagSet(EventFlag_327);
 
@@ -381,7 +381,7 @@ void func_800D6F24(void) // 0x800D6F24
             PLAYER_CHARA().position.vz = Q12(140.36f);
             PLAYER_CHARA().rotation.vy = Q12_ANGLE(90.0f);
 
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
 
             Savegame_EventFlagSet(EventFlag_327);
 
@@ -1602,7 +1602,7 @@ void func_800D9824(void) // 0x800D9824
             break;
 
         case 1:
-            func_800D4000(&g_SysWork.npcs[0]);
+            func_800D4000(&NPC_CHARA(0));
 
             SysWork_StateStepIncrement(0);
             break;

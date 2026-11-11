@@ -349,7 +349,7 @@ void func_800D0608(void) // 0x800D0608
             break;
 
         case 1:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 2, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 2, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(1.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -390,7 +390,7 @@ void func_800D0608(void) // 0x800D0608
 
     if (D_800D1FEC >= 0)
     {
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
+        Dms_CharacterTransformGet(&NPC_CHARA(0).position, &NPC_CHARA(0).rotation, "ARISA", D_800D1FEC, FS_BUFFER_24);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&camPosTarget, &camLookAtTarget, NULL, D_800D1FEC, FS_BUFFER_24));
         vcUserCamTarget(&camPosTarget, NULL, true);
         vcUserWatchTarget(&camLookAtTarget, NULL, true);

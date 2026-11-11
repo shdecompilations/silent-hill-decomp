@@ -364,7 +364,7 @@ void sharedFunc_800D0110_7_s00(void)
 
             if (Savegame_EventFlagGet(EventFlag_577))
             {
-                if (g_SysWork.npcs[0].health < Q12(500.0f))
+                if (NPC_CHARA(0).health < Q12(500.0f))
                 {
                     bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5 |
                                BgmFlag_Layer6 | BgmFlag_KeepAlive;
@@ -480,7 +480,7 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         fadeSpeed = Q12(1.0f);
 
-                        if (!(g_SysWork.npcs[2].flags & CharaFlag_Hit))
+                        if (!(NPC_CHARA(2).flags & CharaFlag_Hit))
                         {
                             bgmFlags = BgmFlag_Layer2 | BgmFlag_KeepAlive;
                         }

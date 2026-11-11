@@ -361,7 +361,7 @@ void func_800D2408(void) // 0x800D2408
     VECTOR3  lightIntPos;
     SVECTOR3 unused;
 
-    #define cybilChara  &g_SysWork.npcs[0]
+    #define cybilChara  &NPC_CHARA(0)
 
     // Skip.
     if (Pad_ButtonClickedBind(skip) &&
@@ -808,7 +808,7 @@ void func_800D3420(void) // 0x800D3420
     s32                             i;
     g_GteScratchData_func_800DD2D4* scratchData;
 
-    #define cybilChara  &g_SysWork.npcs[0]
+    #define cybilChara  &NPC_CHARA(0)
 
     scratchData = PSX_SCRATCH_ADDR(0);
 

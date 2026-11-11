@@ -68,9 +68,9 @@ void func_800D61AC(void) // 0x800D61AC
         PLAYER_CHARA().rotation.vy = Q12(0.25f);
 
         // Warp NPC.
-        g_SysWork.npcs[0].position.vx = Q12(-114.5f);
-        g_SysWork.npcs[0].position.vy = Q12(2.0f);
-        g_SysWork.npcs[0].position.vz = Q12(108.0f);
+        NPC_CHARA(0).position.vx = Q12(-114.5f);
+        NPC_CHARA(0).position.vy = Q12(2.0f);
+        NPC_CHARA(0).position.vz = Q12(108.0f);
 
         vcReturnPreAutoCamWork(true);
         SysWork_StateStepReset();
@@ -174,10 +174,10 @@ void func_800D61AC(void) // 0x800D61AC
             PLAYER_CHARA().rotation.vy = Q12_ANGLE(90.0f);
 
             // Warp NPC.
-            g_SysWork.npcs[0].position.vx     = Q12(-114.5f);
-            g_SysWork.npcs[0].position.vy     = Q12(3.0f);
-            g_SysWork.npcs[0].position.vz     = Q12(108.0f);
-            g_SysWork.npcs[0].model.stateStep = 1;
+            NPC_CHARA(0).position.vx     = Q12(-114.5f);
+            NPC_CHARA(0).position.vy     = Q12(3.0f);
+            NPC_CHARA(0).position.vz     = Q12(108.0f);
+            NPC_CHARA(0).model.stateStep = 1;
 
             Savegame_EventFlagSet(EventFlag_348);
 
@@ -207,7 +207,7 @@ void func_800D61AC(void) // 0x800D61AC
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
 
             Savegame_EventFlagSet(EventFlag_349);
-            g_SysWork.npcs[0].model.stateStep = 2;
+            NPC_CHARA(0).model.stateStep = 2;
 
             func_8003A16C();
             break;
@@ -264,10 +264,10 @@ void func_800D6800(void) // 0x800D6800
             PLAYER_CHARA().rotation.vy = 0;
 
             // Warp NPC.
-            g_SysWork.npcs[0].position.vx = Q12(-120.0f);
-            g_SysWork.npcs[0].position.vy = Q12(2.0f);
-            g_SysWork.npcs[0].position.vz = Q12(108.0f);
-            g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(180.0f);
+            NPC_CHARA(0).position.vx = Q12(-120.0f);
+            NPC_CHARA(0).position.vy = Q12(2.0f);
+            NPC_CHARA(0).position.vz = Q12(108.0f);
+            NPC_CHARA(0).rotation.vy = Q12_ANGLE(180.0f);
             break;
 
         case 4:

@@ -159,7 +159,7 @@ void func_800D0B64(void) // 0x800D0B64
         EventState_Skip = 27
     } e_EventState;
 
-    #define lisaChara g_SysWork.npcs[0]
+    #define lisaChara NPC_CHARA(0)
 
     // Skip.
     if (Pad_ButtonClickedBind(skip) &&

@@ -209,11 +209,11 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
             sharedFunc_800CBE54_4_s03(&trace.target, 1);
             sharedFunc_800CBE54_4_s03(&rayFrom, 1);
 
-            if (g_SysWork.npcs[0].model.charaId == Chara_Floatstinger)
+            if (NPC_CHARA(0).model.charaId == Chara_Floatstinger)
             {
                 sub->attackReceived = WEAPON_ATTACK(EquippedWeaponId_Unk60, AttackInputType_Tap);
             }
-            else if (g_SysWork.npcs[0].model.charaId == Chara_Twinfeeler)
+            else if (NPC_CHARA(0).model.charaId == Chara_Twinfeeler)
             {
                 sub->attackReceived = WEAPON_ATTACK(EquippedWeaponId_Unk62, AttackInputType_Tap);
             }

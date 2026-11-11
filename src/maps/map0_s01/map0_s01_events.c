@@ -146,7 +146,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
     s_SubCharacter* cybil0;
     s_SubCharacter* cybil1;
 
-    #define cybilChara g_SysWork.npcs[0]
+    #define cybilChara NPC_CHARA(0)
 
     // Skip.
     if (Pad_ButtonClickedBind(skip) &&
@@ -574,7 +574,7 @@ const VECTOR3 D_800CCA58 = { Q12(0.8f), Q12(-1.8f), Q12(264.1f) };
 
 void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 {
-    #define airScreamerChara g_SysWork.npcs[0]
+    #define airScreamerChara NPC_CHARA(0)
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -775,7 +775,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
 {
     static const RECT IMG_BUFFER_RECT = { 320, 256, 160, 240 };
 
-    #define airScreamerChara g_SysWork.npcs[0]
+    #define airScreamerChara NPC_CHARA(0)
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -964,7 +964,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
         {
             Chara_ProcessLoads();
             Chara_Spawn(Chara_AirScreamer, 0, Q12(1048566.0f), Q12(280.0f), Q12_ANGLE(0.0f), 12);
-            func_800D3A3C(&g_SysWork.npcs[0]);
+            func_800D3A3C(&NPC_CHARA(0));
 
             Fs_QueueStartRead(FILE_ANIM_CAFE2_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
@@ -994,7 +994,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     s32  var_a2;
     s32* ptr;
 
-    #define airScreamerChara g_SysWork.npcs[0]
+    #define airScreamerChara NPC_CHARA(0)
 
     if (!Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {

@@ -1347,7 +1347,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
             dist += distProp8;
         }
 
-        if (airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx])
+        if (airScreamer == &NPC_CHARA(g_SysWork.targetNpcIdx))
         {
             dist += Q12(1.0f);
         }
@@ -8787,7 +8787,7 @@ void AirScreamer_Control_46(s_SubCharacter* airScreamer)
     {
         case AirScreamerHit_None:
             if (airScreamerProps.timer_120 == Q12(0.0f) ||
-                airScreamer == &g_SysWork.npcs[g_SysWork.targetNpcIdx] ||
+                airScreamer == &NPC_CHARA(g_SysWork.targetNpcIdx) ||
                 Math_Distance2dGet(&airScreamer->position, &PLAYER_CHARA().position) > Q12(6.5f))
             {
                 airScreamer->model.controlState = AirScreamerControl_47;
@@ -9838,12 +9838,12 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
         bitsSet++;
 
         // Check if character is Air Screamer.
-        if (g_SysWork.npcs[i].model.charaId != airScreamer->model.charaId)
+        if (NPC_CHARA(i).model.charaId != airScreamer->model.charaId)
         {
             continue;
         }
 
-        switch (g_SysWork.npcs[i].model.controlState)
+        switch (NPC_CHARA(i).model.controlState)
         {
             case AirScreamerControl_2:
             case AirScreamerControl_Stun:

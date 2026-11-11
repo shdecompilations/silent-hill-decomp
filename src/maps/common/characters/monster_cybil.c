@@ -9,7 +9,7 @@
 #include "maps/common/characters/monster_cybil.h"
 
 // Weird access pattern using `npcs` array instead of function param.
-#define monsterCybilChara g_SysWork.npcs[0]
+#define monsterCybilChara NPC_CHARA(0)
 #define monsterCybilProps monsterCybilChara.properties.monsterCybil
 
 const s32 D_800CB118[24] =

@@ -240,7 +240,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 1, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 1, false);
 
             Savegame_EventFlagSet(EventFlag_412);
             D_800D4E09 = 0;
@@ -258,8 +258,8 @@ void func_800CF0B8(void) // 0x800CF0B8
             // Warp player.
             PLAYER_CHARA().position.vx = Q12(59.0f);
             PLAYER_CHARA().position.vz = Q12(-19.5f);
-            PLAYER_CHARA().rotation.vy = ratan2(g_SysWork.npcs[0].position.vx - PLAYER_CHARA().position.vx,
-                                                                g_SysWork.npcs[0].position.vz - PLAYER_CHARA().position.vz);
+            PLAYER_CHARA().rotation.vy = ratan2(NPC_CHARA(0).position.vx - PLAYER_CHARA().position.vx,
+                                                                NPC_CHARA(0).position.vz - PLAYER_CHARA().position.vz);
 
             WorldGfx_CharaModelTransparentSet(Chara_Alessa, true);
             Savegame_EventFlagSet(EventFlag_412);
@@ -270,7 +270,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             break;
 
         case 12:
-            g_SysWork.npcs[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
+            NPC_CHARA(0).timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
             Event_WaitTimer(Q12(0.3f), false);
             Event_DisplayMapMsgWithAudio(16, &D_800D4E08, &D_800D3B40);
             break;
@@ -282,24 +282,24 @@ void func_800CF0B8(void) // 0x800CF0B8
         case 14:
             Event_DisplayMapMsgWithAudio(16, &D_800D4E08, &D_800D3B40);
 
-            g_SysWork.npcs[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
-            if (g_SysWork.npcs[0].timer_C6 > Q12(1.0f))
+            NPC_CHARA(0).timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
+            if (NPC_CHARA(0).timer_C6 > Q12(1.0f))
             {
-                g_SysWork.npcs[0].timer_C6 = Q12(1.0f);
+                NPC_CHARA(0).timer_C6 = Q12(1.0f);
             }
             break;
 
         case 15:
-            g_SysWork.npcs[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
-            if (g_SysWork.npcs[0].timer_C6 > Q12(1.0f))
+            NPC_CHARA(0).timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
+            if (NPC_CHARA(0).timer_C6 > Q12(1.0f))
             {
-                g_SysWork.npcs[0].timer_C6 = Q12(1.0f);
+                NPC_CHARA(0).timer_C6 = Q12(1.0f);
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 16:
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -346,7 +346,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             PLAYER_CHARA().position.vz = Q12(-19.5f);
             PLAYER_CHARA().rotation.vy = Q12_ANGLE(164.1f);
 
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             Player_ControlUnfreeze(true);
 
             SysWork_StateSetNext(SysState_Gameplay);

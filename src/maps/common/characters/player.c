@@ -770,7 +770,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     D_800C45B0.vx = posX;
     D_800C45B0.vz = posZ;
 
-    if (g_SysWork.npcs[0].health <= Q12(0.0f) ||
+    if (NPC_CHARA(0).health <= Q12(0.0f) ||
         g_Player_IsInWalkToRunTransition || playerChara->health <= Q12(0.0f))
     {
         return;
@@ -882,7 +882,7 @@ bool sharedFunc_800D2E94_0_s00(void)
     s_SubCharacter* npc;
     q19_12          playerDist;
 
-    npc = &g_SysWork.npcs[5];
+    npc = &NPC_CHARA(5);
 
     if (PLAYER_CHARA().position.vx < Q12(-255.0f) &&
         PLAYER_CHARA().position.vz > Q12(-110.0f) &&

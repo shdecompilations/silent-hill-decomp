@@ -96,10 +96,10 @@ void Map_RoomBgmInit(bool arg0) // 0x800D494C
     s32 bgmFlags;
 
     bgmFlags = 1;
-    if (g_SysWork.npcs[0].health > Q12(0.0f))
+    if (NPC_CHARA(0).health > Q12(0.0f))
     {
         bgmFlags = 2;
-        if (g_SysWork.npcs[0].properties.splitHead.flags & SplitHeadFlag_4)
+        if (NPC_CHARA(0).properties.splitHead.flags & SplitHeadFlag_4)
         {
             bgmFlags = 6;
         }

@@ -1320,7 +1320,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             {
                 if (!(PLAYER_PROPS().flags & PlayerFlag_Unk6))
                 {
-                    func_8005F6B0(&g_SysWork.npcs[1], &Q12_VECTOR3(14.94f, -0.05f, 102.0f), 3, 3);
+                    func_8005F6B0(&NPC_CHARA(1), &Q12_VECTOR3(14.94f, -0.05f, 102.0f), 3, 3);
                     PLAYER_PROPS().flags |= PlayerFlag_Unk6;
                 }
             }
@@ -1505,7 +1505,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 if (!(PLAYER_PROPS().flags & PlayerFlag_Unk6))
                 {
                     func_8006342C(EquippedWeaponId_Handgun, Q12_ANGLE(73.125f), player->rotation.vy, boneCoords);
-                    func_8005F6B0(&g_SysWork.npcs[1], &Q12_VECTOR3(140.39f, -0.55f, 22.76f), 3, 3);
+                    func_8005F6B0(&NPC_CHARA(1), &Q12_VECTOR3(140.39f, -0.55f, 22.76f), 3, 3);
                     PLAYER_PROPS().flags |= PlayerFlag_Unk6;
                 }
             }

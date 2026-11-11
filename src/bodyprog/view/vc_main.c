@@ -369,7 +369,7 @@ void vcSetAllNpcDeadTimer(void) // 0x8008123C
     s_SubCharacter* curChara;
 
     // Run through NPCs.
-    for (curChara = &g_SysWork.npcs[0]; curChara < &g_SysWork.npcs[ARRAY_SIZE(g_SysWork.npcs)]; curChara++)
+    for (curChara = &NPC_CHARA(0); curChara < &NPC_CHARA(ARRAY_SIZE(g_SysWork.npcs)); curChara++)
     {
         // Continue if invalid character.
         if (curChara->model.charaId == Chara_None)
@@ -897,7 +897,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     }
 
     // Run through NPCs.
-    for (sc_p = &g_SysWork.npcs[0]; sc_p < &g_SysWork.npcs[ARRAY_SIZE(g_SysWork.npcs)]; sc_p++)
+    for (sc_p = &NPC_CHARA(0); sc_p < &NPC_CHARA(ARRAY_SIZE(g_SysWork.npcs)); sc_p++)
     {
         if (sc_p->model.charaId >= Chara_AirScreamer   &&
             sc_p->model.charaId <= CHARA_LAST_ENEMY_ID &&
@@ -932,7 +932,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                 if (sc_p->flags & CharaFlag_Unk2) // `sc_p->battle(ShBattleInfo).status & (1 << 2)` in SH2.
                 {
                     set_active_data_f = false;
-                    if (sc_p == &g_SysWork.npcs[g_SysWork.targetNpcIdx])
+                    if (sc_p == &NPC_CHARA(g_SysWork.targetNpcIdx))
                     {
                         set_active_data_f = PLAYER_COMBAT().isAiming > false;
                     }

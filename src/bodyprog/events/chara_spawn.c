@@ -62,7 +62,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         {
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (g_SysWork.npcs[i].field_40 == activeSpawnFlags)
+                if (NPC_CHARA(i).field_40 == activeSpawnFlags)
                 {
                     return i;
                 }
@@ -74,7 +74,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         npcIdx = 0;
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
-            if (g_SysWork.npcs[i].model.charaId != Chara_None)
+            if (NPC_CHARA(i).model.charaId != Chara_None)
             {
                 npcIdx++;
             }
@@ -90,16 +90,16 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
         // Find unoccupied slot.
-        if (g_SysWork.npcs[i].model.charaId != Chara_None)
+        if (NPC_CHARA(i).model.charaId != Chara_None)
         {
             continue;
         }
 
         // Clear character data.
-        bzero(&g_SysWork.npcs[i], sizeof(s_SubCharacter));
+        bzero(&NPC_CHARA(i), sizeof(s_SubCharacter));
 
-        g_SysWork.npcs[i].model.charaId = charaId;
-        g_SysWork.npcs[i].field_40      = activeSpawnFlags;
+        NPC_CHARA(i).model.charaId = charaId;
+        NPC_CHARA(i).field_40      = activeSpawnFlags;
 
         if (charaId <= CHARA_LAST_ENEMY_ID && spawnFlags < (1 << 6))
         {
@@ -110,16 +110,16 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         SET_FLAG(&g_SysWork.npcFlags, i);
 
         // Set NPC default control state and start position.
-        g_SysWork.npcs[i].model.controlState = 0;
-        g_SysWork.npcs[i].model.stateStep    = stateStep;
-        g_SysWork.npcs[i].position.vx        = posX;
+        NPC_CHARA(i).model.controlState = 0;
+        NPC_CHARA(i).model.stateStep    = stateStep;
+        NPC_CHARA(i).position.vx        = posX;
         Collision_SurfaceGet(&surface, posX, posZ);
-        g_SysWork.npcs[i].position.vy        = surface.floorHeight;
-        g_SysWork.npcs[i].position.vz        = posZ;
-        g_SysWork.npcs[i].rotation.vy        = rotY;
+        NPC_CHARA(i).position.vy        = surface.floorHeight;
+        NPC_CHARA(i).position.vz        = posZ;
+        NPC_CHARA(i).rotation.vy        = rotY;
 
         // Set visible.
-        chara                    = &g_SysWork.npcs[i];
+        chara                    = &NPC_CHARA(i);
         chara->model.anim.flags |= AnimFlag_Visible;
 
         return i;

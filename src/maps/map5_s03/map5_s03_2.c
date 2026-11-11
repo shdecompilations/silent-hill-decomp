@@ -436,12 +436,12 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 14:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(0.0f), Q12(17.0f), true, true);
-            Model_AnimFlagsClear(&g_SysWork.npcs[0].model, 2);
+            Model_AnimFlagsClear(&NPC_CHARA(0).model, 2);
             break;
 
         case 15:
-            Event_CharaAnimPlayToEnd(&g_SysWork.npcs[0], 16);
-            Model_AnimFlagsSet(&g_SysWork.npcs[0].model, 2);
+            Event_CharaAnimPlayToEnd(&NPC_CHARA(0), 16);
+            Model_AnimFlagsSet(&NPC_CHARA(0).model, 2);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(18.0f), Q12(38.0f), true, false);
             break;
 
@@ -452,7 +452,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 17:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 169, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 15, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 15, false);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -461,7 +461,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 19:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 5, false);
             func_8003D03C();
 
             g_Cutscene_Timer = Q12(76.0f);
@@ -491,7 +491,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 25:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 1, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 1, false);
             Player_WeaponAttackRestore();
             WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
             Player_EmptyWeaponHandSet();
@@ -502,7 +502,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 27:
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             Sfx_WithFlagsPlay(Sfx_Unk1595, &Q12_VECTOR3(103.0f, -1.2f, 17.6f), Q8(0.5f), SfxFlag_None);
 
             Savegame_EventFlagClear(EventFlag_395);
@@ -554,7 +554,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             Player_WeaponAttackRestore();
 
             WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
 
             Fs_QueueWaitForEmpty();
 
@@ -593,7 +593,7 @@ void func_800D1AF8(void) // 0x800D1AF8
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_17);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", g_Cutscene_Timer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&NPC_CHARA(0).position, &NPC_CHARA(0).rotation, "KAU", g_Cutscene_Timer, FS_BUFFER_17);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_17));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);

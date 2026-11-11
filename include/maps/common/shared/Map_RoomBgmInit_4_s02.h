@@ -35,7 +35,7 @@ void Map_RoomBgmInit(bool arg0)
                 }
                 else if (Savegame_EventFlagGet(EventFlag_348))
                 {
-                    if (g_SysWork.npcs[0].health < Q12(1000.0f))
+                    if (NPC_CHARA(0).health < Q12(1000.0f))
                     {
                         bgmFlags = 0x1FE; // TODO: Demagic.
                     }
@@ -51,11 +51,11 @@ void Map_RoomBgmInit(bool arg0)
                         }
                         bgmFlags = sharedData_800ED420_4_s02;
 
-                        if (g_SysWork.npcs[0].health < Q12(2000.0f))
+                        if (NPC_CHARA(0).health < Q12(2000.0f))
                         {
                             bgmFlags |= (1 << 2) | (1 << 5);
                         }
-                        else if (g_SysWork.npcs[0].health < Q12(3000.0f))
+                        else if (NPC_CHARA(0).health < Q12(3000.0f))
                         {
                             bgmFlags |= 1 << 2;
                         }
@@ -124,8 +124,8 @@ void Map_RoomBgmInit(bool arg0)
                 {
                     fadeSpeed = Q12(0.5f);
 
-                    if (g_SysWork.npcs[0].health > Q12(0.0f) &&
-                        g_SysWork.npcs[0].position.vy < Q12(1.0f))
+                    if (NPC_CHARA(0).health > Q12(0.0f) &&
+                        NPC_CHARA(0).position.vy < Q12(1.0f))
                     {
                         bgmFlags = (1 << 5) | (1 << 6) | (1 << 8);
                     }

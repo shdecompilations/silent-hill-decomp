@@ -31,6 +31,9 @@
 /** @brief Returns the player combat data. */
 #define PLAYER_COMBAT() (g_SysWork.playerCombat)
 
+/** @brief Returns the `s_SubCharacter` instance for a given NPC index. */
+#define NPC_CHARA(index) (g_SysWork.npcs[(index)])
+
 /** @brief Character flags. Used by `s_SubCharacter::flags`. */
 typedef enum _CharaFlags
 {

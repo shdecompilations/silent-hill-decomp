@@ -910,8 +910,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 8:
-            g_SysWork.npcs[0].model.stateStep = 0;
-            g_SysWork.npcs[0].model.controlState++;
+            NPC_CHARA(0).model.stateStep = 0;
+            NPC_CHARA(0).model.controlState++;
 
             Savegame_EventFlagSet(EventFlag_76);
 
@@ -932,8 +932,8 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         case 10:
-            g_SysWork.npcs[0].model.stateStep = 0;
-            g_SysWork.npcs[0].model.controlState++;
+            NPC_CHARA(0).model.stateStep = 0;
+            NPC_CHARA(0).model.controlState++;
 
             SysWork_StateStepIncrement(0);
 
@@ -966,7 +966,7 @@ void func_800D87C0(void) // 0x800D87C0
 
         case 14:
             Sfx_WithFlagsPlay(Sfx_Unk1448, &Q12_VECTOR3(-56.4f, -0.8f, 16.8f), Q8(0.5f), SfxFlag_None);
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -1012,7 +1012,7 @@ void func_800D87C0(void) // 0x800D87C0
             Chara_BonesInit(0);
 
             Savegame_EventFlagSet(EventFlag_76);
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             func_8003D01C();
 
             if (D_800DD598 == 0)
@@ -1028,7 +1028,7 @@ void func_800D87C0(void) // 0x800D87C0
 
         if (g_Cutscene_Timer >= Q12(16.0f))
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "CAT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16);
+            Dms_CharacterTransformGet(&NPC_CHARA(0).position, &NPC_CHARA(0).rotation, "CAT", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16);
         }
 
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_16));

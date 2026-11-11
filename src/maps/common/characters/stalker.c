@@ -1923,7 +1923,7 @@ void Stalker_Control_13(s_SubCharacter* stalker)
 
         if (stalker->health != NO_VALUE)
         {
-            func_8005F6B0(&g_SysWork.npcs[1], &Q12_VECTOR3(140.39f, -0.55f, 22.76f), 3, 3);
+            func_8005F6B0(&NPC_CHARA(1), &Q12_VECTOR3(140.39f, -0.55f, 22.76f), 3, 3);
 
             stalker->health     = NO_VALUE;
             stalkerProps.flags |= StalkerFlag_14;

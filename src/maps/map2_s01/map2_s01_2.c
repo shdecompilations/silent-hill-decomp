@@ -223,7 +223,7 @@ void func_800CED88(void) // 0x800CED88
     s32             step;
     s_SubCharacter* dahlia;
 
-    #define dahliaChara (&g_SysWork.npcs[0])
+    #define dahliaChara NPC_CHARA(0)
 
     if (Pad_ButtonClickedBind(skip) &&
         g_SysWork.sysStateSteps[0] > 0 && g_SysWork.sysStateSteps[0] < EventState_Skip)
@@ -242,14 +242,14 @@ void func_800CED88(void) // 0x800CED88
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
-            Chara_MovementReset(dahliaChara);
+            Chara_MovementReset(&dahliaChara);
 
             g_Cutscene_Timer = Q12(0.0f);
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, dahliaChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &dahliaChara, 0, false);
             func_8003D03C();
 
             Savegame_EventFlagSet(EventFlag_182);
@@ -320,7 +320,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 10:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, dahliaChara, 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &dahliaChara, 9, false);
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -328,7 +328,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 12:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, dahliaChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &dahliaChara, 0, false);
             Event_DisplayMapMsgWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
@@ -338,11 +338,11 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 14:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, dahliaChara, 10, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &dahliaChara, 10, false);
             SysWork_StateStepIncrement(0);
 
         case 15:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, dahliaChara, 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &dahliaChara, 0, false);
             Event_DisplayMapMsgWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
         case 16:
@@ -352,7 +352,7 @@ void func_800CED88(void) // 0x800CED88
             Event_DisplayMapMsgWithAudio(29, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
         case 18:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, dahliaChara, 8, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &dahliaChara, 8, false);
             SysWork_StateStepIncrement(0);
 
         case 19:
@@ -389,7 +389,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         case 21:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, dahliaChara, 1, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &dahliaChara, 1, false);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -459,7 +459,7 @@ void func_800CED88(void) // 0x800CED88
 
         case 29:
             Sfx_WithFlagsPlay(Sfx_DoorCloseM2S01, &Q12_VECTOR3(12.0f, -1.2f, 24.0f), Q8(0.5f), SfxFlag_None);
-            Chara_ModelCharaIdClear(dahliaChara, 0, 0);
+            Chara_ModelCharaIdClear(&dahliaChara, 0, 0);
             SysWork_StateStepIncrement(0);
 
         case 30:
@@ -487,7 +487,7 @@ void func_800CED88(void) // 0x800CED88
             Savegame_EventFlagSet(EventFlag_MapMark_FogCentralTown_HospitalCircle);
             Savegame_EventFlagSet(EventFlag_MapMark_AltCentralTown_HospitalCircle);
 
-            Chara_ModelCharaIdClear(dahliaChara, 0, 0);
+            Chara_ModelCharaIdClear(&dahliaChara, 0, 0);
 
             g_Cutscene_Timer = NO_VALUE;
 
@@ -515,7 +515,7 @@ void func_800CED88(void) // 0x800CED88
 
             if (step > 13)
             {
-                dahlia = dahliaChara;
+                dahlia = &dahliaChara;
                 if ((dahlia->model.anim.time - Q12(Chara_AnimStartKeyframeIdxGet(dahlia))) <= Q12(30.0f) &&
                     (dahlia->model.anim.time - Q12(Chara_AnimStartKeyframeIdxGet(dahlia))) >= Q12(21.0f))
                 {
@@ -528,7 +528,7 @@ void func_800CED88(void) // 0x800CED88
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         Dms_CharacterTransformGet(&PLAYER_CHARA().position, (SVECTOR3*)&PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
-        Dms_CharacterTransformGet(&dahliaChara->position, (SVECTOR3*)&dahliaChara->rotation, "DAHLIA", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
+        Dms_CharacterTransformGet(&dahliaChara.position, (SVECTOR3*)&dahliaChara.rotation, "DAHLIA", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_CameraPositionTarget, &g_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&g_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_CameraLookAtTarget, NULL, true);

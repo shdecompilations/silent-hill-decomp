@@ -826,7 +826,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             state = 4; // @hack Needed to match reg order.
             for (i = 2; i >= 0; i--)
             {
-                g_SysWork.npcs[i].model.controlState = state;
+                NPC_CHARA(i).model.controlState = state;
             }
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);

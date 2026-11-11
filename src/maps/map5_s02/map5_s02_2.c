@@ -581,7 +581,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Chara_Spawn(Chara_Mumbler, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 17);
             D_800D94F4 = 1;
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 12, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 12, false);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -602,9 +602,9 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 12:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 164, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 11, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 11, false);
 
-            ModelAnim_StatusDecrement(&g_SysWork.npcs[1].model.anim);
+            ModelAnim_StatusDecrement(&NPC_CHARA(1).model.anim);
             SysWork_StateStepIncrement(0);
 
         case 13:
@@ -625,7 +625,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 17:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 14, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 14, false);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -633,11 +633,11 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 19:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 13, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 13, false);
             func_8003D03C();
 
             Savegame_EventFlagClear(EventFlag_381);
-            g_SysWork.npcs[1].model.stateStep++;
+            NPC_CHARA(1).model.stateStep++;
 
             SysWork_StateStepIncrement(0);
 
@@ -647,7 +647,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 21:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 5, false);
             func_800625F4(&Q12_VECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
 
             D_800D94F4 = 2;
@@ -660,7 +660,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 23:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 10, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 10, false);
             SysWork_StateStepIncrement(0);
 
         case 24:
@@ -669,7 +669,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 25:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 5, false);
             g_Cutscene_Timer = Q12(228.0f);
             SysWork_StateStepIncrement(0);
 
@@ -678,7 +678,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 27:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 9, false);
             Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
             SysWork_StateStepIncrement(0);
 
@@ -700,7 +700,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 32:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 1, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 1, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 73, false);
             Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
             SysWork_StateStepIncrement(0);
@@ -713,7 +713,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 35:
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
 
             g_Cutscene_Timer = Q12(316.0f);
@@ -762,12 +762,12 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             if (!D_800D94F4)
             {
                 Chara_ProcessLoads();
-                g_SysWork.npcs[0].model.charaId = Chara_Kaufmann;
+                NPC_CHARA(0).model.charaId = Chara_Kaufmann;
                 Chara_Spawn(Chara_Mumbler, 0, Q12(140.5f), Q12(23.0f), Q12_ANGLE(0.0f), 17);
                 D_800D94F4 = 1;
             }
 
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             Player_WeaponAttackRestore();
             WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
 
@@ -778,7 +778,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         case 45:
             if (D_800D94F4 == 1)
             {
-                g_SysWork.npcs[1].model.stateStep = 3;
+                NPC_CHARA(1).model.stateStep = 3;
                 func_800625F4(&Q12_VECTOR3(139.3f, 0.0f, 23.6f), 120, 3, 1);
             }
 
@@ -833,8 +833,8 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, FS_BUFFER_17);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "KAU", g_Cutscene_Timer, FS_BUFFER_17);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "CLD4", g_Cutscene_Timer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&NPC_CHARA(0).position, &NPC_CHARA(0).rotation, "KAU", g_Cutscene_Timer, FS_BUFFER_17);
+        Dms_CharacterTransformGet(&NPC_CHARA(1).position, &NPC_CHARA(1).rotation, "CLD4", g_Cutscene_Timer, FS_BUFFER_17);
 
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, FS_BUFFER_17));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);

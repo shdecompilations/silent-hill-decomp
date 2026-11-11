@@ -330,7 +330,7 @@ void func_800D725C(void) // 0x800D725C
             break;
 
         case 8:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 5, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
 
             g_Cutscene_Timer = Q12(21.0f);
@@ -346,7 +346,7 @@ void func_800D725C(void) // 0x800D725C
             break;
 
         case 11:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 17, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 17, false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -371,7 +371,7 @@ void func_800D725C(void) // 0x800D725C
             break;
 
         case 17:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 18, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 18, false);
             Savegame_EventFlagSet(EventFlag_570);
             SysWork_StateStepIncrement(0);
 
@@ -418,7 +418,7 @@ void func_800D725C(void) // 0x800D725C
         default:
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_482);
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             Chara_ProcessLoads();
             SD_Call(19);
             break;
@@ -427,7 +427,7 @@ void func_800D725C(void) // 0x800D725C
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LISA", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterTransformGet(&NPC_CHARA(0).position, &NPC_CHARA(0).rotation, "LISA", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraTargetsGet(&g_Cutscene_CameraPositionTarget, &g_Cutscene_CameraLookAtTarget, NULL, g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11));
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
@@ -463,7 +463,7 @@ void func_800D7A60(void) // 0x800D7A60
 
         case 1:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 156, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 6, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 6, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -511,7 +511,7 @@ void func_800D7A60(void) // 0x800D7A60
 
         case 8:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 158, false);
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             Sfx_WithFlagsPlay(Sfx_DoorCloseM7S01, &g_WorldObject_Door.position, Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);
 
@@ -558,7 +558,7 @@ void func_800D7A60(void) // 0x800D7A60
 
         case 18:
             SD_Call(19);
-            Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+            Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -592,7 +592,7 @@ void func_800D7A60(void) // 0x800D7A60
     if (g_Cutscene_Timer >= Q12(0.0f))
     {
         Dms_CharacterTransformGet(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, "HERO", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
-        Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "BLS", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
+        Dms_CharacterTransformGet(&NPC_CHARA(0).position, &NPC_CHARA(0).rotation, "BLS", g_Cutscene_Timer, (s_DmsHeader*)FS_BUFFER_11);
 
         if (D_800E1671 != 0)
         {
@@ -1843,7 +1843,7 @@ void func_800DB1F0(void) // 0x800DB1F0
             break;
 
         default:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 9, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -2279,7 +2279,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
         case MAP_CHUNK_CELL(-2, -1):
             if (!Savegame_EventFlagGet(EventFlag_485))
             {
-                if (g_SysWork.npcs[0].model.charaId != Chara_GhostChildAlessa)
+                if (NPC_CHARA(0).model.charaId != Chara_GhostChildAlessa)
                 {
                     Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(-60.0f), Q12(-20.0f), Q12_ANGLE(180.0f), 3);
                     Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio569);
@@ -2287,22 +2287,22 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 else if (PLAYER_CHARA().position.vx > Q12(-62.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_485);
-                    Chara_MovementReset(&g_SysWork.npcs[0]);
+                    Chara_MovementReset(&NPC_CHARA(0));
                     Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(90.0f), Q12(-60.0f), Q12(-35.0f));
                     SD_Call(Sfx_XaAudio569);
                 }
             }
-            else if (g_SysWork.npcs[0].model.charaId == Chara_GhostChildAlessa)
+            else if (NPC_CHARA(0).model.charaId == Chara_GhostChildAlessa)
             {
-                g_SysWork.npcs[0].properties.npc.moveDistance_124 = Q12(1.25f);
-                Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
+                NPC_CHARA(0).properties.npc.moveDistance_124 = Q12(1.25f);
+                Event_PathWaypointExecuteCharaNoWait(&NPC_CHARA(0), 2, 1);
                 npcTimer = 0;
 
                 if (Sd_AudioStreamingCheck() == AudioStreamingState_XaPlaying)
                 {
-                    if (g_SysWork.npcs[0].position.vz < Q12(-24.0f))
+                    if (NPC_CHARA(0).position.vz < Q12(-24.0f))
                     {
-                        npcTimer = (Q12(-24.0f) - g_SysWork.npcs[0].position.vz) / 5;
+                        npcTimer = (Q12(-24.0f) - NPC_CHARA(0).position.vz) / 5;
                         v1 = CLAMP_LOW(npcTimer, D_800E33A4);
                         D_800E33A4 = v1;
                     }
@@ -2335,8 +2335,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 }
                 npcTimer = tmp2;
 
-                g_SysWork.npcs[0].timer_C6 = npcTimer;
-                if (g_SysWork.npcs[0].position.vz < Q12(-30.0f) || g_SysWork.npcs[0].timer_C6 == Q12(1.0f))
+                NPC_CHARA(0).timer_C6 = npcTimer;
+                if (NPC_CHARA(0).position.vz < Q12(-30.0f) || NPC_CHARA(0).timer_C6 == Q12(1.0f))
                 {
                     Chara_ModelCharaIdClear(g_SysWork.npcs, 0, 0);
                 }
@@ -2366,12 +2366,12 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
             break;
 
         case MAP_CHUNK_CELL(1, -1):
-            if (g_SysWork.npcs[0].model.charaId == Chara_GhostChildAlessa)
+            if (NPC_CHARA(0).model.charaId == Chara_GhostChildAlessa)
             {
-                g_SysWork.npcs[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.2f));
-                if (g_SysWork.npcs[0].timer_C6 > Q12(1.0f))
+                NPC_CHARA(0).timer_C6 += Q12_MULT_PRECISE(g_DeltaTime, Q12(0.2f));
+                if (NPC_CHARA(0).timer_C6 > Q12(1.0f))
                 {
-                    Chara_ModelCharaIdClear(&g_SysWork.npcs[0], 0, 0);
+                    Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
                 }
             }
 

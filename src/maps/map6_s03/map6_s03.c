@@ -348,11 +348,11 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
 
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (g_SysWork.npcs[i].model.charaId != Chara_None &&
-                    g_SysWork.npcs[i].position.vz < Q12(36.5f))
+                if (NPC_CHARA(i).model.charaId != Chara_None &&
+                    NPC_CHARA(i).position.vz < Q12(36.5f))
                 {
-                    g_SysWork.npcs[i].model.charaId = Chara_None;
-                    Savegame_EnemyStateUpdate(&g_SysWork.npcs[i]);
+                    NPC_CHARA(i).model.charaId = Chara_None;
+                    Savegame_EnemyStateUpdate(&NPC_CHARA(i));
                 }
             }
         }
@@ -460,10 +460,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
 
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (g_SysWork.npcs[i].position.vx < Q12(32.0f) &&
-                    g_SysWork.npcs[i].model.charaId != Chara_None)
+                if (NPC_CHARA(i).position.vx < Q12(32.0f) &&
+                    NPC_CHARA(i).model.charaId != Chara_None)
                 {
-                    Chara_ModelCharaIdClear(&g_SysWork.npcs[i], 0, 0);
+                    Chara_ModelCharaIdClear(&NPC_CHARA(i), 0, 0);
                 }
             }
 

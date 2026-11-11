@@ -111,30 +111,30 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
                 npcIdx++;
             }
 
-            bzero(&g_SysWork.npcs[npcIdx], sizeof(s_SubCharacter));
+            bzero(&NPC_CHARA(npcIdx), sizeof(s_SubCharacter));
 
             if (curCharaSpawn->charaId > Chara_None)
             {
-                g_SysWork.npcs[npcIdx].model.charaId = curCharaSpawn->charaId;
+                NPC_CHARA(npcIdx).model.charaId = curCharaSpawn->charaId;
             }
             else
             {
-                g_SysWork.npcs[npcIdx].model.charaId = (i < 16) ? groupCharaId0 : groupCharaId1;
+                NPC_CHARA(npcIdx).model.charaId = (i < 16) ? groupCharaId0 : groupCharaId1;
             }
 
-            g_SysWork.npcs[npcIdx].field_40           = i;
-            g_SysWork.npcs[npcIdx].model.controlState = 0;
-            g_SysWork.npcs[npcIdx].model.stateStep    = curCharaSpawn->flags;
-            g_SysWork.npcs[npcIdx].position.vx        = curCharaSpawn->positionX;
-            g_SysWork.npcs[npcIdx].position.vz        = curCharaSpawn->positionZ;
+            NPC_CHARA(npcIdx).field_40           = i;
+            NPC_CHARA(npcIdx).model.controlState = 0;
+            NPC_CHARA(npcIdx).model.stateStep    = curCharaSpawn->flags;
+            NPC_CHARA(npcIdx).position.vx        = curCharaSpawn->positionX;
+            NPC_CHARA(npcIdx).position.vz        = curCharaSpawn->positionZ;
             Collision_SurfaceGet(&surface, curCharaSpawn->positionX, curCharaSpawn->positionZ);
-            g_SysWork.npcs[npcIdx].position.vy        = surface.floorHeight;
-            g_SysWork.npcs[npcIdx].rotation.vy        = Q8_TO_Q12(curCharaSpawn->rotationY);
+            NPC_CHARA(npcIdx).position.vy        = surface.floorHeight;
+            NPC_CHARA(npcIdx).rotation.vy        = Q8_TO_Q12(curCharaSpawn->rotationY);
 
             SET_FLAG(&g_SysWork.npcFlags, npcIdx);
             SET_FLAG(g_SysWork.field_228C, i);
 
-            chara                    = &g_SysWork.npcs[npcIdx];
+            chara                    = &NPC_CHARA(npcIdx);
             chara->model.anim.flags |= AnimFlag_Visible;
         }
     }

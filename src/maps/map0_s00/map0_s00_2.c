@@ -438,7 +438,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
     q19_12 prevPlayerPosX;
     q19_12 prevPlayerPosZ;
 
-    #define cherylChara g_SysWork.npcs[0]
+    #define cherylChara NPC_CHARA(0)
     #define cherylProps cherylChara.properties.npc
 
     switch (g_SysWork.sysStateSteps[0])
@@ -729,7 +729,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
     q19_12 playerOffsetZ0;
     q19_12 playerOffsetZ1;
 
-    #define cherylChara g_SysWork.npcs[0]
+    #define cherylChara NPC_CHARA(0)
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -829,7 +829,7 @@ void MapEvent_CutsceneCherylIntoTheAlley(void) // 0x800DAEFC
 
 void func_800DB26C(void) // 0x800DB26C
 {
-    #define cherylChara g_SysWork.npcs[0]
+    #define cherylChara NPC_CHARA(0)
 
     // Warp camera.
     if (g_SysWork.sysStateSteps[0] == 0)
@@ -1187,10 +1187,10 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             // Make all Grey Children aggressive.
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (g_SysWork.npcs[i].model.charaId == Chara_GreyChildOrMumbler)
+                if (NPC_CHARA(i).model.charaId == Chara_GreyChildOrMumbler)
                 {
-                    g_SysWork.npcs[i].model.controlState = 0;
-                    g_SysWork.npcs[i].model.stateStep    = 6;
+                    NPC_CHARA(i).model.controlState = 0;
+                    NPC_CHARA(i).model.stateStep    = 6;
                 }
             }
             break;
@@ -1288,7 +1288,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
 
 void MapEvent_GreyChildrenSpawn(void) // 0x800DC1E8
 {
-    if (Savegame_EventFlagGet(EventFlag_17) && g_SysWork.npcs[0].model.charaId == Chara_None)
+    if (Savegame_EventFlagGet(EventFlag_17) && NPC_CHARA(0).model.charaId == Chara_None)
     {
         if (PLAYER_IN_MAP_CHUNK(-7, 6))
         {
@@ -1313,39 +1313,39 @@ void func_800DC33C(void) // 0x800DC33C
     if (!Savegame_EventFlagGet(EventFlag_5))
     {
         Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(180.0f), Q12(-62.0f), Q12(108.0f));
-        Chara_MovementReset(&g_SysWork.npcs[0]);
+        Chara_MovementReset(&NPC_CHARA(0));
 
         Savegame_EventFlagSet(EventFlag_5);
     }
 
     vwGetViewPosition(&camPos);
-    if (Math_Vector2MagCalcSafeQ6(g_SysWork.npcs[0].position.vx - camPos.vx,
-                            g_SysWork.npcs[0].position.vz - camPos.vz) <= Q12(16.5f) &&
-        g_SysWork.npcs[0].position.vx >= Q12(-58.0f))
+    if (Math_Vector2MagCalcSafeQ6(NPC_CHARA(0).position.vx - camPos.vx,
+                            NPC_CHARA(0).position.vz - camPos.vz) <= Q12(16.5f) &&
+        NPC_CHARA(0).position.vx >= Q12(-58.0f))
     {
         if (!(g_SysWork.sysFlags & SysFlag_MenuActive))
         {
-            if (!Vw_AabbVisibleInScreenCheck(g_SysWork.npcs[0].position.vx - Q12(1.0f),
-                                             g_SysWork.npcs[0].position.vx + Q12(1.0f),
-                                             g_SysWork.npcs[0].position.vy - Q12(1.5f),
-                                             g_SysWork.npcs[0].position.vy,
-                                             g_SysWork.npcs[0].position.vz - Q12(1.0f),
-                                             g_SysWork.npcs[0].position.vz + Q12(1.0f)))
+            if (!Vw_AabbVisibleInScreenCheck(NPC_CHARA(0).position.vx - Q12(1.0f),
+                                             NPC_CHARA(0).position.vx + Q12(1.0f),
+                                             NPC_CHARA(0).position.vy - Q12(1.5f),
+                                             NPC_CHARA(0).position.vy,
+                                             NPC_CHARA(0).position.vz - Q12(1.0f),
+                                             NPC_CHARA(0).position.vz + Q12(1.0f)))
             {
 block7:
-                g_SysWork.npcs[0].position.vz = 1;
-                g_SysWork.npcs[0].position.vx = 1;
-                g_SysWork.npcs[0].properties.npc.moveDistance_124 = Q12(0.0f);
+                NPC_CHARA(0).position.vz = 1;
+                NPC_CHARA(0).position.vx = 1;
+                NPC_CHARA(0).properties.npc.moveDistance_124 = Q12(0.0f);
 
-                Chara_AnimReset(&g_SysWork.npcs[0], false);
+                Chara_AnimReset(&NPC_CHARA(0), false);
 
                 Savegame_EventFlagSet(EventFlag_6);
                 return;
             }
         }
 
-        var_s1 = Math_AngleNormalizeSigned(ratan2(g_SysWork.npcs[0].position.vx - PLAYER_CHARA().position.vx,
-                                      g_SysWork.npcs[0].position.vz - PLAYER_CHARA().position.vz) -
+        var_s1 = Math_AngleNormalizeSigned(ratan2(NPC_CHARA(0).position.vx - PLAYER_CHARA().position.vx,
+                                      NPC_CHARA(0).position.vz - PLAYER_CHARA().position.vz) -
                                PLAYER_CHARA().headingAngle);
 
         temp_a0 = Math_AngleNormalizeSigned(ratan2(Q12(-62.0f) - PLAYER_CHARA().position.vx,
@@ -1384,8 +1384,8 @@ block7:
             D_800DFAD0 = var_v1_2;
         }
 
-        g_SysWork.npcs[0].properties.npc.moveDistance_124 = D_800DFAD0;
-        Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
+        NPC_CHARA(0).properties.npc.moveDistance_124 = D_800DFAD0;
+        Event_PathWaypointExecuteCharaNoWait(&NPC_CHARA(0), 2, 1);
         return;
     }
 
@@ -1401,31 +1401,31 @@ void func_800DC694(void) // 0x800DC694
     s32    var_a2;
     s32    var_v1;
 
-    mag = Math_Vector2MagCalcSafeQ6(g_SysWork.npcs[0].position.vx - PLAYER_CHARA().position.vx,
-                              (g_SysWork.npcs[0].position.vz - PLAYER_CHARA().position.vz) - Q12(2.0f));
+    mag = Math_Vector2MagCalcSafeQ6(NPC_CHARA(0).position.vx - PLAYER_CHARA().position.vx,
+                              (NPC_CHARA(0).position.vz - PLAYER_CHARA().position.vz) - Q12(2.0f));
 
     if (!Savegame_EventFlagGet(EventFlag_7))
     {
-        Chara_MovementReset(&g_SysWork.npcs[0]);
+        Chara_MovementReset(&NPC_CHARA(0));
         return;
     }
 
-    if (mag <= Q12(14.5f) && g_SysWork.npcs[0].position.vz >= Q12(49.0f))
+    if (mag <= Q12(14.5f) && NPC_CHARA(0).position.vz >= Q12(49.0f))
     {
         if (!(g_SysWork.sysFlags & SysFlag_MenuActive))
         {
-            if (!Vw_AabbVisibleInScreenCheck(g_SysWork.npcs[0].position.vx - Q12(1.0f),
-                                             g_SysWork.npcs[0].position.vx + Q12(1.0f),
-                                             g_SysWork.npcs[0].position.vy - Q12(1.5f),
-                                             g_SysWork.npcs[0].position.vy,
-                                             g_SysWork.npcs[0].position.vz - Q12(1.0f),
-                                             g_SysWork.npcs[0].position.vz + Q12(1.0f)))
+            if (!Vw_AabbVisibleInScreenCheck(NPC_CHARA(0).position.vx - Q12(1.0f),
+                                             NPC_CHARA(0).position.vx + Q12(1.0f),
+                                             NPC_CHARA(0).position.vy - Q12(1.5f),
+                                             NPC_CHARA(0).position.vy,
+                                             NPC_CHARA(0).position.vz - Q12(1.0f),
+                                             NPC_CHARA(0).position.vz + Q12(1.0f)))
             {
 block7:
-                g_SysWork.npcs[0].position.vz = 1;
-                g_SysWork.npcs[0].position.vx = 1;
+                NPC_CHARA(0).position.vz = 1;
+                NPC_CHARA(0).position.vx = 1;
 
-                Chara_AnimReset(&g_SysWork.npcs[0], false);
+                Chara_AnimReset(&NPC_CHARA(0), false);
 
                 Savegame_EventFlagSet(EventFlag_9);
                 return;
@@ -1457,9 +1457,9 @@ block7:
             D_800DFAD4 = var_v1;
         }
 
-        g_SysWork.npcs[0].properties.npc.moveDistance_124 = D_800DFAD4;
+        NPC_CHARA(0).properties.npc.moveDistance_124 = D_800DFAD4;
 
-        Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
+        Event_PathWaypointExecuteCharaNoWait(&NPC_CHARA(0), 2, 1);
         return;
     }
 
@@ -1472,32 +1472,32 @@ void func_800DC8D8(void) // 0x800DC8D8
 {
     q19_12 mag;
 
-    mag = Math_Vector2MagCalcSafeQ6(g_SysWork.npcs[0].position.vx - PLAYER_CHARA().position.vx,
-                              (g_SysWork.npcs[0].position.vz - PLAYER_CHARA().position.vz) - Q12(2.0f));
+    mag = Math_Vector2MagCalcSafeQ6(NPC_CHARA(0).position.vx - PLAYER_CHARA().position.vx,
+                              (NPC_CHARA(0).position.vz - PLAYER_CHARA().position.vz) - Q12(2.0f));
 
     if (!Savegame_EventFlagGet(EventFlag_10))
     {
-        g_SysWork.npcs[0].position.vx = Q12(-61.0f);
-        g_SysWork.npcs[0].position.vz = Q12(48.0f);
-        g_SysWork.npcs[0].rotation.vy = Q12_ANGLE(90.0f);
+        NPC_CHARA(0).position.vx = Q12(-61.0f);
+        NPC_CHARA(0).position.vz = Q12(48.0f);
+        NPC_CHARA(0).rotation.vy = Q12_ANGLE(90.0f);
 
         if (mag < Q12(14.8f))
         {
-            Chara_MovementReset(&g_SysWork.npcs[0]);
+            Chara_MovementReset(&NPC_CHARA(0));
             Savegame_EventFlagSet(EventFlag_10);
             Event_PathWaypointSet(true, 1, 0, Q12_ANGLE(90.0f), Q12(-57.0f), Q12(47.0f));
         }
     }
     else
     {
-        g_SysWork.npcs[0].properties.npc.moveDistance_124 = Q12(1.8f);
+        NPC_CHARA(0).properties.npc.moveDistance_124 = Q12(1.8f);
 
-        Event_PathWaypointExecuteCharaNoWait(&g_SysWork.npcs[0], 2, 1);
+        Event_PathWaypointExecuteCharaNoWait(&NPC_CHARA(0), 2, 1);
 
-        if (g_SysWork.npcs[0].position.vx > Q12(-58.0f))
+        if (NPC_CHARA(0).position.vx > Q12(-58.0f))
         {
             Savegame_EventFlagSet(EventFlag_11);
-            g_SysWork.npcs[0].model.charaId = Chara_None;
+            NPC_CHARA(0).model.charaId = Chara_None;
 
             Sfx_WithFlagsPlay(Sfx_Unk1354, &Q12_VECTOR3(-57.0f, -1.0f, 47.0f), Q8(0.5f), SfxFlag_None);
         }

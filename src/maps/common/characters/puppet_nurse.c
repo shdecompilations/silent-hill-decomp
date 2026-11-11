@@ -945,10 +945,10 @@ bool sharedFunc_800CF90C_3_s03(s_SubCharacter* nurse)
     // Run through NPCs.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
-        if ((g_SysWork.npcs[i].model.charaId == Chara_PuppetNurse || g_SysWork.npcs[i].model.charaId == Chara_PuppetDoctor) &&
-            g_SysWork.npcs[i].health > Q12(0.0f) &&
-            g_SysWork.npcs[i].field_40 != nurse->field_40 &&
-            !Math_Distance2dCheck(&nurse->position, &g_SysWork.npcs[i].position, Q12(4.0f)))
+        if ((NPC_CHARA(i).model.charaId == Chara_PuppetNurse || NPC_CHARA(i).model.charaId == Chara_PuppetDoctor) &&
+            NPC_CHARA(i).health > Q12(0.0f) &&
+            NPC_CHARA(i).field_40 != nurse->field_40 &&
+            !Math_Distance2dCheck(&nurse->position, &NPC_CHARA(i).position, Q12(4.0f)))
         {
             curNpc = g_SysWork.npcs;
 

@@ -464,7 +464,7 @@ s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubC
     curCollChara    = &collCharas;
 
     // Collect collidable NPCs.
-    for (curChara = &g_SysWork.npcs[0]; curChara < &g_SysWork.npcs[ARRAY_SIZE(g_SysWork.npcs)]; curChara++)
+    for (curChara = &NPC_CHARA(0); curChara < &NPC_CHARA(ARRAY_SIZE(g_SysWork.npcs)); curChara++)
     {
         if (curChara->model.charaId != Chara_None)
         {

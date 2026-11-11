@@ -3251,7 +3251,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     sp4C = 67;
     dist = Q12_MULT_PRECISE(arg0->rotationZ_4D8, Q12(0.9f));
 
-    if (g_SysWork.npcs[2].model.charaId == Chara_Incubus)
+    if (NPC_CHARA(2).model.charaId == Chara_Incubus)
     {
         sp4C = 3;
     }
@@ -4870,7 +4870,7 @@ void func_800E1854(void) // 0x800E1854
         case 5:
             if (D_800F4B40.timer_10 < Q12(2.0f))
             {
-                VECTOR3* srcPos = &g_SysWork.npcs[4].position;
+                VECTOR3* srcPos = &NPC_CHARA(4).position;
                 sp10            = *srcPos;
                 sp10.vy        -= Q12(1.1f);
 
@@ -5054,14 +5054,14 @@ void func_800E2664(s32 arg0, s16 arg1) // 0x800E2664
     if (arg1 > Q12_ANGLE_NORM_U(func_800E28F4()))
     {
         VECTOR3* srcPos;
-        srcPos = &g_SysWork.npcs[4].position;
+        srcPos = &NPC_CHARA(4).position;
 
         angle   = Q12_ANGLE_NORM_U(func_800E28F4());
         pos0.vx = srcPos->vx + Q12_MULT(Math_Sin(angle), arg0);
         pos0.vz = srcPos->vz + Q12_MULT(Math_Cos(angle), arg0);
         pos0.vy = ((func_800E28F4() % (arg0 * 2)) - arg0) - Q12(1.0f);
 
-        pos1     = g_SysWork.npcs[4].position;
+        pos1     = NPC_CHARA(4).position;
         pos1.vy -= Q12(1.1f);
         pos1.vx += Q12_MULT_FLOAT(Math_Sin(angle), 0.4f);
         pos1.vz += Q12_MULT_FLOAT(Math_Cos(angle), 0.4f);
@@ -5081,7 +5081,7 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos) // 0x800E27D0
         angle = Q12_ANGLE_NORM_U(func_800E28F4());
         if (arg2 != 0)
         {
-            srcPos  = &g_SysWork.npcs[1].position;
+            srcPos  = &NPC_CHARA(1).position;
             pos0.vx = srcPos->vx - Q12(0.5f);
             pos0.vy = srcPos->vy - Q12(1.2f);
             pos0.vz = srcPos->vz;
@@ -5089,8 +5089,8 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos) // 0x800E27D0
         else
         {
             // @hack Pointer to `position` needed for match, but doesn't work as a `VECTOR3*` variable?
-            pos0.vx = (&g_SysWork.npcs[4].position)->vx + Q12_MULT(Math_Sin(angle), arg0);
-            pos0.vz = (&g_SysWork.npcs[4].position)->vz + Q12_MULT(Math_Cos(angle), arg0);
+            pos0.vx = (&NPC_CHARA(4).position)->vx + Q12_MULT(Math_Sin(angle), arg0);
+            pos0.vz = (&NPC_CHARA(4).position)->vz + Q12_MULT(Math_Cos(angle), arg0);
             pos0.vy = (func_800E28F4() % (arg0 >> 1)) - (arg0 >> 2);
         }
 
@@ -5234,35 +5234,35 @@ void Map_CutsceneObjectsUpdate(void) // 0x800E2E90
         }
         if (g_Cutscene_UpdateSibyl)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "SIBYL", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&NPC_CHARA(0).position, &NPC_CHARA(0).rotation, "SIBYL", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateDaria)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[1].position, &g_SysWork.npcs[1].rotation, "DARIA", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&NPC_CHARA(1).position, &NPC_CHARA(1).rotation, "DARIA", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateArsia)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[2].position, &g_SysWork.npcs[2].rotation, "ARSIA", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&NPC_CHARA(2).position, &NPC_CHARA(2).rotation, "ARSIA", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateKau)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[3].position, &g_SysWork.npcs[3].rotation, "KAU", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&NPC_CHARA(3).position, &NPC_CHARA(3).rotation, "KAU", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateMar)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[4].position, &g_SysWork.npcs[4].rotation, "MAR", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&NPC_CHARA(4).position, &NPC_CHARA(4).rotation, "MAR", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateBar)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[5].position, &g_SysWork.npcs[5].rotation, "BAR", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&NPC_CHARA(5).position, &NPC_CHARA(5).rotation, "BAR", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateLitl)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[0].position, &g_SysWork.npcs[0].rotation, "LITL", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&NPC_CHARA(0).position, &NPC_CHARA(0).rotation, "LITL", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateBos)
         {
-            Dms_CharacterTransformGet(&g_SysWork.npcs[2].position, &g_SysWork.npcs[2].rotation, "BOS", g_Cutscene_Timer, D_800ED230[D_800F4806]);
+            Dms_CharacterTransformGet(&NPC_CHARA(2).position, &NPC_CHARA(2).rotation, "BOS", g_Cutscene_Timer, D_800ED230[D_800F4806]);
         }
         if (g_Cutscene_UpdateBin)
         {
@@ -5420,7 +5420,7 @@ void func_800E3390(void) // 0x800E3390
         case 8:
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                func_800E9490(&g_SysWork.npcs[i]);
+                func_800E9490(&NPC_CHARA(i));
             }
 
             if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
@@ -5452,8 +5452,8 @@ void func_800E3390(void) // 0x800E3390
                     func_800E941C();
                 }
 
-                func_800E9444(Chara_Incubus, &g_SysWork.npcs[2]);
-                func_800DD9B0(&g_SysWork.npcs[2]);
+                func_800E9444(Chara_Incubus, &NPC_CHARA(2));
+                func_800DD9B0(&NPC_CHARA(2));
 
                 g_Cutscene_UpdateBaby  = false;
                 g_Cutscene_UpdateNu    = false;
@@ -5490,7 +5490,7 @@ void func_800E3390(void) // 0x800E3390
                     func_800E941C();
                 }
 
-                func_800E9444(Chara_Incubator, &g_SysWork.npcs[4]);
+                func_800E9444(Chara_Incubator, &NPC_CHARA(4));
                 func_800E9498();
 
                 g_Cutscene_UpdateBaby  = false;
@@ -5506,7 +5506,7 @@ void func_800E3390(void) // 0x800E3390
                 g_Cutscene_UpdateMar   = true;
                 g_Cutscene_Timer       = Q12(68.0f);
 
-                func_800DFB50(&g_SysWork.npcs[4]);
+                func_800DFB50(&NPC_CHARA(4));
             }
 
             func_800D9394();
@@ -5537,12 +5537,12 @@ void func_800E3390(void) // 0x800E3390
 
             if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
             {
-                func_800DD9D4(&g_SysWork.npcs[2]);
+                func_800DD9D4(&NPC_CHARA(2));
             }
             else
             {
                 func_800E9498();
-                func_800DFB74(&g_SysWork.npcs[4]);
+                func_800DFB74(&NPC_CHARA(4));
             }
 
             Savegame_EventFlagSet(EventFlag_577);
@@ -5555,7 +5555,7 @@ void func_800E3390(void) // 0x800E3390
             func_8003D01C();
             Player_WeaponAttackRestore();
             SD_Call(19);
-            func_800E14DC(&PLAYER_CHARA(), &g_SysWork.npcs[2], 1);
+            func_800E14DC(&PLAYER_CHARA(), &NPC_CHARA(2), 1);
 
             D_800F4805               = 0;
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -5566,7 +5566,7 @@ void func_800E3390(void) // 0x800E3390
 
     if (g_Cutscene_UpdateMar && D_800F4805 == 3 && Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
     {
-        g_SysWork.npcs[4].rotation.vy += Q12_ANGLE(180.0f);
+        NPC_CHARA(4).rotation.vy += Q12_ANGLE(180.0f);
     }
 }
 
@@ -5766,9 +5766,9 @@ void func_800E3F30(void) // 0x800E3F30
             func_800E9260(Chara_Alessa, 2);
             func_800E9260(Chara_EndingDahlia, 3);
             func_800E941C();
-            func_800E9444(Chara_EndingCybil, &g_SysWork.npcs[0]);
-            func_800E9444(Chara_EndingDahlia, &g_SysWork.npcs[1]);
-            func_800E9444(Chara_Alessa, &g_SysWork.npcs[2]);
+            func_800E9444(Chara_EndingCybil, &NPC_CHARA(0));
+            func_800E9444(Chara_EndingDahlia, &NPC_CHARA(1));
+            func_800E9444(Chara_Alessa, &NPC_CHARA(2));
 
             g_Cutscene_UpdateArsia = true;
             g_Cutscene_UpdateDaria = true;
@@ -5783,14 +5783,14 @@ void func_800E3F30(void) // 0x800E3F30
             break;
 
         case 1:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 21, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 5, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[2], 10, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 21, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(2), 10, false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 2:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &g_SysWork.npcs[0], 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimLock, &NPC_CHARA(0), 0, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -5798,7 +5798,7 @@ void func_800E3F30(void) // 0x800E3F30
             break;
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &g_SysWork.npcs[0], 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AnimUnlock, &NPC_CHARA(0), 0, false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -5819,7 +5819,7 @@ void func_800E3F30(void) // 0x800E3F30
             break;
 
         case 9:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 22, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 22, false);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -5829,7 +5829,7 @@ void func_800E3F30(void) // 0x800E3F30
         case 11:
             Savegame_EventFlagClear(EventFlag_576);
             SysWork_StateStepIncrement(0);
-            func_800D6804(&g_SysWork.npcs[1].position, &g_SysWork.npcs[0].position);
+            func_800D6804(&NPC_CHARA(1).position, &NPC_CHARA(0).position);
 
         case 12:
             Event_DisplayMapMsgWithAudio(22, &g_Cutscene_MapMsgAudioIdx, &D_800ED768);
@@ -5838,7 +5838,7 @@ void func_800E3F30(void) // 0x800E3F30
             break;
 
         case 13:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 23, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 23, false);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -5848,7 +5848,7 @@ void func_800E3F30(void) // 0x800E3F30
             break;
 
         case 15:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 24, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 24, false);
             Event_DisplayMapMsgWithAudio(23, &g_Cutscene_MapMsgAudioIdx, &D_800ED768);
 
             g_SysWork.lightIntensity = Q12(0.6f);
@@ -5869,7 +5869,7 @@ void func_800E3F30(void) // 0x800E3F30
             D_800F4805++;
 
             Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
-            func_800E9490(&g_SysWork.npcs[0]);
+            func_800E9490(&NPC_CHARA(0));
 
             g_Cutscene_UpdateSibyl = false;
             break;
@@ -5891,8 +5891,8 @@ void func_800E4714(void) // 0x800E4714
                 func_800E9260(Chara_Alessa, 2);
                 func_800E9260(Chara_EndingDahlia, 3);
                 func_800E941C();
-                func_800E9444(Chara_EndingDahlia, &g_SysWork.npcs[1]);
-                func_800E9444(Chara_Alessa, &g_SysWork.npcs[2]);
+                func_800E9444(Chara_EndingDahlia, &NPC_CHARA(1));
+                func_800E9444(Chara_Alessa, &NPC_CHARA(2));
 
                 g_Cutscene_UpdateArsia = true;
                 g_Cutscene_UpdateDaria = true;
@@ -5911,8 +5911,8 @@ void func_800E4714(void) // 0x800E4714
         case 1:
             if (!Savegame_EventFlagGet(EventFlag_449))
             {
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 5, false);
-                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[2], 10, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 5, false);
+                Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(2), 10, false);
             }
 
             SysWork_StateStepIncrement(0);
@@ -5936,7 +5936,7 @@ void func_800E4714(void) // 0x800E4714
             break;
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 15, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 15, false);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -5968,7 +5968,7 @@ void func_800E4714(void) // 0x800E4714
 
         case 10:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 16, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 16, false);
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -5987,7 +5987,7 @@ void func_800E4714(void) // 0x800E4714
             break;
 
         case 14:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 6, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 6, false);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -6031,7 +6031,7 @@ void func_800E4714(void) // 0x800E4714
 
         case 19:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 171, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 18, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 18, false);
             func_800E1788(1);
             SysWork_StateStepIncrement(0);
 
@@ -6042,13 +6042,13 @@ void func_800E4714(void) // 0x800E4714
         case 21:
             g_Cutscene_UpdateDaria = false;
 
-            Model_AnimFlagsClear(&g_SysWork.npcs[1].model, 2);
+            Model_AnimFlagsClear(&NPC_CHARA(1).model, 2);
             func_800E941C();
-            func_800E9444(Chara_Incubator, &g_SysWork.npcs[4]);
+            func_800E9444(Chara_Incubator, &NPC_CHARA(4));
 
             D_800F4814 = 2;
 
-            Model_AnimFlagsClear(&g_SysWork.npcs[4].model, 2);
+            Model_AnimFlagsClear(&NPC_CHARA(4).model, 2);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -6058,7 +6058,7 @@ void func_800E4714(void) // 0x800E4714
             {
                 if (D_800F481B == 0)
                 {
-                    Model_AnimFlagsClear(&g_SysWork.npcs[2].model, 2);
+                    Model_AnimFlagsClear(&NPC_CHARA(2).model, 2);
                     func_800E1788(2);
                     D_800F481B++;
                 }
@@ -6080,7 +6080,7 @@ void func_800E4714(void) // 0x800E4714
             break;
 
         case 23:
-            func_800E9490(&g_SysWork.npcs[2]);
+            func_800E9490(&NPC_CHARA(2));
 
             g_Cutscene_UpdateArsia = false;
             g_Cutscene_UpdateNu    = false;
@@ -6092,12 +6092,12 @@ void func_800E4714(void) // 0x800E4714
             break;
 
         case 25:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[4], 1, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(4), 1, false);
 
             g_Cutscene_UpdateMar = true;
 
-            Model_AnimFlagsSet(&g_SysWork.npcs[4].model, 2);
-            func_800DD7D0(&g_SysWork.npcs[1].position);
+            Model_AnimFlagsSet(&NPC_CHARA(4).model, 2);
+            func_800DD7D0(&NPC_CHARA(1).position);
 
             D_800F4828 = 1;
 
@@ -6108,7 +6108,7 @@ void func_800E4714(void) // 0x800E4714
             break;
 
         case 27:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[4], 2, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(4), 2, false);
             SysWork_StateStepIncrement(0);
 
         case 28:
@@ -6167,13 +6167,13 @@ void func_800E514C(void) // 0x800E514C
 
             func_800E9260(Chara_EndingKaufmann, 2);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 19, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 19, false);
 
-            Sfx_WithFlagsPlay(Sfx_Unk1670, &g_SysWork.npcs[1].position, Q8_CLAMPED(0.785f), SfxFlag_None);
+            Sfx_WithFlagsPlay(Sfx_Unk1670, &NPC_CHARA(1).position, Q8_CLAMPED(0.785f), SfxFlag_None);
 
             g_SysWork.lightIntensity = Q12(0.7f);
 
-            Model_AnimFlagsSet(&g_SysWork.npcs[1].model, 2);
+            Model_AnimFlagsSet(&NPC_CHARA(1).model, 2);
 
             Savegame_EventFlagClear(EventFlag_591);
             Savegame_EventFlagClear(EventFlag_592);
@@ -6198,14 +6198,14 @@ void func_800E514C(void) // 0x800E514C
 
         case 4:
             func_800E941C();
-            func_800E9444(Chara_EndingKaufmann, &g_SysWork.npcs[3]);
+            func_800E9444(Chara_EndingKaufmann, &NPC_CHARA(3));
             g_Cutscene_UpdateKau = true;
 
             SysWork_StateStepIncrement(0);
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[3], 25, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(3), 25, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -6219,8 +6219,8 @@ void func_800E514C(void) // 0x800E514C
         case 8:
             g_Cutscene_Timer = Q12(59.0f);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[3], 24, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 20, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(3), 24, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 20, false);
             Savegame_EventFlagSet(EventFlag_591);
             SysWork_StateStepIncrement(0);
 
@@ -6229,12 +6229,12 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 10:
-            Event_CharaAnimPlayToEnd(&g_SysWork.npcs[1], 21);
+            Event_CharaAnimPlayToEnd(&NPC_CHARA(1), 21);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(60.0f), Q12(78.0f), true, false);
             break;
 
         case 11:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 22, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 22, false);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -6243,12 +6243,12 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 13:
-            Event_CharaAnimPlayToEnd(&g_SysWork.npcs[3], 18);
+            Event_CharaAnimPlayToEnd(&NPC_CHARA(3), 18);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(79.0f), Q12(100.0f), true, true);
             break;
 
         case 14:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[3], 19, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(3), 19, false);
             g_Cutscene_Timer = Q12(101.0f);
             SysWork_StateStepIncrement(0);
 
@@ -6257,7 +6257,7 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 16:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 23, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 23, false);
             g_SysWork.lightIntensity = Q12(0.6f);
             Savegame_EventFlagClear(EventFlag_591);
             SysWork_StateStepIncrement(0);
@@ -6272,15 +6272,15 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 19:
-            func_800E9490(&g_SysWork.npcs[1]);
-            func_800E9490(&g_SysWork.npcs[4]);
+            func_800E9490(&NPC_CHARA(1));
+            func_800E9490(&NPC_CHARA(4));
 
             g_Cutscene_UpdateMar   = false;
             g_Cutscene_UpdateDaria = false;
 
             WorldGfx_CharaLmBufferAssign(1);
             func_800E9260(Chara_Incubator, 3);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[3], 20, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(3), 20, false);
 
             g_SysWork.lightIntensity = Q12(0.7f);
 
@@ -6308,7 +6308,7 @@ void func_800E514C(void) // 0x800E514C
 
         case 23:
             func_800E941C();
-            func_800E9444(Chara_Incubator, &g_SysWork.npcs[4]);
+            func_800E9444(Chara_Incubator, &NPC_CHARA(4));
             func_800E9260(Chara_BloodyIncubator, 1);
             SysWork_StateStepIncrement(0);
 
@@ -6330,9 +6330,9 @@ void func_800E514C(void) // 0x800E514C
             g_Cutscene_UpdateMar = true;
 
             func_800E941C();
-            func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs[5]);
-            Model_AnimFlagsClear(&g_SysWork.npcs[5].model, 2);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[4], 2, false);
+            func_800E9444(Chara_BloodyIncubator, &NPC_CHARA(5));
+            Model_AnimFlagsClear(&NPC_CHARA(5).model, 2);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(4), 2, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, false);
 
             g_SysWork.lightIntensity = Q12(0.6f);
@@ -6387,12 +6387,12 @@ void func_800E514C(void) // 0x800E514C
         case 35:
             g_Cutscene_UpdateMar = false;
 
-            func_800E9490(&g_SysWork.npcs[4]);
+            func_800E9490(&NPC_CHARA(4));
 
             g_Cutscene_UpdateBar = true;
 
-            Model_AnimFlagsSet(&g_SysWork.npcs[5].model, 2);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 1, false);
+            Model_AnimFlagsSet(&NPC_CHARA(5).model, 2);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 1, false);
             SysWork_StateStepIncrement(0);
 
         case 36:
@@ -6432,13 +6432,13 @@ void func_800E514C(void) // 0x800E514C
 
         case 40:
             func_800E941C();
-            func_800E9444(Chara_EndingDahlia, &g_SysWork.npcs[1]);
+            func_800E9444(Chara_EndingDahlia, &NPC_CHARA(1));
             SysWork_StateStepIncrement(0);
             break;
 
         case 41:
             g_Cutscene_UpdateDaria = true;
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 22, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 22, false);
 
             g_SysWork.lightIntensity = Q12(0.6f);
             g_Cutscene_Timer         = Q12(393.0f);
@@ -6450,12 +6450,12 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 43:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[3], 22, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(3), 22, false);
 
             g_SysWork.lightIntensity = Q12(0.7f);
             g_Cutscene_UpdateDaria   = false;
 
-            func_800E9490(&g_SysWork.npcs[1]);
+            func_800E9490(&NPC_CHARA(1));
             SysWork_StateStepIncrement(0);
 
         case 44:
@@ -6495,14 +6495,14 @@ void func_800E514C(void) // 0x800E514C
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(418.0f), Q12(498.0f), true, true);
 
             g_SysWork.sysStateStepData[0] += g_DeltaTime;
-            g_SysWork.npcs[5].timer_C6    += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f / 16.0f);
+            NPC_CHARA(5).timer_C6    += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 1.0f / 16.0f);
 
             if (g_SysWork.sysStateStepData[0] > Q12(0.3f))
             {
                 localRand           = Rng_Rand16();
-                pos.vx              = g_SysWork.npcs[0].position.vx + Q12(0.2f);
-                pos.vy              = g_SysWork.npcs[0].position.vy + Q12(-0.9f);
-                pos.vz              = g_SysWork.npcs[0].position.vz + Q12(0.2f);
+                pos.vx              = NPC_CHARA(0).position.vx + Q12(0.2f);
+                pos.vy              = NPC_CHARA(0).position.vy + Q12(-0.9f);
+                pos.vz              = NPC_CHARA(0).position.vz + Q12(0.2f);
 
                 g_SysWork.sysStateStepData[0] -= Q12(0.2f);
                 g_SysWork.sysStateStepData[0] -= Rng_GenerateIntFromInput(localRand, 0, Q12(0.1f) - 1);
@@ -6512,8 +6512,8 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 50:
-            func_800E9490(&g_SysWork.npcs[5]);
-            func_800E9490(&g_SysWork.npcs[0]);
+            func_800E9490(&NPC_CHARA(5));
+            func_800E9490(&NPC_CHARA(0));
 
             g_Cutscene_UpdateLitl = false;
             g_Cutscene_UpdateBar  = false;
@@ -6523,7 +6523,7 @@ void func_800E514C(void) // 0x800E514C
             D_800F4813 = 1;
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 171, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[3], 24, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(3), 24, false);
             func_8005E70C();
 
             g_SysWork.lightIntensity = Q12(0.7f);
@@ -6535,7 +6535,7 @@ void func_800E514C(void) // 0x800E514C
 
         case 52:
             func_800E941C();
-            func_800E9444(Chara_Incubus, &g_SysWork.npcs[2]);
+            func_800E9444(Chara_Incubus, &NPC_CHARA(2));
 
             D_800F4813 = 2;
             g_Cutscene_UpdateBos = true;
@@ -6544,7 +6544,7 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 53:
-            func_800DD9B0(&g_SysWork.npcs[2]);
+            func_800DD9B0(&NPC_CHARA(2));
             func_800E9260(Chara_EndingDahlia, 3);
 
             g_SysWork.lightIntensity = Q12(0.8f);
@@ -6557,7 +6557,7 @@ void func_800E514C(void) // 0x800E514C
 
         case 55:
             func_800E941C();
-            func_800E9444(Chara_EndingDahlia, &g_SysWork.npcs[1]);
+            func_800E9444(Chara_EndingDahlia, &NPC_CHARA(1));
 
             g_Cutscene_UpdateDaria = true;
 
@@ -6566,7 +6566,7 @@ void func_800E514C(void) // 0x800E514C
 
         case 56:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 28, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 28, false);
 
             g_SysWork.lightIntensity = Q12(0.9f);
 
@@ -6596,7 +6596,7 @@ void func_800E514C(void) // 0x800E514C
             break;
 
         case 61:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 24, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 24, false);
             SysWork_StateStepIncrement(0);
 
         case 62:
@@ -6611,8 +6611,8 @@ void func_800E514C(void) // 0x800E514C
             g_SysWork.sysStateSteps[0] = 0;
             D_800F4805++;
 
-            func_800E9490(&g_SysWork.npcs[3]);
-            func_800E9490(&g_SysWork.npcs[1]);
+            func_800E9490(&NPC_CHARA(3));
+            func_800E9490(&NPC_CHARA(1));
 
             g_Cutscene_UpdateKau   = false;
             g_Cutscene_UpdateDaria = false;
@@ -6685,7 +6685,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 3:
             SD_Call(Sfx_XaAudio596);
-            func_800DD9F8(&g_SysWork.npcs[2]);
+            func_800DD9F8(&NPC_CHARA(2));
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -6703,36 +6703,36 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 7:
-            func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs[5]);
-            Model_AnimFlagsClear(&g_SysWork.npcs[5].model, 2);
+            func_800E9444(Chara_BloodyIncubator, &NPC_CHARA(5));
+            Model_AnimFlagsClear(&NPC_CHARA(5).model, 2);
             func_800E1788(12);
             SysWork_StateStepIncrement(0);
 
         case 8:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(176.0f), Q12(253.0f), true, true);
 
-            g_SysWork.npcs[2].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.15f);
-            if (g_SysWork.npcs[2].timer_C6 > Q12(1.0f))
+            NPC_CHARA(2).timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.15f);
+            if (NPC_CHARA(2).timer_C6 > Q12(1.0f))
             {
-                g_SysWork.npcs[2].timer_C6 = Q12(1.0f);
+                NPC_CHARA(2).timer_C6 = Q12(1.0f);
             }
             break;
 
         case 9:
             g_Cutscene_UpdateBar = true;
-            Model_AnimFlagsSet(&g_SysWork.npcs[5].model, 2);
+            Model_AnimFlagsSet(&NPC_CHARA(5).model, 2);
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 6, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 6, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
 
-            g_SysWork.npcs[5].timer_C6 = Q12(0.751f); // TODO: Odd value, possibly bad Q format.
+            NPC_CHARA(5).timer_C6 = Q12(0.751f); // TODO: Odd value, possibly bad Q format.
 
-            func_800E9490(&g_SysWork.npcs[2]);
+            func_800E9490(&NPC_CHARA(2));
             func_800E1788(13);
 
             g_Cutscene_UpdateBos = false;
 
-            func_800D7E50(&g_SysWork.npcs[2].position);
+            func_800D7E50(&NPC_CHARA(2).position);
             func_800D947C();
 
             Savegame_EventFlagSet(EventFlag_592);
@@ -6741,16 +6741,16 @@ void func_800E62CC(void) // 0x800E62CC
         case 10:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(254.0f), Q12(314.0f), true, true);
 
-            g_SysWork.npcs[5].timer_C6 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
-            if (g_SysWork.npcs[5].timer_C6 < 0)
+            NPC_CHARA(5).timer_C6 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
+            if (NPC_CHARA(5).timer_C6 < 0)
             {
-                g_SysWork.npcs[5].timer_C6 = 0;
+                NPC_CHARA(5).timer_C6 = 0;
             }
             break;
 
         case 11:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 174, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 7, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 7, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, false);
 
             SysWork_StateStepIncrement(0);
@@ -6764,7 +6764,7 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 13:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 2, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 2, false);
             WorldGfx_PlayerHeldItemSet(InvItemId_CutsceneBaby);
             func_800E1788(14);
             SysWork_StateStepIncrement(0);
@@ -6783,7 +6783,7 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 17:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 3, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 3, false);
 
             g_Cutscene_UpdateBaby = true;
 
@@ -6811,7 +6811,7 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 21:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 4, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 4, false);
             SysWork_StateStepIncrement(0);
 
         case 22:
@@ -6836,7 +6836,7 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 27:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 8, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 8, false);
 
             if (Savegame_EventFlagGet(EventFlag_449))
             {
@@ -6858,7 +6858,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 29:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 180, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 9, false);
             Player_FlexRotationYReset();
             Savegame_EventFlagSet(EventFlag_593);
             SysWork_StateStepIncrement(0);
@@ -6882,7 +6882,7 @@ void func_800E62CC(void) // 0x800E62CC
                 func_800E9444(Chara_EndingCybil, g_SysWork.npcs);
 
                 g_Cutscene_UpdateSibyl = true;
-                Model_AnimFlagsClear(&g_SysWork.npcs[0].model, 2);
+                Model_AnimFlagsClear(&NPC_CHARA(0).model, 2);
 
                 SysWork_StateStepIncrement(0);
             }
@@ -6897,8 +6897,8 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 34:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, g_SysWork.npcs, 26, false);
-            Model_AnimFlagsSet(&g_SysWork.npcs[0].model, 2);
-            func_800E9490(&g_SysWork.npcs[5]);
+            Model_AnimFlagsSet(&NPC_CHARA(0).model, 2);
+            func_800E9490(&NPC_CHARA(5));
             func_800E9260(Chara_EndingKaufmann, 5);
             Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio657);
 
@@ -6932,7 +6932,7 @@ void func_800E62CC(void) // 0x800E62CC
 #if !VERSION_EQUAL_OR_NEWER(JAP1) // @bugfix?
             func_800E941C();
 #endif
-            func_800E9444(Chara_EndingKaufmann, &g_SysWork.npcs[3]);
+            func_800E9444(Chara_EndingKaufmann, &NPC_CHARA(3));
 
             if (Savegame_EventFlagGet(EventFlag_449))
             {
@@ -6947,7 +6947,7 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 39:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[3], 21, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(3), 21, false);
             g_Cutscene_UpdateKau = true;
 
             SysWork_StateStepIncrement(0);
@@ -6962,7 +6962,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         default:
             SysWork_StateSetNext(SysState_Gameplay);
-            func_800E9490(&g_SysWork.npcs[3]);
+            func_800E9490(&NPC_CHARA(3));
 
             g_Cutscene_UpdateKau = false;
 
@@ -7061,7 +7061,7 @@ void func_800E70F0(void) // 0x800E70F0
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
             func_800E1788(4);
 
-            Model_AnimFlagsSet(&g_SysWork.npcs[1].model, 2);
+            Model_AnimFlagsSet(&NPC_CHARA(1).model, 2);
             g_SysWork.lightIntensity = Q12(0.8f);
             SysWork_StateStepIncrement(0);
 
@@ -7080,7 +7080,7 @@ void func_800E70F0(void) // 0x800E70F0
             break;
 
         case 4:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[1], 17, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(1), 17, false);
             Event_DisplayMapMsgWithAudio(80, &g_Cutscene_MapMsgAudioIdx, &D_800ED88C);
             func_800E1788(5);
             func_800DAD54();
@@ -7103,7 +7103,7 @@ void func_800E70F0(void) // 0x800E70F0
             g_SysWork.sysStateSteps[0] = 0;
             D_800F4805++;
 
-            func_800E9490(&g_SysWork.npcs[1]);
+            func_800E9490(&NPC_CHARA(1));
 
             g_Cutscene_UpdateDaria = false;
             break;
@@ -7136,7 +7136,7 @@ void func_800E7380(void) // 0x800E7380
             func_800E94AC();
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[4], 3, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(4), 3, false);
 
             g_Cutscene_MapMsgAudioIdx = 0;
             g_Cutscene_Timer = Q12(69.0f);
@@ -7149,7 +7149,7 @@ void func_800E7380(void) // 0x800E7380
 
         case 1:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(6.8f), Q12(69.0f), Q12(143.0f), true, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &g_SysWork.npcs[4], 0, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_AwaitAnimEnd, &NPC_CHARA(4), 0, false);
             break;
 
         case 2:
@@ -7184,17 +7184,17 @@ void func_800E7380(void) // 0x800E7380
         case 6:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(12.0f), Q12(145.0f), Q12(201.0f), true, true);
 
-            g_SysWork.npcs[4].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
-            if (g_SysWork.npcs[4].timer_C6 > Q12(1.0f))
+            NPC_CHARA(4).timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime, 0.25f);
+            if (NPC_CHARA(4).timer_C6 > Q12(1.0f))
             {
-                g_SysWork.npcs[4].timer_C6 = Q12(1.0f);
+                NPC_CHARA(4).timer_C6 = Q12(1.0f);
             }
             break;
 
         case 7:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 162, false);
             g_SysWork.lightIntensity = Q12(0.7f);
-            func_800E9490(&g_SysWork.npcs[4]);
+            func_800E9490(&NPC_CHARA(4));
             g_Cutscene_UpdateMar = false;
             SysWork_StateStepIncrement(0);
 
@@ -7324,7 +7324,7 @@ void func_800E787C(void) // 0x800E787C
             g_Cutscene_Timer = Q12(0.0f);
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 176, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 2, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 2, false);
 
             Fs_QueueStartRead(FILE_ANIM_ENDAB_DMS, FS_BUFFER_20);
             func_800E9260(Chara_BloodyIncubator, 5);
@@ -7332,7 +7332,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4819 = 1;
             D_800F481A = true;
 
-            Model_AnimFlagsClear(&g_SysWork.npcs[5].model, 2);
+            Model_AnimFlagsClear(&NPC_CHARA(5).model, 2);
             func_800D7E50(&PLAYER_CHARA().position);
 
             func_800D947C();
@@ -7366,7 +7366,7 @@ void func_800E787C(void) // 0x800E787C
         case 6:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 177, false);
             Sfx_WithFlagsPlay(Sfx_Unk1694, NULL, Q8_CLAMPED(1.0f), SfxFlag_Mono | SfxFlag_NoDistAtten);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 27, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 27, false);
             SD_Call(Sfx_XaAudio612);
             D_800F4819 = 2;
             SysWork_StateStepIncrement(0);
@@ -7377,7 +7377,7 @@ void func_800E787C(void) // 0x800E787C
 
         case 8:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 184, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 29, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 29, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -7406,8 +7406,8 @@ void func_800E787C(void) // 0x800E787C
             if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
                 func_800E941C();
-                func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs[5]);
-                Model_AnimFlagsClear(&g_SysWork.npcs[5].model, 2);
+                func_800E9444(Chara_BloodyIncubator, &NPC_CHARA(5));
+                Model_AnimFlagsClear(&NPC_CHARA(5).model, 2);
                 func_801E2E28(g_EndingIdx);
                 SysWork_StateStepIncrement(0);
             }
@@ -7442,14 +7442,14 @@ void func_800E787C(void) // 0x800E787C
             g_Cutscene_UpdateSibyl = false;
             g_Cutscene_UpdateHero  = false;
 
-            Model_AnimFlagsSet(&g_SysWork.npcs[5].model, 2);
+            Model_AnimFlagsSet(&NPC_CHARA(5).model, 2);
 
 #if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 5, false);
 #endif
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 9, false);
             WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
 
             PLAYER_CHARA().position.vx = Q12(140.0f);
@@ -7482,7 +7482,7 @@ void func_800E787C(void) // 0x800E787C
             g_Cutscene_Timer        = Q12(155.0f);
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 176, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 2, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 2, false);
 
             D_800F4819 = 1;
 
@@ -7509,11 +7509,11 @@ void func_800E787C(void) // 0x800E787C
             break;
 
         case 23:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 9, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 9, false);
 
 #if VERSION_EQUAL_OR_NEWER(USA) // @bugfix?
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 5, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 5, false);
 #endif
 
             D_800F483C = Q12(100.0f);
@@ -7542,7 +7542,7 @@ void func_800E787C(void) // 0x800E787C
             break;
 
         case 25:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 10, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 10, false);
             SysWork_StateStepIncrement(0);
 
         case 26:
@@ -7587,7 +7587,7 @@ void func_800E787C(void) // 0x800E787C
             g_Cutscene_Timer        = Q12(225.0f);
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 176, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 2, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 2, false);
 
             D_800F4819 = 0;
             D_800F4818 = true;
@@ -7638,7 +7638,7 @@ void func_800E787C(void) // 0x800E787C
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_800E9490(&g_SysWork.npcs[0]);
+            func_800E9490(&NPC_CHARA(0));
             break;
     }
 
@@ -7769,7 +7769,7 @@ void func_800E86BC(void) // 0x800E86BC
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 51, false);
 #endif
 
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[5], 11, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(5), 11, false);
 
             PLAYER_CHARA().position.vx = Q12(140.0f);
             PLAYER_CHARA().position.vz = Q12(-100.0f);
@@ -7798,7 +7798,7 @@ void func_800E86BC(void) // 0x800E86BC
 
         case 8:
             D_800F4806 = 1;
-            func_800E9490(&g_SysWork.npcs[5]);
+            func_800E9490(&NPC_CHARA(5));
             g_Cutscene_Timer = Q12(161.0f);
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 176, false);
@@ -7933,7 +7933,7 @@ void func_800E8D20(void) // 0x800E8D20
             D_800F4806 = 0;
 
             func_800E941C();
-            func_800E9444(Chara_EndingCybil, &g_SysWork.npcs[0]);
+            func_800E9444(Chara_EndingCybil, &NPC_CHARA(0));
 
             g_Cutscene_UpdateSibyl = true;
             g_Cutscene_MapMsgAudioIdx = 0;
@@ -7952,7 +7952,7 @@ void func_800E8D20(void) // 0x800E8D20
             break;
 
         case 1:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 26, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 26, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -7969,7 +7969,7 @@ void func_800E8D20(void) // 0x800E8D20
             break;
 
         case 5:
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 25, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 25, false);
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 173, false);
             SysWork_StateStepIncrement(0);
 
@@ -7985,7 +7985,7 @@ void func_800E8D20(void) // 0x800E8D20
 
         case 8:
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 172, false);
-            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &g_SysWork.npcs[0], 28, false);
+            Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &NPC_CHARA(0), 28, false);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -8022,7 +8022,7 @@ void func_800E8D20(void) // 0x800E8D20
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            func_800E9490(&g_SysWork.npcs[0]);
+            func_800E9490(&NPC_CHARA(0));
             break;
     }
 
@@ -8256,11 +8256,11 @@ void Map_WorldObjectsUpdate(void) // 0x800E972C
     {
         if (Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial))
         {
-            func_800E14DC(&PLAYER_CHARA(), &g_SysWork.npcs[2], false);
+            func_800E14DC(&PLAYER_CHARA(), &NPC_CHARA(2), false);
         }
         else
         {
-            func_800E14DC(&PLAYER_CHARA(), &g_SysWork.npcs[4], false);
+            func_800E14DC(&PLAYER_CHARA(), &NPC_CHARA(4), false);
         }
     }
 

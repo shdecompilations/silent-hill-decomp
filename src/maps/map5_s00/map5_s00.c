@@ -850,15 +850,15 @@ void func_800D6B00(void) // 0x800D6B00
             }
             else if (D_800DAB78 > Q12(2.5f))
             {
-                g_SysWork.npcs[D_800DAB7C[2]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
+                NPC_CHARA(D_800DAB7C[2]).properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
             else if (D_800DAB78 > Q12(1.25f))
             {
-                g_SysWork.npcs[D_800DAB7C[1]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
+                NPC_CHARA(D_800DAB7C[1]).properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
             else if (D_800DAB78 > Q12(-0.1f))
             {
-                g_SysWork.npcs[D_800DAB7C[0]].properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
+                NPC_CHARA(D_800DAB7C[0]).properties.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
 
             func_800D6414();
@@ -869,23 +869,23 @@ void func_800D6B00(void) // 0x800D6B00
             g_SysWork.lightIntensity = Q12(1.0f);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
-            g_SysWork.npcs[D_800DAB7C[0]].model.controlState     = 0;
-            g_SysWork.npcs[D_800DAB7C[0]].model.stateStep = 17;
-            g_SysWork.npcs[D_800DAB7C[0]].position.vx     += Q12(-0.1878f);
-            g_SysWork.npcs[D_800DAB7C[0]].position.vz     += Q12(0.245f);
-            g_SysWork.npcs[D_800DAB7C[0]].rotation.vy      = Q12_ANGLE(112.5f);
+            NPC_CHARA(D_800DAB7C[0]).model.controlState     = 0;
+            NPC_CHARA(D_800DAB7C[0]).model.stateStep = 17;
+            NPC_CHARA(D_800DAB7C[0]).position.vx     += Q12(-0.1878f);
+            NPC_CHARA(D_800DAB7C[0]).position.vz     += Q12(0.245f);
+            NPC_CHARA(D_800DAB7C[0]).rotation.vy      = Q12_ANGLE(112.5f);
 
-            g_SysWork.npcs[D_800DAB7C[1]].model.controlState     = 0;
-            g_SysWork.npcs[D_800DAB7C[1]].model.stateStep = 17;
-            g_SysWork.npcs[D_800DAB7C[1]].position.vx     += Q12(1.8128f);
-            g_SysWork.npcs[D_800DAB7C[1]].position.vz     += Q12(0.799f);
-            g_SysWork.npcs[D_800DAB7C[1]].rotation.vy      = Q12_ANGLE(180.0f);
+            NPC_CHARA(D_800DAB7C[1]).model.controlState     = 0;
+            NPC_CHARA(D_800DAB7C[1]).model.stateStep = 17;
+            NPC_CHARA(D_800DAB7C[1]).position.vx     += Q12(1.8128f);
+            NPC_CHARA(D_800DAB7C[1]).position.vz     += Q12(0.799f);
+            NPC_CHARA(D_800DAB7C[1]).rotation.vy      = Q12_ANGLE(180.0f);
 
-            g_SysWork.npcs[D_800DAB7C[2]].model.controlState     = 0;
-            g_SysWork.npcs[D_800DAB7C[2]].model.stateStep = 17;
-            g_SysWork.npcs[D_800DAB7C[2]].position.vx     += Q12(0.6531f);
-            g_SysWork.npcs[D_800DAB7C[2]].position.vz     += Q12(-1.2493f);
-            g_SysWork.npcs[D_800DAB7C[2]].rotation.vy      = Q12_ANGLE(0.0f);
+            NPC_CHARA(D_800DAB7C[2]).model.controlState     = 0;
+            NPC_CHARA(D_800DAB7C[2]).model.stateStep = 17;
+            NPC_CHARA(D_800DAB7C[2]).position.vx     += Q12(0.6531f);
+            NPC_CHARA(D_800DAB7C[2]).position.vz     += Q12(-1.2493f);
+            NPC_CHARA(D_800DAB7C[2]).rotation.vy      = Q12_ANGLE(0.0f);
 
             PLAYER_CHARA().position.vz += Q12(-1.2f);
 

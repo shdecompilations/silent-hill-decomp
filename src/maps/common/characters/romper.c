@@ -695,7 +695,7 @@ void Romper_Control_3(s_SubCharacter* romper)
     // @hack Required for match.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
-        if (&g_SysWork.npcs[i] == romper)
+        if (&NPC_CHARA(i) == romper)
         {
             break;
         }

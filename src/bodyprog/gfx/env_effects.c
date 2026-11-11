@@ -521,7 +521,7 @@ void func_8005E89C(void) // 0x8005E89C
             }
             else
             {
-                chara = &g_SysWork.npcs[D_800C42E8[i].field_1];
+                chara = &NPC_CHARA(D_800C42E8[i].field_1);
             }
 
             ptr->field_34[i] = CLAMP_CUSTOM((chara->position.vx + chara->collision.shapeOffsets.box.vx) - D_800C42E8[i].field_4,
@@ -1896,7 +1896,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
     if (g_MapOverlayHdr.unkTable1_4C[idx].field_A == 3)
     {
         var_s7 = 0xC;
-        if (g_SysWork.npcs[g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0].model.charaId == Chara_None)
+        if (NPC_CHARA(g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0).model.charaId == Chara_None)
         {
             g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
             return false;

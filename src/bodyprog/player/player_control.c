@@ -591,8 +591,8 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
         player->model.stateStep++;
     }
 
-    angleTo = Q12_FRACT(ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - PLAYER_COMBAT().attackPosition.vx,
-                               (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - PLAYER_COMBAT().attackPosition.vz) +
+    angleTo = Q12_FRACT(ratan2((NPC_CHARA(g_SysWork.targetNpcIdx).position.vx + NPC_CHARA(g_SysWork.targetNpcIdx).collision.shapeOffsets.box.vx) - PLAYER_COMBAT().attackPosition.vx,
+                               (NPC_CHARA(g_SysWork.targetNpcIdx).position.vz + NPC_CHARA(g_SysWork.targetNpcIdx).collision.shapeOffsets.box.vz) - PLAYER_COMBAT().attackPosition.vz) +
                           Q12_ANGLE(360.0f));
     player->angleToTarget = angleTo;
     Math_ShortestAngleGet(player->rotation.vy, angleTo, &shortestAngle);
@@ -1493,14 +1493,14 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     animStatus        = ANIM_STATUS(HarryAnim_Unk127, true);
                     romperAttackState = PlayerState_EnemyGrabPinnedFront;
                     npcIdx            = g_SysWork.npcIdxs[0];
-                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[npcIdx].rotation.vy + Q12_ANGLE(180.0f)), &headingAngle0);
+                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(NPC_CHARA(npcIdx).rotation.vy + Q12_ANGLE(180.0f)), &headingAngle0);
                     break;
 
                 case PlayerState_EnemyGrabPinnedBackStart:
                     animStatus        = ANIM_STATUS(HarryAnim_Unk128, true);
                     romperAttackState = PlayerState_EnemyGrabPinnedBack;
                     npcIdx            = g_SysWork.npcIdxs[1];
-                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[npcIdx].rotation.vy + Q12_ANGLE(360.0f)), &headingAngle0);
+                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(NPC_CHARA(npcIdx).rotation.vy + Q12_ANGLE(360.0f)), &headingAngle0);
                     break;
             }
 
@@ -1522,11 +1522,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             {
                 if (PLAYER_EXTRA().state == PlayerState_EnemyGrabPinnedFrontStart)
                 {
-                    player->rotation.vy = g_SysWork.npcs[npcIdx].rotation.vy + Q12_ANGLE(180.0f);
+                    player->rotation.vy = NPC_CHARA(npcIdx).rotation.vy + Q12_ANGLE(180.0f);
                 }
                 else
                 {
-                    player->rotation.vy = g_SysWork.npcs[npcIdx].rotation.vy;
+                    player->rotation.vy = NPC_CHARA(npcIdx).rotation.vy;
                 }
             }
             else
@@ -1541,9 +1541,9 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[npcIdx].rotation.vy + Q12_ANGLE(360.0f)), &headingAngle0);
+            Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(NPC_CHARA(npcIdx).rotation.vy + Q12_ANGLE(360.0f)), &headingAngle0);
 
-            model = &g_SysWork.npcs[npcIdx].model;
+            model = &NPC_CHARA(npcIdx).model;
 
             do {} while (false); // @hack Required for match.
 
@@ -1896,14 +1896,14 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabLegsFront:
                 case PlayerState_EnemyGrabNeckFront:
                 case PlayerState_EnemyGrabPinnedFront:
-                    deltaPosX = player->position.vx - g_SysWork.npcs[g_SysWork.npcIdxs[0]].position.vx;
-                    deltaPosZ = player->position.vz - g_SysWork.npcs[g_SysWork.npcIdxs[0]].position.vz;
+                    deltaPosX = player->position.vx - NPC_CHARA(g_SysWork.npcIdxs[0]).position.vx;
+                    deltaPosZ = player->position.vz - NPC_CHARA(g_SysWork.npcIdxs[0]).position.vz;
                     npcDist   = Math_Vector2MagCalc(deltaPosX, deltaPosZ);
-                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[g_SysWork.npcIdxs[0]].rotation.vy + Q12_ANGLE(180.0f)), &headingAngle1);
+                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(NPC_CHARA(g_SysWork.npcIdxs[0]).rotation.vy + Q12_ANGLE(180.0f)), &headingAngle1);
 
                     if (ABS(headingAngle1) < Q12_ANGLE(11.25f))
                     {
-                        player->rotation.vy = g_SysWork.npcs[g_SysWork.npcIdxs[0]].rotation.vy + Q12_ANGLE(180.0f);
+                        player->rotation.vy = NPC_CHARA(g_SysWork.npcIdxs[0]).rotation.vy + Q12_ANGLE(180.0f);
                     }
                     else
                     {
@@ -1922,14 +1922,14 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 case PlayerState_EnemyGrabLegsBack:
                 case PlayerState_EnemyGrabNeckBack:
                 case PlayerState_EnemyGrabPinnedBack:
-                    temp_v1_12 = player->position.vx - g_SysWork.npcs[g_SysWork.npcIdxs[1]].position.vx;
-                    temp_v1_13 = player->position.vz - g_SysWork.npcs[g_SysWork.npcIdxs[1]].position.vz;
+                    temp_v1_12 = player->position.vx - NPC_CHARA(g_SysWork.npcIdxs[1]).position.vx;
+                    temp_v1_13 = player->position.vz - NPC_CHARA(g_SysWork.npcIdxs[1]).position.vz;
                     npcDist     = Math_Vector2MagCalc(temp_v1_12, temp_v1_13);
-                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[g_SysWork.npcIdxs[1]].rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
+                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(NPC_CHARA(g_SysWork.npcIdxs[1]).rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
 
                     if (ABS(headingAngle1) < Q12_ANGLE(11.25f))
                     {
-                        player->rotation.vy = g_SysWork.npcs[g_SysWork.npcIdxs[1]].rotation.vy;
+                        player->rotation.vy = NPC_CHARA(g_SysWork.npcIdxs[1]).rotation.vy;
                     }
                     else
                     {
@@ -1948,10 +1948,10 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             switch (PLAYER_EXTRA().state)
             {
                 case PlayerState_EnemyGrabPinnedFront:
-                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[g_SysWork.npcIdxs[0]].rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
+                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(NPC_CHARA(g_SysWork.npcIdxs[0]).rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
 
                 case PlayerState_EnemyGrabPinnedBack:
-                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(g_SysWork.npcs[g_SysWork.npcIdxs[1]].rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
+                    Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE_NORM_U(NPC_CHARA(g_SysWork.npcIdxs[1]).rotation.vy + Q12_ANGLE(360.0f)), &headingAngle1);
                     break;
             }
 
@@ -1972,12 +1972,12 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                     g_Player_GrabReleaseInputTimer = grabFreeInputCount;
                     if (PLAYER_EXTRA().state == PlayerState_EnemyGrabPinnedFront)
                     {
-                        g_SysWork.npcs[g_SysWork.npcIdxs[0]].moveSpeed = Q12(0.0f);
+                        NPC_CHARA(g_SysWork.npcIdxs[0]).moveSpeed = Q12(0.0f);
                     }
 
                     if (PLAYER_EXTRA().state == PlayerState_EnemyGrabPinnedBack)
                     {
-                        g_SysWork.npcs[g_SysWork.npcIdxs[1]].moveSpeed = Q12(0.0f);
+                        NPC_CHARA(g_SysWork.npcIdxs[1]).moveSpeed = Q12(0.0f);
                     }
                 }
             }
@@ -2919,8 +2919,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
             {
-                player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
-                                                         (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) +
+                player->angleToTarget = Q12_FRACT(ratan2((NPC_CHARA(enemyAttackedIdx).position.vx + NPC_CHARA(enemyAttackedIdx).collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
+                                                         (NPC_CHARA(enemyAttackedIdx).position.vz + NPC_CHARA(enemyAttackedIdx).collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) +
                                                   Q12_ANGLE(360.0f));
             }
             else
@@ -2949,8 +2949,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx)
                 {
-                    temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
-                                               (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) + Q12(1.0f));
+                    temp_a1 = Q12_FRACT(ratan2((NPC_CHARA(enemyAttackedIdx).position.vx + NPC_CHARA(enemyAttackedIdx).collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
+                                               (NPC_CHARA(enemyAttackedIdx).position.vz + NPC_CHARA(enemyAttackedIdx).collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) + Q12(1.0f));
 
                     Math_ShortestAngleGet(player->rotation.vy, temp_a1, &ssp20);
                     D_800C454C = g_DeltaTime * 15;
@@ -3734,9 +3734,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (extra->model.controlState != 0)
                 {
-                    if (g_Player_TargetEnemyPosition.vx != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx ||
-                        g_Player_TargetEnemyPosition.vy != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vy ||
-                        g_Player_TargetEnemyPosition.vz != g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz ||
+                    if (g_Player_TargetEnemyPosition.vx != NPC_CHARA(g_SysWork.targetNpcIdx).position.vx ||
+                        g_Player_TargetEnemyPosition.vy != NPC_CHARA(g_SysWork.targetNpcIdx).position.vy ||
+                        g_Player_TargetEnemyPosition.vz != NPC_CHARA(g_SysWork.targetNpcIdx).position.vz ||
                         g_Player_PrevPosition.vx != PLAYER_CHARA().position.vx ||
                         g_Player_PrevPosition.vy != PLAYER_CHARA().position.vy ||
                         g_Player_PrevPosition.vz != PLAYER_CHARA().position.vz)
@@ -3750,7 +3750,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                             func_8005CD38(&enemyAttackedIdx, &PLAYER_PROPS().field_122, &PLAYER_COMBAT().attackPosition, Q12_ANGLE(25.0f), Q12(3.0f), 0);
                         }
 
-                        g_Player_TargetEnemyPosition = g_SysWork.npcs[g_SysWork.targetNpcIdx].position;
+                        g_Player_TargetEnemyPosition = NPC_CHARA(g_SysWork.targetNpcIdx).position;
                     }
                     else
                     {
@@ -3760,13 +3760,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 else
                 {
                     enemyAttackedIdx      = g_SysWork.targetNpcIdx;
-                    g_Player_TargetEnemyPosition = g_SysWork.npcs[g_SysWork.targetNpcIdx].position;
+                    g_Player_TargetEnemyPosition = NPC_CHARA(g_SysWork.targetNpcIdx).position;
                 }
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx && enemyAttackedIdx != NO_VALUE)
                 {
-                    player->angleToTarget = Q12_FRACT(ratan2((g_SysWork.npcs[enemyAttackedIdx].position.vx + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
-                                                       (g_SysWork.npcs[enemyAttackedIdx].position.vz + g_SysWork.npcs[enemyAttackedIdx].collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) +
+                    player->angleToTarget = Q12_FRACT(ratan2((NPC_CHARA(enemyAttackedIdx).position.vx + NPC_CHARA(enemyAttackedIdx).collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
+                                                       (NPC_CHARA(enemyAttackedIdx).position.vz + NPC_CHARA(enemyAttackedIdx).collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz) +
                                                 Q12_ANGLE(360.0f));
                 }
                 else
@@ -3950,8 +3950,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             if (!g_GameWork.config.extraAutoAiming)
             {
-                temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
-                                   (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz + g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz);
+                temp_v0_3 = ratan2((NPC_CHARA(g_SysWork.targetNpcIdx).position.vx + NPC_CHARA(g_SysWork.targetNpcIdx).collision.shapeOffsets.box.vx) - PLAYER_CHARA().position.vx,
+                                   (NPC_CHARA(g_SysWork.targetNpcIdx).position.vz + NPC_CHARA(g_SysWork.targetNpcIdx).collision.shapeOffsets.box.vz) - PLAYER_CHARA().position.vz);
 
                 temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
 
@@ -4023,11 +4023,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 break;
             }
 
-            temp_v0_3 = ratan2((g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vx +
-                                g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vx) -
+            temp_v0_3 = ratan2((NPC_CHARA(g_SysWork.targetNpcIdx).position.vx +
+                                NPC_CHARA(g_SysWork.targetNpcIdx).collision.shapeOffsets.box.vx) -
                                PLAYER_CHARA().position.vx,
-                                (g_SysWork.npcs[g_SysWork.targetNpcIdx].position.vz +
-                                 g_SysWork.npcs[g_SysWork.targetNpcIdx].collision.shapeOffsets.box.vz) -
+                                (NPC_CHARA(g_SysWork.targetNpcIdx).position.vz +
+                                 NPC_CHARA(g_SysWork.targetNpcIdx).collision.shapeOffsets.box.vz) -
                                 PLAYER_CHARA().position.vz);
 
             temp_s1_2 = Q12_ANGLE_NORM_U(temp_v0_3 + Q12_ANGLE(360.0f));
@@ -7032,7 +7032,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
     s32   sfxId;
     s32   angleState;
 
-    #define attacker g_SysWork.npcs[0]
+    #define attacker NPC_CHARA(0)
 
     // Set damage SFX according to something.
     sfxId = Sfx_Unk1326;
@@ -7174,7 +7174,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 Player_CollisionReset();
             }
 
-            enemyRotY = g_SysWork.npcs[player->field_40].rotation.vy;
+            enemyRotY = NPC_CHARA(player->field_40).rotation.vy;
             if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap) ||
                 player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap))
             {
@@ -7790,8 +7790,8 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
     static VECTOR3        attackPos;
     static s32            __pad_bss_800C44EC;
 
-    #define targetNpc g_SysWork.npcs[g_Player_TargetNpcIdx]
-    #define unused    g_SysWork.npcs[0]
+    #define targetNpc NPC_CHARA(g_Player_TargetNpcIdx)
+    #define unused    NPC_CHARA(0)
 
     model = &PLAYER_EXTRA().model;
 

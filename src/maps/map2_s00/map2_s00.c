@@ -346,9 +346,9 @@ void func_800E7D54(void) // 0x800E7D54
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
         // Breaks if there are any characters with IDs in range `[Chara_Harry, Chara_MonsterCybil]` with health above `Q12(0.0f)`.
-        if (g_SysWork.npcs[i].model.charaId >= Chara_Harry         &&
-            g_SysWork.npcs[i].model.charaId <= CHARA_LAST_ENEMY_ID &&
-            g_SysWork.npcs[i].health > Q12(0.0f))
+        if (NPC_CHARA(i).model.charaId >= Chara_Harry         &&
+            NPC_CHARA(i).model.charaId <= CHARA_LAST_ENEMY_ID &&
+            NPC_CHARA(i).health > Q12(0.0f))
         {
             break;
         }

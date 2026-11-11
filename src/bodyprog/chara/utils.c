@@ -27,7 +27,7 @@ s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
         return ARRAY_SIZE(g_SysWork.npcs);
     }
 
-    curNpc = &g_SysWork.npcs[0];
+    curNpc = &NPC_CHARA(0);
     player = chara;
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++, curNpc++)
     {
@@ -196,7 +196,7 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
     // Run through NPCs.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
-        #define curNpc g_SysWork.npcs[i]
+        #define curNpc NPC_CHARA(i)
 
         // Check if NPC is valid.
         if (curNpc.model.charaId == Chara_None || curNpc.health < Q12(0.0f))
@@ -298,8 +298,8 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
     {
         for (j = i + 1; j < count; j++)
         {
-            if ((!Chara_HasFlag(&g_SysWork.npcs[npcIdxs[i]], 1 << 1) && !Chara_HasFlag(&g_SysWork.npcs[npcIdxs[j]], 1 << 1)) ||
-                ( Chara_HasFlag(&g_SysWork.npcs[npcIdxs[i]], 1 << 1) &&  Chara_HasFlag(&g_SysWork.npcs[npcIdxs[j]], 1 << 1)))
+            if ((!Chara_HasFlag(&NPC_CHARA(npcIdxs[i]), 1 << 1) && !Chara_HasFlag(&NPC_CHARA(npcIdxs[j]), 1 << 1)) ||
+                ( Chara_HasFlag(&NPC_CHARA(npcIdxs[i]), 1 << 1) &&  Chara_HasFlag(&NPC_CHARA(npcIdxs[j]), 1 << 1)))
             {
                 switch (mode)
                 {
@@ -343,7 +343,7 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
                         continue;
                 }
             }
-            else if (!Chara_HasFlag(&g_SysWork.npcs[npcIdxs[i]], 2))
+            else if (!Chara_HasFlag(&NPC_CHARA(npcIdxs[i]), 2))
             {
                 continue;
             }
@@ -369,12 +369,12 @@ void func_8005CD38(s32* npcIdx, q3_12* angle, const VECTOR3* pos, q3_12 angleMin
         }
 
         j         = npcIdxs[i];
-        offset.vx = (g_SysWork.npcs[j].position.vx + g_SysWork.npcs[j].collision.shapeOffsets.box.vx) - posX;
-        offset.vy = (g_SysWork.npcs[j].position.vy + g_SysWork.npcs[j].collision.box.offsetY)         - posY;
-        offset.vz = (g_SysWork.npcs[j].position.vz + g_SysWork.npcs[j].collision.shapeOffsets.box.vz) - posZ;
+        offset.vx = (NPC_CHARA(j).position.vx + NPC_CHARA(j).collision.shapeOffsets.box.vx) - posX;
+        offset.vy = (NPC_CHARA(j).position.vy + NPC_CHARA(j).collision.box.offsetY)         - posY;
+        offset.vz = (NPC_CHARA(j).position.vz + NPC_CHARA(j).collision.shapeOffsets.box.vz) - posZ;
 
         if (Ray_GeomAndCharaTraceGet(&trace, &from, &offset, &PLAYER_CHARA()) &&
-            trace.character == &g_SysWork.npcs[j])
+            trace.character == &NPC_CHARA(j))
         {
             break;
         }
@@ -400,7 +400,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, 
     q19_12     curDistToTarget;
     s32        i;
 
-    #define npc g_SysWork.npcs[npcIdx]
+    #define npc NPC_CHARA(npcIdx)
 
     // Check if NPC index is valid.
     if (npcIdx >= ARRAY_SIZE(g_SysWork.npcs))
@@ -424,7 +424,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, 
     // Run through NPCs to find closer targetable NPC.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
     {
-        #define curNpc g_SysWork.npcs[i]
+        #define curNpc NPC_CHARA(i)
 
         // Check if NPC is valid.
         if (curNpc.model.charaId == Chara_None || curNpc.health < Q12(0.0f) || i == npcIdx)
@@ -460,7 +460,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, 
 
         // Track closer targetable NPC.
         if (Ray_GeomAndCharaTraceGet(&trace, attackPos, &offsetToTarget, &PLAYER_CHARA()) &&
-            trace.character == &g_SysWork.npcs[i])
+            trace.character == &NPC_CHARA(i))
         {
             *targetNpcIdx = i;
             *rotToTargetX = curRotToTargetX;

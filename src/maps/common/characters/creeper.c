@@ -85,7 +85,7 @@ void Creeper_Init(s_SubCharacter* creeper)
     i = 0;
     do
     {
-        if (creeper == &g_SysWork.npcs[i] || g_SysWork.npcs[i].model.charaId != Chara_Creeper)
+        if (creeper == &NPC_CHARA(i) || NPC_CHARA(i).model.charaId != Chara_Creeper)
         {
             i++;
             continue;
@@ -338,7 +338,7 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
                 // Update other Creepers.
                 for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
                 {
-                    #define curNpc g_SysWork.npcs[i]
+                    #define curNpc NPC_CHARA(i)
 
                     // Check if NPC is a Creeper.
                     if (curNpc.model.charaId != Chara_Creeper)
@@ -565,9 +565,9 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {
             if (creeper->model.charaId == Chara_Creeper &&
-                !Math_Distance2dCheck(&creeper->position, &g_SysWork.npcs[i].position, Q12(16.0f)))
+                !Math_Distance2dCheck(&creeper->position, &NPC_CHARA(i).position, Q12(16.0f)))
             {
-                g_SysWork.npcs[i].properties.creeper.flags |= CreeperFlag_Alerted;
+                NPC_CHARA(i).properties.creeper.flags |= CreeperFlag_Alerted;
             }
         }
     }

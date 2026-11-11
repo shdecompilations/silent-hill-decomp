@@ -491,7 +491,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
         case CybilControl_22:
             if (sharedData_800E237C_0_s01 == 1)
             {
-                Sfx_WithFlagsPlay(Sfx_Unk1673, &g_SysWork.npcs[1].position, Q8(0.75f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1673, &NPC_CHARA(1).position, Q8(0.75f), SfxFlag_None);
                 sharedData_800E237C_0_s01 = 2;
             }
 
