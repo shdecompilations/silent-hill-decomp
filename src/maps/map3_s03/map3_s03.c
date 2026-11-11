@@ -32,7 +32,7 @@
 void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere_is_a_ ~C2 Plate_of_[Hatter] ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tThere_is_a_ ~C2 Plate_of_[Cat] ~C7 . ~N\n\tTake_it? ~S4 ",

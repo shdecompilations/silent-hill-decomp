@@ -16,7 +16,7 @@ void (*g_LoadScreenFuncs[])() = {
 };
 
 s_MapPoint2d MAP_POINTS[] = {
-    #include "map_points.h"
+    #include "map_points.inc"
 };
 
 void (*g_MapEventFuncs[])() = {
@@ -152,12 +152,12 @@ const s_MapOverlayHdr g_MapOverlayHdr = {
     },
     .charaGroupIds   = {},
     .charaSpawnInfos = {
-        #include "chara_spawns.h"
+        #include "chara_spawns.inc"
     },
     .cameraPaths = {
-        #include "camera_paths.h"
+        #include "camera_paths.inc"
     },
     .collisionTriggers = {
-        #include "collision_triggers.h"
+        #include "collision_triggers.inc"
     },
 };

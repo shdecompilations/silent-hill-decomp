@@ -133,7 +133,7 @@ void func_800D7F98(void) // 0x800D7F98
 void GameBoot_LoadScreen_StageString(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~H\tThere_is_a_ ~C5 Sewer_map ~N\n\t(connecting_to_amusement_park) ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E "

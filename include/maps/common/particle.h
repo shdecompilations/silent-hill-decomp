@@ -48,7 +48,7 @@ typedef struct _ParticleVectors
 {
     /* 0x0  */ VECTOR3 vector_0;
     /* 0xC  */ VECTOR3 viewPosition; /** Q19.12 */
-    /* 0x18 */ SVECTOR svec_18;
+    /* 0x18 */ SVECTOR svec_18;      /** Rotation. */
     /* 0x20 */ SVECTOR viewRotation; /** Q19.12 */
     /* 0x28 */ s32     field_28;
 } s_ParticleVectors;

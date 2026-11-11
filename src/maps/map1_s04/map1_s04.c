@@ -126,7 +126,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
 void GameBoot_LoadScreen_StageString(void) {} // 0x800CCA24
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tNO_STAGE! ~E "
 #elif VERSION_REGION_IS(NTSCJ)

@@ -38,7 +38,7 @@ void GameBoot_LoadScreen_StageString(void) {} // 0x800D1340
 #include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800D1508
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tI've_got_a_ ~C2 Motorcycle_key ~C7 . ~E ",
     /* 16 */ "\tThere's_a_crack. ~E ",

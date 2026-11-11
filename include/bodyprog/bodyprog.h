@@ -1100,7 +1100,7 @@ s_IpdCollisionData* WorldMap_CollisionDataGet(q19_12 posX, q19_12 posZ);
 /** @brief Gets the location of a nearby world object model.
  *
  * @param model Model to find.
- * @param metadata TODO
+ * @param metadata Model metadata.
  * @param posX X search position.
  * @param posZ Z search position.
  * @return World object model location (`e_WorldModelLocation`).

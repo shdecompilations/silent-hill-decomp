@@ -102,7 +102,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800DA1B0
 
 const char* MAP_MESSAGES[] = {
-#include "maps/common/shared/map_msg_common.h"
+#include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\t\tSame_thing... ~E ",
     /* 16 */ "~L4 ~C3 Investigation_stalled. ~N\n\t[PTV]_dealers_still_at_large. ~N\n\t~N\n\tSuspicious_deaths_continue. ~N\n\tLike_anti-drug_Mayor, ~N\n\tnarcotics_officer_dies_of ~N\n\tsudden_heart_failure_of ~N\n\tunknown_origin. ~E ",

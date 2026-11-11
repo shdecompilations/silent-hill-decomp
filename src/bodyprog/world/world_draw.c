@@ -455,7 +455,7 @@ void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* name) // 0x8003C8
 
     StringCopy(model->metadata.name.str, name);
 
-    model->metadata.field_8 = 0;
+    model->metadata.unused_8 = 0;
 }
 
 void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C

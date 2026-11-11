@@ -75,7 +75,7 @@ void MapEvent_DoorUnlocked(void) // 0x800D7180
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tStatue_of_an_old_man's_hand.",
     /* 16 */ "\tThe_fist_shut_tight, ~N\n\tas_if_never_to_let_go. ~E ",

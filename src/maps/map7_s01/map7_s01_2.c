@@ -89,7 +89,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D71C4
 
 const char* MAP_MESSAGES[] = {
-#include "maps/common/shared/map_msg_common.h"
+#include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(5.5)\t",
     /* 16 */ "~J0(2.8)\tDamn! ~N\n\t\t\tWhat's_that? ~E ",

@@ -1482,7 +1482,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
 
     if (!Game_FlashlightIsOn())
     {
-        g_ParticleVectors0.svec_18.vx = -0x400;
+        g_ParticleVectors0.svec_18.vx = Q12_ANGLE(-90.0f);
     }
 
     temp_s4 = func_800CC8FC(&sp90, &sp120, &sp50);

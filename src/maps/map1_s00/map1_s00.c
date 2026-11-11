@@ -61,7 +61,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/common/shared/MapEvent_DoorUnlocked.h" // 0x800D7994
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThe_tower_door_is_locked. ~E ",
     /* 16 */ "\tThe_hands_are_stopped_at_10:00. ~E ",

@@ -116,7 +116,7 @@ void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
 void func_800CF0B0(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.0)\t...! ~E ",
     /* 16 */ "~J0(1.0)\tWait! ~E ",

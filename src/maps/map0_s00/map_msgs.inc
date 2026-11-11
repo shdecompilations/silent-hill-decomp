@@ -1,4 +1,4 @@
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(2.5)\tCheryl.__Where_could_you_be? ~E ",
     /* 16 */ "~J0(1.5)\tIt's_strange... ",

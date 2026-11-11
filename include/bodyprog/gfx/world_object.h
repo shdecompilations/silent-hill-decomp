@@ -11,7 +11,7 @@
 typedef struct _WorldObjectMetadata
 {
     /* 0x0 */ u_Filename name;
-    /* 0x8 */ s8         field_8;
+    /* 0x8 */ s8         unused_8;      /** Unused, dead code. Set to 0 in `WorldObject_ModelNameSet` and never referenced again. */
     /* 0x9 */ s8         modelLocation; /** `e_WorldModelLocation` */
 } s_WorldObjectMetadata;
 

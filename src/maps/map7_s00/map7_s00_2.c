@@ -78,7 +78,7 @@ void func_800D0AC4(void) {}
 #include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D0ACC
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.2)\t~E ",
     /* 16 */ "~J1(1.2)\tLisa? ",

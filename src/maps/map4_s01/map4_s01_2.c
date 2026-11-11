@@ -42,7 +42,7 @@ void MapEvent_DoorJammed(void) // 0x800D1F54
 void func_800D1FE8(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15  */ "~J0(1.6)\tWhat's_this? ~E ",
     /* 16  */ "~J0(1.0)\tHarry! ",

@@ -35,7 +35,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 void func_800EA338(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~C3\tgreen_lion ~E ",
     /* 16 */ "~C3\tAlchemilla_Hospital ~E "

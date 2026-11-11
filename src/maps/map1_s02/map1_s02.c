@@ -38,7 +38,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #define playerChara g_SysWork.playerWork.player.position
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.2)\tWhere_am_I? ~E ",
     /* 16 */ "~J0(2.0)\tHave_I_been_here_before? ~E ",

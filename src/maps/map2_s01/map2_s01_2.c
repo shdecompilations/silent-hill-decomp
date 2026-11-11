@@ -120,7 +120,7 @@ void func_800CEC30(void) // 0x800CEC30
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J1(1.9)\tWere_you_ringing_that_bell? ",
     /* 16 */ "~J1(5.3)\tI've_been_expecting_you. ~N\n\t\t\tIt_was_foretold_by_Gyromancy. ",

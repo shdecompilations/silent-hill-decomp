@@ -51,7 +51,7 @@ void func_800D57E8(void) // 0x800D57E8
 #include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800D58A0
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere_is_a_ ~C2 Video_tape ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "~C3\tAlessa ~E ",

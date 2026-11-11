@@ -69,7 +69,7 @@ void GameBoot_LoadScreen_StageString(void) {} // 0x800CCE6C
 #include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800CCF08
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tThere's_a_memo_on_the_desk. ",
     /* 16 */ "~C3\tCoroner_Seals_called. ",

@@ -37,7 +37,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/common/shared/MapEvent_DoorJammed.h" // 0x800D2130
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J1(3.6)\tFinally. ~N\n\t\t\tSomeone_else_who's_OK. ",
     /* 16 */ "~J1(1.0)\tWho_are_you? ",

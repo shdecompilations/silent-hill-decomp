@@ -116,18 +116,21 @@ g_MapEventFuncs                 = 0x800D02E4;
 //--- PA: 0x006D84   VA: 0x800D02FC   subsegment: .data, map2_s01_2
 //-----------------------------------------------------------------
 MAP_MESSAGES                    = 0x800D02FC; // type:u32 size:0xB0
-
-//-----------------------------------------------------------------
-//--- PA: 0x006E34   VA: 0x800D03AC   subsegment: .data, map_events
-//-----------------------------------------------------------------
 MAP_EVENTS                      = 0x800D03AC;
-
-//----------------------------------------------------
-//--- PA: 0x006F84   VA: 0x800D04FC   subsegment: data
-//----------------------------------------------------
 g_Cutscene_MapMsgAudioCmds      = 0x800D04FC; // type:u16 size:0x28
 g_Cutscene_Timer                = 0x800D0524; // type:s32
 g_CommonWorldObjectPoses        = 0x800D0528; // type:Pose size:0x14
+
+
+
+//================================================
+//=== .bss section
+//================================================
+
+
+//----------------------------------------------------------------
+//--- PA: 0x006FC4   VA: 0x800D053C   subsegment: .bss, map2_s01_2
+//----------------------------------------------------------------
 g_ParticleMapIdx0               = 0x800D053C;
 g_ParticleMapIdx1               = 0x800D0540; // type:s32
 g_CameraPositionTarget          = 0x800D054C; // type:VECTOR3 size:0xC

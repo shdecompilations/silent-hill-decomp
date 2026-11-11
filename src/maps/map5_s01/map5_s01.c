@@ -559,7 +559,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/common/shared/MapEvent_DoorLocked.h" // 0x800EB910
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~H\tThere_is_a_ ~C5 Resort_area_map ~C7 . ~N\n\tTake_it? ~S4 ",
     /* 16 */ "\tNothing_unusual. ~E ",

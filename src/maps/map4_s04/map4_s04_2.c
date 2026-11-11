@@ -39,7 +39,7 @@ void func_800D1870(void) {}
 #include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800D1878
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.8)\tWhere_am_I? ~E ",
     /* 16 */ "~J1(1.0)\tHarry. ",

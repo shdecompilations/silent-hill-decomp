@@ -38,7 +38,7 @@ void GameBoot_LoadScreen_StageString(void) {}
 #include "maps/common/shared/Event_CutsceneTimerAdvance.h" // 0x800EAFF8
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "~J0(1.5)\tWhat's_this! ~E ",
     /* 16 */ "~J0(0.1)\t~E ",

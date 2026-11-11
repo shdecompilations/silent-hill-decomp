@@ -54,7 +54,7 @@ void Map_WorldObjectsInit(void) {}
 void Map_WorldObjectsUpdate(void) {}
 
 const char* MAP_MESSAGES[] = {
-#include "maps/common/shared/map_msg_common.h"
+#include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     "\tNO_STAGE! ~E "
 #elif VERSION_REGION_IS(NTSCJ)

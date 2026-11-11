@@ -64,7 +64,7 @@ void GameBoot_LoadScreen_StageString(void) // 0x800D95D4
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "map_msgs.h"
+    #include "map_msgs.inc"
 };
 
 void func_800D9610(void) // 0x800D9610

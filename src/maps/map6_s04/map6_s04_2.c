@@ -1777,7 +1777,7 @@ void func_800E1CA0(void) // 0x800E1CA0
 void func_800E1D48(void) {}
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tGotta'_go_find_Cybil! ~N\n\tNo_time_to_go_back. ~E ",
     /* 16 */ "~J0(10)\t~E ",

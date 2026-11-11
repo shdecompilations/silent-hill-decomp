@@ -237,7 +237,7 @@ void MapEvent_ClassroomKeyUse(void) // 0x800DA8B0
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tWhat's_this? ~E ",
     /* 16 */ "\t[The_Monster_Lurks] ~N\n\tis_the_book's_title. ~E ",

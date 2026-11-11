@@ -641,7 +641,7 @@ void func_800D6888(void) // 0x800D6888
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tUsed_the_ ~C2 Sewer_key ~C7 . ~E ",
     /* 16 */ "\tUsed_the_ ~C2 Sewer_exit_key ~C7 . ~E ",

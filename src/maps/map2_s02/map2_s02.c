@@ -43,7 +43,7 @@ void func_800E9D54(void) // 0x800E9D54
 }
 
 const char* MAP_MESSAGES[] = {
-    #include "maps/common/shared/map_msg_common.h"
+    #include "maps/common/shared/map_msg_common.inc"
 #if VERSION_REGION_IS(NTSC)
     /* 15 */ "\tUsed_the_ ~C2 Antique_shop_key ~C7 . ~E ",
     /* 16 */ "~C3\tAlchemilla_Hospital ~E ",
