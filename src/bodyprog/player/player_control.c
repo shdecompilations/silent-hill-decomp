@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/player/player_control.h"
 #include "bodyprog/chara/bone.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/world/effects.h"

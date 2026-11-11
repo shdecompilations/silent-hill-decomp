@@ -12848,11 +12848,11 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     rotSpeedCpy                   = rotSpeedZ;
     airScreamer->rotationSpeed.vz = rotSpeedCpy;
 
-    airScreamer->rotation.vz        += Q12_MULT_PRECISE(g_DeltaTime, rotSpeedCpy);
-    rotSpeedCpy                      = sharedFunc_800D71F0_0_s01(airScreamer->angleToTargetRotationSpeed, sharedData_800E21D0_0_s01.field_B4[5][1], sharedData_800E21D0_0_s01.field_B4[5][2], sharedData_800E21D0_0_s01.field_B4[5][3]);
-    targetRotSpeed                   = rotSpeedCpy;
+    airScreamer->rotation.vz               += Q12_MULT_PRECISE(g_DeltaTime, rotSpeedCpy);
+    rotSpeedCpy                             = sharedFunc_800D71F0_0_s01(airScreamer->angleToTargetRotationSpeed, sharedData_800E21D0_0_s01.field_B4[5][1], sharedData_800E21D0_0_s01.field_B4[5][2], sharedData_800E21D0_0_s01.field_B4[5][3]);
+    targetRotSpeed                          = rotSpeedCpy;
     airScreamer->angleToTargetRotationSpeed = targetRotSpeed;
-    airScreamer->angleToTarget      += Q12_MULT_PRECISE(g_DeltaTime, targetRotSpeed);
+    airScreamer->angleToTarget             += Q12_MULT_PRECISE(g_DeltaTime, targetRotSpeed);
 }
 
 q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2)
