@@ -189,8 +189,8 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
         // Set global flag.
         loadedEffectTextureFlags |= 1 << i;
 
-        // TODO: Not sure if this is actually checking something gte related, but the macro/pointless branch is needed for match.
-        if (gte_IsDisabled())
+        // @hack Always false, but the branch is required for match.
+        if ((u8)(1 << i) >> 8)
         {
             continue;
         }

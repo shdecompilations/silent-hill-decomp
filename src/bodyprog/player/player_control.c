@@ -8948,32 +8948,35 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
 
 void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
 {
-    s32 mapIdx;
-
     switch (floorType)
     {
         case FloorType_8:
-            mapIdx = g_SavegamePtr->mapIdx;
-            *sfxId = Sfx_FootstepUnk1330;
-
-            // @hack Odd redundant load of `mapIdx`, likely there was some optimized-out code above that left side-effects?
-            // This just sets `mapIdx` to `g_SavegamePtr->mapIdx` (again).
-            asm volatile(
-                "lui   $2, %%hi(g_SavegamePtr)\n"
-                "lw    $2, %%lo(g_SavegamePtr)($2)\n"
-                "nop\n"
-                "lb    $3, 164($2)\n"
-                :
-                :
-                : "memory");
-
-            if (mapIdx == MapIdx_MAP2_S00)
+            // @hack Redundant switch needed for match. This allows emitting a dupe `g_SavegamePtr->mapIdx`
+            // load in the ASM that goes unused, before setting `*sfxId = Sfx_FootstepUnk1330`.
+            // MapIdx cases are just guesses that allow the dupe to be emitted.
+            // Unknown whether original code might have had something similar (maybe at one point would set
+            // different sfxId values, but was later changed to same one)
+            switch (g_SavegamePtr->mapIdx)
             {
-                if (g_SysWork.playerWork.player.position.vx >= Q12(95.0f)  && g_SysWork.playerWork.player.position.vx <= Q12(105.0f) &&
-                    g_SysWork.playerWork.player.position.vz >= Q12(-33.0f) && g_SysWork.playerWork.player.position.vz <= Q12(-28.0f))
-                {
-                    *sfxId = Sfx_Unk1389;
-                }
+                case MapIdx_MAP0_S01:
+                case MapIdx_MAP0_S02:
+                    *sfxId = Sfx_FootstepUnk1330;
+                    break;
+
+                default:
+                    *sfxId = Sfx_FootstepUnk1330;
+                    break;
+            }
+
+            switch (g_SavegamePtr->mapIdx)
+            {
+                case MapIdx_MAP2_S00:
+                    if (g_SysWork.playerWork.player.position.vx >= Q12(95.0f)  && g_SysWork.playerWork.player.position.vx <= Q12(105.0f) &&
+                        g_SysWork.playerWork.player.position.vz >= Q12(-33.0f) && g_SysWork.playerWork.player.position.vz <= Q12(-28.0f))
+                    {
+                        *sfxId = Sfx_Unk1389;
+                    }
+                    break;
             }
             break;
 

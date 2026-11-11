@@ -477,13 +477,6 @@ void SetPriority(PACKET*, s32, s32);
     : "r"(r0)                              \
     : "memory")
 
-#define gte_IsDisabled()                                \
-    ({                                                  \
-        u32 __r;                                        \
-        __asm__ volatile("move %0, $zero" : "=r"(__r)); \
-        __r;                                            \
-    })
-
 #define gte_stlzcr(dst) __asm__ volatile( \
     "mfc2  %0, $31"                       \
     : "=r"(dst))
