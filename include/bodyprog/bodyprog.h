@@ -28,6 +28,7 @@
 #include "bodyprog/map/map.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/paper_map/paper_map.h"
+#include "bodyprog/paper_map/paper_map_image.h"
 #include "bodyprog/player/player_control.h"
 #include "bodyprog/player/weapon_anim_data.h"
 #include "bodyprog/screen/data.h"
@@ -40,35 +41,6 @@
 #include "bodyprog/world/lighting.h"
 #include "bodyprog/world/map.h"
 #include "main/fsqueue.h"
-
-// ======
-// ENUMS
-// ======
-
-/** @brief SFX flags. */
-typedef enum _SfxFlags
-{
-    SfxFlag_None          = 0,
-    SfxFlag_Mono          = 1 << 0, /** Monophonic. */
-    SfxFlag_NoDistAtten   = 1 << 1, /** No distance attenuation. */
-    SfxFlag_UpdateAttribs = 1 << 2  /** @unused Update attributes. */
-} e_SfxFlags;
-
-/** Used by `func_8003F654` to cast a specific field to the desired type. */
-typedef enum _PrimitiveType
-{
-    PrimitiveType_None = 0,
-    PrimitiveType_S8   = 1,
-    PrimitiveType_U8   = 2,
-    PrimitiveType_S16  = 3,
-    PrimitiveType_U16  = 4,
-    PrimitiveType_S32  = 5
-} e_PrimitiveType;
-
-// ================
-// UNKNOWN STRUCTS
-// ================
-// TODO: Deobfuscate these and move where they belong afterwardd.
 
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct _GteScratchData
@@ -839,7 +811,7 @@ void GameFs_MapItemsTextureLoad(s32 mapId);
  */
 void Gfx_PlayerHeldItemAttach(u8 weaponAttack);
 
-void func_8005487C(s32);
+void func_8005487C(s32 arg0);
 
 void func_80054A04(u8 arg0);
 
@@ -1131,64 +1103,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1);
 
 void func_80066184(void);
 
-void func_80066D90(void);
-
-void func_80066E40(void);
-
-void func_80066E7C(void);
-
-void Player_FlexRotationYReset(void);
-
 void func_8004BBF4(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR* camRot);
-
-void nullsub_800334C8(void);
-
-s32 func_800382B0(s32 arg0);
-
-/** @brief Computes the distance between two positions.
- *
- * @param from First position (Q19.12).
- * @param to Second position (Q19.12).
- * @return Distance between positions.
- */
-q19_12 Math_DistanceGet(const VECTOR3* from, const VECTOR3* to);
-
-/** @brief Computes the 2D distance on the XZ plane between two positions.
- *
- * @param from First position (Q19.12).
- * @param to Second position (Q19.12).
- * @return 2D distance between positions.
- */
-q19_12 Math_Distance2dGet(const VECTOR3* from, const VECTOR3* to);
-
-void func_800803FC(VECTOR3* pos, s32 idx);
-
-/** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
-void Input_SelectClickSet(void);
-
-/** @brief Updates the active autosave savegame entry with the most recent savegame. */
-void SysWork_AutosaveUpdate(void);
-
-void func_8003ECBC(void);
-
-void func_8003ECE4(void);
-
-void func_8003EDA8(void);
-
-/** Resets player info such as the inventory, health, and playtime in the savegame buffer. */
-void Game_SavegameResetPlayer(void);
-
-void Game_PlayerInfoInit(void);
-
-void func_8007E860(void);
-
-void func_8007E8C0(void);
-
-/** Loads player animations for a given map. Maybe for cutscenes?
- *
- * @param mapIdx Map index.
- */
-void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveSpeed, s32 keyframeIdx);
 

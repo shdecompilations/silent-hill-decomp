@@ -1,6 +1,8 @@
 #ifndef _BODYPROG_PLAYER_PLAYERCONTROL_H
 #define _BODYPROG_PLAYER_PLAYERCONTROL_H
 
+#include "bodyprog/player/player_control.h"
+
 /** @brief Gets the variable animation duration for the player.
  *
  * @param model Player model.
@@ -15,10 +17,33 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
 
 void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
+void Player_FlexRotationYReset(void);
+
+// TODO: Decl issue, placed in `player.h` for now.
+// Returns player lower body state.
+//s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1);
+
 void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords);
+
+/** Resets player info such as the inventory, health, and playtime in the savegame buffer. */
+void Game_SavegameResetPlayer(void);
+
+void Game_PlayerInfoInit(void);
+
+void func_8007E860(void);
+
+void func_8007E8C0(void);
 
 /** Player func. */
 void func_8007E9C4(void);
+
+/** Loads player animations for a given map. Maybe for cutscenes?
+ *
+ * @param mapIdx Map index.
+ */
+void GameFs_PlayerMapAnimLoad(s32 mapIdx);
+
+void GameFs_WeaponInfoUpdate(void);
 
 /** Sound func. */
 void func_8007F14C(u8 weaponAttack);
@@ -81,6 +106,27 @@ void func_8007FD4C(bool resetColl);
  * @return Footstep SFX ID.
  */
 void Player_FootstepSfxGet(s8 floorType, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
+
+/** @brief Computes the distance between two positions.
+ *
+ * @param from First position (Q19.12).
+ * @param to Second position (Q19.12).
+ * @return Distance between positions.
+ */
+q19_12 Math_DistanceGet(const VECTOR3* from, const VECTOR3* to);
+
+/** @brief Computes the 2D distance on the XZ plane between two positions.
+ *
+ * @param from First position (Q19.12).
+ * @param to Second position (Q19.12).
+ * @return 2D distance between positions.
+ */
+q19_12 Math_Distance2dGet(const VECTOR3* from, const VECTOR3* to);
+
+void func_800803FC(VECTOR3* pos, s32 idx);
+
+/** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
+void Input_SelectClickSet(void);
 
 /** Presumably, returns a heading angle from `from` to `to`. If so, rename to `Math_AngleBetweenPositionsGet`. */
 q19_12 func_80080478(const VECTOR3* from, const VECTOR3* to);

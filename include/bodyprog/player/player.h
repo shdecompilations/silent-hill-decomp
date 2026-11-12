@@ -623,17 +623,15 @@ void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra);
  */
 void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra);
 
-// Returns player lower body state.
-s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1);
-
-void GameFs_WeaponInfoUpdate(void);
-
 void Game_PlayerMovementsReset(void);
 
 void Player_Controller(void);
 
 /** @brief Determines if the player can stomp or kick a knocked enemy. */
 bool func_8007F95C(void);
+
+// TODO: Temporary placement, belongs in `player_control.h` but there's a decl issue. 
+s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1);
 
 #define Player_ExtraStateSet(playerChara, playerExtra, playerState)        \
 {                                                                          \

@@ -7,4 +7,6 @@ void Settings_RestoreDefaults(void);
 
 void Settings_RestoreControlDefaults(s32 configIdx);
 
+void nullsub_800334C8(void);
+
 #endif

@@ -1,6 +1,17 @@
 #ifndef _BODYPROG_WORLD_EFFECTS_H
 #define _BODYPROG_WORLD_EFFECTS_H
 
+/** @brief Used by `func_8003F654` to cast a specific field to the desired type. */
+typedef enum _PrimitiveType
+{
+    PrimitiveType_None = 0,
+    PrimitiveType_S8   = 1,
+    PrimitiveType_U8   = 2,
+    PrimitiveType_S16  = 3,
+    PrimitiveType_U16  = 4,
+    PrimitiveType_S32  = 5
+} e_PrimitiveType;
+
 /** @brief World environment flags. Used by `s_WorldEnvPreset::flags`. */
 typedef enum _WorldEnvFlags
 {

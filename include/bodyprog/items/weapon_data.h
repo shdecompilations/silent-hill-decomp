@@ -1,17 +1,17 @@
 #ifndef _BODYPROG_ITEMS_WEAPONDATA_H
 #define _BODYPROG_ITEMS_WEAPONDATA_H
 
-/** @brief Attack IDs. Packed with an `e_AttackInputType` by `WEAPON_ATTACK` to index `g_Items_WeaponAttackInfos`.
+/** @brief Attack types. Packed with an `e_AttackInputType` by `WEAPON_ATTACK` to index into `g_Items_WeaponAttackInfos`.
  *
- * Attacks here are linked with `e_InvItemId` enum, game code adds 128 to attack types from player weapons (0-7, 32-35, 96-98)
- * to find the `e_InvItemId` for that attack.
+ * @note Attacks here are associated with the `e_InvItemId` enum. Game code adds 128 to attack types from player weapons
+ * (0-7, 32-35, and 96-98) to find the `e_InvItemId` for a given attack.
  */
 typedef enum _AttackType
 {
     AttackType_KitchenKnife         = 0,
     AttackType_SteelPipe            = 1,
     AttackType_RockDrill            = 2,
-    AttackType_Unk3                 = 3,  // @unused Has stats, but InvItemId 131 has no ID and a blank name. Possibly "nightstick" mentioned in some protos.
+    AttackType_Unk3                 = 3,  /** @unused Has stats, but InvItemId 131 has no ID and a blank name. Possibly "nightstick" mentioned in some protos. */
     AttackType_Hammer               = 4,
     AttackType_Chainsaw             = 5,
     AttackType_Katana               = 6,
@@ -19,17 +19,17 @@ typedef enum _AttackType
     AttackType_Kick                 = 8,
     AttackType_Stomp                = 9,
 
-    AttackType_Unk31                = 31, // @unused Possibly another kind of fighting attack, like kick/stomp, gets associated with those in `func_80071968_Switch0`
+    AttackType_Unk31                = 31, /** @unused Possibly another kind of fighting attack, like kick/stomp. Gets associated with those in `func_80071968_Switch0`. */
     AttackType_Handgun              = 32,
     AttackType_HuntingRifle         = 33,
     AttackType_Shotgun              = 34,
     AttackType_HyperBlaster         = 35,
-    AttackType_Unk36                = 36, // @unused Unused gun, might be an automatic-firing gun based on having `interval` set in the attack info table.
+    AttackType_Unk36                = 36, /** @unused Unused gun. Might be an automatic-firing gun based on having `interval` set in the attack info table. */
 
     AttackType_Unk40                = 40,
     AttackType_Unk41                = 41,
     AttackType_Unk42                = 42,
-    AttackType_Groaner              = 43, // Groaner jump attack.
+    AttackType_Groaner              = 43, /** Groaner jump attack. */
     AttackType_HangedScratcher0     = 44,
     AttackType_HangedScratcher1     = 45,
     AttackType_Unk46                = 46,
@@ -37,27 +37,28 @@ typedef enum _AttackType
     AttackType_Stalker              = 48,
     AttackType_StalkerLegGrab       = 49,
     AttackType_Unk50                = 50,
-    AttackType_LarvalStalkerGrab    = 51, // Set from `LarvalStalkerControl_Unused5`, @unused?
-    AttackType_LarvalStalkerDrain   = 52, // Damage while grabbed, set from `LarvalStalkerControl_Unused5`, @unused?
+    AttackType_LarvalStalkerGrab    = 51, /** @unused? Set from `LarvalStalkerControl_Unused5`. */
+    AttackType_LarvalStalkerDrain   = 52, /** @unused? Damage while grabbed. Set from `LarvalStalkerControl_Unused5`. */
     AttackType_Creeper              = 53,
-    AttackType_RomperGrab           = 54, // Pins the player.
-    AttackType_PuppetNurseGrab      = 56, // Torso grab, used by both Puppet Nurse and Puppet Doctor.
+    AttackType_RomperGrab           = 54, /** Pins the player. */
+    AttackType_PuppetNurseGrab      = 56, /** Torso grab. Used by Puppet Nurse and Puppet Doctor. */
     AttackType_PuppetNurse          = 57,
     AttackType_PuppetDoctor         = 58,
     AttackType_Floatstinger         = 59,
     AttackType_FloatstingerAcid     = 60,
     AttackType_Twinfeeler           = 61,
     AttackType_TwinfeelerAcid       = 62,
-    AttackType_CybilHandgun         = 63, // Used by Cybil and Monster Cybil.
+    AttackType_CybilHandgun         = 63, /** Used by Cybil and Monster Cybil. */
     AttackType_MonsterCybil0        = 64,
     AttackType_MonsterCybil1        = 65,
     AttackType_MonsterCybilNeckGrab = 66,
-    AttackType_Unk67                = 67, // Effect in the map7_s03 boss room, damages on contact.
-    AttackType_Unknown23            = 68, // `Chara_Unknown23` attack, pushes player away.
+    AttackType_Unk67                = 67, /** Effect in the map7_s03 boss room. Damages on contact. */
+    AttackType_Unknown23            = 68, /** `Chara_Unknown23` attack. Pushes the player away. */
     AttackType_Bloodsucker          = 69,
     AttackType_KaufmannHandgun      = 70  // Muzzle flash only, never hit-tested?
 } e_AttackType;
 
+/** @brief Attack info types. */
 typedef enum _AttackInfoType
 {
     AttackInfoType_Unk0      = 0,
@@ -66,10 +67,10 @@ typedef enum _AttackInfoType
     AttackInfoType_Gunshot   = 3,
     AttackInfoType_Enemy0    = 4, // } TODO: Better naming.
     AttackInfoType_Enemy1    = 5, // }
-    AttackInfoType_Enemy2    = 6, // }
+    AttackInfoType_Enemy2    = 6  // }
 } e_AttackInfoType;
 
-/** @brief Melee attack box.
+/** @brief Melee attack hitbox.
  *
  * SH2 name: `shBattleFight`.
  */
