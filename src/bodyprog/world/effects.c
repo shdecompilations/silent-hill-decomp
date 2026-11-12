@@ -17,7 +17,7 @@
 
 extern s_WorldEnvRenderWork const g_WorldEnvRenderWork;
 
-s16 D_800BCDE8[8];
+q3_12 D_800BCDE8[8];
 
 static s_WorldEnvPresetIdxs D_800A9F80 = { 1, 1  };
 static s_WorldEnvPresetIdxs D_800A9F84 = { 2, 2  };

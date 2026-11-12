@@ -42,6 +42,15 @@ typedef enum _WorldEnvFogMode
     WorldEnvFogMode_FollowLight = 3  /** @unused Fog distance follows the light position. Only set by preset 5, which nothing selects? */
 } e_WorldEnvFogMode;
 
+typedef struct _WorldEnvPresetIdxs
+{
+    /* 0x0 */ u8 presetIdx0;
+    /* 0x1 */ u8 presetIdx1;
+} s_WorldEnvPresetIdxs;
+
+/** Angles. */
+extern q3_12 D_800BCDE8[8];
+
 /** @brief Checks if the world environment is in darkness, without the flashlight turned on.
  *
  * @return `WorldEnvFlag_Dark` if the work environment is in darkness, `false` otherwise.

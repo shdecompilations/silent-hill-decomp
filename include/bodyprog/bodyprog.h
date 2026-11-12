@@ -110,12 +110,6 @@ typedef struct
     /* 0x6 */ s16 endKeyframeIdx;
 } s_800C44F0;
 
-typedef struct _WorldEnvPresetIdxs
-{
-    /* 0x0 */ u8 presetIdx0;
-    /* 0x1 */ u8 presetIdx1;
-} s_WorldEnvPresetIdxs;
-
 typedef struct
 {
     /* 0x0   */ DVECTOR  screenXy_0[90];
@@ -318,10 +312,6 @@ typedef struct
     /* 0x168 */ s32             field_168;
 } s_func_80064334;
 
-// ========
-// GLOBALS
-// ========
-
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
 extern char D_80028544[16];
@@ -351,14 +341,6 @@ extern s8 g_CharaAnimDataIdxs[Chara_Count];
     extern e_FsFile g_ItemLanguageFileIds[];
 #endif
 
-extern s32 D_800A9EB0;
-
-extern s_FsImageDesc D_800A9EB4;
-
-extern s_FsImageDesc D_800A9EBC;
-
-extern s_FsImageDesc D_800A9EC4;
-
 /** Player anim info? */
 extern s_AnimInfo D_800A998C;
 
@@ -370,103 +352,7 @@ extern s8 D_800A99B5;
 
 extern void (*g_SysStateFuncs[])(void);
 
-extern s32 D_800A9A68;
-
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
-
-extern s32 D_800A9ECC;
-
-extern s32 D_800A9ED0;
-
-extern s32 D_800A9ED4;
-
-extern s32 D_800A9ED8;
-
-extern s32 D_800A9EDC;
-
-extern s32 D_800A9EE0;
-
-extern s32 D_800A9EE4;
-
-extern s32 D_800A9EE8;
-
-extern s32 D_800A9EEC;
-
-extern s32 D_800A9EF0;
-
-extern s32 D_800A9EF4;
-
-extern s32 D_800A9EF8;
-
-extern s32 D_800A9EFC;
-
-extern s32 D_800A9F00;
-
-extern s32 D_800A9F04;
-
-extern s32 D_800A9F08;
-
-extern s32 D_800A9F0C;
-
-extern s32 D_800A9F10;
-
-extern s32 D_800A9F14;
-
-extern s32 D_800A9F18;
-
-extern s32 D_800A9F1C;
-
-extern s32 D_800A9F20;
-
-extern s32 D_800A9F28;
-
-extern s32 D_800A9F2C;
-
-extern s32 D_800A9F30;
-
-extern s32 D_800A9F34;
-
-extern s32 D_800A9F38;
-
-extern s32 D_800A9F3C;
-
-extern s32 D_800A9F40;
-
-extern s32 D_800A9F44;
-
-extern s32 D_800A9F48;
-
-extern s32 D_800A9F4C;
-
-extern s32 D_800A9F50;
-
-extern s32 D_800A9F54;
-
-extern s32 D_800A9F58;
-
-extern s32 D_800A9F60;
-
-extern s32 D_800A9F64;
-
-extern s32 D_800A9F68;
-
-extern s32 D_800A9F6C;
-
-extern s32 D_800A9F74;
-
-extern s32 D_800A9F78;
-
-extern s32 D_800A9F7C;
-
-extern s_WorldEnvPresetIdxs D_800A9F80;
-
-extern s_WorldEnvPresetIdxs D_800A9F84;
-
-extern s_WorldEnvPresetIdxs D_800A9F88;
-
-extern s_WorldEnvPresetIdxs D_800A9F8C;
-
-extern s_WorldEnvPresetIdxs D_800A9F98;
 
 extern u32 D_800A9FB0;
 
@@ -517,20 +403,9 @@ extern s_FsImageDesc D_800A90B4;
 
 extern s_SubCharacter D_800BA00C; // Often passed to `Los_NpcToPlayerHitCheck`, might not be full `s_SubCharacter`?
 
-extern u8 D_800BC74F;
-
-extern u16 D_800BCCB0;
-
 extern u32 D_800A999C;
 
-extern u16 D_800BCCB2;
-
 extern s32 g_Bgm_LayersUpdated;
-
-extern s32 D_800BCD84;
-
-/** Angles. */
-extern s16 D_800BCDE8[8];
 
 extern u16 g_CollisionTriggerFlags;
 
@@ -578,10 +453,6 @@ extern u8 D_800AD480[24];
 extern const s_MapOverlayHdr g_MapOverlayHdr; // 0x800C957C
 
 extern s16 SQRT[100];
-
-// ==========
-// FUNCTIONS
-// ==========
 
 /** @brief Draws a palette of colors in the frame buffer. */
 void func_8003652C(void);
