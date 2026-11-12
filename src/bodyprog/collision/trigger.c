@@ -47,7 +47,7 @@ void Collision_TriggerQuery(q19_12* result, q19_12 posX, q19_12 posZ, q19_12 off
     }
     else
     {
-        result[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(intersect->offsetX, Q12(0.0f), intersect->offsetZ),
+        result[0] = Math_MulFixed(vwRet3DLength(intersect->offsetX, Q12(0.0f), intersect->offsetZ),
                                   intersect->intersectAlpha,
                                   Q12_SHIFT);
         result[1] = intersect->triggerHeight;
@@ -241,7 +241,7 @@ q19_12 Collision_TriggerCeilingHeightGet(VECTOR3* moveOffset,
         }
 
         // Check accurate cylinder-trigger collision at projected position.
-        projDistToTrigger = Vc_VectorMagnitudeCalc(projOffsetToTriggerX, Q12(0.0f), projOffsetToTriggerZ);
+        projDistToTrigger = vwRet3DLength(projOffsetToTriggerX, Q12(0.0f), projOffsetToTriggerZ);
         if (projDistToTrigger >= cylinderRadius)
         {
             continue;
@@ -256,7 +256,7 @@ q19_12 Collision_TriggerCeilingHeightGet(VECTOR3* moveOffset,
 
             // Compute allowed intersection depth.
             allowedIntersectDist = Q12(INTERSECTION_BUFFER);
-            distToTrigger        = Vc_VectorMagnitudeCalc(offsetToTriggerX, Q12(0.0f), offsetToTriggerZ);
+            distToTrigger        = vwRet3DLength(offsetToTriggerX, Q12(0.0f), offsetToTriggerZ);
             if ((cylinderRadius - distToTrigger) <= Q12(INTERSECTION_BUFFER))
             {
                 allowedIntersectDist = cylinderRadius - distToTrigger;

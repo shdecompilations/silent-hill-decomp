@@ -11,8 +11,8 @@
 #include "bodyprog/math/math.h"
 
 // Reference view transform?
-MATRIX D_800C3868;
-MATRIX VbWvsMatrix;
+MATRIX VwCrdVwMat;
+MATRIX VwCrdWsRotMat;
 
 void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, q19_12 tgt_r,
                                     q19_12 accel, q19_12 total_max_spd, q19_12 dec_forwd_lim_spd, q19_12 dec_accel_side) // 0x80048F28
@@ -54,7 +54,7 @@ void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR
     *velo_x += Q12_MULT(add_spd, Math_Sin(cam2tgt_ang_y));
     *velo_z += Q12_MULT(add_spd, Math_Cos(cam2tgt_ang_y));
 
-    lim_spd = Vc_VectorMagnitudeCalc(*velo_x, Q12(0.0f), *velo_z);
+    lim_spd = vwRet3DLength(*velo_x, Q12(0.0f), *velo_z);
     if (total_max_spd < lim_spd)
     {
         spd      = lim_spd - total_max_spd;
@@ -66,7 +66,7 @@ void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR
     deltaX       = tgt_pos->vx - now_pos->vx;
     deltaZ       = tgt_pos->vz - now_pos->vz;
     to_tgt_ang_y = ratan2(deltaX, deltaZ);
-    to_tgt_dist  = Math_MulFixed(dec_forwd_lim_spd, Vc_VectorMagnitudeCalc(deltaX, Q12(0.0f), deltaZ) - tgt_r, Q12_SHIFT);
+    to_tgt_dist  = Math_MulFixed(dec_forwd_lim_spd, vwRet3DLength(deltaX, Q12(0.0f), deltaZ) - tgt_r, Q12_SHIFT);
 
     if (to_tgt_dist < Q12(0.0f))
     {
@@ -284,28 +284,28 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord) // 0x800497E4
     MATRIX work;
     VECTOR vec;
 
-    Vw_CoordHierarchyMatrixCompute(coord, &D_800C3868);
-    TransposeMatrix(&D_800C3868, &work);
-    MulMatrix0(&work, &GsIDMATRIX2, &VbWvsMatrix);
+    Vw_CoordHierarchyMatrixCompute(coord, &VwCrdVwMat);
+    TransposeMatrix(&VwCrdVwMat, &work);
+    MulMatrix0(&work, &GsIDMATRIX2, &VwCrdWsRotMat);
 
-    VbWvsMatrix.t[2] = Q8(0.0f);
-    VbWvsMatrix.t[1] = Q8(0.0f);
-    VbWvsMatrix.t[0] = Q8(0.0f);
+    VwCrdWsRotMat.t[2] = Q8(0.0f);
+    VwCrdWsRotMat.t[1] = Q8(0.0f);
+    VwCrdWsRotMat.t[0] = Q8(0.0f);
 
-    GsWSMATRIX.m[0][0] = VbWvsMatrix.m[0][0];
-    GsWSMATRIX.m[0][1] = VbWvsMatrix.m[0][1];
-    GsWSMATRIX.m[0][2] = VbWvsMatrix.m[0][2];
-    GsWSMATRIX.m[1][0] = VbWvsMatrix.m[1][0];
-    GsWSMATRIX.m[1][1] = VbWvsMatrix.m[1][1];
-    GsWSMATRIX.m[1][2] = VbWvsMatrix.m[1][2];
-    GsWSMATRIX.m[2][0] = VbWvsMatrix.m[2][0];
-    GsWSMATRIX.m[2][1] = VbWvsMatrix.m[2][1];
-    GsWSMATRIX.m[2][2] = VbWvsMatrix.m[2][2];
+    GsWSMATRIX.m[0][0] = VwCrdWsRotMat.m[0][0];
+    GsWSMATRIX.m[0][1] = VwCrdWsRotMat.m[0][1];
+    GsWSMATRIX.m[0][2] = VwCrdWsRotMat.m[0][2];
+    GsWSMATRIX.m[1][0] = VwCrdWsRotMat.m[1][0];
+    GsWSMATRIX.m[1][1] = VwCrdWsRotMat.m[1][1];
+    GsWSMATRIX.m[1][2] = VwCrdWsRotMat.m[1][2];
+    GsWSMATRIX.m[2][0] = VwCrdWsRotMat.m[2][0];
+    GsWSMATRIX.m[2][1] = VwCrdWsRotMat.m[2][1];
+    GsWSMATRIX.m[2][2] = VwCrdWsRotMat.m[2][2];
 
-    vec.vx = -D_800C3868.t[0];
-    vec.vy = -D_800C3868.t[1];
-    vec.vz = -D_800C3868.t[2];
-    ApplyMatrixLV(&VbWvsMatrix, &vec, (VECTOR*)&GsWSMATRIX.t);
+    vec.vx = -VwCrdVwMat.t[0];
+    vec.vy = -VwCrdVwMat.t[1];
+    vec.vz = -VwCrdVwMat.t[2];
+    ApplyMatrixLV(&VwCrdWsRotMat, &vec, (VECTOR*)&GsWSMATRIX.t);
 }
 
 void vbSetRefView(VbRVIEW* rview) // 0x800498D8
@@ -402,24 +402,24 @@ void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* boneCoords, MATRIX* viewMat) // 0x
     MATRIX worldMat;
 
     Vw_CoordHierarchyMatrixCompute(boneCoords, &worldMat);
-    worldMat.t[0] -= D_800C3868.t[0];
-    worldMat.t[1] -= D_800C3868.t[1];
-    worldMat.t[2] -= D_800C3868.t[2];
+    worldMat.t[0] -= VwCrdVwMat.t[0];
+    worldMat.t[1] -= VwCrdVwMat.t[1];
+    worldMat.t[2] -= VwCrdVwMat.t[2];
 
-    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &worldMat, viewMat);
+    Vw_MultiplyAndTransformMatrix(&VwCrdWsRotMat, &worldMat, viewMat);
 }
 
 void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* boneCoords, MATRIX* worldMat, MATRIX* viewMat) // 0x80049B6C
 {
     Vw_CoordHierarchyMatrixCompute(boneCoords, worldMat);
-    worldMat->t[0] -= D_800C3868.t[0];
-    worldMat->t[1] -= D_800C3868.t[1];
-    worldMat->t[2] -= D_800C3868.t[2];
+    worldMat->t[0] -= VwCrdVwMat.t[0];
+    worldMat->t[1] -= VwCrdVwMat.t[1];
+    worldMat->t[2] -= VwCrdVwMat.t[2];
 
-    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, worldMat, viewMat);
-    worldMat->t[0] += D_800C3868.t[0];
-    worldMat->t[1] += D_800C3868.t[1];
-    worldMat->t[2] += D_800C3868.t[2];
+    Vw_MultiplyAndTransformMatrix(&VwCrdWsRotMat, worldMat, viewMat);
+    worldMat->t[0] += VwCrdVwMat.t[0];
+    worldMat->t[1] += VwCrdVwMat.t[1];
+    worldMat->t[2] += VwCrdVwMat.t[2];
 }
 
 void Vw_WorldScreenMatrixAtPositionGet(MATRIX* worldToScreenMat, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80049C2C

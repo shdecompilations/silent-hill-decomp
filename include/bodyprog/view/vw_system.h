@@ -80,8 +80,8 @@ extern VC_CAM_MV_PARAM   cam_mv_prm_user;        /** User camera move parameters
 extern q19_12            excl_r_ary[9];          /** Q19.12 | Exclusion radius array. */
 extern VC_WORK           vcWork;                 /** View camera workspace. */
 extern VW_VIEW_WORK      vwViewPointInfo;
-extern MATRIX            D_800C3868;
-extern MATRIX            VbWvsMatrix;            /** View block's world view space matrix. */
+extern MATRIX            VwCrdVwMat;             /** Camera coordinate's world matrix. Its translation is the camera position. */
+extern MATRIX            VwCrdWsRotMat;          /** World-to-screen rotation, the transpose of `VwCrdVwMat`'s rotation. */
 extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;         /** View camera look-at move parameters start. */
 extern q19_12            vcSelfViewTimer;        /** View camera first-person timer. */
 

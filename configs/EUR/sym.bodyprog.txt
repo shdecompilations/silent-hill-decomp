@@ -1322,7 +1322,7 @@ vcAdjCamOfsAngByOfsAngSpd                    = 0x8008513C; // type:func
 vcMakeCamMatAndCamAngByBaseAngAndOfsAng      = 0x800853CC; // type:func
 vcSetDataToVwSystem                          = 0x80085464; // type:func
 vcCamMatNoise                                = 0x8008565C; // type:func
-Vc_VectorMagnitudeCalc                       = 0x800856FC; // type:func - Originally could've be something like `vcGetXZSumDist`.
+vwRet3DLength                                = 0x800856FC; // type:func
 vcGetXZSumDistFromLimArea                    = 0x80085860; // type:func
 
 //---------------------------------------------------------------------
@@ -3149,10 +3149,10 @@ D_800AFD1C                                   = 0x800AF314;
 //----------------------------------------------------------------
 //--- PA: 0x089CA4   VA: 0x800AF334   subsegment: .data, gfx/water
 //----------------------------------------------------------------
-Y_ARRAY_0.251                                = 0x800AF334;
-Y_ARRAY_1.252                                = 0x800AF33C;
-Y_ARRAY_2.253                                = 0x800AF358;
-D_800AFD7C                                   = 0x800AF374;
+pow_rate_dat.60                              = 0x800AF334;
+dist_rate_dat.61                             = 0x800AF33C;
+ang_z_rate_dat.62                            = 0x800AF358;
+ang_dat.69                                   = 0x800AF374;
 img0                                         = 0x800AF394;
 svec0.264                                    = 0x800AF3A8;
 
@@ -3630,8 +3630,8 @@ vwViewPointInfo                              = 0x800C2DD0; // type:VW_VIEW_WORK 
 //------------------------------------------------------------------
 //--- PA: 0x09D7C8   VA: 0x800C2E58   subsegment: .bss, view/vw_calc
 //------------------------------------------------------------------
-D_800C3868                                   = 0x800C2E58;
-VbWvsMatrix                                  = 0x800C2E78; // type:MATRIX size:0x20
+VwCrdVwMat                                   = 0x800C2E58;
+VwCrdWsRotMat                                = 0x800C2E78; // type:MATRIX size:0x20
 
 //--------------------------------------------------------------------
 //--- PA: 0x09D808   VA: 0x800C2E98   subsegment: .bss, text/text_draw

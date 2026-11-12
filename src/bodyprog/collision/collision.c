@@ -741,7 +741,7 @@ void Collision_MoveOffsetDampen(VECTOR3* moveOffset, const s_CharaCollisionCylin
         cylinderOffsetZ = (curChara->position.vz + curChara->collision.shapeOffsets.cylinder.vz) - cylinder->position.vz;
         
         // Check if cylinders collide on XZ plane.
-        dist = Vc_VectorMagnitudeCalc(cylinderOffsetX, Q12(0.0f), cylinderOffsetZ);
+        dist = vwRet3DLength(cylinderOffsetX, Q12(0.0f), cylinderOffsetZ);
         if (((curChara->collision.cylinder.outerRadius + cylinder->radius) + Q12(INTERSECTION_BUFFER)) < dist)
         {
             continue;

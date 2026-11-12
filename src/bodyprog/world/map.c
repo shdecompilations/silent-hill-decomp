@@ -734,7 +734,7 @@ q19_12 WorldMap_DistanceToChunkEdgeGet(q19_12 posX, q19_12 posZ, s32 chunkX, s32
 
     chunkPosX = OUTSIDE_DIST(posX, chunkEdgeX, chunkEdgeX + Q8(CHUNK_SIZE));
     chunkPosZ = OUTSIDE_DIST(posZ, chunkEdgeZ, chunkEdgeZ + Q8(CHUNK_SIZE));
-    return Vc_VectorMagnitudeCalc(chunkPosX, Q12(0.0f), chunkPosZ);
+    return vwRet3DLength(chunkPosX, Q12(0.0f), chunkPosZ);
 }
 
 s32 WorldMap_ChunkLoad(s_WorldMapWork* terrain, q19_12 posX, q19_12 posZ, q19_12 projPosX, q19_12 projPosZ) // 0x80042EBC

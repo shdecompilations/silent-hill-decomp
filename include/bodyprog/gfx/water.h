@@ -32,13 +32,20 @@ void func_8008D464(void);
 /** Light function. */
 void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
 
+// Named from SH2 symbols.
 void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z);
 
 // Named from SH2 symbols.
-q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 x1, q19_12 x2);
+void shLensFlareDraw(void);
+
+// Named from SH2 symbols (func code doesn't match SH2, but the purpose/caller does)
+s32 shLensFlareLightCenterIsVisible(void);
 
 // Named from SH2 symbols.
-void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4);
+q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 scr_l_pos_z, q19_12 scr_l_ang_z);
+
+// Named from SH2 symbols.
+void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 now_l_eff_rate, VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z);
 
 /** @brief Gets the water zone at a given position.
  *

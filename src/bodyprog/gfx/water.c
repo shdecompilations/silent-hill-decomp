@@ -54,6 +54,7 @@ void func_8008D464(void) // 0x8008D464
 
 void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
 {
+    s32          proj;
     s32          posY;
     s_WaterZone* waterZone;
 
@@ -61,7 +62,8 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
     {
         func_800410D8(&g_LensFlareWork.scr_l_pos, &g_LensFlareWork.scr_l_ang_xy, &g_LensFlareWork.scr_l_ang_z, rot, pos);
 
-        if ((ReadGeomScreen() >> 1) < g_LensFlareWork.scr_l_pos.vz)
+        proj = ReadGeomScreen();
+        if (g_LensFlareWork.scr_l_pos.vz > (proj >> 1))
         {
             g_LensFlareWork.lfl_sync_draw_func_exec_f = 1;
             g_LensFlareWork.tgt_l_eff_rate = shLensFlareMakeEffectTargetRate(light_intensity, g_LensFlareWork.scr_l_pos.vz, g_LensFlareWork.scr_l_ang_z);
@@ -90,10 +92,18 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
     }
 }
 
+/** Checks whether the light is on screen, in front of the camera and facing it closely enough to draw the visibility test pixel. */
+static inline bool check_screen_bounds(VECTOR3* scr_l_pos, s16 scr_l_ang_z)
+{
+    return scr_l_pos->vx >= (-g_GameWork.gsScreenWidth >> 1) && (g_GameWork.gsScreenWidth >> 1) >= scr_l_pos->vx &&
+           scr_l_pos->vy >= (-g_GameWork.gsScreenHeight >> 1) && (g_GameWork.gsScreenHeight >> 1) >= scr_l_pos->vy &&
+           scr_l_pos->vz >= 0 && scr_l_ang_z >= Q12_ANGLE(75.0f);
+}
+
 void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z) // 0x8008D5A0
 {
-    RECT      sp10;
-    bool      cond;
+    RECT      rect;
+    bool      draw_center_f;
     DR_MOVE*  packet;
     TILE*     tile;
     GsOT_TAG* ot;
@@ -103,17 +113,9 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z) // 0x8008D5A0
     GsOUT_PACKET_P = GsOUT_PACKET_P + 40;
     ot             = &g_OrderingTable0[g_ActiveBufferIdx].org[(scr_l_pos->vz + 2) >> 3];
 
-    cond = false;
-    if (scr_l_pos->vx >= (-g_GameWork.gsScreenWidth >> 1) && (g_GameWork.gsScreenWidth >> 1) >= scr_l_pos->vx)
-    {
-        if (scr_l_pos->vy >= (-g_GameWork.gsScreenHeight >> 1) && (g_GameWork.gsScreenHeight >> 1) >= scr_l_pos->vy &&
-            scr_l_pos->vz >= 0)
-        {
-            cond = scr_l_ang_z >= Q12_ANGLE(75.0f);
-        }
-    }
+    draw_center_f = check_screen_bounds(scr_l_pos, scr_l_ang_z);
 
-    if (cond)
+    if (draw_center_f)
     {
         SetTile(tile);
         tile->r0 = 0xFF;
@@ -125,42 +127,42 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z) // 0x8008D5A0
         tile->h  = 1;
         AddPrim(ot, tile);
 
-        sp10.x = scr_l_pos->vx + (g_GameWork.gsScreenWidth / 2);
-        sp10.y = scr_l_pos->vy + (g_GameWork.gsScreenHeight / 2);
+        rect.x = scr_l_pos->vx + (g_GameWork.gsScreenWidth / 2);
+        rect.y = scr_l_pos->vy + (g_GameWork.gsScreenHeight / 2);
 
 #if VERSION_REGION_IS(PAL) 
         if (g_ActiveBufferIdx != 1)
         {
-            sp10.y += 256;
+            rect.y += 256;
         }
 #else
         if (g_ActiveBufferIdx == 1)
         {
-            sp10.y += 32;
+            rect.y += 32;
         }
         else
         {
-            sp10.y += 256;
+            rect.y += 256;
         }
 #endif
     }
     else
     {
-        sp10.x = 784;
-        sp10.y = 113;
+        rect.x = 784;
+        rect.y = 113;
     }
 
-    sp10.h = 8;
-    sp10.w = 8;
+    rect.h = 8;
+    rect.w = 8;
 
-    SetDrawMove(packet, &sp10, (g_ActiveBufferIdx * 8) + 784, 112);
+    SetDrawMove(packet, &rect, (g_ActiveBufferIdx * 8) + 784, 112);
     AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 5, packet);
 }
 
 void shLensFlareDraw(void) // 0x8008D78C
 {
-    s32 var0;
-    s32 var1;
+    q19_12 add_rate;
+    s32    center_visible_f;
 
     if (g_LensFlareWork.lfl_sync_draw_func_exec_f == 0)
     {
@@ -174,25 +176,25 @@ void shLensFlareDraw(void) // 0x8008D78C
         return;
     }
 
-    var1 = shLensFlareLightCenterIsVisible();
-    if (var1 != 0)
+    center_visible_f = shLensFlareLightCenterIsVisible();
+    if (center_visible_f != 0)
     {
-        var0 = g_LensFlareWork.tgt_l_eff_rate - g_LensFlareWork.now_l_eff_rate;
+        add_rate = g_LensFlareWork.tgt_l_eff_rate - g_LensFlareWork.now_l_eff_rate;
     }
     else
     {
-        var0 = -g_LensFlareWork.now_l_eff_rate;
+        add_rate = -g_LensFlareWork.now_l_eff_rate;
     }
 
-    g_LensFlareWork.now_l_eff_rate += var0 >> 1;
+    g_LensFlareWork.now_l_eff_rate += add_rate >> 1;
 
     if (vcRetCamMvSmoothF() == VC_MV_CHASE)
     {
         g_LensFlareWork.now_l_eff_rate = 0;
-        var1               = 0;
+        center_visible_f               = 0;
     }
 
-    shLensFlareEffect_Draw(var1, g_LensFlareWork.now_l_eff_rate, &g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_xy, g_LensFlareWork.scr_l_ang_z);
+    shLensFlareEffect_Draw(center_visible_f, g_LensFlareWork.now_l_eff_rate, &g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_xy, g_LensFlareWork.scr_l_ang_z);
 }
 
 s32 shLensFlareLightCenterIsVisible(void) // 0x8008D850
@@ -220,56 +222,49 @@ s32 shLensFlareLightCenterIsVisible(void) // 0x8008D850
     return (pixels[0] & 0x7FFF) == 0x7FFF;
 }
 
-q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 x1, q19_12 x2) // 0x8008D8C0
+q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 scr_l_pos_z, q19_12 scr_l_ang_z) // 0x8008D8C0
 {
-    q19_12 temp0;
-    q19_12 temp1;
-    q19_12 res;
+    q19_12 pow_rate;
+    q19_12 dist_rate;
+    q19_12 ang_z_rate;
+    q19_12 ret_tgt_rate;
 
-    static s32 Y_ARRAY_0[2] = {
-        Q12(0.0f),
-        Q12(1.0f)
+    static s32 pow_rate_dat[2] = {
+        Q12(0.0f), Q12(1.0f)
     };
 
-    static s32 Y_ARRAY_1[7] = {
-        Q12(4.0f),
-        Q12(1.3f),
-        Q12(0.9f),
-        Q12(0.7f),
-        Q12(0.5f),
-        Q12(0.35f),
-        Q12(0.2f)
+    static s32 dist_rate_dat[7] = {
+        Q12(4.0f), Q12(1.3f), Q12(0.9f), Q12(0.7f), Q12(0.5f), Q12(0.35f), Q12(0.2f)
     };
 
-    static s32 Y_ARRAY_2[7] = {
-        Q12(0.15f),
-        Q12(0.2f),
-        Q12(0.25f),
-        Q12(0.3f),
-        Q12(0.35f),
-        Q12(0.5f),
-        Q12(1.3f)
+    static s32 ang_z_rate_dat[7] = {
+        Q12(0.15f), Q12(0.2f), Q12(0.25f), Q12(0.3f), Q12(0.35f), Q12(0.5f), Q12(1.3f)
     };
 
-    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), light_eff_pow, 0, Q8(16.0f));
-    temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, Q8(0.8f), Q8(13.0f));
-    res   = Q12_MULT(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q12_ANGLE(75.0f), Q12_ANGLE(167.0f)),
-                     Q12_MULT(temp0, temp1));
+    pow_rate     = vwOresenHokan(pow_rate_dat, ARRAY_SIZE(pow_rate_dat), light_eff_pow, Q12(0.0f), Q12(1.0f));
+    dist_rate    = vwOresenHokan(dist_rate_dat, ARRAY_SIZE(dist_rate_dat), scr_l_pos_z, 204, 3328); // Screen depth.
+    ang_z_rate   = vwOresenHokan(ang_z_rate_dat, ARRAY_SIZE(ang_z_rate_dat), scr_l_ang_z, Q12_ANGLE(75.0f), Q12_ANGLE(167.0f));
+    ret_tgt_rate = Q12_MULT(ang_z_rate, Q12_MULT(pow_rate, dist_rate));
 
-    return (res > Q8(24.0f)) ? Q8(24.0f) : res;
+    return MIN(ret_tgt_rate, Q12(1.5f)); // 2.0f in SH2
 }
 
-// Angles used by `shLensFlareEffect_Draw`.
-q3_12 D_800AFD7C[] = {
-    Q12_ANGLE(-175.0f), 0xF889, 0xFA39, 0xFAE4,
-    0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
-    Q12_ANGLE(5.0f), Q12_ANGLE(35.0f), Q12_ANGLE(40.0f), Q12_ANGLE(60.0f),
-    Q12_ANGLE(110.0f), Q12_ANGLE(142.0f), Q12_ANGLE(147.0f), Q12_ANGLE(155.0f)
-};
+/** Sets a square sprite's corners, centered at `x, y` with half-size `r`. */
+static inline void shLensFlareSpriteXYSet(POLY_FT4* poly, s32 x, s32 y, s32 r)
+{
+    setXY4(poly,
+           x - r, y - r,
+           x + r, y - r,
+           x - r, y + r,
+           x + r, y + r);
+}
 
-s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
+static inline void shLensFlareGreySet(POLY_FT4* poly, s32 c)
+{
+    setRGB0(poly, c, c, c);
+}
 
-void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8008D990
+void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 now_l_eff_rate, VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z) // 0x8008D990
 {
     // VRAM position of the CLUT rows used below.
 #if VERSION_REGION_IS(PAL)
@@ -280,42 +275,32 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
     #define CLUT_Y 0
 #endif
 
-    s32       sp20;
-    s32       sp24;
-    s32       sp28;
-    s32       sp2C;
-    q3_12     curAngle;
-    s32       temp_a0;
-    s32       temp_a0_4;
-    s32       temp_a0_5;
-    s32       temp_a1;
-    s32       temp_a1_2;
-    s32       temp_a1_5;
-    s32       temp_a2;
-    s32       temp_a2_3;
-    s32       temp_a3_2;
-    q3_12     cosCurAngle;
-    s32       temp_s0_6;
-    q3_12     sinCurAngle;
-    s32       temp_s2_2;
-    s32       temp_t0;
-    s32       temp_v0_11;
-    s32       temp_v0_13;
-    s32       temp_v0_3;
-    s32       temp_v0_5;
-    s32       temp_v0_9;
-    s32       temp_v1_10;
-    s32       temp_v1_12;
-    s32       temp_v1_4;
-    s32       temp_v1_6;
-    s32       temp_v1_8;
-    s16       var_s3;
+    s32       add_flare_ang;
+    s32       add_mask_ang;
+    q3_12     ang;
+    q3_12     hensin_rate_x;
+    q3_12     hensin_rate_y;
+    s32       hensin_x;
+    s32       hensin_y;
+    s32       r;
+    q3_12     sin_val;
+    q3_12     cos_val;
+    s16       _rate;
     s32       i;
     POLY_FT4* poly;
-    GsOT_TAG* temp_s2;
-    GsOT_TAG* temp_s7;
+    GsOT_TAG* depth_ot;
+    GsOT_TAG* front_ot;
 
-    DVECTOR D_8002B2BC[] = {
+    // Flare streak angles. Close to SH2's 12-entry `ang_dat`.
+    static q3_12 ang_dat[] = {
+        Q12_ANGLE(-175.0f), Q12_ANGLE(-168.0f), Q12_ANGLE(-130.0f), Q12_ANGLE(-115.0f),
+        Q12_ANGLE(-60.0f),  Q12_ANGLE(-50.0f),  Q12_ANGLE(-15.0f),  Q12_ANGLE(-2.0f),
+        Q12_ANGLE(5.0f),    Q12_ANGLE(35.0f),   Q12_ANGLE(40.0f),   Q12_ANGLE(60.0f),
+        Q12_ANGLE(110.0f),  Q12_ANGLE(142.0f),  Q12_ANGLE(147.0f),  Q12_ANGLE(155.0f)
+    };
+
+    // Streak quad corners, rotated by each `ang_dat` angle.
+    DVECTOR pos[] = {
         { -4, 0 },
         { 43, -47 },
         { 43, 47 },
@@ -323,19 +308,19 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
     };
 
     // TODO: 512 is probably a screen constant.
-    if (arg2->vx < ((-g_GameWork.gsScreenWidth  >> 1) - 512) || ((g_GameWork.gsScreenWidth  >> 1) + 512) < arg2->vx ||
-        arg2->vy < ((-g_GameWork.gsScreenHeight >> 1) - 512) || ((g_GameWork.gsScreenHeight >> 1) + 512) < arg2->vy)
+    if (scr_l_pos->vx < ((-g_GameWork.gsScreenWidth  >> 1) - 512) || ((g_GameWork.gsScreenWidth  >> 1) + 512) < scr_l_pos->vx ||
+        scr_l_pos->vy < ((-g_GameWork.gsScreenHeight >> 1) - 512) || ((g_GameWork.gsScreenHeight >> 1) + 512) < scr_l_pos->vy)
     {
         return;
     }
 
-    sinCurAngle   = Q12_MULT(Math_Sin(arg4), Math_Cos(arg3));
-    cosCurAngle = Q12_MULT(Math_Sin(arg4), Math_Sin(arg3));
+    hensin_rate_x = Q12_MULT(Math_Sin(scr_l_ang_z), Math_Cos(scr_l_ang_xy));
+    hensin_rate_y = Q12_MULT(Math_Sin(scr_l_ang_z), Math_Sin(scr_l_ang_xy));
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
-    temp_s7 = &g_OrderingTable0[g_ActiveBufferIdx].org[1];
-    temp_s2 = &g_OrderingTable0[g_ActiveBufferIdx].org[arg2->vz >> 3];
+    front_ot = &g_OrderingTable0[g_ActiveBufferIdx].org[1];
+    depth_ot = &g_OrderingTable0[g_ActiveBufferIdx].org[scr_l_pos->vz >> 3];
 
     SetPolyFT4(poly);
 
@@ -344,35 +329,22 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
 
     setUV4(poly, 0, 0, 63, 0, 0, 63, 63, 63);
 
-    temp_a1 = (arg1 + Q12(3.0f)) >> 2;
-
-    setRGB0(poly, Q12_MULT(temp_a1, 40), Q12_MULT(temp_a1, 40), Q12_MULT(temp_a1, 40));
+    shLensFlareGreySet(poly, Q12_MULT(((now_l_eff_rate + Q12(3.0f)) >> 2), 40));
     setSemiTrans(poly, 1);
 
-    temp_a2   = arg2->vx + Q12_MULT(sinCurAngle, 5);
-    temp_a0   = Q12_MULT(temp_a1, 30);
-    temp_a1_2 = arg2->vy + Q12_MULT(cosCurAngle, 5);
-
-    setXY4(poly,
-           temp_a2 - temp_a0, temp_a1_2 - temp_a0,
-           temp_a2 + temp_a0, temp_a1_2 - temp_a0,
-           temp_a2 - temp_a0, temp_a1_2 + temp_a0,
-           temp_a2 + temp_a0, temp_a1_2 + temp_a0);
+    shLensFlareSpriteXYSet(poly, scr_l_pos->vx + Q12_MULT(hensin_rate_x, 5), scr_l_pos->vy + Q12_MULT(hensin_rate_y, 5), Q12_MULT(((now_l_eff_rate + Q12(3.0f)) >> 2), 30));
 
     if (center_visible_f)
     {
-        AddPrim(temp_s7, poly);
+        AddPrim(front_ot, poly);
+    }
+    else if (scr_l_ang_z > Q12_ANGLE(90.0f))
+    {
+        AddPrim(depth_ot, poly);
     }
     else
     {
-        if (arg4 > 0x400)
-        {
-            AddPrim(temp_s2, poly);
-        }
-        else
-        {
-            AddPrim(temp_s2 + 7, poly);
-        }
+        AddPrim(depth_ot + 7, poly);
     }
 
     poly++;
@@ -386,29 +358,19 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
     setRGB0(poly, 0x10, 0x10, 0x10);
     setSemiTrans(poly, 1);
 
-    temp_v0_3 = arg2->vx;
-    temp_v1_4 = arg2->vy;
-
-    setXY4(poly,
-           temp_v0_3 - 11, temp_v1_4 - 11,
-           temp_v0_3 + 11, temp_v1_4 - 11,
-           temp_v0_3 - 11, temp_v1_4 + 11,
-           temp_v0_3 + 11, temp_v1_4 + 11);
+    shLensFlareSpriteXYSet(poly, scr_l_pos->vx, scr_l_pos->vy, 11);
 
     if (center_visible_f)
     {
-        AddPrim(temp_s7, poly);
+        AddPrim(front_ot, poly);
+    }
+    else if (scr_l_ang_z > Q12_ANGLE(90.0f))
+    {
+        AddPrim(depth_ot, poly);
     }
     else
     {
-        if (arg4 > 0x400)
-        {
-            AddPrim(temp_s2, poly);
-        }
-        else
-        {
-            AddPrim(temp_s2 + 7, poly);
-        }
+        AddPrim(depth_ot + 7, poly);
     }
 
     poly++;
@@ -416,45 +378,42 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
     SetPolyFT4(poly);
     setSemiTrans(poly, 1);
 
-    temp_v0_5 = Q12_MULT(MIN(arg1 * 2, Q12(1.0f)), 48);
-    setRGB0(poly, temp_v0_5, temp_v0_5, temp_v0_5);
+    shLensFlareGreySet(poly, Q12_MULT(MIN(now_l_eff_rate * 2, Q12(1.0f)), 48));
 
     poly->tpage = 44;
     poly->clut  = getClut(CLUT_X, CLUT_Y + 6);
 
     setUV4(poly, 0, 0, 63, 0, 0, 63, 63, 63);
 
-    temp_t0   = arg2->vx + FP_MULTIPLY(sinCurAngle, 9, Q12_SHIFT - 1);
-    temp_a2_3 = Q12_MULT((arg1 + Q12(3.0f)) >> 2, 48);
-    temp_a3_2 = arg2->vy + FP_MULTIPLY(cosCurAngle, 9, Q12_SHIFT - 1);
+    hensin_x = scr_l_pos->vx + FP_MULTIPLY(hensin_rate_x, 9, Q12_SHIFT - 1);
+    r        = Q12_MULT((now_l_eff_rate + Q12(3.0f)) >> 2, 48);
+    hensin_y = scr_l_pos->vy + FP_MULTIPLY(hensin_rate_y, 9, Q12_SHIFT - 1);
+    shLensFlareSpriteXYSet(poly, hensin_x, hensin_y, r);
 
-    setXY4(poly,
-           temp_t0 - temp_a2_3, temp_a3_2 - temp_a2_3,
-           temp_t0 + temp_a2_3, temp_a3_2 - temp_a2_3,
-           temp_t0 - temp_a2_3, temp_a3_2 + temp_a2_3,
-           temp_t0 + temp_a2_3, temp_a3_2 + temp_a2_3);
-
-    AddPrim(temp_s7, poly);
+    AddPrim(front_ot, poly);
     poly++;
 
-    if (!arg1)
+    if (!now_l_eff_rate)
     {
         GsOUT_PACKET_P = (PACKET*)poly;
         return;
     }
 
-    sp20 = ((-arg4 >> 1) + ((arg2->vx + arg2->vy) * 4)) + 0x2AA;
-    sp24 = (arg2->vz * 4) + ((arg2->vx + arg2->vy) * 16);
+    add_flare_ang = ((-scr_l_ang_z >> 1) + ((scr_l_pos->vx + scr_l_pos->vy) * 4)) + Q12_ANGLE(60.0f);
+    add_mask_ang  = (scr_l_pos->vz * 4) + ((scr_l_pos->vx + scr_l_pos->vy) * 16);
 
     for (i = 0; i < 16; i++)
     {
-        curAngle = D_800AFD7C[i] + sp20;
+        s32 pos_x;
+        s32 pos_y;
 
-        var_s3 = Q12_MULT((Math_Cos(curAngle - arg3) + Q12(1.7f)), (Math_Cos((curAngle * 12) + sp24) + Q12(1.0f)) >> 1);
-        var_s3 = MIN(var_s3, Q12(1.5f));
+        ang = ang_dat[i] + add_flare_ang;
 
-        sinCurAngle = Math_Sin(curAngle);
-        cosCurAngle = Math_Cos(curAngle);
+        _rate = Q12_MULT((Math_Cos(ang - scr_l_ang_xy) + Q12(1.7f)), (Math_Cos((ang * 12) + add_mask_ang) + Q12(1.0f)) >> 1);
+        _rate = MIN(_rate, Q12(1.5f));
+
+        sin_val = Math_Sin(ang);
+        cos_val = Math_Cos(ang);
 
         SetPolyFT4(poly);
 
@@ -464,32 +423,29 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
         setUV4(poly, 0x20, 0x40, 0x3F, 0x40, 0x20, 0x5F, 0x3F, 0x5F);
         setSemiTrans(poly, 1);
 
-        temp_v0_9 = (arg1 * var_s3) >> 18;
-        setRGB0(poly, temp_v0_9, temp_v0_9, temp_v0_9);
+        shLensFlareGreySet(poly, (now_l_eff_rate * _rate) >> 18);
 
-        temp_a0_4 = arg2->vy;
-        temp_v1_6 = arg2->vx;
+        pos_y = scr_l_pos->vy;
+        pos_x = scr_l_pos->vx;
 
         setXY4(poly,
-               temp_v1_6 + FP_FROM(D_8002B2BC[0].vx * cosCurAngle - D_8002B2BC[0].vy * sinCurAngle, Q12_SHIFT),
-               temp_a0_4 + FP_FROM(D_8002B2BC[0].vx * sinCurAngle + D_8002B2BC[0].vy * cosCurAngle, Q12_SHIFT),
-               temp_v1_6 + FP_FROM(D_8002B2BC[1].vx * cosCurAngle - D_8002B2BC[1].vy * sinCurAngle, Q12_SHIFT),
-               temp_a0_4 + FP_FROM(D_8002B2BC[1].vx * sinCurAngle + D_8002B2BC[1].vy * cosCurAngle, Q12_SHIFT),
-               temp_v1_6 + FP_FROM(D_8002B2BC[2].vx * cosCurAngle - D_8002B2BC[2].vy * sinCurAngle, Q12_SHIFT),
-               temp_a0_4 + FP_FROM(D_8002B2BC[2].vx * sinCurAngle + D_8002B2BC[2].vy * cosCurAngle, Q12_SHIFT),
-               temp_v1_6 + FP_FROM(D_8002B2BC[3].vx * cosCurAngle - D_8002B2BC[3].vy * sinCurAngle, Q12_SHIFT),
-               temp_a0_4 + FP_FROM(D_8002B2BC[3].vx * sinCurAngle + D_8002B2BC[3].vy * cosCurAngle, Q12_SHIFT));
+               pos_x + FP_FROM(pos[0].vx * cos_val - pos[0].vy * sin_val, Q12_SHIFT),
+               pos_y + FP_FROM(pos[0].vx * sin_val + pos[0].vy * cos_val, Q12_SHIFT),
+               pos_x + FP_FROM(pos[1].vx * cos_val - pos[1].vy * sin_val, Q12_SHIFT),
+               pos_y + FP_FROM(pos[1].vx * sin_val + pos[1].vy * cos_val, Q12_SHIFT),
+               pos_x + FP_FROM(pos[2].vx * cos_val - pos[2].vy * sin_val, Q12_SHIFT),
+               pos_y + FP_FROM(pos[2].vx * sin_val + pos[2].vy * cos_val, Q12_SHIFT),
+               pos_x + FP_FROM(pos[3].vx * cos_val - pos[3].vy * sin_val, Q12_SHIFT),
+               pos_y + FP_FROM(pos[3].vx * sin_val + pos[3].vy * cos_val, Q12_SHIFT));
 
-        addPrim(temp_s7, poly);
+        addPrim(front_ot, poly);
         poly++;
     }
 
-    sp28 = 0x3F;
-    sp2C = 0x40;
-
+    // Ghost flares, placed along the line from the screen center through the light at `base_vector` scale.
     SetPolyFT4(poly);
 
-    setRGB0(poly, Q12_MULT(arg1, 32), Q12_MULT(arg1, 0x30), Q12_MULT(arg1, 32));
+    setRGB0(poly, Q12_MULT(now_l_eff_rate, 32), Q12_MULT(now_l_eff_rate, 48), Q12_MULT(now_l_eff_rate, 32));
 
     poly->tpage = 44;
     poly->clut  = getClut(CLUT_X, CLUT_Y + 7);
@@ -497,25 +453,14 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
     setUV4(poly, 0x40, 0, 0x7F, 0, 0x40, 0x3F, 0x7F, 0x3F);
     setSemiTrans(poly, 1);
 
-    temp_s2_2 = (arg1 + 0x3000) >> 2;
-    temp_a1_5 = Q12_MULT(temp_s2_2, 0x10);
-    temp_a0_5 = Q12_MULT(arg2->vx, 0x333);
-    setSemiTrans(poly, 1);
-    temp_v1_8 = Q12_MULT(arg2->vy, 0x333);
+    shLensFlareSpriteXYSet(poly, Q12_MULT(scr_l_pos->vx, Q12(0.2f)), Q12_MULT(scr_l_pos->vy, Q12(0.2f)), Q12_MULT(((now_l_eff_rate + Q12(3.0f)) >> 2), 16));
 
-    setXY4(poly,
-           temp_a0_5 - temp_a1_5, temp_v1_8 - temp_a1_5,
-           temp_a0_5 + temp_a1_5, temp_v1_8 - temp_a1_5,
-           temp_a0_5 - temp_a1_5, temp_v1_8 + temp_a1_5,
-           temp_a0_5 + temp_a1_5, temp_v1_8 + temp_a1_5);
-
-    addPrim(temp_s7, poly);
+    addPrim(front_ot, poly);
     poly++;
 
     SetPolyFT4(poly);
 
-    temp_s0_6 = Q12_MULT(arg1, 0x18);
-    setRGB0(poly, ((u32)arg1 * 7) >> 9, ((u32)arg1 * 0x13) >> 0xB, temp_s0_6);
+    setRGB0(poly, ((u32)now_l_eff_rate * 7) >> 9, ((u32)now_l_eff_rate * 19) >> 11, Q12_MULT(now_l_eff_rate, 24));
 
     poly->tpage = 44;
     poly->clut  = getClut(CLUT_X, CLUT_Y + 7);
@@ -523,21 +468,14 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
     setUV4(poly, 0x40, 0, 0x7F, 0, 0x40, 0x3F, 0x7F, 0x3F);
     setSemiTrans(poly, 1);
 
-    temp_v1_10 = Q12_MULT(arg2->vx, -0x4CC);
-    temp_v0_11 = Q12_MULT(arg2->vy, -0x4CC);
+    shLensFlareSpriteXYSet(poly, Q12_MULT(scr_l_pos->vx, -Q12(0.3f)), Q12_MULT(scr_l_pos->vy, -Q12(0.3f)), Q12_MULT(((now_l_eff_rate + Q12(3.0f)) >> 2), 28));
 
-    setXY4(poly,
-           temp_v1_10 - Q12_MULT(temp_s2_2, 0x1C), temp_v0_11 - Q12_MULT(temp_s2_2, 0x1C),
-           temp_v1_10 + Q12_MULT(temp_s2_2, 0x1C), temp_v0_11 - Q12_MULT(temp_s2_2, 0x1C),
-           temp_v1_10 - Q12_MULT(temp_s2_2, 0x1C), temp_v0_11 + Q12_MULT(temp_s2_2, 0x1C),
-           temp_v1_10 + Q12_MULT(temp_s2_2, 0x1C), temp_v0_11 + Q12_MULT(temp_s2_2, 0x1C));
-
-    addPrim(temp_s7, poly);
+    addPrim(front_ot, poly);
     poly++;
 
     SetPolyFT4(poly);
 
-    setRGB0(poly, (u32)arg1 >> 6, temp_s0_6, ((u32)arg1 * 0x2F) >> 11);
+    setRGB0(poly, (u32)now_l_eff_rate >> 6, Q12_MULT(now_l_eff_rate, 24), ((u32)now_l_eff_rate * 47) >> 11);
 
     poly->tpage = 76;
     poly->clut  = getClut(CLUT_X, CLUT_Y + 6);
@@ -545,22 +483,17 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s3
     setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
     setSemiTrans(poly, 1);
 
-    temp_v0_13 = arg2->vx;
-    temp_v1_12 = arg2->vy;
+    shLensFlareSpriteXYSet(poly, scr_l_pos->vx, scr_l_pos->vy, 10);
 
-    setXY4(poly,
-           temp_v0_13 - 10, temp_v1_12 - 10,
-           temp_v0_13 + 10, temp_v1_12 - 10,
-           temp_v0_13 - 10, temp_v1_12 + 10,
-           temp_v0_13 + 10, temp_v1_12 + 10);
-
-    addPrim(temp_s7, poly);
+    addPrim(front_ot, poly);
     poly++;
     GsOUT_PACKET_P = (PACKET*)poly;
 
     #undef CLUT_X
     #undef CLUT_Y
 }
+
+s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
 
 void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 {

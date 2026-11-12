@@ -120,7 +120,7 @@ typedef struct _VC_WORK
     /* 0xB8  */ SVECTOR                   ofs_cam_ang;                               /** Offset rotation. */
     /* 0xC0  */ SVECTOR                   ofs_cam_ang_spd;                           /** Offset rotational speed. */
     /* 0xC8  */ SVECTOR                   base_cam_ang;                              /** Base rotation. */
-    /* 0xD0  */ s8                        unk_D0[8];                                 // TODO: Possibly unused or debug data?
+    /* 0xD0  */ SVECTOR                   old_base_cam_ang;                          /** @unused Previous base rotation. Name from SH2. */
     /* 0xD8  */ u8                        updateLookAtPoint;                         /** `bool` */
                 // 3 bytes of padding.
     /* 0xDC  */ MATRIX                    lookAtMat;

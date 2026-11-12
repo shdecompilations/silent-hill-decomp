@@ -373,7 +373,7 @@ void WorldGfx_CloseRangeChunksInit(void) // 0x8003C3AC
         projPos.vz += projOffsetZ;
 
         // Limit projection if too far away.
-        if (Vc_VectorMagnitudeCalc(projPos.vx - player->position.vx,
+        if (vwRet3DLength(projPos.vx - player->position.vx,
                                    Q12(0.0f),
                                    projPos.vz - player->position.vz) > Q12(16.0f))
         {

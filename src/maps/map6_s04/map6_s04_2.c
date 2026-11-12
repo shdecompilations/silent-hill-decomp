@@ -430,12 +430,12 @@ void func_800DED50(MATRIX* outMat, GsCOORDINATE2* rootCoord, s32 scale) // 0x800
     scaleVec.vy = scale;
     scaleVec.vz = scale;
 
-    transformMat.t[0] -= D_800C3868.t[0];
-    transformMat.t[1] -= D_800C3868.t[1];
-    transformMat.t[2] -= D_800C3868.t[2];
+    transformMat.t[0] -= VwCrdVwMat.t[0];
+    transformMat.t[1] -= VwCrdVwMat.t[1];
+    transformMat.t[2] -= VwCrdVwMat.t[2];
 
     ScaleMatrix(&transformMat, &scaleVec);
-    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &transformMat, outMat);
+    Vw_MultiplyAndTransformMatrix(&VwCrdWsRotMat, &transformMat, outMat);
 }
 
 bool func_800DEDEC(s_800ED848* arg0) // 0x800DEDEC
@@ -1627,7 +1627,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     temp3   = temp3 & 1;
     temp_s5 = temp3 ^ (g_GameWorkConst->config.extraViewCtrl != false);
 
-    Vc_VectorMagnitudeCalc(player->position.vx - npc->position.vx, Q12(0.0f), player->position.vz - npc->position.vz);
+    vwRet3DLength(player->position.vx - npc->position.vx, Q12(0.0f), player->position.vz - npc->position.vz);
     angle2 = ratan2(player->position.vx - Q12(20.0f), player->position.vz - Q12(100.0f));
     angle1 = angle2 + Q12_ANGLE(90.0f);
 
@@ -1686,7 +1686,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
 
         temp_s1_2 = Q12(0.4f);
         temp_s1_2 = FP_FROM(FP_TO(Math_Cos(player->rotation.vy - angle2), Q12_SHIFT), Q12_SHIFT) +
-                    (Vc_VectorMagnitudeCalc(player->position.vx - Q12(20.0f), Q12(0.0f), player->position.vz - Q12(100.0f)) - temp_s1_2);
+                    (vwRet3DLength(player->position.vx - Q12(20.0f), Q12(0.0f), player->position.vz - Q12(100.0f)) - temp_s1_2);
 
         temp_s0_2 = angle2 + Q12_MULT(Math_Cos(player->rotation.vy - angle1), Q12_ANGLE(25.0f));
 
@@ -1726,7 +1726,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
         D_800EBB58.field_4 += Q12_MULT_PRECISE(D_800EBB58.field_6, g_DeltaTime);
     }
 
-    ratan2(player->position.vy + Q12(0.9f), Vc_VectorMagnitudeCalc(player->position.vx - sp28.vx, Q12(0.0f), player->position.vz - sp28.vz));
+    ratan2(player->position.vy + Q12(0.9f), vwRet3DLength(player->position.vx - sp28.vx, Q12(0.0f), player->position.vz - sp28.vz));
 
     sp18.vx = sp28.vx + Q12_MULT(Math_Sin(D_800EBB58.field_4), Q12(3.0f));
     sp18.vz = sp28.vz + Q12_MULT(Math_Cos(D_800EBB58.field_4), Q12(3.0f));
