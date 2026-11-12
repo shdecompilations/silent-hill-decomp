@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/items/weapon_data.h"
 
 u8 g_Items_GunsMaxLoadAmmo[36] = {
     0, 0, 0, 0, 0, 0, 0, 0,
@@ -10,7 +11,7 @@ u8 g_Items_GunsMaxLoadAmmo[36] = {
     15, 6, 6, NO_VALUE
 };
 
-u32 D_800AD4C4 = 0;
+static u32 D_800AD4C4 = 0;
 
 // TODO: Add weapon attack names to each row.
 s_AttackInfo g_Items_WeaponAttackInfos[70] = {
