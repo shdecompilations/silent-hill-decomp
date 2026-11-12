@@ -349,9 +349,6 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                var_s2;
     s32                temp_v0_10;
     s32                scaledDistSqr;
-    s32                temp_v0_4;
-    s32                temp_v0_5;
-    s32                temp_v0_6;
     s32                temp_v1;
     s32                var_a0_2;
     s32                var_a0_3;
@@ -375,7 +372,6 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                temp3;
     s32                temp4;
     s32                temp5;
-    s32                temp6;
     static s_RayTrace  D_800C4728;
     static DVECTOR     D_800C4748[4];
     static VECTOR3     D_800C4758[4];
@@ -527,26 +523,12 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                     {
                         var_s2 = (var_s2 + 170) / 2;
                     }
-
-                    // @hack
-                    goto j_3d8;
-                j_3a8:
-                    sp30 = 3;
-                    goto j_584;
-                j_3b0:
-                    sp30 = 2;
-                    goto j_584;
-                j_3bc:
-                    sp30    = 1;
-                    var_s2 -= var_s2 / 2;
-                    goto j_584;
                 }
                 else
                 {
                     var_s2 = 170;
                 }
 
-            j_3d8:
                 temp_t3_2 = sp54 / 3;
                 sp30      = NO_VALUE;
 
@@ -560,14 +542,10 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                         {
                             if (temp_s1_2->model.charaId <= CHARA_LAST_ENEMY_ID)
                             {
-                                temp_v0_4 = chara->position.vx - temp_s1_2->position.vx;
-                                temp_v0_5 = chara->position.vy - temp_s1_2->position.vy;
-                                temp_v0_6 = chara->position.vz - temp_s1_2->position.vz;
-
-                                temp6   = Q12_MULT_PRECISE(temp_v0_4, temp_v0_4) + Q12_MULT_PRECISE(temp_v0_5, temp_v0_5);
-                                temp_s0 = Q12_MULT_PRECISE(temp_v0_6, temp_v0_6) + temp6;
-
-                                sp30 = SquareRoot12(temp_s0);
+                                temp_s0 = Q12_SQUARE_PRECISE(chara->position.vx - temp_s1_2->position.vx) +
+                                          Q12_SQUARE_PRECISE(chara->position.vy - temp_s1_2->position.vy) +
+                                          Q12_SQUARE_PRECISE(chara->position.vz - temp_s1_2->position.vz);
+                                sp30    = SquareRoot12(temp_s0);
 
                                 if (temp_s1_2->flags & CharaFlag_Unk2)
                                 {
@@ -583,39 +561,29 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                                     }
                                 }
 
-                                if (!WorldEnv_IsInDarkness())
+                                if (WorldEnv_IsInDarkness())
                                 {
-                                    if (temp_t3_2 >= sp30)
-                                    {
-                                        if (sp30 <= Q12(2.0f))
-                                        {
-                                            sp30   = 0;
-                                            var_s2 = 0;
-                                        }
-                                        else
-                                        {
-                                            goto j_3bc;
-                                            // sp30 = 1;
-                                            // var_s2 -= var_s2 / 2;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        goto j_3b0;
-                                        // sp30 = 2;
-                                    }
+                                    sp30 = 3;
+                                }
+                                else if (temp_t3_2 < sp30)
+                                {
+                                    sp30 = 2;
+                                }
+                                else if (sp30 > Q12(2.0f))
+                                {
+                                    sp30    = 1;
+                                    var_s2 -= var_s2 / 2;
                                 }
                                 else
                                 {
-                                    goto j_3a8;
-                                    // sp30 = 3;
+                                    sp30   = 0;
+                                    var_s2 = 0;
                                 }
                             }
                         } while (0); // @hack
                     }
                 }
 
-            j_584:
                 sp48 = Q12_MULT_PRECISE(var_s2, Rng_RandQ12());
             }
 
