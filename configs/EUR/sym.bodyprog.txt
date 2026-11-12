@@ -1471,10 +1471,10 @@ func_8008D454                                = 0x8008D038; // type:func
 func_8008D464                                = 0x8008D048; // type:func
 func_8008D470                                = 0x8008D054; // type:func
 func_8008D5A0                                = 0x8008D184; // type:func
-func_8008D78C                                = 0x8008D368; // type:func
-func_8008D850                                = 0x8008D42C; // type:func
-func_8008D8C0                                = 0x8008D49C; // type:func
-func_8008D990                                = 0x8008D56C; // type:func
+shLensFlareDraw                              = 0x8008D368; // type:func
+shLensFlareLightCenterIsVisible              = 0x8008D42C; // type:func
+shLensFlareMakeEffectTargetRate              = 0x8008D49C; // type:func
+shLensFlareEffect_Draw                       = 0x8008D56C; // type:func
 func_8008E4EC                                = 0x8008E0C8; // type:func
 Map_WaterZoneGet                             = 0x8008E0F8; // type:func
 func_8008E5B4                                = 0x8008E190; // type:func
@@ -3798,7 +3798,7 @@ g_Event_TweenTimers                          = 0x800C3D00;
 //---------------------------------------------------------------
 //--- PA: 0x09E778   VA: 0x800C3E08   subsegment: .bss, gfx/water
 //---------------------------------------------------------------
-D_800C4818                                   = 0x800C3E08; // size:0x24
+light_flare_work                             = 0x800C3E08; // size:0x24
 
 //--------------------------------------------------------------
 //--- PA: 0x09E7A0   VA: 0x800C3E30   subsegment: .bss, sys/demo

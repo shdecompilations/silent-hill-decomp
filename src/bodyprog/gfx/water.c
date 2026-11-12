@@ -22,50 +22,50 @@
     #define WATER_CLUT_Y 0
 #endif
 
-s_800C4818 D_800C4818;
+LensFlareWork light_flare_work;
 
 void func_8008D41C(void) // 0x8008D41C
 {
-    D_800C4818.field_0 = 0;
-    D_800C4818.field_1 = 0;
-    D_800C4818.field_2 = 0;
-    D_800C4818.field_A = 0;
+    light_flare_work.flare_inhibit_f = 0;
+    light_flare_work.water_inhibit_f = 0;
+    light_flare_work.lfl_sync_draw_func_exec_f = 0;
+    light_flare_work.now_l_eff_rate = 0;
 }
 
 void func_8008D438(void) // 0x8008D438
 {
-    D_800C4818.field_0 = 1;
+    light_flare_work.flare_inhibit_f = 1;
 }
 
 void func_8008D448(void) // 0x8008D448
 {
-    D_800C4818.field_0 = 0;
+    light_flare_work.flare_inhibit_f = 0;
 }
 
 void func_8008D454(void) // 0x8008D454
 {
-    D_800C4818.field_1 = 1;
+    light_flare_work.water_inhibit_f = 1;
 }
 
 void func_8008D464(void) // 0x8008D464
 {
-    D_800C4818.field_1 = 0;
+    light_flare_work.water_inhibit_f = 0;
 }
 
-void func_8008D470(q3_12 lensFlareIntensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
+void func_8008D470(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
 {
     s32          posY;
     s_WaterZone* waterZone;
 
-    if (D_800C4818.field_0 == 0)
+    if (light_flare_work.flare_inhibit_f == 0)
     {
-        func_800410D8(&D_800C4818.field_C, &D_800C4818.field_1C, &D_800C4818.field_20, rot, pos);
+        func_800410D8(&light_flare_work.scr_l_pos, &light_flare_work.scr_l_ang_xy, &light_flare_work.scr_l_ang_z, rot, pos);
 
-        if ((ReadGeomScreen() >> 1) < D_800C4818.field_C.vz)
+        if ((ReadGeomScreen() >> 1) < light_flare_work.scr_l_pos.vz)
         {
-            D_800C4818.field_2 = 1;
-            D_800C4818.field_8 = func_8008D8C0(lensFlareIntensity, D_800C4818.field_C.vz, D_800C4818.field_20);
-            func_8008D5A0(&D_800C4818.field_C, D_800C4818.field_20);
+            light_flare_work.lfl_sync_draw_func_exec_f = 1;
+            light_flare_work.tgt_l_eff_rate = shLensFlareMakeEffectTargetRate(light_intensity, light_flare_work.scr_l_pos.vz, light_flare_work.scr_l_ang_z);
+            func_8008D5A0(&light_flare_work.scr_l_pos, light_flare_work.scr_l_ang_z);
         }
         else
         {
@@ -73,7 +73,7 @@ void func_8008D470(q3_12 lensFlareIntensity, SVECTOR* rot, VECTOR3* pos, s_Water
         }
     }
 
-    if (D_800C4818.field_1 == 0)
+    if (light_flare_work.water_inhibit_f == 0)
     {
         waterZone = Map_WaterZoneGet(Q12_TO_Q4(pos->vx), Q12_TO_Q4(pos->vz), waterZones);
         if (waterZone != NULL)
@@ -83,7 +83,7 @@ void func_8008D470(q3_12 lensFlareIntensity, SVECTOR* rot, VECTOR3* pos, s_Water
             if (waterZone->isEnabled == true)
             {
                 posY = Q4_TO_Q12(waterZone->illumination);
-                func_8008E794(pos, D_800C4818.field_20, posY);
+                func_8008E794(pos, light_flare_work.scr_l_ang_z, posY);
                 func_8008EA68(rot, pos, posY);
             }
         }
@@ -157,49 +157,49 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 5, packet);
 }
 
-void func_8008D78C(void) // 0x8008D78C
+void shLensFlareDraw(void) // 0x8008D78C
 {
     s32 var0;
     s32 var1;
 
-    if (D_800C4818.field_2 == 0)
+    if (light_flare_work.lfl_sync_draw_func_exec_f == 0)
     {
         return;
     }
 
-    D_800C4818.field_2 = 0;
+    light_flare_work.lfl_sync_draw_func_exec_f = 0;
 
-    if (D_800C4818.field_0 != 0)
+    if (light_flare_work.flare_inhibit_f != 0)
     {
         return;
     }
 
-    var1 = func_8008D850();
+    var1 = shLensFlareLightCenterIsVisible();
     if (var1 != 0)
     {
-        var0 = D_800C4818.field_8 - D_800C4818.field_A;
+        var0 = light_flare_work.tgt_l_eff_rate - light_flare_work.now_l_eff_rate;
     }
     else
     {
-        var0 = -D_800C4818.field_A;
+        var0 = -light_flare_work.now_l_eff_rate;
     }
 
-    D_800C4818.field_A += var0 >> 1;
+    light_flare_work.now_l_eff_rate += var0 >> 1;
 
     if (vcRetCamMvSmoothF() == VC_MV_CHASE)
     {
-        D_800C4818.field_A = 0;
+        light_flare_work.now_l_eff_rate = 0;
         var1               = 0;
     }
 
-    func_8008D990(var1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
+    shLensFlareEffect_Draw(var1, light_flare_work.now_l_eff_rate, &light_flare_work.scr_l_pos, light_flare_work.scr_l_ang_xy, light_flare_work.scr_l_ang_z);
 }
 
-s32 func_8008D850(void) // 0x8008D850
+s32 shLensFlareLightCenterIsVisible(void) // 0x8008D850
 {
-    s16 rectX;
+    s16  rectX;
     RECT rect;
-    s_8008D850 unk;
+    u16  pixels[2]; // `StoreImage2` copies whole 32-bit words, so the 1 pixel needed comes with a 2nd.
 
     rectX = 784;
     if (g_ActiveBufferIdx == 0)
@@ -213,13 +213,14 @@ s32 func_8008D850(void) // 0x8008D850
     rect.h = 1;
 
     DrawSync(SyncMode_Wait);
-    StoreImage2(&rect, &unk.field_0);
+    StoreImage2(&rect, (u_long*)pixels);
     DrawSync(SyncMode_Wait);
 
-    return (unk.field_0 & SHRT_MAX) == SHRT_MAX;
+    // Still white (ignoring the mask bit) if nothing was drawn over the light center.
+    return (pixels[0] & 0x7FFF) == 0x7FFF;
 }
 
-q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2) // 0x8008D8C0
+q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 x1, q19_12 x2) // 0x8008D8C0
 {
     q19_12 temp0;
     q19_12 temp1;
@@ -250,7 +251,7 @@ q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2) // 0x8008D8
         Q12(1.3f)
     };
 
-    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), lensFlareIntensity, 0, Q8(16.0f));
+    temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), light_eff_pow, 0, Q8(16.0f));
     temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, Q8(0.8f), Q8(13.0f));
     res   = Q12_MULT(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q8(3.335f), Q8(7.425f)), // TODO: Yucky floats, maybe these aren't distances?
                      Q12_MULT(temp0, temp1));
@@ -258,7 +259,7 @@ q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2) // 0x8008D8
     return (res > Q8(24.0f)) ? Q8(24.0f) : res;
 }
 
-// Angles used by `func_8008D990`.
+// Angles used by `shLensFlareEffect_Draw`.
 q3_12 D_800AFD7C[] = {
     Q12_ANGLE(-175.0f), 0xF889, 0xFA39, 0xFAE4,
     0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
@@ -268,7 +269,7 @@ q3_12 D_800AFD7C[] = {
 
 s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
 
-void func_8008D990(s32 arg0, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8008D990
+void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8008D990
 {
     // VRAM position of the CLUT rows used below.
 #if VERSION_REGION_IS(PAL)
@@ -358,7 +359,7 @@ void func_8008D990(s32 arg0, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 
            temp_a2 - temp_a0, temp_a1_2 + temp_a0,
            temp_a2 + temp_a0, temp_a1_2 + temp_a0);
 
-    if (arg0)
+    if (center_visible_f)
     {
         AddPrim(temp_s7, poly);
     }
@@ -394,7 +395,7 @@ void func_8008D990(s32 arg0, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 
            temp_v0_3 - 11, temp_v1_4 + 11,
            temp_v0_3 + 11, temp_v1_4 + 11);
 
-    if (arg0)
+    if (center_visible_f)
     {
         AddPrim(temp_s7, poly);
     }

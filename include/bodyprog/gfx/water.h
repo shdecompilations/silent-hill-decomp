@@ -1,22 +1,23 @@
 #ifndef _BODYPROG_GFX_WATER_H
 #define _BODYPROG_GFX_WATER_H
 
-typedef struct
+/** @brief Lens flare state, name and fields taken from SH2, which matches almost exactly. */
+typedef struct _LensFlareWork
 {
-    /* 0x0  */ u8      field_0; // `bool`?
-    /* 0x1  */ u8      field_1; // `bool`?
-    /* 0x2  */ u8      field_2; // `bool`?
-    /* 0x3  */ u8      field_3;
+    /* 0x0  */ u8      flare_inhibit_f;           /** `bool` */
+    /* 0x1  */ u8      water_inhibit_f;           /** `bool` */
+    /* 0x2  */ u8      lfl_sync_draw_func_exec_f; /** `bool` */
+    /* 0x3  */ u8      draw_center_f;             /** @unused */
     /* 0x4  */ s8      unk_4[4];
-    /* 0x8  */ s16     field_8;
-    /* 0xA  */ s16     field_A;
-    /* 0xC  */ VECTOR3 field_C; // Q19.12
+    /* 0x8  */ s16     tgt_l_eff_rate;
+    /* 0xA  */ s16     now_l_eff_rate;            /** Moves halfway to `tgt_l_eff_rate` each frame. */
+    /* 0xC  */ VECTOR3 scr_l_pos;                 /** Light position projected to the screen. */
     /* 0x18 */ s8      unk_18[4];
-    /* 0x1C */ s32     field_1C;
-    /* 0x20 */ q19_12  field_20;
-} s_800C4818;
+    /* 0x1C */ s32     scr_l_ang_xy;
+    /* 0x20 */ q19_12  scr_l_ang_z;
+} LensFlareWork;
 
-extern s_800C4818 D_800C4818;
+extern LensFlareWork light_flare_work; // Name from SH2 symbols.
 
 void func_8008D41C(void);
 
@@ -29,14 +30,15 @@ void func_8008D454(void);
 void func_8008D464(void);
 
 /** Light function. */
-void func_8008D470(q3_12 lensFlareIntensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
+void func_8008D470(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
 
 void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 
-/** Light function. */
-q19_12 func_8008D8C0(q3_12 lensFlareIntensity, q19_12 x1, q19_12 x2);
+// Named from SH2 symbols.
+q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 x1, q19_12 x2);
 
-void func_8008D990(s32 arg0, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4);
+// Named from SH2 symbols.
+void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 arg1, VECTOR3* arg2, s32 arg3, s32 arg4);
 
 /** @brief Gets the water zone at a given position.
  *

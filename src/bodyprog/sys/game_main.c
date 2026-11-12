@@ -220,7 +220,7 @@ void MainLoop(void) // 0x80032EE0
         }
 
         func_80089128();
-        func_8008D78C(); // Camera update?
+        shLensFlareDraw();
         DrawSync(SyncMode_Wait);
 
         // Handle V sync.

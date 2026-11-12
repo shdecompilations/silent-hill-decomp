@@ -93,11 +93,6 @@ typedef struct
     /* 0x4 */ s32 field_4[4];
 } s_800382B0;
 
-typedef struct
-{
-    /* 0x0 */ s16 field_0; // Flags?
-} s_8008D850;
-
 /** @brief Radio noise data for nearby enemies. */
 typedef struct _RadioNoise
 {
@@ -912,12 +907,14 @@ u32 func_800364BC(void);
 void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
                     u32 clutX, s16 clutY, s32 tPage);
 
-s32 func_8008D850(void);
+// Named from SH2 symbols (func code doesn't match SH2, but the purpose/caller does)
+s32 shLensFlareLightCenterIsVisible(void);
 
 // Sets material flags?
 void func_8008E4EC(s_LmHeader* lmHdr);
 
-void func_8008D78C(void);
+// Named from SH2 symbols.
+void shLensFlareDraw(void);
 
 void func_80091380(void);
 
