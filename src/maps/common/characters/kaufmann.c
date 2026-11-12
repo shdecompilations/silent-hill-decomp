@@ -164,7 +164,7 @@ void Kaufmann_ControlUpdate(s_SubCharacter* kaufmann, GsCOORDINATE2* boneCoords)
             if (kaufmann->model.anim.keyframeIdx >= 95 && NPC_CHARA(0).properties.npc.field_120 == 0)
             {
                 NPC_CHARA(0).properties.npc.field_120 = 1;
-                func_8006342C(EquippedWeaponId_Unk70, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), &g_SysWork.npcBoneCoordBuffer[0]);
+                func_8006342C(AttackType_KaufmannHandgun, Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), &g_SysWork.npcBoneCoordBuffer[0]);
             }
 
             Model_AnimStatusSet(&kaufmann->model, KaufmannAnim_5, false);

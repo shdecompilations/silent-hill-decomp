@@ -179,77 +179,6 @@ typedef enum _CommonPickupItemId
     CommonPickupItemId_ShotgunShells  = 5
 } e_CommonPickupItemId;
 
-/** @brief Equipped weapon IDs. Derivative of `e_InvItemId`.
- *
- * TODO: Maybe "attack ID" or "interaction ID" is a better name?
- */
-typedef enum _EquippedWeaponId
-{
-    EquippedWeaponId_KitchenKnife   = 0,
-    EquippedWeaponId_SteelPipe      = 1,
-    EquippedWeaponId_RockDrill      = 2,
-    EquippedWeaponId_Unk3           = 3,
-    EquippedWeaponId_Hammer         = 4,
-    EquippedWeaponId_Chainsaw       = 5,
-    EquippedWeaponId_Katana         = 6,
-    EquippedWeaponId_Axe            = 7,
-    EquippedWeaponId_Kick           = 8,
-    EquippedWeaponId_Stomp          = 9,
-
-    EquippedWeaponId_Unk31          = 31, // Larval Stalker attack.
-    EquippedWeaponId_Handgun        = 32,
-    EquippedWeaponId_HuntingRifle   = 33,
-    EquippedWeaponId_Shotgun        = 34,
-    EquippedWeaponId_HyperBlaster   = 35,
-
-    EquippedWeaponId_Unk40          = 40,
-    EquippedWeaponId_Unk41          = 41,
-    EquippedWeaponId_Unk42          = 42,
-    EquippedWeaponId_Unk43          = 43, // Groaner attack.
-
-    EquippedWeaponId_Unk44          = 44, // } HangedScratcher attack.
-    EquippedWeaponId_Unk45          = 45, // }
-
-    EquippedWeaponId_Unk46          = 46,
-    EquippedWeaponId_Unk47          = 47, // Split Head attack, instant death.
-
-    EquippedWeaponId_Unk48          = 48, // } Stalker attack.
-    EquippedWeaponId_Unk49          = 49, // }
-
-    EquippedWeaponId_Unk50          = 50,
-
-    EquippedWeaponId_Unk51          = 51, // } Larval Stalker attack.
-    EquippedWeaponId_Unk52          = 52, // }
-
-    EquippedWeaponId_Unk53          = 53, // Creeper attack.
-    EquippedWeaponId_Unk54          = 54, // Romper grab.
-
-    EquippedWeaponId_Unk56          = 56, // Puppet Nurse attack.
-    EquippedWeaponId_Unk57          = 57, // Puppet Nurse attack.
-    EquippedWeaponId_Unk58          = 58, // Puppet Doctor attack.
-
-    EquippedWeaponId_Unk59          = 59, // Float Stinger attack.
-    EquippedWeaponId_Unk60          = 60, // Float Stinger attack.
-
-    EquippedWeaponId_Unk61          = 61, // Twinfeeler attack.
-    EquippedWeaponId_Unk62          = 62, // Twinfeeler attack.
-
-    EquippedWeaponId_Unk63          = 63, // Cybil or Monster Cybil attack.
-
-    EquippedWeaponId_HandgunBullets = 64, // Monster Cybil attack?
-    EquippedWeaponId_RifleShells    = 65, // Monster Cybil attack?
-    EquippedWeaponId_ShotgunShells  = 66, // Monster Cybil attack?
-
-    EquippedWeaponId_Unk67          = 67, // Used in M7S03, unknown character.
-    EquippedWeaponId_Unk68          = 68, // Unknown23 attack.
-    EquippedWeaponId_Unk69          = 69, // Bloodsucker attack.
-    EquippedWeaponId_Unk70          = 70, // Kaufmann attack on Dahlia?
-
-    EquippedWeaponId_Flashlight     = 96,
-    EquippedWeaponId_PocketRadio    = 97,
-    EquippedWeaponId_GasolineTank   = 98
-} e_EquippedWeaponId;
-
 /** @brief Special inventory item toggle flags. */
 typedef enum _ItemToggleFlags
 {
@@ -301,22 +230,5 @@ STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
  */
 #define INV_AMMO_WEAPON_ID(ammoId) \
     ((ammoId) - INV_ITEM_GROUP_SIZE)
-
-/** @brief Packs a weapon attack containing a weapon ID and attack input type.
- *
- * @param weaponId Weapon ID.
- * @param attackInputType Attack input type.
- * @return Packed weapon attack containing a weapon ID and attack input type.
- */
-#define WEAPON_ATTACK(weaponId, attackInputType) \
-    ((weaponId) + ((attackInputType) * 10))
-
-/** @brief Retrieves the weapon ID from a packed weapon attack.
- *
- * @param weaponAttack Packed weapon attack containing a weapon ID and attack input type.
- * @return Weapon ID.
- */
-#define WEAPON_ATTACK_ID_GET(weaponAttack) \
-    ((weaponAttack) % 10)
 
 #endif

@@ -286,7 +286,7 @@ void Player_ControlFreeze(void)
     playerChara->flags                          |= CharaFlag_Unk4;
     playerChara->collision.state                 = CharaCollisionState_4;
 
-    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
     {
         PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack);
     }
@@ -695,7 +695,7 @@ void Player_MoveSpeedClear(void)
 void sharedFunc_800D2E6C_0_s00(void)
 {
 #if defined(MAP0_S01)
-    PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
+    PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap);
     WorldGfx_PlayerPrevHeldItem(&PLAYER_COMBAT());
 
     PLAYER_COMBAT().weaponAttack = NO_VALUE;
@@ -920,7 +920,7 @@ bool sharedFunc_800D2E94_0_s00(void)
         {
             if (playerDist < Q12(2.0f) &&
                 Savegame_EventFlagGet(EventFlag_167) && !Savegame_EventFlagGet(EventFlag_168) &&
-                PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
+                PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap))
             {
                 npc->model.charaId = Chara_Padlock;
             }
@@ -951,13 +951,13 @@ bool sharedFunc_800D2E94_0_s00(void)
 
         if (npc->damage.amount != Q12(0.0f))
         {
-            if (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_KitchenKnife)
+            if (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_KitchenKnife)
             {
                 npc->damage.amount >>= 1;
             }
 
             // Apply `damageReceived` to character health.
-            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
                 npc->health = NO_VALUE;
             }

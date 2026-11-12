@@ -499,7 +499,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
             {
                 if (sharedData_800E237C_0_s01 == 0)
                 {
-                    func_8006342C(EquippedWeaponId_Unk63, Q12_ANGLE(90.0f), cybil->rotation.vy, &g_SysWork.npcBoneCoordBuffer[0]);
+                    func_8006342C(AttackType_CybilHandgun, Q12_ANGLE(90.0f), cybil->rotation.vy, &g_SysWork.npcBoneCoordBuffer[0]);
                     Sfx_WithFlagsPlay(Sfx_Unk1622, &cybil->position, Q8(0.75f), SfxFlag_None);
                     sharedData_800E237C_0_s01 = 1;
                 }

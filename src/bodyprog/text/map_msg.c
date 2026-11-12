@@ -68,7 +68,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
     }
 
     PLAYER_CHARA().properties.player.gasWeaponPowerTimer = Q12(0.0f);
-    func_8004C564(PLAYER_COMBAT().weaponAttack, WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap));
+    func_8004C564(PLAYER_COMBAT().weaponAttack, WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap));
 
     if (activeMapMsgIdx != mapMsgIdx)
     {

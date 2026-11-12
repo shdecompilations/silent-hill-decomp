@@ -3432,22 +3432,22 @@ void Gfx_PlayerHeldItemAttach(u8 weaponAttack) // 0x800546A8
 {
     switch (weaponAttack)
     {
-        case EquippedWeaponId_KitchenKnife:
+        case AttackType_KitchenKnife:
             WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_HandMelee));
             break;
 
-        case EquippedWeaponId_SteelPipe:
-        case EquippedWeaponId_Hammer:
-        case EquippedWeaponId_Chainsaw:
-        case EquippedWeaponId_Katana:
-        case EquippedWeaponId_Axe:
-        case EquippedWeaponId_RockDrill:
+        case AttackType_SteelPipe:
+        case AttackType_Hammer:
+        case AttackType_Chainsaw:
+        case AttackType_Katana:
+        case AttackType_Axe:
+        case AttackType_RockDrill:
             WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_HandMelee));
             break;
 
-        case EquippedWeaponId_Handgun:
-        case EquippedWeaponId_HuntingRifle:
-        case EquippedWeaponId_Shotgun:
+        case AttackType_Handgun:
+        case AttackType_HuntingRifle:
+        case AttackType_Shotgun:
             WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandGun));
             break;
 

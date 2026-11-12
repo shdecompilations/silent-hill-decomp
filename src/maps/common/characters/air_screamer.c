@@ -918,13 +918,13 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     {
         switch (attack)
         {
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_SteelPipe, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Hammer,    AttackInputType_Tap):
                 damage += damage / 2;
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
                 damage /= 2;
                 break;
 

@@ -368,7 +368,7 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
 
     ptr = FS_BUFFER_26;
 
-    Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap));
+    Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap));
 
     angle                                          = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
     PLAYER_CHARA().damage.amount      = 1;

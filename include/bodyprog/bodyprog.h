@@ -849,7 +849,7 @@ bool Gfx_PickupItemAnimate(u8 itemId);
  *
  * @param currentAmmo Current amount of loaded ammunition.
  * @param availableAmmo Ammount of available ammunition.
- * @param gunIdx Index of the gun being reloaded ()`e_EquippedWeaponId`).
+ * @param gunIdx Index of the gun being reloaded (`e_AttackType`).
  */
 void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 

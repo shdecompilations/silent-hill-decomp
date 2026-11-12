@@ -1950,7 +1950,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
 
-            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
                 PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack);
             }

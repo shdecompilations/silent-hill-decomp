@@ -3166,7 +3166,7 @@ void func_800DBC18(q19_12 damageAmount) // 0x800DBC18
 {
     s32 i;
 
-    PLAYER_CHARA().attackReceived = WEAPON_ATTACK(EquippedWeaponId_Unk67, AttackInputType_Tap);
+    PLAYER_CHARA().attackReceived = WEAPON_ATTACK(AttackType_Unk67, AttackInputType_Tap);
 
     if (D_800F3DB4 > Q12(0.8f))
     {

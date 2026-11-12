@@ -296,5 +296,5 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
 
     bloodsucker->field_44.field_0 = 1;
 
-    func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap), bloodsucker, &scratchData->field_38, &PLAYER_CHARA(), Q12_ANGLE(90.0f), Q12_ANGLE(90.0f));
+    func_8008A0E4(1, WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap), bloodsucker, &scratchData->field_38, &PLAYER_CHARA(), Q12_ANGLE(90.0f), Q12_ANGLE(90.0f));
 }

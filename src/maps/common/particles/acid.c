@@ -211,11 +211,11 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx)
 
             if (NPC_CHARA(0).model.charaId == Chara_Floatstinger)
             {
-                sub->attackReceived = WEAPON_ATTACK(EquippedWeaponId_Unk60, AttackInputType_Tap);
+                sub->attackReceived = WEAPON_ATTACK(AttackType_FloatstingerAcid, AttackInputType_Tap);
             }
             else if (NPC_CHARA(0).model.charaId == Chara_Twinfeeler)
             {
-                sub->attackReceived = WEAPON_ATTACK(EquippedWeaponId_Unk62, AttackInputType_Tap);
+                sub->attackReceived = WEAPON_ATTACK(AttackType_TwinfeelerAcid, AttackInputType_Tap);
             }
         }
         else

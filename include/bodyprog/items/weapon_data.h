@@ -1,6 +1,74 @@
 #ifndef _BODYPROG_ITEMS_WEAPONDATA_H
 #define _BODYPROG_ITEMS_WEAPONDATA_H
 
+/** @brief Attack IDs. Packed with an `e_AttackInputType` by `WEAPON_ATTACK` to index `g_Items_WeaponAttackInfos`.
+ *
+ * Attacks here are linked with `e_InvItemId` enum, game code adds 128 to attack types from player weapons (0-7, 32-35, 96-98)
+ * to find the `e_InvItemId` for that attack.
+ */
+typedef enum _AttackType
+{
+    AttackType_KitchenKnife         = 0,
+    AttackType_SteelPipe            = 1,
+    AttackType_RockDrill            = 2,
+    AttackType_Unk3                 = 3,  // @unused Has stats, but InvItemId 131 has no ID and a blank name. Possibly "nightstick" mentioned in some protos.
+    AttackType_Hammer               = 4,
+    AttackType_Chainsaw             = 5,
+    AttackType_Katana               = 6,
+    AttackType_Axe                  = 7,
+    AttackType_Kick                 = 8,
+    AttackType_Stomp                = 9,
+
+    AttackType_Unk31                = 31, // @unused Possibly another kind of fighting attack, like kick/stomp, gets associated with those in `func_80071968_Switch0`
+    AttackType_Handgun              = 32,
+    AttackType_HuntingRifle         = 33,
+    AttackType_Shotgun              = 34,
+    AttackType_HyperBlaster         = 35,
+    AttackType_Unk36                = 36, // @unused Unused gun, might be an automatic-firing gun based on having `interval` set in the attack info table.
+
+    AttackType_Unk40                = 40,
+    AttackType_Unk41                = 41,
+    AttackType_Unk42                = 42,
+    AttackType_Groaner              = 43, // Groaner jump attack.
+    AttackType_HangedScratcher0     = 44,
+    AttackType_HangedScratcher1     = 45,
+    AttackType_Unk46                = 46,
+    AttackType_SplitHeadInstantKill = 47,
+    AttackType_Stalker              = 48,
+    AttackType_StalkerLegGrab       = 49,
+    AttackType_Unk50                = 50,
+    AttackType_LarvalStalkerGrab    = 51, // Set from `LarvalStalkerControl_Unused5`, @unused?
+    AttackType_LarvalStalkerDrain   = 52, // Damage while grabbed, set from `LarvalStalkerControl_Unused5`, @unused?
+    AttackType_Creeper              = 53,
+    AttackType_RomperGrab           = 54, // Pins the player.
+    AttackType_PuppetNurseGrab      = 56, // Torso grab, used by both Puppet Nurse and Puppet Doctor.
+    AttackType_PuppetNurse          = 57,
+    AttackType_PuppetDoctor         = 58,
+    AttackType_Floatstinger         = 59,
+    AttackType_FloatstingerAcid     = 60,
+    AttackType_Twinfeeler           = 61,
+    AttackType_TwinfeelerAcid       = 62,
+    AttackType_CybilHandgun         = 63, // Used by Cybil and Monster Cybil.
+    AttackType_MonsterCybil0        = 64,
+    AttackType_MonsterCybil1        = 65,
+    AttackType_MonsterCybilNeckGrab = 66,
+    AttackType_Unk67                = 67, // Effect in the map7_s03 boss room, damages on contact.
+    AttackType_Unknown23            = 68, // `Chara_Unknown23` attack, pushes player away.
+    AttackType_Bloodsucker          = 69,
+    AttackType_KaufmannHandgun      = 70  // Muzzle flash only, never hit-tested?
+} e_AttackType;
+
+typedef enum _AttackInfoType
+{
+    AttackInfoType_Unk0      = 0,
+    AttackInfoType_Melee     = 1, /** Melee hitting every frame. */
+    AttackInfoType_Melee1Hit = 2, /** Melee stopping on first hit. */
+    AttackInfoType_Gunshot   = 3,
+    AttackInfoType_Enemy0    = 4, // } TODO: Better naming.
+    AttackInfoType_Enemy1    = 5, // }
+    AttackInfoType_Enemy2    = 6, // }
+} e_AttackInfoType;
+
 /** @brief Melee attack box.
  *
  * SH2 name: `shBattleFight`.
@@ -24,17 +92,6 @@ typedef struct _AttackShot
     /* 0x4 */ u8    inaccuracy;
     /* 0x5 */ u8    spread;      /** Low nibble: `D_800AFD1C` index, high nibble: step count. */
 } s_AttackShot;
-
-typedef enum _AttackInfoType
-{
-    AttackInfoType_Unk0      = 0,
-    AttackInfoType_Melee     = 1, /** Melee hitting every frame. */
-    AttackInfoType_Melee1Hit = 2, /** Melee stopping on first hit. */
-    AttackInfoType_Gunshot   = 3,
-    AttackInfoType_Enemy0    = 4, // } TODO: Better naming.
-    AttackInfoType_Enemy1    = 5, // }
-    AttackInfoType_Enemy2    = 6, // }
-} e_AttackInfoType;
 
 /** @brief Attack definition, indexed by `WEAPON_ATTACK` value.
  *
@@ -89,5 +146,22 @@ extern s_AttackInfo g_Items_WeaponAttackInfos[70];
  */
 #define ATTACK_SHOT(interval, shotsMax, pelletCount, inaccuracy, spreadIdx, spreadSteps) \
     { Q12(interval), (shotsMax) | ((pelletCount) << 8), (inaccuracy) | ((spreadIdx) << 8) | ((spreadSteps) << 12) }
+
+/** @brief Packs a melee weapon attack containing a weapon ID and attack input type.
+ *
+ * @param weaponId Weapon ID.
+ * @param attackInputType Attack input type.
+ * @return Packed weapon attack containing a weapon ID and attack input type.
+ */
+#define WEAPON_ATTACK(weaponId, attackInputType) \
+    ((weaponId) + ((attackInputType) * 10))
+
+/** @brief Retrieves the melee weapon ID from a packed weapon attack.
+ *
+ * @param weaponAttack Packed weapon attack containing a weapon ID and attack input type.
+ * @return Weapon ID.
+ */
+#define WEAPON_ATTACK_ID_GET(weaponAttack) \
+    ((weaponAttack) % 10)
 
 #endif

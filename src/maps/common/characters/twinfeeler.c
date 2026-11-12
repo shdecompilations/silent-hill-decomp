@@ -2803,7 +2803,7 @@ void func_800D54B4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
 {
     VECTOR3         pos;                                                  // Q19.12
     MATRIX          sp30;
-    s32             var_s0;                                               // `e_EquippedWeaponId`
+    s32             var_s0;                                               // `e_AttackType`
     s32             var_v0;
     q19_12          posX;
     q19_12          posY;
@@ -2818,7 +2818,7 @@ void func_800D54B4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
         case 5:
         case 6:
         case 8:
-            var_s0 = EquippedWeaponId_Unk61;
+            var_s0 = AttackType_Twinfeeler;
             var_v0 = 14;
             break;
 

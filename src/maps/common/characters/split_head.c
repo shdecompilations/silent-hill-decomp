@@ -215,7 +215,7 @@ void SplitHead_DamageTake(s_SubCharacter* splitHead)
     if (splitHeadProps.flags & SplitHeadFlag_0)
     {
         if (g_SavegamePtr->gameDifficulty != GameDifficulty_Hard &&
-            PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
+            PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap))
         {
             damageAmount <<= 5;
         }
@@ -1693,7 +1693,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
                 sp28.field_0 < radius &&
                 !(splitHeadProps.flags & SplitHeadFlag_9))
             {
-                Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(EquippedWeaponId_Unk47, AttackInputType_Tap));
+                Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(AttackType_SplitHeadInstantKill, AttackInputType_Tap));
 
                 splitHeadProps.flags |= SplitHeadFlag_1 | SplitHeadFlag_9;
 

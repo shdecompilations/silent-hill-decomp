@@ -950,50 +950,50 @@ static inline void func_80071968_Switch0(void)
     {
         switch (PLAYER_COMBAT().weaponAttack)
         {
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Multitap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_HandMelee));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_RightHandGun));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarryVariantMesh_RightHandRifle));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk31,AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Unk3, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Kick, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Unk3, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Kick, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Unk3, AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Kick, AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Unk31,AttackInputType_Tap):
                 break;
         }
     }
@@ -1009,50 +1009,50 @@ static inline void func_80071968_Switch1(void)
     {
         switch (PLAYER_COMBAT().weaponAttack)
         {
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Multitap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_HandMelee));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandGun));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandRifle));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Unk3,  AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Unk3,  AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Unk3,  AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Unk31, AttackInputType_Tap):
                 break;
         }
     }
@@ -1345,8 +1345,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
 
     PLAYER_PROPS().gasWeaponPowerTimer = CLAMP(PLAYER_PROPS().gasWeaponPowerTimer, Q12(0.0f), Q12(60.0f));
 
-    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
+        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
     {
         func_8004C564(PLAYER_COMBAT().weaponAttack, (PLAYER_PROPS().gasWeaponPowerTimer != 0) ? 4 : 2);
     }
@@ -1420,8 +1420,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            if (player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap) && 
-                player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
+            if (player->attackReceived != WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap) && 
+                player->attackReceived != WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
             {
                 g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
                 PLAYER_PROPS().moveSpeed = SQUARE(player->damage.position.vx) + SQUARE(player->damage.position.vz) + SQUARE(player->damage.position.vy);
@@ -2495,8 +2495,8 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            if (player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap) && 
-                player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
+            if (player->attackReceived != WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap) && 
+                player->attackReceived != WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
             {
                 g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) -
                                         player->rotation.vy;
@@ -2521,11 +2521,11 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
             break;
 
         case PlayerState_KickEnemy:
-            func_80070DF0(extra, player, WEAPON_ATTACK(EquippedWeaponId_Kick, AttackInputType_Tap), ANIM_STATUS(24, true));
+            func_80070DF0(extra, player, WEAPON_ATTACK(AttackType_Kick, AttackInputType_Tap), ANIM_STATUS(24, true));
             break;
 
         case PlayerState_StompEnemy:
-            func_80070DF0(extra, player, WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap), ANIM_STATUS(25, true));
+            func_80070DF0(extra, player, WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap), ANIM_STATUS(25, true));
             break;
     }
 
@@ -2770,33 +2770,33 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
         switch (PLAYER_COMBAT().weaponAttack)
         {
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
                 keyframeIdx0 = 619;
                 keyframeIdx1 = 613;
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap):
                 keyframeIdx0 = 630;
                 keyframeIdx1 = 624;
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
                 keyframeIdx0 = 568;
                 keyframeIdx1 = 568;
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Axe, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Axe, AttackInputType_Tap):
                 keyframeIdx0 = 625;
                 keyframeIdx1 = 618;
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_SteelPipe, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Hammer,    AttackInputType_Tap):
                 keyframeIdx0 = 648;
                 keyframeIdx1 = 642;
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Katana, AttackInputType_Tap):
                 keyframeIdx0 = 619;
                 keyframeIdx1 = 612;
                 break;
@@ -2840,13 +2840,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             PLAYER_PROPS().flags &= ~PlayerFlag_Shooting;
             PLAYER_PROPS().flags &= ~PlayerFlag_Unk6;
 
-            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType = 0;
                 g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold;
                 D_800AF220               = g_Player_EquippedWeaponInfo.field_A >> 4;
             }
-            else if (g_Player_IsAttacking && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            else if (g_Player_IsAttacking && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
                 g_Player_MeleeAttackType = 1;
                 g_Player_AttackAnimIdx   = g_Player_EquippedWeaponInfo.animAttackHold - 4;
@@ -2857,7 +2857,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 g_Player_MeleeAttackType = 0;
 
                 // Handle Rock Drill animation.
-                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
+                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap) ||
                     g_Player_RockDrill_AttackType == RockDrillAttackType_Center)
                 {
                     g_Player_AttackAnimIdx = g_Player_EquippedWeaponInfo.animAttackHold;
@@ -2877,7 +2877,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             extra->model.controlState++;
 
-            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
                 PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack), AttackInputType_Tap);
             }
@@ -2891,7 +2891,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
         // Used for make continuos/hold shooting smoother?
         if (g_SysWork.targetNpcIdx != NO_VALUE &&
-            PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
         {
             if (!g_GameWork.config.extraAutoAiming)
             {
@@ -2977,7 +2977,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 player->angleToTarget = player->rotation.vy;
             }
 
-            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
                 if (PLAYER_PROPS().flags & PlayerFlag_Unk11)
                 {
@@ -2996,7 +2996,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     }
                 }
             }
-            else if (g_Player_IsAttacking && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            else if (g_Player_IsAttacking && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3004,7 +3004,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.stateStep++;
                 }
             }
-            else if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
+            else if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap) ||
                      g_Player_RockDrill_AttackType == RockDrillAttackType_Center)
             {
                 if (extra->model.stateStep == 0)
@@ -3033,10 +3033,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
         // Audio effects for attack animations, no ammo audio and removes ammo value.
         // Additionally trigger some special state for the Rock Drill.
-        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
         {
-            if (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx)
                 {
@@ -3085,7 +3085,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     player->field_44.field_0 = 1;
 
-                    if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap))
                     {
                         PLAYER_COMBAT().currentWeaponAmmo--;
                         g_SavegamePtr->items[PLAYER_COMBAT().weaponInventoryIdx].count--;
@@ -3119,7 +3119,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         // Finish attack animation.
         // Though more context about `D_800AF220` and `D_800C44F0` is required,
         // they likely indicate if an attack animation has finished.
-        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
         {
             // Attack anim.
             if (extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
@@ -3210,9 +3210,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         PLAYER_PROPS().flags |= PlayerFlag_Unk6;
 
         // Handles multitap attack.
-        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
         {
-            if (g_Player_MeleeAttackType == 0 && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (g_Player_MeleeAttackType == 0 && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx >= keyframeIdx1 &&
                     extra->model.anim.keyframeIdx < keyframeIdx0 &&
@@ -3608,8 +3608,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         case PlayerUpperBodyState_Aim:
             g_SysWork.targetNpcIdx = NO_VALUE;
 
-            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
+                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
                 if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                 {
@@ -3635,7 +3635,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             PLAYER_PROPS().flags &= ~PlayerFlag_Unk6;
             player->angleToTarget = player->rotation.vy;
 
-            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
                 // Aim.
                 if (extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) &&
@@ -3790,8 +3790,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
         case PlayerUpperBodyState_AimStart:
             player->angleToTarget = player->rotation.vy;
 
-            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
+                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
                 if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                 {
@@ -3807,10 +3807,10 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.stateStep++;
                 }
 
-                if (((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
+                if (((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model.anim.keyframeIdx >= (D_800C44F0[0].startKeyframeIdx + 5)) ||
-                     (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
+                     (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap) &&
                       extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model.anim.keyframeIdx >= (D_800C44F0[0].startKeyframeIdx + 9))) &&
                     !(PLAYER_PROPS().flags & PlayerFlag_Unk2))
@@ -3823,7 +3823,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     PLAYER_PROPS().flags |= PlayerFlag_Unk2;
                 }
             }
-            else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
+            else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap))
             {
                 if (extra->model.stateStep == 0)
                 {
@@ -3840,8 +3840,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 }
             }
 
-            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
+                PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
                 if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx ||
                     extra->model.anim.keyframeIdx == D_800C44F0[5].endKeyframeIdx)
@@ -4219,12 +4219,12 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
         case PlayerUpperBodyState_TurnLeft:
             if (!g_Player_IsInWalkToRunTransition)
             {
-                if ((g_Player_IsAiming && PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap)) ||
+                if ((g_Player_IsAiming && PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap)) ||
                     PLAYER_COMBAT().isAiming)
                 {
                     PLAYER_COMBAT().isAiming = true;
 
-                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                     {
                         g_Player_TargetNpcIdx = NO_VALUE;
                     }
@@ -4280,7 +4280,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
 
                     if (PLAYER_COMBAT().totalWeaponAmmo != 0)
                     {
-                        if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                        if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                         {
                             currentAmmoVar = PLAYER_COMBAT().currentWeaponAmmo;
                             totalAmmoVar   = PLAYER_COMBAT().totalWeaponAmmo;
@@ -4292,7 +4292,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                         }
                     }
 
-                    if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                     {
                         for (i = 0; i < INV_ITEM_COUNT_MAX; i++)
                         {
@@ -4381,10 +4381,10 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_AimQuickTurnRight &&
                 PLAYER_EXTRA().lowerBodyState != PlayerLowerBodyState_AimQuickTurnLeft)
             {
-                if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                 {
-                    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
+                        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
                     {
                         if ((extra->model.anim.status != ANIM_STATUS(HarryAnim_HandgunAim, true) ||
                              extra->model.anim.keyframeIdx != D_800C44F0[0].endKeyframeIdx) &&
@@ -4441,7 +4441,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
 
                 PLAYER_PROPS().flags &= ~PlayerFlag_Unk0;
 
-                if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                 {
                     if (!WorldEnv_IsInDarkness())
                     {
@@ -4469,7 +4469,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                 switch (g_Player_TargetNpcIdx)
                 {
                     default:
-                        if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                        if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                         {
                             PLAYER_EXTRA().state = PlayerState_Combat;
                             PLAYER_PROPS().flags               |= PlayerFlag_Unk0 | PlayerFlag_Unk9;
@@ -4517,7 +4517,7 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                         break;
                 }
 
-                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                 {
                     if (PLAYER_COMBAT().currentWeaponAmmo == 0 &&
                         INV_ITEM_GROUP(g_SavegamePtr->equippedWeapon) == InvItemGroup_GunWeapons &&
@@ -4540,10 +4540,10 @@ void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0
                     PLAYER_EXTRA().upperBodyState = PlayerUpperBodyState_Attack;
 
                     if (PLAYER_EXTRA().lowerBodyState == PlayerLowerBodyState_Aim ||
-                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_SteelPipe ||
-                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Hammer    ||
-                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_RockDrill ||
-                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Katana)
+                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_SteelPipe ||
+                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_Hammer    ||
+                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_RockDrill ||
+                        WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_Katana)
                     {
                         PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_Attack;
                         player->model.stateStep                   = 0;
@@ -4740,10 +4740,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                     }
                 }
                 // Melee weapon.
-                else if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                else if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                 {
-                    if ((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                         PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)) &&
+                    if ((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
+                         PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap)) &&
                         PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                     {
                         if (player->model.stateStep == 0)
@@ -4774,7 +4774,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
                 }
-                else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap))
+                else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap))
                 {
                     if (player->model.stateStep == 0)
                     {
@@ -4833,7 +4833,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                             if ((g_Player_IsRunning && lowerBodyMoveState == PlayerLowerBodyState_None) &&
                                 (aimState == 0 || (( g_GameWork.config.extraWeaponCtrl && !g_Player_IsAiming) ||
                                                    (!g_GameWork.config.extraWeaponCtrl &&  g_Player_IsAiming)) &&
-                                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_SteelPipe))
+                                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_SteelPipe))
                             {
                                 PLAYER_EXTRA().lowerBodyState = PlayerLowerBodyState_RunForward;
                             }
@@ -4918,26 +4918,26 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         // Determine speed if using certain weapons while moving?
                         switch (PLAYER_COMBAT().weaponAttack)
                         {
-                            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
                                 PLAYER_PROPS().moveSpeed = (u32)(D_800C454C * 0x465) >> 9;
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_Katana,   AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_Axe,      AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_Katana,   AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_Axe,      AttackInputType_Tap):
                                 PLAYER_PROPS().moveSpeed = (u32)(D_800C454C * 0x15F9) >> 11;
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_SteelPipe, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_Hammer,    AttackInputType_Tap):
                                 PLAYER_PROPS().moveSpeed = ((u32)(D_800C454C * 0xD2F) >> 10);
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
                                 PLAYER_PROPS().moveSpeed = (-(D_800C454C * 0x87F0) >> 14);
                                 break;
                         }
@@ -5077,7 +5077,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 Player_MovementStateReset(player, aimState | (1 << 0));
 
-                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap))
                 {
                     Player_CharaRotate(5);
                 }
@@ -5115,13 +5115,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                           player->model.anim.keyframeIdx == 22 || player->model.anim.keyframeIdx == 21)
                 {
                     // Aparently, code intended to change player's state if the player stop walking while either aiming or attacking.
-                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                            (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                             PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                            (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) &&
+                             PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             PLAYER_PROPS().flags         |= PlayerFlag_Unk10;
@@ -5490,7 +5490,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
                 Player_MovementStateReset(player, aimState + PlayerLowerBodyState_WalkBackward);
 
-                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap))
                 {
                     Player_CharaRotate(5);
                 }
@@ -5523,13 +5523,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                          (player->model.anim.keyframeIdx >= 56 && player->model.anim.keyframeIdx <= 57) ||
                           player->model.anim.keyframeIdx == 67 || player->model.anim.keyframeIdx == 66)
                 {
-                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) &&
+                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))) ||
                             extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             PLAYER_PROPS().flags         |= PlayerFlag_Unk10;
@@ -5602,14 +5602,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 // If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingRightHold)
                 {
-                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         // Some melee weapons allow attack while sidestepping.
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) &&
+                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             PLAYER_PROPS().flags         |= PlayerFlag_Unk10;
@@ -5682,13 +5682,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 // If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingLeftHold)
                 {
-                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+                    if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
                         if (((extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model.anim.status == ANIM_STATUS(HarryAnim_Unk30, true)) &&
-                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))) ||
+                             (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) &&
+                              PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))) ||
                              extra->model.anim.status == ANIM_STATUS(HarryAnim_HandgunRecoil, true))
                         {
                             PLAYER_PROPS().flags         |= PlayerFlag_Unk10;
@@ -6329,10 +6329,10 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
 
         case PlayerLowerBodyState_Attack:
             // If weapon is katana.
-            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Katana)
+            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_Katana)
             {
-                if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Hold))
+                if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Katana, AttackInputType_Hold))
                 {
                     if (PLAYER_PROPS().moveSpeed == Q12(0.0f) &&
                         (extra->model.anim.keyframeIdx >= D_800C44F0[D_800AF220].startKeyframeIdx + 7))
@@ -6348,8 +6348,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
             }
 
-            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Katana)
+            if (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) &&
+                WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_Katana)
             {
                 if (PLAYER_PROPS().moveSpeed != Q12(0.0f))
                 {
@@ -6373,9 +6373,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
             }
 
             if (g_SysWork.targetNpcIdx == NO_VALUE ||
-                PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
-                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
                 {
                     if (PLAYER_PROPS().flags & PlayerFlag_Unk11)
                     {
@@ -6396,8 +6396,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 }
                 else if (PLAYER_PROPS().flags & PlayerFlag_Unk10)
                 {
-                    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
-                        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
+                        PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
                     {
                         if (player->model.stateStep == 0)
                         {
@@ -6420,7 +6420,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                         player->model.stateStep++;
                     }
                 }
-                else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+                else if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
                 {
                     if (g_Player_RockDrill_AttackType == RockDrillAttackType_Up)
                     {
@@ -6480,11 +6480,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
                 player->model.stateStep++;
             }
 
-            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) ||
-                (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != EquippedWeaponId_SteelPipe &&
-                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != EquippedWeaponId_Hammer    &&
-                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != EquippedWeaponId_RockDrill &&
-                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != EquippedWeaponId_Katana))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) ||
+                (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != AttackType_SteelPipe &&
+                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != AttackType_Hammer    &&
+                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != AttackType_RockDrill &&
+                 WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) != AttackType_Katana))
             {
                 if (ANIM_STATUS_IS_ACTIVE(player->model.anim.status) &&
                     ANIM_STATUS_IS_ACTIVE(extra->model.anim.status)  &&
@@ -7127,15 +7127,15 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             player->damage.position.vy = Q12(0.0f);
             player->damage.position.vx = Q12(0.0f);
 
-            if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk47, AttackInputType_Tap))
+            if (player->attackReceived == WEAPON_ATTACK(AttackType_SplitHeadInstantKill, AttackInputType_Tap))
             {
                 PLAYER_CHARA().collision.cylinder.innerRadius = Q12(0.0f);
                 Player_ExtraStateSet(player, extra, PlayerState_InstantDeath);
                 return;
             }
 
-            if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap) ||
-                player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
+            if (player->attackReceived == WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap) ||
+                player->attackReceived == WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
             {
                 player->damage.amount = Q12(0.0f);
             }
@@ -7163,7 +7163,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             PLAYER_COMBAT().weaponAttack = (g_SavegamePtr->equippedWeapon == InvItemId_Unequipped) ? NO_VALUE :
                                                                                                   (g_SavegamePtr->equippedWeapon - InvItemId_KitchenKnife);
 
-            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
                 func_8004C564(2, 3);
             }
@@ -7175,16 +7175,16 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             }
 
             enemyRotY = NPC_CHARA(player->field_40).rotation.vy;
-            if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap) ||
-                player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap))
+            if (player->attackReceived == WEAPON_ATTACK(AttackType_MonsterCybil0, AttackInputType_Tap) ||
+                player->attackReceived == WEAPON_ATTACK(AttackType_MonsterCybil1, AttackInputType_Tap))
             {
                 enemyRotY -= Q12_ANGLE(90.0f);
             }
-            else if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
+            else if (player->attackReceived == WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
             {
                 enemyRotY = Q12_ANGLE(90.0f);
             }
-            else if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap))
+            else if (player->attackReceived == WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap))
             {
                 enemyRotY = player->damage.position.vy;
             }
@@ -7193,11 +7193,11 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
             switch (player->attackReceived)
             {
-                case WEAPON_ATTACK(EquippedWeaponId_Unk67, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Unk67, AttackInputType_Tap):
                     Player_ExtraStateSet(player, extra, PlayerState_Unk7);
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_CybilHandgun, AttackInputType_Tap):
                     PLAYER_PROPS().moveSpeed = Q12(1.5f);
                     Math_ShortestAngleGet(player->rotation.vy, attacker.rotation.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
@@ -7212,21 +7212,21 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     }
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk60, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk62, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_FloatstingerAcid, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_TwinfeelerAcid, AttackInputType_Tap):
                     player->damage.amount = Q12(10.0f);
                     Player_ExtraStateSet(player, extra, PlayerState_DamageHead);
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk41, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk42, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Unk41, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Unk42, AttackInputType_Tap):
                     Player_ExtraStateSet(player, extra, PlayerState_DamageHead);
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap): // Leg grab.
-                case WEAPON_ATTACK(EquippedWeaponId_Unk54, AttackInputType_Tap): // Romper grab.
-                case WEAPON_ATTACK(EquippedWeaponId_Unk56, AttackInputType_Tap): // Torso grab.
-                case WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_StalkerLegGrab, AttackInputType_Tap): // Leg grab.
+                case WEAPON_ATTACK(AttackType_RomperGrab, AttackInputType_Tap): // Romper grab.
+                case WEAPON_ATTACK(AttackType_PuppetNurseGrab, AttackInputType_Tap): // Torso grab.
+                case WEAPON_ATTACK(AttackType_MonsterCybilNeckGrab, AttackInputType_Tap):
                     if (enemyRotY >= Q12_ANGLE(90.0f) &&
                         enemyRotY <  Q12_ANGLE(270.0f))
                     {
@@ -7234,20 +7234,20 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
                         switch (player->attackReceived)
                         {
-                            case WEAPON_ATTACK(EquippedWeaponId_Unk54, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_RomperGrab, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabPinnedFrontStart);
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_Unk56, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_HangedScratcher1, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_PuppetNurseGrab, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabTorsoFront);
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_StalkerLegGrab, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabLegsFront);
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_MonsterCybilNeckGrab, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabNeckFront);
                                 break;
 
@@ -7259,59 +7259,59 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
                         switch (player->attackReceived)
                         {
-                            case WEAPON_ATTACK(EquippedWeaponId_Unk54, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_RomperGrab, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabPinnedBackStart);
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap):
-                            case WEAPON_ATTACK(EquippedWeaponId_Unk56, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_HangedScratcher1, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_PuppetNurseGrab, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabTorsoBack);
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_StalkerLegGrab, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabLegsBack);
                                 break;
 
-                            case WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap):
+                            case WEAPON_ATTACK(AttackType_MonsterCybilNeckGrab, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabNeckBack);
                                 break;
                         }
                     }
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk47, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_SplitHeadInstantKill, AttackInputType_Tap):
                     player->health                     = NO_VALUE;
                     player->collision.cylinder.innerRadius = Q12(0.0f);
                     Player_ExtraStateSet(player, extra, PlayerState_InstantDeath);
                     return;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap):
                     PLAYER_PROPS().moveSpeed = Q12(1.6f);
                     Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE(90.0f), &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap):
-                    if (player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
+                case WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap):
+                    if (player->attackReceived != WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
                     {
                         PLAYER_PROPS().moveSpeed = Q12(4.0f);
                         Math_ShortestAngleGet(player->rotation.vy, (s16)player->damage.position.vy, &headingAngle);
                         g_Player_HeadingAngle = headingAngle;
                     }
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk40, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk43, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk44, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk46, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk48, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk50, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk52, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk57, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk58, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk59, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Unk61, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Unk40, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Groaner, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_HangedScratcher0, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_HangedScratcher1, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Unk46, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Stalker, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Unk50, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_LarvalStalkerDrain, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_PuppetNurse, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_PuppetDoctor, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Floatstinger, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Twinfeeler, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_MonsterCybil0, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_MonsterCybil1, AttackInputType_Tap):
                     // Left harm animation.
                     if (enemyRotY >= Q12_ANGLE(45.0f) && enemyRotY < Q12_ANGLE(135.0f))
                     {
@@ -7336,7 +7336,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     Player_ExtraStateSet(player, extra, angleState);
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Unk53, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Creeper, AttackInputType_Tap):
                     if (enemyRotY < Q12_ANGLE(179.95f))
                     {
                         angleState = PlayerState_DamageFeetFront;
@@ -7427,7 +7427,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             g_SysWork.npcIdxs[i] = NO_VALUE;
         }
 
-        if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap))
+        if (player->attackReceived == WEAPON_ATTACK(AttackType_MonsterCybilNeckGrab, AttackInputType_Tap))
         {
             Player_ExtraStateSet(player, extra, PlayerState_Unk36);
         }
@@ -7457,22 +7457,22 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
         case PlayerState_Combat:
             switch (PLAYER_COMBAT().weaponAttack)
             {
-                case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap):
                     var_a2 = 20;
                     var_a3 = 2;
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
                     var_a2 = 18;
                     var_a3 = 6;
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
                     var_a2 = 26;
                     var_a3 = 3;
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
                     var_a2 = 30;
                     var_a3 = 0;
                     break;
@@ -7484,7 +7484,7 @@ void func_8007D090(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* 
             }
 
             if (PLAYER_EXTRA().upperBodyState == PlayerUpperBodyState_Reload ||
-                PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+                PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
                 g_Player_FlexRotationX = Q12_ANGLE(0.0f);
                 g_Player_FlexRotationY = Q12_ANGLE(0.0f);
@@ -7809,8 +7809,8 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
         switch (PLAYER_COMBAT().weaponAttack)
         {
             case NO_VALUE:
-            case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
                 attackPos1     = &PLAYER_COMBAT().attackPosition;
                 attackPos1->vx = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[0]);
                 attackPos1->vy = Q8_TO_Q12(g_SysWork.playerBoneCoords[HarryBone_RightFoot].workm.t[1]);
@@ -7842,7 +7842,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
          PLAYER_EXTRA().state == PlayerState_KickEnemy ||
          PLAYER_EXTRA().state == PlayerState_StompEnemy))
     {
-        if (PLAYER_COMBAT().weaponAttack >= EquippedWeaponId_Handgun &&
+        if (PLAYER_COMBAT().weaponAttack >= AttackType_Handgun &&
             PLAYER_EXTRA().lowerBodyState >= PlayerLowerBodyState_Aim)
         {
             if (PLAYER_EXTRA().state == PlayerState_Combat && g_Player_TargetNpcIdx != NO_VALUE)
@@ -7882,8 +7882,8 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
             switch (PLAYER_COMBAT().weaponAttack)
             {
                 case NO_VALUE:
-                case EquippedWeaponId_Kick:
-                case EquippedWeaponId_Stomp:
+                case AttackType_Kick:
+                case AttackType_Stomp:
                     // Compute transformation matrix for right foot.
                     Math_SetSVectorFast(&localHandPos, 0, 60, 134);
                     Vw_CoordHierarchyMatrixCompute(&boneCoords[HarryBone_RightFoot], &handTransformMat);
@@ -7900,46 +7900,46 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                     {
                         switch (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack))
                         {
-                            case EquippedWeaponId_KitchenKnife:
+                            case AttackType_KitchenKnife:
                                 Math_SetSVectorFastSum(&localHandPos, Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF),
                                                        -FP_MULTIPLY(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.0185f), Q12_SHIFT - 1),
                                                         Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.0185f)) >> 1);
                                 break;
 
-                            case EquippedWeaponId_SteelPipe:
+                            case AttackType_SteelPipe:
                                 Math_SetSVectorFastSum(&localHandPos, Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF),
                                                        -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.055f)) >> 1),
                                                         FP_MULTIPLY(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.011f), Q12_SHIFT - 2));
                                 break;
 
-                            case EquippedWeaponId_Chainsaw:
+                            case AttackType_Chainsaw:
                                 Math_SetSVectorFastSum(&localHandPos,
                                                         Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF) >> 1,
                                                        -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.033f)) >> 1),
                                                         (Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.121f)) >> 1));
                                 break;
 
-                            case EquippedWeaponId_RockDrill:
+                            case AttackType_RockDrill:
                                 Math_SetSVectorFastSum(&localHandPos,
                                                         Q12(0.0f),
                                                        -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.011f))),
                                                         FP_MULTIPLY(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.011f), Q12_SHIFT - 2));
                                 break;
 
-                            case EquippedWeaponId_Axe:
+                            case AttackType_Axe:
                                 Math_SetSVectorFastSum(&localHandPos,
                                                          Q12(0.0f),
                                                         -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0x2C1) >> 1),
                                                          Q12_MULT((u32)g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xC3));
                                 break;
 
-                            case EquippedWeaponId_Hammer:
+                            case AttackType_Hammer:
                                 Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF) >> 1),
                                                        -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0x69)),
                                                         Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0x13B) >> 1);
                                 break;
 
-                            case EquippedWeaponId_Katana:
+                            case AttackType_Katana:
                                 Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF) >> 1),
                                                        -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0x13B) >> 1),
                                                         Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF));
@@ -7967,7 +7967,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
         }
 
         // Draw Hyper Blaster beam.
-        if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap) &&
+        if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap) &&
             PLAYER_COMBAT().isAiming &&
             model->anim.status >= ANIM_STATUS(HarryAnim_HandgunAim, true) &&
             model->anim.keyframeIdx >= 574)
@@ -8007,9 +8007,9 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
         // Draw particle beam.
         if (PLAYER_EXTRA().state < PlayerState_Idle)
         {
-            if ((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
+            if ((PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap) &&
                  model->anim.keyframeIdx >= 572 && model->anim.keyframeIdx < 584) ||
-                (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
+                (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap) &&
                  player->model.anim.keyframeIdx >= 577 && model->anim.keyframeIdx < 583))
             {
                 // Compute beam start position.
@@ -8043,7 +8043,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
 
         if (PLAYER_EXTRA().upperBodyState != PlayerUpperBodyState_AimStop)
         {
-            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
             {
                 if (g_Player_RotationToTargetX != NO_VALUE || g_Player_RotationToTargetY != g_Player_RotationToTargetX)
                 {
@@ -8332,7 +8332,7 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
             g_Player_EquippedWeaponInfo = g_Player_EquippedWeaponInfos[0];
             return;
 
-        case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
             relAnimInfoIdx                                    = 30;
             relKeyframeIdx                                    = 15;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[1];
@@ -8342,24 +8342,24 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
         default:
             return;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Axe, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Axe, AttackInputType_Tap):
             relAnimInfoIdx                                    = 0;
             relKeyframeIdx                                    = 0;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[3];
             PLAYER_CHARA().collision.box.field_8 = -0xFD0;
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_SteelPipe, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Hammer, AttackInputType_Tap):
             g_Player_EquippedWeaponInfo = g_Player_EquippedWeaponInfos[2];
             switch (PLAYER_COMBAT().weaponAttack)
             {
-                case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Hammer, AttackInputType_Tap):
                     relAnimInfoIdx = 10;
                     relKeyframeIdx = 5;
                     break;
 
-                case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_SteelPipe, AttackInputType_Tap):
                     relAnimInfoIdx = 20;
                     relKeyframeIdx = 10;
                     break;
@@ -8368,49 +8368,49 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
             PLAYER_CHARA().collision.box.field_8 = -0xEC0;
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap):
             relAnimInfoIdx                                    = 50;
             relKeyframeIdx                                    = 25;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[4];
             PLAYER_CHARA().collision.box.field_8 = -0xE90;
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
             relAnimInfoIdx                                    = 64;
             relKeyframeIdx                                    = 32;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[5];
             PLAYER_CHARA().collision.box.field_8 = -0x12E0;
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Katana, AttackInputType_Tap):
             relAnimInfoIdx                                    = 40;
             relKeyframeIdx                                    = 20;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[10];
             PLAYER_CHARA().collision.box.field_8 = -0xF20;
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 78;
             relKeyframeIdx                                    = 39;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[6];
             PLAYER_CHARA().collision.box.field_8 = -0x1600;
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
             relAnimInfoIdx                                    = 96;
             relKeyframeIdx                                    = 48;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[7];
             PLAYER_CHARA().collision.box.field_8 = -0x1180;
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
             relAnimInfoIdx                                    = 114;
             relKeyframeIdx                                    = 57;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[8];
             PLAYER_CHARA().collision.box.field_8 = -0x1600;
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
             relAnimInfoIdx                                    = 132;
             relKeyframeIdx                                    = 66;
             g_Player_EquippedWeaponInfo                       = g_Player_EquippedWeaponInfos[9];
@@ -8435,44 +8435,44 @@ void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
 
         switch (PLAYER_COMBAT().weaponAttack)
         {
-            case EquippedWeaponId_KitchenKnife:
+            case AttackType_KitchenKnife:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP3_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Axe:
+            case AttackType_Axe:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP1_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_SteelPipe:
-            case EquippedWeaponId_Hammer:
+            case AttackType_SteelPipe:
+            case AttackType_Hammer:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP2_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Chainsaw:
+            case AttackType_Chainsaw:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP6_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_RockDrill:
+            case AttackType_RockDrill:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP8_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Katana:
+            case AttackType_Katana:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP9_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Handgun:
+            case AttackType_Handgun:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP4_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_HuntingRifle:
+            case AttackType_HuntingRifle:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP51_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_Shotgun:
+            case AttackType_Shotgun:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP52_ANM, FS_BUFFER_12);
                 break;
 
-            case EquippedWeaponId_HyperBlaster:
+            case AttackType_HyperBlaster:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP53_ANM, FS_BUFFER_12);
                 break;
         }
@@ -8483,35 +8483,35 @@ void func_8007F14C(u8 weaponAttack) // 0x8007F14C
 {
     switch (weaponAttack)
     {
-        case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Tap):
             SD_Call(164);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap):
             SD_Call(169);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
             SD_Call(163);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap):
             SD_Call(166);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
             SD_Call(167);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
             SD_Call(168);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
             SD_Call(165);
             break;
     }
@@ -8640,7 +8640,7 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsAiming = g_Controller0->buttonFlags.clicked & g_GameWorkPtr->config.controllerConfig.aim;
     }
 
-    if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
+    if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) &&
         PLAYER_EXTRA().lowerBodyState >= PlayerLowerBodyState_Aim)
     {
         g_Player_IsShooting  = g_Controller0->buttonFlags.held & g_GameWorkPtr->config.controllerConfig.action;
@@ -8675,7 +8675,7 @@ void Player_Controller(void) // 0x8007F32C
         g_Player_IsHoldAttack = false;
     }
 
-    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
+    if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap))
     {
         switch (Inventory_HyperBlasterFunctionalTest())
         {
@@ -8695,11 +8695,11 @@ void Player_Controller(void) // 0x8007F32C
     }
 
     // This conditional makes it impossible to move when aiming with specific weapons.
-    if (PLAYER_COMBAT().isAiming && (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap) ||
-                                            (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-                                             (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Hammer    ||
-                                              WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_RockDrill ||
-                                              WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == EquippedWeaponId_Katana))))
+    if (PLAYER_COMBAT().isAiming && (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap) ||
+                                            (PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap) &&
+                                             (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_Hammer    ||
+                                              WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_RockDrill ||
+                                              WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack) == AttackType_Katana))))
     {
         if (g_Player_IsMovingForward)
         {
@@ -8745,7 +8745,7 @@ bool func_8007F95C(void) // 0x8007F95C
     pos0.vz = PLAYER_CHARA().position.vz;
 
     if (!PLAYER_COMBAT().isAiming ||
-        PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+        PLAYER_COMBAT().weaponAttack < WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap))
     {
         for (i = 0, curNpc0 = g_SysWork.npcs, curNpc1 = g_SysWork.npcs;
              i < ARRAY_SIZE(g_SysWork.npcs);

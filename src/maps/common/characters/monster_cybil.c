@@ -662,7 +662,7 @@ void func_800D8D7C(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
         case MonsterCybilControl_11:
             if (monsterCybil->model.anim.keyframeIdx == 38)
             {
-                func_8006342C(EquippedWeaponId_Unk63, Q12_ANGLE(90.0f), monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
+                func_8006342C(AttackType_CybilHandgun, Q12_ANGLE(90.0f), monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
             }
 
             Npc_SfxPlay(39, monsterCybil, 38, Sfx_Unk1622);
@@ -1166,11 +1166,10 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
                 monsterCybil->field_44.field_0         = 1;
 
-                // TODO: What's weapon attack 63?
-                func_8006342C(EquippedWeaponId_Unk63, monsterCybilProps.field_11A, monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
+                func_8006342C(AttackType_CybilHandgun, monsterCybilProps.field_11A, monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
 
                 if (func_8008A0E4(monsterCybil->field_44.field_0,
-                                  WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap),
+                                  WEAPON_ATTACK(AttackType_CybilHandgun, AttackInputType_Tap),
                                   monsterCybil,
                                   &D_800ED570,
                                   &PLAYER_CHARA(),
@@ -1251,7 +1250,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybil->field_44.field_0 = 0;
             }
 
-            if (func_8008A0E4(monsterCybil->field_44.field_0, WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap), monsterCybil, &D_800ED570, &PLAYER_CHARA(), monsterCybil->rotation.vy, 0x400) != -1)
+            if (func_8008A0E4(monsterCybil->field_44.field_0, WEAPON_ATTACK(AttackType_MonsterCybil0, AttackInputType_Tap), monsterCybil, &D_800ED570, &PLAYER_CHARA(), monsterCybil->rotation.vy, 0x400) != -1)
             {
                 PLAYER_CHARA().damage.position.vz = Q12(1.0f);
 
@@ -1614,7 +1613,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
 
             temp_v0_2 = func_8008A0E4(monsterCybil->field_44.field_0,
-                                      WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap),
+                                      WEAPON_ATTACK(AttackType_MonsterCybilNeckGrab, AttackInputType_Tap),
                                       monsterCybil,
                                       &D_800ED570,
                                       &PLAYER_CHARA(),
@@ -1727,7 +1726,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
 
             if (func_8008A0E4(monsterCybil->field_44.field_0,
-                              WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap),
+                              WEAPON_ATTACK(AttackType_MonsterCybil1, AttackInputType_Tap),
                               monsterCybil,
                               &D_800ED570,
                               &PLAYER_CHARA(),

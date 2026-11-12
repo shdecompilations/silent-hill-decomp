@@ -393,7 +393,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 floatstingerProps.field_104++;
             }
 
-            func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk59, AttackInputType_Tap), floatstinger, &sp20[0], &PLAYER_CHARA(), ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz),
+            func_8008A0E4(1, WEAPON_ATTACK(AttackType_Floatstinger, AttackInputType_Tap), floatstinger, &sp20[0], &PLAYER_CHARA(), ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz),
                           ratan2(Math_Vector2MagCalcSafeQ6(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz), sp20[1].vy - sp20[0].vy));
 
             if (g_SavegamePtr->gameDifficulty != 1 && floatstingerProps.field_100 == 0)

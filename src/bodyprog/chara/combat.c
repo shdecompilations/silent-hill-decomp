@@ -1200,10 +1200,10 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         {
             switch (weaponAttack)
             {
-                case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
-                case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Hold):
-                case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Multitap):
-                case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
+                case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
+                case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
                     if (g_SysWork.field_275C > Q12(256.0f))
                     {
                         func_8008B3E4(Q8(0.5f));
@@ -1242,12 +1242,12 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
     switch (weaponAttack)
     {
-        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Hold):
-        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Hold):
-        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
-        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Multitap):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
             if (func_8008A35C(attackInfo, attacker->field_44.field_14) == 0)
             {
                 var_s0 = 0;
@@ -1259,7 +1259,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
             switch (Game_HyperBlasterBeamColorGet())
             {
                 case 0:
@@ -1276,8 +1276,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
             if (target->flags & CharaFlag_Unk2)
             {
                 var_s0 = Q12(1000.0f);
@@ -1290,16 +1290,16 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
     switch (weaponAttack)
     {
-        case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
         case NO_VALUE:
             offsetX = attacker->field_44.field_48[1].vx;
             offsetY   = attacker->field_44.field_48[1].vy;
             offsetZ   = attacker->field_44.field_48[1].vz;
 
-            if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
+            if (weaponAttack == WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap))
             {
                 if (sp14 & sp10)
                 {
@@ -1324,8 +1324,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
                 var_s7 = Q12_MULT_PRECISE(var_s7, offsetZ);
             }
 
-            if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Kick,  AttackInputType_Tap) ||
-                weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Stomp, AttackInputType_Tap))
+            if (weaponAttack == WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap) ||
+                weaponAttack == WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap))
             {
                 offsetX = attacker->field_44.field_48[0].vx;
                 offsetY   = 0;
@@ -1473,7 +1473,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
                 case Chara_Incubator:
                     if (!(target->flags & CharaFlag_Hit))
                     {
-                        if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
+                        if (weaponAttack == WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap))
                         {
                             var_a2 = 4;
                         }

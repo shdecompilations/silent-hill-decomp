@@ -33,8 +33,8 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
         }
 
         weaponId = WEAPON_ATTACK_ID_GET(g_ItemScreen_PlayerWeaponAttack);
-        if ((weaponId == EquippedWeaponId_Chainsaw && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap)) ||
-            (weaponId == EquippedWeaponId_RockDrill && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)))
+        if ((weaponId == AttackType_Chainsaw && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap)) ||
+            (weaponId == AttackType_RockDrill && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap)))
         {
             PLAYER_CHARA().field_44.field_0    = 0;
             PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);

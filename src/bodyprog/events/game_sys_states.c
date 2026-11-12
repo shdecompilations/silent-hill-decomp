@@ -363,7 +363,7 @@ void func_8003943C(void) // 0x8003943C
     s32 val0;
     s32 val1;
 
-    #define isRockDrillAttack (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+    #define isRockDrillAttack (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
 
     func_8008B3E4(0);
 

@@ -20,12 +20,12 @@ s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse)
     s32 idx;
 
     weaponAttack = nurse->attackReceived;
-    if (weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap) &&
-        weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Hold) &&
-        weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Multitap) &&
-        weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
-        weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Hold) &&
-        weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Multitap))
+    if (weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap) &&
+        weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Hold) &&
+        weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Multitap) &&
+        weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap) &&
+        weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Hold) &&
+        weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap))
     {
         idx = g_Items_WeaponAttackInfos[weaponAttack].type;
         return g_PuppetNurseHurtSfxIdxs[idx];
@@ -598,7 +598,7 @@ void PuppetNurse_Control5(s_SubCharacter* nurse)
 
         if (nurseProps.field_104 >= Q12(1.5f))
         {
-            PLAYER_CHARA().damage.amount += Q12(g_Items_WeaponAttackInfos[EquippedWeaponId_Unk56].damage);
+            PLAYER_CHARA().damage.amount += Q12(g_Items_WeaponAttackInfos[AttackType_PuppetNurseGrab].damage);
             nurseProps.field_104                       = 0;
         }
     }
@@ -1281,8 +1281,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
         }
         else
         {
-            // TODO: What's weapon attack 56?
-            weaponAttack = EquippedWeaponId_Unk56;
+            weaponAttack = AttackType_PuppetNurseGrab;
         }
 
         if (func_8008A0E4(1, weaponAttack, nurse, &pos, &PLAYER_CHARA(), nurse->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)

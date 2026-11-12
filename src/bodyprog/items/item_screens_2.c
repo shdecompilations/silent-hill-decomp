@@ -609,7 +609,7 @@ void Inventory_Update(void) // 0x8004D518
             {
                 g_Inventory_SelectionBordersDraw = 1;
 
-                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
+                if (PLAYER_COMBAT().weaponAttack >= WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap))
                 {
                     g_Inventory_SelectionId = InvSelectionId_EquippedItem;
                     Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));

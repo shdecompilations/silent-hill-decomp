@@ -12,10 +12,10 @@
 /** @brief Used to overwrite `HARRY_BASE_ANIM_INFOS[56:76]` with weapon-specific animations.
  * Always copies 20 `s_AnimInfo`s, but most weapons use fewwer than that.
  *
- * @bug `EquippedWeaponId_HyperBlaster` will copy past the end of this array?
+ * @bug `AttackType_HyperBlaster` will copy past the end of this array?
  */
 const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
-    /* `EquippedWeaponId_Axe` */
+    /* `AttackType_Axe` */
     /* 0   */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 1   */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(25.0f)  }, 568, 577 },
     /* 2   */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 579 },
@@ -27,7 +27,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 8   */ { Anim_BlendLinear, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 577 },
     /* 9   */ { Anim_PlayOnce,    ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 577 },
 
-    /* `EquippedWeaponId_Hammer` */
+    /* `AttackType_Hammer` */
     /* 10  */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 11  */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(40.0f)  }, 568, 579 },
     /* 12  */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
@@ -39,7 +39,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 18  */ { Anim_BlendLinear, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
     /* 19  */ { Anim_PlayOnce,    ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 579 },
 
-    /* `EquippedWeaponId_SteelPipe` */
+    /* `AttackType_SteelPipe` */
     /* 20  */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 21  */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(45.0f)  }, 568, 579 },
     /* 22  */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
@@ -51,7 +51,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 28  */ { Anim_BlendLinear, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
     /* 29  */ { Anim_PlayOnce,    ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-40.0f) }, 568, 579 },
 
-    /* `EquippedWeaponId_KitchenKnife` */
+    /* `AttackType_KitchenKnife` */
     /* 30  */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 31  */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(30.0f)  }, 568, 575 },
     /* 32  */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 581 },
@@ -63,7 +63,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 38  */ { Anim_BlendLinear, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 577 },
     /* 39  */ { Anim_PlayOnce,    ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-40.0f) }, 568, 577 },
 
-    /* `EquippedWeaponId_Katana` */
+    /* `AttackType_Katana` */
     /* 40  */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 41  */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(30.0f) }, 568, 579 },
     /* 42  */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 580 },
@@ -75,7 +75,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 48  */ { Anim_BlendLinear, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
     /* 49  */ { Anim_PlayOnce,    ANIM_STATUS(32, true),  false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 579 },
 
-    /* `EquippedWeaponId_Chainsaw` */
+    /* `AttackType_Chainsaw` */
     /* 50  */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 51  */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(15.0f)  }, 568, 583 },
     /* 52  */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
@@ -91,7 +91,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 62  */ { Anim_BlendLinear, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 650 },
     /* 63  */ { Anim_PlayLoop,    ANIM_STATUS(34, true),  false, NO_VALUE,              { Q12(20.0f)  }, 650, 655 },
 
-    /* `EquippedWeaponId_RockDrill` */
+    /* `AttackType_RockDrill` */
     /* 64  */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 65  */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(18.0f)  }, 568, 583 },
     /* 66  */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
@@ -107,7 +107,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 76  */ { Anim_BlendLinear, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 637 },
     /* 77  */ { Anim_PlayLoop,    ANIM_STATUS(34, true),  false, NO_VALUE,              { Q12(24.0f)  }, 637, 640 },
 
-    /* `EquippedWeaponId_Handgun` */
+    /* `AttackType_Handgun` */
     /* 78  */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 570 },
     /* 79  */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(35.0f)  }, 570, 579 },
     /* 80  */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 582 },
@@ -127,7 +127,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 94  */ { Anim_BlendLinear, ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 582 },
     /* 95  */ { Anim_PlayOnce,    ANIM_STATUS(36, true),  false, ANIM_STATUS(36, true), { Q12(25.0f)  }, 582, 604 },
 
-    /* `EquippedWeaponId_HuntingRifle` */
+    /* `AttackType_HuntingRifle` */
     /* 96  */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 97  */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(35.0f)  }, 568, 587 },
     /* 98  */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 588 },
@@ -147,7 +147,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 112 */ { Anim_BlendLinear, ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 598 },
     /* 113 */ { Anim_PlayOnce,    ANIM_STATUS(36, true),  false, ANIM_STATUS(36, true), { Q12(16.0f)  }, 598, 607 },
 
-    /* `EquippedWeaponId_Shotgun` */
+    /* `AttackType_Shotgun` */
     /* 114 */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 570 },
     /* 115 */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(40.0f)  }, 570, 579 },
     /* 116 */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 582 },
@@ -167,7 +167,7 @@ const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[] = {
     /* 130 */ { Anim_BlendLinear, ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 582 },
     /* 131 */ { Anim_PlayOnce,    ANIM_STATUS(36, true),  false, ANIM_STATUS(36, true), { Q12(22.0f)  }, 582, 604 },
 
-    /* `EquippedWeaponId_HyperBlaster` */
+    /* `AttackType_HyperBlaster` */
     /* 132 */ { Anim_BlendLinear, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
     /* 133 */ { Anim_PlayOnce,    ANIM_STATUS(28, true),  false, ANIM_STATUS(28, true), { Q12(24.0f)  }, 568, 574 },
     /* 134 */ { Anim_BlendLinear, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 574 },

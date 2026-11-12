@@ -85,37 +85,37 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch(void)
 
         switch (PLAYER_COMBAT().weaponAttack)
         {
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Multitap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_HandMelee));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandGun));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandRifle));
                 break;
         }
@@ -136,37 +136,37 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
 
         switch (PLAYER_COMBAT().weaponAttack)
         {
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_SteelPipe,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_RockDrill,    AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Hammer,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Chainsaw,     AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Multitap):
+            case WEAPON_ATTACK(AttackType_Axe,          AttackInputType_Multitap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_HandMelee));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandGun));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
                 WorldGfx_CharaMeshSwap(Chara_Harry, MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarryVariantMesh_RightHandRifle));
                 break;
         }
@@ -1504,7 +1504,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
             {
                 if (!(PLAYER_PROPS().flags & PlayerFlag_Unk6))
                 {
-                    func_8006342C(EquippedWeaponId_Handgun, Q12_ANGLE(73.125f), player->rotation.vy, boneCoords);
+                    func_8006342C(AttackType_Handgun, Q12_ANGLE(73.125f), player->rotation.vy, boneCoords);
                     func_8005F6B0(&NPC_CHARA(1), &Q12_VECTOR3(140.39f, -0.55f, 22.76f), 3, 3);
                     PLAYER_PROPS().flags |= PlayerFlag_Unk6;
                 }

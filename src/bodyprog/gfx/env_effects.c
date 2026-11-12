@@ -2122,37 +2122,37 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
 
     switch (weaponAttack)
     {
-        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap):
             D_800C440C = coord;
             Math_SetSVectorFast(&ptr->field_20, 2, -15, 71);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
             D_800C440C = coord;
             Math_SetSVectorFast(&ptr->field_20, 3, -18, 109);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
             D_800C440C = coord;
             Math_SetSVectorFast(&ptr->field_20, -2, -35, 221);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Unk70, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_KaufmannHandgun, AttackInputType_Tap):
             D_800C4410 = coord;
             Math_SetSVectorFast(&ptr->field_20, 3, -24, 91);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_CybilHandgun, AttackInputType_Tap):
             D_800C4410 = coord;
             Math_SetSVectorFast(&ptr->field_20, 2, -13, 67);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap):
             D_800C440C = coord;
             Math_SetSVectorFast(&ptr->field_20, 2, 20, 57);
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
             D_800C440C = coord;
             Math_SetSVectorFast(&ptr->field_20, 2, 24, 67);
             break;
@@ -2171,7 +2171,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
 
     switch (weaponAttack)
     {
-        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap):
             ptr->field_38 = func_8005E7E0(15);
             ptr->field_50 = 3;
 
@@ -2181,7 +2181,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
             ptr->field_38 = func_8005E7E0(16);
             ptr->field_50 = 5;
 
@@ -2191,7 +2191,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
             ptr->field_38 = func_8005E7E0(17);
             ptr->field_50 = 3;
 
@@ -2201,7 +2201,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Unk70, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_KaufmannHandgun, AttackInputType_Tap):
             ptr->field_38 = func_8005E7E0(18);
             ptr->field_50 = 3;
 
@@ -2211,7 +2211,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_CybilHandgun, AttackInputType_Tap):
             ptr->field_38 = func_8005E7E0(19);
             ptr->field_50 = 3;
 
@@ -2221,8 +2221,8 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             }
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap):
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
@@ -2232,12 +2232,12 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             break;
     }
 
-    if (weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
-        weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+    if (weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) &&
+        weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
     {
         if (ptr->field_38 != NO_VALUE)
         {
-            if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Unk70, AttackInputType_Tap))
+            if (weaponAttack == WEAPON_ATTACK(AttackType_KaufmannHandgun, AttackInputType_Tap))
             {
                 g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = Q12_ANGLE(-90.0f);
                 g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = Q12_ANGLE(90.0f);

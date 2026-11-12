@@ -1464,8 +1464,7 @@ void Stalker_Control_6(s_SubCharacter* stalker)
         vec0.vy = stalker->position.vy + stalker->collision.box.field_8;
         vec0.vz = stalker->position.vz;
 
-        // TODO: What's weapon attack 49?
-        if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap), stalker, &vec0, &g_SysWork.playerWork, stalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, WEAPON_ATTACK(AttackType_StalkerLegGrab, AttackInputType_Tap), stalker, &vec0, &g_SysWork.playerWork, stalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             stalkerProps.flags |= StalkerFlag_5;
             g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;
@@ -2121,8 +2120,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
         ptr->position_38.vy = stalker->position.vy + stalker->collision.box.field_8;
         ptr->position_38.vz = stalker->position.vz;
 
-        // TODO: What's weapon attack 48?
-        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk48, AttackInputType_Tap), stalker, &ptr->position_38, &PLAYER_CHARA(),
+        func_8008A0E4(1, WEAPON_ATTACK(AttackType_Stalker, AttackInputType_Tap), stalker, &ptr->position_38, &PLAYER_CHARA(),
                       ratan2(ptr->field_20.vx - stalker->position.vx, ptr->field_20.vz - stalker->position.vz),
                       ratan2(Math_Vector2MagCalcSafeQ6(stalker->position.vx - ptr->field_20.vx,
                                                  stalker->position.vz - ptr->field_20.vz),
