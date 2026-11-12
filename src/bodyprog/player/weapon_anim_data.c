@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 #include "inline_no_dmpsx.h"
 
 #include <psyq/gtemac.h>
@@ -6,14 +6,8 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/collision/collision.h"
+#include "bodyprog/player/weapon_anim_data.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/items/item_screens.h"
-#include "bodyprog/player/player.h"
-#include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/sound/sound_system.h"
-#include "main/rng.h"
 
 /** @brief Used to overwrite `HARRY_BASE_ANIM_INFOS[56:76]` with weapon-specific animations.
  * Always copies 20 `s_AnimInfo`s, but most weapons use fewwer than that.

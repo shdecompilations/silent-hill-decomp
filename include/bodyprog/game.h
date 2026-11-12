@@ -1,12 +1,10 @@
-#ifndef _GAME_H
-#define _GAME_H
-
-// TODO: Should move this to the `bodyprog` folder.
+#ifndef _BODYPROG_GAME_H
+#define _BODYPROG_GAME_H
 
 #include "bodyprog/events/event_flags.h"
 #include "gpu.h"
 #include "types.h"
-#include "libkpad.h"
+#include "bodyprog/libkpad/libkpad.h"
 
 // TODO: Includes will have to be cleaned up once everything is organised project-wide.
 #include "bodyprog/chara/anim.h"

@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include <libetc.h>
 #include <libgs.h>

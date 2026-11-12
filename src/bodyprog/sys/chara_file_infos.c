@@ -1,7 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/chara_file_infos.h"
 #include "bodyprog/math/math.h"
-#include "game.h"
+#include "bodyprog/game.h"
 
 s_CharaFileInfo CHARA_FILE_INFOS[] = {
 /* `Chara_` name       { `animFileIdx`          `modelFileIdx`         `textureFileIdx`       `field_6`  `materialBlendMode`      `field_8`    `cameraAnchor`          `cameraOffsetY`     } */

@@ -3,7 +3,7 @@
 
 // TODO: Includes will have to be cleaned up once everything is organised project-wide and this header becomes
 // deprecated.
-#include "game.h"
+#include "bodyprog/game.h"
 #include "bodyprog/libkpad/vibration.h"
 #include "bodyprog/sound/sfx.h"
 #include "bodyprog/chara/anim.h"
@@ -28,6 +28,7 @@
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/paper_map/paper_map.h"
 #include "bodyprog/player/player_control.h"
+#include "bodyprog/player/weapon_anim_data.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/sound/sfx_id_enum.h"
 #include "bodyprog/sys/map_info.h"
@@ -136,7 +137,7 @@ STATIC_ASSERT_SIZEOF(s_RadioNoise, 4);
 
 typedef struct
 {
-    /* 0x0 */ u8  unused_0[4];      /** @unused TODO: Looks meaningful, but unclear what it could be. */
+    /* 0x0 */ u8  unused_0[4];      /** @unused Looks meaningful, but unclear what it could be. */
     /* 0x4 */ s16 startKeyframeIdx;
     /* 0x6 */ s16 endKeyframeIdx;
 } s_800C44F0;
@@ -453,8 +454,6 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to
 extern char D_80028544[16];
 
 extern RECT D_80028A20;
-
-extern const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[];
 
 // Something related to keyframes.
 extern const s_800C44F0 D_800294F4[];

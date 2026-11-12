@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/screen/draw.h"

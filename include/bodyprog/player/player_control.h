@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_PLAYERCONTROL_H
-#define _BODYPROG_PLAYERCONTROL_H
+#ifndef _BODYPROG_PLAYER_PLAYERCONTROL_H
+#define _BODYPROG_PLAYER_PLAYERCONTROL_H
 
 /** @brief Gets the variable animation duration for the player.
  *

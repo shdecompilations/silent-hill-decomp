@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include <psyq/libetc.h>
 #include <psyq/libgs.h>

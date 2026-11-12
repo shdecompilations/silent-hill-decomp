@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_PLAYER_H
-#define _BODYPROG_PLAYER_H
+#ifndef _BODYPROG_PLAYER_PLAYER_H
+#define _BODYPROG_PLAYER_PLAYER_H
 
 /** @note The game handles the upper and lower part of the player's body independently.
  *

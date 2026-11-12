@@ -1,5 +1,5 @@
 #include "common.h"
-#include "libkpad.h"
+#include "bodyprog/libkpad/libkpad.h"
 
 #include <psyq/libgte.h>
 #include <psyq/libpad.h>

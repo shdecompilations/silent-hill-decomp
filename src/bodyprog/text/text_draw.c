@@ -1,6 +1,6 @@
 #include <psyq/libapi.h>
 
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/screen/data.h"

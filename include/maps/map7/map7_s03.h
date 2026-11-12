@@ -1,7 +1,7 @@
 #ifndef _MAPS_MAP7_S03_H
 #define _MAPS_MAP7_S03_H
 
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include <psyq/libgs.h>
 

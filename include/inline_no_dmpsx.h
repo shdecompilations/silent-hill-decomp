@@ -1,5 +1,5 @@
-#ifndef _INLINE_NO_DMPSX_H_
-#define _INLINE_NO_DMPSX_H_
+#ifndef _INLINENODMPSX_H_
+#define _INLINENODMPSX_H_
 
 #include "inline_c.h"
 

@@ -1,7 +1,7 @@
 #ifndef _MAPS_SHARED_H
 #define _MAPS_SHARED_H
 
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/game_boot/game_boot.h"

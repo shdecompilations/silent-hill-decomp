@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 
 #if VERSION_IS(JAP0)
     const s32 g_Bodyprog = 0xCC010000;

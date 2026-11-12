@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "game.h"
+#include "bodyprog/game.h"
 
 s_SysWork  g_SysWork;
 s_GameWork g_GameWork;

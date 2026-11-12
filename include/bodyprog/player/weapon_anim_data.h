@@ -1,0 +1,8 @@
+#ifndef _BODYPROG_PLAYER_WEAPONANIMDATA_H
+#define _BODYPROG_PLAYER_WEAPONANIMDATA_H
+
+extern const s_AnimInfo HARRY_WEAPON_ANIM_INFOS[];
+
+// TODO: Move `D_800294F4` here?
+
+#endif

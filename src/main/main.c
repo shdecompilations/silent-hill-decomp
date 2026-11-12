@@ -1,5 +1,5 @@
 #include "common.h"
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include <psyq/libapi.h>
 #include <psyq/libetc.h>

@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/settings_reset.h"

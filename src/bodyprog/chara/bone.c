@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 #include "inline_no_dmpsx.h"
 
 #include "bodyprog/bodyprog.h"

@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include "bodyprog/view/vw_main.h"
 #include "bodyprog/view/vw_system.h"

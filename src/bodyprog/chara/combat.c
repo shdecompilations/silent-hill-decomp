@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 #include "inline_no_dmpsx.h"
 
 #include <psyq/libpad.h>
@@ -1667,20 +1667,20 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo,
 
     if (var_v0 < temp_v1)
     {
-        sp38 += attackInfo->hitCheck.fight.sizeX >> 1;
-        sp44 -= attackInfo->hitCheck.fight.sizeX >> 1;
+        sp38 += DIV_FAST(attackInfo->hitCheck.fight.sizeX, 2);
+        sp44 -= DIV_FAST(attackInfo->hitCheck.fight.sizeX, 2);
     }
 
     if (temp_v0_7 < temp_a0_2)
     {
-        sp3C += attackInfo->hitCheck.fight.sizeY >> 1;
-        sp48 -= attackInfo->hitCheck.fight.sizeY >> 1;
+        sp3C += DIV_FAST(attackInfo->hitCheck.fight.sizeY, 2);
+        sp48 -= DIV_FAST(attackInfo->hitCheck.fight.sizeY, 2);
     }
 
     if (var_v0_6 < temp_a2)
     {
-        sp40 += attackInfo->hitCheck.fight.sizeZ >> 1;
-        sp4C -= attackInfo->hitCheck.fight.sizeZ >> 1;
+        sp40 += DIV_FAST(attackInfo->hitCheck.fight.sizeZ, 2);
+        sp4C -= DIV_FAST(attackInfo->hitCheck.fight.sizeZ, 2);
     }
 
     if (chara == &PLAYER_CHARA())

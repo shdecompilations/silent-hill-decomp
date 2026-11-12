@@ -1,4 +1,4 @@
-#include "game.h"
+#include "bodyprog/game.h"
 
 #include "main/fsqueue.h"
 #include "bodyprog/screen/data.h"
