@@ -22,50 +22,50 @@
     #define WATER_CLUT_Y 0
 #endif
 
-LensFlareWork light_flare_work;
+s_LensFlareWork g_LensFlareWork;
 
-void func_8008D41C(void) // 0x8008D41C
+void shLensFlareInit(void) // 0x8008D41C
 {
-    light_flare_work.flare_inhibit_f = 0;
-    light_flare_work.water_inhibit_f = 0;
-    light_flare_work.lfl_sync_draw_func_exec_f = 0;
-    light_flare_work.now_l_eff_rate = 0;
+    g_LensFlareWork.flare_inhibit_f = 0;
+    g_LensFlareWork.water_inhibit_f = 0;
+    g_LensFlareWork.lfl_sync_draw_func_exec_f = 0;
+    g_LensFlareWork.now_l_eff_rate = 0;
 }
 
 void func_8008D438(void) // 0x8008D438
 {
-    light_flare_work.flare_inhibit_f = 1;
+    g_LensFlareWork.flare_inhibit_f = 1;
 }
 
 void func_8008D448(void) // 0x8008D448
 {
-    light_flare_work.flare_inhibit_f = 0;
+    g_LensFlareWork.flare_inhibit_f = 0;
 }
 
 void func_8008D454(void) // 0x8008D454
 {
-    light_flare_work.water_inhibit_f = 1;
+    g_LensFlareWork.water_inhibit_f = 1;
 }
 
 void func_8008D464(void) // 0x8008D464
 {
-    light_flare_work.water_inhibit_f = 0;
+    g_LensFlareWork.water_inhibit_f = 0;
 }
 
-void func_8008D470(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
+void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
 {
     s32          posY;
     s_WaterZone* waterZone;
 
-    if (light_flare_work.flare_inhibit_f == 0)
+    if (g_LensFlareWork.flare_inhibit_f == 0)
     {
-        func_800410D8(&light_flare_work.scr_l_pos, &light_flare_work.scr_l_ang_xy, &light_flare_work.scr_l_ang_z, rot, pos);
+        func_800410D8(&g_LensFlareWork.scr_l_pos, &g_LensFlareWork.scr_l_ang_xy, &g_LensFlareWork.scr_l_ang_z, rot, pos);
 
-        if ((ReadGeomScreen() >> 1) < light_flare_work.scr_l_pos.vz)
+        if ((ReadGeomScreen() >> 1) < g_LensFlareWork.scr_l_pos.vz)
         {
-            light_flare_work.lfl_sync_draw_func_exec_f = 1;
-            light_flare_work.tgt_l_eff_rate = shLensFlareMakeEffectTargetRate(light_intensity, light_flare_work.scr_l_pos.vz, light_flare_work.scr_l_ang_z);
-            func_8008D5A0(&light_flare_work.scr_l_pos, light_flare_work.scr_l_ang_z);
+            g_LensFlareWork.lfl_sync_draw_func_exec_f = 1;
+            g_LensFlareWork.tgt_l_eff_rate = shLensFlareMakeEffectTargetRate(light_intensity, g_LensFlareWork.scr_l_pos.vz, g_LensFlareWork.scr_l_ang_z);
+            shLensFlareSetLightSeed(&g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_z);
         }
         else
         {
@@ -73,7 +73,7 @@ void func_8008D470(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZon
         }
     }
 
-    if (light_flare_work.water_inhibit_f == 0)
+    if (g_LensFlareWork.water_inhibit_f == 0)
     {
         waterZone = Map_WaterZoneGet(Q12_TO_Q4(pos->vx), Q12_TO_Q4(pos->vz), waterZones);
         if (waterZone != NULL)
@@ -83,14 +83,14 @@ void func_8008D470(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZon
             if (waterZone->isEnabled == true)
             {
                 posY = Q4_TO_Q12(waterZone->illumination);
-                func_8008E794(pos, light_flare_work.scr_l_ang_z, posY);
+                func_8008E794(pos, g_LensFlareWork.scr_l_ang_z, posY);
                 func_8008EA68(rot, pos, posY);
             }
         }
     }
 }
 
-void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
+void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z) // 0x8008D5A0
 {
     RECT      sp10;
     bool      cond;
@@ -101,15 +101,15 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     packet         = GsOUT_PACKET_P;
     tile           = GsOUT_PACKET_P + 24;
     GsOUT_PACKET_P = GsOUT_PACKET_P + 40;
-    ot             = &g_OrderingTable0[g_ActiveBufferIdx].org[(arg0->vz + 2) >> 3];
+    ot             = &g_OrderingTable0[g_ActiveBufferIdx].org[(scr_l_pos->vz + 2) >> 3];
 
     cond = false;
-    if (arg0->vx >= (-g_GameWork.gsScreenWidth >> 1) && (g_GameWork.gsScreenWidth >> 1) >= arg0->vx)
+    if (scr_l_pos->vx >= (-g_GameWork.gsScreenWidth >> 1) && (g_GameWork.gsScreenWidth >> 1) >= scr_l_pos->vx)
     {
-        if (arg0->vy >= (-g_GameWork.gsScreenHeight >> 1) && (g_GameWork.gsScreenHeight >> 1) >= arg0->vy &&
-            arg0->vz >= 0)
+        if (scr_l_pos->vy >= (-g_GameWork.gsScreenHeight >> 1) && (g_GameWork.gsScreenHeight >> 1) >= scr_l_pos->vy &&
+            scr_l_pos->vz >= 0)
         {
-            cond = arg1 > 0x354;
+            cond = scr_l_ang_z >= Q12_ANGLE(75.0f);
         }
     }
 
@@ -119,14 +119,14 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
         tile->r0 = 0xFF;
         tile->g0 = 0xFF;
         tile->b0 = 0xFF;
-        tile->x0 = arg0->vx;
-        tile->y0 = arg0->vy;
+        tile->x0 = scr_l_pos->vx;
+        tile->y0 = scr_l_pos->vy;
         tile->w  = 1;
         tile->h  = 1;
         AddPrim(ot, tile);
 
-        sp10.x = arg0->vx + (g_GameWork.gsScreenWidth / 2);
-        sp10.y = arg0->vy + (g_GameWork.gsScreenHeight / 2);
+        sp10.x = scr_l_pos->vx + (g_GameWork.gsScreenWidth / 2);
+        sp10.y = scr_l_pos->vy + (g_GameWork.gsScreenHeight / 2);
 
 #if VERSION_REGION_IS(PAL) 
         if (g_ActiveBufferIdx != 1)
@@ -162,14 +162,14 @@ void shLensFlareDraw(void) // 0x8008D78C
     s32 var0;
     s32 var1;
 
-    if (light_flare_work.lfl_sync_draw_func_exec_f == 0)
+    if (g_LensFlareWork.lfl_sync_draw_func_exec_f == 0)
     {
         return;
     }
 
-    light_flare_work.lfl_sync_draw_func_exec_f = 0;
+    g_LensFlareWork.lfl_sync_draw_func_exec_f = 0;
 
-    if (light_flare_work.flare_inhibit_f != 0)
+    if (g_LensFlareWork.flare_inhibit_f != 0)
     {
         return;
     }
@@ -177,22 +177,22 @@ void shLensFlareDraw(void) // 0x8008D78C
     var1 = shLensFlareLightCenterIsVisible();
     if (var1 != 0)
     {
-        var0 = light_flare_work.tgt_l_eff_rate - light_flare_work.now_l_eff_rate;
+        var0 = g_LensFlareWork.tgt_l_eff_rate - g_LensFlareWork.now_l_eff_rate;
     }
     else
     {
-        var0 = -light_flare_work.now_l_eff_rate;
+        var0 = -g_LensFlareWork.now_l_eff_rate;
     }
 
-    light_flare_work.now_l_eff_rate += var0 >> 1;
+    g_LensFlareWork.now_l_eff_rate += var0 >> 1;
 
     if (vcRetCamMvSmoothF() == VC_MV_CHASE)
     {
-        light_flare_work.now_l_eff_rate = 0;
+        g_LensFlareWork.now_l_eff_rate = 0;
         var1               = 0;
     }
 
-    shLensFlareEffect_Draw(var1, light_flare_work.now_l_eff_rate, &light_flare_work.scr_l_pos, light_flare_work.scr_l_ang_xy, light_flare_work.scr_l_ang_z);
+    shLensFlareEffect_Draw(var1, g_LensFlareWork.now_l_eff_rate, &g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_xy, g_LensFlareWork.scr_l_ang_z);
 }
 
 s32 shLensFlareLightCenterIsVisible(void) // 0x8008D850
@@ -253,7 +253,7 @@ q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 x1, q19_12 x2
 
     temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), light_eff_pow, 0, Q8(16.0f));
     temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, Q8(0.8f), Q8(13.0f));
-    res   = Q12_MULT(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q8(3.335f), Q8(7.425f)), // TODO: Yucky floats, maybe these aren't distances?
+    res   = Q12_MULT(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q12_ANGLE(75.0f), Q12_ANGLE(167.0f)),
                      Q12_MULT(temp0, temp1));
 
     return (res > Q8(24.0f)) ? Q8(24.0f) : res;

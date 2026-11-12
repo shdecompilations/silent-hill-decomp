@@ -1603,13 +1603,13 @@ Dms_AngleLerp                                = 0x8008EEE4; // type:func
 //------------------------------------------------------------
 //--- PA: 0x06A3CC   VA: 0x8008EF2C   subsegment: c, gfx/water
 //------------------------------------------------------------
-func_8008D41C                                = 0x8008EF2C; // type:func
+shLensFlareInit                              = 0x8008EF2C; // type:func
 func_8008D438                                = 0x8008EF48; // type:func
 func_8008D448                                = 0x8008EF58; // type:func
 func_8008D454                                = 0x8008EF64; // type:func
 func_8008D464                                = 0x8008EF74; // type:func
-func_8008D470                                = 0x8008EF80; // type:func
-func_8008D5A0                                = 0x8008F0B0; // type:func
+shLensFlareExec                              = 0x8008EF80; // type:func
+shLensFlareSetLightSeed                      = 0x8008F0B0; // type:func
 shLensFlareDraw                              = 0x8008F29C; // type:func
 shLensFlareLightCenterIsVisible              = 0x8008F360; // type:func
 shLensFlareMakeEffectTargetRate              = 0x8008F3D0; // type:func
@@ -3875,7 +3875,7 @@ D_800C47F8                                   = 0x800C6E50;
 //---------------------------------------------------------------
 //--- PA: 0x0A2310   VA: 0x800C6E70   subsegment: .bss, gfx/water
 //---------------------------------------------------------------
-light_flare_work                             = 0x800C6E70; // size:0x24
+g_LensFlareWork                              = 0x800C6E70; // size:0x24
 
 //--------------------------------------------------------------
 //--- PA: 0x0A2338   VA: 0x800C6E98   subsegment: .bss, sys/demo

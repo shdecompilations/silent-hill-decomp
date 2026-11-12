@@ -48,7 +48,7 @@ s_WorldEnvRenderWork g_WorldEnvRenderWork;
 void WorldEnvRender_Init(void) // 0x80055028
 {
     func_80040BAC();
-    func_8008D41C();
+    shLensFlareInit();
 
     g_WorldEnvRenderWork.lightMode = WorldEnvLightMode_None;
     g_WorldEnvRenderWork.field_20  = Q12(1.0f);
@@ -93,7 +93,7 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 
     if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_Spot && g_WorldEnvRenderWork.light.lensFlareIntensity != Q12(0.0f))
     {
-        func_8008D470(g_WorldEnvRenderWork.light.lensFlareIntensity, &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position, g_WorldEnvRenderWork.waterZones);
+        shLensFlareExec(g_WorldEnvRenderWork.light.lensFlareIntensity, &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position, g_WorldEnvRenderWork.waterZones);
     }
 
     if (g_WorldEnvRenderWork.screenBrightness > Q12(0.0f))

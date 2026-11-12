@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_GFX_WATER_H
 #define _BODYPROG_GFX_WATER_H
 
-/** @brief Lens flare state, name and fields taken from SH2, which matches almost exactly. */
+/** @brief Lens flare state, fields taken from SH2 which has an anonymous struct that matches near exactly. */
 typedef struct _LensFlareWork
 {
     /* 0x0  */ u8      flare_inhibit_f;           /** `bool` */
@@ -15,11 +15,11 @@ typedef struct _LensFlareWork
     /* 0x18 */ s8      unk_18[4];
     /* 0x1C */ s32     scr_l_ang_xy;
     /* 0x20 */ q19_12  scr_l_ang_z;
-} LensFlareWork;
+} s_LensFlareWork;
 
-extern LensFlareWork light_flare_work; // Name from SH2 symbols.
+extern s_LensFlareWork g_LensFlareWork;
 
-void func_8008D41C(void);
+void shLensFlareInit(void);
 
 void func_8008D438(void);
 
@@ -30,9 +30,9 @@ void func_8008D454(void);
 void func_8008D464(void);
 
 /** Light function. */
-void func_8008D470(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
+void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
 
-void func_8008D5A0(VECTOR3* arg0, s16 arg1);
+void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z);
 
 // Named from SH2 symbols.
 q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 x1, q19_12 x2);
