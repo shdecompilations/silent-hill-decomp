@@ -7,6 +7,23 @@
 #include "main/rng.h"
 #include "maps/common/shared.h"
 
+typedef struct
+{
+    /* 0x0   */ s_func_8005E89C    field_0;
+    /* 0x12C */ s_CollisionSurface surface;
+    /* 0x138 */ MATRIX             field_138;
+    /* 0x158 */ SVECTOR            field_158[4];
+    /* 0x178 */ VECTOR             field_178[4];
+    /* 0x1B8 */ CVECTOR            field_1B8;
+    /* 0x1BC */ CVECTOR            field_1BC;
+    /* 0x1C0 */ s32                field_1C0;
+    /* 0x1C4 */ s32                field_1C4;
+    /* 0x1C8 */ s32                field_1C8;
+    /* 0x1CC */ s32                field_1CC;
+    /* 0x1D0 */ s32                field_1D0;
+    /* 0x1D4 */ DVECTOR            field_1D4;
+} s_func_800CD1F8;
+
 // Glass-breaking particle effect? Included in M0S01 and M7S01
 // Called by cutscene event code.
 // TODO: Make this separate split in each map instead of `#include`.

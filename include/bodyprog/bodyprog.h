@@ -170,60 +170,6 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0  */ POLY_FT4* field_0;
-    /* 0x4  */ SVECTOR   field_4; // Q23.8
-    /* 0xC  */ MATRIX    field_C;
-    /* 0x2C */ VECTOR3   field_2C; // Q23.8 | Set as grid-aligned player position in `func_80065B94`.
-    /* 0x38 */ s32       field_38;
-    /* 0x3C */ DVECTOR   field_3C;
-    /* 0x40 */ s32       field_40;
-    /* 0x44 */ DVECTOR   field_44;
-    /* 0x48 */ DVECTOR   field_48;
-} s_func_80065B94;
-
-typedef struct
-{
-    /* 0x0  */ POLY_GT4* field_0;
-    /* 0x4  */ MATRIX    field_4;
-    /* 0x24 */ SVECTOR   field_24[3];
-    /* 0x3C */ VECTOR3   field_3C; // Q19.12
-    /* 0x48 */ s32       field_48;
-    /* 0x4C */ DVECTOR   field_4C;
-    /* 0x50 */ DVECTOR   field_50;
-    /* 0x54 */ DVECTOR   field_54;
-    /* 0x58 */ DVECTOR   field_58;
-    /* 0x5C */ s32       field_5C;
-    /* 0x60 */ s32       field_60;
-    /* 0x64 */ s32       field_64;
-    /* 0x68 */ s32       field_68;
-    /* 0x6C */ s32       field_6C;
-    /* 0x70 */ s32       field_70;
-    /* 0x74 */ s32       field_74;
-    /* 0x78 */ s32       field_78;
-} s_func_80066184;
-
-typedef struct
-{
-    /* 0x0 */ u8  field_0;
-    /* 0x1 */ u8  field_1;
-    /* 0x2 */ s16 field_2; // XYZ? X and Y swapped?
-    /* 0x4 */ s32 field_4; //
-    /* 0x8 */ s32 field_8; //
-} s_800C42E8;
-
-typedef struct
-{
-    /* 0x0 */ s16 field_0;
-    /* 0x2 */ s16 field_2;
-    /* 0x4 */ s16 field_4;
-    /* 0x6 */ s16 field_6;
-    /* 0x8 */ u16 field_8;
-    /* 0xA */ u16 field_A;
-    /* 0xC */ u8  field_C;
-} s_800C4418;
-
-typedef struct
-{
     /* 0x0   */ VECTOR3 field_0; // Q23.8 | Position.
     /* 0xC   */ MATRIX  worldToScreenMat;
     /* 0x2C  */ s32     field_2C;
@@ -337,20 +283,6 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0  */ POLY_G4*  field_0;
-    /* 0x4  */ DR_TPAGE* field_4;
-    /* 0x8  */ SVECTOR   field_8[3];
-    /* 0x20 */ MATRIX    field_20;
-    /* 0x40 */ VECTOR3   field_40; // Q23.8
-    /* 0x4C */ s32       field_4C;
-    /* 0x50 */ s16       field_50;
-    /* 0x54 */ s32       field_54[3];
-    /* 0x60 */ s16       field_60[3];
-    /* 0x68 */ s32       field_68;
-} s_func_800652F4;
-
-typedef struct
-{
     /* 0x0   */ s_func_8005E89C field_0;
     /* 0x12C */ MATRIX          field_12C;
     /* 0x14C */ SVECTOR         field_14C[3];
@@ -390,33 +322,6 @@ typedef struct
     /* 0x164 */ s32             field_164;
     /* 0x168 */ s32             field_168;
 } s_func_80064334;
-
-typedef struct
-{
-    /* 0x0   */ s_func_8005E89C    field_0;
-    /* 0x12C */ s_CollisionSurface surface;
-    /* 0x138 */ MATRIX             field_138;
-    /* 0x158 */ SVECTOR            field_158[4];
-    /* 0x178 */ VECTOR             field_178[4];
-    /* 0x1B8 */ CVECTOR            field_1B8;
-    /* 0x1BC */ CVECTOR            field_1BC;
-    /* 0x1C0 */ s32                field_1C0;
-    /* 0x1C4 */ s32                field_1C4;
-    /* 0x1C8 */ s32                field_1C8;
-    /* 0x1CC */ s32                field_1CC;
-    /* 0x1D0 */ s32                field_1D0;
-    /* 0x1D4 */ DVECTOR            field_1D4;
-} s_func_800CD1F8;
-
-typedef struct
-{
-    /* 0x0  */ MATRIX  field_0; // View matrix?
-    /* 0x20 */ SVECTOR field_20;
-    /* 0x28 */ VECTOR  field_28; // Q27.4
-    /* 0x38 */ s32     field_38;
-    /* 0x3C */ s32     field_3C[5];
-    /* 0x50 */ s32     field_50;
-} s_func_8006342C;
 
 // ========
 // GLOBALS
@@ -655,21 +560,6 @@ extern GsCOORDINATE2* g_BillboardViewCoord;
 
 extern q4_12 g_Player_RotationDeltaToTargetY;
 extern q4_12 g_Player_RotationDeltaToTargetX;
-
-extern s_800C42E8 D_800C42E8[24];
-
-extern s16 D_800C4408;
-
-extern s16 __pad_bss_800C440A;
-
-extern GsCOORDINATE2* D_800C440C;
-
-extern GsCOORDINATE2* D_800C4410;
-
-/** Flags. */
-extern s8 D_800C4414;
-
-extern s_800C4418 D_800C4418;
 
 extern q3_12 D_800C4454;
 

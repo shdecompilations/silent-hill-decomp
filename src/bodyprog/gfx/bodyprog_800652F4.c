@@ -14,6 +14,54 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
+typedef struct
+{
+    /* 0x0  */ POLY_FT4* field_0;
+    /* 0x4  */ SVECTOR   field_4; // Q23.8
+    /* 0xC  */ MATRIX    field_C;
+    /* 0x2C */ VECTOR3   field_2C; // Q23.8 | Set as grid-aligned player position in `func_80065B94`.
+    /* 0x38 */ s32       field_38;
+    /* 0x3C */ DVECTOR   field_3C;
+    /* 0x40 */ s32       field_40;
+    /* 0x44 */ DVECTOR   field_44;
+    /* 0x48 */ DVECTOR   field_48;
+} s_func_80065B94;
+
+typedef struct
+{
+    /* 0x0  */ POLY_GT4* field_0;
+    /* 0x4  */ MATRIX    field_4;
+    /* 0x24 */ SVECTOR   field_24[3];
+    /* 0x3C */ VECTOR3   field_3C; // Q19.12
+    /* 0x48 */ s32       field_48;
+    /* 0x4C */ DVECTOR   field_4C;
+    /* 0x50 */ DVECTOR   field_50;
+    /* 0x54 */ DVECTOR   field_54;
+    /* 0x58 */ DVECTOR   field_58;
+    /* 0x5C */ s32       field_5C;
+    /* 0x60 */ s32       field_60;
+    /* 0x64 */ s32       field_64;
+    /* 0x68 */ s32       field_68;
+    /* 0x6C */ s32       field_6C;
+    /* 0x70 */ s32       field_70;
+    /* 0x74 */ s32       field_74;
+    /* 0x78 */ s32       field_78;
+} s_func_80066184;
+
+typedef struct
+{
+    /* 0x0  */ POLY_G4*  field_0;
+    /* 0x4  */ DR_TPAGE* field_4;
+    /* 0x8  */ SVECTOR   field_8[3];
+    /* 0x20 */ MATRIX    field_20;
+    /* 0x40 */ VECTOR3   field_40; // Q23.8
+    /* 0x4C */ s32       field_4C;
+    /* 0x50 */ s16       field_50;
+    /* 0x54 */ s32       field_54[3];
+    /* 0x60 */ s16       field_60[3];
+    /* 0x68 */ s32       field_68;
+} s_func_800652F4;
+
 s_800AE710 D_800AE710[4] = {
     {},
     { 0x4C, 0x27, 0x7F },
