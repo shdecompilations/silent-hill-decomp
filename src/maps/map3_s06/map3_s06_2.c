@@ -112,7 +112,7 @@ void MapEvent_CommonItemTake(void) // 0x800D0AEC
 
 void func_800D0B10(void) // 0x800D0B10
 {
-    const static VECTOR3 D_800CB21C = { Q12(61.72f), Q12(-0.8f), Q12(100.51f) };
+    static const VECTOR3 D_800CB21C = { Q12(61.72f), Q12(-0.8f), Q12(100.51f) };
 
     if (g_SysWork.sysStateSteps[1] == 0)
     {

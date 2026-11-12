@@ -64,7 +64,7 @@ segments:
       - [0x138,   pad] # Garbage padding (should start at 0x13A but causes mismatches)
       - [0x144,  .rodata, screen/fade]
       - [0x184,  .rodata, screen/cutscene_border]
-      - [0x1E4,  .rodata, sys/syswork_globals]
+      - [0x1E4,  .rodata, game]
       - [0x1F8,   pad]
       - [0x1FC,  .rodata, sys/map_info]
       - [0x5AC,  .rodata, sys/fs_screens]
@@ -143,8 +143,8 @@ segments:
       # data only files
       - [auto,       c, bodyprog]
       - [auto,       c, screen/data]
-      - [auto,       c, sys/syswork_globals]
-      - [auto,       c, sys/chara_data_info]
+      - [auto,       c, game]
+      - [auto,       c, sys/chara_file_infos]
       - [auto,       c, sys/map_info]
       - [auto,       c, events/event_data]
       - [auto,       c, sound/sound_data] # Possibly `sd_dat.c` from SH2 symbols?
@@ -157,7 +157,7 @@ segments:
       - [0xD7F8,     c, screen/draw]
       - [0xDA44,     c, screen/fade]
       - [0xDD3C,     c, screen/cutscene_border]
-      - [0xE020,     c, sys/vsync]
+      - [0xE020,     c, screen/vsync]
       - [0xE070,     c, sys/fs_screens]
       - [0xE1BC,     c, sys/game_main] # Name from SH2 symbols. This name also applies for SH4 instance too.
       - [0xE86C,     c, sys/settings_reset]
@@ -458,7 +458,7 @@ segments:
       - [0x842FC, .data, screen/fade]
       - [0x84338, .data, screen/cutscene_border]
       - [0x843E4, .data, screen/data]
-      - [0x8459C, .data, sys/chara_data_info]
+      - [0x8459C, .data, sys/chara_file_infos]
       - [0x8486C, .data, sys/map_info]
       - [0x84C08, .data, sys/game_main]
       - [0x84C74, .data, sys/memcard_2]
@@ -539,7 +539,7 @@ segments:
                         # so until we don't find a way to replicate `COMM` segment behaviour
                         # this will remain undefined. Maybe worth addding it with `NON_MATCHING`
                         # mark in order to allow anybody to use it.
-      - [0x95460, .bss, sys/syswork_globals]
+      - [0x95460, .bss, game]
       - [0x981A0,  bss]
       - [0x981B4,  pad] # Garbage.
       - [0x981B8, .bss, sys/memcard_2]

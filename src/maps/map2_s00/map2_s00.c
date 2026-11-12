@@ -1888,8 +1888,8 @@ void func_800EB174(void) // 0x800EB174
 
 void func_800EB3F4(void) // 0x800EB3F4
 {
-    const static VECTOR3 D_800CD45C = { Q12(-261.977f), Q12(-0.1f),  Q12(-104.286f) };
-    const static VECTOR3 D_800CD468 = { Q12(-263.0f),   Q12(-1.25f), Q12(-104.0f)   };
+    static const VECTOR3 D_800CD45C = { Q12(-261.977f), Q12(-0.1f),  Q12(-104.286f) };
+    static const VECTOR3 D_800CD468 = { Q12(-263.0f),   Q12(-1.25f), Q12(-104.0f)   };
 
     switch (g_SysWork.sysStateSteps[0])
     {

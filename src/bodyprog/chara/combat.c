@@ -234,7 +234,7 @@ u32 func_8008A270(s32 idx) // 0x8008A270
     }
 #endif
 
-    return g_Items_WeaponAttackInfo[idx].activeStartKeyframe;
+    return g_Items_WeaponAttackInfos[idx].activeStartKeyframe;
 }
 
 u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
@@ -257,7 +257,7 @@ u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
         }
     }
 
-    return g_Items_WeaponAttackInfo[arg0].activeKeyframeCount;
+    return g_Items_WeaponAttackInfos[arg0].activeKeyframeCount;
 }
 
 s32 func_8008A35C(s_AttackInfo* arg0, s32 arg1) // 0x8008A35C
@@ -403,9 +403,9 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     sp18 = 0;
 
-    sp1C = &g_Items_WeaponAttackInfo[sp14];
+    sp1C = &g_Items_WeaponAttackInfos[sp14];
 
-    temp_s1 = sp1C->kind;
+    temp_s1 = sp1C->type;
 
     if (chara == &PLAYER_CHARA())
     {
@@ -472,7 +472,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
             sp40 = chara->field_44.field_4;
             sp34 = sp1C->hitCheck.shot.interval;
 
-            sp54 = sp1C->maxRange;
+            sp54 = sp1C->rangeMax;
 
             if (sp34 != 0)
             {
@@ -947,10 +947,10 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
         base->field_24[i + 1].vz = vz2;
     }
 
-    ptr = &g_Items_WeaponAttackInfo[idx46];
+    ptr = &g_Items_WeaponAttackInfos[idx46];
 
-    temp_s2 = ptr->maxRange;
-    temp_s0 = ptr->minRange;
+    temp_s2 = ptr->rangeMax;
+    temp_s0 = ptr->rangeMin;
 
     vx3 = chara->field_44.field_18.vx;
     vy3 = chara->field_44.field_18.vy;
@@ -1213,8 +1213,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
     s_AttackInfo* temp_fp;
 
     weaponAttack = (u8)attacker->field_44.field_2;
-    temp_fp      = &g_Items_WeaponAttackInfo[weaponAttack];
-    offsetY       = temp_fp->kind;
+    temp_fp      = &g_Items_WeaponAttackInfos[weaponAttack];
+    offsetY       = temp_fp->type;
     sp14         = attacker->field_44.field_8;
     offsetZ       = arg3;
 

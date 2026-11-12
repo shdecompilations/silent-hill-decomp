@@ -7,6 +7,7 @@
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
+#include "bodyprog/sys/warm_boot.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s02.h"
 #include "maps/common/particle.h"

@@ -13,8 +13,8 @@ u8 g_Items_GunsMaxLoadAmmo[36] = {
 u32 D_800AD4C4 = 0;
 
 // TODO: Add weapon attack names to each row.
-s_AttackInfo g_Items_WeaponAttackInfo[70] = {
-/*  { `maxRange`, `minRange`, `damage`, `hitCheck`,                           `shock`,    `activeStartKeyframe`, `activeKeyframeCount`, `kind`, `hurtSfxType`, `impactSfxGroup`, `pad`, `unk_14`    } */
+s_AttackInfo g_Items_WeaponAttackInfos[70] = {
+/*  { `rangeMax`, `rangeMin`, `damage`, `hitCheck`,                           `shock`,    `activeStartKeyframe`, `activeKeyframeCount`, `kind`, `hurtSfxType`, `impactSfxGroup`, `pad`, `unk_14`    } */
     { Q12(0.4f),  Q12(0.1f),  0x0082,   ATTACK_FIGHT(0.5f, 0.5f, 0.2f),       Q12(0.0f),  3,                     3,                     1,      -1,            2,                0,     &D_800AD4C4 },
     { Q12(1.0f),  Q12(-0.1f), 0x0046,   ATTACK_FIGHT(0.4f, 0.5f, 0.3f),       Q12(1.0f),  7,                     4,                     2,      -1,            3,                0,     &D_800AD4C4 },
     { Q12(1.0f),  Q12(0.6f),  0x00C8,   ATTACK_FIGHT(0.5f, 0.5f, 0.3f),       Q12(1.0f),  4,                     6,                     1,      -1,            1,                0,     &D_800AD4C4 },

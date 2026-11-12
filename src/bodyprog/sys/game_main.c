@@ -14,6 +14,7 @@
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/memcard.h"
+#include "bodyprog/sys/warm_boot.h"
 #include "bodyprog/sound/sound_system.h"
 #include "bodyprog/sys/game_main.h"
 #include "screens/b_konami/b_konami.h"

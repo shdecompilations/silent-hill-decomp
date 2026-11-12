@@ -62,7 +62,6 @@ typedef struct _ModelHeader
     /* 0xB+6 */ u8            unk_B_6   : 2;
     /* 0xC   */ s_MeshHeader* meshHdrs;
 } s_ModelHeader;
-STATIC_ASSERT_SIZEOF(s_ModelHeader, 16);
 
 /** @brief Model info. */
 typedef struct _ModelInfo

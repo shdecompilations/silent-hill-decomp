@@ -1929,7 +1929,7 @@ void func_800DE828(void) // 0x800DE828
     s32 tmp0;
     s32 tmp1;
 
-    const static VECTOR3 sfxPos = VECTOR3(-58.81f, -1.4f, 18.02f);
+    static const VECTOR3 sfxPos = VECTOR3(-58.81f, -1.4f, 18.02f);
 
     if (g_DeltaTime == Q12(0.0f))
     {

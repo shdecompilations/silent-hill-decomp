@@ -30,6 +30,7 @@
 #include "bodyprog/screen/data.h"
 #include "bodyprog/sound/sfx_id_enum.h"
 #include "bodyprog/sys/map_info.h"
+#include "bodyprog/sys/settings_reset.h"
 #include "bodyprog/text/map_msg.h"
 #include "bodyprog/view/vw_system.h"
 #include "bodyprog/world/draw.h"
@@ -122,49 +123,56 @@ typedef struct
     /* 0x0 */ s16 field_0; // Flags?
 } s_8008D850;
 
-/** @brief Melee hit box for an attack. SH2: `shBattleFight`. */
-typedef struct
+/** @brief Melee attack box.
+ *
+ * SH2 name: `shBattleFight`.
+ */
+typedef struct _AttackFight
 {
-    /* 0x0 */ q4_12 sizeX; // SH2: `test_a`.
-    /* 0x2 */ q4_12 sizeY; // SH2: `test_b`.
-    /* 0x4 */ q4_12 sizeZ; // SH2: `test_c`.
+    /* 0x0 */ q4_12 sizeX; /** SH2 name : `test_a`. */
+    /* 0x2 */ q4_12 sizeY; /** SH2 name : `test_b`. */
+    /* 0x4 */ q4_12 sizeZ; /** SH2 name : `test_c`. */
 } s_AttackFight;
 
-/** @brief Gunshot parameters for an attack. SH2: `shBattleShot`. */
-typedef struct
+/** @brief Gunshot attack parameters.
+ *
+ * SH2 name: `shBattleShot`.
+ */
+typedef struct ot
 {
-    /* 0x0 */ q4_12 interval;    // Animation time between shots.
-    /* 0x2 */ u8    maxShots;    // 0 is treated as 1.
-    /* 0x3 */ u8    pelletCount; // Rays traced per shot.
+    /* 0x0 */ q4_12 interval;    /** Animation time between shots. */
+    /* 0x2 */ u8    maxShots;    /** 0 is treated as 1. */
+    /* 0x3 */ u8    pelletCount; /** Rays trace per shot. */
     /* 0x4 */ u8    inaccuracy;
-    /* 0x5 */ u8    spread;      // Low nibble: `D_800AFD1C` index, high nibble: step count.
+    /* 0x5 */ u8    spread;      /** Low nibble: `D_800AFD1C` index, high nibble: step count. */
 } s_AttackShot;
 
 /** @brief Attack definition, indexed by `WEAPON_ATTACK` value.
- * Struct contents match very closely to SH2 `shAttackInfo` struct, though with fields reordered.
- * (some PS2 compilers do reorder structs to improve packing iirc)
- * The shAttackInfo struct even has some fields (sd/eff) that go completely unused in SH2, left set to 0.
- * In our struct they do get used as sound index though, good indication SH2 struct was heldover from something older.
- * Sadly code in SH2 that uses this struct seems completely different/reworked to use some kind of attack queue system, too bad.
+ *
+ * @note Struct contents match SH2's `shAttackInfo` struct very closely, though with reordered fields likely because
+ * some PS2 compilers reorder structs to improve packing.
+ * The `shAttackInfo` struct even has some fields (such as `sd` and `eff`) which go completely unused in SH2 (set set to 0),
+ * which is a good indication they were a holdover from SH1. The code in SH2 that uses this struct seems to have been
+ * reworked into a kind of attack queue system for that game and doesn't resemble anything from SH1.
 */
-typedef struct
+typedef struct _AttackInfo
 {
-    /* 0x0  */ q4_12 maxRange; // SH2: `max_range`.
-    /* 0x2  */ q3_12 minRange; // SH2: `min_range`.
-    /* 0x4  */ u16   damage;   // SH2: `ap`. Game code converts to Q12 later.
+    /* 0x0  */ q4_12 rangeMax; /** SH2 name: `max_range`. */
+    /* 0x2  */ q3_12 rangeMin; /** SH2 name: `min_range`. */
+    /* 0x4  */ u16   damage;   /** SH2 name: `ap`. Game code converts to Q12 later. */
     /* 0x6  */ union
                {
                    s_AttackFight fight;
                    s_AttackShot  shot;
-               } hitCheck;     // SH2: `hit_check`. `shot` when `kind` is 3, otherwise `fight`.
-    /* 0xC  */ q4_12 shock;    // SH2: `sp`. Scales the push applied to `s_CharaDamage::position`.
-    /* 0xE  */ u8    activeStartKeyframe; // SH2: `atk_start`.
-    /* 0xF  */ u8    activeKeyframeCount; // SH2: `atk_end`, stored as a length. 99: rest of the animation.
-    /* 0x10 */ u8    kind;           // SH2: `kind`. 1: melee hitting every frame, 2: melee stopping on first hit, 3: gunshot, 4-6: enemy only. TODO: Enum.
-    /* 0x11 */ u8    hurtSfxType;    // SH2: `sd`. Player hurt SFX?
-    /* 0x12 */ u8    impactSfxGroup; // SH2: `eff`. Impact SFX per target, uses values 0-4.
+               } hitCheck;                /** SH2 name: `hit_check`. `shot` when `type` is 3, otherwise `fight`. */
+    /* 0xC  */ q4_12 shock;               /** SH2 name: `sp`. Scales the push applied to `s_CharaDamage::position`. */
+    /* 0xE  */ u8    activeStartKeyframe; /** SH2 name: `atk_start`. */
+    /* 0xF  */ u8    activeKeyframeCount; /** SH2 name: `atk_end`, stored as a length. 99: rest of the animation. */
+    /* 0x10 */ u8    type;                /** SH2 name: `kind`. 1: melee hitting every frame, 2: melee stopping on first hit, 3: gunshot, 4-6: enemy only. TODO: Enum. */
+    /* 0x11 */ u8    hurtSfxType;         /** SH2 name: `sd`. Player hurt SFX? */
+    /* 0x12 */ u8    impactSfxGroup;      /** SH2 name: `eff`. Impact SFX per target, uses values 0-4. */
     /* 0x13 */ s8    __pad_13;
-    /* 0x14 */ u32*  unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
+    /* 0x14 */ u32*  unk_14;              /** Some pointer. All entries have the same value `D_800AD4C4`. */
 } s_AttackInfo;
 STATIC_ASSERT_SIZEOF(s_AttackInfo, 24);
 
@@ -776,8 +784,7 @@ extern s32 D_800C48F0;
 
 extern u8 D_800AD480[24];
 
-/** Weapon attacks. */
-extern s_AttackInfo g_Items_WeaponAttackInfo[70];
+extern s_AttackInfo g_Items_WeaponAttackInfos[70];
 
 extern const s_MapOverlayHdr g_MapOverlayHdr; // 0x800C957C
 
@@ -1343,16 +1350,7 @@ void Player_FlexRotationYReset(void);
 
 void func_8004BBF4(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR* camRot);
 
-void Settings_ScreenAndVolUpdate(void);
-
-void Settings_RestoreDefaults(void);
-
-void Settings_RestoreControlDefaults(s32 configIdx);
-
 void nullsub_800334C8(void);
-
-/** @brief Handles a warm game reboot. */
-void Game_WarmBoot(void);
 
 s32 func_800382B0(s32 arg0);
 
@@ -1394,9 +1392,6 @@ void Game_PlayerInfoInit(void);
 void func_8007E860(void);
 
 void func_8007E8C0(void);
-
-/** @brief Clears NPC animation data from memory. */
-void Anim_CharaTypeAnimInfoClear(void);
 
 /** Loads player animations for a given map. Maybe for cutscenes?
  *

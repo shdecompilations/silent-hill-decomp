@@ -1,13 +1,14 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
-#include "bodyprog/world/effects.h"
+#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sys/npc_anims_clear.h"
+#include "bodyprog/world/effects.h"
 #include "main/rng.h"
 #include "maps/map7/map7_s01.h"
 #include "maps/common/characters/bloody_lisa.h"
@@ -755,7 +756,7 @@ void func_800D8958(void) // 0x800D8958
 
 void MapEvent_BirdCageKeyUse(void) // 0x800D8984
 {
-    const static VECTOR3 sfxPos = { Q12(-179.64f), Q12(-1.0f), Q12(-20.05f) };
+    static const VECTOR3 sfxPos = { Q12(-179.64f), Q12(-1.0f), Q12(-20.05f) };
 
     Event_DisplayMapMsgWithSfx(MAP_MSG(79), Sfx_Unk1645, &sfxPos);
     Player_ItemRemove(InvItemId_BirdCageKey, 1);
@@ -779,8 +780,8 @@ void func_800D8A30(void) // 0x800D8A30
 
 void func_800D8A5C(void) // 0x800D8A5C
 {
-    const static VECTOR3 D_800CC534 = { Q12(-140.05f), Q12(-1.4f), Q12(-22.15f) };
-    const static VECTOR3 D_800CC540 = { Q12(-140.05f), Q12(0.0f), Q12(-22.15f) };
+    static const VECTOR3 D_800CC534 = { Q12(-140.05f), Q12(-1.4f), Q12(-22.15f) };
+    static const VECTOR3 D_800CC540 = { Q12(-140.05f), Q12(0.0f), Q12(-22.15f) };
 
     s32 i;
 
@@ -930,10 +931,10 @@ void func_800D8FCC(void) // 0x800D8FCC
 
 void func_800D8FF8(void) // 0x800D8FF8
 {
-    const static VECTOR3 D_800CC594 = { Q12(-16.6661f), Q12(-1.234f), Q12(-61.49756f) };
-    const static VECTOR3 D_800CC5A0 = { Q12(-16.6661f), Q12(-1.234f), Q12(-61.69751f) };
-    const static VECTOR3 D_800CC5AC = { Q12(-15.8f), Q12(-1.23f), Q12(-60.22f) };
-    const static VECTOR3 D_800CC5B8 = { Q12(-16.7f), Q12(-1.5f), Q12(-60.8f) };
+    static const VECTOR3 D_800CC594 = { Q12(-16.6661f), Q12(-1.234f), Q12(-61.49756f) };
+    static const VECTOR3 D_800CC5A0 = { Q12(-16.6661f), Q12(-1.234f), Q12(-61.69751f) };
+    static const VECTOR3 D_800CC5AC = { Q12(-15.8f), Q12(-1.23f), Q12(-60.22f) };
+    static const VECTOR3 D_800CC5B8 = { Q12(-16.7f), Q12(-1.5f), Q12(-60.8f) };
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -1700,8 +1701,8 @@ void MapEvent_CutsceneCherylRedirect3(void) // 0x800DADD4
 
 void func_800DAE00(void) // 0x800DAE00
 {
-    const static VECTOR3 SFX_POS_0 = { Q12(-63.2f), Q12(-1.45f), Q12(-139.05f) };
-    const static VECTOR3 SFX_POS_1 = { Q12(-62.9f), Q12(0.0f), Q12(-139.1f) };
+    static const VECTOR3 SFX_POS_0 = { Q12(-63.2f), Q12(-1.45f), Q12(-139.05f) };
+    static const VECTOR3 SFX_POS_1 = { Q12(-62.9f), Q12(0.0f), Q12(-139.1f) };
 
     s16* var_s0;
 
@@ -1957,7 +1958,7 @@ void func_800DB3D0(void) // 0x800DB3D0
 
 void func_800DBDE0(void) // 0x800DBDE0
 {
-    const static VECTOR3 SFX_POS = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
+    static const VECTOR3 SFX_POS = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -2030,7 +2031,7 @@ void func_800DBDE0(void) // 0x800DBDE0
 
 void func_800DC028(void) // 0x800DC028
 {
-    const static VECTOR3 SFX_POS = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
+    static const VECTOR3 SFX_POS = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
 
     if (g_SysWork.sysStateSteps[1] == 0)
     {

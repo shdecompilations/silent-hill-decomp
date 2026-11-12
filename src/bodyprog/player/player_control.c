@@ -609,8 +609,8 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
         }
     }
 
-    if (extra->model.anim.keyframeIdx >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + g_Items_WeaponAttackInfo[weaponAttack].activeStartKeyframe) &&
-        ((HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + g_Items_WeaponAttackInfo[weaponAttack].activeStartKeyframe) + g_Items_WeaponAttackInfo[weaponAttack].activeKeyframeCount) >= extra->model.anim.keyframeIdx)
+    if (extra->model.anim.keyframeIdx >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + g_Items_WeaponAttackInfos[weaponAttack].activeStartKeyframe) &&
+        ((HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + g_Items_WeaponAttackInfos[weaponAttack].activeStartKeyframe) + g_Items_WeaponAttackInfos[weaponAttack].activeKeyframeCount) >= extra->model.anim.keyframeIdx)
     {
         PLAYER_COMBAT().weaponAttack = weaponAttack;
 
@@ -2884,9 +2884,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(PLAYER_COMBAT().weaponAttack, g_Player_MeleeAttackType);
 
-            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].activeStartKeyframe;
-            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].activeStartKeyframe +
-                         g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].activeKeyframeCount;
+            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeStartKeyframe;
+            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeStartKeyframe +
+                         g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeKeyframeCount;
         }
 
         // Used for make continuos/hold shooting smoother?
@@ -3247,9 +3247,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.stateStep++;
                 }
 
-                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].activeStartKeyframe;
-                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].activeStartKeyframe +
-                             g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].activeKeyframeCount;
+                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeStartKeyframe;
+                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeStartKeyframe +
+                             g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeKeyframeCount;
                 g_Player_IsMultiTapAttack = 0;
 
                 PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;
@@ -7038,7 +7038,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
     sfxId = Sfx_Unk1326;
     if (player->attackReceived != NO_VALUE)
     {
-        switch (g_Items_WeaponAttackInfo[player->attackReceived].hurtSfxType)
+        switch (g_Items_WeaponAttackInfos[player->attackReceived].hurtSfxType)
         {
             case 2:
                 sfxId = Sfx_Unk1327;
@@ -7901,48 +7901,48 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                         switch (WEAPON_ATTACK_ID_GET(PLAYER_COMBAT().weaponAttack))
                         {
                             case EquippedWeaponId_KitchenKnife:
-                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0xF),
-                                                       -FP_MULTIPLY(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Q12(0.0185f), Q12_SHIFT - 1),
-                                                        Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Q12(0.0185f)) >> 1);
+                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF),
+                                                       -FP_MULTIPLY(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.0185f), Q12_SHIFT - 1),
+                                                        Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.0185f)) >> 1);
                                 break;
 
                             case EquippedWeaponId_SteelPipe:
-                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0xF),
-                                                       -(Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Q12(0.055f)) >> 1),
-                                                        FP_MULTIPLY(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Q12(0.011f), Q12_SHIFT - 2));
+                                Math_SetSVectorFastSum(&localHandPos, Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF),
+                                                       -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.055f)) >> 1),
+                                                        FP_MULTIPLY(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.011f), Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Chainsaw:
                                 Math_SetSVectorFastSum(&localHandPos,
-                                                        Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0xF) >> 1,
-                                                       -(Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Q12(0.033f)) >> 1),
-                                                        (Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Q12(0.121f)) >> 1));
+                                                        Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF) >> 1,
+                                                       -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.033f)) >> 1),
+                                                        (Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.121f)) >> 1));
                                 break;
 
                             case EquippedWeaponId_RockDrill:
                                 Math_SetSVectorFastSum(&localHandPos,
                                                         Q12(0.0f),
-                                                       -(Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Q12(0.011f))),
-                                                        FP_MULTIPLY(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Q12(0.011f), Q12_SHIFT - 2));
+                                                       -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.011f))),
+                                                        FP_MULTIPLY(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Q12(0.011f), Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Axe:
                                 Math_SetSVectorFastSum(&localHandPos,
                                                          Q12(0.0f),
-                                                        -(Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0x2C1) >> 1),
-                                                         Q12_MULT((u32)g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0xC3));
+                                                        -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0x2C1) >> 1),
+                                                         Q12_MULT((u32)g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xC3));
                                 break;
 
                             case EquippedWeaponId_Hammer:
-                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0xF) >> 1),
-                                                       -(Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0x69)),
-                                                        Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0x13B) >> 1);
+                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF) >> 1),
+                                                       -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0x69)),
+                                                        Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0x13B) >> 1);
                                 break;
 
                             case EquippedWeaponId_Katana:
-                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0xF) >> 1),
-                                                       -(Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0x13B) >> 1),
-                                                        Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, 0xF));
+                                Math_SetSVectorFastSum(&localHandPos, (Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF) >> 1),
+                                                       -(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0x13B) >> 1),
+                                                        Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, 0xF));
                                 break;
                         }
 

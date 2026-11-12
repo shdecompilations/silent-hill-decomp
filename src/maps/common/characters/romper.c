@@ -1123,7 +1123,7 @@ void Romper_Control_10(s_SubCharacter* romper)
     {
         romperProps.flags &= ~RomperFlag_6;
 
-        PLAYER_CHARA().damage.amount += (FP_TO(g_Items_WeaponAttackInfo[55].damage, Q12_SHIFT) *
+        PLAYER_CHARA().damage.amount += (FP_TO(g_Items_WeaponAttackInfos[55].damage, Q12_SHIFT) *
                                                                Rng_GenerateUInt(85, 116)) / 100;
 
         sp10.vx = romper->position.vx + FP_FROM(FP_TO(Math_Sin(romper->rotation.vy) >> 1, Q12_SHIFT), Q12_SHIFT);

@@ -1878,9 +1878,9 @@ bool func_800DB81C(s_SubCharacter* monsterCybil) // 0x800DB81C
     s_RayTrace trace;
     VECTOR3    dir; // Q19.12
 
-    dir.vy = Q12_MULT(g_Items_WeaponAttackInfo[63].maxRange, Math_Cos(monsterCybilProps.field_11A));
-    dir.vx = Q12_MULT(Q12_MULT(g_Items_WeaponAttackInfo[63].maxRange, Math_Sin(monsterCybilProps.field_11A)), Math_Sin(monsterCybil->rotation.vy));
-    dir.vz = Q12_MULT(Q12_MULT(g_Items_WeaponAttackInfo[63].maxRange, Math_Sin(monsterCybilProps.field_11A)), Math_Cos(monsterCybil->rotation.vy));
+    dir.vy = Q12_MULT(g_Items_WeaponAttackInfos[63].rangeMax, Math_Cos(monsterCybilProps.field_11A));
+    dir.vx = Q12_MULT(Q12_MULT(g_Items_WeaponAttackInfos[63].rangeMax, Math_Sin(monsterCybilProps.field_11A)), Math_Sin(monsterCybil->rotation.vy));
+    dir.vz = Q12_MULT(Q12_MULT(g_Items_WeaponAttackInfos[63].rangeMax, Math_Sin(monsterCybilProps.field_11A)), Math_Cos(monsterCybil->rotation.vy));
 
     if (Ray_GeomAndCharaTraceGet(&trace, &D_800ED570, &dir, monsterCybil) && trace.character == NULL)
     {

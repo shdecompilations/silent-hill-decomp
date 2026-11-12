@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_MEMCARD_H
-#define _BODYPROG_MEMCARD_H
+#ifndef _BODYPROG_SYS_MEMCARD_H
+#define _BODYPROG_SYS_MEMCARD_H
 
 // ==========
 // CONSTANTS

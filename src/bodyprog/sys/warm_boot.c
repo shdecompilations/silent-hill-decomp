@@ -4,6 +4,7 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/sys/warm_boot.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/sys/joy.h"
 #include "bodyprog/screen/draw.h"
@@ -11,7 +12,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sound_system.h"
 
-void SysWork_Clear(void) // 0x800340E0
+static void SysWork_Clear(void) // 0x800340E0
 {
     bzero(&g_SysWork, sizeof(s_SysWork));
 }

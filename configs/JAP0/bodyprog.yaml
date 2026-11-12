@@ -64,7 +64,7 @@ segments:
       - [0x130, rodata] # Garbage padding (should start at 0x13A but causes mismatches)
       - [0x13C, .rodata, screen/fade]
       - [0x17C, .rodata, screen/cutscene_border]
-      - [0x1DC, .rodata, sys/syswork_globals]
+      - [0x1DC, .rodata, game]
       - [0x1F0, rodata]
       - [0x1F4, .rodata, sys/map_info]
       - [0x598, .rodata, sys/fs_screens]
@@ -144,8 +144,8 @@ segments:
       # data only files
       - [auto,       c, bodyprog]
       - [auto,       c, screen/data]
-      - [auto,       c, sys/syswork_globals]
-      - [auto,       c, sys/chara_data_info]
+      - [auto,       c, game]
+      - [auto,       c, sys/chara_file_infos]
       - [auto,       c, sys/map_info]
       - [auto,       c, events/event_data]
       - [auto,       c, sound/sound_data] # Possibly `sd_dat.c` from SH2 symbols?
@@ -156,7 +156,7 @@ segments:
       - [0xD4E0, c, screen/draw]
       - [0xD72C, c, screen/fade]
       - [0xDA24, c, screen/cutscene_border]
-      - [0xDD08, c, sys/vsync]
+      - [0xDD08, c, screen/vsync]
       - [0xDD58, c, sys/fs_screens]
       - [0xDEA4, c, sys/game_main] # Name from SH2 symbols. This name also applies for SH4 instance too.
       - [0xE53C, c, sys/settings_reset]
@@ -415,7 +415,7 @@ segments:
       - [0x86698, .data, screen/fade]
       - [0x866D4, .data, screen/cutscene_border]
       - [0x86780, .data, screen/data]
-      - [0x86938, .data, sys/chara_data_info]
+      - [0x86938, .data, sys/chara_file_infos]
       - [0x86C08, .data, sys/map_info]
       - [0x86FA4, .data, sys/game_main]
       - [0x87010, .data, sys/memcard_2]
@@ -491,7 +491,7 @@ segments:
       - [0x935FC, pad]
       - [0x93600, .bss, screen/data]
       - [0x976A0, bss] # `vcWork + g_ActiveBufferIdx` Not possible to set it in a logical
-      - [0x97990, .bss, sys/syswork_globals]
+      - [0x97990, .bss, game]
       - [0x9A6D0, bss]
       - [0x9A6E4, pad] # Garbage.
       - [0x9A6E8, .bss, sys/memcard_2]

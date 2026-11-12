@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/sys/chara_file_infos.h"
 #include "bodyprog/math/math.h"
 #include "game.h"
 

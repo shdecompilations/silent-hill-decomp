@@ -6,13 +6,14 @@
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/world/effects.h"
+#include "bodyprog/items/item_screens.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
+#include "bodyprog/sys/warm_boot.h"
 #include "bodyprog/text/text_draw.h"
-#include "bodyprog/items/item_screens.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/math/math.h"
+#include "bodyprog/world/effects.h"
 
 static const s32 __pad_rodata_80025EAC = 0;
 

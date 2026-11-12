@@ -49,7 +49,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
         idx = chara->attackReceived;
         if (idx < 39) // TODO: What weapon attack?
         {
-            cond = g_Items_WeaponAttackInfo[idx].kind == 3;
+            cond = g_Items_WeaponAttackInfos[idx].type == 3;
             func_800914C4(cond, func_8009146C(cond) + 1);
         }
 

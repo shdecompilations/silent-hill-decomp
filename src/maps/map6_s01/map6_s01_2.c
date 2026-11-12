@@ -691,8 +691,8 @@ void func_800D236C(void) // 0x800D236C
 
 void func_800D2658(void) // 0x800D2658
 {
-    const static SVECTOR EMPTY_ROT = {};
-    const static VECTOR3 UNK_POS   = { Q12(-23.37f), Q12(-1.25f), Q12(19.28f) };
+    static const SVECTOR EMPTY_ROT = {};
+    static const VECTOR3 UNK_POS   = { Q12(-23.37f), Q12(-1.25f), Q12(19.28f) };
 
     s32 temp_a0_4;
     s32 temp_s0;

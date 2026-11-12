@@ -964,7 +964,7 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
 
     if (damage > Q12(0.0f) || airScreamer->health <= Q12(0.0f))
     {
-        temp_a1 = g_Items_WeaponAttackInfo[attack].kind;
+        temp_a1 = g_Items_WeaponAttackInfos[attack].type;
         angle   = Q12_ANGLE_NORM_S(PLAYER_CHARA().rotation.vy - airScreamer->rotation.vy);
 
 #ifdef MAP0_S01

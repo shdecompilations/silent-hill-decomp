@@ -7,9 +7,9 @@ scratchpad                                   = 0x1F800000; // size:0x400 ignore:
 //================================================
 
 
-//----------------------------------------------------------------------------
-//--- PA: 0x0001E4   VA: 0x80024D44   subsegment: .rodata, sys/syswork_globals
-//----------------------------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x0001E4   VA: 0x80024D44   subsegment: .rodata, game
+//-------------------------------------------------------------
 g_GameWorkConst                              = 0x80024D44; // type:u32
 g_SavegamePtr                                = 0x80024D48; // type:u32
 g_Controller0                                = 0x80024D4C; // type:u32
@@ -251,9 +251,9 @@ Screen_FadeUpdate                            = 0x8003260C; // type:func
 Screen_BlackBorderDraw.0                     = 0x8003289C; // filename:Screen_BlackBorderDraw type:func Compiler adds suffix to end of nested func names.
 Screen_CutsceneCameraStateUpdate             = 0x80032904; // type:func
 
-//------------------------------------------------------------
-//--- PA: 0x00E020   VA: 0x80032B80   subsegment: c, sys/vsync
-//------------------------------------------------------------
+//---------------------------------------------------------------
+//--- PA: 0x00E020   VA: 0x80032B80   subsegment: c, screen/vsync
+//---------------------------------------------------------------
 Screen_VSyncCallback                         = 0x80032B80; // type:func
 
 //-----------------------------------------------------------------
@@ -2604,9 +2604,9 @@ D_800A90E4                                   = 0x800A90E4;
 D_800A90EC                                   = 0x800A90EC;
 D_800A90F4                                   = 0x800A90F4;
 
-//--------------------------------------------------------------------------
-//--- PA: 0x08459C   VA: 0x800A90FC   subsegment: .data, sys/chara_data_info
-//--------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//--- PA: 0x08459C   VA: 0x800A90FC   subsegment: .data, sys/chara_file_infos
+//---------------------------------------------------------------------------
 CHARA_FILE_INFOS                             = 0x800A90FC; // type:CharaFileInfo size:0x2D0
 
 //-------------------------------------------------------------------
@@ -2794,7 +2794,7 @@ g_StringLayerIdx                             = 0x800AD49C;
 //--- PA: 0x088940   VA: 0x800AD4A0   subsegment: .data, items/weapon_data
 //------------------------------------------------------------------------
 g_Items_GunsMaxLoadAmmo                      = 0x800AD4A0;
-g_Items_WeaponAttackInfo                     = 0x800AD4C8; // size:0x690
+g_Items_WeaponAttackInfos                    = 0x800AD4C8; // size:0x690
 
 //---------------------------------------------------------------------------
 //--- PA: 0x088FF8   VA: 0x800ADB58   subsegment: .data, items/item_screens_3
@@ -3258,9 +3258,9 @@ g_TickCount                                  = 0x800B9CCC;
 vcWork                                       = 0x800B9CD0; // type:VC_WORK size:0x2E8
 g_ActiveBufferIdx                            = 0x800B9FB8;
 
-//-------------------------------------------------------------------------
-//--- PA: 0x095460   VA: 0x800B9FC0   subsegment: .bss, sys/syswork_globals
-//-------------------------------------------------------------------------
+//----------------------------------------------------------
+//--- PA: 0x095460   VA: 0x800B9FC0   subsegment: .bss, game
+//----------------------------------------------------------
 g_SysWork                                    = 0x800B9FC0; // type:SysWork size:0x2768 - should use s_SysWork here, but splat only supports custom structs with capital letter at beginning.
 g_GameWork                                   = 0x800BC728; // type:GameWork size:0x5D8
 

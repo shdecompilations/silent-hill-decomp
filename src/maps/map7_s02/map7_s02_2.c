@@ -1,13 +1,14 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/event_data.h"
-#include "bodyprog/world/effects.h"
+#include "bodyprog/game_boot/fs_chara_anim.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sys/npc_anims_clear.h"
+#include "bodyprog/world/effects.h"
 #include "main/rng.h"
 #include "maps/map7/map7_s02.h"
 #include "maps/common/characters/bloody_lisa.h"
@@ -834,7 +835,7 @@ void MapEvent_KeyOfAratronUse(void) // 0x800DB67C
 
 void func_800DB738(void) // 0x800DB738
 {
-    const static VECTOR3 SFX_POS = { Q12(97.4f), Q12(-0.5f), Q12(-59.0f) };
+    static const VECTOR3 SFX_POS = { Q12(97.4f), Q12(-0.5f), Q12(-59.0f) };
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -2786,8 +2787,8 @@ void MapEvent_CameraTake(void) // 0x800E0C88
 
 void func_800E0CB4(void) // 0x800E0CB4
 {
-    const static VECTOR3 SFX_POS_0 = { Q12(-63.2f), Q12(-1.45f), Q12(-139.05f) };
-    const static VECTOR3 SFX_POS_1 = { Q12(-62.9f), Q12(0.0f), Q12(-139.1f) };
+    static const VECTOR3 SFX_POS_0 = { Q12(-63.2f), Q12(-1.45f), Q12(-139.05f) };
+    static const VECTOR3 SFX_POS_1 = { Q12(-62.9f), Q12(0.0f), Q12(-139.1f) };
 
     s16* var_s0;
 
@@ -3063,7 +3064,7 @@ void func_800E1398(void) // 0x800E1398
 
 void func_800E1DAC(void) // 0x800E1DAC
 {
-    const static VECTOR3 SFX_POS = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
+    static const VECTOR3 SFX_POS = { Q12(100.8f), Q12(-1.0f), Q12(-20.0f) };
 
     switch (g_SysWork.sysStateSteps[0])
     {
@@ -3136,7 +3137,7 @@ void func_800E1DAC(void) // 0x800E1DAC
 
 void func_800E1FF4(void) // 0x800E1FF4
 {
-    const static VECTOR3 SFX_POS = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
+    static const VECTOR3 SFX_POS = { Q12(97.8f), Q12(-1.0f), Q12(-19.2f) };
 
     if (g_SysWork.sysStateSteps[1] == 0)
     {

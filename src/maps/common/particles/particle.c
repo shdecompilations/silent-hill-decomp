@@ -4075,9 +4075,9 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     gte_SetRotMatrix(&viewMat);
     gte_SetTransMatrix(&viewMat);
 
-    beamDirY      = Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Math_Cos(*rotY));
-    beamDirX      = Q12_MULT(Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Math_Sin(*rotY)), Math_Sin(*rotX));
-    beamDirZ      = Q12_MULT(Q12_MULT(g_Items_WeaponAttackInfo[PLAYER_COMBAT().weaponAttack].maxRange, Math_Sin(*rotY)), Math_Cos(*rotX));
+    beamDirY      = Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Math_Cos(*rotY));
+    beamDirX      = Q12_MULT(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Math_Sin(*rotY)), Math_Sin(*rotX));
+    beamDirZ      = Q12_MULT(Q12_MULT(g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].rangeMax, Math_Sin(*rotY)), Math_Cos(*rotX));
     beamStart.vx  = vec0->vx;
     beamStart.vy  = vec0->vy;
     beamStart.vz  = vec0->vz;
