@@ -849,7 +849,6 @@ u8 midi_file_out(s32 file_no) // 0x800A8674
     return 0;
 }
 
-// TODO: goto jumps below which I'm not sure how to remove yet, maybe code actually included them.
 u8 midi_smf_main(void) // 0x800A8950
 {
     SMF_SONG* s;
@@ -888,43 +887,42 @@ u8 midi_smf_main(void) // 0x800A8950
                         }
                         else
                         {
-                            while (true)
+                            do
                             {
                                 if (s->smf_seq_flag_52C != KDT_MODE)
                                 {
                                     readtrack(p);
-                                    goto block_12;
+                                    if (p->mf_eof_flag_20 != 0)
+                                    {
+                                        break;
+                                    }
+                                    p->mf_delta_time_1C = readvarinum(p);
                                 }
-                                if (!readtrack2(p))
+                                else if (!readtrack2(p))
                                 {
-                                block_12:
-                                    if (p->mf_eof_flag_20 == 0)
+                                    if (p->mf_eof_flag_20 != 0)
                                     {
-                                        p->mf_delta_time_1C = readvarinum(p);
-                                        goto block_15;
+                                        break;
                                     }
+                                    p->mf_delta_time_1C = readvarinum(p);
                                 }
-                                else if (p->mf_eof_flag_20 == 0)
+                                else if (p->mf_eof_flag_20 != 0)
                                 {
-                                block_15:
-                                    if (p->mf_delta_time_1C != 0 && time_flag != 0)
-                                    {
-                                        delta_time_conv(p);
-                                    }
-
-                                    if (p->mf_delta_time_1C == 0)
-                                    {
-                                        continue;
-                                    }
+                                    break;
                                 }
 
-                                if (p->mf_delta_time_1C != 0)
+                                if (p->mf_delta_time_1C != 0 && time_flag != 0)
                                 {
-                                    p->mf_delta_time_1C--;
+                                    delta_time_conv(p);
                                 }
-
-                                break;
                             }
+                            while (p->mf_delta_time_1C == 0);
+
+                            if (p->mf_delta_time_1C != 0)
+                            {
+                                p->mf_delta_time_1C--;
+                            }
+
                         }
                     }
                 }

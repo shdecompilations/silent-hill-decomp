@@ -9,9 +9,9 @@
 
 static const s32 __pad_rodata_80025E90 = 0;
 
-void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
+void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
 {
-    s8       weaponAttack; // Packed weapon attack. See `WEAPON_ATTACK`.
+    s8       weaponId;
     s32      playerState;
     s_Model* modelPtr3;
     s_Model* extraModelPtr2;
@@ -33,16 +33,9 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
         }
 
         weaponId = WEAPON_ATTACK_ID_GET(g_ItemScreen_PlayerWeaponAttack);
-        if (weaponId == EquippedWeaponId_Chainsaw &&
-            PLAYER_COMBAT().weaponAttack != weaponId)
+        if ((weaponId == EquippedWeaponId_Chainsaw && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap)) ||
+            (weaponId == EquippedWeaponId_RockDrill && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap)))
         {
-            goto Inventory_ExitAnimEquippedItemUpdate_block; // TODO: Remove goto if possible.
-        }
-
-        if (weaponId == EquippedWeaponId_RockDrill &&
-            PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
-        {
-        Inventory_ExitAnimEquippedItemUpdate_block:
             PLAYER_CHARA().field_44.field_0    = 0;
             PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
         }
