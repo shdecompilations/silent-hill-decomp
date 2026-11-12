@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/chara/combat.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/world/effects.h"
@@ -306,7 +307,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     s32                sp2C;
     s32                sp30;
     s32                sp34;
-    u32                sp38;
+    u32                shotCountMax;
     s32                sp3C;
     u32                sp40;
     s32                pelletCount;
@@ -472,15 +473,15 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
             if (sp34 != 0)
             {
-                sp38 = attackInfo->hitCheck.shot.maxShots;
-                if (sp38 == 0)
+                shotCountMax = attackInfo->hitCheck.shot.shotCountMax;
+                if (shotCountMax == 0)
                 {
-                    sp38 = 1;
+                    shotCountMax = 1;
                 }
             }
             else
             {
-                sp38 = 1;
+                shotCountMax = 1;
             }
 
             sp50 = attackInfo->hitCheck.shot.spread;
@@ -590,7 +591,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
             var_s6 = Q12_MULT(sp4C, sp10 - 2);
 
             for (i = i + sp34;
-                 sp3C != 0 && sp40 < sp38 && sp28 >= i;
+                 sp3C != 0 && sp40 < shotCountMax && sp28 >= i;
                  i += sp34, sp40++, sp3C--)
             {
                 for (j = pelletCount; j > 0; j--)
@@ -646,7 +647,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 sp18   = 1;
             }
 
-            if (sp40 >= sp38)
+            if (sp40 >= shotCountMax)
             {
                 i = sp28;
                 sp18   = 1;

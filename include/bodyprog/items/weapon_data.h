@@ -19,7 +19,7 @@ typedef struct _AttackFight
 typedef struct _AttackShot
 {
     /* 0x0 */ q4_12 interval;    /** Animation time between shots. */
-    /* 0x2 */ u8    maxShots;    /** 0 is treated as 1. */
+    /* 0x2 */ u8    shotCountMax;    /** 0 is treated as 1. */
     /* 0x3 */ u8    pelletCount; /** Rays trace per shot. */
     /* 0x4 */ u8    inaccuracy;
     /* 0x5 */ u8    spread;      /** Low nibble: `D_800AFD1C` index, high nibble: step count. */
@@ -56,7 +56,7 @@ typedef struct _AttackInfo
                } hitCheck;                /** SH2 name: `hit_check`. `shot` when `type` is `AttackInfoType_Gunshot`, otherwise `fight`. */
     /* 0xC  */ q4_12 shock;               /** SH2 name: `sp`. Scales the push applied to `s_CharaDamage::position`. */
     /* 0xE  */ u8    hitStartKeyframe;    /** SH2 name: `atk_start`. Keyframe into the attack animation where hit checks begin. */
-    /* 0xF  */ u8    hitKeyframeCount;    /** SH2 name: `atk_end`. How many keyframes hit checks stay active for after `hitStartKeyframe`. 99: rest of the animation. */
+    /* 0xF  */ u8    hitKeyframeCount;    /** SH2 name: `atk_end`. Number of keyframes for which hit checks stay active for after `hitStartKeyframe`. */
     /* 0x10 */ u8    type;                /** `e_AttackInfoType` | SH2 name: `kind`. */
     /* 0x11 */ u8    hurtSfxType;         /** SH2 name: `sd`. Player hurt SFX type. TODO: Enum. */
     /* 0x12 */ u8    impactSfxGroup;      /** SH2 name: `eff`. Impact SFX per target, uses values 0-4. */
@@ -64,11 +64,15 @@ typedef struct _AttackInfo
     /* 0x14 */ u32*  unk_14;              /** Some pointer. All `g_Items_WeaponAttackInfos` entries point to `D_800AD4C4`. */
 } s_AttackInfo;
 
+extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
+
+extern s_AttackInfo g_Items_WeaponAttackInfos[70];
+
 /** @brief Initializer for `s_AttackInfo::hitCheck` as a melee hit box.
  *
- * @param sizeX Hit box X size.
- * @param sizeY Hit box Y size.
- * @param sizeZ Hit box Z size.
+ * @param sizeX X hitbox span.
+ * @param sizeY Y hitbox span.
+ * @param sizeZ Z hitbox span.
  */
 #define ATTACK_FIGHT(sizeX, sizeY, sizeZ) \
     { Q12(sizeX), Q12(sizeY), Q12(sizeZ) }
@@ -76,18 +80,14 @@ typedef struct _AttackInfo
 /** @brief Initializer for `s_AttackInfo::hitCheck` as gunshot parameters.
  * The union initializer fills `fight`, so the `s_AttackShot` fields are packed into its three halfwords.
  *
- * @param interval    Time between shots. 0: single shot. @unused Only weapon that sets this is Unk36, which could be a removed automatic-firing weapon?
- * @param maxShots    Shots per attack, 0 is treated as 1.
+ * @param interval Time between shots. 0: single shot. @unused Only weapon that sets this is Unk36, which could be a removed automatic-firing weapon?
+ * @param shotsMax Shots per attack (0 is treated as 1).
  * @param pelletCount Rays traced per shot.
- * @param inaccuracy  Aim error scale.
- * @param spreadIdx   `D_800AFD1C` index for the pellet spread angle (0-15).
- * @param spreadSteps Pellet spread step count (0-15).
+ * @param inaccuracy Aim error scale.
+ * @param spreadIdx `D_800AFD1C` index for the pellet spread angle. Range: `[0, 15].
+ * @param spreadSteps Pellet spread step count. Range: `[0, 15]`.
  */
-#define ATTACK_SHOT(interval, maxShots, pelletCount, inaccuracy, spreadIdx, spreadSteps) \
-    { Q12(interval), (maxShots) | ((pelletCount) << 8), (inaccuracy) | ((spreadIdx) << 8) | ((spreadSteps) << 12) }
-
-extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
-
-extern s_AttackInfo g_Items_WeaponAttackInfos[70];
+#define ATTACK_SHOT(interval, shotsMax, pelletCount, inaccuracy, spreadIdx, spreadSteps) \
+    { Q12(interval), (shotsMax) | ((pelletCount) << 8), (inaccuracy) | ((spreadIdx) << 8) | ((spreadSteps) << 12) }
 
 #endif

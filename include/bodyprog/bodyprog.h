@@ -7,9 +7,10 @@
 #include "bodyprog/libkpad/vibration.h"
 #include "bodyprog/sound/sfx.h"
 #include "bodyprog/chara/anim.h"
-#include "bodyprog/collision/collision.h"
+#include "bodyprog/chara/combat.h"
 #include "bodyprog/chara/model.h"
 #include "bodyprog/chara/spawn.h"
+#include "bodyprog/collision/collision.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/events_util.h"
 #include "bodyprog/events/game_sys_states.h"
@@ -696,8 +697,6 @@ extern GsCOORDINATE2* D_800C4410;
 /** Flags. */
 extern s8 D_800C4414;
 
-extern s8 __pad_bss_800C4415[3];
-
 extern s_800C4418 D_800C4418;
 
 extern q3_12 D_800C4454;
@@ -744,99 +743,6 @@ void func_80032D1C(void);
  * @param model Character model to release.
  */
 void Chara_ModelFree(s_CharaModel* model);
-
-void WorldGfx_MapInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);
-
-/** @brief Loads map chunks in view and checks if they are loaded.
- *
- * @param `true` if chunks in view are loaded, `false` otherwise.
- */
-bool WorldGfx_ChunksInitCheck(void);
-
-/** @brief Draws world objects, chunks, and 2D screen effects.
- *
- * @param otShift Ordering table shift.
- */
-void WorldGfx_Draw(s32 otShift);
-
-/** @brief Sets the name of a world object model.
- *
- * @param model World object model to update.
- * @param name Name to set.
- */
-void WorldObject_ModelNameSet(s_WorldObjectModel* model, char* name);
-
-/** Submits a world object model to draw. */
-void WorldObjects_Add(s_WorldObjectModel* model, const VECTOR3* pos, const SVECTOR3* rot);
-
-/** @brief @unused Returns held item ID.
- *
- * @return Held item ID.
- */
-s32 WorldGfx_HeldItemIdGet(void);
-
-s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat);
-
-/** @brief Loads and sets an item held by the player.
- *
- * @param itemId ID of the held item to load (`e_InvItemId`).
- * @return Model or texture queue index.
- */
-s32 WorldGfx_PlayerHeldItemSet(e_InvItemId itemId);
-
-// Make a Harry bone invisible? TODO: Is bone 32 the light?
-void func_8003D01C(void);
-
-// Make a Harry bone visible? TODO: Is bone 32 the light?
-void func_8003D03C(void);
-
-/** Loads the model of an item held by the player? */
-void WorldGfx_HeldItemDraw(void);
-
-bool WorldGfx_IsCharaModelPresent(e_CharaId charaId);
-
-/** @brief Sets the material for a character model.
- *
- * @param charaId ID of the character whose model to update.
- * @param blendMode Material blend mode to set (`e_BlendMode`).
- */
-void WorldGfx_CharaModelMaterialSet(e_CharaId charaId, s32 blendMode);
-
-/** @brief Makes a character transparent. */
-void WorldGfx_CharaModelTransparentSet(e_CharaId charaId, bool isTransparent);
-
-/** @brief Frees a registered character model.
- *
- * @param model Character model to release.
- */
-void WorldGfx_CharaFree(s_CharaModel* model);
-
-/** @brief Loads the Harry character model. */
-void WorldGfx_HarryCharaLoad(void);
-
-/** @brief Loads default characters in the map overlay.
- *
- * @param mapHdr Map header.
- * @return Character model queue index.
- */
-s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHdr* mapHdr);
-
-void WorldGfx_CharaLmBufferAssign(s8 forceFree);
-
-/** @brief Gets the Y position of a color palette in VRAM.
- *
- * @param charaId @unused Character ID.
- * @param paletteIdx Color palette index.
- * @return CLUT Y position in VRAM.
- */
-s32 WorldGfx_CharaClutYGet(e_CharaId charaId, s32 paletteIdx);
-
-/** @brief Handles a mesh swap for a character.
- *
- * @param charaId ID of the character on which to perform the mesh swap.
- * @param meshSwapStatus Packed mesh swap status. See `MESH_SWAP_STATUS`.
- */
-void WorldGfx_CharaMeshSwap(e_CharaId charaId, s32 meshSwapStatus);
 
 // TODO: Move to `bodyprog/chara/anim.h`.
 // ========================================
@@ -1144,54 +1050,6 @@ u32 func_800364BC(void);
 void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
                     u32 clutX, s16 clutY, s32 tPage);
 
-// Q12 square root?
-u32 func_8008A058(s32 arg0);
-
-/** @brief @unused Returns 0. */
-s32 func_8008A0CC(void);
-
-/** @brief @unused Returns 0. */
-s64 func_8008A0D4(void);
-
-/** Anim infos setup for character. */
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
-                  q3_12 rotToTargetX, q3_12 rotToTargetY);
-
-u32 func_8008A270(s32 idx);
-
-s32 func_8008A35C(s_AttackInfo* attackInfo, s32 arg1);
-
-void Chara_Flag8Clear(s_SubCharacter* chara);
-
-void Chara_Flag8Set(s_SubCharacter* chara);
-
-/** Large function. Runs if `CharaFlag_Unk8` is set. */
-void func_8008A3AC(s_SubCharacter* chara);
-
-s32 func_8008A3E0(s_SubCharacter* chara);
-
-void func_8008B15C(s_SubCharacter* chara);
-
-void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1);
-
-void func_8008B398(void);
-
-void func_8008B3E4(q23_8 vol);
-
-void func_8008B40C(q23_8 vol, s32 soundType);
-
-/** `arg0` is boolean. */
-void func_8008B438(s32 arg0, q23_8 vol, s32 soundType);
-
-bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType);
-
-void func_8008B664(VECTOR3* pos, u32 caseVar);
-
-/** Main attack handling function. */
-s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* attackPos, s32 arg3);
-
-s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo, s32 arg3);
-
 s32 func_8008D850(void);
 
 // Sets material flags?
@@ -1335,8 +1193,6 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveSpeed, s32 keyframeIdx);
 
 void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttack, s32 animStatus);
-
-u32 func_8008A2E0(s32 arg0);
 
 /** @brief Draws a set of expanding boxes used to highlight a point on a paper map.
  *
