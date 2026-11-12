@@ -609,8 +609,8 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
         }
     }
 
-    if (extra->model.anim.keyframeIdx >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + g_Items_WeaponAttackInfos[weaponAttack].activeStartKeyframe) &&
-        ((HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + g_Items_WeaponAttackInfos[weaponAttack].activeStartKeyframe) + g_Items_WeaponAttackInfos[weaponAttack].activeKeyframeCount) >= extra->model.anim.keyframeIdx)
+    if (extra->model.anim.keyframeIdx >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + g_Items_WeaponAttackInfos[weaponAttack].hitStartKeyframe) &&
+        ((HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx + g_Items_WeaponAttackInfos[weaponAttack].hitStartKeyframe) + g_Items_WeaponAttackInfos[weaponAttack].hitKeyframeCount) >= extra->model.anim.keyframeIdx)
     {
         PLAYER_COMBAT().weaponAttack = weaponAttack;
 
@@ -2884,9 +2884,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
             PLAYER_COMBAT().weaponAttack = WEAPON_ATTACK(PLAYER_COMBAT().weaponAttack, g_Player_MeleeAttackType);
 
-            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeStartKeyframe;
-            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeStartKeyframe +
-                         g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeKeyframeCount;
+            D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].hitStartKeyframe;
+            D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].hitStartKeyframe +
+                         g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].hitKeyframeCount;
         }
 
         // Used for make continuos/hold shooting smoother?
@@ -3247,9 +3247,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                     extra->model.stateStep++;
                 }
 
-                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeStartKeyframe;
-                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeStartKeyframe +
-                             g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].activeKeyframeCount;
+                D_800C44D0 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].hitStartKeyframe;
+                D_800C44D4 = HARRY_BASE_ANIM_INFOS[g_Player_AttackAnimIdx].startKeyframeIdx + g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].hitStartKeyframe +
+                             g_Items_WeaponAttackInfos[PLAYER_COMBAT().weaponAttack].hitKeyframeCount;
                 g_Player_IsMultiTapAttack = 0;
 
                 PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;

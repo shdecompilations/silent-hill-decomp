@@ -234,7 +234,7 @@ u32 func_8008A270(s32 idx) // 0x8008A270
     }
 #endif
 
-    return g_Items_WeaponAttackInfos[idx].activeStartKeyframe;
+    return g_Items_WeaponAttackInfos[idx].hitStartKeyframe;
 }
 
 u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
@@ -257,7 +257,7 @@ u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
         }
     }
 
-    return g_Items_WeaponAttackInfos[arg0].activeKeyframeCount;
+    return g_Items_WeaponAttackInfos[arg0].hitKeyframeCount;
 }
 
 s32 func_8008A35C(s_AttackInfo* attackInfo, s32 arg1) // 0x8008A35C
@@ -265,9 +265,9 @@ s32 func_8008A35C(s_AttackInfo* attackInfo, s32 arg1) // 0x8008A35C
     s32 var;
     s32 res;
 
-    var = attackInfo->activeStartKeyframe + attackInfo->activeKeyframeCount;
+    var = attackInfo->hitStartKeyframe + attackInfo->hitKeyframeCount;
     res = 0;
-    if (arg1 >= attackInfo->activeStartKeyframe)
+    if (arg1 >= attackInfo->hitStartKeyframe)
     {
         res = (arg1 < var);
     }
