@@ -13,7 +13,13 @@ u8 g_Items_GunsMaxLoadAmmo[36] = {
 
 static u32 D_800AD4C4 = 0;
 
-// TODO: Add weapon attack names to each row.
+/** @brief Weapon attack definitions, indexed by `WEAPON_ATTACK` value. 
+ *
+ * @note "Silent Hill Perfect Navigation Book" (JP) lists some weapon damage numbers that match these closely (Page 14+), but has some slight differences.
+ * Unsure if there's any english-language guides with similar info.
+ *
+ * TODO: Add weapon attack names to each row.
+*/
 s_AttackInfo g_Items_WeaponAttackInfos[70] = {
 /*  { `rangeMax`, `rangeMin`, `damage`, `hitCheck`,                           `shock`,    `activeStartKeyframe`, `activeKeyframeCount`, `type`,                   `hurtSfxType`, `impactSfxGroup`, `pad`, `unk_14`    } */
     { Q12(0.4f),  Q12(0.1f),  130,      ATTACK_FIGHT(0.5f, 0.5f, 0.2f),       Q12(0.0f),  3,                     3,                     AttackInfoType_Melee,     -1,            2,                0,     &D_800AD4C4 },
