@@ -980,7 +980,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
             pos.vy = romper->position.vy;
             pos.vz = romper->position.vz;
 
-            if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Multitap), romper, &pos, &PLAYER_CHARA(), romper->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+            if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk54, AttackInputType_Tap), romper, &pos, &PLAYER_CHARA(), romper->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
             {
                 romper->model.anim.status = ANIM_STATUS(RomperAnim_JumpToIdleStart, false);
                 romper->model.controlState  = RomperControl_10;

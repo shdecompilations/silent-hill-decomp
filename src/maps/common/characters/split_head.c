@@ -1693,7 +1693,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
                 sp28.field_0 < radius &&
                 !(splitHeadProps.flags & SplitHeadFlag_9))
             {
-                Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold));
+                Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(EquippedWeaponId_Unk47, AttackInputType_Tap));
 
                 splitHeadProps.flags |= SplitHeadFlag_1 | SplitHeadFlag_9;
 

@@ -906,7 +906,7 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     s32    animStatus;
     s32    attack;
     u32    damageType;
-    u8     temp_a1;
+    u8     attackType;
     q19_12 angle;
 
     damage     = airScreamer->damage.amount;
@@ -964,7 +964,7 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
 
     if (damage > Q12(0.0f) || airScreamer->health <= Q12(0.0f))
     {
-        temp_a1 = g_Items_WeaponAttackInfos[attack].type;
+        attackType = g_Items_WeaponAttackInfos[attack].type;
         angle   = Q12_ANGLE_NORM_S(PLAYER_CHARA().rotation.vy - airScreamer->rotation.vy);
 
 #ifdef MAP0_S01
@@ -982,20 +982,20 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
                 damageType = AirScreamerHit_Stun;
             }
         }
-        else if (airScreamerProps.field_E8_0 != 3 && temp_a1 == 2 && Math_CheckSignedRange(angle, Q12_ANGLE(120.0f)))
+        else if (airScreamerProps.field_E8_0 != 3 && attackType == AttackInfoType_Melee1Hit && Math_CheckSignedRange(angle, Q12_ANGLE(120.0f)))
         {
             damageType = AirScreamerHit_Rear;
         }
         else if (airScreamerProps.field_E8_0 == 3)
         {
-            if (damage > Q12(45.0f) || temp_a1 == 1)
+            if (damage > Q12(45.0f) || attackType == AttackInfoType_Melee)
             {
                 damageType = AirScreamerHit_Recoil;
             }
         }
         else
         {
-            if (damage > Q12(20.0f) || temp_a1 == 1)
+            if (damage > Q12(20.0f) || attackType == AttackInfoType_Melee)
             {
                 damageType = AirScreamerHit_Recoil;
             }

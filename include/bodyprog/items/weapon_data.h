@@ -16,7 +16,7 @@ typedef struct _AttackFight
  *
  * SH2 name: `shBattleShot`.
  */
-typedef struct ot
+typedef struct _AttackShot
 {
     /* 0x0 */ q4_12 interval;    /** Animation time between shots. */
     /* 0x2 */ u8    maxShots;    /** 0 is treated as 1. */
@@ -24,6 +24,17 @@ typedef struct ot
     /* 0x4 */ u8    inaccuracy;
     /* 0x5 */ u8    spread;      /** Low nibble: `D_800AFD1C` index, high nibble: step count. */
 } s_AttackShot;
+
+typedef enum _AttackInfoType
+{
+    AttackInfoType_Unk0      = 0,
+    AttackInfoType_Melee     = 1, /** Melee hitting every frame. */
+    AttackInfoType_Melee1Hit = 2, /** Melee stopping on first hit. */
+    AttackInfoType_Gunshot   = 3,
+    AttackInfoType_Enemy0    = 4, // } TODO: Better naming.
+    AttackInfoType_Enemy1    = 5, // }
+    AttackInfoType_Enemy2    = 6, // }
+} e_AttackInfoType;
 
 /** @brief Attack definition, indexed by `WEAPON_ATTACK` value.
  *
@@ -42,12 +53,12 @@ typedef struct _AttackInfo
                {
                    s_AttackFight fight;
                    s_AttackShot  shot;
-               } hitCheck;                /** SH2 name: `hit_check`. `shot` when `type` is 3, otherwise `fight`. */
+               } hitCheck;                /** SH2 name: `hit_check`. `shot` when `type` is `AttackInfoType_Gunshot`, otherwise `fight`. */
     /* 0xC  */ q4_12 shock;               /** SH2 name: `sp`. Scales the push applied to `s_CharaDamage::position`. */
     /* 0xE  */ u8    activeStartKeyframe; /** SH2 name: `atk_start`. */
     /* 0xF  */ u8    activeKeyframeCount; /** SH2 name: `atk_end`, stored as a length. 99: rest of the animation. */
-    /* 0x10 */ u8    type;                /** SH2 name: `kind`. 1: melee hitting every frame, 2: melee stopping on first hit, 3: gunshot, 4-6: enemy only. TODO: Enum. */
-    /* 0x11 */ u8    hurtSfxType;         /** SH2 name: `sd`. Player hurt SFX? */
+    /* 0x10 */ u8    type;                /** `e_AttackInfoType` | SH2 name: `kind`. */
+    /* 0x11 */ u8    hurtSfxType;         /** SH2 name: `sd`. Player hurt SFX type. TODO: Enum. */
     /* 0x12 */ u8    impactSfxGroup;      /** SH2 name: `eff`. Impact SFX per target, uses values 0-4. */
     /* 0x13 */ s8    __pad_13;
     /* 0x14 */ u32*  unk_14;              /** Some pointer. All `g_Items_WeaponAttackInfos` entries point to `D_800AD4C4`. */
@@ -60,8 +71,8 @@ typedef struct _AttackInfo
 /** @brief Initializer for `s_AttackInfo::hitCheck` as gunshot parameters.
  * The union initializer fills `fight`, so the `s_AttackShot` fields are packed into its three halfwords.
  */
-#define ATTACK_SHOT(interval, maxShots, pelletCount, inaccuracy, spread) \
-    { Q12(interval), (maxShots) | ((pelletCount) << 8), (inaccuracy) | ((spread) << 8) }
+#define ATTACK_SHOT(interval, maxShots, pelletCount, inaccuracy, spreadIdx, spreadSteps) \
+    { Q12(interval), (maxShots) | ((pelletCount) << 8), (inaccuracy) | ((spreadIdx) << 8) | ((spreadSteps) << 12) }
 
 extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 

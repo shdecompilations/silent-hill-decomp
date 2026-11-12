@@ -7127,7 +7127,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             player->damage.position.vy = Q12(0.0f);
             player->damage.position.vx = Q12(0.0f);
 
-            if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold))
+            if (player->attackReceived == WEAPON_ATTACK(EquippedWeaponId_Unk47, AttackInputType_Tap))
             {
                 PLAYER_CHARA().collision.cylinder.innerRadius = Q12(0.0f);
                 Player_ExtraStateSet(player, extra, PlayerState_InstantDeath);
@@ -7193,11 +7193,11 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
             switch (player->attackReceived)
             {
-                case 67:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk67, AttackInputType_Tap):
                     Player_ExtraStateSet(player, extra, PlayerState_Unk7);
                     break;
 
-                case 63:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk63, AttackInputType_Tap):
                     PLAYER_PROPS().moveSpeed = Q12(1.5f);
                     Math_ShortestAngleGet(player->rotation.vy, attacker.rotation.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
@@ -7212,21 +7212,21 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     }
                     break;
 
-                case 60:
-                case 62:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk60, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk62, AttackInputType_Tap):
                     player->damage.amount = Q12(10.0f);
                     Player_ExtraStateSet(player, extra, PlayerState_DamageHead);
                     break;
 
-                case 41:
-                case 42:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk41, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk42, AttackInputType_Tap):
                     Player_ExtraStateSet(player, extra, PlayerState_DamageHead);
                     break;
 
-                case 49: // Leg grab.
-                case 54: // Romper grab.
-                case 56: // Torso grab.
-                case 66:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap): // Leg grab.
+                case WEAPON_ATTACK(EquippedWeaponId_Unk54, AttackInputType_Tap): // Romper grab.
+                case WEAPON_ATTACK(EquippedWeaponId_Unk56, AttackInputType_Tap): // Torso grab.
+                case WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap):
                     if (enemyRotY >= Q12_ANGLE(90.0f) &&
                         enemyRotY <  Q12_ANGLE(270.0f))
                     {
@@ -7234,20 +7234,20 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
                         switch (player->attackReceived)
                         {
-                            case 54:
+                            case WEAPON_ATTACK(EquippedWeaponId_Unk54, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabPinnedFrontStart);
                                 break;
 
-                            case 45:
-                            case 56:
+                            case WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_Unk56, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabTorsoFront);
                                 break;
 
-                            case 49:
+                            case WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabLegsFront);
                                 break;
 
-                            case 66:
+                            case WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabNeckFront);
                                 break;
 
@@ -7259,38 +7259,38 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
                         switch (player->attackReceived)
                         {
-                            case 54:
+                            case WEAPON_ATTACK(EquippedWeaponId_Unk54, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabPinnedBackStart);
                                 break;
 
-                            case 45:
-                            case 56:
+                            case WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_Unk56, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabTorsoBack);
                                 break;
 
-                            case 49:
+                            case WEAPON_ATTACK(EquippedWeaponId_Unk49, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabLegsBack);
                                 break;
 
-                            case 66:
+                            case WEAPON_ATTACK(EquippedWeaponId_ShotgunShells, AttackInputType_Tap):
                                 Player_ExtraStateSet(player, extra, PlayerState_EnemyGrabNeckBack);
                                 break;
                         }
                     }
                     break;
 
-                case 47:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk47, AttackInputType_Tap):
                     player->health                     = NO_VALUE;
                     player->collision.cylinder.innerRadius = Q12(0.0f);
                     Player_ExtraStateSet(player, extra, PlayerState_InstantDeath);
                     return;
 
-                case 69:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap):
                     PLAYER_PROPS().moveSpeed = Q12(1.6f);
                     Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE(90.0f), &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
-                case 68:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk68, AttackInputType_Tap):
                     if (player->attackReceived != WEAPON_ATTACK(EquippedWeaponId_Unk69, AttackInputType_Tap))
                     {
                         PLAYER_PROPS().moveSpeed = Q12(4.0f);
@@ -7298,20 +7298,20 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                         g_Player_HeadingAngle = headingAngle;
                     }
 
-                case 40:
-                case 43:
-                case 44:
-                case 45:
-                case 46:
-                case 48:
-                case 50:
-                case 52:
-                case 57:
-                case 58:
-                case 59:
-                case 61:
-                case 64:
-                case 65:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk40, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk43, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk44, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk45, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk46, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk48, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk50, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk52, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk57, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk58, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk59, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Unk61, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_HandgunBullets, AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_RifleShells, AttackInputType_Tap):
                     // Left harm animation.
                     if (enemyRotY >= Q12_ANGLE(45.0f) && enemyRotY < Q12_ANGLE(135.0f))
                     {
@@ -7336,7 +7336,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     Player_ExtraStateSet(player, extra, angleState);
                     break;
 
-                case 53:
+                case WEAPON_ATTACK(EquippedWeaponId_Unk53, AttackInputType_Tap):
                     if (enemyRotY < Q12_ANGLE(179.95f))
                     {
                         angleState = PlayerState_DamageFeetFront;

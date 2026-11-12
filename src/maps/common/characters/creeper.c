@@ -548,7 +548,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         creeperPos     = creeper->position;
         creeperPos.vy += creeper->collision.box.field_8;
 
-        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Multitap),
+        func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk53, AttackInputType_Tap),
                       creeper, &creeperPos, &PLAYER_CHARA(), creeper->rotation.vy,
                       ratan2(Q12(0.4f),
                              (PLAYER_CHARA().position.vy + PLAYER_CHARA().collision.box.bottomExtent) -

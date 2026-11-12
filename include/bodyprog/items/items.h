@@ -202,15 +202,31 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Shotgun        = 34,
     EquippedWeaponId_HyperBlaster   = 35,
 
-    EquippedWeaponId_Unk37          = 37, // Split Head attack.
+    EquippedWeaponId_Unk40          = 40,
+    EquippedWeaponId_Unk41          = 41,
+    EquippedWeaponId_Unk42          = 42,
+    EquippedWeaponId_Unk43          = 43, // Groaner attack.
 
     EquippedWeaponId_Unk44          = 44, // } HangedScratcher attack.
     EquippedWeaponId_Unk45          = 45, // }
 
+    EquippedWeaponId_Unk46          = 46,
+    EquippedWeaponId_Unk47          = 47, // Split Head attack, instant death.
+
     EquippedWeaponId_Unk48          = 48, // } Stalker attack.
     EquippedWeaponId_Unk49          = 49, // }
 
+    EquippedWeaponId_Unk50          = 50,
+
+    EquippedWeaponId_Unk51          = 51, // } Larval Stalker attack.
+    EquippedWeaponId_Unk52          = 52, // }
+
+    EquippedWeaponId_Unk53          = 53, // Creeper attack.
+    EquippedWeaponId_Unk54          = 54, // Romper grab.
+
     EquippedWeaponId_Unk56          = 56, // Puppet Nurse attack.
+    EquippedWeaponId_Unk57          = 57, // Puppet Nurse attack.
+    EquippedWeaponId_Unk58          = 58, // Puppet Doctor attack.
 
     EquippedWeaponId_Unk59          = 59, // Float Stinger attack.
     EquippedWeaponId_Unk60          = 60, // Float Stinger attack.
