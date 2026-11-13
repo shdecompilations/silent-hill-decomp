@@ -6,6 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/texture_utils.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"

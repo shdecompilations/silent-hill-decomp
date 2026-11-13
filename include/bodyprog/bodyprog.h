@@ -20,8 +20,10 @@
 #include "bodyprog/formats/model.h"
 #include "bodyprog/formats/texture.h"
 #include "bodyprog/formats/tmd.h"
+#include "bodyprog/gfx/bodyprog_80056D8C.h"
 #include "bodyprog/gfx/env_effects.h"
 #include "bodyprog/gfx/lens_flare.h"
+#include "bodyprog/gfx/texture_utils.h"
 #include "bodyprog/gfx/world.h"
 #include "bodyprog/gfx/world_object.h"
 #include "bodyprog/items/weapon_data.h"
@@ -366,13 +368,6 @@ extern s16 SQRT[100];
 /** @brief Draws a palette of colors in the frame buffer. */
 void func_8003652C(void);
 
-/** @brief @unused Draws loading screen text.
- *
- * Just like in earlier builds of Silent Hill 2, the game was intended to show a black screen with "Now loading." text
- * in middle of the screen.
- */
-void GameFs_LoadingTextDraw(void);
-
 void func_80032D1C(void);
 
 /** @brief Frees a character model.
@@ -561,9 +556,40 @@ void Lm_HeaderPtrsInit(s_LmHeader* lmHdr);
 
 void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
+// `gfx/materials.h
+// ================================================
+
 void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent);
 
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
+
+// `bodyprog/gfx/bodyprog_80056D8C.h`
+//======================
+
+/** @brief Draws a 2D fog overlay quad. */
+void Gfx_FogOverlayQuadDraw(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, GsOT* ot, s32 otShift);
+
+/** Draws 3D IPD chunk models? */
+void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 otShift, MATRIX* viewMat, MATRIX* worldMat, u16 clutY);
+
+s32 func_800571D0(u32 arg0);
+
+void WorldEnvRender_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECTOR3* arg3);
+
+void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* mat);
+
+void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
+
+void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertOffset, s32 normalOffset);
+
+void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
+
+void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
+
+void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
+
+/** Main quad drawing func? */
+void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, s32 otShift, GsOT_TAG* tag);
@@ -588,18 +614,7 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
 
 void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool otShift);
 
-void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
-
-void Texture_RefCountReset(s_Texture* tex);
-
-/** @unused */
-void func_8005B378(s_Texture* tex, char* arg1);
-
-void Texture_RefClear(s_Texture* tex);
-
-void Material_TimFileNameGet(char* filename, s_Material* mat);
-
-void func_8005B424(VECTOR3* vec0, const VECTOR3* vec1);
+// ====================================
 
 /** @unused No references. */
 void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
@@ -634,33 +649,7 @@ bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMet
 
 void StringCopy(char* prevStr, char* newStr);
 
-/** @brief Draws a 2D fog overlay quad. */
-void Gfx_FogOverlayQuadDraw(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, GsOT* ot, s32 otShift);
-
-/** Draws 3D IPD chunk models? */
-void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 otShift, MATRIX* viewMat, MATRIX* worldMat, u16 clutY);
-
-s32 func_800571D0(u32 arg0);
-
-void WorldEnvRender_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECTOR3* arg3);
-
-void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* mat);
-
-void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
-
-void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertOffset, s32 normalOffset);
-
-void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
-
-void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
-
-void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
-
-/** Main quad drawing func? */
-void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
-
-/** `arg4` unused. */
-s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
+// ================================================
 
 u32 func_8005C478(s16* arg0, q19_12 x0, q19_12 y0, q19_12 x1, q19_12 y1, q19_12 x2, q19_12 y2);
 
@@ -673,17 +662,6 @@ s32 Chara_MovementUpdate0(s_SubCharacter* chara, s_CollisionResult* collResult);
 /** Checks `floorType`. */
 bool func_8005F680(s_CollisionSurface* surface);
 
-void Game_MapRoomIdxUpdate(void);
-
-/** @unused */
-s32 func_8003647C(void);
-
-/** @unused */
-s32 func_80036498(void);
-
-// Used in some RoomBgmInit funcs.
-u32 func_800364BC(void);
-
 void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
                     u32 clutX, s16 clutY, s32 tPage);
 
@@ -692,37 +670,10 @@ void func_8008E4EC(s_LmHeader* lmHdr);
 
 void func_80091380(void);
 
-// TODO: Arrange these in address order for better insight into the original interface. -- Sezz
-// ------------------------------------------------------------------
-
-/** Seeks for the English title screen background graphic. */
-void GameFs_TitleGfxSeek(void);
-
-/** Loads the English title screen background graphic. */
-void GameFs_TitleGfxLoad(void);
-
-/** Seeks for the stream overlay. */
-void GameFs_StreamBinSeek(void);
-
-/** Loads the stream overlay. */
-void GameFs_StreamBinLoad(void);
-
-/** Loads the options background graphic and overlay. */
-void GameFs_OptionBinLoad(void);
-
-/** Loads the save/load background graphic and overlay. */
-void GameFs_SaveLoadBinLoad(void);
-
 /** Loads `Tim00` graphic. */
 void GameFs_Tim00TIMLoad(void);
 
 void GameFs_MapItemsModelLoad(u32 mapId);
-
-void Textures_ActiveTex_CountReset(s_ActiveChunkTextures* activeTexs);
-
-void Textures_ActiveTex_PutTextures(s_ActiveChunkTextures* activeTexs, s_Texture* texs, s32 texIdx);
-
-s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveChunkTextures* activeTexs);
 
 /** @brief @unused Sets the debug string position.
  *

@@ -152,4 +152,25 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
  */
 void Bgm_MenuUpdate(void);
 
+void Bgm_SongChange(s32 bgmIdx);
+
+// ========================================
+// PLAYER ROOM INFORMATION
+// ========================================
+
+void Game_MapRoomIdxUpdate(void);
+
+/** @unused */
+s32 func_8003647C(void);
+
+/** @unused */
+s32 func_80036498(void);
+
+// ========================================
+// UNKNOWN UNUSED MATH
+// ========================================
+
+// Used in some RoomBgmInit funcs.
+u32 func_800364BC(void);
+
 #endif

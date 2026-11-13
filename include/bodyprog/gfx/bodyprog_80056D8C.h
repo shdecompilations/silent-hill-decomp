@@ -1,0 +1,6 @@
+#ifndef _BODYPROG_BODYPROG80056D8C_H
+#define _BODYPROG_BODYPROG80056D8C_H
+
+// TODO: Move decls here.
+
+#endif

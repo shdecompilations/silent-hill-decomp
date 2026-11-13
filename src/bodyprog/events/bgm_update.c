@@ -366,10 +366,6 @@ void Bgm_SongChange(s32 bgmIdx) // 0x8003640C
     }
 }
 
-// ========================================
-// PLAYER ROOM INFORMATION
-// ========================================
-
 void Game_MapRoomIdxUpdate(void) // 0x80036420
 {
     q19_12 posX;
@@ -400,10 +396,6 @@ s32 func_80036498(void) // 80036498
 {
     return !(g_SavegamePtr->mapRoomIdx > g_MapOverlayHdr.unused_8);
 }
-
-// ========================================
-// UNKNOWN UNUSED MATH
-// ========================================
 
 u32 func_800364BC(void) // 0x800364BC
 {

@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/sys/fs_screens.h"
 #include "bodyprog/text/text_draw.h"
 #include "main/fsqueue.h"
 

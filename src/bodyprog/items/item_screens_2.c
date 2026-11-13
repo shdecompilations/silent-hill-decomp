@@ -5,6 +5,7 @@
 #include "bodyprog/events/events_main.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
+#include "bodyprog/sys/fs_screens.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"

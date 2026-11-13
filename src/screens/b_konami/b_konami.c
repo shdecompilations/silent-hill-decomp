@@ -9,6 +9,7 @@
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
+#include "bodyprog/sys/fs_screens.h"
 #include "bodyprog/sys/joy.h"
 #include "main/fsqueue.h"
 #include "screens/b_konami/b_konami.h"

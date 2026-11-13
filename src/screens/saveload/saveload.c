@@ -7,6 +7,7 @@
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/fade.h"
+#include "bodyprog/sys/fs_screens.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "screens/saveload/saveload.h"

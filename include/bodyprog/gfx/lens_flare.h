@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_GFX_WATER_H
-#define _BODYPROG_GFX_WATER_H
+#ifndef _BODYPROG_GFX_LENSFLARE_H
+#define _BODYPROG_GFX_LENSFLARE_H
 
 /** @brief Lens flare workspace.
  *

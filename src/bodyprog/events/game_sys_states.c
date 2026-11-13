@@ -16,6 +16,7 @@
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sys/demo.h"
+#include "bodyprog/sys/fs_screens.h"
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/sys/warm_boot.h"
 #include "bodyprog/text/text_draw.h"
