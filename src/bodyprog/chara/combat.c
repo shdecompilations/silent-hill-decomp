@@ -11,6 +11,7 @@
 #include "bodyprog/world/effects.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player/player_control.h"
 #include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
@@ -1504,61 +1505,62 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
 s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo, s32 arg3) // 0x8008BF84
 {
-    s_SubCharacter*   chara1;
-    s32               sp14;
-    s32               sp18;
-    s32               i;
-    q19_12            sinAngle;
-    q19_12            cosAngle;
-    s32               countX;
-    s32               countY;
-    s32               countZ;
-    q19_12            sp34;
-    s32               sp38;
-    s32               sp3C;
-    s32               sp40;
-    s32               sp44;
-    s32               sp48;
-    s32               sp4C;
-    q19_12            posX;
-    q19_12            posZ;
-    q19_12            sp58;
-    s32               sp5C;
-    s32               temp_s5;
-    s32               temp_s6;
-    q19_12            temp_a0;
-    s32               temp_a0_2;
-    q19_12            temp_a0_3;
-    s32               temp_lo_5;
-    s32               temp_s0;
-    s32               temp_s1;
-    q19_12            unkX;
-    q19_12            innerRadius;
-    q19_12            temp_t2;
-    s32               j;
-    q19_12            temp_t4;
-    q19_12            temp_t4_2;
-    q19_12            temp_t5;
-    s32               angle1;
-    s32               temp_v0_6;
-    s32               temp_v0_7;
-    q19_12            temp_v0_8;
-    q19_12            var_a1_2;
-    s32               var_fp;
-    q19_12            unkZ;
-    q19_12            var_s7;
-    s32               var_t1;
-    s32               var_t2;
-    s32               var_v0;
-    q19_12            var_v0_3;
-    s32               var_v0_6;
-    q19_12            var_v1;
-    s32               temp_a2;
-    u16               temp_v1;
-    q19_12            posY;
-    s32               temp4;
-    s_SubCharacter*   chara0;
-    static VECTOR3    D_800C4788[4];
+    s_SubCharacter* chara1;
+    s32             sp14;
+    s32             sp18;
+    s32             i;
+    q19_12          sinAngle;
+    q19_12          cosAngle;
+    s32             countX;
+    s32             countY;
+    s32             countZ;
+    q19_12          sp34;
+    s32             sp38;
+    s32             sp3C;
+    s32             sp40;
+    s32             sp44;
+    s32             sp48;
+    s32             sp4C;
+    q19_12          posX;
+    q19_12          posZ;
+    q19_12          sp58;
+    s32             sp5C;
+    s32             temp_s5;
+    s32             temp_s6;
+    q19_12          temp_a0;
+    s32             temp_a0_2;
+    q19_12          temp_a0_3;
+    s32             temp_lo_5;
+    s32             temp_s0;
+    s32             temp_s1;
+    q19_12          unkX;
+    q19_12          innerRadius;
+    q19_12          temp_t2;
+    s32             j;
+    q19_12          temp_t4;
+    q19_12          temp_t4_2;
+    q19_12          temp_t5;
+    s32             angle1;
+    s32             temp_v0_6;
+    s32             temp_v0_7;
+    q19_12          temp_v0_8;
+    q19_12          var_a1_2;
+    s32             var_fp;
+    q19_12          unkZ;
+    q19_12          var_s7;
+    s32             var_t1;
+    s32             var_t2;
+    s32             var_v0;
+    q19_12          var_v0_3;
+    s32             var_v0_6;
+    q19_12          var_v1;
+    s32             temp_a2;
+    u16             temp_v1;
+    q19_12          posY;
+    s32             temp4;
+    s_SubCharacter* chara0;
+
+    static VECTOR3    D_800C4788[4]; // Q19.12
     static VECTOR3    D_800C47B8;
     static s32        __pad_bss_800C47C4;
     static VECTOR3    D_800C47C8[2];

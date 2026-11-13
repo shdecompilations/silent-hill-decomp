@@ -6,7 +6,8 @@ bool Chara_ModelLoadedCheck(e_CharaId charaId);
 /** Related to the screen. Called by `WorldEnvRender_Init`. */
 void func_80040BAC(void);
 
-void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
+void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB,
+                                           u8 worldTintR, u8 worldTintG, u8 worldTintB);
 
 void func_80041074(GsOT* ot, s32 arg1, SVECTOR* rot, const VECTOR3* pos);
 

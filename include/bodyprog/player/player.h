@@ -1,6 +1,8 @@
 #ifndef _BODYPROG_PLAYER_PLAYER_H
 #define _BODYPROG_PLAYER_PLAYER_H
 
+#include "bodyprog/player/weapon_anim_data.h"
+
 /** @note The game handles the upper and lower part of the player's body independently.
  *
  * SH2 symbols indicate a similar system with 4 enums used depending on the control scheme:

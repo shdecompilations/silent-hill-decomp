@@ -20,14 +20,19 @@ typedef struct _CharaAnimData
     /* 0x10 */ s32            activeSize;
     /* 0x14 */ GsCOORDINATE2* boneCoords;
 } s_CharaAnimData;
-STATIC_ASSERT_SIZEOF(s_CharaAnimData, 24);
 
 // ========
 // GLOBALS
 // ========
 
+/** Loaded NPC types in memory and their `g_CharaModelAnimsData` indices. */
+extern s8 g_CharaAnimDataIdxs[Chara_Count];
+
 /** @brief Animation data for loaded character models. */
 extern s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT];
+
+/** Player anim info? */
+extern s_AnimInfo D_800A998C;
 
 // ==========
 // FUNCTIONS

@@ -9,7 +9,7 @@
 #include "bodyprog/paper_map/paper_map_image.h"
 #include "main/fsqueue.h"
 
-const RECT D_80028A20 = { SCREEN_WIDTH, 256, 192, SCREEN_HEIGHT };
+static const RECT D_80028A20 = { SCREEN_WIDTH, 256, 192, SCREEN_HEIGHT };
 
 void func_80066D90(void) // 0x80066D90
 {

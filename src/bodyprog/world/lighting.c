@@ -133,7 +133,8 @@ void func_80040BAC(void) // 0x80040BAC
     }
 }
 
-void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x80040E7C
+void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB,
+                                           u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x80040E7C
 {
     u32      colors[4];
     s32      j;

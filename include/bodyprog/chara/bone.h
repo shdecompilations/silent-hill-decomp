@@ -8,6 +8,8 @@ typedef enum _BoneHierarchy
     BoneHierarchy_End        = -2
 } e_BoneHierarchy;
 
+extern s8* D_800C15B0;
+
 /** Something related to player weapon position. Takes coords to arm bones. */
 void Bone_ExtraRotationSet(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY);
 

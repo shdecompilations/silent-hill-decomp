@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_PLAYER_PLAYERCONTROL_H
 #define _BODYPROG_PLAYER_PLAYERCONTROL_H
 
-#include "bodyprog/player/player_control.h"
+extern const s_AnimInfo* D_800297B8;
 
 /** @brief Gets the variable animation duration for the player.
  *

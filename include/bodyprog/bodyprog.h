@@ -95,13 +95,6 @@ typedef struct
 
 typedef struct
 {
-    /* 0x0 */ u8  unused_0[4];      /** @unused Looks meaningful, but unclear what it could be. */
-    /* 0x4 */ s16 startKeyframeIdx;
-    /* 0x6 */ s16 endKeyframeIdx;
-} s_800C44F0;
-
-typedef struct
-{
     /* 0x0   */ DVECTOR  screenXy_0[90];
     /* 0x168 */ s16      screenZ_168[18];
     /* 0x18C */ s16      field_18C[72];
@@ -306,36 +299,12 @@ extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to
 
 extern char D_80028544[16];
 
-extern RECT D_80028A20;
-
-// Something related to keyframes.
-extern const s_800C44F0 D_800294F4[];
-
-extern const s_AnimInfo* D_800297B8;
-
 extern u_Filename D_8002B2CC;
-
-extern s32 D_800A9A20;
-
-/** X. */
-extern s32 D_800A9A24;
-
-/** Z. */
-extern s32 D_800A9A28;
-
-/** Loaded NPC types in memory and their `g_CharaModelAnimsData` indices. */
-extern s8 g_CharaAnimDataIdxs[Chara_Count];
 
 #if VERSION_REGION_IS(PAL)
     extern e_FsFile g_MapLanguageBaseIds[];
     extern e_FsFile g_ItemLanguageFileIds[];
 #endif
-
-/** Player anim info? */
-extern s_AnimInfo D_800A998C;
-
-/** Current player anim index store? */
-extern u8 D_800A9990;
 
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
@@ -372,17 +341,7 @@ extern u32 D_800A999C;
 
 extern s32 g_Bgm_LayersUpdated;
 
-extern u16 g_CollisionTriggerFlags;
-
-extern s16 __pad_800BCE14;
-
-extern s_WorldGfxWork g_WorldGfxWork;
-
-extern s8* D_800C15B0;
-
 extern s8 D_800C15B4;
-
-extern s16 D_800C16A4;
 
 extern s8 D_800C39A0;
 
@@ -391,8 +350,6 @@ extern s8 D_800C39A0;
  */
 // extern s_WorldEnvRenderWork g_WorldEnvRenderWork;
 
-extern GsCOORDINATE2* g_BillboardViewCoord;
-
 extern q4_12 g_Player_RotationDeltaToTargetY;
 extern q4_12 g_Player_RotationDeltaToTargetX;
 
@@ -400,22 +357,9 @@ extern q3_12 D_800C4454;
 
 extern s_CollisionSurface D_800C4620;
 
-/** Q19.12 */
-extern VECTOR3 D_800C4788[];
-
-extern VECTOR3 D_800C47B8;
-
-extern VECTOR3 D_800C47C8[];
-
-extern VECTOR3 D_800C47E8;
-
-extern s_RayTrace D_800C47F8;
-
 extern s32 D_800C48F0;
 
-extern u8 D_800AD480[24];
-
-extern const s_MapOverlayHdr g_MapOverlayHdr; // 0x800C957C
+extern const s_MapOverlayHdr g_MapOverlayHdr;
 
 extern s16 SQRT[100];
 

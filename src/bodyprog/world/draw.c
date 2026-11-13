@@ -24,10 +24,10 @@
 
 #ifndef PAD_HACK_IGNORE
     const s32 __pad_rodata_80025524 = 0;
-    s16 __pad_800BCE14;
+    s16       __pad_800BCE14;
 #endif
 
-u16 g_CollisionTriggerFlags;
+u16            g_CollisionTriggerFlags;
 s_WorldGfxWork g_WorldGfxWork;
 
 s32 Map_TypeGet(void) // 0x8003BD2C

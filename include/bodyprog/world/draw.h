@@ -3,6 +3,12 @@
 
 // TODO: Likely multiple splits here.
 
+extern u16 g_CollisionTriggerFlags;
+
+extern s16 __pad_800BCE14;
+
+extern s_WorldGfxWork g_WorldGfxWork;
+
 s32 Map_TypeGet(void);
 
 void Collision_TriggerFlagsLocationUpdate(const s_SubCharacter* chara);

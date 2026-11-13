@@ -86,40 +86,40 @@ void Gfx_BillboardInfosInit(GsCOORDINATE2* viewCoord) // 0x8005B55C
 
 void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot, s32 otShift) // 0x8005B62C
 {
-    MATRIX            worldToScreenMat;
-    MATRIX            worldMat;
-    CVECTOR           colors[5];
-    MATRIX            lightMat;
-    s_GteScratchData2 sp90;
-    DVECTOR           sxy;
-    s32               dummy;
-    s32               sp494;
-    s32               sp498;
-    u16               sp4A0;
-    u16               sp4A8;
-    s_WorldEnvRenderWork*   worldEnvWork;
-    s_WorldEnvRenderWork*   worldEngWork1;
-    s32               temp_a0;
-    s32               temp_a0_2;
-    q19_12            temp_lo; // Light-related.
-    s32               depthScaleFactor;
-    q19_12            lightMag;
-    s32               temp_v0_2;
-    s32               temp_v1;
-    s32               temp_v1_2;
-    s32               temp_v1_4;
-    q19_12            lightPosX;
-    q19_12            lightPosY;
-    q19_12            lightPosZ;
-    q19_12            fogAlpha;
-    s32               var_v0;
-    s_BillboardInfo*  curBillboardInfo;
-    s_BillboardWork*  billboardWork;
-    s32               temp;
-    PACKET*           packet;
-    PACKET*           packet2;
-    POLY_GT4*         poly_gt4;
-    POLY_G4*          poly_g4;
+    MATRIX                worldToScreenMat;
+    MATRIX                worldMat;
+    CVECTOR               colors[5];
+    MATRIX                lightMat;
+    s_GteScratchData2     sp90;
+    DVECTOR               sxy;
+    s32                   dummy;
+    s32                   sp494;
+    s32                   sp498;
+    u16                   sp4A0;
+    u16                   sp4A8;
+    s32                   temp_a0;
+    s32                   temp_a0_2;
+    q19_12                temp_lo; // Light-related.
+    s32                   depthScaleFactor;
+    q19_12                lightMag;
+    s32                   temp_v0_2;
+    s32                   temp_v1;
+    s32                   temp_v1_2;
+    s32                   temp_v1_4;
+    q19_12                lightPosX;
+    q19_12                lightPosY;
+    q19_12                lightPosZ;
+    q19_12                fogAlpha;
+    s32                   var_v0;
+    s_WorldEnvRenderWork* worldEnvWork;
+    s_WorldEnvRenderWork* worldEngWork1;
+    s_BillboardInfo*      curBillboardInfo;
+    s_BillboardWork*      billboardWork;
+    s32                   temp;
+    PACKET*               packet;
+    PACKET*               packet2;
+    POLY_GT4*             poly_gt4;
+    POLY_G4*              poly_g4;
 
     billboardWork = &g_BillboardWorks[idx];
     sp4A0   = billboardWork->field_A | (billboardWork->field_9 << 8);
