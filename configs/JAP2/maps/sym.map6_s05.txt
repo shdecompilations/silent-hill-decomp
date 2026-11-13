@@ -85,11 +85,9 @@ LOADABLE_INVENTORY_ITEMS        = 0x800CF290;
 sharedData_800DD584_0_s00       = 0x800CF291; // type:u8
 sharedData_800DD598_0_s00       = 0x800CF294;
 g_Player_PrevWeaponAttack       = 0x800CF298; // type:u8
-sharedData_800EB738_6_s04       = 0x800CF29C; // type:u8
-sharedData_800EB740_6_s04       = 0x800CF2A4; // type:u8 size:2
-D_800CCC82                      = 0x800CF2A6;
-sharedData_800EB748_6_s04       = 0x800CF2AC; // type:u8
-sharedData_800EB74A_6_s04       = 0x800CF2AE; // type:u8
+sharedData_800EB738_6_s04       = 0x800CF29C; // type:u8 size:8
+sharedData_800EB740_6_s04       = 0x800CF2A4; // type:u8 size:8
+sharedData_800EB748_6_s04       = 0x800CF2AC; // type:u8 size:8
 sharedData_800EB750_6_s04       = 0x800CF2B4; // type:VECTOR3 size:0xC
 
 //-------------------------------------------------------------

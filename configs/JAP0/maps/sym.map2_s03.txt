@@ -87,7 +87,7 @@ g_Player_PrevWeaponAttack       = 0x800CF0A8; // type:u8
 //----------------------------------------------------
 MAP_ROOM_IDXS                   = 0x800CF0AC; // type:u8 unknown type
 sharedData_800DF2DC_0_s00       = 0x800CF18C; // type:s32 unknown type
-sharedData_800F06D4_2_s00       = 0x800CF1A8; // size:8
+sharedData_800F06D4_2_s00       = 0x800CF1A8; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x003708   VA: 0x800CF1B0   subsegment: .data, header

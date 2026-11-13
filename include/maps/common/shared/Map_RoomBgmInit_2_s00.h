@@ -1,6 +1,6 @@
 void Map_RoomBgmInit(bool arg0)
 {
-    extern u8 sharedData_800F06D4_2_s00[8];
+    extern s_BgmLayerLimits sharedData_800F06D4_2_s00;
     s32       bgmFlags;
     s32       mapRoomIdx;
 
@@ -37,7 +37,7 @@ void Map_RoomBgmInit(bool arg0)
     if (bgmFlags & BgmFlag_Layer4)
     {
         s8 tmp                       = func_800364BC();
-        sharedData_800F06D4_2_s00[3] = tmp;
+        sharedData_800F06D4_2_s00.limits[3] = tmp;
     }
 
     Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &sharedData_800F06D4_2_s00);

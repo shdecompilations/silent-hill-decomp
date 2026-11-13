@@ -79,6 +79,9 @@ typedef struct
     u16 field_E;
 } s_800F3D48_0_0;
 
+struct _800F3D48;
+struct _800F3D48_0;
+
 typedef struct
 {
     s32     field_0;
@@ -94,8 +97,8 @@ typedef struct
     s32     field_38;
     s32     field_3C;
     s32     field_40;
-    struct s_800F3D48_0* (*field_44)(struct s_800F3D48*);
-    void                 (*field_48)(struct s_800F3D48*, s_800F3D48_0_0*);
+    struct _800F3D48_0* (*field_44)(struct _800F3D48*);
+    void                (*field_48)(struct _800F3D48*, s_800F3D48_0_0*);
 } s_800F3D48_4;
 STATIC_ASSERT_SIZEOF(s_800F3D48_4, 76);
 
@@ -107,7 +110,7 @@ typedef struct _800F3D48_0
 } s_800F3D48_0;
 STATIC_ASSERT_SIZEOF(s_800F3D48_0, 12);
 
-typedef struct
+typedef struct _800F3D48
 {
     s_800F3D48_0* ptr_0;
     s_800F3D48_4  field_4;
@@ -589,9 +592,9 @@ s_800F3D48_0* func_800D9740(s_800F3D48* arg0);
 
 q19_12 func_800DA08C(q19_12 arg0, q19_12 arg1, q19_12 arg2);
 
-q19_12 func_800DA420(VECTOR3* result);
+q19_12 func_800DA420(VECTOR* result);
 
-void func_800DA4B4(s32* arg0, s32* arg1); // Assumed types.
+void func_800DA4B4(VECTOR* arg0, VECTOR* arg1);
 
 s32 func_800DA4EC(s32 min, s32 max);
 
@@ -874,7 +877,7 @@ void func_800DA04C(void);
 /** Does some kind of timer computation. */
 q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, q19_12 arg4);
 
-s32 func_800DA1F4(VECTOR3* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 func_800DA1F4(VECTOR3* arg0, VECTOR* arg1, q19_12 arg2, s32 arg3, s32 arg4);
 
 void func_800DA550(s_800ED7E0_ptr* arg0);
 

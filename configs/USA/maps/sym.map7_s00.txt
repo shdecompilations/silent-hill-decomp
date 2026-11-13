@@ -98,12 +98,12 @@ sharedData_800DF1F4_0_s00       = 0x800D2EE8; // type:s32
 sharedData_800DF1F8_0_s00       = 0x800D2EEC; // type:s16
 sharedData_800DF1FA_0_s00       = 0x800D2EEE; // type:s16
 MAP_ROOM_IDXS                   = 0x800D2EF0; // type:u8 - TODO add size
-sharedData_800D2F18_7_s00       = 0x800D2F18;
-sharedData_800D2F20_7_s00       = 0x800D2F20;
+sharedData_800D2F18_7_s00       = 0x800D2F18; // type:u8 size:8
+sharedData_800D2F20_7_s00       = 0x800D2F20; // type:u8 size:8
 sharedData_800D2F28_7_s00       = 0x800D2F28;
-sharedData_800D2F74_7_s00       = 0x800D2F74;
-sharedData_800D2F7C_7_s00       = 0x800D2F7C;
-sharedData_800D2F84_7_s00       = 0x800D2F84;
+sharedData_800D2F74_7_s00       = 0x800D2F74; // type:u8 size:8
+sharedData_800D2F7C_7_s00       = 0x800D2F7C; // type:u8 size:8
+sharedData_800D2F84_7_s00       = 0x800D2F84; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x009A14   VA: 0x800D2F8C   subsegment: .data, header

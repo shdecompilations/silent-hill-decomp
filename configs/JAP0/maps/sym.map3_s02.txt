@@ -15,7 +15,7 @@ D_800C9578                      = 0x800CBAA8;
 //--- PA: 0x001050   VA: 0x800CCAF8   subsegment: .rodata, map3_s02_2
 //-------------------------------------------------------------------
 D_800CA7F8                      = 0x800CCBD8;
-D_800CA70C                      = 0x800CCC3C;
+D_800CA70C                      = 0x800CCC3C; // type:u8 size:8
 D_800CAAF8                      = 0x800CCFE4;
 D_800CAB4C                      = 0x800CD034;
 

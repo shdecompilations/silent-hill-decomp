@@ -45,7 +45,7 @@ typedef struct
     s32 field_4318;
 } s_func_800DE274;
 
-typedef struct
+typedef struct _func_800E030C
 {
     s32     field_0;
     VECTOR  vec_4; // Origin of something.
@@ -53,7 +53,7 @@ typedef struct
     bool    isSlotInUse_24;
     q19_12  field_28;
     s32     field_2C; // Q23.8?
-    void    (*funcPtr_30)(struct s_func_800E030C*);
+    void    (*funcPtr_30)(struct _func_800E030C*);
     s32     field_34;
 } s_func_800E030C;
 STATIC_ASSERT_SIZEOF(s_func_800E030C, 0x38);
@@ -72,7 +72,7 @@ typedef struct
     s_func_800E030C field_494[800];
 } s_func_800E05C8;
 
-typedef struct
+typedef struct _800ED848
 {
     s32            field_0;
     s32            field_4;
@@ -82,7 +82,7 @@ typedef struct
     VECTOR3*       field_14;
     SVECTOR*       field_18;
     SVECTOR        field_1C;
-    s32            (*field_24)(struct s_800ED848*);
+    s32            (*field_24)(struct _800ED848*);
     MATRIX         field_28;
     s32            field_48;
     s32*           field_4C;

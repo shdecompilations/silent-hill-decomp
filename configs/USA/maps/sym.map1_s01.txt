@@ -164,6 +164,7 @@ sharedData_800DEE68_0_s00        = 0x800DC618;
 sharedData_800DEF1C_0_s00        = 0x800DC6CC;
 CAT_ANIM_INFOS                   = 0x800DC924; // type:AnimInfo
 MAP_ROOM_IDXS                    = 0x800DC9C4; // type:u8
+D_800DC9FC                       = 0x800DC9FC; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x0134E0   VA: 0x800DCA58   subsegment: .data, header

@@ -230,7 +230,7 @@ sharedData_800DF1F8_0_s00           = 0x800E0FA4; // type:s16
 sharedData_800DF1FA_0_s00           = 0x800E0FA6; // type:s16
 MAP_ROOM_IDXS                       = 0x800E0FA8; // type:u8 unknown type
 sharedData_800DF2DC_0_s00           = 0x800E1088; // type:s32 unknown type
-D_800DF2F8                          = 0x800E10A4;
+D_800DF2F8                          = 0x800E10A4; // type:u8 size:8
 D_800DF300                          = 0x800E10AC;
 
 //-------------------------------------------------------------

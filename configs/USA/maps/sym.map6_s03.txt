@@ -188,6 +188,7 @@ sharedData_800D9AF0_5_s00          = 0x800DBB10;
 sharedData_800D9B04_5_s00          = 0x800DBB24;
 sharedData_800D9B18_5_s00          = 0x800DBB38;
 sharedData_800D9B2C_5_s00          = 0x800DBB4C;
+D_800DBCDC                         = 0x800DBCDC; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x0127A4   VA: 0x800DBD1C   subsegment: .data, header

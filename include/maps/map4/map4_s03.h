@@ -63,13 +63,13 @@ typedef struct
 STATIC_ASSERT_SIZEOF(s_800E0698, 612);
 
 // Used by Twinfeeler for random spawn locations when resurfacing?
-typedef struct
+typedef struct _800E0930
 {
     /* 0x0  */ s32             stateStep;
     /* 0x4  */ q19_12          timer;
     /* 0x8  */ s_SubCharacter* chara;
     /* 0xC  */ VECTOR3         position;
-    /* 0x18 */ void            (*funcptr_18)(struct s_800E0930*);
+    /* 0x18 */ void            (*funcptr_18)(struct _800E0930*);
 } s_800E0930;
 
 typedef struct
@@ -79,7 +79,7 @@ typedef struct
     MATRIX world_8;
 } s_800E0988;
 
-typedef struct
+typedef struct _800DF580
 {
     /* 0x0  */ s32     field_0;
     /* 0x4  */ s32     field_4;
@@ -92,7 +92,7 @@ typedef struct
     /* 0x1C */ MATRIX  worldMat;
     /* 0x3C */ s32     field_3C;
     /* 0x40 */ u8      field_40[133]; // Type assumed.
-    /* 0xC8 */ s32     (*field_C8)(struct s_800DF580*);
+    /* 0xC8 */ s32     (*field_C8)(struct _800DF580*);
     /* 0xCC */ q19_12  field_CC;
     /* 0xD0 */ s32     field_D0;
     /* 0xD4 */ s32     field_D4;

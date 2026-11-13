@@ -2390,7 +2390,7 @@ q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, q19_12 
     return arg0;
 }
 
-s32 func_800DA1F4(VECTOR3* arg0, VECTOR3* arg1, q19_12 arg2, s32 arg3, s32 arg4) // 0x800DA1F4
+s32 func_800DA1F4(VECTOR3* arg0, VECTOR* arg1, q19_12 arg2, s32 arg3, s32 arg4) // 0x800DA1F4
 {
     q19_12   temp_a0;
     s32      dist;
@@ -2438,7 +2438,7 @@ s32 func_800DA1F4(VECTOR3* arg0, VECTOR3* arg1, q19_12 arg2, s32 arg3, s32 arg4)
     return var_fp;
 }
 
-q19_12 func_800DA420(VECTOR3* result) // 0x800DA420
+q19_12 func_800DA420(VECTOR* result) // 0x800DA420
 {
     q19_12 posX;
     q19_12 posY;
@@ -2452,9 +2452,9 @@ q19_12 func_800DA420(VECTOR3* result) // 0x800DA420
     return Q12_ANGLE(15.0f);
 }
 
-void func_800DA4B4(s32* arg0, s32* arg1) // 0x800DA4B4
+void func_800DA4B4(VECTOR* arg0, VECTOR* arg1) // 0x800DA4B4
 {
-    arg0[0] += (arg1[0] * arg0[1]) / arg1[1];
+    arg0->vx += (arg1->vx * arg0->vy) / arg1->vy;
 }
 
 s32 func_800DA4EC(s32 min, s32 max) // 0x800DA4EC
@@ -2485,7 +2485,7 @@ void func_800DA550(s_800ED7E0_ptr* arg0) // 0x800DA550
         return;
     }
 
-    ptr->field_4.field_3C = func_800DA1F4(arg0, &ptr->field_4.field_18, arg0->field_C, arg0->field_10, arg0->field_24);
+    ptr->field_4.field_3C = func_800DA1F4(&arg0->field_0, &ptr->field_4.field_18, arg0->field_C, arg0->field_10, arg0->field_24);
     ptr->field_4.field_14 = func_800DA4EC(arg0->field_1C, arg0->field_20);
     temp_s4               = func_800DA4EC(arg0->field_14, arg0->field_18);
 

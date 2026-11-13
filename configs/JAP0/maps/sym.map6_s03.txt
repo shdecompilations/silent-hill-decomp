@@ -208,10 +208,7 @@ sharedData_800D9AF0_5_s00          = 0x800DDFD8;
 sharedData_800D9B04_5_s00          = 0x800DDFEC;
 sharedData_800D9B18_5_s00          = 0x800DE000;
 sharedData_800D9B2C_5_s00          = 0x800DE014;
-D_800DBCDC                         = 0x800DE1A4;
-D_800DBCE1                         = 0x800DE1A9;
-D_800DBCE2                         = 0x800DE1AA;
-D_800DBCE3                         = 0x800DE1AB;
+D_800DBCDC                         = 0x800DE1A4; // type:u8 size:8
 D_800DBCE4                         = 0x800DE1AC;
 D_800DBD10                         = 0x800DE1D8;
 

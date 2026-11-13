@@ -194,7 +194,7 @@ sharedData_800DEE68_0_s00        = 0x800DEC30;
 sharedData_800DEF1C_0_s00        = 0x800DECE4;
 CAT_ANIM_INFOS                   = 0x800DEF3C; // type:AnimInfo
 MAP_ROOM_IDXS                    = 0x800DEFDC; // type:u8
-D_800DC9FC                       = 0x800DF014;
+D_800DC9FC                       = 0x800DF014; // type:u8 size:8
 D_800DCA04                       = 0x800DF01C;
 
 //-------------------------------------------------------------

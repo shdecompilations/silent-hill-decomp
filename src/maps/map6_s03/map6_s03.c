@@ -51,9 +51,9 @@ void func_800D7F98(void) // 0x800D7F98
             {
                 case 15:
                 case 16:
-                    D_800DBCDC[5] = 0;
-                    D_800DBCDC[6] = 0;
-                    D_800DBCDC[7] = 0;
+                    D_800DBCDC.limits[5] = 0;
+                    D_800DBCDC.limits[6] = 0;
+                    D_800DBCDC.limits[7] = 0;
                     break;
 
                 case 17:
@@ -72,15 +72,15 @@ void func_800D7F98(void) // 0x800D7F98
                         }
                     }
 
-                    D_800DBCDC[5] = dist0;
-                    D_800DBCDC[6] = Q12(0.0f);
-                    D_800DBCDC[7] = Q12(0.0f);
+                    D_800DBCDC.limits[5] = dist0;
+                    D_800DBCDC.limits[6] = Q12(0.0f);
+                    D_800DBCDC.limits[7] = Q12(0.0f);
                     break;
 
                 case 18:
                 case 19:
                 case 20:
-                    D_800DBCDC[5] = Q8(0.313f);
+                    D_800DBCDC.limits[5] = Q8(0.313f);
 
                     dist1 = Q12(64.0f) - PLAYER_CHARA().position.vx;
                     if (dist1 < Q12(0.0f))
@@ -96,7 +96,7 @@ void func_800D7F98(void) // 0x800D7F98
                         }
                     }
 
-                    D_800DBCDC[6] = dist1;
+                    D_800DBCDC.limits[6] = dist1;
 
                     dist2 = Q12(80.0f) - PLAYER_CHARA().position.vx;
                     if (dist2 < Q12(0.0f))
@@ -112,7 +112,7 @@ void func_800D7F98(void) // 0x800D7F98
                         }
                     }
 
-                    D_800DBCDC[7] = dist2;
+                    D_800DBCDC.limits[7] = dist2;
                     break;
             }
         }

@@ -193,10 +193,9 @@ sharedData_800DF1F8_0_s00       = 0x800EAE7C; // type:s16
 sharedData_800DF1FA_0_s00       = 0x800EAE7E; // type:s16
 FLAUROS_ANIM_INFOS              = 0x800EAE80; // type:AnimInfo
 PARASITE_ANIM_INFOS             = 0x800EAEC0; // type:AnimInfo
-sharedData_800EB738_6_s04       = 0x800EB738; // type:u8
-sharedData_800EB740_6_s04       = 0x800EB740; // type:u8 size:2
-sharedData_800EB748_6_s04       = 0x800EB748; // type:u8
-sharedData_800EB74A_6_s04       = 0x800EB74A; // type:u8
+sharedData_800EB738_6_s04       = 0x800EB738; // type:u8 size:8
+sharedData_800EB740_6_s04       = 0x800EB740; // type:u8 size:8
+sharedData_800EB748_6_s04       = 0x800EB748; // type:u8 size:8
 sharedData_800EB750_6_s04       = 0x800EB750; // type:VECTOR3 size:0xC
 
 //-------------------------------------------------------------

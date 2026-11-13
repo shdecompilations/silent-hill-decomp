@@ -33,7 +33,7 @@ void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s3
 s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void* fsBuffer9, e_FsFile fileIdx, s32 arg4)
 {
     char       filename[12];
-    char       debugStr[12];
+    char       debugStr[16];
     s32        fileId;
     s32        i;
     s32        smallestQueueIdx;

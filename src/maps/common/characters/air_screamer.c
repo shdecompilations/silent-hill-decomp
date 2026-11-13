@@ -896,7 +896,7 @@ void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer)
 
 void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer)
 {
-    ModelAnim_AnimInfoSet(&airScreamer->model.anim, &sharedData_800CAA98_0_s01.animInfo_0);
+    ModelAnim_AnimInfoSet(&airScreamer->model.anim, sharedData_800CAA98_0_s01.animInfo_0);
 }
 
 s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
@@ -12452,7 +12452,7 @@ void sharedFunc_800D633C_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12 posY;
 
-    Collision_TriggerQuery(&sharedData_800E2370_0_s01, airScreamer->position.vx, airScreamer->position.vz, Q12(0.0f), Q12(0.0f));
+    Collision_TriggerQuery(sharedData_800E2370_0_s01, airScreamer->position.vx, airScreamer->position.vz, Q12(0.0f), Q12(0.0f));
 
     posY = sharedData_800E2370_0_s01[1] - airScreamer->collision.box.topExtent;
     if (airScreamer->position.vy < posY)

@@ -343,11 +343,9 @@ D_800EB324                      = 0x800ED7F4;
 D_800EB328                      = 0x800ED7F8;
 D_800EB330                      = 0x800ED800;
 D_800EB338                      = 0x800ED808;
-sharedData_800EB738_6_s04       = 0x800EDC08; // type:u8
-sharedData_800EB740_6_s04       = 0x800EDC10; // type:u8 size:2
-D_800EB742                      = 0x800EDC12;
-sharedData_800EB748_6_s04       = 0x800EDC18; // type:u8
-sharedData_800EB74A_6_s04       = 0x800EDC1A; // type:u8
+sharedData_800EB738_6_s04       = 0x800EDC08; // type:u8 size:8
+sharedData_800EB740_6_s04       = 0x800EDC10; // type:u8 size:8
+sharedData_800EB748_6_s04       = 0x800EDC18; // type:u8 size:8
 sharedData_800EB750_6_s04       = 0x800EDC20; // type:VECTOR3 size:0xC
 
 //-------------------------------------------------------------

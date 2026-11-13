@@ -1117,7 +1117,7 @@ static void MemCard_UserConfigCopy(s_Savegame_OptionsConfig* dest, s_OptionsConf
 {
     bzero(dest, sizeof(s_Savegame_OptionsConfig));
     dest->config = *src;
-    MemCard_ChecksumUpdate(&dest->footer, &dest->config, sizeof(s_Savegame_OptionsConfig));
+    MemCard_ChecksumUpdate(&dest->footer, (s8*)&dest->config, sizeof(s_Savegame_OptionsConfig));
 }
 
 /** @brief Retrieves the index of the file with the save with the
@@ -1171,7 +1171,7 @@ static void MemCard_GameDataCopy(s_Savegame_Container* dest, s_Savegame* src)
 {
     bzero(dest, sizeof(s_Savegame_Container));
     memcpy(&dest->savegame, src, sizeof(s_Savegame));
-    MemCard_ChecksumUpdate(&dest->footer, &dest->savegame, sizeof(s_Savegame_Container));
+    MemCard_ChecksumUpdate(&dest->footer, (s8*)&dest->savegame, sizeof(s_Savegame_Container));
 }
 
 /** @brief Updates game save's total save count.
@@ -1191,7 +1191,7 @@ static void MemCard_TotalSavegameCountUpdate(s32 deviceId, s32 fileIdx, s32 save
     saveHdrPtr = &g_MemCardSaveWork.devices[deviceId].saveHeader[fileIdx];
 
     MemCard_TotalSavegameCountStepUpdate(deviceId, fileIdx, saveIdx);
-    MemCard_ChecksumUpdate(&saveHdrPtr->footer, saveHdrPtr, sizeof(s_MemCard_SaveHeader));
+    MemCard_ChecksumUpdate(&saveHdrPtr->footer, (s8*)saveHdrPtr, sizeof(s_MemCard_SaveHeader));
 }
 
 /** @brief Finds the biggest total save game count in the memory card and

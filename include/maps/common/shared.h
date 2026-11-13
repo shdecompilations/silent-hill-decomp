@@ -180,17 +180,16 @@ extern CVECTOR g_WorldEnv_RainColor;
 
 extern q19_12 sharedData_800E2370_0_s01[2]; // Air Screamer floor collision heights?
 
-// Each of these holds 8 bytes, passed to `Bgm_LayersUpdate` which loops through each byte.
-// TODO: Should use `s_BgmLayerLimits`?
-extern u8 sharedData_800CFB14_0_s02[8];
-extern u8 sharedData_800CFB1C_0_s02[8];
-extern u8 sharedData_800CFB24_0_s02[8];
-extern u8 sharedData_800CFB2C_0_s02[8];
-extern u8 sharedData_800CFB34_0_s02[8];
-extern u8 sharedData_800CFB3C_0_s02[8];
-extern u8 sharedData_800CFB44_0_s02[8];
-extern u8 sharedData_800CFB4C_0_s02[8];
-extern u8 sharedData_800CFB54_0_s02[8];
+// Per-room BGM layer limits passed to `Bgm_LayersUpdate`.
+extern s_BgmLayerLimits sharedData_800CFB14_0_s02;
+extern s_BgmLayerLimits sharedData_800CFB1C_0_s02;
+extern s_BgmLayerLimits sharedData_800CFB24_0_s02;
+extern s_BgmLayerLimits sharedData_800CFB2C_0_s02;
+extern s_BgmLayerLimits sharedData_800CFB34_0_s02;
+extern s_BgmLayerLimits sharedData_800CFB3C_0_s02;
+extern s_BgmLayerLimits sharedData_800CFB44_0_s02;
+extern s_BgmLayerLimits sharedData_800CFB4C_0_s02;
+extern s_BgmLayerLimits sharedData_800CFB54_0_s02;
 
 // Cached collision result for Cheryl, Dahlia, and the player?
 extern s_CollisionResult sharedData_800E39BC_0_s00;
@@ -200,15 +199,14 @@ extern s16 sharedData_800DD5A4_0_s00; // Used as index into array of vectors.
 extern s16 sharedData_800E39E0_0_s00;
 extern s16 sharedData_800E39E2_0_s00;
 
-extern u8      sharedData_800EB738_6_s04;
-extern u8      sharedData_800EB740_6_s04[2];
-extern u8      sharedData_800EB748_6_s04;
-extern s8      sharedData_800EB74A_6_s04;
-extern VECTOR3 sharedData_800EB750_6_s04;
+extern s_BgmLayerLimits sharedData_800EB738_6_s04;
+extern s_BgmLayerLimits sharedData_800EB740_6_s04;
+extern s_BgmLayerLimits sharedData_800EB748_6_s04;
+extern VECTOR3          sharedData_800EB750_6_s04;
 
 extern s16 sharedData_800D5880_1_s05;
 
-extern u8 sharedData_800E1208_1_s02[8];
+extern s_BgmLayerLimits sharedData_800E1208_1_s02;
 extern u16 sharedData_800E1210_1_s02[42]; // Flags.
 
 typedef struct
@@ -303,7 +301,7 @@ extern s8      sharedData_800D4D18_3_s01;
 
 extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
 
-extern u8 sharedData_800D1D14_3_s02[8];
+extern s_BgmLayerLimits sharedData_800D1D14_3_s02;
 
 /** Room flags? */
 extern u16 sharedData_800D1D1C_3_s02[60];
@@ -312,18 +310,18 @@ extern s_sharedData_800DFB10_0_s01 sharedData_800DFB10_0_s01[];
 
 extern u8 sharedData_800ED430_2_s02[];
 
-extern u8 sharedData_800ED43C_2_s02[];
+extern s_BgmLayerLimits sharedData_800ED43C_2_s02;
 
-extern u8  sharedData_800EFCFC_6_s00[8];
+extern s_BgmLayerLimits sharedData_800EFCFC_6_s00;
 extern s32 sharedData_800EFD04_6_s00;
 extern u16 sharedData_800EFD08_6_s00[];
 extern u16 sharedData_800EFD34_6_s00[];
 
-extern u8 sharedData_800ED418_4_s02[8];
+extern s_BgmLayerLimits sharedData_800ED418_4_s02;
 extern s32 sharedData_800ED420_4_s02;   // `e_BgmFlags`
-extern u8 sharedData_800ED424_4_s02[8];
+extern s_BgmLayerLimits sharedData_800ED424_4_s02;
 extern u16 sharedData_800ED42C_4_s02[]; // `e_BgmFlags` | Map room index used for access.
-extern u8 sharedData_800ED458_4_s02[8];
+extern s_BgmLayerLimits sharedData_800ED458_4_s02;
 
 extern s_BgmLayerLimits sharedData_800D2F18_7_s00;
 extern s_BgmLayerLimits sharedData_800D2F20_7_s00;

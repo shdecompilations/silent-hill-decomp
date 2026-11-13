@@ -22,7 +22,7 @@
 
 #include "maps/common/shared.h"
 
-extern u8 D_800DCC4C;
+extern s_BgmLayerLimits D_800DCC4C;
 
 extern u16 D_800DCC54[42];
 

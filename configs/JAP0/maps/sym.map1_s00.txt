@@ -207,7 +207,7 @@ sharedData_800DEE40_0_s00                  = 0x800DED68;
 sharedData_800DEE68_0_s00                  = 0x800DED90;
 sharedData_800DEF1C_0_s00                  = 0x800DEE44;
 MAP_ROOM_IDXS                              = 0x800DF09C; // type:u8
-D_800DCC4C                                 = 0x800DF0D4;
+D_800DCC4C                                 = 0x800DF0D4; // type:u8 size:8
 D_800DCC54                                 = 0x800DF0DC;
 
 //-------------------------------------------------------------

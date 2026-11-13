@@ -87,7 +87,7 @@ g_Player_PrevWeaponAttack       = 0x800CF53C; // type:u8
 //--- PA: 0x003970   VA: 0x800CF540   subsegment: .data, header
 //-------------------------------------------------------------
 MAP_ROOM_IDXS                   = 0x800CF540; // type:u8
-D_800CCF54                      = 0x800CF578;
+D_800CCF54                      = 0x800CF578; // type:u8 size:8
 D_800CCF5C                      = 0x800CF580;
 g_LoadScreenFuncs               = 0x800CF5D4;
 MAP_POINTS                      = 0x800CF5E4;

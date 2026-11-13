@@ -23,7 +23,7 @@ extern s8 D_800DFEF4;
 extern s8 D_800DFEF5;
 extern VECTOR3 D_800DBD10;
 extern u16 D_800DBCE4[22]; // Flags.
-extern u8 D_800DBCDC[8];   // Distances.
+extern s_BgmLayerLimits D_800DBCDC;   // Distances.
 
 void func_800D7F98(void);
 

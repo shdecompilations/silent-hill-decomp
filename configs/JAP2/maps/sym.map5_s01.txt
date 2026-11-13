@@ -389,7 +389,7 @@ sharedData_800ED2D4_2_s02        = 0x800F2164;
 sharedData_800ED314_2_s02        = 0x800F21A4;
 MAP_ROOM_IDXS                    = 0x800F2254; // type:u8
 sharedData_800ED430_2_s02        = 0x800F2280;
-D_800EFC74                       = 0x800F228C;
+D_800EFC74                       = 0x800F228C; // type:u8 size:8
 D_800EFC7C                       = 0x800F2294;
 D_800EFC80                       = 0x800F2298;
 

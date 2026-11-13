@@ -214,15 +214,15 @@ void Twinfeeler_TextureLoad(void);
  */
 void Twinfeeler_Translate(VECTOR3* newPos, const VECTOR3* pos, q19_12 headingAngle, q19_12 dist);
 
-void func_800D3114(void);
+void func_800D3114(s_800E0930* unused);
 
-void func_800D326C(void);
+void func_800D326C(s_800E0930* unused);
 
 void func_800D33D0(void);
 
 void func_800D3428(void);
 
-s_800E0930* func_800D344C(s_SubCharacter* twinfeeler, void (*funcptr)());
+s_800E0930* func_800D344C(s_SubCharacter* twinfeeler, void (*funcptr)(s_800E0930*));
 
 void func_800D3504(s_SubCharacter* twinfeeler);
 

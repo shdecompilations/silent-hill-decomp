@@ -156,6 +156,7 @@ sharedData_800E1194_1_s02          = 0x800DA118;
 sharedData_800E11A8_1_s02          = 0x800DA12C;
 sharedData_800E11BC_1_s02          = 0x800DA140;
 MAP_ROOM_IDXS                      = 0x800DA554; // type:u8
+D_800DA570                         = 0x800DA570; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x01102C   VA: 0x800DA5A4   subsegment: .data, header

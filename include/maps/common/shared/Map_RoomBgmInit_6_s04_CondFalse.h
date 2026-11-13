@@ -1,11 +1,11 @@
 void Map_RoomBgmInit_CondFalse(void)
 {
-    q19_12 dist0;
-    s32    bgmFlags;
-    s32    fadeSpeed;
-    s32    soundCmd;
-    q19_12 dist;
-    u8*    dataPtr;
+    q19_12            dist0;
+    s32               bgmFlags;
+    s32               fadeSpeed;
+    s32               soundCmd;
+    q19_12            dist;
+    s_BgmLayerLimits* dataPtr;
 
     fadeSpeed    = Q12(0.2f);
     soundCmd = g_GameWork.bgmIdx;
@@ -29,7 +29,7 @@ void Map_RoomBgmInit_CondFalse(void)
     }
     else if (soundCmd == 39)
     {
-        dataPtr = sharedData_800EB740_6_s04;
+        dataPtr = &sharedData_800EB740_6_s04;
 
         if (Savegame_EventFlagGet(EventFlag_445))
         {
@@ -43,7 +43,7 @@ void Map_RoomBgmInit_CondFalse(void)
             }
             else if (Savegame_EventFlagGet(EventFlag_470))
             {
-                sharedData_800EB740_6_s04[1] = 0x80;
+                sharedData_800EB740_6_s04.limits[1] = 0x80;
                 fadeSpeed                        = Q12(0.5f);
 
                 if (!Savegame_EventFlagGet(EventFlag_447))
@@ -62,19 +62,19 @@ void Map_RoomBgmInit_CondFalse(void)
             }
             else if (Savegame_EventFlagGet(EventFlag_446))
             {
-                sharedData_800EB740_6_s04[1] = 0;
+                sharedData_800EB740_6_s04.limits[1] = 0;
                 fadeSpeed                        = Q12(240.0f);
                 bgmFlags                        = 0x101;
             }
             else
             {
-                sharedData_800EB740_6_s04[1] = 0x60;
+                sharedData_800EB740_6_s04.limits[1] = 0x60;
                 bgmFlags                        = 0x10A;
             }
         }
         else
         {
-            sharedData_800EB740_6_s04[1] = 0x60;
+            sharedData_800EB740_6_s04.limits[1] = 0x60;
 
             if (Savegame_EventFlagGet(EventFlag_443))
             {
@@ -140,7 +140,7 @@ void Map_RoomBgmInit_CondFalse(void)
                 break;
         }
 
-        sharedData_800EB74A_6_s04 = dist;
+        sharedData_800EB748_6_s04.limits[2] = dist;
     }
 
     Bgm_LayersUpdate(bgmFlags, fadeSpeed, dataPtr);

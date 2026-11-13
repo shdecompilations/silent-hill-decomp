@@ -324,7 +324,7 @@ sharedData_800F03A8_2_s00        = 0x800F03A8;
 sharedData_800F04C0_2_s00        = 0x800F04C0;
 MAP_ROOM_IDXS                    = 0x800F05D8; // type:u8 unknown type
 sharedData_800DF2DC_0_s00        = 0x800F06B8; // type:s32 unknown type
-sharedData_800F06D4_2_s00        = 0x800F06D4; // size:8
+sharedData_800F06D4_2_s00        = 0x800F06D4; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x027164   VA: 0x800F06DC   subsegment: .data, header

@@ -934,7 +934,7 @@ static void Sd_XaAudioPlay(void) // 0x80046E00
             break;
 
         case XaLoadState_SetFilter:
-            if (!Sd_CdPrimitiveCmdTry(CdlSetfilter, &g_Sd_XaCdlInfo.cdlFilter, NULL))
+            if (!Sd_CdPrimitiveCmdTry(CdlSetfilter, (u8*)&g_Sd_XaCdlInfo.cdlFilter, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount           = 0;
                 g_Sd_AudioStreamingStates.xaLoadState = XaLoadState_CalculateLba;
@@ -961,7 +961,7 @@ static void Sd_XaAudioPlay(void) // 0x80046E00
             break;
 
         case XaLoadState_Seek:
-            if (!Sd_CdPrimitiveCmdTry(CdlSeekL, &g_Sd_XaCdLocation, NULL))
+            if (!Sd_CdPrimitiveCmdTry(CdlSeekL, (u8*)&g_Sd_XaCdLocation, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount           = 0;
                 g_Sd_AudioStreamingStates.xaLoadState = XaLoadState_StartRead;
@@ -1042,7 +1042,7 @@ static void Sd_XaPreLoadAudio(void) // 0x80047308
             return;
 
         case 3:
-            if (!Sd_CdPrimitiveCmdTry(CdlSetfilter, &g_Sd_XaCdlInfo.cdlFilter, NULL))
+            if (!Sd_CdPrimitiveCmdTry(CdlSetfilter, (u8*)&g_Sd_XaCdlInfo.cdlFilter, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount              = 0;
                 g_Sd_AudioStreamingStates.xaPreLoadState = 4;
@@ -1069,7 +1069,7 @@ static void Sd_XaPreLoadAudio(void) // 0x80047308
             break;
 
         case 5:
-            if (!Sd_CdPrimitiveCmdTry(CdlSeekL, &g_Sd_XaCdLocation, NULL))
+            if (!Sd_CdPrimitiveCmdTry(CdlSeekL, (u8*)&g_Sd_XaCdLocation, NULL))
             {
                 g_Sd_AudioWork.cdErrorCount              = 0;
                 g_Sd_AudioStreamingStates.xaPreLoadState = 6;

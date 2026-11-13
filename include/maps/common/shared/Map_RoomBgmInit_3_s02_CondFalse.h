@@ -2,13 +2,13 @@ void Map_RoomBgmInit_CondFalse(void)
 {
     static const s_BgmLayerLimits D_800CA70C = { { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 } };
 
-    u16           bgmFlags;
-    q19_12        fadeSpeed;
+    u16               bgmFlags;
+    q19_12            fadeSpeed;
     s_BgmLayerLimits* dataPtr;
     s_BgmLayerLimits  data;
-    s32           roomIdx;
+    s32               roomIdx;
 
-    dataPtr = sharedData_800D1D14_3_s02;
+    dataPtr = &sharedData_800D1D14_3_s02;
     roomIdx = g_SavegamePtr->mapRoomIdx;
 
     if (g_GameWork.bgmIdx == BgmCmd_Track8)

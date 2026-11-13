@@ -1,16 +1,16 @@
 void Map_RoomBgmInit(bool arg0)
 {
-    s32 bgmFlags;
-    s32 fadeSpeed;
-    s32 mapRoomIdx;
-    u8* var_a2;
+    s32               bgmFlags;
+    s32               fadeSpeed;
+    s32               mapRoomIdx;
+    s_BgmLayerLimits* var_a2;
 
     mapRoomIdx = g_SavegamePtr->mapRoomIdx;
     fadeSpeed  = Q12(0.1f);
 
     if (g_GameWork.bgmIdx == BgmCmd_Track13)
     {
-        var_a2 = sharedData_800ED418_4_s02;
+        var_a2 = &sharedData_800ED418_4_s02;
 
         switch (mapRoomIdx)
         {
@@ -75,7 +75,7 @@ void Map_RoomBgmInit(bool arg0)
     }
     else if (g_GameWork.bgmIdx == BgmCmd_Track33)
     {
-        var_a2 = sharedData_800ED424_4_s02;
+        var_a2 = &sharedData_800ED424_4_s02;
 
         switch (mapRoomIdx)
         {
@@ -147,7 +147,7 @@ void Map_RoomBgmInit(bool arg0)
     }
     else
     {
-        var_a2 = sharedData_800ED458_4_s02;
+        var_a2 = &sharedData_800ED458_4_s02;
 
         if (!Savegame_EventFlagGet(EventFlag_314))
         {

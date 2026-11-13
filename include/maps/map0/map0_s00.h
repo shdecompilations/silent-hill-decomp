@@ -96,7 +96,7 @@ extern u8 D_800DFB60;
 
 extern u8 D_800DFB61;
 
-extern u8 D_800DF2F8;
+extern s_BgmLayerLimits D_800DF2F8;
 
 extern s16 D_800DF300[];
 

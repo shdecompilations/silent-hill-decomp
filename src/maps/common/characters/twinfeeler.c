@@ -1376,7 +1376,7 @@ void Twinfeeler_Translate(VECTOR3* newPos, const VECTOR3* pos, q19_12 headingAng
     newPos->vz = pos->vz + Q12_MULT_PRECISE(Math_Cos(headingAngle), dist);
 }
 
-void func_800D3114(void) // 0x800D3114
+void func_800D3114(s_800E0930* unused) // 0x800D3114
 {
     VECTOR3     newPos;  // Q19.12
     s_800E0930* ptr;
@@ -1431,7 +1431,7 @@ void func_800D3114(void) // 0x800D3114
 
 const SVECTOR D_800CA788 = { Q8(0.0f), Q8(240.0f), Q8(0.0f), Q8(0.0f) };
 
-void func_800D326C(void) // 0x800D326C
+void func_800D326C(s_800E0930* unused) // 0x800D326C
 {
     VECTOR3     newPos;  // Q19.12
     s_800E0930* ptr;

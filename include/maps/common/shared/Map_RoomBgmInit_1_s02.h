@@ -61,5 +61,5 @@ void Map_RoomBgmInit(bool arg0)
             break;
     }
 
-    Bgm_LayersUpdate(bgmFlags, fadeSpeed, sharedData_800E1208_1_s02);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &sharedData_800E1208_1_s02);
 }

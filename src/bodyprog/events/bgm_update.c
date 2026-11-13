@@ -29,9 +29,9 @@ u32 D_800A999C = &D_80025234;
 // STATIC VARIABLES
 // ========================================
 
-static s32 g_Bgm_LayersUpdated;
-static s32 g_Bgm_ChannelSetProcessState = 0;
-static u8  g_Bgm_ChannelLimits[8]       = { 128, 128, 128, 128, 128, 128, 128, 128 };
+static s32              g_Bgm_LayersUpdated;
+static s32              g_Bgm_ChannelSetProcessState = 0;
+static s_BgmLayerLimits g_Bgm_ChannelLimits          = { { 128, 128, 128, 128, 128, 128, 128, 128 } };
 
 // ========================================
 // MUSIC UPDATE
@@ -119,23 +119,23 @@ static void Bgm_LayerGlobalVariablesUpdate(void)
 
 void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
 {
-    q3_12     firstSongLayerVol; // Value in range `[0.0f, 1.0f]` used to determine the first BGM layer's volume,
-                                 // prompted by radio noise or opening a menu while in-game.
-    q19_12    ducking;
-    q19_12    targetVol;
-    q19_12    curLayerVol;
-    q19_12    curChannelVol;
-    s32       activeSetChannelTask;
-    s32       i;
-    s32       flagsCpy;
-    bool      isBgmChannelActive;
-    bool      isMusicPlaying;
-    q19_12    adjustLayerValue;
-    bool      areChannelsActive;
-    s32       lastLayerIdx;
-    q3_12*    layerVols;
-    u8*       channelLimitsCpy;
-    static s8 bgmChannelVols[8];
+    q3_12             firstSongLayerVol; // Value in range `[0.0f, 1.0f]` used to determine the first BGM layer's volume,
+                                         // prompted by radio noise or opening a menu while in-game.
+    q19_12            ducking;
+    q19_12            targetVol;
+    q19_12            curLayerVol;
+    q19_12            curChannelVol;
+    s32               activeSetChannelTask;
+    s32               i;
+    s32               flagsCpy;
+    bool              isBgmChannelActive;
+    bool              isMusicPlaying;
+    q19_12            adjustLayerValue;
+    bool              areChannelsActive;
+    s32               lastLayerIdx;
+    q3_12*            layerVols;
+    s_BgmLayerLimits* channelLimitsCpy;
+    static s8         bgmChannelVols[8];
 
     // Setup.
     flagsCpy         = bgmFlags;
@@ -145,7 +145,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
     // Ensure layer limits are valid.
     if (channelLimitsCpy == NULL)
     {
-        channelLimitsCpy = g_Bgm_ChannelLimits;
+        channelLimitsCpy = &g_Bgm_ChannelLimits;
     }
 
     // Continue music at reduced volume if player is dead.
@@ -263,7 +263,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
             curChannelVol = Q12(0.0312f);
         }
 
-        curChannelVol = (curChannelVol * channelLimitsCpy[i]) >> 7; // TODO: Equivalent of `/ Q12(0.0312f)` but causes missmatch.
+        curChannelVol = (curChannelVol * channelLimitsCpy->limits[i]) >> 7; // TODO: Equivalent of `/ Q12(0.0312f)` but causes missmatch.
         if (curChannelVol > Q12(0.0312f))
         {
             curChannelVol = Q12(0.0312f);

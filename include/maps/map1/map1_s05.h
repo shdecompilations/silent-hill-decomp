@@ -13,7 +13,7 @@
 
 extern s32 D_800D587C;
 
-extern u8 D_800D5C3C;
+extern s_BgmLayerLimits D_800D5C3C;
 
 extern u8 D_800D5D11;
 
