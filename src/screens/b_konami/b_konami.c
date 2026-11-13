@@ -457,5 +457,5 @@ void BootScreen_KcetScreenDraw(void) // 0x800CA120
     setWH((TILE*)GsOUT_PACKET_P, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2);
 #endif
     
-    GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
+    GsOUT_PACKET_P += sizeof(TILE);
 }

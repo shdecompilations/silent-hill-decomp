@@ -116,8 +116,8 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
     s_BillboardInfo*      curBillboardInfo;
     s_BillboardWork*      billboardWork;
     s32                   temp;
-    PACKET*               packet;
-    PACKET*               packet2;
+    DR_PRIO*              prio0;
+    DR_PRIO*              prio1;
     POLY_GT4*             poly_gt4;
     POLY_G4*              poly_g4;
 
@@ -301,12 +301,12 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
 
             if (worldEngWork1->isFogEnabled)
             {
-                packet = poly_gt4 + 1;
-                SetPriority(packet, 0, 0);
-                packet2 = packet + 12; // TODO: `sizeof`?
-                SetPriority(packet2, 1, 1);
+                prio0 = (DR_PRIO*)(poly_gt4 + 1);
+                SetPriority(prio0, 0, 0);
+                prio1 = prio0 + 1;
+                SetPriority(prio1, 1, 1);
 
-                poly_g4 = packet2 + 12;
+                poly_g4 = (POLY_G4*)(prio1 + 1);
 
                 temp = (func_80055A50(temp_v0_2 << 6) * 16) + worldEngWork1->fog.intensity;
 
@@ -325,9 +325,9 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
                 setPolyG4(poly_g4);
                 setSemiTrans(poly_g4, 1);
 
-                addPrim(&ot->org[temp_v0_2 >> otShift], packet);
+                addPrim(&ot->org[temp_v0_2 >> otShift], prio0);
                 addPrim(&ot->org[temp_v0_2 >> otShift], poly_g4);
-                addPrim(&ot->org[temp_v0_2 >> otShift], packet2);
+                addPrim(&ot->org[temp_v0_2 >> otShift], prio1);
                 addPrim(&ot->org[temp_v0_2 >> otShift], poly_gt4);
                 poly_g4++;
                 poly_gt4 = poly_g4;

@@ -35,8 +35,8 @@ void Gfx_FogOverlayQuadDraw(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, 
     s32       var_v1_4;
     POLY_G4*  poly;
     DR_MODE*  mode;
-    PACKET*   packet;
-    PACKET*   packet2;
+    DR_PRIO*  prio0;
+    DR_PRIO*  prio1;
     GsOT_TAG* tag;
     s16       temp_s6;
     s16       temp_s5;
@@ -82,13 +82,13 @@ void Gfx_FogOverlayQuadDraw(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, 
 
         var_v1_4 = MAX(arg5 >> 7, 1);
 
-        packet = GsOUT_PACKET_P;
-        tag    = &ot->org[var_v1_4];
+        prio0 = (DR_PRIO*)GsOUT_PACKET_P;
+        tag   = &ot->org[var_v1_4];
 
-        SetPriority(packet, 0, 0);
-        AddPrim(tag, packet);
+        SetPriority(prio0, 0, 0);
+        AddPrim(tag, prio0);
 
-        poly           = (POLY_G4*)(packet + 12);
+        poly           = (POLY_G4*)(prio0 + 1);
         GsOUT_PACKET_P = (PACKET*)poly;
 
         // TODO: Use macro.
@@ -110,17 +110,17 @@ void Gfx_FogOverlayQuadDraw(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, 
         setSemiTrans(poly, true);
         AddPrim(tag, poly);
 
-        mode           = (DR_MODE*)(packet + 48);
+        mode           = (DR_MODE*)(poly + 1);
         GsOUT_PACKET_P = (PACKET*)mode;
         SetDrawMode(mode, 0, 1, 32, NULL);
         AddPrim(tag, mode);
 
-        packet2        = packet + 60;
-        GsOUT_PACKET_P = packet2;
-        SetPriority(packet2, 1, 1);
-        AddPrim(tag, packet2);
+        prio1          = (DR_PRIO*)(mode + 1);
+        GsOUT_PACKET_P = (PACKET*)prio1;
+        SetPriority(prio1, 1, 1);
+        AddPrim(tag, prio1);
 
-        GsOUT_PACKET_P = packet + 72;
+        GsOUT_PACKET_P = (PACKET*)(prio1 + 1);
     }
 }
 
@@ -647,8 +647,8 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
     s32          temp3;
     s32          temp4;
     s_Primitive* prim;
-    PACKET*      packet0;
-    PACKET*      packet1;
+    DR_PRIO*     prio0;
+    DR_PRIO*     prio1;
     POLY_GT4*    poly0;
     POLY_G4*     poly1;
     POLY_G4*     poly2;
@@ -848,21 +848,21 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
                     if (prim->bits1.flags & (1 << 15))
                     {
-                        packet1 = poly1 + 1;
+                        prio1 = (DR_PRIO*)(poly1 + 1);
 
-                        SetPriority(packet1, 0, 0);
-                        addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], packet1);
+                        SetPriority(prio1, 0, 0);
+                        addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], prio1);
 
                         setSemiTrans(poly1, 1);
                         addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly1);
 
-                        packet1 = (PACKET*)(poly1 + 1) + 12;
-                        SetPriority(packet1, 1, 1);
-                        addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], packet1);
+                        prio1++;
+                        SetPriority(prio1, 1, 1);
+                        addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], prio1);
 
                         addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
 
-                        poly3 = (PACKET*)(poly1 + 1) + 12 + 12;
+                        poly3 = (POLY_GT4*)(prio1 + 1);
                         poly1  = poly3 + 1;
                     }
                     else
@@ -1150,20 +1150,20 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
 
                 if (prim->bits1.flags & (1 << 15))
                 {
-                    packet0 = poly2 + 1;
+                    prio0 = (DR_PRIO*)(poly2 + 1);
 
-                    SetPriority(packet0, 0, 0);
+                    SetPriority(prio0, 0, 0);
 
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], packet0);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], prio0);
                     setSemiTrans(poly2, 1);
                     addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly2);
 
-                    packet0 = (PACKET*)(poly2 + 1) + 12;
-                    SetPriority(packet0, 1, 1);
-                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], packet0);
+                    prio0++;
+                    SetPriority(prio0, 1, 1);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], prio0);
                     addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
 
-                    poly3  = (PACKET*)(poly2 + 1) + 12 + 12;
+                    poly3  = (POLY_GT4*)(prio0 + 1);
                     poly2 = poly3 + 1;
                 }
                 else

@@ -46,6 +46,13 @@ typedef enum _PrimitiveFlags
     PRIM_RECT     = 3 << 5  /** Rectangle (`TILE` or `SPRT`). */
 } e_PrimitiveFlags;
 
+/** @brief Psy-Q priority primitive, set by `SetPriority`. Removed from later SDK headers. */
+typedef struct
+{
+    u_long tag;
+    u_long code[2];
+} DR_PRIO;
+
 /** @brief 2D screen-space line. */
 typedef struct _Line2d
 {
@@ -223,7 +230,8 @@ void GsTMDfastG3LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, 
 void GsTMDfastTG3LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
 void GsTMDfastG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
 void GsTMDfastTG4LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);
-void SetPriority(PACKET*, s32, s32);
+
+void SetPriority(DR_PRIO* p, s32 pbc, s32 pbw);
 
 /** @brief Sets the `DQA` register in the GTE. Not part of Psy-Q for some reason. */
 #define gte_lddqa(r0) __asm__ volatile( \

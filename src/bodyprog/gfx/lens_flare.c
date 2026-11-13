@@ -107,13 +107,13 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, q3_12 scr_l_ang_z) // 0x8008D5A
 {
     RECT      rect;
     bool      draw_center_f;
-    DR_MOVE*  packet;
+    DR_MOVE*  move;
     TILE*     tile;
     GsOT_TAG* ot;
 
-    packet         = GsOUT_PACKET_P;
-    tile           = GsOUT_PACKET_P + sizeof(DR_MOVE);
-    GsOUT_PACKET_P = GsOUT_PACKET_P + sizeof(DR_MOVE) + sizeof(TILE);
+    move           = (DR_MOVE*)GsOUT_PACKET_P;
+    tile           = (TILE*)(move + 1);
+    GsOUT_PACKET_P = (PACKET*)(tile + 1);
     ot             = &g_OrderingTable0[g_ActiveBufferIdx].org[(scr_l_pos->vz + 2) >> 3];
 
     draw_center_f = check_screen_bounds(scr_l_pos, scr_l_ang_z);
@@ -157,8 +157,8 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, q3_12 scr_l_ang_z) // 0x8008D5A
     rect.h = 8;
     rect.w = 8;
 
-    SetDrawMove(packet, &rect, (g_ActiveBufferIdx * 8) + 784, 112);
-    AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 5, packet);
+    SetDrawMove(move, &rect, (g_ActiveBufferIdx * 8) + 784, 112);
+    AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 5, move);
 }
 
 void shLensFlareDraw(void) // 0x8008D78C

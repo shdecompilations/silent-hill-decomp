@@ -1947,8 +1947,7 @@ void SaveScreen_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
                tris[i].vertex2.vx, tris[i].vertex2.vy);
 
         addPrim((u8*)ot->org + LAYER_32, poly_f3);
-        GsOUT_PACKET_P  = (u8*)poly_f3;
-        GsOUT_PACKET_P += sizeof(POLY_F3);
+        GsOUT_PACKET_P = (PACKET*)(poly_f3 + 1);
     }
 
     Gfx_Primitive2dTextureSet(0, 0, 8, 2);

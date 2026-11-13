@@ -778,8 +778,8 @@ void Ranking_DisplayInfo(u32* arg0) // 0x80090664
                     66, (i * 6) - 196,
                     66, ((i + 1) * 6) - 196);
 
-            addPrim((u8*)ot->org + 0x1C, poly);
-            GsOUT_PACKET_P = (u8*)poly + 0x24;
+            addPrim(&ot->org[7], poly);
+            GsOUT_PACKET_P = (PACKET*)(poly + 1);
         }
     }
 }

@@ -305,7 +305,7 @@ bool func_801E342C(void) // 0x801E342C
     setWHFast(tile, 512, 2);
 #endif
 
-    GsOUT_PACKET_P += sizeof(TILE);
+    GsOUT_PACKET_P = (PACKET*)(tile + 1);
     temp = func_801E3684();
 
     switch (g_GameWork.gameStateSteps[1])
@@ -1180,7 +1180,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
 
     g_CreditTextState.textX = textX;
     g_CreditTextState.textY = textY;
-    GsOUT_PACKET_P          = packet + sizeof(DR_TPAGE);
+    GsOUT_PACKET_P          = (PACKET*)(tPage + 1);
 }
 
 void Credits_Text3dPositionSet(s32 arg0, s32 arg1) // 0x801E47E0

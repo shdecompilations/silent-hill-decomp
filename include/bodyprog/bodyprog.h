@@ -181,7 +181,7 @@ typedef struct
 typedef struct
 {
     /* 0x0   */ s_func_8005E89C field_0;
-    /* 0x12C */ PACKET*         field_12C;
+    /* 0x12C */ DR_PRIO*        field_12C;
     /* 0x130 */ CVECTOR         field_130;
     /* 0x134 */ CVECTOR         field_134;
     /* 0x138 */ SVECTOR         field_138;
@@ -284,7 +284,7 @@ typedef struct
 typedef struct
 {
     /* 0x0   */ s_func_8005E89C field_0;
-    /* 0x12C */ PACKET*         field_12C;
+    /* 0x12C */ DR_PRIO*        field_12C;
     /* 0x130 */ CVECTOR         field_130;
     /* 0x134 */ CVECTOR         field_134;
     /* 0x138 */ SVECTOR         field_138;

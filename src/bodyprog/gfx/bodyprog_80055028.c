@@ -77,10 +77,17 @@ void WorldEnvRender_Init(void) // 0x80055028
 
 void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 {
+#if VERSION_REGION_IS(PAL) // Inverse of `SCREEN_GEOM_DIST`, for some reason.
+    #define OVERLAY_HEIGHT g_GameWork.gsScreenHeight
+#else
+    #define OVERLAY_HEIGHT SCREEN_HEIGHT
+#endif
+    #define OVERLAY_WIDTH (SCREEN_WIDTH + 40) // Slightly wider to cover it at any X offset?
+
     s32      color0;
     s32      color2;
-    PACKET*  packet;
-    PACKET*  packet2;
+    DR_PRIO* prio0;
+    DR_PRIO* prio1;
     DR_MODE* mode;
     POLY_G4* poly;
     GsOT*    ot;
@@ -101,8 +108,8 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
     if (g_WorldEnvRenderWork.screenBrightness > Q12(0.0f))
     {
         poly            = (POLY_G4*)GsOUT_PACKET_P;
-        mode            = (DR_MODE*)(GsOUT_PACKET_P + sizeof(POLY_G4));
-        GsOUT_PACKET_P += sizeof(POLY_G4) + sizeof(DR_MODE);
+        mode            = (DR_MODE*)(poly + 1);
+        GsOUT_PACKET_P  = (PACKET*)(mode + 1);
 
         color0           = (g_WorldEnvRenderWork.screenBrightness + (g_WorldEnvRenderWork.screenBrightness << 8)) + (g_WorldEnvRenderWork.screenBrightness << 16);
         *(s32*)&poly->r3 = color0;
@@ -113,33 +120,24 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
         setPolyG4(poly);
         setSemiTrans(poly, true);
         
-#if VERSION_REGION_IS(PAL)
         setXY4(poly,
-               -180, -g_GameWork.gsScreenHeight / 2,
-                180, -g_GameWork.gsScreenHeight / 2,
-               -180,  g_GameWork.gsScreenHeight / 2,
-                180,  g_GameWork.gsScreenHeight / 2);
-#else
-        setXY4(poly,
-               -180, -120,
-                180, -120,
-               -180,  120,
-                180,  120);
-#endif
+               -OVERLAY_WIDTH / 2, -OVERLAY_HEIGHT / 2,
+                OVERLAY_WIDTH / 2, -OVERLAY_HEIGHT / 2,
+               -OVERLAY_WIDTH / 2,  OVERLAY_HEIGHT / 2,
+                OVERLAY_WIDTH / 2,  OVERLAY_HEIGHT / 2);
 
         AddPrim(ot->org, poly);
         SetDrawMode(mode, 0, 1, 0x20, NULL);
         AddPrim(ot->org, mode);
     }
 
-    packet2 = GsOUT_PACKET_P;
-    packet  = packet2;
+    prio0 = (DR_PRIO*)GsOUT_PACKET_P;
 
-    SetPriority(packet2, 0, 0);
-    AddPrim(&ot->org[ORDERING_TABLE_SIZE - 1], packet2);
+    SetPriority(prio0, 0, 0);
+    AddPrim(&ot->org[ORDERING_TABLE_SIZE - 1], prio0);
 
-    poly           = (POLY_G4*)(packet + 0xC);
-    GsOUT_PACKET_P = packet + 0x30;
+    poly           = (POLY_G4*)(prio0 + 1);
+    GsOUT_PACKET_P = (PACKET*)(poly + 1);
 
     color2           = *(s32*)&g_WorldEnvRenderWork.fog.color;
     *(s32*)&poly->r3 = color2;
@@ -149,32 +147,27 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 
     SetPolyG4(poly);
 
-#if VERSION_REGION_IS(PAL)
     setXY4(poly,
-           -180, -g_GameWork.gsScreenHeight / 2,
-            180, -g_GameWork.gsScreenHeight / 2,
-           -180,  g_GameWork.gsScreenHeight / 2,
-            180,  g_GameWork.gsScreenHeight / 2);
-#else
-    setXY4(poly,
-           -180, -120,
-            180, -120,
-           -180,  120,
-            180,  120);
-#endif
+           -OVERLAY_WIDTH / 2, -OVERLAY_HEIGHT / 2,
+            OVERLAY_WIDTH / 2, -OVERLAY_HEIGHT / 2,
+           -OVERLAY_WIDTH / 2,  OVERLAY_HEIGHT / 2,
+            OVERLAY_WIDTH / 2,  OVERLAY_HEIGHT / 2);
 
     AddPrim(&ot->org[ORDERING_TABLE_SIZE - 1], poly);
-    packet = GsOUT_PACKET_P;
-    SetPriority(packet, 0, 1);
-    AddPrim(&ot->org[ORDERING_TABLE_SIZE - 1], packet);
+    prio1 = (DR_PRIO*)GsOUT_PACKET_P;
+    SetPriority(prio1, 0, 1);
+    AddPrim(&ot->org[ORDERING_TABLE_SIZE - 1], prio1);
 
-    GsOUT_PACKET_P = packet + sizeof(DR_MODE);
+    GsOUT_PACKET_P = (PACKET*)(prio1 + 1);
     mode           = (DR_MODE*)GsOUT_PACKET_P;
 
     SetDrawMode(mode, 0, 1, 32, NULL);
     AddPrim(&ot->org[ORDERING_TABLE_SIZE - 1], mode);
 
-    GsOUT_PACKET_P = packet + 24;
+    GsOUT_PACKET_P = (PACKET*)(mode + 1);
+
+    #undef OVERLAY_HEIGHT
+    #undef OVERLAY_WIDTH
 }
 
 void WorldEnvRender_WorldLightingParamSet(u8 arg0, q19_12 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness) // 0x80055330
