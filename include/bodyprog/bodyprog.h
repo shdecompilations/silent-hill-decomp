@@ -27,6 +27,7 @@
 #include "bodyprog/gfx/texture_utils.h"
 #include "bodyprog/gfx/world.h"
 #include "bodyprog/gfx/world_object.h"
+#include "bodyprog/items/utils.h"
 #include "bodyprog/items/weapon_data.h"
 #include "bodyprog/libkpad/vibration.h"
 #include "bodyprog/map/map.h"
@@ -45,6 +46,8 @@
 #include "bodyprog/world/lighting.h"
 #include "bodyprog/world/map.h"
 #include "main/fsqueue.h"
+
+#include "bodyprog/gfx/materials.h"
 
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct _GteScratchData
@@ -453,16 +456,6 @@ void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneC
 
 // =========================
 
-/** `flags` might not be a bitfield. */
-void func_8004C564(u8 flags, s8 weaponAttack);
-
-// TODO: Can probably create status enums for the below funcs' return values to avoid magic,
-// but other funcs using similar return patterns should be identified first if they exist.
-
-void GameFs_UniqueItemModelLoad(u8 itemId);
-
-void GameFs_MapItemsTextureLoad(s32 mapId);
-
 /** @brief Attaches a weapon model to the player's hand.
  *
  * @param weaponAttack Packed weapon attack. See `WEAPON_ATTACK`.
@@ -482,13 +475,6 @@ bool Gfx_PickupItemAnimate(u8 itemId);
  * @param gunIdx Index of the gun being reloaded (`e_AttackType`).
  */
 void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
-
-// `gfx/materials.h
-// ================================================
-
-void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool isTransparent);
-
-s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 // `bodyprog/gfx/bodyprog_80056D8C.h`
 //======================
@@ -540,53 +526,6 @@ void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
 
 void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool otShift);
-
-// ====================================
-
-/** @unused No references. */
-void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
-
-void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, e_FsFile fileIdx, s_FsImageDesc* image, s32 blendMode);
-
-void Lm_MaterialFsImageApply1(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode);
-
-bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 blendMode);
-
-void Material_FsImageApply(s_Material* mat, s_FsImageDesc* image, s32 blendMode);
-
-/** @brief @unused Sets a model's material blending mode. */
-void Lm_MaterialBlendModeSet(s_LmHeader* lmHdr, s_FsImageDesc* images, s8 unused, s32 startIdx, s32 blendMode);
-
-void Lm_MaterialsLoadWithFilter(s_LmHeader* lmHdr, s_ActiveChunkTextures* activeTexs, bool (*filterFunc)(s_Material* mat), e_FsFile fileIdx, s32 blendMode);
-
-/** Checks if LM textures are loaded? */
-bool Lm_IsTextureLoaded(s_LmHeader* lmHdr);
-
-void Lm_MaterialFlagsApply(s_LmHeader* lmHdr);
-
-void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 matIdx, const s_Material* mat, s32 matFlags);
-
-void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
-
-s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr);
-
-void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelIdx);
-
-bool Lm_ModelFind(s_WorldObjectModel* model, s_LmHeader* lmHdr, s_WorldObjectMetadata* metadata);
-
-void StringCopy(char* prevStr, char* newStr);
-
-// ================================================
-
-// Sets material flags?
-void func_8008E4EC(s_LmHeader* lmHdr);
-
-void func_80091380(void);
-
-/** Loads `Tim00` graphic. */
-void GameFs_Tim00TIMLoad(void);
-
-void GameFs_MapItemsModelLoad(u32 mapId);
 
 // events_2d_draw_utils
 // =========================

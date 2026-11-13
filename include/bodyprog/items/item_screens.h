@@ -253,47 +253,6 @@ extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX];
 // FUNCTIONS
 // ==========
 
-/** @brief Used to correct aim animations when exiting the inventory screen.
- *
- * If removed, when the user enters the inventory between the transition of the
- * aim animation to the idle animation, then changes the weapon to another
- * type (e.g. from a gun weapon to a melee weapon), Harry will continue
- * aiming until he interacts with something or starts running.
- *
- * @param weaponAttack @unused
- */
-void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack); // 0x8004C088
-
-/** Returns `true` if player has usable ammo in inventory (i.e. ammo + gun needed
- * for it, or gun with ammo loaded) for the shotgun and the hunting rifle.
- *
- * @note Related to the ending unlockable if out of ammo. However, that
- * ending requires the handgun to be out of ammo too. This function is also triggered
- * during the boss fight.
- */
-bool Inventory_GunsAvailableCheck(bool unused); // 0x8004C328
-
-/** @brief Used to check if the Hyper Blaster can be added to the inventory.
- *
- * @return -1 if it already exists in the inventory,
- *          1 if the Konami gun controller is connected or the savegame flag is set,
- *          0 otherwise.
- */
-s32 Inventory_HyperBlasterUnlockTest(void); // 0x8004C45C
-
-/** @brief Called by status screen to check if Hyper Blaster can be used?
- *
- * @return 2 if the savegame flag is set,
- *         1 if the Konami gun controller is connected,
- *         0 otherwise.
- */
-s32 Inventory_HyperBlasterFunctionalTest(void); // 0x8004C4F8
-
-/** @note Rough name. */
-s32 Game_HyperBlasterBeamColorGet(void); // 0x8004C54C
-
-void Game_TimerUpdate(void); // 0x8004C8DC
-
 void GameState_ItemScreens_Update(void); // 0x8004C9B0
 
 void Gfx_Results_Save(void); // 0x8004D1A0
@@ -371,6 +330,18 @@ void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr);
  * Used in: `Inventory_Update`
  */
 void func_800539A4(s32 arg0, s32 arg1);
+
+// TODO: Can probably create status enums for the below funcs' return values to avoid magic,
+// but other funcs using similar return patterns should be identified first if they exist.
+
+void GameFs_UniqueItemModelLoad(u8 itemId);
+
+/** Loads `Tim00` graphic. */
+void GameFs_Tim00TIMLoad(void);
+
+void GameFs_MapItemsModelLoad(u32 mapId);
+
+void GameFs_MapItemsTextureLoad(s32 mapId);
 
 /** Related to file loading of inventory elements.
  * Loads Harry's potrait for the health status image.

@@ -4,6 +4,7 @@
 #include "bodyprog/world/effects.h"
 #include "bodyprog/items/camera.h"
 #include "bodyprog/items/item_screens.h"
+#include "bodyprog/items/utils.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/items/ranking.h"

@@ -77,6 +77,9 @@ q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 scr_l_pos_z, 
 void shLensFlareEffect_Draw(bool center_visible_f, q19_12 now_l_eff_rate,
                             VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z);
 
+// Sets material flags?
+void func_8008E4EC(s_LmHeader* lmHdr);
+
 /** @brief Gets the water zone at a given position for a water shimmer effect.
  *
  * @param posX X position.
