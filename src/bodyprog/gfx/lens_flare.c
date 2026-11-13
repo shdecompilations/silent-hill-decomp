@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/gfx/water.h"
+#include "bodyprog/gfx/lens_flare.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/items/item_screens.h"
@@ -26,30 +26,30 @@ s_LensFlareWork g_LensFlareWork;
 
 void shLensFlareInit(void) // 0x8008D41C
 {
-    g_LensFlareWork.flare_inhibit_f = 0;
-    g_LensFlareWork.water_inhibit_f = 0;
-    g_LensFlareWork.lfl_sync_draw_func_exec_f = 0;
-    g_LensFlareWork.now_l_eff_rate = 0;
+    g_LensFlareWork.flare_inhibit_f           = false;
+    g_LensFlareWork.water_inhibit_f           = false;
+    g_LensFlareWork.lfl_sync_draw_func_exec_f = false;
+    g_LensFlareWork.now_l_eff_rate            = false;
 }
 
 void func_8008D438(void) // 0x8008D438
 {
-    g_LensFlareWork.flare_inhibit_f = 1;
+    g_LensFlareWork.flare_inhibit_f = true;
 }
 
 void func_8008D448(void) // 0x8008D448
 {
-    g_LensFlareWork.flare_inhibit_f = 0;
+    g_LensFlareWork.flare_inhibit_f = false;
 }
 
 void func_8008D454(void) // 0x8008D454
 {
-    g_LensFlareWork.water_inhibit_f = 1;
+    g_LensFlareWork.water_inhibit_f = true;
 }
 
 void func_8008D464(void) // 0x8008D464
 {
-    g_LensFlareWork.water_inhibit_f = 0;
+    g_LensFlareWork.water_inhibit_f = false;
 }
 
 void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones) // 0x8008D470
@@ -58,14 +58,14 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
     s32          posY;
     s_WaterZone* waterZone;
 
-    if (g_LensFlareWork.flare_inhibit_f == 0)
+    if (!g_LensFlareWork.flare_inhibit_f)
     {
         func_800410D8(&g_LensFlareWork.scr_l_pos, &g_LensFlareWork.scr_l_ang_xy, &g_LensFlareWork.scr_l_ang_z, rot, pos);
 
         proj = ReadGeomScreen();
         if (g_LensFlareWork.scr_l_pos.vz > (proj >> 1))
         {
-            g_LensFlareWork.lfl_sync_draw_func_exec_f = 1;
+            g_LensFlareWork.lfl_sync_draw_func_exec_f = true;
             g_LensFlareWork.tgt_l_eff_rate = shLensFlareMakeEffectTargetRate(light_intensity, g_LensFlareWork.scr_l_pos.vz, g_LensFlareWork.scr_l_ang_z);
             shLensFlareSetLightSeed(&g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_z);
         }
@@ -75,7 +75,7 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
         }
     }
 
-    if (g_LensFlareWork.water_inhibit_f == 0)
+    if (!g_LensFlareWork.water_inhibit_f)
     {
         waterZone = Map_WaterZoneGet(Q12_TO_Q4(pos->vx), Q12_TO_Q4(pos->vz), waterZones);
         if (waterZone != NULL)
@@ -92,11 +92,13 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
     }
 }
 
-/** Checks whether the light is on screen, in front of the camera and facing it closely enough to draw the visibility test pixel. */
+/** @brief Checks if the light is on the screen, in front of the camera, and facing it close enough to draw the
+ * visibility test pixel.
+ */
 static inline bool check_screen_bounds(VECTOR3* scr_l_pos, s16 scr_l_ang_z)
 {
-    return scr_l_pos->vx >= (-g_GameWork.gsScreenWidth >> 1) && (g_GameWork.gsScreenWidth >> 1) >= scr_l_pos->vx &&
-           scr_l_pos->vy >= (-g_GameWork.gsScreenHeight >> 1) && (g_GameWork.gsScreenHeight >> 1) >= scr_l_pos->vy &&
+    return scr_l_pos->vx >= DIV_FAST(-g_GameWork.gsScreenWidth,  2) && DIV_FAST(g_GameWork.gsScreenWidth,  2) >= scr_l_pos->vx &&
+           scr_l_pos->vy >= DIV_FAST(-g_GameWork.gsScreenHeight, 2) && DIV_FAST(g_GameWork.gsScreenHeight, 2) >= scr_l_pos->vy &&
            scr_l_pos->vz >= 0 && scr_l_ang_z >= Q12_ANGLE(75.0f);
 }
 
@@ -162,22 +164,22 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z) // 0x8008D5A0
 void shLensFlareDraw(void) // 0x8008D78C
 {
     q19_12 add_rate;
-    s32    center_visible_f;
+    bool   center_visible_f;
 
-    if (g_LensFlareWork.lfl_sync_draw_func_exec_f == 0)
+    if (!g_LensFlareWork.lfl_sync_draw_func_exec_f)
     {
         return;
     }
 
-    g_LensFlareWork.lfl_sync_draw_func_exec_f = 0;
+    g_LensFlareWork.lfl_sync_draw_func_exec_f = false;
 
-    if (g_LensFlareWork.flare_inhibit_f != 0)
+    if (g_LensFlareWork.flare_inhibit_f)
     {
         return;
     }
 
     center_visible_f = shLensFlareLightCenterIsVisible();
-    if (center_visible_f != 0)
+    if (center_visible_f)
     {
         add_rate = g_LensFlareWork.tgt_l_eff_rate - g_LensFlareWork.now_l_eff_rate;
     }
@@ -186,18 +188,18 @@ void shLensFlareDraw(void) // 0x8008D78C
         add_rate = -g_LensFlareWork.now_l_eff_rate;
     }
 
-    g_LensFlareWork.now_l_eff_rate += add_rate >> 1;
+    g_LensFlareWork.now_l_eff_rate += DIV_FAST(add_rate, 2);
 
     if (vcRetCamMvSmoothF() == VC_MV_CHASE)
     {
-        g_LensFlareWork.now_l_eff_rate = 0;
-        center_visible_f               = 0;
+        g_LensFlareWork.now_l_eff_rate = false;
+        center_visible_f               = false;
     }
 
     shLensFlareEffect_Draw(center_visible_f, g_LensFlareWork.now_l_eff_rate, &g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_xy, g_LensFlareWork.scr_l_ang_z);
 }
 
-s32 shLensFlareLightCenterIsVisible(void) // 0x8008D850
+bool shLensFlareLightCenterIsVisible(void) // 0x8008D850
 {
     s16  rectX;
     RECT rect;
@@ -249,7 +251,7 @@ q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 scr_l_pos_z, 
     return MIN(ret_tgt_rate, Q12(1.5f)); // 2.0f in SH2
 }
 
-/** Sets a square sprite's corners, centered at `x, y` with half-size `r`. */
+/** @brief Sets a square sprite's corners, centered at `x, y` with half-size `r`. */
 static inline void shLensFlareSpriteXYSet(POLY_FT4* poly, s32 x, s32 y, s32 r)
 {
     setXY4(poly,
@@ -264,7 +266,8 @@ static inline void shLensFlareGreySet(POLY_FT4* poly, s32 c)
     setRGB0(poly, c, c, c);
 }
 
-void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 now_l_eff_rate, VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z) // 0x8008D990
+void shLensFlareEffect_Draw(bool center_visible_f, q19_12 now_l_eff_rate,
+                            VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z) // 0x8008D990
 {
     // VRAM position of the CLUT rows used below.
 #if VERSION_REGION_IS(PAL)
@@ -301,15 +304,15 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 now_l_eff_rate, VECTOR3
 
     // Streak quad corners, rotated by each `ang_dat` angle.
     DVECTOR pos[] = {
-        { -4, 0 },
+        { -4,  0  },
         { 43, -47 },
-        { 43, 47 },
-        { 90, 0 }
+        { 43,  47 },
+        { 90,  0  }
     };
 
     // TODO: 512 is probably a screen constant.
-    if (scr_l_pos->vx < ((-g_GameWork.gsScreenWidth  >> 1) - 512) || ((g_GameWork.gsScreenWidth  >> 1) + 512) < scr_l_pos->vx ||
-        scr_l_pos->vy < ((-g_GameWork.gsScreenHeight >> 1) - 512) || ((g_GameWork.gsScreenHeight >> 1) + 512) < scr_l_pos->vy)
+    if (scr_l_pos->vx < (DIV_FAST(-g_GameWork.gsScreenWidth,  2) - 512) || (DIV_FAST(g_GameWork.gsScreenWidth,  2) + 512) < scr_l_pos->vx ||
+        scr_l_pos->vy < (DIV_FAST(-g_GameWork.gsScreenHeight, 2) - 512) || (DIV_FAST(g_GameWork.gsScreenHeight, 2) + 512) < scr_l_pos->vy)
     {
         return;
     }
@@ -324,7 +327,7 @@ void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 now_l_eff_rate, VECTOR3
 
     SetPolyFT4(poly);
 
-    poly->tpage = 0x2C;
+    poly->tpage = 44;
     poly->clut  = getClut(CLUT_X, CLUT_Y + 6);
 
     setUV4(poly, 0, 0, 63, 0, 0, 63, 63, 63);

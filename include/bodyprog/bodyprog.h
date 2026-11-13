@@ -21,7 +21,7 @@
 #include "bodyprog/formats/texture.h"
 #include "bodyprog/formats/tmd.h"
 #include "bodyprog/gfx/env_effects.h"
-#include "bodyprog/gfx/water.h"
+#include "bodyprog/gfx/lens_flare.h"
 #include "bodyprog/gfx/world.h"
 #include "bodyprog/gfx/world_object.h"
 #include "bodyprog/items/weapon_data.h"

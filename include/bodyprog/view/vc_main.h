@@ -230,6 +230,13 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
 
 s32 vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, q19_12 vcSelfViewTimer);
 
+/** @brief Computes the magnitude of a 3D vector.
+ *
+ * @param x X component.
+ * @param y Y component.
+ * @param z Z component.
+ * @return Magnitude.
+ */
 q19_12 vwRet3DLength(q19_12 x, q19_12 y, q19_12 z);
 
 q19_12 vcGetXZSumDistFromLimArea(q19_12* out_vec_x_p, q19_12* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,

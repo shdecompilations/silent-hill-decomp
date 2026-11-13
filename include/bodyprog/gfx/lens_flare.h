@@ -1,13 +1,16 @@
 #ifndef _BODYPROG_GFX_WATER_H
 #define _BODYPROG_GFX_WATER_H
 
-/** @brief Lens flare state, fields taken from SH2 which has an anonymous struct that matches near exactly. */
+/** @brief Lens flare workspace.
+ *
+ * @note Field names are taken from SH2, which has an anonymous struct that matches almost exactly.
+ */
 typedef struct _LensFlareWork
 {
     /* 0x0  */ u8      flare_inhibit_f;           /** `bool` */
     /* 0x1  */ u8      water_inhibit_f;           /** `bool` */
     /* 0x2  */ u8      lfl_sync_draw_func_exec_f; /** `bool` */
-    /* 0x3  */ u8      draw_center_f;             /** @unused */
+    /* 0x3  */ u8      draw_center_f;             /** `bool` | @unused */
     /* 0x4  */ s8      unk_4[4];
     /* 0x8  */ s16     tgt_l_eff_rate;
     /* 0xA  */ s16     now_l_eff_rate;            /** Moves halfway to `tgt_l_eff_rate` each frame. */
@@ -39,13 +42,14 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z);
 void shLensFlareDraw(void);
 
 // Named from SH2 symbols (func code doesn't match SH2, but the purpose/caller does)
-s32 shLensFlareLightCenterIsVisible(void);
+bool shLensFlareLightCenterIsVisible(void);
 
 // Named from SH2 symbols.
 q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 scr_l_pos_z, q19_12 scr_l_ang_z);
 
 // Named from SH2 symbols.
-void shLensFlareEffect_Draw(s32 center_visible_f, q19_12 now_l_eff_rate, VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z);
+void shLensFlareEffect_Draw(bool center_visible_f, q19_12 now_l_eff_rate,
+                            VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z);
 
 /** @brief Gets the water zone at a given position.
  *
