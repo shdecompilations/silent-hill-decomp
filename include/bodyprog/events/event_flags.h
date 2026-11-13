@@ -1,3 +1,6 @@
+#ifndef _BODYPROG_EVENTS_EVENTFLAGS_H
+#define _BODYPROG_EVENTS_EVENTFLAGS_H
+
 /** @brief Indices for game event flags stored in the savegame.
  * Accessed via `Savegame_EventFlagGet`/`Savegame_EventFlagSet`.
  */
@@ -1203,3 +1206,5 @@ typedef enum _EventFlag
     EventFlag_Count,
     EventFlag_Hack = -1, // @hack Force enum to be treated as `s32`.
 } e_EventFlag;
+
+#endif

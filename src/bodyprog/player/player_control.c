@@ -9248,7 +9248,7 @@ void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg
 bool func_800806AC(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x800806AC
 {
     bool result;
-    //static s_Collision D_800C4620;
+    //static s_CollisionSurface D_800C4620; // TODO: Doesn't match.
 
     result = arg0 != 0;
     if (!result)

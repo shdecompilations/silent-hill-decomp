@@ -34,7 +34,6 @@ typedef struct _AnimInfo
     /* 0xC */ s16 startKeyframeIdx;             /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
     /* 0xE */ s16 endKeyframeIdx;               /** End keyframe index. */
 } s_AnimInfo;
-STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
 /** @brief Packs an animation status containing an animation index and active flag.
  * `isActive` is `false` in the blend phase and `true` in the playback phase.

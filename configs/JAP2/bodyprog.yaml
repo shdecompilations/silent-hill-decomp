@@ -217,7 +217,7 @@ segments:
       - [0x62D28, c, events/events_util]           # }
       - [0x64E58, c, events/bgm_utils]             # }
       - [0x65168, c, events/events_2d_draw_utils]  # }
-      - [0x65C2C, c, events/chara_spawn]           # }
+      - [0x65C2C, c, chara/spawn]                  # }
       - [0x66040, c, vibration]
       - [0x67008, c, chara/combat]
       - [0x69950, c, chara/dms]

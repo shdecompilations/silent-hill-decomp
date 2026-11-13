@@ -91,6 +91,8 @@ extern s32 g_Inventory_CmdSelectedIdx; // 0x800ADB58
  */
 extern u32 g_Inventory_SelectionId; /** `e_InvSelectionId` */ // 0x800ADB5C
 
+extern const char* INV_ITEM_NAMES[];
+
 /** @brief Has user started scrolling. Dead code?
  * Only used when the user starts to scrolling through the inventory, but as soon
  * as it's assigned to 1, `Gfx_Inventory_ItemDescriptionDraw` makes it 0 again.

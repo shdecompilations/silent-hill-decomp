@@ -12,6 +12,7 @@
 #include "bodyprog/chara/spawn.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/events/bgm_update.h"
+#include "bodyprog/events/events_2d_draw_utils.h"
 #include "bodyprog/events/events_util.h"
 #include "bodyprog/events/game_sys_states.h"
 #include "bodyprog/events/title.h"
@@ -78,8 +79,6 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
-extern const char* INV_ITEM_NAMES[];
-
 extern const char* g_ItemDescriptions[];
 
 extern s_FsImageDesc D_800A90A4;
@@ -114,7 +113,7 @@ extern const s_MapOverlayHdr g_MapOverlayHdr;
 
 extern s16 SQRT[100];
 
-// TODO: Move to `bodyprog/chara/anim.h`.
+// TODO: Move to `bodyprog/chara/anim.h`. Getting weird errors.
 // ========================================
 
 void Anim_BonesInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
@@ -179,10 +178,8 @@ void Anim_PlayLoop(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoord
  */
 void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
 
-/** @brief Smoothly blends between the current pose into a new target animation using a sine-based ease-out
+/** @brief @unused? Smoothly blends between the current pose into a new target animation using a sine-based ease-out
  * without triggering a status transition.
- *
- * @unused?
  *
  * @param model Character model to animate.
  * @param anmHdr Character animation data.
@@ -190,26 +187,5 @@ void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCo
  * @param animInfo Character animation info.
  */
 void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
-
-// events_2d_draw_utils
-// =========================
-void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
-                    u32 clutX, s16 clutY, s32 tPage);
-
-/** @brief Draws a set of expanding boxes used to highlight a point on a paper map.
- *
- * @param progressAlpha Progress weight.
- * @param startX X start corner (top-left).
- * @param startY Y start corner (top-left).
- * @param startWidth Start width.
- * @param startHeight Start height.
- * @param endX X end corner (bottom-right).
- * @param endY Y end corner (bottom-right).
- * @param endWidth End width.
- * @param endHeight End height.
- */
-void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
-                                 q3_12 startX, q3_12 startY, q3_12 startWidth, q3_12 startHeight,
-                                 q3_12 endX, q3_12 endY, q3_12 endWidth, q3_12 endHeight);
 
 #endif

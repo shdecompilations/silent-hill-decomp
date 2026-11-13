@@ -1378,7 +1378,7 @@ Gfx_CursorDraw                               = 0x80087D98; // type:func
 PaperMap_ExpandingBoxesDraw                  = 0x80087F50; // type:func
 
 //---------------------------------------------------------------------
-//--- PA: 0x0631CC   VA: 0x8008885C   subsegment: c, events/chara_spawn
+//--- PA: 0x0631CC   VA: 0x8008885C   subsegment: c, chara/spawn
 //---------------------------------------------------------------------
 Chara_Load                                   = 0x8008885C; // type:func
 Chara_ProcessLoads                           = 0x800888EC; // type:func

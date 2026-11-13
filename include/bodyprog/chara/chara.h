@@ -58,17 +58,6 @@ typedef enum _CharaGroupFlags
     CharaGroupFlag_1    = 1 << 1
 } e_CharaGroupFlags;
 
-/** @brief Character spawn flags. */
-typedef enum _CharaSpawnFlags
-{
-    CharaSpawnFlag_None = 0,
-    CharaSpawnFlag_0    = 1 << 0,
-    CharaSpawnFlag_1    = 1 << 1,
-    CharaSpawnFlag_2    = 1 << 2,
-    CharaSpawnFlag_3    = 1 << 3,
-    CharaSpawnFlag_4    = 1 << 4
-} e_CharaSpawnFlags;
-
 /** @brief Character collision states. */
 typedef enum _CharaCollisionState
 {
