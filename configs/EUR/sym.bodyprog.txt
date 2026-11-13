@@ -625,7 +625,7 @@ WorldEnvRender_WorldLightTintParamSet        = 0x800408B4; // type:func
 WorldEnvRender_LightOverlapDraw              = 0x80040AAC; // type:func
 WorldEnvRender_LightScreenInfoGet            = 0x80040B10; // type:func
 WorldEnvRender_LightScreenAngleGet           = 0x80040C64; // type:func
-WorldEnvRender_LightScreenPosGet             = 0x80040DB4; // type:func
+WorldEnvRender_LightScreenPositionGet        = 0x80040DB4; // type:func
 WorldEnvRender_LightOverlapPolysDraw         = 0x80040F18; // type:func
 
 //------------------------------------------------------------
@@ -1476,7 +1476,7 @@ shLensFlareLightCenterIsVisible              = 0x8008D42C; // type:func
 shLensFlareMakeEffectTargetRate              = 0x8008D49C; // type:func
 shLensFlareEffect_Draw                       = 0x8008D56C; // type:func
 func_8008E4EC                                = 0x8008E0C8; // type:func
-LensFlare_WaterZoneGet                             = 0x8008E0F8; // type:func
+LensFlare_WaterZoneGet                       = 0x8008E0F8; // type:func
 func_8008E5B4                                = 0x8008E190; // type:func
 func_8008E794                                = 0x8008E370; // type:func
 func_8008EA68                                = 0x8008E644; // type:func

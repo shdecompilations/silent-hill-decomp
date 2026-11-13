@@ -329,15 +329,6 @@ void Math_RotMatrixZxyNeg(const SVECTOR* rot, MATRIX* mat);
 
 void Math_RotMatrixZxyNegGte(const SVECTOR* rot, MATRIX* mat);
 
-/** @brief Multiplies two integers in a fixed-point Q format.
- *
- * @param a First fixed-point factor.
- * @param b Second fixed-point factor.
- * @param shift Fixed-point shift.
- * @return Fixed-point product of `a` and `b`.
- */
-s32 Math_MulFixed(s32 a, s32 b, s32 shift);
-
 /** @brief Computes the sine in Q19.12 of degrees in Q19.12, integer range `[0, 4096]`.
  *
  * TODO: Matched on decomp.me.

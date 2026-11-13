@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_RANKING_H
-#define _BODYPROG_RANKING_H
+#ifndef _BODYPROG_ITEMS_RANKING_H
+#define _BODYPROG_ITEMS_RANKING_H
 
 /** @brief Ranking system. */
 

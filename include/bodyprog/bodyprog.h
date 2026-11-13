@@ -327,10 +327,6 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
-extern q3_12 g_Player_FlexRotationY;
-
-extern q3_12 g_Player_FlexRotationX;
-
 extern const char* INV_ITEM_NAMES[];
 
 extern const char* g_ItemDescriptions[];
@@ -582,18 +578,6 @@ void StringCopy(char* prevStr, char* newStr);
 
 // ================================================
 
-s32 Chara_NpcIdxGet(s_SubCharacter* chara);
-
-void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharacter* chara);
-
-s32 Chara_MovementUpdate0(s_SubCharacter* chara, s_CollisionResult* collResult);
-
-/** Checks `floorType`. */
-bool func_8005F680(s_CollisionSurface* surface);
-
-void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
-                    u32 clutX, s16 clutY, s32 tPage);
-
 // Sets material flags?
 void func_8008E4EC(s_LmHeader* lmHdr);
 
@@ -604,17 +588,10 @@ void GameFs_Tim00TIMLoad(void);
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
-s32 Chara_MovementUpdate1(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
-
-/** Computes something for a targeted NPC. */
-bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, const VECTOR3* attackPos,
-                   u32 npcIdx, q19_12 angleConstraint);
-
-void func_8004BBF4(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR* camRot);
-
-void func_80070B84(s_SubCharacter* player, q19_12 baseMoveSpeed, q19_12 topMoveSpeed, s32 keyframeIdx);
-
-void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttack, s32 animStatus);
+// events_2d_draw_utils
+// =========================
+void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 u, s16 v, s16 width, s32 height, s32 tint,
+                    u32 clutX, s16 clutY, s32 tPage);
 
 /** @brief Draws a set of expanding boxes used to highlight a point on a paper map.
  *

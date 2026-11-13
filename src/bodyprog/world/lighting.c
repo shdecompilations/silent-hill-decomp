@@ -200,7 +200,8 @@ void WorldEnvRender_LightOverlapDraw(GsOT* ot, q19_12 intensity, SVECTOR* world_
     WorldEnvRender_LightOverlapPolysDraw(ot, &scr_l_pos, intensity, scr_l_ang_xy, scr_l_ang_z);
 }
 
-void WorldEnvRender_LightScreenInfoGet(VECTOR3* scr_l_pos, q19_12* scr_l_ang_xy, q19_12* scr_l_ang_z, SVECTOR* world_light_vec, const VECTOR3* world_light_pos) // 0x800410D8
+void WorldEnvRender_LightScreenInfoGet(VECTOR3* scr_l_pos, q19_12* scr_l_ang_xy, q19_12* scr_l_ang_z,
+                                       SVECTOR* world_light_vec, const VECTOR3* world_light_pos) // 0x800410D8
 {
     MATRIX        transformMat;
     SVECTOR       vec0;
@@ -227,19 +228,20 @@ void WorldEnvRender_LightScreenInfoGet(VECTOR3* scr_l_pos, q19_12* scr_l_ang_xy,
     ApplyRotMatrix(world_light_vec, &ws_l_vec);
 
     WorldEnvRender_LightScreenAngleGet(scr_l_ang_xy, scr_l_ang_z, &ws_l_pos, &ws_l_vec);
-    WorldEnvRender_LightScreenPosGet(scr_l_pos, &ws_l_pos, &ws_l_vec, ReadGeomScreen());
+    WorldEnvRender_LightScreenPositionGet(scr_l_pos, &ws_l_pos, &ws_l_vec, ReadGeomScreen());
 }
 
-void WorldEnvRender_LightScreenAngleGet(q19_12* scr_l_ang_xy, q19_12* scr_l_ang_z, const VECTOR* ws_l_sxyz_p, const VECTOR* ws_l_vec_p) // 0x8004122C
+void WorldEnvRender_LightScreenAngleGet(q19_12* scr_l_ang_xy, q19_12* scr_l_ang_z,
+                                        const VECTOR* ws_l_sxyz_p, const VECTOR* ws_l_vec_p) // 0x8004122C
 {
-    VECTOR  one_pos;        // Q19.12
-    VECTOR  one_l_vec;        // Q19.12
+    VECTOR  one_pos;    // Q19.12
+    VECTOR  one_l_vec;  // Q19.12
     VECTOR  one_op_vec; // Q19.12
     SVECTOR cos_z;
     SVECTOR sin_z;
-    VECTOR  vec;    // Q19.12
+    VECTOR  vec;        // Q19.12
 
-    // Normal of the plane containing the eye-to-light ray and the light direction.
+    // Normal of plane containing eye-to-light ray and light direction.
     VectorNormal(ws_l_sxyz_p, &one_pos);
     VectorNormal(ws_l_vec_p, &one_l_vec);
     OuterProduct12(&one_pos, &one_l_vec, &one_op_vec);
@@ -248,19 +250,20 @@ void WorldEnvRender_LightScreenAngleGet(q19_12* scr_l_ang_xy, q19_12* scr_l_ang_
     // Screen-space direction of that plane.
     *scr_l_ang_xy = Q12_ANGLE_NORM_U(ratan2(one_op_vec.vy, one_op_vec.vx) - Q12_ANGLE(90.0f));
 
-    // Angle between the eye-to-light ray and the light direction, measured within that plane.
+    // Angle between eye-to-light ray and light direction, measured within that plane.
     cos_z.vx = FP_FROM((one_pos.vx * one_l_vec.vx) +
-                          (one_pos.vy * one_l_vec.vy) +
-                          (one_pos.vz * one_l_vec.vz), Q12_SHIFT);
+                       (one_pos.vy * one_l_vec.vy) +
+                       (one_pos.vz * one_l_vec.vz), Q12_SHIFT);
     OuterProduct12(&one_op_vec, &one_pos, &vec);
     sin_z.vx = FP_FROM((one_l_vec.vx * vec.vx) +
-                          (one_l_vec.vy * vec.vy) +
-                          (one_l_vec.vz * vec.vz), Q12_SHIFT);
+                       (one_l_vec.vy * vec.vy) +
+                       (one_l_vec.vz * vec.vz), Q12_SHIFT);
 
     *scr_l_ang_z = Q12_ANGLE_NORM_U(ratan2(sin_z.vx, cos_z.vx));
 }
 
-void WorldEnvRender_LightScreenPosGet(VECTOR3* scr_l_pos, const VECTOR* ws_l_sxyz_p, const VECTOR* ws_l_vec_p, s32 scr_z) // 0x8004137C
+void WorldEnvRender_LightScreenPositionGet(VECTOR3* scr_l_pos,
+                                           const VECTOR* ws_l_sxyz_p, const VECTOR* ws_l_vec_p, s32 scr_z) // 0x8004137C
 {
     VECTOR tmp_pos;
     s32    geom_x;
@@ -294,7 +297,8 @@ void WorldEnvRender_LightScreenPosGet(VECTOR3* scr_l_pos, const VECTOR* ws_l_sxy
     scr_l_pos->vy = ((tmp_pos.vy * scr_z) / tmp_pos.vz) + geom_y;
 }
 
-void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q19_12 intensity, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z) // 0x800414E0
+void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q19_12 intensity,
+                                          q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z) // 0x800414E0
 {
     s32      sp10[4];
     DVECTOR  sp20[4];

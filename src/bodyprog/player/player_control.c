@@ -196,14 +196,14 @@ u32    D_800AF218                       = 0; // Unused, maybe padding.
 s32    g_Player_TargetNpcIdx            = NO_VALUE;
 
 /** Related to player. */
-u8 D_800AF220 = 0; // Keyframe index in map overlay header struct.
+static u8 D_800AF220 = 0; // Keyframe index in map overlay header struct.
 
 // 3 bytes of padding.
 
 /** @brief Previous selected weapon. Set to `g_SysWork::PLAYER_COMBAT()::weaponAttack` and used to load the required
  * animation data.
  */
-s32 g_Player_PrevSelectedWeapon = NO_VALUE;
+static s32 g_Player_PrevSelectedWeapon = NO_VALUE;
 
 // TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {

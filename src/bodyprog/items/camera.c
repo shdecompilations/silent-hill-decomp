@@ -4,6 +4,7 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/items/camera.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"

@@ -74,6 +74,9 @@ void func_8005E89C(void);
 
 s32 func_8005F55C(s32 arg0);
 
+/** Checks `floorType`. */
+bool func_8005F680(s_CollisionSurface* surface);
+
 /** Related to camera collision? */
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3);
 

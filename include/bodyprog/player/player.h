@@ -384,23 +384,6 @@ typedef struct
 // GLOBALS
 // ========
 
-/** @brief `bool` | Determines if the player is transitioning from a walk to a run and vice-versa. */
-extern u8 g_Player_IsInWalkToRunTransition;
-
-/** `bool` */
-extern u8 g_Player_DisableControl;
-
-extern q1_7 g_Player_MoveStickMag;
-
-/** @brief `e_RockDrillAttackType` | Rock Drill attack type based on D-Pad input. */
-extern s8 g_Player_RockDrill_AttackType;
-
-/** Another variable that saves the index of the enemy being attacked. */
-extern s32 g_Player_TargetNpcIdx;
-
-/** @brief Counts the number inputs performed by the user to release an enemy grab. */
-extern s32 g_Player_GrabReleaseInputTimer;
-
 /** @brief Current attack animation. */
 extern s32 g_Player_AttackAnimIdx;
 
@@ -536,104 +519,6 @@ extern VECTOR3 D_800C4610;
 // ==========
 // FUNCTIONS
 // ==========
-
-/** Used for enemy target locking. Arg at index 3 is an angle? */
-void func_8005CD38(s32* out0, q3_12* out1, const VECTOR3* pos, q3_12 angleMin, q19_12 distMin, s32 mode);
-
-/** Used for player run displacement.
- *
- * @param chara Player character.
- */
-void func_80070CF0(s_SubCharacter* player, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 moveDistBack);
-
-void Player_CharaTurn_0(s_SubCharacter* player, e_PlayerLowerBodyState curState);
-
-void Player_CharaTurn_1(s_SubCharacter* player, e_PlayerLowerBodyState curState);
-
-void Player_CharaRotate(s32 speed);
-
-/** @brief Clears movement variables and reset Harry's lower body part animation states in case
- * of switching the player state.
- */
-void Player_MovementStateReset(s_SubCharacter* player, e_PlayerLowerBodyState lowerBodyState);
-
-/** Audio-related. */
-bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* player, s32 keyframe0, s32 keyframe1, s32 sfx, s8 pitch);
-
-/** @brief Main update function for player functionality.
- *
- * @note SH2 symbols have a similar function named `PlayerFunction`, but code-wise they
- * doesn't share many similarities.
- */
-void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-/** Player anim handler? */
-void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-/** @brief Main update function for player logic. */
-void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords);
-
-/** @brief Updates `PLAYER_EXTRA().upperBodyState` and prepares
- * transitions between running to and from walking animations.
- *
- * @param extra Pointer to `s_PlayerExtra` struct.
- * @param upperState Check if `PLAYER_EXTRA().upperBodyState` is not the same being input in order to clear animation status.
- * @param unused @unused Possibly animation index.
- * @param arg3 Player turn state. Only affects turn animations.
- * * 0 and 2: Idle state.
- * *       1: Any turn state.
- * *       3: Left turn state.
- * *       4: Right turn state.
- */
-void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3);
-
-/** @brief Triggers animations and actions performed by the player's upper body. */
-void Player_UpperBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra);
-
-/** @brief Updates animations and status related to player attacks.
- * Returns `true` if animations where succefully finished and if performing a multitap attack.
- */
-bool Player_CombatAnimUpdate(void);
-
-/** @brief Main animation and state handler for the player's upper body.
- * Returns `true` if combat animations where completed or if the player's health is >60%.
- */
-bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra);
-
-/** @brief Updates upper body states related to combat. */
-void Player_CombatStateUpdate(s_SubCharacter* player, s_PlayerExtra* extra);
-
-/** @brief Cancels movement when the player abruptly stops running sideways. */
-void Player_StepWallStop_MovementCancel(s_SubCharacter* player, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState);
-
-/** @brief Main player movement function. */
-void Player_LowerBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra);
-
-/** @brief Multiple purposes.
- * * Assigns the value used by a global that handles player movement.
- * * Deals with the exhaustion variable (When Harry has been running for too long).
- * * Restarts the animation state if the player is not longer exhausted or has recovered health.
- * * Handles audio related to Harry's movements.
- */
-void func_8007B924(s_SubCharacter* player, s_PlayerExtra* extra);
-
-/** @brief Checks for damage received by the player and handles the animations
- * for getting hurt or grabbed by monsters.
- *
- * @note SH2 symbols have a similar function named `PlayerCheckDamage`, but code-wise it has
- * no similarities.
- */
-void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra);
-
-void Game_PlayerMovementsReset(void);
-
-void Player_Controller(void);
-
-/** @brief Determines if the player can stomp or kick a knocked enemy. */
-bool func_8007F95C(void);
-
-// TODO: Temporary placement, belongs in `player_control.h` but there's a decl issue. 
-s32 Player_LowerBodyMoveStateGet(s_SubCharacter* player, s_800C45C8* arg1);
 
 #define Player_ExtraStateSet(playerChara, playerExtra, playerState)        \
 {                                                                          \
