@@ -112,8 +112,8 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, q3_12 scr_l_ang_z) // 0x8008D5A
     GsOT_TAG* ot;
 
     packet         = GsOUT_PACKET_P;
-    tile           = GsOUT_PACKET_P + 24;
-    GsOUT_PACKET_P = GsOUT_PACKET_P + 40;
+    tile           = GsOUT_PACKET_P + sizeof(DR_MOVE);
+    GsOUT_PACKET_P = GsOUT_PACKET_P + sizeof(DR_MOVE) + sizeof(TILE);
     ot             = &g_OrderingTable0[g_ActiveBufferIdx].org[(scr_l_pos->vz + 2) >> 3];
 
     draw_center_f = check_screen_bounds(scr_l_pos, scr_l_ang_z);
@@ -308,7 +308,7 @@ void shLensFlareEffect_Draw(bool center_visible_f, q19_12 now_l_eff_rate,
         { 90,  0  }
     };
 
-    // TODO: 512 is probably a screen constant.
+    // TODO: 512 is probably a screen constant. (SH2 uses `(sc_info->center_x - sc_info->width)`, 512 is likely `sc_info->width`)
     if (scr_l_pos->vx < (DIV_FAST(-g_GameWork.gsScreenWidth,  2) - 512) || (DIV_FAST(g_GameWork.gsScreenWidth,  2) + 512) < scr_l_pos->vx ||
         scr_l_pos->vy < (DIV_FAST(-g_GameWork.gsScreenHeight, 2) - 512) || (DIV_FAST(g_GameWork.gsScreenHeight, 2) + 512) < scr_l_pos->vy)
     {

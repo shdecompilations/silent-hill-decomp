@@ -222,7 +222,7 @@ void WorldEnvRender_LightScreenInfoGet(VECTOR3* scr_l_pos, q19_12* scr_l_ang_xy,
     Vw_CoordToViewSpaceMatrix(&coord, &transformMat);
     SetRotMatrix(&transformMat);
     SetTransMatrix(&transformMat);
-    RotTrans(&vec0, &ws_l_pos, &flag);
+    RotTrans(&vec0, &ws_l_pos, (long*)&flag);
 
     ApplyRotMatrix(world_light_vec, &ws_l_vec);
 
@@ -287,7 +287,7 @@ void WorldEnvRender_LightScreenPosGet(VECTOR3* scr_l_pos, const VECTOR* ws_l_sxy
         tmp_pos.vy = (((scr_z_half - ws_l_sxyz_p->vz) * ws_l_vec_p->vy) / tmp_vec_z) + ws_l_sxyz_p->vy;
     }
 
-    ReadGeomOffset(&geom_x, &geom_y);
+    ReadGeomOffset((long*)&geom_x, (long*)&geom_y);
 
     scr_l_pos->vz = tmp_pos.vz;
     scr_l_pos->vx = ((tmp_pos.vx * scr_z) / tmp_pos.vz) + geom_x;
@@ -313,7 +313,7 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
     u32*     var_a1_3;
     u32*     var_t0;
     u32*     var_t1;
-    u32*     var_t4;
+    DVECTOR* var_t4;
     POLY_G3* poly_g3;
     POLY_G4* poly_g4;
     POLY_F4* poly_f4;
@@ -331,7 +331,7 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
     var_v1 = var_s0 * (Q12(3.0f) - Q12_MULT(var_s1, Math_Cos(scr_l_ang_z)));
     var_s0 = var_v1 / ((SHRT_MAX / 2) + 1);
 
-    sp10[0] = (var_s0 / 5);
+    sp10[0] = (var_s0 * 2) / 10;
     sp10[1] = (var_s0 * 4) / 10;
     sp10[2] = (var_s0 * 7) / 10;
     sp10[3] = var_s0;
@@ -366,8 +366,8 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
 
     var_t0 = (u32*)PSX_SCRATCH;
 
-    poly_g3 = &g_Map_GfxPackets[g_ActiveBufferIdx][sizeof(DR_TPAGE) * 2];
-    poly_f4 = &g_Map_GfxPackets[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) +
+    poly_g3 = (POLY_G3*)&g_Map_GfxPackets[g_ActiveBufferIdx][sizeof(DR_TPAGE) * 2];
+    poly_f4 = (POLY_F4*)&g_Map_GfxPackets[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) +
                                              ((sizeof(POLY_G4) * 16) * 3) +
                                              (sizeof(POLY_G3) * 16)];
 
@@ -387,10 +387,11 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
     }
 
     var_t1  = (u32*)PSX_SCRATCH;
-    poly_g4 = &g_Map_GfxPackets[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
+    poly_g4 = (POLY_G4*)&g_Map_GfxPackets[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
 
     for (i = 0; i < 3; i++)
     {
+        // TODO: var_a1_3 is likely `DVECTOR*`, x0/x1/x2/x3 sets below are copying x/y from it.
         var_a1_3 = var_t1 + (i * 17);
 
         for (j = 0; j < 16; j++, poly_g4++)
