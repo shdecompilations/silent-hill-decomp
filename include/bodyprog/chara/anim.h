@@ -85,9 +85,6 @@ typedef struct _AnimInfo
 #define ANIM_TIME_REL_KEYFRAME_IDX_GET(animTime, baseOffset) \
     (FP_FROM(animTime, Q12_SHIFT) - (baseOffset))
 
-// TODO: Move to `bodyprog/chara/anim.h`. Getting weird errors.
-// ========================================
-
 void Anim_BonesInit(struct _AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 void Anim_BonesUpdate(struct _AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyframe0, s32 keyframe1, q19_12 alpha);
