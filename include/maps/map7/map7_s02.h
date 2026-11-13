@@ -157,7 +157,7 @@ extern RECT          D_800E9D0C[];
 extern u16           D_800E9D24[];
 extern u16           D_800E9D2C;
 
-void func_800D97FC(s32 arg0);
+void func_800D97FC(bool arg0);
 
 void func_800D9830(s32 arg0);
 

@@ -25,7 +25,7 @@ extern VECTOR3 D_800DBD10;
 extern u16 D_800DBCE4[22]; // Flags.
 extern s_BgmLayerLimits D_800DBCDC;   // Distances.
 
-void func_800D7F98(void);
+void func_800D7F98(bool arg0);
 
 /** @brief Handles a Health Drink or Handgun Bullets item pickup event. */
 void MapEvent_CommonItemTake(void);

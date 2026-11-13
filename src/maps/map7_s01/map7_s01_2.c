@@ -41,7 +41,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D6768
 
-void func_800D6810(s32 arg0) // 0x800D6810
+void func_800D6810(bool arg0) // 0x800D6810
 {
     (arg0 != 0) ? func_800D6878() : sharedFunc_800D0110_7_s00();
 }

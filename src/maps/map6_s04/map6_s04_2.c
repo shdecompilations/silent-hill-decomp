@@ -103,7 +103,7 @@ void* func_800DE380(GsOT_TAG* arg0, PACKET* arg1) // 0x800DE380
     POLY_G4*  poly;
     DR_TPAGE* tPage;
 
-    poly = arg1;
+    poly = (POLY_G4*)arg1;
 
     for (i = 1; i < 19; i++)
     {
@@ -317,7 +317,7 @@ s_800ED848* func_800DEA4C(void) // 0x800DEA4C
     s_800ED848* ptr;
     s32         i;
 
-    ptr = &D_800ED848;
+    ptr = D_800ED848;
 
     for (i = 0; i < 16; i++)
     {
@@ -347,7 +347,7 @@ void func_800DEAA8(s32 arg0) // 0x800DEAA8
     s32         i;
     s_800ED848* ptr;
 
-    ptr = &D_800ED848;
+    ptr = D_800ED848;
 
     for (i = 0; i < 16; i++)
     {
@@ -360,7 +360,7 @@ void func_800DEAA8(s32 arg0) // 0x800DEAA8
     }
 }
 
-s32 func_800DEB1C(s_800ED848* arg0) // 0x800DEB1C
+bool func_800DEB1C(s_800ED848* arg0) // 0x800DEB1C
 {
     SVECTOR sp10;
     VECTOR  sp18;
@@ -385,7 +385,7 @@ s32 func_800DEB1C(s_800ED848* arg0) // 0x800DEB1C
     arg0->field_8 += Q12(1.0f);
     arg0->field_8  = CLAMP_HIGH(arg0->field_C, arg0->field_8);
 
-    return 1;
+    return true;
 }
 
 void func_800DEC3C(VECTOR3* arg0, SVECTOR3* arg1) // 0x800DEC3C
@@ -403,7 +403,7 @@ void func_800DEC3C(VECTOR3* arg0, SVECTOR3* arg1) // 0x800DEC3C
         if (ptr != NULL)
         {
             ptr->field_14 = arg0;
-            ptr->field_18 = arg1;
+            ptr->field_18 = (SVECTOR*)arg1;
             ptr->field_1C = sp10[i].field_0;
             ptr->field_8  = Q12(4.0f);
             ptr->field_C  = sp10[i].field_8;
@@ -734,7 +734,7 @@ PACKET* func_800DF6C4(GsOT_TAG* ot, PACKET* packet, MATRIX* mat) // 0x800DF6C4
     DR_TPAGE* tPage;
     DR_TPAGE* tPage2;
 
-    poly   = packet;
+    poly   = (POLY_G4*)packet;
     var_fp = ot;
 
     for (i = 1; i < 19; i++)
@@ -926,7 +926,7 @@ void* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg
     DR_TPAGE* tPage;
     DR_TPAGE* tPage2;
 
-    poly = packet;
+    poly = (POLY_G4*)packet;
     sp64 = ot;
 
     for (i = 1; i < 19; i++)
@@ -1289,7 +1289,7 @@ void func_800E08B8(void) // 0x800E08B8
     ptr = (s_func_800E05C8*)FS_BUFFER_1;
 
     packet = GsOUT_PACKET_P;
-    poly   = packet;
+    poly   = (POLY_G4*)packet;
 
     index = g_ActiveBufferIdx;
     ot    = g_OrderingTable0[index].org;
@@ -1370,12 +1370,12 @@ void func_800E08B8(void) // 0x800E08B8
         }
     }
 
-    packet = poly;
-    mode   = packet;
+    packet = (PACKET*)poly;
+    mode   = (DR_MODE*)packet;
 
     SetDrawMode(mode, 0, 1, 42, NULL);
     addPrim(ot, mode);
-    packet         = mode + 1;
+    packet         = (PACKET*)(mode + 1);
     GsOUT_PACKET_P = packet;
 }
 
@@ -3912,7 +3912,7 @@ void func_800E74C4(void) // 0x800E74C4
     TILE*     tile;
     DR_TPAGE* tpage;
 
-    tile = GsOUT_PACKET_P;
+    tile = (TILE*)GsOUT_PACKET_P;
 
     setRGBC0(tile, 0, 8, 48, PRIM_RECT | RECT_BLEND);
     setXY0Fast(tile, 0xFF60, 0xFF90);
@@ -3920,12 +3920,12 @@ void func_800E74C4(void) // 0x800E74C4
     addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[2], tile, 3);
     tile++;
 
-    tpage = tile;
+    tpage = (DR_TPAGE*)tile;
     setDrawTPage(tpage, 0, 1, getTPageN(0, 2, 0, 0));
     AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], tpage);
     tpage++;
 
-    GsOUT_PACKET_P = tpage;
+    GsOUT_PACKET_P = (PACKET*)tpage;
 }
 
 void func_800E75B8(s32 arg0, const VECTOR3* pos, s32 arg2, s32 arg3, s32 arg4) // 0x800E75B8

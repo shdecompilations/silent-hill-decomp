@@ -49,11 +49,11 @@ q19_12 Screen_FadeProgressGet(void) // 0x800325F8
 
 void Screen_FadeUpdate(void) // 0x8003260C
 {
-    s32      queueLength;
-    q19_12   timestep;
-    GsOT*    ot;
-    TILE*    tile;
-    DR_MODE* drMode;
+    s32       queueLength;
+    q19_12    timestep;
+    GsOT_TAG* ot;
+    TILE*     tile;
+    DR_MODE*  drMode;
 
     drMode                         = &D_800A8E5C[g_ActiveBufferIdx];
     tile                           = &D_800A8E74[g_ActiveBufferIdx];

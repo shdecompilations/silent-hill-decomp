@@ -23,7 +23,7 @@ extern s32                          __pad_bss_800D5D24;
 extern s_MapHdr_field_4C            sharedData_800DFB7C_0_s00[];
 extern s_BloodSplat                 g_Effect_BloodSplats[];
 extern s8                           __pad_bss_800D8564[4];
-extern struct _MapHeader_field_5C   sharedData_800D8568_1_s05;
+extern s_MapOverlayHdr_5C           sharedData_800D8568_1_s05;
 extern s32                          __pad_bss_800D8590[2];
 extern struct _ParticleVectors      g_ParticleVectors0;
 extern s32                          __pad_bss_800D85C4;

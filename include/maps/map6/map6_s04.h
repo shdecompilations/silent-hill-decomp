@@ -82,7 +82,7 @@ typedef struct _800ED848
     VECTOR3*       field_14;
     SVECTOR*       field_18;
     SVECTOR        field_1C;
-    s32            (*field_24)(struct _800ED848*);
+    bool           (*field_24)(struct _800ED848*);
     MATRIX         field_28;
     s32            field_48;
     s32*           field_4C;
@@ -252,7 +252,7 @@ void func_800DEA94(s_800ED848* arg0);
 
 void func_800DEAA8(s32 arg0);
 
-s32 func_800DEB1C(s_800ED848* arg0);
+bool func_800DEB1C(s_800ED848* arg0);
 
 void func_800DEC3C(VECTOR3* arg0, SVECTOR3* arg1);
 

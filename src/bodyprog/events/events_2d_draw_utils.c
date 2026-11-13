@@ -134,7 +134,7 @@ void PaperMap_ExpandingBoxesDraw(q3_12 progressAlpha,
         line++;
     }
 
-    GsOUT_PACKET_P = line;
+    GsOUT_PACKET_P = (PACKET*)line;
 
     #undef BOX_COUNT
 }

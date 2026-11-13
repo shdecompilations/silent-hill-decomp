@@ -885,7 +885,7 @@ bool func_80068CC0(s32 arg0) // 0x80068CC0
     {
         if (HAS_PAPER_MAP(D_800AE740[arg0][i]))
         {
-            poly = GsOUT_PACKET_P;
+            poly = (POLY_G3*)GsOUT_PACKET_P;
             setPolyG3(poly);
 
             if (i != 0)
@@ -906,7 +906,7 @@ bool func_80068CC0(s32 arg0) // 0x80068CC0
             setRGB2Fast(poly, 0x80, 0x80, 0xC4);
 
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
-            GsOUT_PACKET_P = ++poly;
+            GsOUT_PACKET_P = (PACKET*)(++poly);
         }
     }
 
@@ -1069,7 +1069,7 @@ void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
     rightEdge  = (Q12_MULT_PRECISE(scale, SCREEN_WIDTH)  + scrollX) - 1;
     bottomEdge = (Q12_MULT_PRECISE(scale, SCREEN_HEIGHT) + scrollY) - 1;
 
-    poly = GsOUT_PACKET_P;
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
 
     // Iterate 3x2 grid of 128x128 VRAM tiles covering paper map image.
     for (tileX = 0; tileX < 3; tileX++)
@@ -1173,7 +1173,7 @@ void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale) // 0x800692A4
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
     GsOUT_PACKET_P            = tile;
 #else
-    GsOUT_PACKET_P            = poly;
+    GsOUT_PACKET_P            = (PACKET*)poly;
     g_SysWork.bgmStatusFlags |= BgmStatusFlag_Pause;
 #endif
 }

@@ -256,7 +256,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
     SetTransMatrix(&worldToScreenMat);
 
     // Run through billboard sprites to draw.
-    for (curBillboardInfo = billboardWork->billboardInfos, poly_gt4 = GsOUT_PACKET_P;
+    for (curBillboardInfo = billboardWork->billboardInfos, poly_gt4 = (POLY_GT4*)GsOUT_PACKET_P;
          curBillboardInfo < &billboardWork->billboardInfos[billboardWork->billboardInfoCount];
          curBillboardInfo++)
     {
@@ -331,7 +331,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
                 addPrim(&ot->org[temp_v0_2 >> otShift], prio1);
                 addPrim(&ot->org[temp_v0_2 >> otShift], poly_gt4);
                 poly_g4++;
-                poly_gt4 = poly_g4;
+                poly_gt4 = (POLY_GT4*)poly_g4;
             }
             else
             {
@@ -341,7 +341,7 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
         }
     }
 
-    GsOUT_PACKET_P = poly_gt4;
+    GsOUT_PACKET_P = (PACKET*)poly_gt4;
 }
 
 void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY) // 0x8005BF0C

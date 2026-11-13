@@ -201,7 +201,7 @@ void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
 
     Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
 
-    sprt = GsOUT_PACKET_P;
+    sprt = (SPRT*)GsOUT_PACKET_P;
 
     for (i = 0; (arg1 > 0) ? (i < 5) : (i < 4); i++)
     {
@@ -252,7 +252,7 @@ void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
 
         addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[1], sprt, 4);
         sprt++;
-        tpage = sprt;
+        tpage = (DR_TPAGE*)sprt;
 
         if (i < 4)
         {
@@ -265,10 +265,10 @@ void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
 
         AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[1], tpage);
         tpage++;
-        sprt = tpage;
+        sprt = (SPRT*)tpage;
     }
 
-    GsOUT_PACKET_P = sprt;
+    GsOUT_PACKET_P = (PACKET*)sprt;
 }
 
 void func_800D1A58(void) // 0x800D1A58

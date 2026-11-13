@@ -470,7 +470,7 @@ void Gfx_Results_Save(void) // 0x8004D1A0
         }
 
         addPrim(&ot->org[7], line);
-        GsOUT_PACKET_P = &line[1];
+        GsOUT_PACKET_P = (PACKET*)&line[1];
     }
 
 #if VERSION_REGION_IS(NTSC)

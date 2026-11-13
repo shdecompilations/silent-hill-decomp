@@ -1671,7 +1671,7 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
     for (i = 3; i < count; i++)
     {
-        dVecPtr = &sp10;
+        dVecPtr = (DVECTOR*)&sp10;
 
         j = 0;
 
@@ -2093,7 +2093,7 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
 
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
 
-        GsOUT_PACKET_P = poly + 1;
+        GsOUT_PACKET_P = (PACKET*)(poly + 1);
     }
 }
 

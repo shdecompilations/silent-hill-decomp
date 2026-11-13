@@ -253,7 +253,7 @@ void func_800D625C(void) // 0x800D625C
     ptr = (s_func_800D5EC0*)FS_BUFFER_1;
 
     packet = GsOUT_PACKET_P;
-    poly   = packet;
+    poly   = (POLY_G4*)packet;
 
     x = (ptr->field_A50 & 0xFFFF) - 82;
     y = ((u32)ptr->field_A50 >> 16) - 122;
@@ -337,12 +337,12 @@ void func_800D625C(void) // 0x800D625C
         }
     }
 
-    packet = poly;
-    mode   = packet;
+    packet = (PACKET*)poly;
+    mode   = (DR_MODE*)packet;
 
     SetDrawMode(mode, 0, 1, 42, NULL);
     addPrim(ot, mode);
-    packet         = mode + 1;
+    packet         = (PACKET*)(mode + 1);
     GsOUT_PACKET_P = packet;
 }
 
@@ -617,7 +617,7 @@ void func_800D6C0C(void) // 0x800D6C0C
     ptr = FS_BUFFER_1;
 
     packet = GsOUT_PACKET_P;
-    poly   = packet;
+    poly   = (POLY_G4*)packet;
 
     x = (ptr->field_9FC & 0xFFFF) - 49;
     y = ((u32)ptr->field_9FC >> 16) - 49;
@@ -701,12 +701,12 @@ void func_800D6C0C(void) // 0x800D6C0C
         }
     }
 
-    packet = poly;
-    mode   = packet;
+    packet = (PACKET*)poly;
+    mode   = (DR_MODE*)packet;
 
     SetDrawMode(mode, 0, 1, 42, NULL);
     addPrim(ot, mode);
-    packet         = mode + 1;
+    packet         = (PACKET*)(mode + 1);
     GsOUT_PACKET_P = packet;
 }
 
@@ -1033,7 +1033,7 @@ void func_800D77E4(void) // 0x800D77E4
     }
 
     packet = GsOUT_PACKET_P;
-    poly   = packet;
+    poly   = (POLY_G4*)packet;
 
     i   = 1;
     col = 0x3A000000;
@@ -1112,12 +1112,12 @@ void func_800D77E4(void) // 0x800D77E4
         ot -= 0x28 / 4;
     }
 
-    packet = poly;
-    mode   = packet;
+    packet = (PACKET*)poly;
+    mode   = (DR_MODE*)packet;
 
     SetDrawMode(mode, 0, 1, 42, NULL);
     addPrim(ot, mode);
-    packet         = mode + 1;
+    packet         = (PACKET*)(mode + 1);
     GsOUT_PACKET_P = packet;
 }
 
@@ -1336,7 +1336,7 @@ void func_800D7F2C(GsOT_TAG* ot, s32 arg1, q19_12 angle, q19_12 dist0, q19_12 di
     sp14 = Q12(1.0f) / arg1;
     sp14 = sp14 / 2;
 
-    poly   = func_800D7F10();
+    poly   = (POLY_G4*)func_800D7F10();
     angle0 = angle;
 
     for (i = 0; i < arg1; i++)
@@ -1519,7 +1519,7 @@ void func_800D8738(void* ot, s32 abr) // 0x800D8738
 {
     DR_MODE* drMode;
 
-    drMode = func_800D7F10();
+    drMode = (DR_MODE*)func_800D7F10();
     SetDrawMode(drMode, 0, 1, getTPage(0, abr, 640, 0), NULL);
     addPrim(ot, drMode);
 
@@ -1675,7 +1675,7 @@ void func_800D8954(s_800F3D48* arg0, s_800F3D48_0_0* arg1) // 0x800D8954
         return;
     }
 
-    poly = GsOUT_PACKET_P;
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
 
     setXY4(poly,
            x0, y0,
@@ -1701,7 +1701,7 @@ void func_800D8954(s_800F3D48* arg0, s_800F3D48_0_0* arg1) // 0x800D8954
     addPrim(ot, poly);
     poly++;
 
-    GsOUT_PACKET_P = poly;
+    GsOUT_PACKET_P = (PACKET*)poly;
 }
 
 void func_800D8CD4(q19_12 rotZ, SVECTOR* rot) // 0x800D8CD4
@@ -1795,7 +1795,7 @@ void func_800D8D90(s_800F3D48* arg0, s_800F3D48_0_0* arg1) // 0x800D8D90
         return;
     }
 
-    poly = GsOUT_PACKET_P;
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
 
     *(s32*)&poly->x0 = *(s32*)&sp50[0];
     *(s32*)&poly->x1 = *(s32*)&sp50[1];
@@ -1820,7 +1820,7 @@ void func_800D8D90(s_800F3D48* arg0, s_800F3D48_0_0* arg1) // 0x800D8D90
     addPrim(ot, poly);
     poly++;
 
-    GsOUT_PACKET_P = poly;
+    GsOUT_PACKET_P = (PACKET*)poly;
 }
 
 s_800F3D48* func_800D905C(void) // 0x800D905C
@@ -2795,7 +2795,7 @@ void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1) // 0x800DADE0
         return;
     }
 
-    poly = GsOUT_PACKET_P;
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
 
     setXY4(poly,
            x0, y0,
@@ -2821,7 +2821,7 @@ void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1) // 0x800DADE0
     addPrim(ot, poly);
     poly++;
 
-    GsOUT_PACKET_P = poly;
+    GsOUT_PACKET_P = (PACKET*)poly;
 }
 
 void func_800DB154(GsCOORDINATE2* boneCoords) // 0x800DB154
@@ -3287,7 +3287,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
     var_a2 = func_800DBA08(&sp10, &sp30, &sp34);
 
     packet = GsOUT_PACKET_P;
-    poly   = packet;
+    poly   = (POLY_FT4*)packet;
     ptr    = &D_800F48A8;
 
     for (; i < sp40;
@@ -3411,7 +3411,7 @@ void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
         poly++;
     }
 
-    packet         = poly;
+    packet         = (PACKET*)poly;
     GsOUT_PACKET_P = packet;
 }
 
@@ -4320,7 +4320,7 @@ void func_800E0B28(s32 arg0) // 0x800E0B28
     (arg0 != 0) ? func_800E0B90() : sharedFunc_800D0110_7_s00();
 }
 
-void func_800E0B5C(s32 arg0) // 0x800E0B5C
+void func_800E0B5C(bool arg0) // 0x800E0B5C
 {
     (arg0 != 0) ? func_800E0C10() : sharedFunc_800D0110_7_s00();
 }
@@ -5189,7 +5189,7 @@ void func_800E2C28(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, s32 zDepth,
     s_800F4B40_118* colData;
     DR_MODE*        drMode;
 
-    poly = GsOUT_PACKET_P;
+    poly = (POLY_G4*)GsOUT_PACKET_P;
     ot   = &g_OrderingTable0[g_ActiveBufferIdx].org[zDepth];
 
     for (row = 0; row < rowCount - 1; row++)
@@ -5216,11 +5216,11 @@ void func_800E2C28(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, s32 zDepth,
         }
     }
 
-    GsOUT_PACKET_P = poly;
+    GsOUT_PACKET_P = (PACKET*)poly;
 
-    drMode = poly;
+    drMode = (DR_MODE*)poly;
     SetDrawMode(drMode, 0, 1, (arg4 & 3) << 5, NULL);
-    GsOUT_PACKET_P = &drMode[1];
+    GsOUT_PACKET_P = (PACKET*)&drMode[1];
     addPrim(ot, drMode);
 }
 

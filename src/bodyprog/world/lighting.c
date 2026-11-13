@@ -91,7 +91,7 @@ void func_80040BAC(void) // 0x80040BAC
         }
     }
 
-    for (j = 0, ptr = &posTable[0], packet = &g_Map_GfxPackets; j < 2; j++,
+    for (j = 0, ptr = (s32*)posTable, packet = g_Map_GfxPackets[0]; j < 2; j++,
         packet += (sizeof(DR_TPAGE) * 2)       +
                   ((sizeof(POLY_G4) * 16) * 3) +
                   (sizeof(POLY_G3) * 16)       +
@@ -103,10 +103,10 @@ void func_80040BAC(void) // 0x80040BAC
         page++;
         SetDrawTPage(page, 1, 1, 0x20);
 
-        poly_g3 = packet + sizeof(DR_TPAGE) * 2;
-        poly_f4 = packet + (sizeof(DR_TPAGE) * 2)       +
-                           ((sizeof(POLY_G4) * 16) * 3) +
-                           (sizeof(POLY_G3) * 16);
+        poly_g3 = (POLY_G3*)(packet + sizeof(DR_TPAGE) * 2);
+        poly_f4 = (POLY_F4*)(packet + (sizeof(DR_TPAGE) * 2)       +
+                                      ((sizeof(POLY_G4) * 16) * 3) +
+                                      (sizeof(POLY_G3) * 16));
 
         for (i = 0; i < 16; i++, poly_g3++, poly_f4++)
         {
@@ -119,8 +119,8 @@ void func_80040BAC(void) // 0x80040BAC
             *(s32*)&poly_f4->x3 = ptr[(i % 16) + 1];
         }
 
-        poly_g4 = packet + (sizeof(DR_TPAGE) * 2) +
-                           (sizeof(POLY_G3) * 16);
+        poly_g4 = (POLY_G4*)(packet + (sizeof(DR_TPAGE) * 2) +
+                                      (sizeof(POLY_G3) * 16));
 
         for (k = 0; k < 3; k++)
         {
@@ -148,7 +148,7 @@ void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightP
 
     lightPointColor = COLOR_RGB(lightPosR, lightPosG, lightPosB);
 
-    packet = &g_Map_GfxPackets;
+    packet = g_Map_GfxPackets[0];
 
     colors[0] = COLOR_RGB(0, 0, 0);
     colors[1] = COLOR_RGB(worldTintR / 3, worldTintG / 3, worldTintB / 3);
@@ -161,10 +161,10 @@ void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightP
                   (sizeof(POLY_G3) * 16)       +
                   (sizeof(POLY_F4) * 16))
     {
-        poly_g3 = packet + (sizeof(DR_TPAGE) * 2);
-        poly_f4 = packet + (sizeof(DR_TPAGE) * 2)       +
-                           ((sizeof(POLY_G4) * 16) * 3) +
-                           (sizeof(POLY_G3) * 16);
+        poly_g3 = (POLY_G3*)(packet + (sizeof(DR_TPAGE) * 2));
+        poly_f4 = (POLY_F4*)(packet + (sizeof(DR_TPAGE) * 2)       +
+                                      ((sizeof(POLY_G4) * 16) * 3) +
+                                      (sizeof(POLY_G3) * 16));
 
         for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
         {
@@ -174,8 +174,8 @@ void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightP
             *(s32*)&poly_f4->r0 = colors[3] + (poly_f4->code << 24);
         }
 
-        poly_g4 = packet + (sizeof(DR_TPAGE) * 2) +
-                           (sizeof(POLY_G3) * 16);
+        poly_g4 = (POLY_G4*)(packet + (sizeof(DR_TPAGE) * 2) +
+                                      (sizeof(POLY_G3) * 16));
 
         for (k = 0; k < 3; k++)
         {

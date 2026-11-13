@@ -54,7 +54,7 @@ static inline D_800E9ED8_Set(void)
     }
 }
 
-void func_800D97FC(s32 arg0) // 0x800D97FC
+void func_800D97FC(bool arg0) // 0x800D97FC
 {
     (arg0 != 0) ? func_800D9864() : sharedFunc_800D0110_7_s00();
 }
@@ -1919,17 +1919,17 @@ void func_800DE1FC(void) // 0x800DE1FC
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->drawArea_8);
             scratch->drawArea_8++;
 
-            scratch->drawOffset_C = scratch->drawArea_8;
+            scratch->drawOffset_C = (DR_OFFSET*)scratch->drawArea_8;
             SetDrawOffset(scratch->drawOffset_C, (g_ActiveBufferIdx == 0) ? &D_800E9D24[2] : &D_800E9D24[0]);
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->drawOffset_C);
             scratch->drawOffset_C++;
 
-            scratch->stp_10 = scratch->drawOffset_C;
+            scratch->stp_10 = (DR_STP*)scratch->drawOffset_C;
             SetDrawStp(scratch->stp_10, 0);
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->stp_10);
 
             scratch->stp_10++;
-            scratch->sprt_0 = scratch->stp_10;
+            scratch->sprt_0 = (SPRT*)scratch->stp_10;
 
             for (i = 0; i < 2; i++)
             {
@@ -1960,17 +1960,17 @@ void func_800DE1FC(void) // 0x800DE1FC
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->drawArea_8);
             scratch->drawArea_8++;
 
-            scratch->drawOffset_C = scratch->drawArea_8;
+            scratch->drawOffset_C = (DR_OFFSET*)scratch->drawArea_8;
             SetDrawOffset(scratch->drawOffset_C, &D_800E9D2C);
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->drawOffset_C);
             scratch->drawOffset_C++;
 
-            scratch->stp_10 = scratch->drawOffset_C;
+            scratch->stp_10 = (DR_STP*)scratch->drawOffset_C;
             SetDrawStp(scratch->stp_10, 1);
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->stp_10);
             scratch->stp_10++;
 
-            GsOUT_PACKET_P = scratch->stp_10;
+            GsOUT_PACKET_P = (PACKET*)scratch->stp_10;
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1986,7 +1986,7 @@ void func_800DE1FC(void) // 0x800DE1FC
 
             colorBase       = D_800E9EDC >> 5;
             scratch         = PSX_SCRATCH;
-            scratch->sprt_0 = GsOUT_PACKET_P;
+            scratch->sprt_0 = (SPRT*)GsOUT_PACKET_P;
             vOffset         = 0;
             barPhase        = 1;
             tpageBase       = 21;
@@ -2040,7 +2040,7 @@ void func_800DE1FC(void) // 0x800DE1FC
                 }
 
                 scratch->tpage_4++;
-                scratch->sprt_0 = scratch->tpage_4;
+                scratch->sprt_0 = (SPRT*)scratch->tpage_4;
             }
 
             scratch->stp_10 = (DR_STP*)scratch->sprt_0;
@@ -2052,7 +2052,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratch->stp_10);
             scratch->stp_10++;
 
-            GsOUT_PACKET_P = scratch->stp_10;
+            GsOUT_PACKET_P = (PACKET*)scratch->stp_10;
 
             D_800E9EDC -= Q12_MULT_PRECISE(g_DeltaTime, Q12(0.5f));
             if (D_800E9EDC < 0)

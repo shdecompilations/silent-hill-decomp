@@ -82,13 +82,13 @@ void Collision_NearbyTriggersGet(q19_12 posX, q19_12 posZ, const s_CollisionTrig
 
 void Collision_ChunkHeaderPtrsInit(s_IpdCollisionData* collData) // 0x8006993C
 {
-    collData->polygonSplitVertices = (u8*)collData->polygonSplitVertices + (u32)collData;
-    collData->polygonSurfaces      = (u8*)collData->polygonSurfaces      + (u32)collData;
-    collData->polygons             = (u8*)collData->polygons             + (u32)collData;
-    collData->cylinders            = (u8*)collData->cylinders            + (u32)collData;
-    collData->shapeAllocs          = (u8*)collData->shapeAllocs          + (u32)collData;
-    collData->shapeLut             = (u8*)collData->shapeLut             + (u32)collData;
-    collData->surfaceLut           = (u8*)collData->surfaceLut           + (u32)collData;
+    collData->polygonSplitVertices = PTR_OFFSET_RESOLVE(collData->polygonSplitVertices, collData);
+    collData->polygonSurfaces      = PTR_OFFSET_RESOLVE(collData->polygonSurfaces, collData);
+    collData->polygons             = PTR_OFFSET_RESOLVE(collData->polygons, collData);
+    collData->cylinders            = PTR_OFFSET_RESOLVE(collData->cylinders, collData);
+    collData->shapeAllocs          = PTR_OFFSET_RESOLVE(collData->shapeAllocs, collData);
+    collData->shapeLut             = PTR_OFFSET_RESOLVE(collData->shapeLut, collData);
+    collData->surfaceLut           = PTR_OFFSET_RESOLVE(collData->surfaceLut, collData);
 }
 
 void Collision_ShapePassReset(s_IpdCollisionData* collData) // 0x80069994
@@ -105,8 +105,8 @@ void Collision_ShapePassReset(s_IpdCollisionData* collData) // 0x80069994
         collData->shapePassCounter = 0;
 
         // Clear all shape stamps. TODO: Is this `memset`/`bzero`?
-        for (curStamp = &collData->shapePassStampBuffer[0];
-             curStamp < &collData->shapePassStampBuffer[sizeof(collData->shapePassStampBuffer)];
+        for (curStamp = (s32*)&collData->shapePassStampBuffer[0];
+             curStamp < (s32*)&collData->shapePassStampBuffer[sizeof(collData->shapePassStampBuffer)];
              curStamp++)
         {
             *curStamp = 0;
@@ -456,12 +456,12 @@ s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubC
             (excludedChara->collision.state == CharaCollisionState_Player && includePlayer == true))
         {
             *collCharaCount = 0;
-            return &collCharas;
+            return collCharas;
         }
     }
 
     *collCharaCount = 0;
-    curCollChara    = &collCharas;
+    curCollChara    = collCharas;
 
     // Collect collidable NPCs.
     for (curChara = &NPC_CHARA(0); curChara < &NPC_CHARA(ARRAY_SIZE(g_SysWork.npcs)); curChara++)
@@ -501,7 +501,7 @@ s_SubCharacter** Collision_CollidableCharasGet(s32* collCharaCount, const s_SubC
         }
     }
 
-    return &collCharas;
+    return collCharas;
 }
 
 s32 Collision_OffsetCheck(s_CollisionResult* collResult, VECTOR* offset, const s_CharaCollisionCylinder* cylinder) // 0x8006A3B4

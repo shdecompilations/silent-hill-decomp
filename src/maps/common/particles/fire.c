@@ -17,7 +17,7 @@
 
 #if defined(MAP1_S05)
 // .bss data in maps we've matched .bss for
-s_MapHeader_field_5C sharedData_800D8568_1_s05;
+s_MapOverlayHdr_5C sharedData_800D8568_1_s05;
 #endif
 
 // Fire particles included in M1S05, M3S05 and M4S01.

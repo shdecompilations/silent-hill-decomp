@@ -1055,7 +1055,7 @@ void key_on(u8 chan, u8 c1, u8 c2) // 0x800A5158
                 while (stat != 2 && stat != 0);
             }
 
-            for (i = 0, vag_addr = 0, addr_p = (u8*)vab_h[vabId].vh_addr_4 + (vab0->vab_h.ps * 512) + 2080;
+            for (i = 0, vag_addr = 0, addr_p = (u16*)((u8*)vab_h[vabId].vh_addr_4 + (vab0->vab_h.ps * 512) + 2080);
                 i < sd_vag_atr->vag;
                 addr_p++, i++)
             {

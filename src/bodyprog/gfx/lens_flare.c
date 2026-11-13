@@ -541,8 +541,8 @@ void func_8008E5B4(void) // 0x8008E5B4
     s_func_8008E5B4* packet;
 
     GetDrawEnv(&drawEnv);
-    packet         = GsOUT_PACKET_P;
-    GsOUT_PACKET_P = &packet[1];
+    packet         = (s_func_8008E5B4*)GsOUT_PACKET_P;
+    GsOUT_PACKET_P = (PACKET*)&packet[1];
 
     setlen(packet, 0);
     TermPrim(packet);
@@ -634,7 +634,7 @@ void func_8008E794(VECTOR3* pos, q3_12 angle, q19_12 posY) // 0x8008E794
 
     if ((RotTransPers(&svec0, &sp20, &sp50, &sp50) * 4) >= 128)
     {
-        poly = GsOUT_PACKET_P;
+        poly = (POLY_FT4*)GsOUT_PACKET_P;
         SetPolyFT4(poly);
         setSemiTrans(poly, true);
 
@@ -676,7 +676,7 @@ void func_8008E794(VECTOR3* pos, q3_12 angle, q19_12 posY) // 0x8008E794
         poly->y3    = ((u32)sp20.vx >> 16) + 48;
 
         AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 641, poly);
-        GsOUT_PACKET_P = poly + 1;
+        GsOUT_PACKET_P = (PACKET*)(poly + 1);
     }
 }
 
@@ -761,7 +761,7 @@ void func_8008EA68(SVECTOR* rot, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
         sp28[3].vx = Q12_MULT((q7_8)temp_s0_2, Q8(2.2f));
         sp28[3].vz = Q12_MULT((q7_8)temp_v0_2, Q8(2.2f)) + Q8(1.5);
 
-        poly = packet;
+        poly = (s_func_8008EA68*)packet;
 
         temp = 0;
 
@@ -815,7 +815,7 @@ void func_8008EA68(SVECTOR* rot, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
         AddPrim(spD4, &poly->g3[1]);
 
         poly++;
-        packet = poly;
+        packet = (PACKET*)poly;
     }
 
     SetDrawTPage((DR_TPAGE*)packet, temp, 1, 32);

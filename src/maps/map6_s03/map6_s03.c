@@ -24,7 +24,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D7F14
 
-void func_800D7F98(void) // 0x800D7F98
+void func_800D7F98(bool arg0) // 0x800D7F98
 {
     q19_12 dist0;
     q19_12 dist1;

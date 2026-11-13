@@ -11,6 +11,16 @@
 
 #define PSX_SCRATCH_ADDR(offset) ((void*)(((u8*)PSX_SCRATCH) + (offset)))
 
+/** @brief Converts a byte offset stored in a pointer field into a pointer from a base address.
+ * Loaded file headers store offsets relative to their own start, fixed up after loading.
+ *
+ * @param ptr Pointer field holding a byte offset.
+ * @param base Base address the offset is relative to.
+ * @return `base + ptr` as `void*`.
+ */
+#define PTR_OFFSET_RESOLVE(ptr, base) \
+    ((void*)((u8*)(ptr) + (u32)(base)))
+
 /** @brief Computes the size of an array.
  *
  * @param arr Array.

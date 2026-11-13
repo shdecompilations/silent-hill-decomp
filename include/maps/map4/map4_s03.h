@@ -92,7 +92,7 @@ typedef struct _800DF580
     /* 0x1C */ MATRIX  worldMat;
     /* 0x3C */ s32     field_3C;
     /* 0x40 */ u8      field_40[133]; // Type assumed.
-    /* 0xC8 */ s32     (*field_C8)(struct _800DF580*);
+    /* 0xC8 */ bool    (*field_C8)(struct _800DF580*);
     /* 0xCC */ q19_12  field_CC;
     /* 0xD0 */ s32     field_D0;
     /* 0xD4 */ s32     field_D4;

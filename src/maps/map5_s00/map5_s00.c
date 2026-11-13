@@ -384,7 +384,7 @@ void func_800D5EE8(void) // 0x800D5EE8
     ptr = (s_func_800D5B00*)FS_BUFFER_1;
 
     packet = GsOUT_PACKET_P;
-    poly   = packet;
+    poly   = (POLY_G4*)packet;
 
     x = (ptr->field_D84 & 0xFFFF) - 41;
     y = ((u32)ptr->field_D84 >> 16) - 81;
@@ -468,12 +468,12 @@ void func_800D5EE8(void) // 0x800D5EE8
         }
     }
 
-    packet = poly;
-    mode   = packet;
+    packet = (PACKET*)poly;
+    mode   = (DR_MODE*)packet;
 
     SetDrawMode(mode, 0, 1, 0x2A, NULL);
     addPrim(ot, mode);
-    packet         = mode + 1;
+    packet         = (PACKET*)(mode + 1);
     GsOUT_PACKET_P = packet;
 }
 
@@ -613,7 +613,7 @@ void func_800D6490(VECTOR3* arg0) // 0x800D6490
 
 #include "../src/maps/common/map_util.c" // 0x800D64F8
 
-void func_800D6790(void) // 0x800D6790
+void func_800D6790(bool arg0) // 0x800D6790
 {
     u32 bgmFlags = D_800DA578[g_SavegamePtr->mapRoomIdx];
 

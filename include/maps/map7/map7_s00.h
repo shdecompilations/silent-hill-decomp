@@ -47,7 +47,7 @@ extern u16 g_Cutscene_MapMsgAudioCmds[24];
 extern u16 D_800D31C4;
 extern s16 D_800D31DC[];
 
-void func_800CFFE8(s32 arg0);
+void func_800CFFE8(bool arg0);
 
 void func_800D001C(s32 arg0);
 

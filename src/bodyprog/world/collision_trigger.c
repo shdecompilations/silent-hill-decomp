@@ -17,7 +17,7 @@
 
 void World_CollisionTriggersSet(s_MapOverlayHdr* overlayHeader) // 0x80040004
 {
-    g_WorldGfxWork.collisionTriggers = &overlayHeader->collisionTriggers;
+    g_WorldGfxWork.collisionTriggers = overlayHeader->collisionTriggers;
 }
 
 void World_NearbyPlayerCollisionTriggersGet(void) // 0x80040014

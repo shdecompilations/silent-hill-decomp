@@ -22,7 +22,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800CFF40
 
-void func_800CFFE8(s32 arg0) // 0x800CFFE8
+void func_800CFFE8(bool arg0) // 0x800CFFE8
 {
     (arg0 != 0) ? func_800D0050() : sharedFunc_800D0110_7_s00();
 }
@@ -438,7 +438,7 @@ void func_800D1604(void) // 0x800D1604
         temp_v0 = Screen_FadeProgressGet();
         temp_v1 = (g_GameWork.config.brightness * 8) + 4;
 
-        ptr->field_14 = GsOUT_PACKET_P;
+        ptr->field_14 = (TILE*)GsOUT_PACKET_P;
 
         for (i = 0; i < 4; i++)
         {
@@ -452,18 +452,18 @@ void func_800D1604(void) // 0x800D1604
 
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[3], ptr->field_14, 3);
             ptr->field_14++;
-            ptr->field_4 = ptr->field_14;
+            ptr->field_4 = (DR_TPAGE*)ptr->field_14;
             setDrawTPage(ptr->field_4, 0, 0, getTPage(2, (i >= 2) ? 2 : 1, ((ptr->field_18 << 4) + (j << 2)) << 6, (((ptr->field_18 << 4) >> 4) & 0x1) << 8));
             AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[3], ptr->field_4);
             ptr->field_4++;
 
-            ptr->field_14 = ptr->field_4;
+            ptr->field_14 = (TILE*)ptr->field_4;
         }
 
-        GsOUT_PACKET_P = ptr->field_14;
+        GsOUT_PACKET_P = (PACKET*)ptr->field_14;
     }
 
-    ptr->field_0 = GsOUT_PACKET_P;
+    ptr->field_0 = (SPRT*)GsOUT_PACKET_P;
 
     for (j = 0; j < 2; j++)
     {
@@ -474,16 +474,16 @@ void func_800D1604(void) // 0x800D1604
         addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], ptr->field_0, 4);
         ptr->field_0++;
 
-        ptr->field_4 = ptr->field_0;
+        ptr->field_4 = (DR_TPAGE*)ptr->field_0;
 
         setDrawTPage(ptr->field_4, 0, 0, getTPage(2, 0, ((ptr->field_18 << 4) + (j << 2)) << 6, (((ptr->field_18 << 4) >> 4) & 1) << 8));
         AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], ptr->field_4);
 
         ptr->field_4++;
-        ptr->field_0 = ptr->field_4;
+        ptr->field_0 = (SPRT*)ptr->field_4;
     }
 
-    ptr->field_8 = ptr->field_0;
+    ptr->field_8 = (DR_STP*)ptr->field_0;
 
     SetDrawStp(ptr->field_8, 1);
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], ptr->field_8);
@@ -493,7 +493,7 @@ void func_800D1604(void) // 0x800D1604
     addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], ptr->field_8);
     ptr->field_8++;
 
-    GsOUT_PACKET_P = ptr->field_8;
+    GsOUT_PACKET_P = (PACKET*)ptr->field_8;
 
     if (Pad_ButtonClickedBind(skip))
     {

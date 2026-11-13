@@ -211,7 +211,7 @@ bool Gfx_StringDraw(char* str, s32 displayLength) // 0x8004A8E8
     u8*       strCpy;
     bool      result;
     s32       glyphWidth;
-    GsOT*     ot;
+    GsOT_TAG* ot;
     PACKET*   packet;
     DR_TPAGE* tPage;
     POLY_FT4* glyphPoly;

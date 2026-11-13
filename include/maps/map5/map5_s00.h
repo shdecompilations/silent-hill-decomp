@@ -100,7 +100,7 @@ void func_800D6414(void);
 
 void func_800D6490(VECTOR3* arg0);
 
-void func_800D6790(void);
+void func_800D6790(bool arg0);
 
 void func_800D67F4(void);
 

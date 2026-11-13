@@ -1426,7 +1426,7 @@ s16 SdUtKeyOnV(s16 voice, s16 vabid, s16 prog, s16 tone, s16 note, s16 fine, s16
             }
             while (stat != 2 && stat != 0);
 
-            addr_p = (u8*)vab_h[vabid].vh_addr_4 + (sd_vh->vab_h.ps << 9) + 0x820;
+            addr_p = (u16*)((u8*)vab_h[vabid].vh_addr_4 + (sd_vh->vab_h.ps << 9) + 0x820);
 
             for (vag_offset = 0, i = 0; i < sd_vag_atr->vag; i++)
             {

@@ -511,7 +511,7 @@ bool func_801E3684(void) // 0x801E3684
         }
 
         var_s3 = sp14 + var_s4;
-        var_s2 = &g_CreditList[var_s0];
+        var_s2 = (s32*)&g_CreditList[var_s0];
 
         for (var_s1 = sp18; var_s1 > 0; var_s1--, var_s2++, var_s3 += sp10)
         {
@@ -759,7 +759,7 @@ void func_801E3E18(s32 arg0, s32 arg1) // 0x801E3E18
     s32*     temp_t2;
 
     packet  = GsOUT_PACKET_P;
-    temp_t2 = &g_OtTags0[g_ActiveBufferIdx][6];
+    temp_t2 = (s32*)&g_OtTags0[g_ActiveBufferIdx][6];
     addr    = temp_t2 + 1;
     temp_a2 = D_801E600C;
 
@@ -1024,7 +1024,7 @@ void Credits_TextDraw(char* str) // 0x801E4394
     SPRT*     sprite;
     SPRT_16*  sprite16;
     DR_TPAGE* tPage;
-    GsOT*     ot;
+    GsOT_TAG* ot;
 
     strPtr     = str;
     textX      = g_CreditTextState.textX;
@@ -1283,8 +1283,8 @@ void Credits_Text3dBlendSet(bool semiTrans, u32 arg1) // 0x801E4BD4
 
 void Credits_Text3dDraw(u8* str) // 0x801E4C1C
 {
-    PACKET* packet;
-    GsOT*   ot;
+    PACKET*   packet;
+    GsOT_TAG* ot;
 
     s32 textX      = g_CreditText3dState.sub_0.textX;
     s32 textY      = g_CreditText3dState.sub_0.textY;

@@ -1444,8 +1444,8 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                          (sp38[i].field_E == 8 ? sharedData_800D5AAE_1_s05 : sp38[i].field_E + 1) == sp38[(i + 1) % temp_s7].field_E) ||
                         (j == 2 && sp38[i].field_D != 0))
                     {
-                        ptr0 = &sp18[i * 16] + 32;
-                        ptr1 = &sp18[k * 16] + 32;
+                        ptr0 = (s_sharedFunc_800D4594_1_s05*)(&sp18[i * 16] + 32);
+                        ptr1 = (s_sharedFunc_800D4594_1_s05*)(&sp18[k * 16] + 32);
 
                         ptr1->field_0 = ptr0->field_0;
                         ptr1->field_4 = ptr0->field_4;
@@ -1524,8 +1524,8 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                         (j == 4 && sharedData_800D5CF8_1_s05[sp38[i].field_E] != 2 &&
                          (sharedData_800D5D08_1_s05[sp38[i].field_E] != 0 || sharedData_800D5D08_1_s05[new_var] != 0)))
                     {
-                        ptr0 = &sp18[i * 16] + 32;
-                        ptr1 = &sp18[k * 16] + 32;
+                        ptr0 = (s_sharedFunc_800D4594_1_s05*)(&sp18[i * 16] + 32);
+                        ptr1 = (s_sharedFunc_800D4594_1_s05*)(&sp18[k * 16] + 32);
 
                         ptr1->field_0 = ptr0->field_0;
                         ptr1->field_4 = ptr0->field_4;

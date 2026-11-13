@@ -112,9 +112,9 @@ void Screen_CutsceneCameraStateUpdate(void)
         }
     }
 
-    GsOT*    ot;
-    POLY_G4* poly;
-    DR_MODE* drMode;
+    GsOT_TAG* ot;
+    POLY_G4*  poly;
+    DR_MODE*  drMode;
 
     drMode = &D_800A8E98[g_ActiveBufferIdx];
     poly   = &D_800A8EB0[g_ActiveBufferIdx];

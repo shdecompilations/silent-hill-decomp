@@ -589,7 +589,7 @@ u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
 
     if (g_WorldEnvRenderWork.lightMode != WorldEnvLightMode_None)
     {
-        ptr1 = &g_WorldEnvRenderWork.light.field_38;
+        ptr1 = (VECTOR3*)g_WorldEnvRenderWork.light.field_38;
         for (i = 0, ptr0 = ptr1, var_a3 = 0xFF;
              i < ARRAY_SIZE(pos);
              i++, ptr0 += 2)
@@ -730,9 +730,9 @@ void Lm_HeaderPtrsInit(s_LmHeader* lmHdr) // 0x800560FC
     lmHdr->isLoaded = true;
 
     // Add memory address of header to pointer fields.
-    lmHdr->materials  = (u8*)lmHdr->materials  + (u32)lmHdr;
-    lmHdr->modelHdrs  = (u8*)lmHdr->modelHdrs  + (u32)lmHdr;
-    lmHdr->modelOrder = (u8*)lmHdr->modelOrder + (u32)lmHdr;
+    lmHdr->materials  = PTR_OFFSET_RESOLVE(lmHdr->materials, lmHdr);
+    lmHdr->modelHdrs  = PTR_OFFSET_RESOLVE(lmHdr->modelHdrs, lmHdr);
+    lmHdr->modelOrder = PTR_OFFSET_RESOLVE(lmHdr->modelOrder, lmHdr);
 
     for (i = 0; i < lmHdr->modelCount; i++)
     {
@@ -747,14 +747,14 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800
 {
     s_MeshHeader* curMeshHdr;
 
-    modelHdr->meshHdrs = (u8*)modelHdr->meshHdrs + (u32)lmHdr;
+    modelHdr->meshHdrs = PTR_OFFSET_RESOLVE(modelHdr->meshHdrs, lmHdr);
 
     for (curMeshHdr = &modelHdr->meshHdrs[0]; curMeshHdr < &modelHdr->meshHdrs[modelHdr->meshCount]; curMeshHdr++)
     {
-        curMeshHdr->primitives = (u8*)curMeshHdr->primitives + (u32)lmHdr;
-        curMeshHdr->verticesXy = (u8*)curMeshHdr->verticesXy + (u32)lmHdr;
-        curMeshHdr->verticesZ  = (u8*)curMeshHdr->verticesZ  + (u32)lmHdr;
-        curMeshHdr->normals    = (u8*)curMeshHdr->normals    + (u32)lmHdr;
-        curMeshHdr->unkPtr_14  = (u8*)curMeshHdr->unkPtr_14  + (u32)lmHdr;
+        curMeshHdr->primitives = PTR_OFFSET_RESOLVE(curMeshHdr->primitives, lmHdr);
+        curMeshHdr->verticesXy = PTR_OFFSET_RESOLVE(curMeshHdr->verticesXy, lmHdr);
+        curMeshHdr->verticesZ  = PTR_OFFSET_RESOLVE(curMeshHdr->verticesZ, lmHdr);
+        curMeshHdr->normals    = PTR_OFFSET_RESOLVE(curMeshHdr->normals, lmHdr);
+        curMeshHdr->unkPtr_14  = PTR_OFFSET_RESOLVE(curMeshHdr->unkPtr_14, lmHdr);
     }
 }

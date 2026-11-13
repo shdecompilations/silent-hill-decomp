@@ -16,25 +16,24 @@
 #include "bodyprog/sound/sd_call.h"
 #include "main/rng.h"
 
+// Draw areas, and the draw offset at the centre of each.
+RECT D_800AE5A8[3] = {
+    { 0,            SCREEN_FRAMEBUFFER_Y_INTERLACED, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_PROGRESSIVE },
+    { 0,            256,                             SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_PROGRESSIVE },
+    { SCREEN_WIDTH, 256,                             SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_PROGRESSIVE }
+};
+
+u16 D_800AE5C0[3][2] = {
 #if VERSION_REGION_IS(PAL)
-RECT D_800AE5A8[4] = {
-    { 0x0, 0x1, 0x140, 0xFF },
-    { 0x0, 0x100, 0x140, 0xFF },
-    { 0x140, 0x100, 0x140, 0xFF },
-    { 0xA0, 0x81, 0xA0, 0x17F }
-};
-
-u16 D_800AE5C8[2] = { 0x01E0, 0x017F };
+    { 160, 129 },
+    { 160, 383 },
+    { 480, 383 }
 #else
-RECT D_800AE5A8[4] = {
-    { 0x0, 0x20, 0x140, 0xE0 },
-    { 0x0, 0x100, 0x140, 0xE0 },
-    { 0x140, 0x100, 0x140, 0xE0 },
-    { 0xA0, 0x90, 0xA0, 0x170 }
+    { 160, 144 },
+    { 160, 368 },
+    { 480, 368 }
+#endif
 };
-
-u16 D_800AE5C8[2] = { 0x01E0, 0x0170 };
-#endif // Passed to `SetDrawOffset` and is accessed as part of a RECT with data from `D_800AE5A8`.
 
 // https://decomp.me/scratch/HNL4n something to do with animations?
 // `var_s7 = *(((animStatus + 1) * 2) + &D_800AE5CC) - *((animStatus * 2) + &D_800AE5CC);`
@@ -234,7 +233,7 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 void func_8005E414(s32 orgIdx) // 0x8005E414
 {
     RECT*      rect;
-    PACKET*    packet;
+    u16*       drawOffset;
     DR_AREA*   area;
     DR_OFFSET* offset;
 
@@ -259,26 +258,26 @@ void func_8005E414(s32 orgIdx) // 0x8005E414
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[orgIdx], area);
     area++;
 
-    offset = area;
+    offset = (DR_OFFSET*)area;
 
-    SetDrawOffset(offset, &D_800AE5C8[0]);
+    SetDrawOffset(offset, D_800AE5C0[2]);
 
-    rect = D_800AE5C8 - 4;
+    drawOffset = D_800AE5C0[0];
 
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], offset);
     offset++;
 
     if (g_ActiveBufferIdx == 0)
     {
-        rect = D_800AE5C8 - 2;
+        drawOffset = D_800AE5C0[1];
     }
 
-    SetDrawOffset(offset, rect);
+    SetDrawOffset(offset, drawOffset);
 
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[orgIdx], offset);
     offset++;
 
-    GsOUT_PACKET_P = offset;
+    GsOUT_PACKET_P = (PACKET*)offset;
 }
 
 void func_8005E650(s32 mapId) // 0x8005E650

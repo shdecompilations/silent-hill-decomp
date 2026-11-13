@@ -3070,8 +3070,8 @@ g_Pow2NegFracTable                           = 0x800ADB5C;
 //----------------------------------------------------------------------
 //--- PA: 0x088510   VA: 0x800ADBA0   subsegment: .data, gfx/env_effects
 //----------------------------------------------------------------------
-D_800AE5A8                                   = 0x800ADBA0;
-D_800AE5C8                                   = 0x800ADBC0;
+D_800AE5A8                                   = 0x800ADBA0; // size:0x18
+D_800AE5C0                                   = 0x800ADBB8; // size:0xC
 D_800AE5CC                                   = 0x800ADBC4;
 D_800AE5F0                                   = 0x800ADBE8;
 D_800AE700                                   = 0x800ADCF8;

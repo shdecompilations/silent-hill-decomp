@@ -225,7 +225,7 @@ bool Ray_TraceRun(s_RayTrace* trace, s_RayQuery* query) // 0x8006DEB0
             func_8006E0AC(query, collData);
             Collision_ShapePassReset(collData);
 
-            for (curUnk = &query->field_8C; curUnk < &query->field_8C[query->field_88]; curUnk++)
+            for (curUnk = &query->field_8C[0]; curUnk < &query->field_8C[query->field_88]; curUnk++)
             {
                 temp_lo = curUnk->field_2 * query->cellCountX;
                 func_8006E53C(query, &collData->shapeAllocs[temp_lo + curUnk->field_0], collData);

@@ -91,7 +91,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
         SetDrawStp(scratchData->stp_134, 0);
         addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_134);
         scratchData->stp_134++;
-        *poly = (PACKET*)scratchData->stp_134;
+        *poly = (POLY_FT4*)scratchData->stp_134;
     }
 
     for (i = 0; i < 4; i++)

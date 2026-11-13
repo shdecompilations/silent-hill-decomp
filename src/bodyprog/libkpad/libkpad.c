@@ -384,7 +384,7 @@ bool KPad_ActuatorSetup(s_KPadWork* work, s32 padState, s_KPad_Handler* head) //
 
     if (!status.isActSet_0_23)
     {
-        pattern = &work->actuatorData_4;
+        pattern = (u8*)&work->actuatorData_4;
         if (status.isEnabled_0_18 && !status.isPaused_0_17)
         {
             length = status.actCount_0_19;
@@ -439,7 +439,7 @@ bool KPad_ActuatorDataUpdate(s_KPadWork* work) // 0x8009E718
     scale = status.strength_0_8;
 
     in  = work->channels_C;
-    out = &work->actuatorData_4;
+    out = (u8*)&work->actuatorData_4;
     for (i = work->channelInfo_8.count_2; i != 0; i--)
     {
         // Contains up to 4 actuator data bytes packed into a `u32`, even though there are only two actuators max.

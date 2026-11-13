@@ -7783,9 +7783,9 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
     q23_8                 offsetToAttackPosX;
     q23_8                 offsetToAttackPosZ;
     q3_12                 angleDeltaToTargetY;
-    VECTOR*               attackPos0; // Q19.12
-    VECTOR*               attackPos1; // Q19.12
-    VECTOR*               attackPos2; // Q19.12
+    VECTOR3*              attackPos0; // Q19.12
+    VECTOR3*              attackPos1; // Q19.12
+    VECTOR3*              attackPos2; // Q19.12
     s_Model*              model;
     static s32            __pad_bss_800C44D8[2];
     static VECTOR3        attackPos;

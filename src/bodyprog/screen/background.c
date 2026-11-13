@@ -284,10 +284,10 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
             setDrawTPage(tPage, 0, 1, getTPage(2, 0, (j * 256), tPageOffsetY));
             AddPrim(ot, tPage);
 
-            sprt = (PACKET*)sprt + sizeof(DR_TPAGE);
+            sprt = (SPRT*)((PACKET*)sprt + sizeof(DR_TPAGE));
         }
     }
 
-    GsOUT_PACKET_P = sprt;
+    GsOUT_PACKET_P = (PACKET*)sprt;
     return false;
 }

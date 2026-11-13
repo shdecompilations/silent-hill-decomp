@@ -2962,14 +2962,14 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     #define ICON_SIZE_Y   12
     #define ICON_OFFSET_X -12
 
-    s16      highlightY0;
-    s16      highlightY1;
-    s32      strYPos;
-    s32      i;
-    u16*     contConfig;
-    DR_MODE* drMode;
-    POLY_G4* poly;
-    GsOT*    ot;
+    s16       highlightY0;
+    s16       highlightY1;
+    s32       strYPos;
+    s32       i;
+    u16*      contConfig;
+    DR_MODE*  drMode;
+    POLY_G4*  poly;
+    GsOT_TAG* ot;
 
     /** @brief Draw modes for textured entry selection highlights in the controller config menu.
      * 0: Left presets pane.
@@ -3116,7 +3116,7 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
     u32            clutY;
     s32            temp;
     s32            v0;
-    GsOT*          ot;
+    GsOT_TAG*      ot;
     SPRT*          prim;
     DR_TPAGE*      tpage;
     PACKET*        packet;

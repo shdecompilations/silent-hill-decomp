@@ -398,8 +398,8 @@ void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 v
 
 void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 {
-    s32*  ptr;
-    TILE* tile;
+    GsOT_TAG* ptr;
+    TILE*     tile;
 
     // Draw Konami logo.
     BootScreen_ImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 0, 256, 256, -192, -192);
@@ -438,7 +438,7 @@ void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 
 void BootScreen_KcetScreenDraw(void) // 0x800CA120
 {
-    u32* ptr;
+    GsOT_TAG* ptr;
 
     // Draw KCET logo.
     BootScreen_ImageSegmentDraw(&g_KcetLogoImg, 0xF, 0, 0, 256, 160, -208, -80);

@@ -968,7 +968,7 @@ void func_800D1040(s32 arg0) // 0x800D1040
         var_t4++;
     }
 
-    poly = GsOUT_PACKET_P;
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
 
     setPolyFT4(poly);
 
@@ -999,7 +999,7 @@ void func_800D1040(s32 arg0) // 0x800D1040
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0], poly);
 
     poly++;
-    GsOUT_PACKET_P = poly;
+    GsOUT_PACKET_P = (PACKET*)poly;
 }
 
 void func_800D1330(s16 arg0) // 0x800D1330
@@ -1018,7 +1018,7 @@ void func_800D1330(s16 arg0) // 0x800D1330
     s32       var_a3;
     s32       temp;
 
-    poly = GsOUT_PACKET_P;
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
 
     temp_v0   = Q12_MULT_PRECISE(arg0, 76) - 88;
     temp_t8   = D_800D4E2D + temp_v0;
@@ -1065,7 +1065,7 @@ void func_800D1330(s16 arg0) // 0x800D1330
         poly++;
     }
 
-    GsOUT_PACKET_P = poly;
+    GsOUT_PACKET_P = (PACKET*)poly;
 }
 
 void Map_WorldObjectsInit(void) // 0x800D1658
@@ -1300,7 +1300,7 @@ void func_800D1EB8(s32 arg0, s32* arg1, s32* arg2) // 0x800D1EB8
 
     basePtr = PSX_SCRATCH;
 
-    ptr0 = basePtr->field_8;
+    ptr0 = (s32*)basePtr->field_8;
 
     for (i = 31; i >= 0; i--, ptr0++)
     {
@@ -1373,11 +1373,11 @@ void func_800D1EB8(s32 arg0, s32* arg1, s32* arg2) // 0x800D1EB8
             }
         }
 
-        ptr0 = basePtr->field_8;
+        ptr0 = (s32*)basePtr->field_8;
 
         if (i != 255)
         {
-            ptr1 = basePtr->field_88;
+            ptr1 = (s32*)basePtr->field_88;
 
             for (j = 0; j < 64; j++, ptr0++, ptr1++)
             {
@@ -1428,7 +1428,7 @@ void func_800D2170(s32 arg0) // 0x800D2170
     base = FS_BUFFER_22;
 
     ptr  = &base->field_908;
-    ptr2 = ptr->field_2000;
+    ptr2 = ptr->field_2000[0];
 
     if (!arg0)
     {
@@ -1521,7 +1521,7 @@ void func_800D2364(void) // 0x800D2364
     base = FS_BUFFER_22;
 
     sp10     = &base->field_908;
-    sp14     = sp10->field_2000;
+    sp14     = sp10->field_2000[0];
     var_t2_2 = &base->field_0;
 
     ptr = PSX_SCRATCH;
@@ -1539,7 +1539,7 @@ void func_800D2364(void) // 0x800D2364
     ptr->field_68 = g_ActiveBufferIdx;
     temp          = Q12_MULT_PRECISE((g_GameWork.config.brightness * 8) + 4, Screen_FadeProgressGet());
 
-    ptr->field_4 = GsOUT_PACKET_P;
+    ptr->field_4 = (TILE*)GsOUT_PACKET_P;
 
     otIdx = 3;
 
@@ -1554,16 +1554,16 @@ void func_800D2364(void) // 0x800D2364
         addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_4, 3);
         ptr->field_4++;
 
-        ptr->field_8 = ptr->field_4;
+        ptr->field_8 = (DR_TPAGE*)ptr->field_4;
 
         setDrawTPage(ptr->field_8, 0, 0, getTPage(2, (j >= 2) ? 2 : 1, ((ptr->field_68 << 4) + (i << 2)) << 6, (((ptr->field_68 << 4) >> 4) & 1) << 8));
         AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_8);
 
         ptr->field_8++;
-        ptr->field_4 = ptr->field_8;
+        ptr->field_4 = (TILE*)ptr->field_8;
     }
 
-    ptr->field_0 = ptr->field_4;
+    ptr->field_0 = (SPRT*)ptr->field_4;
 
     if (Savegame_EventFlagGet(EventFlag_412))
     {
@@ -1580,17 +1580,17 @@ void func_800D2364(void) // 0x800D2364
         addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_0, 4);
         ptr->field_0++;
 
-        ptr->field_8 = ptr->field_0;
+        ptr->field_8 = (DR_TPAGE*)ptr->field_0;
 
         setDrawTPage(ptr->field_8, 0, 0, getTPage(2, 0, ((ptr->field_68 << 4) + (i << 2)) << 6, (((ptr->field_68 << 4) >> 4) & 1) << 8));
 
         AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[otIdx], ptr->field_8);
 
         ptr->field_8++;
-        ptr->field_0 = ptr->field_8;
+        ptr->field_0 = (SPRT*)ptr->field_8;
     }
 
-    ptr->field_C = ptr->field_0;
+    ptr->field_C = (DR_STP*)ptr->field_0;
 
     SetDrawStp(ptr->field_C, 1);
     addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], ptr->field_C);
@@ -1600,7 +1600,7 @@ void func_800D2364(void) // 0x800D2364
     addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], ptr->field_C);
 
     ptr->field_C++;
-    packet = ptr->field_C;
+    packet = (PACKET*)ptr->field_C;
 
     for (i = 0; i < 17; i++)
     {
@@ -1731,7 +1731,7 @@ void func_800D2364(void) // 0x800D2364
                     continue;
                 }
 
-                poly = packet;
+                poly = (POLY_GT4*)packet;
 
                 setPolyGT4(poly);
                 setSemiTrans(poly, 1);
@@ -1754,7 +1754,7 @@ void func_800D2364(void) // 0x800D2364
 
                 addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(temp_a2 - 0x40) >> 3], poly);
                 poly++;
-                packet = poly;
+                packet = (PACKET*)poly;
             }
         }
     }

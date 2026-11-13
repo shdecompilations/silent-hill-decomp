@@ -142,7 +142,7 @@ void Settings_RestoreControlDefaults(s32 configIdx) // 0x80033480
     };
 #endif
 
-    for (i = 0, ptr = &g_GameWorkPtr->config.controllerConfig; i < INPUT_ACTION_COUNT; i++, ptr++)
+    for (i = 0, ptr = (u16*)&g_GameWorkPtr->config.controllerConfig; i < INPUT_ACTION_COUNT; i++, ptr++)
     {
         *ptr = (&DEFAULT_CONTROLLER_CONFIGS[configIdx].enter)[i];
     }

@@ -930,7 +930,7 @@ void func_800D3F84(VECTOR3* floatstinger, s32 arg1, s32 arg2) // 0x800D3F84
     gte_SetTransMatrix(&sp20);
     gte_ReadGeomScreen(&sp58);
 
-    tile = GsOUT_PACKET_P;
+    tile = (TILE*)GsOUT_PACKET_P;
 
     Math_SetSVectorFastSum(&sp40, Q12_TO_Q8(floatstinger->vx - sp10.vx), Q12_TO_Q8(floatstinger->vy - sp10.vy), Q12_TO_Q8(floatstinger->vz - sp10.vz));
     gte_ldv0(&sp40);
@@ -956,7 +956,7 @@ void func_800D3F84(VECTOR3* floatstinger, s32 arg1, s32 arg2) // 0x800D3F84
 
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[12], tile);
         tile++;
-        GsOUT_PACKET_P = tile;
+        GsOUT_PACKET_P = (PACKET*)tile;
     }
 }
 

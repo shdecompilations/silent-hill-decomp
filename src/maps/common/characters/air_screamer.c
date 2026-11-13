@@ -13068,15 +13068,15 @@ s32 sharedFunc_800D7440_0_s01(s_CollisionResult* collResult, VECTOR* offset, s_S
 
 void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer)
 {
-    q19_12   headingAngle;
-    q19_12   sinHeadingAngle;
-    q19_12   cosHeadingAngle;
-    q19_12   offsetX;
-    q19_12   offsetZ;
-    MATRIX*  mat;
-    SVECTOR* rot;
+    q19_12    headingAngle;
+    q19_12    sinHeadingAngle;
+    q19_12    cosHeadingAngle;
+    q19_12    offsetX;
+    q19_12    offsetZ;
+    MATRIX*   mat;
+    SVECTOR3* rot;
 
-    mat                                       = (s32*)(sharedData_800E21D0_0_s01.coords_8) + 1;
+    mat                                       = &sharedData_800E21D0_0_s01.coords_8->coord;
     *(s32*)sharedData_800E21D0_0_s01.coords_8 = 0;
     rot                                       = &airScreamer->rotation;
     Math_RotMatrixZxyNegGte(rot, mat);
@@ -13625,7 +13625,7 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         temp_a0  = &temp_s5[1];
         height   = temp_a0->pad;
         idx2     = temp_s5->pad;
-        var_t0_2 = &sharedData_800E21D0_0_s01.matrices_C;
+        var_t0_2 = sharedData_800E21D0_0_s01.matrices_C;
 
         for (i = 1; height != NO_VALUE; i++)
         {

@@ -364,7 +364,7 @@ void func_800CDB98(void) // 0x800CDB98
 
     for (i = 0; i < 16; i++)
     {
-        poly_g3 = GsOUT_PACKET_P;
+        poly_g3 = (POLY_G3*)GsOUT_PACKET_P;
 
         setPolyG3(poly_g3);
         setSemiTrans(poly_g3, 1);
@@ -389,12 +389,12 @@ void func_800CDB98(void) // 0x800CDB98
         setXY2Fast(poly_g3, Q12_MULT(Math_Sin((i + 1) << 8), temp_s5), Q12_MULT(Math_Cos((i + 1) << 8), temp_s5));
 
         addPrim(&ot->org[10], poly_g3);
-        GsOUT_PACKET_P = poly_g3 + 1;
+        GsOUT_PACKET_P = (PACKET*)(poly_g3 + 1);
     }
 
     for (i = 0; i < 16; i++)
     {
-        poly_g4 = GsOUT_PACKET_P;
+        poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
 
         setPolyG4(poly_g4);
         setSemiTrans(poly_g4, 1);
@@ -422,7 +422,7 @@ void func_800CDB98(void) // 0x800CDB98
         setXY3Fast(poly_g4, Q12_MULT(Math_Sin((i + 1) << 8), temp_s6), Q12_MULT(Math_Cos((i + 1) << 8), temp_s6));
 
         addPrim(&ot->org[10], poly_g4);
-        GsOUT_PACKET_P = poly_g4 + 1;
+        GsOUT_PACKET_P = (PACKET*)(poly_g4 + 1);
     }
 
     Gfx_Primitive2dTextureSet(0, 0, 10, 1);
@@ -438,7 +438,7 @@ void func_800CE180(void) // 0x800CE180
 
     for (i = 0; i < 2; i++)
     {
-        poly_g3 = GsOUT_PACKET_P;
+        poly_g3 = (POLY_G3*)GsOUT_PACKET_P;
 
         setPolyG3(poly_g3);
         setSemiTrans(poly_g3, 1);
@@ -453,7 +453,7 @@ void func_800CE180(void) // 0x800CE180
 
         addPrim(&ot->org[9], poly_g3);
 
-        GsOUT_PACKET_P = poly_g3 + 1;
+        GsOUT_PACKET_P = (PACKET*)(poly_g3 + 1);
     }
 }
 
@@ -469,7 +469,7 @@ void func_800CE180(void) // 0x800CE180
 
 #include "../src/maps/common/map_util.c" // 0x800EB460
 
-void func_800EB6B0(void) // 0x800EB6B0
+void func_800EB6B0(bool arg0) // 0x800EB6B0
 {
     s32    temp_v0;
     q19_12 posX;

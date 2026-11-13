@@ -1244,19 +1244,19 @@ void WorldMap_ChunkHeaderPtrsInit(s_IpdHeader* ipdHdr) // 0x80043DA4
 {
     s_IpdModelBuffer* curModelBuf;
 
-    ipdHdr->lmHdr        = (u8*)ipdHdr->lmHdr        + (u32)ipdHdr;
-    ipdHdr->modelInfos   = (u8*)ipdHdr->modelInfos   + (u32)ipdHdr;
-    ipdHdr->modelBuffers = (u8*)ipdHdr->modelBuffers + (u32)ipdHdr;
-    ipdHdr->modelOrder   = (u8*)ipdHdr->modelOrder   + (u32)ipdHdr;
+    ipdHdr->lmHdr        = PTR_OFFSET_RESOLVE(ipdHdr->lmHdr, ipdHdr);
+    ipdHdr->modelInfos   = PTR_OFFSET_RESOLVE(ipdHdr->modelInfos, ipdHdr);
+    ipdHdr->modelBuffers = PTR_OFFSET_RESOLVE(ipdHdr->modelBuffers, ipdHdr);
+    ipdHdr->modelOrder   = PTR_OFFSET_RESOLVE(ipdHdr->modelOrder, ipdHdr);
 
     // Run through model buffers.
     for (curModelBuf = &ipdHdr->modelBuffers[0];
          curModelBuf < &ipdHdr->modelBuffers[ipdHdr->modelBufferCount];
          curModelBuf++)
     {
-        curModelBuf->modelInstances     = (u8*)curModelBuf->modelInstances     + (u32)ipdHdr;
-        curModelBuf->billboardInstances = (u8*)curModelBuf->billboardInstances + (u32)ipdHdr;
-        curModelBuf->subchunkRanges     = (u8*)curModelBuf->subchunkRanges     + (u32)ipdHdr;
+        curModelBuf->modelInstances     = PTR_OFFSET_RESOLVE(curModelBuf->modelInstances, ipdHdr);
+        curModelBuf->billboardInstances = PTR_OFFSET_RESOLVE(curModelBuf->billboardInstances, ipdHdr);
+        curModelBuf->subchunkRanges     = PTR_OFFSET_RESOLVE(curModelBuf->subchunkRanges, ipdHdr);
     }
 }
 

@@ -54,7 +54,7 @@ void func_800D0840(void) // 0x800D0840
     sp10.w = 16;
     sp10.h = 1;
 
-    ptr0 = &D_800DB980;
+    ptr0 = D_800DB980;
 
     StoreImage(&sp10, ptr0);
     DrawSync(0);
@@ -191,7 +191,7 @@ void func_800D0CA0(q19_12 rotY, SVECTOR* pos) // 0x800D0CA0
     SVECTOR     rot; // Q3.12
     s_800E0988* ptr;
 
-    ptr = &D_800E0988;
+    ptr = D_800E0988;
 
     SetRotMatrix(&ptr->world_8);
     SetTransMatrix(&ptr->world_8);
@@ -217,7 +217,7 @@ void func_800D0D6C(MATRIX* worldMat, SVECTOR* pos, q19_12 rotY) // 0x800D0D6C
     SVECTOR     rot; // Q3.12
     s_800E0988* ptr;
 
-    ptr = &D_800E0988;
+    ptr = D_800E0988;
 
     rot.vx = Q12_ANGLE(0.0f);
     rot.vy = rotY;
@@ -365,7 +365,7 @@ void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 a
 
         for (j = 1; j < arg5 + 1; j++)
         {
-            poly = packet;
+            poly = (POLY_G4*)packet;
 
             col0 = col1;
             col2 = col3;
@@ -410,7 +410,7 @@ void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 a
         }
     }
 
-    tpage = packet;
+    tpage = (DR_TPAGE*)packet;
 
     setDrawTPage(tpage, 0, 1, getTPage(0, abr, 320, 0));
     addPrim(ot, tpage);
@@ -835,7 +835,7 @@ void func_800D1FF4(GsOT_TAG* arg0) // 0x800D1FF4
 
     func_800D0D6C(&worldMat, &sp10, 0);
 
-    ptr0 = &D_800E0988;
+    ptr0 = D_800E0988;
 
     SetRotMatrix(&ptr0->world_8);
     SetTransMatrix(&ptr0->world_8);
@@ -2496,7 +2496,7 @@ s32 func_800D4D80(s32 arg0, s32 arg1) // 0x800D4D80
     s32 i;
     u8* ptr;
 
-    ptr = &sp10;
+    ptr = sp10;
 
     for (i = 0; i < 9; i++)
     {

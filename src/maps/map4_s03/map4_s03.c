@@ -1299,7 +1299,7 @@ void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
 
         if (temp_a2 > 0 && temp_a2 < ORDERING_TABLE_SIZE - 1)
         {
-            poly = GsOUT_PACKET_P;
+            poly = (POLY_FT4*)GsOUT_PACKET_P;
 
             setPolyFT4(poly);
             setRGB0(poly, arg1, arg1, arg1);
@@ -1321,7 +1321,7 @@ void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
             poly->tpage = spA8;
             poly->clut  = temp_fp->field_2;
             AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[temp_a2], poly);
-            GsOUT_PACKET_P = poly + 1;
+            GsOUT_PACKET_P = (PACKET*)(poly + 1);
         }
     }
     else
@@ -1382,7 +1382,7 @@ void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
 
                 if (temp_a2 > 0 && temp_a2 < ORDERING_TABLE_SIZE - 1)
                 {
-                    poly2 = GsOUT_PACKET_P;
+                    poly2 = (POLY_FT4*)GsOUT_PACKET_P;
 
                     setPolyFT4(poly2);
                     setRGB0(poly2, arg1, arg1, arg1);
@@ -1401,7 +1401,7 @@ void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
                     poly2->tpage = spA8;
                     poly2->clut  = temp_fp->field_2;
                     AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[temp_a2], poly2);
-                    GsOUT_PACKET_P = poly2 + 1;
+                    GsOUT_PACKET_P = (PACKET*)(poly2 + 1);
                 }
             }
         }
@@ -1841,7 +1841,7 @@ void func_800DA3E0(void) // 0x800DA3E0
 
 void func_800DA718(void) // 0x800DA718
 {
-    void** addr;
+    void (**addr)(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
     if (Savegame_EventFlagGet(EventFlag_323) && !Savegame_EventFlagGet(EventFlag_325))
     {

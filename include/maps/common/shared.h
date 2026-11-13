@@ -241,32 +241,6 @@ typedef struct
 } s_D_800D5A8C;
 STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
 
-typedef struct _MapHeader_field_5C
-{
-    u8    flags;
-    u8    field_1;
-    u8    field_2;
-    u8    field_3;
-    u8    field_4;
-    u8    field_5;
-    u8    field_6;
-    u8    field_7;
-    u16   field_8;
-    s16   field_A;
-    u16   field_C;
-    s16   field_E;
-    q3_12 field_10;
-    s16   field_12;
-    s16   field_14;
-    s16   field_16;
-    s16   field_18;
-    s16   field_1A;
-    u16   field_1C;
-    s16   field_1E;
-    s32   field_20;
-    s32   field_24;
-} s_MapHeader_field_5C;
-
 typedef struct
 {
     s32 vx;
@@ -280,7 +254,7 @@ typedef struct
     s32    field_4;
 } s_sharedData_800ED2D4_2_s02;
 
-extern s_MapHeader_field_5C sharedData_800D8568_1_s05;
+extern s_MapOverlayHdr_5C sharedData_800D8568_1_s05;
 
 extern s_800E330C sharedData_800E330C_0_s00[20];
 

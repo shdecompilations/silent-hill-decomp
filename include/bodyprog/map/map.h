@@ -291,27 +291,32 @@ typedef struct _MapInfo
     /* 0xC */ const s_SpeedZone* speedZones;
 } s_MapInfo;
 
-typedef struct
+typedef struct _MapOverlayHdr_5C
 {
-    u8    unk_0;
-    u8    field_1;
-    u8    field_2;
-    u8    unk_3;
-    u8    field_4;
-    u8    field_5;
-    u8    field_6;
-    u8    unk_7;
-    u8    unk_8[2];
-    s16   field_A;
-    u8    unk_C[2];
-    s16   field_E;
-    q3_12 field_10;
-    u8    unk_12[4];
-    s16   field_16;
-    u8    unk_18[8];
-    s32   field_20;
-    s32   field_24;
+    /* 0x0  */ u8    flags;
+    /* 0x1  */ u8    field_1;
+    /* 0x2  */ u8    field_2;
+    /* 0x3  */ u8    field_3;
+    /* 0x4  */ u8    field_4;
+    /* 0x5  */ u8    field_5;
+    /* 0x6  */ u8    field_6;
+    /* 0x7  */ u8    field_7;
+    /* 0x8  */ u16   field_8;
+    /* 0xA  */ s16   field_A;
+    /* 0xC  */ u16   field_C;
+    /* 0xE  */ s16   field_E;
+    /* 0x10 */ q3_12 field_10;
+    /* 0x12 */ s16   field_12;
+    /* 0x14 */ s16   field_14;
+    /* 0x16 */ s16   field_16;
+    /* 0x18 */ s16   field_18;
+    /* 0x1A */ s16   field_1A;
+    /* 0x1C */ u16   field_1C;
+    /* 0x1E */ s16   field_1E;
+    /* 0x20 */ s32   field_20;
+    /* 0x24 */ s32   field_24;
 } s_MapOverlayHdr_5C;
+STATIC_ASSERT_SIZEOF(s_MapOverlayHdr_5C, 40);
 
 typedef struct
 {
@@ -465,27 +470,27 @@ typedef struct _MapOverlayHdr
     /* 0x5C  */ s_MapOverlayHdr_5C* field_5C;
 
     /* 0x60  */ void                   (*func_60)(s32 idx, bool arg1);
-    /* 0x64  */ s32                    (*func_64)(POLY_FT4** poly, s32);
-    /* 0x68  */ s32                    (*func_68)(POLY_FT4** poly, s32);
+    /* 0x64  */ bool                   (*func_64)(POLY_FT4** poly, s32 idx);
+    /* 0x68  */ bool                   (*func_68)(POLY_FT4** poly, s32 idx);
     /* 0x6C  */ void                   (*func_6C)(); /** @unused */
-    /* 0x70  */ s32                    (*func_70)(POLY_FT4** poly, s32);
+    /* 0x70  */ bool                   (*func_70)(POLY_FT4** poly, s32 idx);
     /* 0x74  */ void                   (*func_74)(); /** @unused */
-    /* 0x78  */ s32                    (*func_78)(POLY_FT4** poly, s32);
+    /* 0x78  */ bool                   (*func_78)(POLY_FT4** poly, s32 idx);
     /* 0x7C  */ s_MapOverlayHdr_7C*    field_7C; // Only map1_s01, map6_s04.
-    /* 0x80  */ void                   (*func_80)();
-    /* 0x84  */ s32                    (*func_84)(POLY_FT4** poly, s32);
+    /* 0x80  */ bool                   (*func_80)(s32 idx);
+    /* 0x84  */ bool                   (*func_84)(POLY_FT4** poly, s32 idx);
     /* 0x88  */ s32*                   func_88; /** @unused */           // Only map0_s01, map7_s01.
-    /* 0x8C  */ s32                    (*func_8C)(POLY_FT4** poly, s32); // Only map0_s01, map7_s01.
+    /* 0x8C  */ bool                   (*func_8C)(POLY_FT4** poly, s32 idx); // Only map0_s01, map7_s01.
     /* 0x90  */ s32                    (*func_90)(POLY_FT4** poly, s32); // Only map5_s00.
     /* 0x94  */ s_MapOverlayHdr_94*    field_94;                         // Only map1_s02, map1_s03.
-    /* 0x98  */ s32                    (*func_98)(POLY_FT4** poly, s32); // Only map1_s02, map1_s03.
+    /* 0x98  */ bool                   (*func_98)(POLY_FT4** poly, s32 idx); // Only map1_s02, map1_s03.
     /* 0x9C  */ void                   (*func_9C)();                     // Only map1_s02, map1_s03.
     /* 0xA0  */ void*                  ptr_A0;                           // M1S03 only, pointer to `s_800E3A40` array.
-    /* 0xA4  */ s32                    (*func_A4)(POLY_FT4** poly, s32); // Only map1_s03.
+    /* 0xA4  */ bool                   (*func_A4)(POLY_FT4** poly, s32 idx); // Only map1_s03.
     /* 0xA8  */ void                   (*func_A8)();                     // Only map6_s02.
-    /* 0xAC  */ s32                    (*func_AC)(POLY_FT4** poly, s32); // Only map4_s03, map4_s05.
-    /* 0xB0  */ s32                    (*func_B0)(POLY_FT4** poly, s32); // Only map4_s03, map4_s05.
-    /* 0xB4  */ s32                    (*func_B4)(POLY_FT4** poly, s32); // Only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
+    /* 0xAC  */ bool                   (*func_AC)(POLY_FT4** poly, s32 idx); // Only map4_s03, map4_s05.
+    /* 0xB0  */ bool                   (*func_B0)(POLY_FT4** poly, s32 idx); // Only map4_s03, map4_s05.
+    /* 0xB4  */ bool                   (*func_B4)(POLY_FT4** poly, s32 idx); // Only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
     /* 0xB8  */ void                   (*func_B8)(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
     /* 0xBC  */ void                   (*func_BC)(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
     /* 0xC0  */ void                   (*playerCutsceneWeaponUnequip)(); /** @unused */
@@ -493,11 +498,11 @@ typedef struct _MapOverlayHdr
     /* 0xC8  */ void                   (*playerControlFreeze)();
     /* 0xCC  */ void                   (*playerControlUnfreeze)(bool setIdle);
     /* 0xD0  */ bool                   (*playerPathWaypointExecute)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
-    /* 0xD4  */ s32                    (*playerAnimStateSet)(s32 playerExtraState); // This only changes the state of player extra data, but gets used by same function that calls `charaAnimStateSet` when player chara is passed.
+    /* 0xD4  */ void                   (*playerAnimStateSet)(s32 playerExtraState); // This only changes the state of player extra data, but gets used by same function that calls `charaAnimStateSet` when player chara is passed.
                                                                                     // @hack Points to `Player_AnimStateSet` which has `void` return type, but changing this funcptr causes mismatch in `Event_CharaAnimCmdExecute`.
     /* 0xD8  */ void                   (*playerAnimReset)();
     /* 0xDC  */ void                   (*playerAnimLock)(void);
-    /* 0xE0  */ void                   (*playerAnimIsLocked)(void);
+    /* 0xE0  */ s32                    (*playerAnimIsLocked)(void);
     /* 0xE4  */ void                   (*playerAnimUnlock)(void);
     /* 0xE8  */ s32                    (*playerAnimPlaybackStateGet)(void);
     /* 0xEC  */ bool                   (*playerMoveSpeedIsZero)(void);
@@ -507,7 +512,7 @@ typedef struct _MapOverlayHdr
     /* 0xFC  */ void                   (*playerDamageFeetFront)(void); /** @unused */
     /* 0x100 */ void                   (*func_100)(); /** @unused */
     /* 0x104 */ void                   (*func_104)(); /** @unused */
-    /* 0x108 */ s32                    (*func_108)();
+    /* 0x108 */ bool                   (*func_108)(void);
     /* 0x10C */ void                   (*playerEmptyWeaponHandSet)(); /** @unused */
     /* 0x110 */ void                   (*playerWeaponAttackRestore)(); /** @unused */
     /* 0x114 */ s32                    (*playerPropertyField10DGet)(); /** @unused */
@@ -515,10 +520,10 @@ typedef struct _MapOverlayHdr
     /* 0x11C */ void                   (*charaMovementReset)(s_SubCharacter* npc); /** @unused */
     /* 0x120 */ void                   (*charaAnimReset)(); /** @unused */
     /* 0x124 */ void                   (*charaAnimStateSet)(s_SubCharacter* chara, q19_12 afkTime);
-    /* 0x128 */ s32                    (*charaControlStateReset)(s_SubCharacter* player); // TODO: Not only used by the player.
-    /* 0x12C */ s32                    (*charaAnimLock)(s_SubCharacter* chara);
-    /* 0x130 */ void                   (*charaAnimIsLocked)(s_SubCharacter* chara);
-    /* 0x134 */ s32                    (*charaAnimUnlock)(s_SubCharacter* chara);
+    /* 0x128 */ void                   (*charaControlStateReset)(s_SubCharacter* player); // TODO: Not only used by the player.
+    /* 0x12C */ void                   (*charaAnimLock)(s_SubCharacter* chara);
+    /* 0x130 */ s32                    (*charaAnimIsLocked)(s_SubCharacter* chara);
+    /* 0x134 */ void                   (*charaAnimUnlock)(s_SubCharacter* chara);
     /* 0x138 */ s32                    (*charaAnimPlaybackStateGet)(s_SubCharacter* chara);
     /* 0x13C */ bool                   (*charaPathWaypointExecute)(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4);
     /* 0x140 */ void                   (*charaVisibleSet)(s_SubCharacter* chara);
@@ -531,11 +536,11 @@ typedef struct _MapOverlayHdr
     /* 0x15C */ void                   (*func_15C)(); /** @unused Loads number pad. */ // Only map5_s01.
     /* 0x160 */ void                   (*func_160)(); /** @unused */ // Only map5_s01.
     /* 0x164 */ void                   (*func_164)(); /** @unused */ // Only map5_s01.
-    /* 0x168 */ void                   (*particleSystemUpdate)(s32 unused, s32 mapId, s32);
+    /* 0x168 */ void                   (*particleSystemUpdate)(s32 unused, e_MapIdx mapIdx, s32 arg3);
     /* 0x16C */ void                   (*particleEnviromentSet)(s8, u32);
     /* 0x170 */ void                   (*func_170)(); /** @unused */
-    /* 0x174 */ void                   (*func_174)(); /** @unused */
-    /* 0x178 */ void                   (*particleHyperBlasterBeamDraw)(VECTOR3* vec0, q19_12* rotX, q19_12* rotY);
+    /* 0x174 */ bool                   (*func_174)(s32 arg0); /** @unused */
+    /* 0x178 */ void                   (*particleHyperBlasterBeamDraw)(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
     /* 0x17C */ void                   (*particleBeamDraw)(const VECTOR3* from, const VECTOR3* to);
     /* 0x180 */ void                   (*particleSoundStop)(); /** @unused */
 

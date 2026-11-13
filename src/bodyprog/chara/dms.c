@@ -25,8 +25,8 @@ void Dms_HeaderFixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
     dmsHdr->isLoaded = true;
 
     // Initialize segments and character entries pointers.
-    dmsHdr->segments         = (u8*)dmsHdr->segments         + (u32)dmsHdr;
-    dmsHdr->characterEntries = (u8*)dmsHdr->characterEntries + (u32)dmsHdr;
+    dmsHdr->segments         = PTR_OFFSET_RESOLVE(dmsHdr->segments, dmsHdr);
+    dmsHdr->characterEntries = PTR_OFFSET_RESOLVE(dmsHdr->characterEntries, dmsHdr);
 
     // Initialize camera entry pointers.
     Dms_EntryFixOffsets(&dmsHdr->cameraEntry, dmsHdr);

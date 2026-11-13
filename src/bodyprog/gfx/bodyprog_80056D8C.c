@@ -309,11 +309,11 @@ void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 ver
     u8*  field_14Ptr;
 
     // Should be loop? Tried but no luck.
-    screenXyPtr  = &scratchData->screenXy_0[vertOffset];
+    screenXyPtr  = (s32*)&scratchData->screenXy_0[vertOffset];
     field_18CPtr = &scratchData->field_18C[vertOffset];
-    vertexXyPtr  = meshHdr->verticesXy;
+    vertexXyPtr  = (s32*)meshHdr->verticesXy;
     vertexZPtr   = meshHdr->verticesZ;
-    while (vertexXyPtr < &meshHdr->verticesXy[meshHdr->vertexCount])
+    while (vertexXyPtr < (s32*)&meshHdr->verticesXy[meshHdr->vertexCount])
     {
         *screenXyPtr++  = *vertexXyPtr++;
         *field_18CPtr++ = *vertexZPtr++;
@@ -498,7 +498,7 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
         }
 
         endPtr = &var_a3[scratchData->field_3A0.count];
-        for (; var_a3 < endPtr; var_a3++)
+        for (; var_a3 < (u8*)endPtr; var_a3++)
         {
             *var_a3 = var_v1;
         }
@@ -696,8 +696,8 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
     {
         if (*(s32*)&scratchData->field_380.s_0.field_C & 0xFFFFFF)
         {
-            poly3 = GsOUT_PACKET_P;
-            poly1  = poly3 + 1;
+            poly3 = (POLY_GT4*)GsOUT_PACKET_P;
+            poly1  = (POLY_G4*)(poly3 + 1);
 
             for (; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
             {
@@ -864,7 +864,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                         addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
 
                         poly3 = (POLY_GT4*)(prio1 + 1);
-                        poly1  = poly3 + 1;
+                        poly1  = (POLY_G4*)(poly3 + 1);
                     }
                     else
                     {
@@ -873,17 +873,17 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                         addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
                         addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly1);
 
-                        poly3 = poly1 + 1;
-                        poly1  = poly3 + 1;
+                        poly3 = (POLY_GT4*)(poly1 + 1);
+                        poly1  = (POLY_G4*)(poly3 + 1);
                     }
                 }
             }
 
-            GsOUT_PACKET_P = poly1; // @bug? Should be `poly_gt4`
+            GsOUT_PACKET_P = (PACKET*)poly1; // @bug? Should be `poly_gt4`
         }
         else
         {
-            poly3 = GsOUT_PACKET_P;
+            poly3 = (POLY_GT4*)GsOUT_PACKET_P;
 
             for (; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
             {
@@ -994,13 +994,13 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                 }
             }
 
-            GsOUT_PACKET_P = poly3;
+            GsOUT_PACKET_P = (PACKET*)poly3;
         }
     }
     else if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_None && g_WorldEnvRenderWork.isFogEnabled)
     {
-        poly3  = GsOUT_PACKET_P;
-        poly2 = poly3 + 1;
+        poly3  = (POLY_GT4*)GsOUT_PACKET_P;
+        poly2 = (POLY_G4*)(poly3 + 1);
 
         for (; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
         {
@@ -1165,7 +1165,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                     addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
 
                     poly3  = (POLY_GT4*)(prio0 + 1);
-                    poly2 = poly3 + 1;
+                    poly2 = (POLY_G4*)(poly3 + 1);
                 }
                 else
                 {
@@ -1173,17 +1173,17 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
                     addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly3);
                     addPrim(&tag[(scratchData->field_380.s_0.field_18 >> otShift) >> 2], poly2);
 
-                    poly3  = poly2 + 1;
-                    poly2 = poly3 + 1;
+                    poly3  = (POLY_GT4*)(poly2 + 1);
+                    poly2 = (POLY_G4*)(poly3 + 1);
                 }
             }
         }
 
-        GsOUT_PACKET_P = poly2; // @bug? Should be `poly_gt4`.
+        GsOUT_PACKET_P = (PACKET*)poly2; // @bug? Should be `poly_gt4`.
     }
     else if (g_WorldEnvRenderWork.lightMode != WorldEnvLightMode_None)
     {
-        poly0 = GsOUT_PACKET_P;
+        poly0 = (POLY_GT4*)GsOUT_PACKET_P;
 
         for (; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
         {
@@ -1318,12 +1318,12 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
             }
         }
 
-        GsOUT_PACKET_P = poly0;
+        GsOUT_PACKET_P = (PACKET*)poly0;
     }
     else
     {
         scratchData->field_380.s_0.field_8.cd = 44;
-        poly4                       = GsOUT_PACKET_P;
+        poly4                       = (POLY_FT4*)GsOUT_PACKET_P;
 
         for (prim = meshHdr->primitives; prim < &meshHdr->primitives[meshHdr->primitiveCount]; prim++)
         {
@@ -1410,7 +1410,7 @@ void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG
             }
         }
 
-        GsOUT_PACKET_P = poly4;
+        GsOUT_PACKET_P = (PACKET*)poly4;
     }
 }
 
@@ -1860,7 +1860,7 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     scratchData->u.normal.field_3E0[2].vy = scratchData->u.normal.field_3DC.ny << 5;
     scratchData->u.normal.field_3E0[2].vz = scratchData->u.normal.field_3DC.nz << 5;
 
-    points = &scratchData->field_21C[arg1];
+    points = (VECTOR3*)&scratchData->field_21C[arg1];
 
     gte_ldv3c(scratchData->u.normal.field_3E0);
     gte_nct();

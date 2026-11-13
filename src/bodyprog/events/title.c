@@ -632,7 +632,7 @@ static PACKET* MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
             color1 = func_8003B7FC(j + (MAIN_MENU_FOG_COUNT * (i - 1)));
             color3 = func_8003B7FC(j + (MAIN_MENU_FOG_COUNT * i));
 
-            poly = packet;
+            poly = (POLY_G4*)packet;
             setPolyG4(poly);
 
             yOffset = (i - 1) * 24;

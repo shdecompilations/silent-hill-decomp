@@ -121,7 +121,7 @@ void func_800DF458(void) // 0x800DF458
     ot  = &ot[ptr->field_584 >> 1];
 
     packet = GsOUT_PACKET_P;
-    poly   = packet;
+    poly   = (POLY_G4*)packet;
 
     col = 0x3A000000;
 
@@ -204,12 +204,12 @@ void func_800DF458(void) // 0x800DF458
         }
     }
 
-    packet = poly;
-    mode   = packet;
+    packet = (PACKET*)poly;
+    mode   = (DR_MODE*)packet;
 
     SetDrawMode(mode, 0, 1, 42, NULL);
     addPrim(ot, mode);
-    packet         = mode + 1;
+    packet         = (PACKET*)(mode + 1);
     GsOUT_PACKET_P = packet;
 }
 
