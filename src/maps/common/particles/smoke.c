@@ -3,6 +3,7 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/env_effects.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 

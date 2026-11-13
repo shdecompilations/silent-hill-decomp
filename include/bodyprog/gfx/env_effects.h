@@ -15,6 +15,161 @@ typedef enum _EffectTextureFlags
 
 typedef struct
 {
+    /* 0x0   */ VECTOR3 field_0; // Q23.8 | Position.
+    /* 0xC   */ MATRIX  worldToScreenMat;
+    /* 0x2C  */ s32     field_2C;
+    /* 0x30  */ DVECTOR field_30;
+    /* 0x34  */ q3_12   field_34[24];
+    /* 0x64  */ q3_12   field_64[24];
+    /* 0x94  */ q3_12   field_94[24];
+    /* 0xC4  */ s16     field_C4;
+    /* 0xC6  */ s16     field_C6;
+    /* 0xC8  */ q3_12   field_C8;
+    /* 0xCA  */ q3_12   field_CA;
+    /* 0xCC  */ q3_12   field_CC; // Angle?
+    /* 0xCE  */ s16     field_CE;
+    /* 0xD0  */ q19_12  field_D0;
+    /* 0xD4  */ q19_12  field_D4;
+    /* 0xD8  */ s32     field_D8;
+    /* 0xDC  */ s16     field_DC[4];
+    /* 0xE4  */ s16     field_E4[4];
+                union
+                {
+                    DVECTOR field_0[4]; // Q19.12
+                    s32     raw_0[4];
+    /* 0xEC  */ } u_field_EC;
+                union
+                {
+                    DVECTOR field_0[4];
+                    s32     raw_0[4];
+    /* 0xFC  */ } u_field_FC; // Q3.12 | Positions or offsets.
+    /* 0x10C */ q19_12  field_10C[4]; // X offsets?
+    /* 0x11C */ q19_12  field_11C[4]; // Z offsets?
+} s_func_8005E89C;
+
+typedef struct
+{
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ DR_PRIO*        field_12C;
+    /* 0x130 */ CVECTOR         field_130;
+    /* 0x134 */ CVECTOR         field_134;
+    /* 0x138 */ SVECTOR         field_138;
+    /* 0x140 */ s32             field_140;
+    /* 0x144 */ DVECTOR         field_144;
+    /* 0x148 */ u16             field_148;
+    /* 0x14A */ u8              unk_14A[2];
+    /* 0x14C */ s32             field_14C;
+    /* 0x150 */ s32             field_150;
+    /* 0x154 */ s32             field_154;
+    /* 0x158 */ s32             field_158;
+    /* 0x15C */ s32             field_15C;
+    /* 0x160 */ s32             field_160;
+    /* 0x164 */ s32             field_164;
+    /* 0x168 */ s32             field_168;
+    /* 0x16C */ s32             field_16C;
+    /* 0x170 */ s32             field_170;
+    /* 0x174 */ s32             field_174;
+} s_func_80060044;
+
+typedef struct
+{
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ CVECTOR         field_12C;
+    /* 0x130 */ CVECTOR         field_130;
+    /* 0x134 */ SVECTOR         field_134;
+    /* 0x13C */ SVECTOR         field_13C;
+    /* 0x144 */ SVECTOR         field_144;
+    /* 0x14C */ VECTOR3         field_14C;
+    /* 0x158 */ s32             field_158;
+    /* 0x15C */ s32             field_15C;
+    /* 0x160 */ s32             field_160;
+    /* 0x164 */ s32             field_164;
+    /* 0x168 */ s32             field_168;
+    /* 0x16C */ DVECTOR         field_16C;
+    /* 0x170 */ s32             field_170;
+    /* 0x174 */ s32             field_174;
+    /* 0x178 */ q19_12          field_178;
+    /* 0x17C */ s32             field_17C;
+    /* 0x180 */ s32             field_180;
+    /* 0x184 */ s32             field_184;
+    /* 0x188 */ s32             field_188;
+    /* 0x18C */ s32             field_18C;
+    /* 0x190 */ s32             field_190;
+    /* 0x194 */ s32             field_194;
+    /* 0x198 */ s32             field_198;
+    /* 0x19C */ s32             field_19C;
+    /* 0x1A0 */ s32             field_1A0;
+} s_func_800611C0;
+
+typedef struct
+{
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ CVECTOR         field_12C;
+    /* 0x130 */ CVECTOR         field_130;
+    /* 0x134 */ SVECTOR         field_134[25];
+    /* 0x1FC */ VECTOR3         field_1FC; // Q19.12
+    /* 0x208 */ q20_12          field_208;
+    /* 0x20C */ s32             field_20C;
+    /* 0x210 */ s32             field_210;
+    /* 0x214 */ s32             field_214[25];
+    /* 0x278 */ DVECTOR         field_278[25];
+    /* 0x2DC */ s32             field_2DC;
+} s_func_80062708;
+
+typedef struct
+{
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ SVECTOR         field_12C;
+    /* 0x138 */ s8              unk_138[8];
+    /* 0x13C */ DVECTOR         field_13C;
+    /* 0x140 */ s32             field_140;
+    /* 0x144 */ s32             field_144;
+} s_func_80064FC0;
+
+typedef struct
+{
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ MATRIX          field_12C;
+    /* 0x14C */ SVECTOR         field_14C[3];
+    /* 0x164 */ SVECTOR         field_164;
+    /* 0x16C */ VECTOR          field_16C[3];
+    /* 0x19C */ VECTOR          field_19C;
+    /* 0x1AC */ VECTOR          field_1AC; // Q27.4
+    /* 0x1BC */ s32             field_1BC;
+    /* 0x1C0 */ s32             field_1C0;
+    /* 0x1C4 */ s32             field_1C4;
+    /* 0x1C8 */ s32             field_1C8;
+    /* 0x1CC */ DVECTOR         field_1CC;
+    /* 0x1D0 */ s16             field_1D0;
+    /* 0x1D2 */ u8              unk_1D2[2];
+    /* 0x1D4 */ s32             field_1D4; // Count.
+    /* 0x1D8 */ s32             field_1D8;
+    /* 0x1DC */ s32             field_1DC;
+    /* 0x1E0 */ s32             field_1E0;
+    /* 0x1E4 */ s32             field_1E4;
+    /* 0x1E8 */ q19_12          field_1E8;
+} s_func_80063A50;
+
+typedef struct
+{
+    /* 0x0   */ s_func_8005E89C field_0;
+    /* 0x12C */ DR_PRIO*        field_12C;
+    /* 0x130 */ CVECTOR         field_130;
+    /* 0x134 */ CVECTOR         field_134;
+    /* 0x138 */ SVECTOR         field_138;
+    /* 0x140 */ u8              unk_140[16];
+    /* 0x150 */ s32             field_150;
+    /* 0x154 */ DVECTOR         field_154;
+    /* 0x158 */ u16             field_158;
+    /* 0x15A */ u16             field_15A;
+    /* 0x15C */ u8              field_15C;
+    /* 0x160 */ s32             field_160;
+    /* 0x164 */ s32             field_164;
+    /* 0x168 */ s32             field_168;
+} s_func_80064334;
+
+typedef struct
+{
     /* 0x0  */ MATRIX  field_0; // View matrix?
     /* 0x20 */ SVECTOR field_20;
     /* 0x28 */ VECTOR  field_28; // Q27.4
