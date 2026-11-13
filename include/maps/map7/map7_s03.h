@@ -341,7 +341,7 @@ extern s32 D_800ED744[9];
 
 extern u16 D_800ED768;
 
-extern u16 g_Cutscene_MapMsgAudioCmds;
+extern u16 g_Cutscene_MapMsgAudioCmds[];
 
 extern u16 D_800ED7B4;
 

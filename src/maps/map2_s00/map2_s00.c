@@ -790,7 +790,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             g_Screen_BackgroundImgGamma = Q8(6.0f / 32.0f);
 
             Event_BgTextureCmd(BgTextureCmd_Draw, 0, false);
-            Event_DisplayMapMsgWithAudio(19, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds); // "Isn't this Cheryl's sketchbook?"
+            Event_DisplayMapMsgWithAudio(19, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds); // "Isn't this Cheryl's sketchbook?"
             break;
 
         case 8:

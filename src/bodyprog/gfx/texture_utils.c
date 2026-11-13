@@ -32,8 +32,8 @@ void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s3
 
 s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void* fsBuffer9, e_FsFile fileIdx, s32 arg4)
 {
-    s8         filename[12];
-    s8         debugStr[12];
+    char       filename[12];
+    char       debugStr[12];
     s32        fileId;
     s32        i;
     s32        smallestQueueIdx;
@@ -69,14 +69,14 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveChunkTextures* activeTexs, void*
         return NULL;
     }
 
-    Material_TimFileNameGet(&filename, mat);
-    fileId = Fs_FindNextFile(&filename, 0, fileIdx);
+    Material_TimFileNameGet(filename, mat);
+    fileId = Fs_FindNextFile(filename, 0, fileIdx);
     if (fileId == NO_VALUE)
     {
         // Failed to find file. Log filename to screen.
         debugStr[12] = 0;
         Text_Debug_PositionSet(100, 80);
-        strncpy(&debugStr, &filename, 12);
+        strncpy(debugStr, filename, 12);
 
 #if VERSION_EQUAL_OR_OLDER(PROTO_981216)
         // Code seen in 98-12-16 build.

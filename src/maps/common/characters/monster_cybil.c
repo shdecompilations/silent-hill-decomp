@@ -285,9 +285,9 @@ void func_800D8848(s_Model* modelUpper) // 0x800D8848
     }
 }
 
-s32 func_800D8898(s_AnimInfo* animInfo) // 0x800D8898
+q19_12 func_800D8898(s_Model* model) // 0x800D8898
 {
-    if (animInfo->status == ANIM_STATUS(MonsterCybilAnim_1, true))
+    if (model->anim.status == ANIM_STATUS(MonsterCybilAnim_1, true))
     {
         if (monsterCybilProps.field_EC == 0)
         {
@@ -296,11 +296,11 @@ s32 func_800D8898(s_AnimInfo* animInfo) // 0x800D8898
 
         if (monsterCybilProps.field_116 == 1)
         {
-            return D_800CB118[animInfo->startKeyframeIdx];
+            return D_800CB118[model->anim.keyframeIdx];
         }
         else
         {
-            return D_800CB178[animInfo->startKeyframeIdx];
+            return D_800CB178[model->anim.keyframeIdx];
         }
     }
 

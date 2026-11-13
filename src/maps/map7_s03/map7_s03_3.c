@@ -5924,7 +5924,7 @@ void func_800E4714(void) // 0x800E4714
             break;
 
         case 3:
-            Event_DisplayMapMsgWithAudio(24, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(24, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(92.0f), Q12(112.0f), true, false);
 
             playerPlaybackState = Player_AnimPlaybackStateGet();
@@ -5941,7 +5941,7 @@ void func_800E4714(void) // 0x800E4714
             SysWork_StateStepIncrement(0);
 
         case 5:
-            Event_DisplayMapMsgWithAudio(30, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(30, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(113.0f), Q12(129.0f), true, false);
             break;
 
@@ -5973,17 +5973,17 @@ void func_800E4714(void) // 0x800E4714
             SysWork_StateStepIncrement(0);
 
         case 11:
-            Event_DisplayMapMsgWithAudio(31, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(31, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(135.0f), Q12(142.0f), true, false);
             break;
 
         case 12:
-            Event_DisplayMapMsgWithAudio(35, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(35, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(135.0f), Q12(142.0f), true, false);
             break;
 
         case 13:
-            Event_DisplayMapMsgWithAudio(44, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(44, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(10.0f), Q12(135.0f), Q12(142.0f), true, false);
             break;
 
@@ -5992,7 +5992,7 @@ void func_800E4714(void) // 0x800E4714
             SysWork_StateStepIncrement(0);
 
         case 15:
-            Event_DisplayMapMsgWithAudio(49, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(49, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.5f), Q12(143.0f), Q12(207.0f), true, false);
 
             Savegame_EventFlagClear(EventFlag_576);

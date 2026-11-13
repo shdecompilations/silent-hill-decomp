@@ -212,11 +212,11 @@ s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
     { Anim_BlendLinear, ANIM_STATUS(HarryAnim_TransitionToStill,       false), false, ANIM_STATUS(HarryAnim_TransitionToStill,       true), { Q12(10.0f)                     }, NO_VALUE, 0   },
     { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_TransitionToStill,       true),  false, NO_VALUE,                                             { Q12(0.0f)                      }, 0,        0   },
     { Anim_BlendLinear, ANIM_STATUS(HarryAnim_WalkForward,             false), false, ANIM_STATUS(HarryAnim_WalkForward,             true), { Q12(50.0f)                     }, NO_VALUE, 1   },
-    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_WalkForward,             true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 1,        23  },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_WalkForward,             true),  true,  NO_VALUE,                                             { .variableFunc = Player_VariableAnimDurationGet }, 1,        23  },
     { Anim_BlendLinear, ANIM_STATUS(HarryAnim_RunForward,              false), false, ANIM_STATUS(HarryAnim_RunForward,              true), { Q12(20.0f)                     }, NO_VALUE, 26  },
-    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_RunForward,              true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 26,       45  },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_RunForward,              true),  true,  NO_VALUE,                                             { .variableFunc = Player_VariableAnimDurationGet }, 26,       45  },
     { Anim_BlendLinear, ANIM_STATUS(HarryAnim_WalkBackward,            false), false, ANIM_STATUS(HarryAnim_WalkBackward,            true), { Q12(20.0f)                     }, NO_VALUE, 46  },
-    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_WalkBackward,            true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 46,       69  },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_WalkBackward,            true),  true,  NO_VALUE,                                             { .variableFunc = Player_VariableAnimDurationGet }, 46,       69  },
     { Anim_BlendLinear, ANIM_STATUS(HarryAnim_SidestepLeft,            false), false, ANIM_STATUS(HarryAnim_SidestepLeft,            true), { Q12(50.0f)                     }, NO_VALUE, 70  },
     { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_SidestepLeft,            true),  false, NO_VALUE,                                             { Q12(30.0f)                     }, 70,       94  },
     { Anim_BlendLinear, ANIM_STATUS(HarryAnim_SidestepRight,           false), false, ANIM_STATUS(HarryAnim_SidestepRight,           true), { Q12(50.0f)                     }, NO_VALUE, 95  },
@@ -262,7 +262,7 @@ s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
     { Anim_BlendLinear, ANIM_STATUS(HarryAnim_Idle,                    false), false, ANIM_STATUS(HarryAnim_Idle,                    true), { Q12(5.0f)                      }, NO_VALUE, 503 },
     { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_Idle,                    true),  false, NO_VALUE,                                             { Q12(10.0f)                     }, 503,      542 },
     { Anim_BlendLinear, ANIM_STATUS(HarryAnim_IdleExhausted,           false), false, ANIM_STATUS(HarryAnim_IdleExhausted,           true), { Q12(5.0f)                      }, NO_VALUE, 543 },
-    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { Player_VariableAnimDurationGet }, 543,      567 },
+    { Anim_PlayLoop,    ANIM_STATUS(HarryAnim_IdleExhausted,           true),  true,  NO_VALUE,                                             { .variableFunc = Player_VariableAnimDurationGet }, 543,      567 },
     {}
 };
 // TODO: `GameFs_WeaponInfoUpdate` indicates there should be more.

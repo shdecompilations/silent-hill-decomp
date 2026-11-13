@@ -18,6 +18,10 @@ typedef enum _AnimPlaybackState
     AnimPlaybackState_End     = 1
 } e_AnimPlaybackState;
 
+// Declared at file scope so the function pointer parameters below refer to the real structs.
+struct _Model;
+struct _AnmHeader;
+
 /** @brief Constant character animation info passed to `Anim_Update` functions. */
 typedef struct _AnimInfo
 {
@@ -29,7 +33,7 @@ typedef struct _AnimInfo
               union
               {
                   q19_12 constant;              /** Constant duration at 30 FPS. */
-                  q19_12 (*variableFunc)(void); /** Variable duration at 30 FPS via a function. Allows animations to be sped up or slowed down. */
+                  q19_12 (*variableFunc)(struct _Model* model); /** Variable duration at 30 FPS via a function. Allows animations to be sped up or slowed down. */
     /* 0x8 */ } duration;
     /* 0xC */ s16 startKeyframeIdx;             /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
     /* 0xE */ s16 endKeyframeIdx;               /** End keyframe index. */

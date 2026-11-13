@@ -1354,42 +1354,42 @@ void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DE60
     s32 swappableId;
 
     // TODO: Bone hierarchies? How are these loaded?
-    static s32 D_800A9ECC = 0xFE16FD13;
-    static s32 D_800A9ED0 = 0x0000FE13;
-    static s32 D_800A9ED4 = 0x0000FE14;
-    static s32 D_800A9ED8 = 0x0000FE15;
-    static s32 D_800A9EDC = 0x0000FE16;
-    static s32 D_800A9EE0 = 0x000000FE;
-    static s32 D_800A9EE4 = 0x00FE1211;
-    static s32 D_800A9EE8 = 0x0000FE11;
-    static s32 D_800A9EEC = 0x0000FE12;
+    static s8 D_800A9ECC[] = { 19, BoneHierarchy_MultiModel, 22, BoneHierarchy_End };
+    static s8 D_800A9ED0[] = { 19, BoneHierarchy_End };
+    static s8 D_800A9ED4[] = { 20, BoneHierarchy_End };
+    static s8 D_800A9ED8[] = { 21, BoneHierarchy_End };
+    static s8 D_800A9EDC[] = { 22, BoneHierarchy_End };
+    static s8 D_800A9EE0[] = { BoneHierarchy_End };
+    static s8 D_800A9EE4[] = { 17, 18, BoneHierarchy_End };
+    static s8 D_800A9EE8[] = { 17, BoneHierarchy_End };
+    static s8 D_800A9EEC[] = { 18, BoneHierarchy_End };
 
     // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
     if (variantId != HarryVariantMesh_None)
     {
-        func_80045468(skel, &D_800A9ECC, false);
+        func_80045468(skel, D_800A9ECC, false);
 
         switch (variantId)
         {
             case HarryVariantMesh_RightHandEmpty:
-                func_80045468(skel, &D_800A9ED0, true);
+                func_80045468(skel, D_800A9ED0, true);
                 break;
 
             case HarryVariantMesh_HandMelee:
-                func_80045468(skel, &D_800A9ED4, true);
+                func_80045468(skel, D_800A9ED4, true);
                 break;
 
             case HarryVariantMesh_RightHandGun:
-                func_80045468(skel, &D_800A9ED8, true);
+                func_80045468(skel, D_800A9ED8, true);
                 break;
 
             case HarryVariantMesh_RightHandRifle:
-                func_80045468(skel, &D_800A9EDC, true);
+                func_80045468(skel, D_800A9EDC, true);
                 break;
 
             case HarryVariantMesh_5:
-                func_80045468(skel, &D_800A9EE0, true);
+                func_80045468(skel, D_800A9EE0, true);
                 break;
         }
     }
@@ -1398,16 +1398,16 @@ void WorldGfx_HarryMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DE60
     swappableId = MESH_SWAP_STATUS_SWAPPABLE_ID_GET(meshSwapStatus);
     if (swappableId != HarrySwappableMesh_None)
     {
-        func_80045468(skel, &D_800A9EE4, false);
+        func_80045468(skel, D_800A9EE4, false);
 
         switch (swappableId)
         {
             case MESH_SWAP_STATUS(HarrySwappableMesh_RightHand, HarrySwappableMesh_None):
-                func_80045468(skel, &D_800A9EE8, true);
+                func_80045468(skel, D_800A9EE8, true);
                 break;
 
             case MESH_SWAP_STATUS(HarrySwappableMesh_LeftHand, HarrySwappableMesh_None):
-                func_80045468(skel, &D_800A9EEC, true);
+                func_80045468(skel, D_800A9EEC, true);
                 break;
         }
     }
@@ -1418,10 +1418,10 @@ void WorldGfx_CybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DF84
     s32 variantId;
     s32 swappableId;
 
-    static s32 D_800A9EF0 = 0x0000FE14;
-    static s32 D_800A9EF4 = 0x00FE1514;
-    static s32 D_800A9EF8 = 0x0000FE12;
-    static s32 D_800A9EFC = 0x00FE1312;
+    static s8 D_800A9EF0[] = { 20, BoneHierarchy_End };
+    static s8 D_800A9EF4[] = { 20, 21, BoneHierarchy_End };
+    static s8 D_800A9EF8[] = { 18, BoneHierarchy_End };
+    static s8 D_800A9EFC[] = { 18, 19, BoneHierarchy_End };
 
     // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
@@ -1430,13 +1430,13 @@ void WorldGfx_CybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DF84
         switch (variantId)
         {
             case CybilVariantMesh_1:
-                func_80045468(skel, &D_800A9EF4, false);
-                func_80045468(skel, &D_800A9EF0, true);
+                func_80045468(skel, D_800A9EF4, false);
+                func_80045468(skel, D_800A9EF0, true);
                 break;
 
             case CybilVariantMesh_2:
-                func_80045468(skel, &D_800A9EF0, false);
-                func_80045468(skel, &D_800A9EF4, true);
+                func_80045468(skel, D_800A9EF0, false);
+                func_80045468(skel, D_800A9EF4, true);
                 break;
         }
     }
@@ -1448,13 +1448,13 @@ void WorldGfx_CybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003DF84
         switch (variantId)
         {
             case MESH_SWAP_STATUS(CybilSwappableMesh_1, CybilVariantMesh_None):
-                func_80045468(skel, &D_800A9EFC, false);
-                func_80045468(skel, &D_800A9EF8, true);
+                func_80045468(skel, D_800A9EFC, false);
+                func_80045468(skel, D_800A9EF8, true);
                 break;
 
             case MESH_SWAP_STATUS(CybilSwappableMesh_2, CybilVariantMesh_None):
-                func_80045468(skel, &D_800A9EF8, false);
-                func_80045468(skel, &D_800A9EFC, true);
+                func_80045468(skel, D_800A9EF8, false);
+                func_80045468(skel, D_800A9EFC, true);
                 break;
         }
     }
@@ -1464,10 +1464,10 @@ void WorldGfx_MonsterCybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x80
 {
     s32 variantId;
 
-    static s32 D_800A9F00 = 0x0000FE02;
-    static s32 D_800A9F04 = 0x0000FE03;
-    static s32 D_800A9F08 = 0x0000FE00;
-    static s32 D_800A9F0C = 0x00FE0100;
+    static s8 D_800A9F00[] = { 2, BoneHierarchy_End };
+    static s8 D_800A9F04[] = { 3, BoneHierarchy_End };
+    static s8 D_800A9F08[] = { 0, BoneHierarchy_End };
+    static s8 D_800A9F0C[] = { 0, 1, BoneHierarchy_End };
 
     // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
@@ -1476,13 +1476,13 @@ void WorldGfx_MonsterCybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x80
         switch (variantId)
         {
             case CybilVariantMesh_1:
-                func_80045468(skel, &D_800A9F04, false);
-                func_80045468(skel, &D_800A9F00, true);
+                func_80045468(skel, D_800A9F04, false);
+                func_80045468(skel, D_800A9F00, true);
                 break;
 
             case CybilVariantMesh_2:
-                func_80045468(skel, &D_800A9F00, false);
-                func_80045468(skel, &D_800A9F04, true);
+                func_80045468(skel, D_800A9F00, false);
+                func_80045468(skel, D_800A9F04, true);
                 break;
         }
     }
@@ -1494,13 +1494,13 @@ void WorldGfx_MonsterCybilMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x80
         switch (variantId)
         {
             case MESH_SWAP_STATUS(CybilSwappableMesh_1, CybilVariantMesh_None):
-                func_80045468(skel, &D_800A9F0C, false);
-                func_80045468(skel, &D_800A9F08, true);
+                func_80045468(skel, D_800A9F0C, false);
+                func_80045468(skel, D_800A9F08, true);
                 break;
 
             case MESH_SWAP_STATUS(CybilSwappableMesh_2, CybilVariantMesh_None):
-                func_80045468(skel, &D_800A9F08, false);
-                func_80045468(skel, &D_800A9F0C, true);
+                func_80045468(skel, D_800A9F08, false);
+                func_80045468(skel, D_800A9F0C, true);
                 break;
         }
     }
@@ -1510,29 +1510,29 @@ void WorldGfx_DahliaMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E194
 {
     s32 variantId;
 
-    static s32 D_800A9F10 = 0xFE03FD00;
-    static s32 D_800A9F14 = 0x0000FE00;
-    static s32 D_800A9F18 = 0x00FE0201;
-    static s32 D_800A9F1C = 0x0000FE03;
+    static s8 D_800A9F10[] = { 0, BoneHierarchy_MultiModel, 3, BoneHierarchy_End };
+    static s8 D_800A9F14[] = { 0, BoneHierarchy_End };
+    static s8 D_800A9F18[] = { 1, 2, BoneHierarchy_End };
+    static s8 D_800A9F1C[] = { 3, BoneHierarchy_End };
 
     // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
     if (variantId != DahliaVariantMesh_None)
     {
-        func_80045468(skel, &D_800A9F10, false);
+        func_80045468(skel, D_800A9F10, false);
 
         switch (variantId)
         {
             case DahliaVariantMesh_1:
-                func_80045468(skel, &D_800A9F14, true);
+                func_80045468(skel, D_800A9F14, true);
                 break;
 
             case DahliaVariantMesh_2:
-                func_80045468(skel, &D_800A9F18, true);
+                func_80045468(skel, D_800A9F18, true);
                 break;
 
             case DahliaVariantMesh_3:
-                func_80045468(skel, &D_800A9F1C, true);
+                func_80045468(skel, D_800A9F1C, true);
                 break;
         }
     }
@@ -1543,39 +1543,38 @@ void WorldGfx_KaufmannMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E2
     s32 variantId;
     s32 swappableId;
 
-    static s32 D_800A9F20 = 0x06050403;
-    static s32 D_800A9F24 = 0x000000FE; // @unused
-    static s32 D_800A9F28 = 0x0000FE03;
-    static s32 D_800A9F2C = 0x0000FE04;
-    static s32 D_800A9F30 = 0x00FE0504;
-    static s32 D_800A9F34 = 0x00FE0603;
-    static s32 D_800A9F38 = 0xFE020100;
-    static s32 D_800A9F3C = 0x0000FE00;
-    static s32 D_800A9F40 = 0x0000FE01;
-    static s32 D_800A9F44 = 0x00FE0201;
+    static s8 D_800A9F20[] = { 3, 4, 5, 6, BoneHierarchy_End };
+    static s8 D_800A9F28[] = { 3, BoneHierarchy_End };
+    static s8 D_800A9F2C[] = { 4, BoneHierarchy_End };
+    static s8 D_800A9F30[] = { 4, 5, BoneHierarchy_End };
+    static s8 D_800A9F34[] = { 3, 6, BoneHierarchy_End };
+    static s8 D_800A9F38[] = { 0, 1, 2, BoneHierarchy_End };
+    static s8 D_800A9F3C[] = { 0, BoneHierarchy_End };
+    static s8 D_800A9F40[] = { 1, BoneHierarchy_End };
+    static s8 D_800A9F44[] = { 1, 2, BoneHierarchy_End };
 
     // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
     if (variantId != KaufmannVariantMesh_None)
     {
-        func_80045468(skel, &D_800A9F20, false);
+        func_80045468(skel, D_800A9F20, false);
 
         switch (variantId)
         {
             case KaufmannVariantMesh_1:
-                func_80045468(skel, &D_800A9F28, true);
+                func_80045468(skel, D_800A9F28, true);
                 break;
 
             case KaufmannVariantMesh_2:
-                func_80045468(skel, &D_800A9F2C, true);
+                func_80045468(skel, D_800A9F2C, true);
                 break;
 
             case KaufmannVariantMesh_3:
-                func_80045468(skel, &D_800A9F30, true);
+                func_80045468(skel, D_800A9F30, true);
                 break;
 
             case KaufmannVariantMesh_4:
-                func_80045468(skel, &D_800A9F34, true);
+                func_80045468(skel, D_800A9F34, true);
                 break;
         }
     }
@@ -1584,20 +1583,20 @@ void WorldGfx_KaufmannMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E2
     swappableId = MESH_SWAP_STATUS_SWAPPABLE_ID_GET(meshSwapStatus);
     if (swappableId != KaufmannSwappableMesh_None)
     {
-        func_80045468(skel, &D_800A9F38, false);
+        func_80045468(skel, D_800A9F38, false);
 
         switch (swappableId)
         {
             case MESH_SWAP_STATUS(KaufmannSwappableMesh_1, KaufmannVariantMesh_None):
-                func_80045468(skel, &D_800A9F3C, true);
+                func_80045468(skel, D_800A9F3C, true);
                 break;
 
             case MESH_SWAP_STATUS(KaufmannSwappableMesh_2, KaufmannVariantMesh_None):
-                func_80045468(skel, &D_800A9F40, true);
+                func_80045468(skel, D_800A9F40, true);
                 break;
 
             case MESH_SWAP_STATUS(KaufmannSwappableMesh_3, KaufmannVariantMesh_None):
-                func_80045468(skel, &D_800A9F44, true);
+                func_80045468(skel, D_800A9F44, true);
                 break;
         }
     }
@@ -1607,8 +1606,8 @@ void WorldGfx_StalkerMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E38
 {
     s32 variantId;
 
-    static s32 D_800A9F48 = 0x0000FE05;
-    static s32 D_800A9F4C = 0x0000FE06;
+    static s8 D_800A9F48[] = { 5, BoneHierarchy_End };
+    static s8 D_800A9F4C[] = { 6, BoneHierarchy_End };
 
     // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
@@ -1617,13 +1616,13 @@ void WorldGfx_StalkerMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E38
         switch (variantId)
         {
             case StalkerVariantMesh_1:
-                func_80045468(skel, &D_800A9F4C, false);
-                func_80045468(skel, &D_800A9F48, true);
+                func_80045468(skel, D_800A9F4C, false);
+                func_80045468(skel, D_800A9F48, true);
                 break;
 
             case StalkerVariantMesh_2:
-                func_80045468(skel, &D_800A9F48, false);
-                func_80045468(skel, &D_800A9F4C, true);
+                func_80045468(skel, D_800A9F48, false);
+                func_80045468(skel, D_800A9F4C, true);
                 break;
         }
     }
@@ -1633,8 +1632,8 @@ void WorldGfx_SplitHeadMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E
 {
     s32 variantId;
 
-    static s32 D_800A9F50 = 0xFE19FD11;
-    static s32 D_800A9F54 = 0xFE22FD1A;
+    static s8 D_800A9F50[] = { 17, BoneHierarchy_MultiModel, 25, BoneHierarchy_End };
+    static s8 D_800A9F54[] = { 26, BoneHierarchy_MultiModel, 34, BoneHierarchy_End };
 
     // @note Unique disuse of `MESH_SWAP_STATUS_VARIANT_ID_GET`. This masks bits 0-1 instead of 0-3.
     variantId = meshSwapStatus & 0x3;
@@ -1643,13 +1642,13 @@ void WorldGfx_SplitHeadMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x8003E
         switch (variantId)
         {
             case SplitHeadVariantMesh_1:
-                func_80045468(skel, &D_800A9F50, false);
-                func_80045468(skel, &D_800A9F54, true);
+                func_80045468(skel, D_800A9F50, false);
+                func_80045468(skel, D_800A9F54, true);
                 break;
 
             case SplitHeadVariantMesh_2:
-                func_80045468(skel, &D_800A9F54, false);
-                func_80045468(skel, &D_800A9F50, true);
+                func_80045468(skel, D_800A9F54, false);
+                func_80045468(skel, D_800A9F50, true);
                 break;
         }
     }
@@ -1659,30 +1658,29 @@ void WorldGfx_PuppetNurseMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x800
 {
     s32 variantId;
 
-    static s32 D_800A9F58 = 0x05040302;
-    static s32 D_800A9F5C = 0x00FE0706; // @unused
-    static s32 D_800A9F60 = 0x00FE0502;
-    static s32 D_800A9F64 = 0x00FE0603;
-    static s32 D_800A9F68 = 0x00FE0704;
+    static s8 D_800A9F58[] = { 2, 3, 4, 5, 6, 7, BoneHierarchy_End };
+    static s8 D_800A9F60[] = { 2, 5, BoneHierarchy_End };
+    static s8 D_800A9F64[] = { 3, 6, BoneHierarchy_End };
+    static s8 D_800A9F68[] = { 4, 7, BoneHierarchy_End };
 
     // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
     if (variantId != PuppetNurseVariantMesh_None)
     {
-        func_80045468(skel, &D_800A9F58, false);
+        func_80045468(skel, D_800A9F58, false);
 
         switch (variantId)
         {
             case PuppetNurseVariantMesh_Head1:
-                func_80045468(skel, &D_800A9F60, true);
+                func_80045468(skel, D_800A9F60, true);
                 break;
 
             case PuppetNurseVariantMesh_Head2:
-                func_80045468(skel, &D_800A9F64, true);
+                func_80045468(skel, D_800A9F64, true);
                 break;
 
             case PuppetNurseVariantMesh_Head3:
-                func_80045468(skel, &D_800A9F68, true);
+                func_80045468(skel, D_800A9F68, true);
                 break;
         }
     }
@@ -1692,30 +1690,29 @@ void WorldGfx_PuppetDoctorMeshSwap(s_Skeleton* skel, s32 meshSwapStatus) // 0x80
 {
     s32 variantId;
 
-    static s32 D_800A9F6C = 0x05040302;
-    static s32 D_800A9F70 = 0x00FE0706; // @unused
-    static s32 D_800A9F74 = 0x00FE0502;
-    static s32 D_800A9F78 = 0x00FE0603;
-    static s32 D_800A9F7C = 0x00FE0704;
+    static s8 D_800A9F6C[] = { 2, 3, 4, 5, 6, 7, BoneHierarchy_End };
+    static s8 D_800A9F74[] = { 2, 5, BoneHierarchy_End };
+    static s8 D_800A9F78[] = { 3, 6, BoneHierarchy_End };
+    static s8 D_800A9F7C[] = { 4, 7, BoneHierarchy_End };
 
     // Process variant mesh.
     variantId = MESH_SWAP_STATUS_VARIANT_ID_GET(meshSwapStatus);
     if (variantId != PuppetNurseVariantMesh_None)
     {
-        func_80045468(skel, &D_800A9F6C, false);
+        func_80045468(skel, D_800A9F6C, false);
 
         switch (variantId)
         {
             case PuppetNurseVariantMesh_Head1:
-                func_80045468(skel, &D_800A9F74, true);
+                func_80045468(skel, D_800A9F74, true);
                 break;
 
             case PuppetNurseVariantMesh_Head2:
-                func_80045468(skel, &D_800A9F78, true);
+                func_80045468(skel, D_800A9F78, true);
                 break;
 
             case PuppetNurseVariantMesh_Head3:
-                func_80045468(skel, &D_800A9F7C, true);
+                func_80045468(skel, D_800A9F7C, true);
                 break;
         }
     }

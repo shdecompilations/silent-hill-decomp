@@ -327,7 +327,7 @@ inline static bool Math_CheckSignedRange(s32 val, s32 range)
 
 void Math_RotMatrixZxyNeg(const SVECTOR* rot, MATRIX* mat);
 
-void Math_RotMatrixZxyNegGte(const SVECTOR* rot, MATRIX* mat);
+void Math_RotMatrixZxyNegGte(const SVECTOR3* rot, MATRIX* mat);
 
 /** @brief Computes the sine in Q19.12 of degrees in Q19.12, integer range `[0, 4096]`.
  *

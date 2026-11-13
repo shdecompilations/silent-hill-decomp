@@ -210,7 +210,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 1:
-            Event_DisplayMapMsgWithAudio(15, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(15, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 2:
@@ -227,7 +227,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case 5:
-            Event_DisplayMapMsgWithAudio(16, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(16, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 6:
@@ -235,7 +235,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 7:
-            Event_DisplayMapMsgWithAudio(30, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(30, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(44.0f), false, true);
             break;
 
@@ -244,7 +244,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 9:
-            Event_DisplayMapMsgWithAudio(30, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(30, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(62.0f), true, false);
             break;
 
@@ -259,7 +259,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 12:
-            Event_DisplayMapMsgWithAudio(35, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(35, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_WaitTimer(Q12(0.5f), false);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(65.0f), true, false);
             break;
@@ -269,7 +269,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 14:
-            Event_DisplayMapMsgWithAudio(35, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(35, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(2.5f), Q12(1.0f), Q12(65.0f), true, false);
             break;
 
@@ -283,7 +283,7 @@ void func_800D0B64(void) // 0x800D0B64
 
         case 17:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(7.5f), Q12(65.0f), Q12(81.0f), true, true);
-            Event_DisplayMapMsgWithAudio(37, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(37, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             break;
 
         case 18:
@@ -298,7 +298,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrement(0);
 
         case 19:
-            Event_DisplayMapMsgWithAudio(37, &g_Cutscene_MapMsgAudioIdx, &g_Cutscene_MapMsgAudioCmds);
+            Event_DisplayMapMsgWithAudio(37, &g_Cutscene_MapMsgAudioIdx, g_Cutscene_MapMsgAudioCmds);
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(8.0f), Q12(82.0f), Q12(105.0f), true, false);
             break;
 

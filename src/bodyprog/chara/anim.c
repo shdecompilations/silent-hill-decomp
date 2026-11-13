@@ -211,14 +211,14 @@ void Anim_CharaUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
     animInfo->playbackFunc(&chara->model, anmHdr, coords, animInfo);
 }
 
-q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo) // 0x800449AC
+q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* animInfo) // 0x800449AC
 {
     if (!animInfo->hasVariableDuration)
     {
         return animInfo->duration.constant;
     }
 
-    return animInfo->duration.variableFunc();
+    return animInfo->duration.variableFunc(model);
 }
 
 void Anim_PlayOnce(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo) // 0x800449F0

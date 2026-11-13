@@ -235,7 +235,7 @@ void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
     }
 }
 
-void func_80045468(s_Skeleton* skel, s32* boneHierarchy, bool cond) // 0x80045468
+void func_80045468(s_Skeleton* skel, s8* boneHierarchy, bool cond) // 0x80045468
 {
     s_BoneNode* boneHierarchyPtr; // TODO: Wrong struct?
     s32         modelIdx;

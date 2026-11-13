@@ -136,11 +136,11 @@ void Anim_CharaUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
 
 /** @brief Gets the duration of an animation. A duration can be constant or variable.
  *
- * @param unused @unused
+ * @param model Model passed to `duration.variableFunc`.
  * @param animInfo Animation info from which to get the duration.
  * @return Animation duration.
  */
-q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo);
+q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* animInfo);
 
 /** @brief Plays an animation once and clamps to the end keyframe, triggering a status transition to the linked
  * animation upon completion.

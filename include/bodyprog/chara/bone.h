@@ -43,7 +43,7 @@ void func_80045360(s_Skeleton* skel, s8* boneHierarchy);
 void func_800453E8(s_Skeleton* skel, bool cond);
 
 /** Does something with skeleton bones. */
-void func_80045468(s_Skeleton* skel, s32* boneHierarchy, bool cond);
+void func_80045468(s_Skeleton* skel, s8* boneHierarchy, bool cond);
 
 // Bone mesh texture handling?
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 otShift, GsCOORDINATE2* boneCoords,

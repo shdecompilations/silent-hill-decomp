@@ -10,6 +10,8 @@ BUILD_ITEMS    ?= 1
 CHECKSUM       ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
+# Compiler warning flags, default `-w` disables warnings.
+WARN_FLAGS     ?= -w
 
 # Enables usage of the `COMMON` segment.
 # The compiler can create a segment call `COMMON` intended to handle repetitive
@@ -183,7 +185,7 @@ define FlagsSwitch
 
 	$(eval LD_FLAGS = $(ENDIAN) $(DL_FLAGS) $(OPT_FLAGS) $(LD_FLAGS_GCSECTIONS) -nostdlib --no-check-sections)
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
-	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
+	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 $(WARN_FLAGS) -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
 	
 	$(if $(findstring libkpad,$(1)), \
 		$(eval ASPSX_VERSION := 2.67), \

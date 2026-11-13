@@ -773,7 +773,7 @@ bool func_8005F680(s_CollisionSurface* surface) // 0x8005F680
     return isSomeFloorGroup;
 }
 
-void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x8005F6B0
+void func_8005F6B0(s_SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3) // 0x8005F6B0
 {
     s_CollisionSurface surface;
     VECTOR3            camPos; // Q19.12

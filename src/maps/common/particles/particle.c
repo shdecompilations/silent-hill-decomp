@@ -3561,7 +3561,7 @@ void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
             localPart->movement.vy = SNOW_Y_START_SPEED;
 
             // Set random start XZ position.
-            Particle_PositionRandomize(rand, part, SNOW_XZ_SPAWN_RANGE);
+            Particle_PositionRandomize(rand, &part->position0, SNOW_XZ_SPAWN_RANGE);
 
             // Second position unused for snow.
             localPart->position1.vz = Q12(0.0f);
@@ -3586,7 +3586,7 @@ void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
 #endif
 
             // Set random start XZ position.
-            Particle_PositionRandomize(rand, part, RAIN_XZ_SPAWN_RANGE);
+            Particle_PositionRandomize(rand, &part->position0, RAIN_XZ_SPAWN_RANGE);
 
             // Copy random XZ to second position.
             localPart->position1.vx = localPart->position0.vx;

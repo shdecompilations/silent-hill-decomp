@@ -50,7 +50,7 @@ extern s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[];
     { Anim_BlendLinear, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0)  }, NO_VALUE, 0  },
     { Anim_PlayLoop, ANIM_STATUS(0, true),  false, NO_VALUE,              { Q12(30) }, NO_VALUE, 1  },
     { Anim_BlendLinear, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true),  { Q12(1)  }, NO_VALUE, 0  },
-    { Anim_PlayLoop, ANIM_STATUS(1, true),  false, NO_VALUE,              { func_800D8898 },  0,        23 },
+    { Anim_PlayLoop, ANIM_STATUS(1, true),  true,  NO_VALUE,              { .variableFunc = func_800D8898 },  0,        23 },
     { Anim_BlendLinear, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true),  { Q12(5)  }, NO_VALUE, 24 }
 };*/
 
@@ -72,7 +72,7 @@ void func_800D87B0(s_SubCharacter* monsterCybil);
 
 void func_800D8848(s_Model* modelUpper);
 
-s32 func_800D8898(s_AnimInfo* animInfo);
+q19_12 func_800D8898(s_Model* model);
 
 void MonsterCybil_Update(s_SubCharacter* monsterCybil, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 

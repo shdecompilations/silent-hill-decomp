@@ -1191,11 +1191,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
     if (target == &PLAYER_CHARA())
     {
         sp10             = NO_VALUE;
-        target->field_40 = (((s32)((u32)((u8*)attacker - sizeof(s_PlayerWork)) - (u32)target) * -0x6EB3E453) >> 3);
+        target->field_40 = attacker - g_SysWork.npcs; // Sets `field_40` to attacker index inside `g_SysWork.npcs`
     }
     else
     {
-        sp10 = 1 << (((s32)((u32)((u8*)target - sizeof(s_PlayerWork)) - (u32)&g_SysWork.playerWork) * -0x6EB3E453) >> 3);
+        sp10 = 1 << (target - g_SysWork.npcs);
 
         if (sp14 & sp10)
         {
@@ -1656,7 +1656,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo,
 
     if (chara == &PLAYER_CHARA())
     {
-        chara0 = (u8*)chara + sizeof(s_PlayerWork);
+        chara0 = &NPC_CHARA(0);
         var_v0 = 6;
         var_v1 = 1;
     }

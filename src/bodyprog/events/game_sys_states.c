@@ -176,7 +176,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         {
             WorldGfx_CharaDraw(Chara_Harry, g_SysWork.playerBoneCoords, 1, PLAYER_CHARA().timer_C6, 0);
             Chara_Flag8Clear(&PLAYER_CHARA());
-            Player_CombatUpdate(&g_SysWork.playerWork, g_SysWork.playerBoneCoords);
+            Player_CombatUpdate(&PLAYER_CHARA(), g_SysWork.playerBoneCoords);
             func_8008A3AC(&PLAYER_CHARA());
         }
 

@@ -1464,7 +1464,7 @@ void Stalker_Control_6(s_SubCharacter* stalker)
         vec0.vy = stalker->position.vy + stalker->collision.box.field_8;
         vec0.vz = stalker->position.vz;
 
-        if (func_8008A0E4(1, WEAPON_ATTACK(AttackType_StalkerLegGrab, AttackInputType_Tap), stalker, &vec0, &g_SysWork.playerWork, stalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, WEAPON_ATTACK(AttackType_StalkerLegGrab, AttackInputType_Tap), stalker, &vec0, &PLAYER_CHARA(), stalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             stalkerProps.flags |= StalkerFlag_5;
             g_SysWork.charaGroupFlags[3] &= ~CharaGroupFlag_1;

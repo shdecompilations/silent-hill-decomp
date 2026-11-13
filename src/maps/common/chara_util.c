@@ -194,7 +194,7 @@ s32 Chara_AnimPlaybackStateGet(s_SubCharacter* chara)
 
     if (animInfo->playbackFunc == Anim_PlayOnce)
     {
-        if (Anim_DurationGet(chara, animInfo) > Q12(0.0f))
+        if (Anim_DurationGet(&chara->model, animInfo) > Q12(0.0f))
         {
             return (chara->model.anim.keyframeIdx == animInfo->endKeyframeIdx) ? AnimPlaybackState_End :
                                                                                  AnimPlaybackState_Active;
