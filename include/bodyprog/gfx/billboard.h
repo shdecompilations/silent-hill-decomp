@@ -44,4 +44,17 @@ void Gfx_BillboardInfosInit(GsCOORDINATE2* viewCoord);
  */
 void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot, s32 otShift);
 
+// ========================================
+// UNUSED
+// ========================================
+// Split from something related to a cut debug feature?
+
+/** @brief @unused Sets the debug string position.
+ *
+ * @param unused @unused
+ * @param posX X screen position.
+ * @param posY Y screen position.
+ */
+void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY);
+
 #endif

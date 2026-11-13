@@ -343,11 +343,6 @@ void Gfx_BillboardDraw(s32 idx, q19_12 posX, q19_12 posY, q19_12 posZ, GsOT* ot,
     GsOUT_PACKET_P = poly_gt4;
 }
 
-// ========================================
-// UNUSED
-// ========================================
-// Split from something related to a cut debug feature?
-
 void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY) // 0x8005BF0C
 {
     Text_Debug_PositionSet(posX, posY);

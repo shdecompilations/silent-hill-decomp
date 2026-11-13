@@ -4,8 +4,8 @@
 // TODO: Includes will have to be cleaned up once everything is organised project-wide and this header becomes
 // deprecated.
 #include "bodyprog/game.h"
-#include "bodyprog/libkpad/vibration.h"
 #include "bodyprog/sound/sfx.h"
+#include "bodyprog/bodyprog_math_8005BF38.h"
 #include "bodyprog/chara/anim.h"
 #include "bodyprog/chara/combat.h"
 #include "bodyprog/chara/model.h"
@@ -20,6 +20,7 @@
 #include "bodyprog/formats/model.h"
 #include "bodyprog/formats/texture.h"
 #include "bodyprog/formats/tmd.h"
+#include "bodyprog/gfx/bodyprog_80055028.h"
 #include "bodyprog/gfx/bodyprog_80056D8C.h"
 #include "bodyprog/gfx/env_effects.h"
 #include "bodyprog/gfx/lens_flare.h"
@@ -27,6 +28,7 @@
 #include "bodyprog/gfx/world.h"
 #include "bodyprog/gfx/world_object.h"
 #include "bodyprog/items/weapon_data.h"
+#include "bodyprog/libkpad/vibration.h"
 #include "bodyprog/map/map.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/paper_map/paper_map.h"
@@ -485,77 +487,6 @@ bool Gfx_PickupItemAnimate(u8 itemId);
  */
 void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
-void WorldEnvRender_Init(void);
-
-/** @brief Draws 2D screen effects for the flashlight's lens flare and glow. */
-void WorldGfx_2dEffectsDraw(void);
-
-/** Sets visual world parameters. */
-void WorldEnvRender_WorldLightingParamSet(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
-
-void WorldEnvRender_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
-
-void WorldEnvRender_WorldLightTintSet(u32 overlapLighting, u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
-
-/** @brief Gets the point light position.
- *
- * @param pos Output light position.
- */
-void WorldEnvRender_LightPositionGet(VECTOR3* pos);
-
-/** @brief Gets the point light rotation and intensity.
- *
- * @param rot Output light rotation.
- * @return Light intensity.
- */
-s32 WorldEnvRender_LightRotationAndIntensityGet(SVECTOR* rot);
-
-/** @brief Gets the point light direction and intensity.
- *
- * @param rot Output light direction.
- * @return Light intensity.
- */
-s32 WorldEnvRender_LightDirectionAndIntensityGet(SVECTOR* dir);
-
-/** Light function. */
-void Gfx_FlashlightPositionUpdate(q19_12 lightIntensity, q3_12 lensFlareIntensity, GsCOORDINATE2* coord0, GsCOORDINATE2* coord1,
-                                  SVECTOR* rot, q19_12 posX, q19_12 posY, q19_12 posZ, s_WaterZone* waterZones);
-
-/** Light function. */
-void func_80055648(s32 lightIntensity, const SVECTOR* dir);
-
-s32 func_800557DC(void);
-
-void func_80055814(s32 arg0);
-
-void WorldEnvRender_FogDistanceSet(q19_12 nearDist, q19_12 farDist);
-
-s32 func_800559A8(s32 arg0);
-
-u8 func_80055A50(s32 arg0);
-
-void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3);
-
-/** @brief Applies uniform lighting and fog shading to `color`, outputting to `result`.
- * The fog factor is derived from `arg2` via `g_WorldEnvRenderWork.fogRamp` and blends the lit color toward the far/fog color in `g_WorldEnvRenderWork.field_1C/field_1D/field_1E`,
- * with lighting strength from `g_WorldEnvRenderWork.field_20` applied equally on all axes.
- */
-void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
-
-void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
-
-u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ);
-
-void func_80055E90(CVECTOR* color, u8 fadeAmount);
-
-void func_80055ECC(CVECTOR* color, SVECTOR3* arg1, SVECTOR3* arg2, MATRIX* worldMat);
-
-u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* worldMat);
-
-void Lm_HeaderPtrsInit(s_LmHeader* lmHdr);
-
-void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
-
 // `gfx/materials.h
 // ================================================
 
@@ -651,8 +582,6 @@ void StringCopy(char* prevStr, char* newStr);
 
 // ================================================
 
-u32 func_8005C478(s16* arg0, q19_12 x0, q19_12 y0, q19_12 x1, q19_12 y1, q19_12 x2, q19_12 y2);
-
 s32 Chara_NpcIdxGet(s_SubCharacter* chara);
 
 void Chara_CollisionShapeOffsetsUpdate(s_CharaShapeOffsets* offsets, s_SubCharacter* chara);
@@ -675,45 +604,11 @@ void GameFs_Tim00TIMLoad(void);
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
-/** @brief @unused Sets the debug string position.
- *
- * @param unused @unused
- * @param posX X screen position.
- * @param posY Y screen position.
- */
-void Gfx_DebugStringPositionSet(s16 unused, s16 posX, s16 posY);
-
-/** @brief Normalizes a signed Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.
- *
- * TODO: Appears to have the same effect as `Q12_ANGLE_NORM_S` macro. Maybe this was written by someone unaware of that?
- * Once the build is shiftable, check if calls to this can simply be switched over to the macro.
- *
- * @param angle Angle to normalize.
- * @return Normalized angle.
- */
-q3_12 Math_AngleNormalizeSigned(q3_12 angle);
-
-/** @unused */
-bool func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
-
-/** @unused */
-s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
-
-q19_12 func_8005C7B0(q19_12 angle);
-
 s32 Chara_MovementUpdate1(s_SubCharacter* chara, s_CollisionResult* collResult, q3_12 offsetX, q3_12 offsetZ);
 
 /** Computes something for a targeted NPC. */
 bool func_8005D50C(s32* targetNpcIdx, q3_12* rotToTargetX, q3_12* rotToTargetY, const VECTOR3* attackPos,
                    u32 npcIdx, q19_12 angleConstraint);
-
-/** @unused */
-void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
-
-/** @unused */
-void func_80065B94(VECTOR3* arg0, s16 arg1);
-
-void func_80066184(void);
 
 void func_8004BBF4(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR* camRot);
 

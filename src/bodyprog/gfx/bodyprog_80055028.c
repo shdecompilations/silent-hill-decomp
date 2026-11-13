@@ -6,6 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/bodyprog_80055028.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
@@ -15,11 +16,15 @@
 #include "bodyprog/sound/sound_system.h"
 #include "main/rng.h"
 
-VECTOR3 D_800AE1B4[1] = { Q12(0.0f), Q12(0.05f), Q12(-0.076f) };
+// ========================================
+// ENVIRONMENT AND SCREEN GFX 1
+// ========================================
+
+static VECTOR3 D_800AE1B4[1] = { Q12(0.0f), Q12(0.05f), Q12(-0.076f) };
 
 // Referenced only by `func_80055648` (https://decomp.me/scratch/joGmE)
 // Doesn't look like `VECTOR3` tbh. Each word is larger than the previous.
-s32 D_800AE1C0[] = {
+static s32 D_800AE1C0[] = {
     0,
     0,
     0x26,
@@ -38,10 +43,6 @@ s32 D_800AE1C0[] = {
     0xFA,
     0xFF
 };
-
-// ========================================
-// ENVIRONMENT AND SCREEN GFX 1
-// ========================================
 
 s_WorldEnvRenderWork g_WorldEnvRenderWork;
 

@@ -1,9 +1,9 @@
 #ifndef _BODYPROG_SCREEN_DATA_H
 #define _BODYPROG_SCREEN_DATA_H
 
-// =====================================
-// SCREEN/FRAMEBUFFER-RELATED CONSTANTS
-// =====================================
+// =============================
+// SCREEN/FRAMEBUFFER CONSTANTS
+// =============================
 
 #define SCREEN_WIDTH  320
 #define SCREEN_HEIGHT 240
@@ -52,9 +52,9 @@
 
 #define ORDERING_TABLE_SIZE 2048
 
-// =========================
-// TIMING-RELATED CONSTANTS
-// =========================
+// =================
+// TIMING CONSTANTS
+// =================
 
 #define TICKS_PER_SECOND 60                                        /** Game has a variable timestep with 60 ticks max. */
 #define TIMESTEP_30_FPS  Q12(1.0f / (float)(TICKS_PER_SECOND / 2))

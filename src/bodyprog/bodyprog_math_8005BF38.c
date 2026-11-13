@@ -6,6 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/bodyprog_math_8005BF38.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/items/item_screens.h"
@@ -27,7 +28,7 @@
  */
 
 // Angle table used by `func_8005C7B0`.
-q3_12 D_800AE520[34] = {
+static q3_12 D_800AE520[34] = {
     0x3F6, 0x3E1, 0x3CD, 0x3B8,
     0x3A4, 0x38F, 0x37B, 0x366,
     0x351, 0x33B, 0x326, 0x310,

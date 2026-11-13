@@ -3,11 +3,11 @@
 #include <abs.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/view/vc_main.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/view/vc_main.h"
 #include "bodyprog/view/vw_system.h"
 
 #define MIN_IN_ROAD_DIST Q12(1.0f) // `vcGetMinInRoadDist` in SH2, hardcoded to `Q12(1.0f)` in SH1.

@@ -1,9 +1,9 @@
 #include "bodyprog/game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/view/vc_util.h"
 #include "bodyprog/map/map.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/view/vc_util.h"
 #include "bodyprog/view/vw_system.h"
 #include "bodyprog/screen/data.h"
 
