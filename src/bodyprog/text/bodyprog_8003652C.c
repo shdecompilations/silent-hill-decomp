@@ -5,6 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/text/bodyprog_8003652C.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/text/map_msg.h"

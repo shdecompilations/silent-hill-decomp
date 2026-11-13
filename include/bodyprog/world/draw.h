@@ -44,6 +44,10 @@ void WorldGfx_HeldItemModelFree(void);
 /** Allocates player model? */
 void WorldGfx_CharaModelsFree(void);
 
+/** @brief Frees a character model.
+ *
+ * @param model Character model to release.
+ */
 void Chara_ModelFree(s_CharaModel* model);
 
 void WorldGfx_MapInit(s_MapOverlayHdr* mapHdr, s32 playerPosX, s32 playerPosZ);

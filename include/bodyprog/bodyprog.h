@@ -47,6 +47,7 @@
 #include "bodyprog/world/map.h"
 #include "main/fsqueue.h"
 
+#include "bodyprog/items/item_screens.h"
 #include "bodyprog/gfx/materials.h"
 
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
@@ -202,17 +203,6 @@ extern const s_MapOverlayHdr g_MapOverlayHdr;
 
 extern s16 SQRT[100];
 
-/** @brief Draws a palette of colors in the frame buffer. */
-void func_8003652C(void);
-
-void func_80032D1C(void);
-
-/** @brief Frees a character model.
- *
- * @param model Character model to release.
- */
-void Chara_ModelFree(s_CharaModel* model);
-
 // TODO: Move to `bodyprog/chara/anim.h`.
 // ========================================
 
@@ -289,28 +279,6 @@ void Anim_BlendLinear(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCo
  * @param animInfo Character animation info.
  */
 void Anim_BlendEaseOut(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s_AnimInfo* animInfo);
-
-// =========================
-
-/** @brief Attaches a weapon model to the player's hand.
- *
- * @param weaponAttack Packed weapon attack. See `WEAPON_ATTACK`.
- */
-void Gfx_PlayerHeldItemAttach(u8 weaponAttack);
-
-void func_8005487C(s32 arg0);
-
-void func_80054A04(u8 arg0);
-
-bool Gfx_PickupItemAnimate(u8 itemId);
-
-/** @brief Computes the ammo needed to reload the equipped gun.
- *
- * @param currentAmmo Current amount of loaded ammunition.
- * @param availableAmmo Ammount of available ammunition.
- * @param gunIdx Index of the gun being reloaded (`e_AttackType`).
- */
-void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
 // `bodyprog/gfx/bodyprog_80056D8C.h`
 //======================

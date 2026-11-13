@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_TEXT_DEBUGDRAW_H
-#define _BODYPROG_TEXT_DEBUGDRAW_H
+#ifndef _BODYPROG_TEXT_TEXTDEBUGDRAW_H
+#define _BODYPROG_TEXT_TEXTDEBUGDRAW_H
 
 /** @brief Sets the position at which text will be drawn.
  *

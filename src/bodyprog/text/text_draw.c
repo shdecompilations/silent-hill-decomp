@@ -5,6 +5,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
+#include "bodyprog/text/bodyprog_8003652C.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 

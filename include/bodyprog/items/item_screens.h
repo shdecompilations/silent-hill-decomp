@@ -253,12 +253,12 @@ extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX];
 // FUNCTIONS
 // ==========
 
-void GameState_ItemScreens_Update(void); // 0x8004C9B0
+void GameState_ItemScreens_Update(void);
 
-void Gfx_Results_Save(void); // 0x8004D1A0
+void Gfx_Results_Save(void);
 
 /** Function mainly responsible for handling the inventory screen. */
-void Inventory_Update(void); // 0x8004D518
+void Inventory_Update(void);
 
 /** @brief Used for environmental item interactions such as keys, puzzle objects, or
  * events like the Cybil boss fight.
@@ -269,11 +269,11 @@ void Inventory_Update(void); // 0x8004D518
  * with is Cybil, allowing the player to trigger the bug by interacting with
  * the first NPC loaded in `g_SysWork`.
  */
-void Inventory_ItemUse(s32 arg0); // 0x8004E6D4
+void Inventory_ItemUse(s32 arg0);
 
-void Gfx_Inventory_CmdOptionsDraw(void); // 0x8004E864
+void Gfx_Inventory_CmdOptionsDraw(void);
 
-void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
+void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId);
 
 bool Player_ItemRemove(u8 itemId, u8 count);
 
@@ -289,9 +289,9 @@ void func_8004F10C(s32* arg0);
 /** @brief Draws the two messages that indicate when the player can't open
  * the map in the inventory.
  */
-void Inventory_UnavailableMapTextDraw(s32 strIdx); // 0x8004F57C
+void Inventory_UnavailableMapTextDraw(s32 strIdx);
 
-void Inventory_DirectionalInputSet(void); // 0x8004F5DC
+void Inventory_DirectionalInputSet(void);
 
 void Gfx_ItemScreens_DrawInit(u32* selectedItemId);
 
@@ -349,10 +349,10 @@ void GameFs_MapItemsTextureLoad(s32 mapId);
 void func_800540A4(s8 arg0);
 
 /** Related to drawing items. */
-void Gfx_Items_Draw(void); // 0x80054200
+void Gfx_Items_Draw(void);
 
 /** Rough name. Part of this function resets values related to visual elements of the inventory. */
-void Gfx_Items_DrawInit(void); // 0x80054558
+void Gfx_Items_DrawInit(void);
 
 /** Used for correct reset of aiming animations when exiting the inventory screen.
  *
@@ -363,16 +363,38 @@ void Gfx_Items_DrawInit(void); // 0x80054558
  * the user enters the inventory, unequips the weapon, and exits the inventory.
  * This results in Harry being unable to move and use wrong animations.
  */
-void Inventory_ExitAnimFixes(void); // 0x80054634
+void Inventory_ExitAnimFixes(void);
+
+/** @brief Attaches a weapon model to the player's hand.
+ *
+ * @param weaponAttack Packed weapon attack. See `WEAPON_ATTACK`.
+ */
+void Gfx_PlayerHeldItemAttach(u8 weaponAttack);
 
 /** Very rough param names. */
-void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx); // 0x80054720
+void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx);
+
+void func_8005487C(s32 arg0);
 
 /** Something related to items lighting. */
-void func_800548D8(s32 idx); // 0x800548D8
+void func_800548D8(s32 idx);
 
-void Gfx_Items_SetAmbientLighting(void); // 0x80054928
+void Gfx_Items_SetAmbientLighting(void);
 
-void Inventory_AddSpecialItem(u8 itemId, u8 itemCount); // 0x80054CAC
+void Inventory_AddSpecialItem(u8 itemId, u8 itemCount);
+
+void func_800549A0(void);
+
+void func_80054A04(u8 arg0);
+
+bool Gfx_PickupItemAnimate(u8 itemId);
+
+/** @brief Computes the ammo needed to reload the equipped gun.
+ *
+ * @param currentAmmo Current amount of loaded ammunition.
+ * @param availableAmmo Ammount of available ammunition.
+ * @param gunIdx Index of the gun being reloaded (`e_AttackType`).
+ */
+void Items_AmmoReloadCompute(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
 #endif

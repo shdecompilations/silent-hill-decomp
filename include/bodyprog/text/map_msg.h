@@ -1,9 +1,8 @@
-#ifndef _BODYPROG_EVENTS_MAP_MSG_H
-#define _BODYPROG_EVENTS_MAP_MSG_H
+#ifndef _BODYPROG_TEXT_MAPMSG_H
+#define _BODYPROG_TEXT_MAPMSG_H
 
 #define MAP_MSG_UNSKIPPABLE_AUDIO_TYPE_FLAG (1 << 0)
 #define DEFAULT_MAP_MESSAGE_LENGTH          99
-
 
 #if VERSION_REGION_IS(NTSC) || VERSION_REGION_IS(PAL)
     #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400 /** Long string length is used to display a whole message instantly without a rollout. */
