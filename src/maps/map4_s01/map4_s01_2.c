@@ -640,6 +640,7 @@ void func_800D2408(void) // 0x800D2408
             func_8003D01C();
             SD_Call(19);
             Savegame_EventFlagSet(EventFlag_303);
+
             LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
@@ -1263,6 +1264,7 @@ void func_800D4410(void) // 0x800D4410
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
             WorldEnv_PresetsSet(7, 4);
+
             LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 

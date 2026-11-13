@@ -1,6 +1,40 @@
 #ifndef _BODYPROG_EVENTS_GAMESYSSTATES_H
 #define _BODYPROG_EVENTS_GAMESYSSTATES_H
 
+/** @brief Radio noise data for nearby enemies. */
+typedef struct _RadioNoise
+{
+    /* 0x0 */ s8 prevIdx;
+    /* 0x1 */ s8 idx;
+    /* 0x2 */ s8 closeNpcInfoIdx;
+    /* 0x3 */ s8 unused_3; /** @unused */
+} s_RadioNoise;
+
+extern s8 __pad_bss_800BCD81[3];
+
+extern q19_12 g_DeltaTimeCpy; // TODO: This is static. `extern`ed padding variables seem necessary for now?
+
+extern s32 __pad_bss_800BCD88[2];
+
+extern s_EventData* g_ItemEvents[];
+
+extern s32 __pad_bss_800BCD94[5];
+
+extern s_RadioNoise g_RadioNoise[2];
+
+extern s_MapPoint2d g_MapPoint;
+
+extern s32 __pad_bss_800BCDD0;
+
+/** Related to special item interactions. */
+extern s32 g_ItemTriggerItemIds[5];
+
+extern u8 g_MapAreaLoadCounter;
+
+extern s8 __pad_bss_800BCDD5[3];
+
+extern s_EventData* g_MapEventData;
+
 void GameState_InGame_Update(void);
 
 void SysState_Gameplay_Update(void);

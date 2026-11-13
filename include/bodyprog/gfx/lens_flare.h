@@ -68,7 +68,6 @@ bool shLensFlareLightCenterIsVisible(void);
 // Named from SH2 symbols.
 q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 scr_l_pos_z, q19_12 scr_l_ang_z);
 
-// Named from SH2 symbols.
 /** @brief Draws a lens flare effect
  *
  * @note Name from SH2.
@@ -78,14 +77,14 @@ q19_12 shLensFlareMakeEffectTargetRate(q3_12 light_eff_pow, q19_12 scr_l_pos_z, 
 void shLensFlareEffect_Draw(bool center_visible_f, q19_12 now_l_eff_rate,
                             VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z);
 
-/** @brief Gets the water zone at a given position.
+/** @brief Gets the water zone at a given position for a water shimmer effect.
  *
  * @param posX X position.
  * @param posZ Z position.
  * @param waterZones Water zones to query.
  * @return Water zone at the given position.
  */
-s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones);
+s_WaterZone* LensFlare_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones);
 
 void func_8008E5B4(void);
 

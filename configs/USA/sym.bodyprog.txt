@@ -1208,7 +1208,7 @@ shLensFlareDraw                              = 0x8008D78C; // type:func
 shLensFlareLightCenterIsVisible              = 0x8008D850; // type:func
 shLensFlareMakeEffectTargetRate              = 0x8008D8C0; // type:func
 shLensFlareEffect_Draw                       = 0x8008D990; // type:func
-Map_WaterZoneGet                             = 0x8008E51C; // type:func
+LensFlare_WaterZoneGet                             = 0x8008E51C; // type:func
 
 //-----------------------------------------------------------
 //--- PA: 0x06A3C0   VA: 0x8008EF20   subsegment: c, sys/demo

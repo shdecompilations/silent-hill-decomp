@@ -62,16 +62,12 @@ static void (*g_SysStateFuncs[])(void) = {
  */
 static q19_12 g_DeltaTimeCpy;
 
-// ========================================
-// GLOBAL VARIABLES
-// ========================================
-
 s_EventData* g_ItemEvents[];
 s_RadioNoise g_RadioNoise[2];
 s_MapPoint2d g_MapPoint;
 s32          g_ItemTriggerItemIds[5];
 u8           g_MapAreaLoadCounter;
-s_EventData*  g_MapEventData;
+s_EventData* g_MapEventData;
 
 void GameState_InGame_Update(void) // 0x80038BD4
 {

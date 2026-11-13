@@ -81,7 +81,7 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
     // Draw water shimmer.
     if (!g_LensFlareWork.water_inhibit_f)
     {
-        waterZone = Map_WaterZoneGet(Q12_TO_Q4(pos->vx), Q12_TO_Q4(pos->vz), waterZones);
+        waterZone = LensFlare_WaterZoneGet(Q12_TO_Q4(pos->vx), Q12_TO_Q4(pos->vz), waterZones);
         if (waterZone != NULL)
         {
             func_8008E5B4();
@@ -508,7 +508,7 @@ void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
     Lm_MaterialFsImageApply1(lmHdr, D_8002B2CC.str, &img0, 1);
 }
 
-s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
+s_WaterZone* LensFlare_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
 {
     s_WaterZone* curWaterZone;
 
