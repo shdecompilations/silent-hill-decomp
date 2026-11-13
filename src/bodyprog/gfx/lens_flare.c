@@ -7,10 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/lens_flare.h"
 #include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound/sound_system.h"
 #include "main/fsqueue.h"
 
 // VRAM position of the CLUT rows used by `func_8008E5B4` and `func_8008E794`.
@@ -29,7 +26,7 @@ void shLensFlareInit(void) // 0x8008D41C
     g_LensFlareWork.flare_inhibit_f           = false;
     g_LensFlareWork.water_inhibit_f           = false;
     g_LensFlareWork.lfl_sync_draw_func_exec_f = false;
-    g_LensFlareWork.now_l_eff_rate            = false;
+    g_LensFlareWork.now_l_eff_rate            = Q12(0.0f);
 }
 
 void LensFlare_LensFlareDisable(void) // 0x8008D438
@@ -210,13 +207,9 @@ bool shLensFlareLightCenterIsVisible(void) // 0x8008D850
     RECT rect;
     u16  pixels[2]; // `StoreImage2` copies whole 32-bit words, so the 1 pixel needed comes with a 2nd.
 
-    rectX = 784;
-    if (g_ActiveBufferIdx == 0)
-    {
-        rectX = 792;
-    }
+    rectX = (g_ActiveBufferIdx == 0) ? 792 : 784;
 
-    rect.y = FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2;
+    rect.y = 224 / 2; // `FRAMEBUFFER_HEIGHT_PROGRESSIVE`? @bug maybe they forget to change this in EUR, or hardcoded instead of using constant?
     rect.w = 2;
     rect.x = rectX;
     rect.h = 1;
