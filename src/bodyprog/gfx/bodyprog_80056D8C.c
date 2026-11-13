@@ -6,6 +6,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/bodyprog_80056D8C.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"

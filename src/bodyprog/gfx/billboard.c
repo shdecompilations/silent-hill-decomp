@@ -5,6 +5,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/billboard.h"
+#include "bodyprog/gfx/bodyprog_80056D8C.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
