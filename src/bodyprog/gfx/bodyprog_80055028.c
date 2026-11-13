@@ -89,7 +89,7 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 
     if (g_WorldEnvRenderWork.enableTintLightOverlap != false)
     {
-        func_80041074(ot, g_WorldEnvRenderWork.light.intensity, &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position);
+        WorldEnvRender_LightOverlapDraw(ot, g_WorldEnvRenderWork.light.intensity, &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position);
     }
 
     if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_Spot && g_WorldEnvRenderWork.light.lensFlareIntensity != Q12(0.0f))

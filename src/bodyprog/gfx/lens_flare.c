@@ -58,7 +58,7 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
     // Draw lens flare.
     if (!g_LensFlareWork.flare_inhibit_f)
     {
-        func_800410D8(&g_LensFlareWork.scr_l_pos, &g_LensFlareWork.scr_l_ang_xy, &g_LensFlareWork.scr_l_ang_z, rot, pos);
+        WorldEnvRender_LightScreenInfoGet(&g_LensFlareWork.scr_l_pos, &g_LensFlareWork.scr_l_ang_xy, &g_LensFlareWork.scr_l_ang_z, rot, pos);
 
         proj = ReadGeomScreen();
         if (g_LensFlareWork.scr_l_pos.vz > DIV_FAST(proj, 2))

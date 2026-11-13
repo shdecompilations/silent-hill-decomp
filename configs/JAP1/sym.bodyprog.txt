@@ -747,11 +747,11 @@ nullsub_80040B6C                             = 0x80040944; // type:func
 Chara_ModelLoadedCheck                       = 0x8004094C; // type:func
 func_80040BAC                                = 0x80040984; // type:func
 WorldEnvRender_WorldLightTintParamSet        = 0x80040C54; // type:func
-func_80041074                                = 0x80040E4C; // type:func
-func_800410D8                                = 0x80040EB0; // type:func
-Math_RelativeRotationGet                     = 0x80041004; // type:func
-func_8004137C                                = 0x80041154; // type:func
-func_800414E0                                = 0x800412B8; // type:func
+WorldEnvRender_LightOverlapDraw              = 0x80040E4C; // type:func
+WorldEnvRender_LightScreenInfoGet            = 0x80040EB0; // type:func
+WorldEnvRender_LightScreenAngleGet           = 0x80041004; // type:func
+WorldEnvRender_LightScreenPosGet             = 0x80041154; // type:func
+WorldEnvRender_LightOverlapPolysDraw         = 0x800412B8; // type:func
 
 //------------------------------------------------------------
 //--- PA: 0x01CD54   VA: 0x800418B4   subsegment: c, world/map

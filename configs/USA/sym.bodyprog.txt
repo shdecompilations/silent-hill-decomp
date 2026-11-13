@@ -560,10 +560,13 @@ nullsub_80040B6C                             = 0x80040B6C; // type:func
 //--- PA: 0x01C014   VA: 0x80040B74   subsegment: c, world/lighting
 //-----------------------------------------------------------------
 Chara_ModelLoadedCheck                       = 0x80040B74; // type:func
-func_80040BAC                                = 0x80040BAC;
-WorldEnvRender_WorldLightTintParamSet        = 0x80040E7C;
-func_80041074                                = 0x80041074;
-Math_RelativeRotationGet                     = 0x8004122C; // type:func
+func_80040BAC                                = 0x80040BAC; // type:func
+WorldEnvRender_WorldLightTintParamSet        = 0x80040E7C; // type:func
+WorldEnvRender_LightOverlapDraw              = 0x80041074; // type:func
+WorldEnvRender_LightScreenInfoGet            = 0x800410D8; // type:func
+WorldEnvRender_LightScreenAngleGet           = 0x8004122C; // type:func
+WorldEnvRender_LightScreenPosGet             = 0x8004137C; // type:func
+WorldEnvRender_LightOverlapPolysDraw         = 0x800414E0; // type:func
 
 //------------------------------------------------------------
 //--- PA: 0x01CF7C   VA: 0x80041ADC   subsegment: c, world/map
