@@ -1081,7 +1081,7 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     g_SysWork.lightBoneCoord = NULL;
     g_SysWork.lensFlareBoneCoord = NULL;
 
-    func_8008D438();
+    LensFlare_LensFlareDisable();
     WorldEnv_PresetsSet(4, 4);
 
     Savegame_EventFlagSet(EventFlag_428);
@@ -1434,7 +1434,7 @@ void func_800D2170(s32 arg0) // 0x800D2170
     {
         i = 0;
 
-        func_8008D438();
+        LensFlare_LensFlareDisable();
         Fs_QueueStartReadTim(FILE_TIM_LHEFFECT_TIM, FS_BUFFER_1, &D_800CAB90);
         Fs_QueueWaitForEmpty();
         OpenTIM(FS_BUFFER_1);

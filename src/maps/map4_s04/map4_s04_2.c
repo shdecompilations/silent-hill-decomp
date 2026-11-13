@@ -326,7 +326,7 @@ void func_800D1910(void) // 0x800D1910
 
             Math_SetSVectorFastSum(&g_SysWork.lightRotation, Q12_ANGLE(-90.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f));
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             CutsceneBorder_ForceShow();
             Screen_FadeTimestepReset();
@@ -480,7 +480,7 @@ void func_800D23E4(void) // 0x800D23E4
             g_SysWork.lensFlareBoneCoord = NULL;
             g_SysWork.lightIntensity     = Q12(1.2f);
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             CutsceneBorder_ForceShow();
             Screen_FadeTimestepReset();
@@ -642,7 +642,7 @@ void func_800D23E4(void) // 0x800D23E4
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);

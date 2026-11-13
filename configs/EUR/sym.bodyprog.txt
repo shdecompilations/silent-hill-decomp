@@ -1461,14 +1461,14 @@ Dms_SegmentStateGet                          = 0x8008CEA8; // type:func
 Dms_KeyframeIdxGet                           = 0x8008CF14; // type:func
 Dms_AngleLerp                                = 0x8008CFB8; // type:func
 
-//------------------------------------------------------------
-//--- PA: 0x067970   VA: 0x8008D000   subsegment: c, gfx/water
-//------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x067970   VA: 0x8008D000   subsegment: c, gfx/lens_flare
+//-----------------------------------------------------------------
 shLensFlareInit                              = 0x8008D000; // type:func
-func_8008D438                                = 0x8008D01C; // type:func
-func_8008D448                                = 0x8008D02C; // type:func
-func_8008D454                                = 0x8008D038; // type:func
-func_8008D464                                = 0x8008D048; // type:func
+LensFlare_LensFlareDisable                   = 0x8008D01C; // type:func
+LensFlare_LensFlareEnable                    = 0x8008D02C; // type:func
+LensFlare_WaterShimmerDisable                = 0x8008D038; // type:func
+LensFlare_WaterShimmerEnable                 = 0x8008D048; // type:func
 shLensFlareExec                              = 0x8008D054; // type:func
 shLensFlareSetLightSeed                      = 0x8008D184; // type:func
 shLensFlareDraw                              = 0x8008D368; // type:func
@@ -3146,9 +3146,9 @@ g_VibScript_StepHandlers                     = 0x800AF300;
 //-------------------------------------------------------------------
 D_800AFD1C                                   = 0x800AF314;
 
-//----------------------------------------------------------------
-//--- PA: 0x089CA4   VA: 0x800AF334   subsegment: .data, gfx/water
-//----------------------------------------------------------------
+//---------------------------------------------------------------------
+//--- PA: 0x089CA4   VA: 0x800AF334   subsegment: .data, gfx/lens_flare
+//---------------------------------------------------------------------
 pow_rate_dat.60                              = 0x800AF334;
 dist_rate_dat.61                             = 0x800AF33C;
 ang_z_rate_dat.62                            = 0x800AF358;
@@ -3795,9 +3795,9 @@ g_Event_PathWaypoints                        = 0x800C3C30; // size:0xC0
 g_Event_PathWaypointHeadingAngles            = 0x800C3CF0;
 g_Event_TweenTimers                          = 0x800C3D00;
 
-//---------------------------------------------------------------
-//--- PA: 0x09E778   VA: 0x800C3E08   subsegment: .bss, gfx/water
-//---------------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x09E778   VA: 0x800C3E08   subsegment: .bss, gfx/lens_flare
+//--------------------------------------------------------------------
 g_LensFlareWork                              = 0x800C3E08; // size:0x24
 
 //--------------------------------------------------------------

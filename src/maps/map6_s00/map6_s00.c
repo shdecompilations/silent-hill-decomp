@@ -382,7 +382,7 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
     WorldObject_PlacementInit(&g_WorldObject_DrOpen2, "DROPEN2_", -190.5f, -0.05f, 132.214f);
     WorldObject_PlacementInit(&g_WorldObject_DrClose, "DRCLOSE_", -189.5f, 0.0f, 132.5f);
 
-    func_8008D448();
+    LensFlare_LensFlareEnable();
     Game_FlashlightAttribsSet();
 
     g_SysWork.lightIntensity = Q12(1.0f);

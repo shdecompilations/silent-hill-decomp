@@ -278,7 +278,7 @@ void func_800D13D8(void) // 0x800D13D8
             g_SysWork.lightIntensity     = Q12(0.6f);
 
             WorldEnv_PresetsSet(16, 16);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -567,7 +567,7 @@ void func_800D13D8(void) // 0x800D13D8
             SysWork_StateSetNext(SysState_Gameplay);
             Game_TurnFlashlightOn();
             WorldEnv_PresetsSet(7, 4);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);

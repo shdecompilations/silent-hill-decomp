@@ -1194,10 +1194,14 @@ Dms_SegmentStateGet                          = 0x8008D2C4; // type:func
 Dms_KeyframeIdxGet                           = 0x8008D330; // type:func
 Dms_AngleLerp                                = 0x8008D3D4; // type:func
 
-//------------------------------------------------------------
-//--- PA: 0x0688BC   VA: 0x8008D41C   subsegment: c, gfx/water
-//------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x0688BC   VA: 0x8008D41C   subsegment: c, gfx/lens_flare
+//-----------------------------------------------------------------
 shLensFlareInit                              = 0x8008D41C; // type:func
+LensFlare_LensFlareDisable                   = 0x8008D438; // type:func
+LensFlare_LensFlareEnable                    = 0x8008D448; // type:func
+LensFlare_WaterShimmerDisable                = 0x8008D454; // type:func
+LensFlare_WaterShimmerEnable                 = 0x8008D464; // type:func
 shLensFlareExec                              = 0x8008D470; // type:func
 shLensFlareSetLightSeed                      = 0x8008D5A0; // type:func
 shLensFlareDraw                              = 0x8008D78C; // type:func
@@ -2893,9 +2897,9 @@ excl_r_ary                                   = 0x800AFCE0; // int[9]
 //----------------------------------------------------------------
 g_VibScript_StepHandlers                     = 0x800AFD08;
 
-//----------------------------------------------------------------
-//--- PA: 0x08B1DC   VA: 0x800AFD3C   subsegment: .data, gfx/water
-//----------------------------------------------------------------
+//---------------------------------------------------------------------
+//--- PA: 0x08B1DC   VA: 0x800AFD3C   subsegment: .data, gfx/lens_flare
+//---------------------------------------------------------------------
 pow_rate_dat.60                              = 0x800AFD3C;
 dist_rate_dat.61                             = 0x800AFD44;
 ang_z_rate_dat.62                            = 0x800AFD60;
@@ -3617,9 +3621,9 @@ D_800C47E8.88                                = 0x800C47E8;
 __pad_bss_800C4F4.89                         = 0x800C47F4;
 D_800C47F8.90                                = 0x800C47F8;
 
-//---------------------------------------------------------------
-//--- PA: 0x09FCB8   VA: 0x800C4818   subsegment: .bss, gfx/water
-//---------------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x09FCB8   VA: 0x800C4818   subsegment: .bss, gfx/lens_flare
+//--------------------------------------------------------------------
 g_LensFlareWork                              = 0x800C4818; // size:0x24
 
 //--------------------------------------------------------------

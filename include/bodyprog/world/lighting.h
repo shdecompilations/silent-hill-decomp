@@ -24,6 +24,6 @@ void Math_RelativeRotationGet(q19_12* azimuthAngle, q19_12* altitudeAngle, const
 
 void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1, s32 screenDist);
 
-void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 angle1);
+void func_800414E0(GsOT* ot, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 angle1);
 
 #endif

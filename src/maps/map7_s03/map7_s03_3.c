@@ -5313,7 +5313,7 @@ void func_800E3390(void) // 0x800E3390
             Player_ControlFreeze();
             func_8003A16C();
             WorldEnv_PresetsSet(18, 18);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             g_Cutscene_UpdateSibyl = false;
             g_Cutscene_UpdateDaria = false;

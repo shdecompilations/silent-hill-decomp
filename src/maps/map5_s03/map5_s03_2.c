@@ -406,7 +406,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             g_SysWork.lightIntensity = Q12(1.0f);
             g_SysWork.lightBoneCoord = NULL;
@@ -531,7 +531,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             Player_WeaponAttackRestore();
             func_8003D01C();
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -579,7 +579,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             g_Cutscene_Timer = NO_VALUE;
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);

@@ -32,22 +32,22 @@ void shLensFlareInit(void) // 0x8008D41C
     g_LensFlareWork.now_l_eff_rate            = false;
 }
 
-void func_8008D438(void) // 0x8008D438
+void LensFlare_LensFlareDisable(void) // 0x8008D438
 {
     g_LensFlareWork.flare_inhibit_f = true;
 }
 
-void func_8008D448(void) // 0x8008D448
+void LensFlare_LensFlareEnable(void) // 0x8008D448
 {
     g_LensFlareWork.flare_inhibit_f = false;
 }
 
-void func_8008D454(void) // 0x8008D454
+void LensFlare_WaterShimmerDisable(void) // 0x8008D454
 {
     g_LensFlareWork.water_inhibit_f = true;
 }
 
-void func_8008D464(void) // 0x8008D464
+void LensFlare_WaterShimmerEnable(void) // 0x8008D464
 {
     g_LensFlareWork.water_inhibit_f = false;
 }
@@ -58,15 +58,18 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
     s32          posY;
     s_WaterZone* waterZone;
 
+    // Draw lens flare.
     if (!g_LensFlareWork.flare_inhibit_f)
     {
         func_800410D8(&g_LensFlareWork.scr_l_pos, &g_LensFlareWork.scr_l_ang_xy, &g_LensFlareWork.scr_l_ang_z, rot, pos);
 
         proj = ReadGeomScreen();
-        if (g_LensFlareWork.scr_l_pos.vz > (proj >> 1))
+        if (g_LensFlareWork.scr_l_pos.vz > DIV_FAST(proj, 2))
         {
             g_LensFlareWork.lfl_sync_draw_func_exec_f = true;
-            g_LensFlareWork.tgt_l_eff_rate = shLensFlareMakeEffectTargetRate(light_intensity, g_LensFlareWork.scr_l_pos.vz, g_LensFlareWork.scr_l_ang_z);
+            g_LensFlareWork.tgt_l_eff_rate            = shLensFlareMakeEffectTargetRate(light_intensity,
+                                                                                        g_LensFlareWork.scr_l_pos.vz,
+                                                                                        g_LensFlareWork.scr_l_ang_z);
             shLensFlareSetLightSeed(&g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_z);
         }
         else
@@ -75,6 +78,7 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
         }
     }
 
+    // Draw water shimmer.
     if (!g_LensFlareWork.water_inhibit_f)
     {
         waterZone = Map_WaterZoneGet(Q12_TO_Q4(pos->vx), Q12_TO_Q4(pos->vz), waterZones);
@@ -102,7 +106,7 @@ static inline bool check_screen_bounds(VECTOR3* scr_l_pos, s16 scr_l_ang_z)
            scr_l_pos->vz >= 0 && scr_l_ang_z >= Q12_ANGLE(75.0f);
 }
 
-void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z) // 0x8008D5A0
+void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, q3_12 scr_l_ang_z) // 0x8008D5A0
 {
     RECT      rect;
     bool      draw_center_f;
@@ -116,7 +120,6 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z) // 0x8008D5A0
     ot             = &g_OrderingTable0[g_ActiveBufferIdx].org[(scr_l_pos->vz + 2) >> 3];
 
     draw_center_f = check_screen_bounds(scr_l_pos, scr_l_ang_z);
-
     if (draw_center_f)
     {
         SetTile(tile);
@@ -164,15 +167,16 @@ void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, s16 scr_l_ang_z) // 0x8008D5A0
 void shLensFlareDraw(void) // 0x8008D78C
 {
     q19_12 add_rate;
-    bool   center_visible_f;
+    bool   center_visible_f; // Light source is visible.
 
+    // Check if lens flare was already drawn.
     if (!g_LensFlareWork.lfl_sync_draw_func_exec_f)
     {
         return;
     }
-
     g_LensFlareWork.lfl_sync_draw_func_exec_f = false;
 
+    // Check if lens flare is enabled.
     if (g_LensFlareWork.flare_inhibit_f)
     {
         return;
@@ -192,11 +196,12 @@ void shLensFlareDraw(void) // 0x8008D78C
 
     if (vcRetCamMvSmoothF() == VC_MV_CHASE)
     {
-        g_LensFlareWork.now_l_eff_rate = false;
+        g_LensFlareWork.now_l_eff_rate = Q12(0.0f);
         center_visible_f               = false;
     }
 
-    shLensFlareEffect_Draw(center_visible_f, g_LensFlareWork.now_l_eff_rate, &g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_xy, g_LensFlareWork.scr_l_ang_z);
+    shLensFlareEffect_Draw(center_visible_f, g_LensFlareWork.now_l_eff_rate,
+                           &g_LensFlareWork.scr_l_pos, g_LensFlareWork.scr_l_ang_xy, g_LensFlareWork.scr_l_ang_z);
 }
 
 bool shLensFlareLightCenterIsVisible(void) // 0x8008D850
@@ -211,7 +216,7 @@ bool shLensFlareLightCenterIsVisible(void) // 0x8008D850
         rectX = 792;
     }
 
-    rect.y = 112;
+    rect.y = FRAMEBUFFER_HEIGHT_PROGRESSIVE / 2;
     rect.w = 2;
     rect.x = rectX;
     rect.h = 1;
@@ -609,7 +614,7 @@ void func_8008E5B4(void) // 0x8008E5B4
     DrawOTag((u32*)packet);
 }
 
-void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY) // 0x8008E794
+void func_8008E794(VECTOR3* pos, q3_12 angle, q19_12 posY) // 0x8008E794
 {
     VECTOR    sp10;
     VECTOR    sp20; // Q23.8
@@ -622,9 +627,9 @@ void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY) // 0x8008E794
     static SVECTOR svec0 = {};
 
     memset(&sp20, 0, 16);
-    sp20.vx = Q12_TO_Q8(posXz->vx);
-    sp20.vy = Q12_TO_Q8(posY * 2) - Q12_TO_Q8(posXz->vy);
-    sp20.vz = Q12_TO_Q8(posXz->vz);
+    sp20.vx = Q12_TO_Q8(pos->vx);
+    sp20.vy = Q12_TO_Q8(posY * 2) - Q12_TO_Q8(pos->vy);
+    sp20.vz = Q12_TO_Q8(pos->vz);
     sp10    = sp20;
 
     sp30 = GsWSMATRIX;
@@ -682,7 +687,7 @@ void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY) // 0x8008E794
     }
 }
 
-void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
+void func_8008EA68(SVECTOR* rot, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 {
     typedef struct
     {
@@ -720,7 +725,7 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     spD0 = &ot[641];
     spD4 = &ot[639];
 
-    angle1  = ratan2(arg0->vx, arg0->vz);
+    angle1  = ratan2(rot->vx, rot->vz);
     sp50.coord.m[0][0] =  Math_Cos(angle1);
     sp50.coord.m[2][2] =  Math_Cos(angle1);
     sp50.coord.m[0][2] =  Math_Sin(angle1);

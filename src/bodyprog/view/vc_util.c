@@ -264,22 +264,22 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     {
         if (Pad2_ButtonHeld(ControllerFlag_LStickHighDown))
         {
-            cam_ang.vx = cam_ang.vx - (g_VBlanks * V_BLANKS_MULT);
+            cam_ang.vx -= g_VBlanks * V_BLANKS_MULT;
         }
 
         if (Pad2_ButtonHeld(ControllerFlag_LStickHighUp))
         {
-            cam_ang.vx = cam_ang.vx + (g_VBlanks * V_BLANKS_MULT);
+            cam_ang.vx += g_VBlanks * V_BLANKS_MULT;
         }
 
         if (Pad2_ButtonHeld(ControllerFlag_LStickHighRight))
         {
-            cam_ang.vy = cam_ang.vy + (g_VBlanks * V_BLANKS_MULT);
+            cam_ang.vy += g_VBlanks * V_BLANKS_MULT;
         }
 
         if (Pad2_ButtonHeld(ControllerFlag_LStickHighLeft))
         {
-            cam_ang.vy = cam_ang.vy - (g_VBlanks * V_BLANKS_MULT);
+            cam_ang.vy -= g_VBlanks * V_BLANKS_MULT;
         }
 
         if (Pad2_ButtonHeld(ControllerFlag_Triangle | ControllerFlag_Cross))
@@ -294,7 +294,6 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 moveStep = -MOVE_DIST - 1; // TODO: `- 1` enforces a rounded down result, but `Q8` truncates toward 0.
             }
 
-            // @bug? Misuse of Q12 multiplication on Q8 values.
             newCamPos.vx += Q12_MULT_ALT(moveStep, Math_Sin(cam_ang.vy));
             newCamPos.vz += Q12_MULT_ALT(moveStep, Math_Cos(cam_ang.vy));
         }
@@ -322,7 +321,6 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
                 moveStep = -MOVE_DIST - 1; // TODO: `- 1` enforces a rounded down result, but `Q8` truncates toward 0.
             }
 
-            // @bug? Misuse of Q12 multiplication on Q8 values.
             newCamPos.vx += Q12_MULT_ALT(moveStep, Math_Sin(cam_ang.vy + Q12_ANGLE(90.0f)));
             newCamPos.vz += Q12_MULT_ALT(moveStep, Math_Cos(cam_ang.vy + Q12_ANGLE(90.0f)));
         }
@@ -336,11 +334,11 @@ void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p) // 0x80040
     lookAtMat.t[2] = newCamPos.vz;
     vwSetViewInfoDirectMatrix(NULL, &lookAtMat);
 
-    if (Pad2_ButtonHeld(ControllerFlag_LStickHighUp    |
-                  ControllerFlag_LStickHighRight |
-                  ControllerFlag_LStickHighDown  |
-                  ControllerFlag_LStickHighLeft  |
-                  ControllerFlag_Cross           |
+    if (Pad2_ButtonHeld(ControllerFlag_LStickHighUp |
+                  ControllerFlag_LStickHighRight    |
+                  ControllerFlag_LStickHighDown     |
+                  ControllerFlag_LStickHighLeft     |
+                  ControllerFlag_Cross              |
                   ControllerFlag_Triangle))
     {
         SVECTOR refOffset; // Q19.12?
@@ -390,5 +388,3 @@ q0_7 Vc_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 }
 
 void nullsub_80040B6C(void) {} // 0x80040B6C
-
-#undef V_BLANKS_MULT

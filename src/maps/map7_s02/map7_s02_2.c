@@ -617,7 +617,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             g_SysWork.lensFlareBoneCoord = NULL;
             g_SysWork.lightIntensity     = Q12(1.0f);
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -633,7 +633,7 @@ void func_800DAA4C(void) // 0x800DAA4C
         case 6:
             D_800E9ECD = 1;
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(0.8f);
@@ -712,7 +712,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_484);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -952,7 +952,7 @@ void func_800DBB34(void) // 0x800DBB34
 
             Screen_FadeTimestepReset();
             Model_AnimFlagsClear(&PLAYER_CHARA().model, AnimFlag_Visible);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             Event_CameraPositionSet(NULL,
                                     Q12(20.09f), Q12(-0.9f),
                                     Q12(-97.78f), Q12(0.0f),
@@ -1069,7 +1069,7 @@ void func_800DBB34(void) // 0x800DBB34
             Savegame_EventFlagSet(EventFlag_548);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Anim_CharaTypeAnimInfoClear();
             break;
     }
@@ -1729,7 +1729,7 @@ void func_800DD9E8(void) // 0x800DD9E8
 
             vcReturnPreAutoCamWork(false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
 
             Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -1877,7 +1877,7 @@ void func_800DE1FC(void) // 0x800DE1FC
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags           |= 1 << 3;
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             g_SysWork.lightBoneCoord     = NULL;
             g_SysWork.lensFlareBoneCoord = NULL;
@@ -2092,7 +2092,7 @@ void func_800DE1FC(void) // 0x800DE1FC
 
             vcReturnPreAutoCamWork(false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -2260,7 +2260,7 @@ void func_800DF21C(void) // 0x800DF21C
             Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
             Chara_ModelCharaIdClear(&NPC_CHARA(1), 0, 0);
             Anim_CharaTypeAnimInfoClear();
-            func_8008D448();
+            LensFlare_LensFlareEnable();
 
             Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -2646,7 +2646,7 @@ void func_800DFDDC(void) // 0x800DFDDC
             D_800EA492         = 0;
 
             Model_AnimFlagsClear(&PLAYER_CHARA().model, AnimFlag_Visible);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             // Warp camera.
             Event_CameraPositionSet(NULL,
@@ -2747,7 +2747,7 @@ void func_800DFDDC(void) // 0x800DFDDC
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
             Savegame_EventFlagClear(EventFlag_500 + D_800EA494.field_0);
             Savegame_EventFlagSet(EventFlag_487);

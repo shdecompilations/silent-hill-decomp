@@ -190,7 +190,7 @@ void func_800D0B64(void) // 0x800D0B64
 
             Math_Vector3Set(&g_SysWork.lightPosition, Q12(18.7f), Q12(-1.9f), Q12(-137.8f));
             Math_SetSVectorFast(&g_SysWork.lightRotation, Q12_ANGLE(-34.0f), Q12_ANGLE(-100.0f), 0);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             CutsceneBorder_ForceShow();
 
@@ -348,7 +348,7 @@ void func_800D0B64(void) // 0x800D0B64
             vcReturnPreAutoCamWork(true);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 0, Q12(0.0f), false);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);

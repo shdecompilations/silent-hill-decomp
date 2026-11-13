@@ -2104,7 +2104,7 @@ void func_800E219C(void) // 0x800E219C
             Event_ScreenFadeCmd(ScreenFadeCmd_Auto, false, 0, 0, false);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, 0, false);
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -2244,7 +2244,7 @@ void func_800E2950(void) // 0x800E2950
             Math_Vector3Set(&camLookAt, Q12(18.0f), Q12(-1.3f), Q12(96.0f));
             Event_CameraPositionSet(&camPos, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(&camLookAt, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             g_SysWork.lensFlareBoneCoord = NULL;
 
@@ -2284,7 +2284,7 @@ void func_800E2950(void) // 0x800E2950
             SysWork_StateSetNext(SysState_Gameplay);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -2394,7 +2394,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             Savegame_EventFlagSet(EventFlag_450);
 
             vcReturnPreAutoCamWork(true);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
             SD_Call(19);
@@ -2619,7 +2619,7 @@ void func_800E3244(void) // 0x800E3244
 
             g_Cutscene_Timer = NO_VALUE;
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             g_SysWork.lightIntensity = Q12(0.3594f);
             D_800ED5B8 = 1;
@@ -2668,7 +2668,7 @@ void func_800E3244(void) // 0x800E3244
 
             Chara_AnimReset(&NPC_CHARA(0), false);
             vcReturnPreAutoCamWork(true);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -2767,7 +2767,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             Screen_FadeTimestepReset();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             g_SysWork.lightBoneCoord     = NULL;
             g_SysWork.lensFlareBoneCoord = NULL;
@@ -3164,7 +3164,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             g_CharaModelAnimsData[0].allocSize = 190000;
 
             SD_Call(19);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);

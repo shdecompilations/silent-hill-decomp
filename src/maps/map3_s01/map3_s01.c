@@ -457,7 +457,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
             g_SysWork.lightRotation.vz   = Q12_ANGLE(0.0f);
             g_SysWork.lightIntensity     = Q12(0.7f);
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             posZ = Q12(19.1f);
             for (i = 5; i >= 0; i--)

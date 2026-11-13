@@ -165,9 +165,9 @@ D_8002ABA4_JPN                               = 0x8002ABA4;
 // Default names that collide with names from USA, workaround by renaming.
 D_8002AC04_JPN                               = 0x8002AC04;
 
-//------------------------------------------------------------------
-//--- PA: 0x00641C   VA: 0x8002AF7C   subsegment: .rodata, gfx/water
-//------------------------------------------------------------------
+//-----------------------------------------------------------------------
+//--- PA: 0x00641C   VA: 0x8002AF7C   subsegment: .rodata, gfx/lens_flare
+//-----------------------------------------------------------------------
 D_8002B2BC                                   = 0x8002AF7C;
 
 //------------------------------------------------------
@@ -1497,14 +1497,14 @@ Dms_SegmentStateGet                          = 0x8008ECE0; // type:func
 Dms_KeyframeIdxGet                           = 0x8008ED4C; // type:func
 Dms_AngleLerp                                = 0x8008EDF0; // type:func
 
-//------------------------------------------------------------
-//--- PA: 0x06A2D8   VA: 0x8008EE38   subsegment: c, gfx/water
-//------------------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x06A2D8   VA: 0x8008EE38   subsegment: c, gfx/lens_flare
+//-----------------------------------------------------------------
 shLensFlareInit                              = 0x8008EE38; // type:func
-func_8008D438                                = 0x8008EE54; // type:func
-func_8008D448                                = 0x8008EE64; // type:func
-func_8008D454                                = 0x8008EE70; // type:func
-func_8008D464                                = 0x8008EE80; // type:func
+LensFlare_LensFlareDisable                   = 0x8008EE54; // type:func
+LensFlare_LensFlareEnable                    = 0x8008EE64; // type:func
+LensFlare_WaterShimmerDisable                = 0x8008EE70; // type:func
+LensFlare_WaterShimmerEnable                 = 0x8008EE80; // type:func
 shLensFlareExec                              = 0x8008EE8C; // type:func
 shLensFlareSetLightSeed                      = 0x8008EFBC; // type:func
 shLensFlareDraw                              = 0x8008F1A8; // type:func
@@ -3155,9 +3155,9 @@ g_VibScript_StepHandlers                     = 0x800B20C8;
 //-------------------------------------------------------------------
 D_800AFD1C                                   = 0x800B20DC;
 
-//----------------------------------------------------------------
-//--- PA: 0x08D59C   VA: 0x800B20FC   subsegment: .data, gfx/water
-//----------------------------------------------------------------
+//---------------------------------------------------------------------
+//--- PA: 0x08D59C   VA: 0x800B20FC   subsegment: .data, gfx/lens_flare
+//---------------------------------------------------------------------
 pow_rate_dat.60                              = 0x800B20FC;
 dist_rate_dat.61                             = 0x800B2104;
 ang_z_rate_dat.62                            = 0x800B2120;
@@ -3757,9 +3757,9 @@ D_800C47C8                                   = 0x800C6CF8;
 D_800C47E8                                   = 0x800C6D18;
 D_800C47F8                                   = 0x800C6D28;
 
-//---------------------------------------------------------------
-//--- PA: 0x0A21E8   VA: 0x800C6D48   subsegment: .bss, gfx/water
-//---------------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x0A21E8   VA: 0x800C6D48   subsegment: .bss, gfx/lens_flare
+//--------------------------------------------------------------------
 g_LensFlareWork                              = 0x800C6D48; // size:0x24
 
 //--------------------------------------------------------------

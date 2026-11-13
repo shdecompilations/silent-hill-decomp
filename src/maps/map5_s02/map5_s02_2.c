@@ -516,7 +516,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             CutsceneBorder_ForceShow();
             g_SysWork.sysFlags |= SysFlag_CutsceneActive;
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
 #if VERSION_EQUAL_OR_NEWER(JAP2) // @bugfix?
             Game_TurnFlashlightOn();
@@ -813,7 +813,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             g_Cutscene_Timer = NO_VALUE;
 
             Savegame_EventFlagSet(EventFlag_379);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
 
             Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);

@@ -945,7 +945,7 @@ void func_800DBB7C(void) // 0x800DBB7C
         case 2:
             Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             Event_TweenReset(0);
             Event_TweenReset(1);
@@ -1024,7 +1024,7 @@ void func_800DBB7C(void) // 0x800DBB7C
             SysWork_StateSetNext(SysState_Gameplay);
 
             Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);

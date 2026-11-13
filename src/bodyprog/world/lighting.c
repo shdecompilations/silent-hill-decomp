@@ -199,7 +199,7 @@ void func_80041074(GsOT* ot, s32 arg1, SVECTOR* rot, const VECTOR3* pos) // 0x80
     func_800414E0(ot, &pos0, arg1, rotY, rotX);
 }
 
-void func_800410D8(VECTOR3* pos0, q19_12* azimuthAngle, q19_12* altitudeAngle, SVECTOR* rot, const VECTOR3* pos1) // 0x800410D8
+void func_800410D8(VECTOR3* pos0, q19_12* azimuthAngle, q19_12* altitudeAngle, SVECTOR* rot, const VECTOR3* posXz) // 0x800410D8
 {
     MATRIX        transformMat;
     SVECTOR       vec0;
@@ -213,9 +213,9 @@ void func_800410D8(VECTOR3* pos0, q19_12* azimuthAngle, q19_12* altitudeAngle, S
     // Compute coord.
     coord.super      = NULL;
     coord.workm      = GsIDMATRIX;
-    coord.workm.t[0] = Q12_TO_Q8(pos1->vx);
-    coord.workm.t[1] = Q12_TO_Q8(pos1->vy);
-    coord.workm.t[2] = Q12_TO_Q8(pos1->vz);
+    coord.workm.t[0] = Q12_TO_Q8(posXz->vx);
+    coord.workm.t[1] = Q12_TO_Q8(posXz->vy);
+    coord.workm.t[2] = Q12_TO_Q8(posXz->vz);
     coord.flg        = true;
 
     Vw_CoordToViewSpaceMatrix(&coord, &transformMat);
@@ -294,7 +294,7 @@ void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1
     result->vy = ((vec.vy * screenDist) / vec.vz) + offsetY;
 }
 
-void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 angle1) // 0x800414E0
+void func_800414E0(GsOT* ot, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 angle1) // 0x800414E0
 {
     s32      sp10[4];
     DVECTOR  sp20[4];
@@ -381,12 +381,12 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
         *(s32*)&poly_g3->x1 = var_t0[j];
         *(s32*)&poly_g3->x2 = var_t0[j + 1];
 
-        addPrim(arg0->org, poly_g3);
+        addPrim(ot->org, poly_g3);
 
         *(s32*)&poly_f4->x0 = var_t0[j + 51];
         *(s32*)&poly_f4->x1 = var_t0[j + 52];
 
-        addPrim(&arg0->org[1], poly_f4);
+        addPrim(&ot->org[1], poly_f4);
     }
 
     var_t1  = (u32*)PSX_SCRATCH;
@@ -403,10 +403,10 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 an
             *(s32*)&poly_g4->x2 = var_a1_3[17 + j];
             *(s32*)&poly_g4->x3 = var_a1_3[(17 + j) + 1];
 
-            addPrim(&arg0->org[1], poly_g4);
+            addPrim(&ot->org[1], poly_g4);
         }
     }
 
-    AddPrim(arg0->org, &g_Map_GfxPackets[g_ActiveBufferIdx][8]);
-    AddPrim(&arg0->org[1], &g_Map_GfxPackets[g_ActiveBufferIdx]);
+    AddPrim(ot->org, &g_Map_GfxPackets[g_ActiveBufferIdx][8]);
+    AddPrim(&ot->org[1], &g_Map_GfxPackets[g_ActiveBufferIdx]);
 }

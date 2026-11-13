@@ -299,7 +299,7 @@ void func_800D2668(void) // 0x800D2668
 
             Math_SetSVectorFastSum(&g_SysWork.lightRotation, Q12_ANGLE(-15.0f), Q12_ANGLE(-177.0f), Q12_ANGLE(0.0f));
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             func_8003D03C();
             Player_EmptyWeaponHandSet();
 
@@ -441,7 +441,7 @@ void func_800D2668(void) // 0x800D2668
 
             Savegame_EventFlagSet(EventFlag_294);
             Savegame_EventFlagSet(EventFlag_MapMark_AltHospital1F_WomensBathroomBroken);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             break;
     }
 

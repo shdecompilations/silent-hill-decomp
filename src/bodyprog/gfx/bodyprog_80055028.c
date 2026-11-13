@@ -93,7 +93,8 @@ void WorldGfx_2dEffectsDraw(void) // 0x800550D0
 
     if (g_WorldEnvRenderWork.lightMode == WorldEnvLightMode_Spot && g_WorldEnvRenderWork.light.lensFlareIntensity != Q12(0.0f))
     {
-        shLensFlareExec(g_WorldEnvRenderWork.light.lensFlareIntensity, &g_WorldEnvRenderWork.light.direction, &g_WorldEnvRenderWork.light.position, g_WorldEnvRenderWork.waterZones);
+        shLensFlareExec(g_WorldEnvRenderWork.light.lensFlareIntensity, &g_WorldEnvRenderWork.light.direction,
+                        &g_WorldEnvRenderWork.light.position, g_WorldEnvRenderWork.waterZones);
     }
 
     if (g_WorldEnvRenderWork.screenBrightness > Q12(0.0f))

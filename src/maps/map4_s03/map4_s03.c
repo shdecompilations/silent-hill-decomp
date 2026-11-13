@@ -169,7 +169,7 @@ void func_800D6774(void) // 0x800D6774
     {
         case 0:
             Player_ControlFreeze();
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -1496,7 +1496,7 @@ void func_800D8FC0(void) // 0x800D8FC0
             PLAYER_CHARA().rotation.vy = Q12_ANGLE(180.0f);
 
             Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
 
             // Warp camera.
             Event_CameraPositionSet(NULL, Q12(163.78f), Q12(-2.31f), Q12(58.91f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -1563,7 +1563,7 @@ void func_800D960C(void) // 0x800D960C
 
             Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             SysWork_StateStepIncrement(0);
 
         case 1:

@@ -373,7 +373,7 @@ void sharedFunc_800D15F0_3_s01(void)
             SysWork_StateSetNext(SysState_Gameplay);
 
 #ifdef MAP3_S01
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
             g_SysWork.lightIntensity = Q12(1.0f);
 #endif

@@ -540,7 +540,7 @@ void func_800D64E0(void) // 0x800D64E0
 
             sharedFunc_800CAAD0_1_s05();
             SD_Call(Sfx_Unk1533);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -603,7 +603,7 @@ void func_800D64E0(void) // 0x800D64E0
             Savegame_EventFlagSet(EventFlag_284);
 
             WorldEnv_PresetsSet(7, 4);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             vcReturnPreAutoCamWork(true);
 
             PLAYER_CHARA().position.vx -= Q12(1.2f);

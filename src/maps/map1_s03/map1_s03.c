@@ -746,7 +746,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
 
             Model_AnimFlagsClear(&PLAYER_CHARA().model, AnimFlag_Visible);
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             Event_CameraPositionSet(NULL,
                                     D_800E1F88[0].vx, D_800E1F88[0].vy, D_800E1F88[0].vz,
                                     Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f),
@@ -842,7 +842,7 @@ void MapEvent_DrainageValveInteract(void) // 0x800DAF18
         case 11:
             Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             // Warp camera.
@@ -1290,7 +1290,7 @@ void MapEvent_LockerDeadBodyCutscene(void) // 0x800DC780
             PLAYER_CHARA().rotation.vy = ratan2(Q12(-61.4f) - PLAYER_CHARA().position.vx,
                                                              Q12(20.8f)  - PLAYER_CHARA().position.vz);
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             Model_AnimFlagsClear(&PLAYER_CHARA().model, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
@@ -1317,7 +1317,7 @@ void MapEvent_LockerDeadBodyCutscene(void) // 0x800DC780
 
             Savegame_EventFlagSet(EventFlag_107);
             Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             break;
     }
 }

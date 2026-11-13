@@ -341,7 +341,7 @@ void func_800D0608(void) // 0x800D0608
 
             Model_AnimFlagsClear(&PLAYER_CHARA().model, 2);
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             WorldEnv_PresetsSet(16, 16);
             D_800D1FEC = 0;
 
@@ -373,7 +373,7 @@ void func_800D0608(void) // 0x800D0608
 
             Model_AnimFlagsSet(&PLAYER_CHARA().model, 2);
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity      = Q12(1.0f);

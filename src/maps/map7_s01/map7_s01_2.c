@@ -483,7 +483,7 @@ void func_800D7A60(void) // 0x800D7A60
             g_SysWork.lensFlareBoneCoord = NULL;
             g_SysWork.lightIntensity     = Q12(1.0f);
 
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -498,7 +498,7 @@ void func_800D7A60(void) // 0x800D7A60
         case 6:
             D_800E1671 = 1;
 
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(0.8f);
@@ -577,7 +577,7 @@ void func_800D7A60(void) // 0x800D7A60
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_484);
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
             Game_FlashlightAttribsSet();
 
             g_SysWork.lightIntensity = Q12(1.0f);
@@ -1513,7 +1513,7 @@ void func_800D9C9C(void) // 0x800D9C9C
             D_800E168E         = Q12(0.0f);
 
             Model_AnimFlagsClear(&PLAYER_CHARA().model, AnimFlag_Visible);
-            func_8008D438();
+            LensFlare_LensFlareDisable();
             Event_CameraPositionSet(NULL, Q12(-138.15f), Q12(-1.71f), Q12(-138.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Event_CameraLookAtSet(NULL, Q12(-140.56f), Q12(-1.03f), Q12(-141.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             WorldObject_ModelNameSet(&g_WorldObject_Stone0.object, "STONE2_H");
@@ -1604,7 +1604,7 @@ void func_800D9C9C(void) // 0x800D9C9C
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
-            func_8008D448();
+            LensFlare_LensFlareEnable();
 
             Model_AnimFlagsSet(&PLAYER_CHARA().model, AnimFlag_Visible);
             Savegame_EventFlagClear(EventFlag_500 + D_800E1690.field_0);

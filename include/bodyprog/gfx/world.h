@@ -52,7 +52,7 @@ typedef struct _PointLight
     /* 0x0  */ s32               field_0; // Depth for something related about the lighting. The value used here is meant to be used in `gte_lddqa`.
     /* 0x4  */ q3_12             lensFlareIntensity;
     /* 0x8  */ q19_12            intensity;
-    /* 0xC  */ SVECTOR           direction; /** Q3.12 */
+    /* 0xC  */ SVECTOR           direction; /** Q3.12 | TODO: Also a rotation. */
     /* 0x14 */ VECTOR3           position;  /** Q19.12 */
     /* 0x20 */ SVECTOR           rotation;  /** Q3.12 */
     /* 0x28 */ SVECTOR           field_28;  // Q8 light position for matrix?
