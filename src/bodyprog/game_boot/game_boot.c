@@ -9,10 +9,10 @@
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/radio.h"
-#include "bodyprog/game_boot/fs_chara_anim.h"
+#include "bodyprog/game_boot/chara_anim.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "bodyprog/world/collision_trigger.h"
 
 void GameState_LoadScreen_Update(void) // 0x800348E8
@@ -165,7 +165,7 @@ void GameBoot_InGameStartup(void) // 0x80034964
             break;
 
         case 9:
-            if (!Sd_BgmInit())
+            if (Sd_BgmInit() == 0)
             {
                 g_GameWork.gameState = GameState_MainLoadScreen;
                 Game_StateStepIncrement(0);

@@ -10,7 +10,7 @@
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/draw.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/fsqueue.h"
 
 // ========================================
@@ -19,7 +19,7 @@
 
 void Bgm_PlayNewSong(s32 bgmIdx) // 0x80087EA8
 {
-    if (Sd_BgmActiveSongCheck(bgmIdx) == false)
+    if (!Sd_BgmActiveSongCheck(bgmIdx))
     {
         return;
     }
@@ -37,7 +37,7 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            if (Sd_BgmActiveSongCheck(bgmIdx) == false)
+            if (!Sd_BgmActiveSongCheck(bgmIdx))
             {
                 SysWork_StateStepSet(1, 3);
                 break;

@@ -1,15 +1,17 @@
 #ifndef _BODYPROG_GAMEBOOT_BACKGROUNDSOUNDINIT_H
 #define _BODYPROG_GAMEBOOT_BACKGROUNDSOUNDINIT_H
 
-/** @brief Main background music * initalization and some track update.
+/** @brief Main background music and ambient track utils.
  *
- * Handles the initialization and changes of music and environmental sound when moving through a map.
- * `Sd_BgmInit` updates music when going, while `Sd_AmbientSfxInit` similarly handles environmental sound effects.
+ * Handles the initialization and changes of music and environmental sound when moving in a map.
+ * `Sd_BgmInit` updates music, while `Sd_AmbientSfxInit` updates environmental sound effects.
  */
 
-// ==========
-// FUNCTIONS
-// ==========
+// TODO: Enums for `Sd_BgmInit` and `Sd_AmbientSfxInit`.
+
+// ====
+// BGM 
+// ====
 
 /** @brief Initializes background music or updates the current track.
  *
@@ -48,9 +50,9 @@ void Sd_BgmUpdateTrack(void);
  */
 void Sd_BgmChannelSet(void);
 
-// ========================================
-// AMBIENT SOUND INIT & SET
-// ========================================
+// ==============
+// AMBIENT SOUND 
+// ==============
 
 /** @brief Initializes enviromental audio or updates the current audio track.
  *

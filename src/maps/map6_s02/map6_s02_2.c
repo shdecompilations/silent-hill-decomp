@@ -8,7 +8,7 @@
 #include "bodyprog/items/ranking.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/sys/npc_anims_clear.h"
 #include "bodyprog/world/effects.h"

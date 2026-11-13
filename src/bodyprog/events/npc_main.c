@@ -9,12 +9,12 @@
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
-#include "bodyprog/game_boot/fs_chara_anim.h"
+#include "bodyprog/game_boot/chara_anim.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/screen/data.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/fsqueue.h"
 
 void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4

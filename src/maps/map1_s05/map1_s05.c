@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/rng.h"
 
 // TODO: .bss is emitted in order of first declaration, right now our headers

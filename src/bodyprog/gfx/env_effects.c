@@ -13,7 +13,7 @@
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/rng.h"
 
 #if VERSION_REGION_IS(PAL)

@@ -268,7 +268,6 @@ typedef struct _XaItemData
     /* 0x8+0  */ u32 audioLength : 24;
     /* 0x8+24 */ u8  field_8_24  : 8; // Index.
 } s_XaItemData;
-STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 
 // Used to store KDT and VAB data access.
 typedef struct _AudioItemData
@@ -279,7 +278,6 @@ typedef struct _AudioItemData
     /* 0x4 */ u32 fileSize;      /** VAB/KDT file size. */
     /* 0x8 */ s32 fileOffset;    /** VAB/KDT audio offset in the file container. */
 } s_AudioItemData;
-STATIC_ASSERT_SIZEOF(s_AudioItemData, 12);
 
 // ========
 // GLOBALS
@@ -335,41 +333,41 @@ extern s_XaItemData gSDXATable[];
 extern s_VabInfo g_Vab_InfoTable[];
 
 #ifndef PAD_HACK_IGNORE
-#ifdef BSS_HACK_SD_CALL_C
-// ====================
-// GLOBALS (BSS; Hack; sd_call.c)
-// ====================
-// To match the order of the BSS segment, extern declarations
-// are required in a predetermined order. All these variables
-// are static.
-// This is done until a way to replicate `common`
-// segment behavior is found.
+    #ifdef BSS_HACK_SD_CALL_C
+        // ====================
+        // GLOBALS (BSS; Hack; sd_call.c)
+        // ====================
+        // To match the order of the BSS segment, extern declarations
+        // are required in a predetermined order. All these variables
+        // are static.
+        // This is done until a way to replicate `common`
+        // segment behavior is found.
 
-extern CdlLOC                     g_Sd_XaCdLocation;
-extern s32                        __pad_bss_800C15EC;
-extern u_Sd_XaCdlInfo             g_Sd_XaCdlInfo;
-extern s16                        __pad_bss_800C15F2[2];
-extern u16                        g_AudioPlayingIdxList[24];
-extern s16                        g_AudioPlayingPitchList[24];
-extern s_Sd_AudioWork             g_Sd_AudioWork;
-extern s_AudioStreamingStates     g_Sd_AudioStreamingStates;
-extern s32                        __pad_bss_800C1674;
-extern s_ChannelsVolumeController gSDVolConfig; /** Original name. */
-extern s_XaAudioPlayTracking      g_Sd_XaAudioPlayTracking;
-extern s32                        __pad_bss_800C1694;
-extern s_VabPlayingInfo           g_Sd_VabPlayingInfo;
-extern u8                         g_Sd_TaskPool[];
-extern s8                         D_800C16C8[];
-extern u8                         g_Sd_AudioType;
-extern char                       __pad_bss_800C37C9[3];
-extern u32                        g_Sd_FileDataTransferred;
-extern u8                         g_Sd_DataLoadAttempts;
-extern char                       __pad_bss_800C37D1[3];
-extern s_AudioItemData*           g_Sd_VabTargetLoad;
-extern s_AudioItemData*           g_Sd_KdtTargetLoad;
-extern u8                         g_Sd_XaTaskPending;
-extern u8                         g_Sd_CurrentTask;
-#endif
+        extern CdlLOC                     g_Sd_XaCdLocation;
+        extern s32                        __pad_bss_800C15EC;
+        extern u_Sd_XaCdlInfo             g_Sd_XaCdlInfo;
+        extern s16                        __pad_bss_800C15F2[2];
+        extern u16                        g_AudioPlayingIdxList[24];
+        extern s16                        g_AudioPlayingPitchList[24];
+        extern s_Sd_AudioWork             g_Sd_AudioWork;
+        extern s_AudioStreamingStates     g_Sd_AudioStreamingStates;
+        extern s32                        __pad_bss_800C1674;
+        extern s_ChannelsVolumeController gSDVolConfig; /** Original name. */
+        extern s_XaAudioPlayTracking      g_Sd_XaAudioPlayTracking;
+        extern s32                        __pad_bss_800C1694;
+        extern s_VabPlayingInfo           g_Sd_VabPlayingInfo;
+        extern u8                         g_Sd_TaskPool[];
+        extern s8                         D_800C16C8[];
+        extern u8                         g_Sd_AudioType;
+        extern char                       __pad_bss_800C37C9[3];
+        extern u32                        g_Sd_FileDataTransferred;
+        extern u8                         g_Sd_DataLoadAttempts;
+        extern char                       __pad_bss_800C37D1[3];
+        extern s_AudioItemData*           g_Sd_VabTargetLoad;
+        extern s_AudioItemData*           g_Sd_KdtTargetLoad;
+        extern u8                         g_Sd_XaTaskPending;
+        extern u8                         g_Sd_CurrentTask;
+    #endif
 #endif
 
 // ==========

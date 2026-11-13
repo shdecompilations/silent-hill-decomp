@@ -8,11 +8,11 @@
 #include "bodyprog/chara/spawn.h"
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/lm.h"
-#include "bodyprog/game_boot/fs_chara_anim.h"
+#include "bodyprog/game_boot/chara_anim.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/draw.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/fsqueue.h"
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* boneCoords, s8 forceFree,

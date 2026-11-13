@@ -5,9 +5,10 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/events/game_sys_states.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/event_data.h"
 #include "bodyprog/events/events_main.h"
-#include "bodyprog/events/game_sys_states.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/items/item_screens.h"
@@ -21,7 +22,7 @@
 #include "bodyprog/sys/warm_boot.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "bodyprog/world/collision_trigger.h"
 #include "bodyprog/world/effects.h"
 #include "main/fsqueue.h"

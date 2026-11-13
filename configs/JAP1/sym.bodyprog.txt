@@ -476,7 +476,7 @@ GameBoot_WorldInit                           = 0x80034EEC; // type:func
 GameBoot_MapLoad                             = 0x80034F90; // type:func
 
 //--------------------------------------------------------------------------
-//--- PA: 0x0104A0   VA: 0x80035000   subsegment: c, game_boot/fs_chara_anim
+//--- PA: 0x0104A0   VA: 0x80035000   subsegment: c, game_boot/chara_anim
 //--------------------------------------------------------------------------
 Fs_CharaAnimDataOverlapCheck                 = 0x80035000; // type:func
 Fs_CharaAnimDataIdxGet                       = 0x8003506C; // type:func
@@ -485,7 +485,7 @@ Fs_CharaAnimDataUpdate                       = 0x800352D4; // type:func
 Fs_CharaAnimBoneInfoSet                      = 0x80035410; // type:func
 
 //----------------------------------------------------------------------------------
-//--- PA: 0x010994   VA: 0x800354F4   subsegment: c, game_boot/background_sound_init
+//--- PA: 0x010994   VA: 0x800354F4   subsegment: c, sound/sound
 //----------------------------------------------------------------------------------
 Sd_BgmInit                                   = 0x800354F4; // type:func
 Sd_BgmActiveSongCheck                        = 0x8003561C; // type:func
@@ -2972,14 +2972,14 @@ unavailableMemCardSlotIdx                    = 0x800ABCA0;
 fileStatuses                                 = 0x800ABCA4;
 
 //--------------------------------------------------------------------------------------
-//--- PA: 0x087164   VA: 0x800ABCC4   subsegment: .data, game_boot/background_sound_init
+//--- PA: 0x087164   VA: 0x800ABCC4   subsegment: .data, sound/sound
 //--------------------------------------------------------------------------------------
 g_BgmTaskLoad                                = 0x800ABCC4; // type:u16 size:0x54
 g_BgmChannelSetTask                          = 0x800ABD18; // type:u16 size:0x54
 g_AmbientVabTaskLoad                         = 0x800ABD6C; // type:u16 size:0x50
 
 //------------------------------------------------------------------------------
-//--- PA: 0x08725C   VA: 0x800ABDBC   subsegment: .data, game_boot/fs_chara_anim
+//--- PA: 0x08725C   VA: 0x800ABDBC   subsegment: .data, game_boot/chara_anim
 //------------------------------------------------------------------------------
 g_CharaAnimDataIdxs                          = 0x800ABDBC;
 g_CharaModelAnimsData                        = 0x800ABDEC; // size:0x60
@@ -3097,7 +3097,7 @@ D_800A9FB0                                   = 0x800AC470;
 Y_ARRAY.295                                  = 0x800AC474;
 
 //-----------------------------------------------------------------------
-//--- PA: 0x087928   VA: 0x800AC488   subsegment: .data, sound/sound_data
+//--- PA: 0x087928   VA: 0x800AC488   subsegment: .data, sound/data
 //-----------------------------------------------------------------------
 g_Sd_VabBuffers                              = 0x800AC488;
 g_Sd_KdtBuffer                               = 0x800AC498;

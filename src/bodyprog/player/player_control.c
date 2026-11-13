@@ -15,7 +15,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/player/weapon_anim_data.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "bodyprog/sys/joy.h"
 #include "main/rng.h"
 

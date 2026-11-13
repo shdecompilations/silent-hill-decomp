@@ -12,7 +12,7 @@
 #include "bodyprog/screen/background.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/fsqueue.h"
 
 /** @brief EVENT AND INTERACTION HELPERS

@@ -10,7 +10,7 @@
 #include "main/fsqueue.h"
 
 #define BSS_HACK_SD_CALL_C
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 
 #ifndef PAD_HACK_IGNORE
     const  s32  __pad_rodata_80025BF4 = 0;

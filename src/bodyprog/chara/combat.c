@@ -12,7 +12,7 @@
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player_control.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/fsqueue.h"
 
 // Used by `func_8008A3E0`. TODO: Are they really angles?

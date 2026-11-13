@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/radio.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 
 void Game_RadioNoiseReset(void) // 0x80037154
 {

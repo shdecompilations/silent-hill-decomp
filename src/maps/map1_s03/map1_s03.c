@@ -9,7 +9,7 @@
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "bodyprog/world/effects.h"
 #include "main/rng.h"
 #include "maps/map1/map1_s03.h"

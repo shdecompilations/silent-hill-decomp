@@ -147,7 +147,7 @@ segments:
       - [auto,       c, sys/chara_file_infos]
       - [auto,       c, sys/map_info]
       - [auto,       c, events/event_data]
-      - [auto,       c, sound/sound_data] # Possibly `sd_dat.c` from SH2 symbols?
+      - [auto,       c, sound/sd_dat] # Possibly `sd_dat.c` from SH2 symbols?
       - [auto,       c, player/weapon_anim_data]
       - [0x985C, c, sys/memcard]
       - [0xC6F4, c, screen/background]
@@ -164,8 +164,8 @@ segments:
       - [0xF630, c, sys/joy]
       - [0xFAD4, c, sys/npc_anims_clear]
       - [0xFAFC, c, game_boot/game_boot]
-      - [0x104A0, c, game_boot/fs_chara_anim]
-      - [0x10994, c, game_boot/background_sound_init]
+      - [0x104A0, c, game_boot/chara_anim]
+      - [0x10994, c, sound/sound]
       - [0x10D18, c, game_boot/load_screen]
       - [0x10FC8, c, events/bgm_update]        # }
       - [0x11740, c, text/bodyprog_8003652C]
@@ -406,8 +406,8 @@ segments:
       - [0x86D2C, .data, sys/map_info]
       - [0x870C8, .data, sys/game_main]
       - [0x87134, .data, sys/memcard_2]
-      - [0x87164, .data, game_boot/background_sound_init]
-      - [0x8725C, .data, game_boot/fs_chara_anim]
+      - [0x87164, .data, sound/sound]
+      - [0x8725C, .data, game_boot/chara_anim]
       - [0x872FC, .data, events/bgm_update]
       - [0x8730C, .data, text/map_msg]
       - [0x87312, pad] # Garbage padding
@@ -417,7 +417,7 @@ segments:
       - [0x873D4, .data, events/title]
       - [0x87814, .data, world/draw]
       - [0x878E0, .data, world/effects]
-      - [0x87928, .data, sound/sound_data]
+      - [0x87928, .data, sound/sd_dat]
       - [0x8ADE0, .data, view/vw_calc]
       - [0x8ADF8, .data, text/text_draw]
       - [0x8AE24, .data, items/weapon_data]

@@ -1,5 +1,5 @@
 #include "common.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 
 u8* g_Sd_VabBuffers[4] = {
     (u8*)0x801FE460,
@@ -18,13 +18,13 @@ s32 D_800A9FDC[4] = {
 
 s_AudioItemData g_AudioData[127] = {
 #if VERSION_IS(USA)
-    #include "audiodata.c.USA.inc"
+    #include "audiodata.USA.inc"
 #elif VERSION_IS(JAP0)
-    #include "audiodata.c.JAP0.inc"
+    #include "audiodata.JAP0.inc"
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
-    #include "audiodata.c.JAP1.inc"
+    #include "audiodata.JAP1.inc"
 #elif VERSION_IS(EUR)
-    #include "audiodata.c.EUR.inc"
+    #include "audiodata.EUR.inc"
 #endif
 };
 

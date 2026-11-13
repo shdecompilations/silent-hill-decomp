@@ -2,7 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/settings_reset.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "bodyprog/screen/draw.h"
 #include "screens/options/options.h"
 

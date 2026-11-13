@@ -5,12 +5,10 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/sound/sound.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/sound/sound_system.h"
-
-// ========================================
-// STATIC VARIABLES
-// ========================================
+#include "bodyprog/sound/sd_call.h"
 
 /** @brief Task commands for `SD_Call` to load BGM KDT and VAB files. */
 static u16 g_BgmTaskLoad[42] = {
@@ -45,18 +43,9 @@ static u16 g_AmbientVabTaskLoad[40] = {
     196, 197, 198, 199, 200, 201, 202, 203
 };
 
-// ========================================
-// ENVIROMENT AND MUSIC INIT AND SET
-// ========================================
-
-bool Sd_BgmInit(void) // 0x80035780
+s32 Sd_BgmInit(void) // 0x80035780
 {
-    if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
-    {
-        return NO_VALUE;
-    }
-
-    if (Fs_QueueGetLength() > 0)
+    if (Sd_AudioStreamingCheck() != AudioStreamingState_None || Fs_QueueGetLength() > 0)
     {
         return NO_VALUE;
     }
@@ -69,7 +58,7 @@ bool Sd_BgmInit(void) // 0x80035780
             g_GameWork.gameStateSteps[1]++;
 
         case 1:
-            if (Sd_BgmActiveSongCheck(g_MapOverlayHdr.bgmCmd) == false)
+            if (!Sd_BgmActiveSongCheck(g_MapOverlayHdr.bgmCmd))
             {
                 g_GameWork.gameStateSteps[1] += 2;
             }
@@ -92,10 +81,10 @@ bool Sd_BgmInit(void) // 0x80035780
             break;
 
         default:
-            return false;
+            return 0;
     }
 
-    return true;
+    return 1;
 }
 
 bool Sd_BgmActiveSongCheck(s32 bgmIdx) // 0x800358A8
@@ -174,7 +163,7 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
                 }
             }
 
-            if (Sd_ActiveAmbientSfxCheck((s8)g_MapOverlayHdr.ambientAudioIdx) != false)
+            if (Sd_ActiveAmbientSfxCheck((s8)g_MapOverlayHdr.ambientAudioIdx))
             {
                 SD_Call(17);
                 g_GameWork.gameStateSteps[1]++;

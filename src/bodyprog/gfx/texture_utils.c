@@ -12,7 +12,7 @@
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/rng.h"
 
 void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0

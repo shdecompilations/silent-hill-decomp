@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_SOUND_SFX_H
 #define _BODYPROG_SOUND_SFX_H
 
-#include "bodyprog/sound/sfx_id_enum.h"
+#include "bodyprog/sound/sfx_ids.h"
 
 /** @brief SFX flags. */
 typedef enum _SfxFlags

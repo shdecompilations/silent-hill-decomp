@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/bgm_utils.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/items/ranking.h"
@@ -9,7 +10,7 @@
 #include "bodyprog/sys/memcard.h"
 #include "bodyprog/sys/npc_anims_clear.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "bodyprog/world/effects.h"
 #include "main/rng.h"
 #include "maps/map7/map7_s03.h"

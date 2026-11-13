@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/game_boot/fs_chara_anim.h"
+#include "bodyprog/game_boot/chara_anim.h"
 #include "main/fsqueue.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/game_boot/game_boot.h"
@@ -14,11 +14,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/items/ranking.h"
-#include "bodyprog/sound/sound_system.h"
-
-// ========================================
-// GLOBAL VARIABLES
-// ========================================
+#include "bodyprog/sound/sd_call.h"
 
 s8 g_CharaAnimDataIdxs[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -71,10 +67,6 @@ s_AnimInfo D_800A998C = {
     .startKeyframeIdx    = 26,
     .endKeyframeIdx      = 44
 };
-
-// ========================================
-// ANIMATION FILE STREAMING
-// ========================================
 
 /** @brief Checks if the raw file streaming memory allocations of two character animation data slots overlap.
  *

@@ -8,7 +8,7 @@
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/rng.h"
 #include "maps/map6/map6_s00.h"
 #include "maps/common/particle.h"

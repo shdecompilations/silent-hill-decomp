@@ -2,7 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sound/sfx.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 
 /** @brief Lookup table for `2^(-i / 32)` in Q12, i = 0..32.
  * Used by `Math_Pow2Neg` for exponential decay via table interpolation.

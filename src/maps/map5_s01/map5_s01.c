@@ -5,7 +5,7 @@
 #include "bodyprog/items/camera.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "bodyprog/world/effects.h"
 #include "main/rng.h"
 #include "maps/map5/map5_s01.h"

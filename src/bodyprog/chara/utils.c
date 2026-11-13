@@ -12,7 +12,7 @@
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/player/player.h"
-#include "bodyprog/sound/sound_system.h"
+#include "bodyprog/sound/sd_call.h"
 #include "main/rng.h"
 
 s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0

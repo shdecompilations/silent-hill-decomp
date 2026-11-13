@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
