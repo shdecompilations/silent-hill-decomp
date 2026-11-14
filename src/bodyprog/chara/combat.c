@@ -103,20 +103,17 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
-                  q3_12 rotToTargetX, q3_12 rotToTargetY) // 0x8008A0E4
+s32 func_8008A0E4(s32 request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
+                  q3_12 aimYaw, q3_12 aimPitch) // 0x8008A0E4
 {
-    s32          var_t1;
-    s32          temp_a1;
-    s32          var_a0;
+    s32          prevState;
+    s32          hitFlags;
     s32          ret;
-    s32          var_v0_2;
+    s32          firstNpcBit;
     s32          count;
-    s_AnimInfo*  mapAnimInfos;
-    s_AnimInfo*  baseAnimInfos;
     s_ModelAnim* modelAnim;
 
-    var_t1    = chara->attack.state;
+    prevState = chara->attack.state;
     modelAnim = &chara->model.anim;
 
     if (g_DeltaTime == Q12(0.0f) || g_SysWork.sysState != SysState_Gameplay)
@@ -126,8 +123,8 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
 
     if (chara == &PLAYER_CHARA())
     {
-        baseAnimInfos = D_800297B8;
-        mapAnimInfos  = g_MapOverlayHdr.harryMapAnimInfos;
+        s_AnimInfo* baseAnimInfos = D_800297B8;
+        s_AnimInfo* mapAnimInfos  = g_MapOverlayHdr.harryMapAnimInfos;
 
         modelAnim->baseAnimInfos      = baseAnimInfos;
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false); // TODO: 38 is the first Harry anim after base anims. Make a constant?
@@ -139,54 +136,56 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false);
     }
 
-    if (arg0 <= 0)
+    if (request <= 0)
     {
-        var_t1          = 0;
+        prevState           = 0;
         chara->attack.state = 0;
     }
 
     chara->attack.weaponAttack = weaponAttack;
+
     if (!(modelAnim->status & (1 << 0)))
     {
-        chara->attack.state = 0;
+        chara->attack.state    = 0;
         chara->attack.hitFlags = 0;
     }
-    else if (!var_t1 && arg0 > 0)
+    else if (!prevState && request > 0)
     {
-        chara->attack.state = 1;
+        chara->attack.state    = 1;
         chara->attack.hitFlags = 0;
     }
 
-    chara->attack.shotsLeft  = 100;
-    chara->attack.aimYaw  = rotToTargetX;
-    chara->attack.aimPitch  = rotToTargetY;
-    chara->attack.origin = *attackPos;
-    temp_a1         = func_8008A3E0(chara);
-    ret             = NO_VALUE;
+    chara->attack.shotsLeft = 100;
+    chara->attack.aimYaw    = aimYaw;
+    chara->attack.aimPitch  = aimPitch;
+    chara->attack.origin    = *attackPos;
+    hitFlags                = func_8008A3E0(chara);
+    ret                     = NO_VALUE;
 
     if (chara == &PLAYER_CHARA())
     {
-        count    = 6;
-        var_v0_2 = 1;
+        count       = NPC_COUNT_MAX;
+        firstNpcBit = 1;
     }
     else
     {
-        count    = 1;
-        var_v0_2 = NO_VALUE;
+        count       = 1;
+        firstNpcBit = NO_VALUE;
     }
 
-    if (temp_a1 != 0)
+    if (hitFlags != 0)
     {
-        var_a0 = var_v0_2;
+        s32 npcBit = firstNpcBit;
+
         while (count > 0)
         {
-            if (temp_a1 & var_a0)
+            if (hitFlags & npcBit)
             {
                 ret = count;
                 break;
             }
 
-            var_a0 *= 2; // Or `<<= 1`.
+            npcBit <<= 1;
             count--;
         }
     }
@@ -206,17 +205,17 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
     return ret;
 }
 
-u32 func_8008A270(s32 idx) // 0x8008A270
+u32 func_8008A270(s32 weaponAttack) // 0x8008A270
 {
 #if VERSION_EQUAL_OR_NEWER(USA)
-    switch (idx)
+    switch (weaponAttack)
     {
-        case 2:
-        case 5:
-        case 12:
-        case 15:
-        case 22:
-        case 25:
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
             if (g_SysWork.field_275C > Q12(256.0f))
             {
                 return 0;
@@ -227,7 +226,8 @@ u32 func_8008A270(s32 idx) // 0x8008A270
             break;
     }
 #else
-    if (idx != 57 && idx != 58)
+    if (weaponAttack != WEAPON_ATTACK(AttackType_PuppetNurse,  AttackInputType_Tap) &&
+        weaponAttack != WEAPON_ATTACK(AttackType_PuppetDoctor, AttackInputType_Tap))
     {
         if (g_SysWork.field_275C > Q12(256.0f))
         {
@@ -236,45 +236,45 @@ u32 func_8008A270(s32 idx) // 0x8008A270
     }
 #endif
 
-    return g_Items_WeaponAttackInfos[idx].hitStartKeyframe;
+    return g_Items_WeaponAttackInfos[weaponAttack].hitStartKeyframe;
 }
 
-u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
+u32 func_8008A2E0(s32 weaponAttack) // 0x8008A2E0
 {
     if (g_SysWork.field_275C > Q12(256.0f))
     {
-        switch (arg0)
+        switch (weaponAttack)
         {
-            case 5:
-            case 25:
+            case WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Multitap):
                 return 18;
 
-            case 15:
+            case WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Hold):
                 return 15;
 
-            case 2:
-            case 12:
-            case 22:
+            case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
+            case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Hold):
+            case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
                 return 13;
         }
     }
 
-    return g_Items_WeaponAttackInfos[arg0].hitKeyframeCount;
+    return g_Items_WeaponAttackInfos[weaponAttack].hitKeyframeCount;
 }
 
-s32 func_8008A35C(s_AttackInfo* attackInfo, s32 arg1) // 0x8008A35C
+s32 func_8008A35C(s_AttackInfo* attackInfo, s32 keyframe) // 0x8008A35C
 {
-    s32 var;
-    s32 res;
+    s32 hitEnd;
+    s32 result;
 
-    var = attackInfo->hitStartKeyframe + attackInfo->hitKeyframeCount;
-    res = 0;
-    if (arg1 >= attackInfo->hitStartKeyframe)
+    hitEnd = attackInfo->hitStartKeyframe + attackInfo->hitKeyframeCount;
+    result = 0;
+    if (keyframe >= attackInfo->hitStartKeyframe)
     {
-        res = (arg1 < var);
+        result = (keyframe < hitEnd);
     }
 
-    return res;
+    return result;
 }
 
 void Chara_Flag8Clear(s_SubCharacter* chara) // 0x8008A384
@@ -299,7 +299,7 @@ void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
 s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 {
     s32                sp10;
-    s32                sp14;
+    s32                weaponAttack;
     s32                sp18;
     s_AttackInfo*      attackInfo;
     s32                sp20;
@@ -381,8 +381,8 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     sp30 = NO_VALUE;
     Chara_Flag8Set(chara);
 
-    sp10 = chara->attack.state;
-    sp14 = (u8)chara->attack.weaponAttack;
+    sp10         = chara->attack.state;
+    weaponAttack = chara->attack.weaponAttack;
 
     if (sp10 == 0)
     {
@@ -401,7 +401,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     sp18 = 0;
 
-    attackInfo = &g_Items_WeaponAttackInfos[sp14];
+    attackInfo = &g_Items_WeaponAttackInfos[weaponAttack];
 
     temp_s1 = attackInfo->type;
 
@@ -418,8 +418,8 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     sp28  = var_s0->time;
     sp28 -= Q12(anim->startKeyframeIdx);
 
-    var_s0_2 = func_8008A270(sp14);
-    var_a0   = func_8008A2E0(sp14);
+    var_s0_2 = func_8008A270(weaponAttack);
+    var_a0   = func_8008A2E0(weaponAttack);
 
     i   = chara->attack.hitCheckTime;
     sp2C     = Q12(var_s0_2 + var_a0);
@@ -787,10 +787,10 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
             if (chara->model.charaId == Chara_Harry)
             {
-                switch (sp14)
+                switch (weaponAttack)
                 {
-                    case 32:
-                    case 33:
+                    case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+                    case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
                         if (sp30 != NO_VALUE)
                         {
                             if (WorldEnv_IsInDarkness())
@@ -808,28 +808,28 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                         }
                         break;
 
-                    case 34:
+                    case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
                         var_s0_2 = 5;
                         break;
 
-                    case 35:
+                    case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
                         var_s0_2 = 4;
                         break;
 
-                    case 2:
-                    case 5:
-                    case 6:
-                    case 12:
-                    case 15:
-                    case 16:
-                    case 22:
-                    case 25:
-                    case 26:
+                    case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
+                    case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap):
+                    case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Tap):
+                    case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Hold):
+                    case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
+                    case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Hold):
+                    case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
+                    case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
+                    case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Multitap):
                         var_s0_2 = 7;
                         break;
 
-                    case 8:
-                    case 9:
+                    case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap):
+                    case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
                         var_s0_2 = NO_VALUE;
                         break;
 
@@ -856,105 +856,110 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
 void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
 {
-    s32 temp_s2;
-    s32 temp_s3;
+    s32 aimPitch;
+    s32 aimYaw;
     s32 i;
 
-    temp_s3 = chara->attack.aimYaw;
-    temp_s2 = chara->attack.aimPitch;
+    aimYaw   = chara->attack.aimYaw;
+    aimPitch = chara->attack.aimPitch;
 
-    chara->attack.prevAimYaw = temp_s3;
-    chara->attack.prevAimPitch = temp_s2;
+    chara->attack.prevAimYaw   = aimYaw;
+    chara->attack.prevAimPitch = aimPitch;
 
-    for (i = 1; i > 0; i--)
+    // @hack Loop is required for match, might be based on `attack->segVec` ARRAY_SIZE but not totally sure.
+    // Code in this loop only runs once.
+    for (i = ARRAY_SIZE(chara->attack.segVec) - 1; i > 0; i--)
     {
-        func_8008B1DC(chara, temp_s3, temp_s2);
+        func_8008B1DC(chara, aimYaw, aimPitch);
         chara->attack.prevOrigin = chara->attack.origin;
     }
 }
 
-void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x8008B1DC
+void func_8008B1DC(s_SubCharacter* chara, q19_12 aimYaw, q19_12 aimPitch) // 0x8008B1DC
 {
-    s32                temp_s0;
-    q19_12             sinAngle1;
-    q19_12             cosAngle1;
-    s32                temp_s3;
-    s32                temp_v1_2;
+    s32                rangeMin;
+    q19_12             sinPitch;
+    q19_12             cosPitch;
+    s32                dirX;
+    s32                dirZ;
     s32                i;
-    s32                temp_s2;
-    s32                idx46;
-    s32                vx;
-    s32                vy;
-    s32                vz;
-    s32                vx2;
-    s32                vy2;
-    s32                vz2;
-    s32                vx3;
-    s32                vy3;
-    s32                vz3;
+    s32                segLength;
+    s32                weaponAttack;
+    s32                segVecX;
+    s32                segVecY;
+    s32                segVecZ;
+    s32                segStartX;
+    s32                segStartY;
+    s32                segStartZ;
+    s32                originX;
+    s32                originY;
+    s32                originZ;
     s_AttackInfo*      attackInfo;
-    s_CharaAttack*     base;
+    s_CharaAttack*     attack;
 
-    base  = &chara->attack;
-    idx46 = chara->attack.weaponAttack;
+    attack       = &chara->attack;
+    weaponAttack = chara->attack.weaponAttack;
 
-    for (i = 0; i >= 0; i--)
+    // Shift segment history.
+    // @hack Loop is required for match, might be based on `attack->segVec` ARRAY_SIZE but not totally sure.
+    // Code in this loop only runs once.
+    for (i = ARRAY_SIZE(attack->segVec) - 2; i >= 0; i--)
     {
-        vx = base->segVec[i].vx;
-        vy = base->segVec[i].vy;
-        vz = base->segVec[i].vz;
+        segVecX = attack->segVec[i].vx;
+        segVecY = attack->segVec[i].vy;
+        segVecZ = attack->segVec[i].vz;
 
-        base->segVec[i + 1].vx = vx;
-        base->segVec[i + 1].vy = vy;
-        base->segVec[i + 1].vz = vz;
+        attack->segVec[i + 1].vx = segVecX;
+        attack->segVec[i + 1].vy = segVecY;
+        attack->segVec[i + 1].vz = segVecZ;
 
-        vx2 = base->segStart[i].vx;
-        vy2 = base->segStart[i].vy;
-        vz2 = base->segStart[i].vz;
+        segStartX = attack->segStart[i].vx;
+        segStartY = attack->segStart[i].vy;
+        segStartZ = attack->segStart[i].vz;
 
-        base->segStart[i + 1].vx = vx2;
-        base->segStart[i + 1].vy = vy2;
-        base->segStart[i + 1].vz = vz2;
+        attack->segStart[i + 1].vx = segStartX;
+        attack->segStart[i + 1].vy = segStartY;
+        attack->segStart[i + 1].vz = segStartZ;
     }
 
-    attackInfo = &g_Items_WeaponAttackInfos[idx46];
+    attackInfo = &g_Items_WeaponAttackInfos[weaponAttack];
 
-    temp_s2 = attackInfo->rangeMax;
-    temp_s0 = attackInfo->rangeMin;
+    segLength = attackInfo->rangeMax;
+    rangeMin  = attackInfo->rangeMin;
 
-    vx3 = chara->attack.origin.vx;
-    vy3 = chara->attack.origin.vy;
-    vz3 = chara->attack.origin.vz;
+    originX = chara->attack.origin.vx;
+    originY = chara->attack.origin.vy;
+    originZ = chara->attack.origin.vz;
 
-    vx2 = vx3;
-    vy2 = vy3;
-    vz2 = vz3;
+    segStartX = originX;
+    segStartY = originY;
+    segStartZ = originZ;
 
-    cosAngle1 = Math_Cos(angle1);
-    sinAngle1 = Math_Sin(angle1);
+    cosPitch = Math_Cos(aimPitch);
+    sinPitch = Math_Sin(aimPitch);
 
-    temp_s3   = Q12_MULT(sinAngle1, Math_Sin(angle0));
-    temp_v1_2 = Q12_MULT(sinAngle1, Math_Cos(angle0));
+    dirX = Q12_MULT(sinPitch, Math_Sin(aimYaw));
+    dirZ = Q12_MULT(sinPitch, Math_Cos(aimYaw));
 
-    temp_s2 -= temp_s0;
+    segLength -= rangeMin;
 
-    vx2                          += Q12_MULT(temp_s0, temp_s3);
-    chara->attack.segStart[0].vx = vx2;
+    segStartX                   += Q12_MULT(rangeMin, dirX);
+    chara->attack.segStart[0].vx = segStartX;
 
-    vy2                          += Q12_MULT(temp_s0, cosAngle1);
-    chara->attack.segStart[0].vy = vy2;
+    segStartY                   += Q12_MULT(rangeMin, cosPitch);
+    chara->attack.segStart[0].vy = segStartY;
 
-    vz2                          += Q12_MULT(temp_s0, temp_v1_2);
-    chara->attack.segStart[0].vz = vz2;
+    segStartZ                   += Q12_MULT(rangeMin, dirZ);
+    chara->attack.segStart[0].vz = segStartZ;
 
-    vx                            = Q12_MULT(temp_s2, temp_s3);
-    chara->attack.segVec[0].vx = vx;
+    segVecX                    = Q12_MULT(segLength, dirX);
+    chara->attack.segVec[0].vx = segVecX;
 
-    vy                            = Q12_MULT(temp_s2, cosAngle1);
-    chara->attack.segVec[0].vy = vy;
+    segVecY                    = Q12_MULT(segLength, cosPitch);
+    chara->attack.segVec[0].vy = segVecY;
 
-    vz                            = Q12_MULT(temp_s2, temp_v1_2);
-    chara->attack.segVec[0].vz = vz;
+    segVecZ                    = Q12_MULT(segLength, dirZ);
+    chara->attack.segVec[0].vz = segVecZ;
 }
 
 void func_8008B398(void) // 0x8008B398
@@ -1171,7 +1176,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
     s32           weaponAttack;
     s_AttackInfo* attackInfo;
 
-    weaponAttack = (u8)attacker->attack.weaponAttack;
+    weaponAttack = attacker->attack.weaponAttack;
     attackInfo   = &g_Items_WeaponAttackInfos[weaponAttack];
     attackType   = attackInfo->type;
     hitFlags     = attacker->attack.hitFlags;
@@ -1658,7 +1663,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo,
     if (chara == &PLAYER_CHARA())
     {
         chara0 = &NPC_CHARA(0);
-        var_v0 = 6;
+        var_v0 = NPC_COUNT_MAX;
         var_v1 = 1;
     }
     else
