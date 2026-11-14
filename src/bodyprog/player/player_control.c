@@ -617,7 +617,7 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
 
         if (!(PLAYER_PROPS().flags & PlayerFlag_Unk2))
         {
-            player->field_44.field_0 = 1;
+            player->attack.state = 1;
             PLAYER_PROPS().flags |= PlayerFlag_Unk2;
         }
     }
@@ -3043,7 +3043,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (!(PLAYER_PROPS().flags & PlayerFlag_Unk2))
                     {
-                        player->field_44.field_0 = 1;
+                        player->attack.state = 1;
 
                         Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
 
@@ -3061,15 +3061,15 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
                     !(PLAYER_PROPS().flags & PlayerFlag_Unk2))
                 {
-                    player->field_44.field_0 = 1;
+                    player->attack.state = 1;
                     PLAYER_PROPS().flags       |= PlayerFlag_Unk2;
                 }
             }
             else
             {
-                if (player->field_44.field_0 <= 0)
+                if (player->attack.state <= 0)
                 {
-                    player->field_44.field_0 = 1;
+                    player->attack.state = 1;
                 }
 
                 player->properties.player.field_10C = 0x40;
@@ -3084,7 +3084,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (PLAYER_COMBAT().currentWeaponAmmo != 0)
                 {
-                    player->field_44.field_0 = 1;
+                    player->attack.state = 1;
 
                     if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap))
                     {
@@ -3614,9 +3614,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                 {
-                    if (player->field_44.field_0 <= 0)
+                    if (player->attack.state <= 0)
                     {
-                        player->field_44.field_0 = 1;
+                        player->attack.state = 1;
                     }
 
                     if (extra->model.stateStep == 0)
@@ -3858,7 +3858,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                     if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                     {
-                        player->field_44.field_0 = 1;
+                        player->attack.state = 1;
                     }
                 }
             }
@@ -7358,7 +7358,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk12;
                 PLAYER_COMBAT().isAiming              = false;
                 PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk9;
-                player->field_44.field_0           = NO_VALUE;
+                player->attack.state           = NO_VALUE;
             }
             break;
     }
@@ -7873,7 +7873,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                 angleDeltaToTargetY = Q12_ANGLE(33.75f);
             }
 
-            if (player->field_44.field_0 > 0)
+            if (player->attack.state > 0)
             {
                 func_8006342C(PLAYER_COMBAT().weaponAttack, angleDeltaToTargetY, rotDeltaToTarget.vx, boneCoords);
             }
@@ -8048,16 +8048,16 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
             {
                 if (g_Player_RotationToTargetX != NO_VALUE || g_Player_RotationToTargetY != g_Player_RotationToTargetX)
                 {
-                    func_8008A0E4(player->field_44.field_0, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, g_Player_RotationToTargetY, g_Player_RotationToTargetX);
+                    func_8008A0E4(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, g_Player_RotationToTargetY, g_Player_RotationToTargetX);
                 }
                 else
                 {
-                    func_8008A0E4(player->field_44.field_0, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
+                    func_8008A0E4(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
                 }
             }
             else
             {
-                func_8008A0E4(player->field_44.field_0, PLAYER_COMBAT().weaponAttack, player, &PLAYER_COMBAT().attackPosition, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
+                func_8008A0E4(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &PLAYER_COMBAT().attackPosition, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
             }
 
             g_Player_RotationDeltaToTargetX = rotDeltaToTarget.vx;

@@ -341,7 +341,7 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
 
     if (groaner->model.anim.status != ANIM_STATUS(GroanerAnim_JumpAttack, true))
     {
-        groaner->field_44.field_0 = 0;
+        groaner->attack.state = 0;
     }
 
     sharedData_800EEE14_2_s00[groaner->model.controlState](groaner);
@@ -704,7 +704,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
             groaner->moveSpeed           = MIN(var_v0, Q12(4.5f));
 
             deltaHeadingAngleToPlayer = PLAYER_CHARA().position.vy - groaner->position.vy;
-            groaner->field_44.field_0 = 1;
+            groaner->attack.state = 1;
             groanerProps.field_10F    = 2;
             groaner->fallSpeed        = Q12_MULT_PRECISE(deltaHeadingAngleToPlayer - Q12(1.4f), Q12(2.35f));
         }

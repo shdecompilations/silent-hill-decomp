@@ -839,11 +839,11 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
             playerChara->properties.player.afkTimer = Q12(0.0f);
             playerChara->properties.player.field_F4 = 0;
             PLAYER_COMBAT().isAiming         = false;
-            playerChara->field_44.field_0           = NO_VALUE;
+            playerChara->attack.state           = NO_VALUE;
 
             PLAYER_PROPS().flags &= ~PlayerFlag_Unk9;
 
-            playerChara->field_44.field_0 = NO_VALUE; // Redundant set needed for match.
+            playerChara->attack.state = NO_VALUE; // Redundant set needed for match.
         }
     }
 

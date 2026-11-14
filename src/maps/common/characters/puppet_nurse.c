@@ -826,7 +826,7 @@ void PuppetNurse_Control9(s_SubCharacter* nurse)
     }
 
     cond                    = sharedFunc_800CF294_3_s03(nurse, dist);
-    nurse->field_44.field_0 = 0;
+    nurse->attack.state = 0;
 
     switch (nurse->model.stateStep)
     {
@@ -1030,7 +1030,7 @@ void PuppetNurse_Control12(s_SubCharacter* nurse)
             sharedFunc_800CF7F4_3_s03(nurse);
 
         case 2:
-            nurse->field_44.field_0 = 0;
+            nurse->attack.state = 0;
             localNurse              = nurse;
             distToPlayer            = sharedFunc_800CF600_3_s03(nurse);
 

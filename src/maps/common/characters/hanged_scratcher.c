@@ -246,7 +246,7 @@ void HangedScratcher_ControlUpdate(s_SubCharacter* scratcher)
     if (animStatus != ANIM_STATUS(HangedScratcherAnim_4, true) &&
         animStatus != ANIM_STATUS(HangedScratcherAnim_5, true))
     {
-        scratcher->field_44.field_0 = 0;
+        scratcher->attack.state = 0;
     }
 
     // Handle control state.
@@ -524,7 +524,7 @@ void HangedScratcher_Control_4(s_SubCharacter* scratcher)
             scratcher->moveSpeed = Q12(0.0f);
         }
 
-        scratcher->field_44.field_0 = 1;
+        scratcher->attack.state = 1;
     }
     else
     {
@@ -1061,9 +1061,9 @@ void HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model.anim.time, 124, 130))
     {
-        if (scratcher->field_44.field_0 == 0)
+        if (scratcher->attack.state == 0)
         {
-            scratcher->field_44.field_0 = 1;
+            scratcher->attack.state = 1;
         }
 
         attackPos.vx = scratcher->position.vx;

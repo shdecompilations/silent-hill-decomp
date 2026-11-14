@@ -537,7 +537,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
             creeper->rotation.vy = Math_AngleBetweenPositionsGet(creeper->position, PLAYER_CHARA().position);
         }
 
-        creeper->field_44.field_0 = 1;
+        creeper->attack.state = 1;
         return;
     }
 
@@ -579,7 +579,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         creeperProps.angleToTarget    = Los_CharaHeadingAngleGet(creeper, Q12(4.8f),
                                                               PLAYER_CHARA().position.vx, PLAYER_CHARA().position.vz,
                                                               Q12_ANGLE(360.0f), false);
-        creeper->field_44.field_0     = 0;
+        creeper->attack.state     = 0;
     }
 }
 

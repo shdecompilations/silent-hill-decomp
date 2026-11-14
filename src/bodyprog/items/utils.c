@@ -37,7 +37,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
         if ((weaponId == AttackType_Chainsaw && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_Chainsaw, AttackInputType_Tap)) ||
             (weaponId == AttackType_RockDrill && PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap)))
         {
-            PLAYER_CHARA().field_44.field_0    = 0;
+            PLAYER_CHARA().attack.state    = 0;
             PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
         }
 
@@ -329,7 +329,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                     curFlags                        = 0;
                     curSoundType                    = 0;
                     PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
-                    PLAYER_CHARA().field_44.field_0    = 0;
+                    PLAYER_CHARA().attack.state    = 0;
                 }
             }
             break;

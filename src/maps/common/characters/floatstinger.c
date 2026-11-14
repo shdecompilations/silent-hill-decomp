@@ -194,7 +194,7 @@ void Floatstinger_ControlUpdate(s_SubCharacter* floatstinger) // 0x800D1B98
 {
     if (floatstinger->model.anim.status != ANIM_STATUS(FloatstingerAnim_1, true))
     {
-        floatstinger->field_44.field_0 = 0;
+        floatstinger->attack.state = 0;
         floatstingerProps.flags_E8    &= ~FloatstingerFlag_2;
     }
 
@@ -363,7 +363,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
             floatstinger->moveSpeed = Q12(0.0f);
             if (!(floatstingerProps.flags_E8 & FloatstingerFlag_2))
             {
-                floatstinger->field_44.field_0++;
+                floatstinger->attack.state++;
                 floatstingerProps.flags_E8 |= FloatstingerFlag_2;
             }
 

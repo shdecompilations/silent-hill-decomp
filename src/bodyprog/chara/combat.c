@@ -116,7 +116,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
     s_AnimInfo*  baseAnimInfos;
     s_ModelAnim* modelAnim;
 
-    var_t1    = chara->field_44.field_0;
+    var_t1    = chara->attack.state;
     modelAnim = &chara->model.anim;
 
     if (g_DeltaTime == Q12(0.0f) || g_SysWork.sysState != SysState_Gameplay)
@@ -142,25 +142,25 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* at
     if (arg0 <= 0)
     {
         var_t1          = 0;
-        chara->field_44.field_0 = 0;
+        chara->attack.state = 0;
     }
 
-    chara->field_44.field_2 = weaponAttack;
+    chara->attack.weaponAttack = weaponAttack;
     if (!(modelAnim->status & (1 << 0)))
     {
-        chara->field_44.field_0 = 0;
-        chara->field_44.field_8 = 0;
+        chara->attack.state = 0;
+        chara->attack.hitFlags = 0;
     }
     else if (!var_t1 && arg0 > 0)
     {
-        chara->field_44.field_0 = 1;
-        chara->field_44.field_8 = 0;
+        chara->attack.state = 1;
+        chara->attack.hitFlags = 0;
     }
 
-    chara->field_44.field_3  = 100;
-    chara->field_44.field_C  = rotToTargetX;
-    chara->field_44.field_E  = rotToTargetY;
-    chara->field_44.field_18 = *attackPos;
+    chara->attack.shotsLeft  = 100;
+    chara->attack.aimYaw  = rotToTargetX;
+    chara->attack.aimPitch  = rotToTargetY;
+    chara->attack.origin = *attackPos;
     temp_a1         = func_8008A3E0(chara);
     ret             = NO_VALUE;
 
@@ -291,7 +291,7 @@ void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
 {
     if (!(chara->flags & CharaFlag_Unk8))
     {
-        chara->field_44.field_0 = 0;
+        chara->attack.state = 0;
         func_8008A3E0(chara);
     }
 }
@@ -335,7 +335,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     DVECTOR*           temp_s0_14;
     VECTOR3*           temp_a0;
     VECTOR3*           temp_v0_11;
-    s_SubCharacter_44* temp_v0_12;
+    s_CharaAttack*     temp_v0_12;
     s32                temp_s0;
     s32                temp_s0_11;
     q19_12             angle;
@@ -381,21 +381,21 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     sp30 = NO_VALUE;
     Chara_Flag8Set(chara);
 
-    sp10 = chara->field_44.field_0;
-    sp14 = (u8)chara->field_44.field_2;
+    sp10 = chara->attack.state;
+    sp14 = (u8)chara->attack.weaponAttack;
 
     if (sp10 == 0)
     {
-        chara->field_44.field_4  = 0;
-        chara->field_44.field_8  = 0;
-        chara->field_44.field_14 = 0;
+        chara->attack.shotsFired  = 0;
+        chara->attack.hitFlags  = 0;
+        chara->attack.hitCheckTime = 0;
         return 0;
     }
 
     if (sp10 == sp30)
     {
-        chara->field_44.field_8  = 0;
-        chara->field_44.field_14 = 0;
+        chara->attack.hitFlags  = 0;
+        chara->attack.hitCheckTime = 0;
         return 0;
     }
 
@@ -407,7 +407,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     if (chara == &PLAYER_CHARA())
     {
-        var_s0 = &((s_PlayerWork*)chara)->extra.model.anim;
+        var_s0 = &PLAYER_EXTRA().model.anim;
     }
     else
     {
@@ -421,31 +421,31 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     var_s0_2 = func_8008A270(sp14);
     var_a0   = func_8008A2E0(sp14);
 
-    i   = chara->field_44.field_14;
+    i   = chara->attack.hitCheckTime;
     sp2C     = Q12(var_s0_2 + var_a0);
     var_s0_2 = Q12(var_s0_2);
 
     if (sp28 < i)
     {
         sp10                   = 1;
-        chara->field_44.field_0 = sp10;
+        chara->attack.state = sp10;
     }
 
     if (sp10 == 1)
     {
-        chara->field_44.field_4 = 0;
+        chara->attack.shotsFired = 0;
         sp10                   = 2;
     }
 
     if (i < var_s0_2)
     {
         i                  = var_s0_2;
-        chara->field_44.field_14 = i;
+        chara->attack.hitCheckTime = i;
     }
     else if (sp2C < i)
     {
         i                  = sp2C;
-        chara->field_44.field_14 = i;
+        chara->attack.hitCheckTime = i;
     }
 
     if (sp28 < var_s0_2)
@@ -461,13 +461,13 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
             sp18 = 1;
         }
 
-        sp20 = chara->field_44.field_C;
-        sp24 = chara->field_44.field_E;
+        sp20 = chara->attack.aimYaw;
+        sp24 = chara->attack.aimPitch;
 
         if (temp_s1 == 3)
         {
-            sp3C = chara->field_44.field_3;
-            sp40 = chara->field_44.field_4;
+            sp3C = chara->attack.shotsLeft;
+            sp40 = chara->attack.shotsFired;
             sp34 = attackInfo->hitCheck.shot.interval;
 
             sp54 = attackInfo->rangeMax;
@@ -610,9 +610,9 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                     temp_s1_4 = Q12_MULT(temp_s0_8, Math_Sin(temp3));
                     temp_s0_9 = Q12_MULT(temp_s0_8, Math_Cos(temp3));
 
-                    chara->field_44.field_48[0].vx = Q12_MULT(sp54, temp_s1_4);
-                    chara->field_44.field_48[0].vy = Q12_MULT(sp54, temp2);
-                    chara->field_44.field_48[0].vz = Q12_MULT(sp54, temp_s0_9);
+                    chara->attack.segVec[0].vx = Q12_MULT(sp54, temp_s1_4);
+                    chara->attack.segVec[0].vy = Q12_MULT(sp54, temp2);
+                    chara->attack.segVec[0].vz = Q12_MULT(sp54, temp_s0_9);
 
                     var_s6 += sp4C;
 
@@ -621,13 +621,13 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                         func_800892A4(5);
                     }
 
-                    hasHit = Ray_GeomAndCharaTraceGet(&D_800C4728, &chara->field_44.field_18, &chara->field_44.field_48[0], chara);
+                    hasHit = Ray_GeomAndCharaTraceGet(&D_800C4728, &chara->attack.origin, &chara->attack.segVec[0], chara);
                     ptr  = D_800C4728.character;
                     if (hasHit && ptr != NULL)
                     {
-                        chara->field_44.field_48[1].vx = temp_s1_4;
-                        chara->field_44.field_48[1].vy = temp2;
-                        chara->field_44.field_48[1].vz = temp_s0_9;
+                        chara->attack.segVec[1].vx = temp_s1_4;
+                        chara->attack.segVec[1].vy = temp2;
+                        chara->attack.segVec[1].vz = temp_s0_9;
                         func_8008B714(chara, ptr, &D_800C4728.target, 0);
                     }
                 }
@@ -654,9 +654,9 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 sp18   = 1;
             }
 
-            chara->field_44.field_14 = i;
-            chara->field_44.field_4  = sp40;
-            chara->field_44.field_3  = sp3C;
+            chara->attack.hitCheckTime = i;
+            chara->attack.shotsFired  = sp40;
+            chara->attack.shotsLeft  = sp3C;
         }
         else
         {
@@ -689,16 +689,16 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 sp10 = 3;
             }
 
-            temp_s0_10 = chara->field_44.field_12;
-            temp_s1_5  = chara->field_44.field_10;
+            temp_s0_10 = chara->attack.prevAimPitch;
+            temp_s1_5  = chara->attack.prevAimYaw;
 
-            sp60 = chara->field_44.field_24[2].vx;
-            sp64 = chara->field_44.field_24[2].vy;
-            sp68 = chara->field_44.field_24[2].vz;
+            sp60 = chara->attack.prevOrigin.vx;
+            sp64 = chara->attack.prevOrigin.vy;
+            sp68 = chara->attack.prevOrigin.vz;
 
-            sp6C = chara->field_44.field_18.vx;
-            sp70 = chara->field_44.field_18.vy;
-            sp74 = chara->field_44.field_18.vz;
+            sp6C = chara->attack.origin.vx;
+            sp70 = chara->attack.origin.vy;
+            sp74 = chara->attack.origin.vz;
 
             sp7C = Math_Cos(temp_s0_10);
             sp80 = Math_Sin(temp_s0_10);
@@ -749,17 +749,17 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 temp_a0->vz = temp_v0_10 / 4;
             }
 
-            chara->field_44.field_10 = chara->field_44.field_C;
-            chara->field_44.field_12 = chara->field_44.field_E;
+            chara->attack.prevAimYaw = chara->attack.aimYaw;
+            chara->attack.prevAimPitch = chara->attack.aimPitch;
 
             for (var_s2 = 0, temp_s1_3 = 4; (temp_s1_3 > 0) && (var_s2 == 0); temp_s1_3--)
             {
                 temp_v0_11                 = &D_800C4758[4 - temp_s1_3];
-                chara->field_44.field_18.vx = temp_v0_11->vx;
-                chara->field_44.field_18.vy = temp_v0_11->vy;
+                chara->attack.origin.vx = temp_v0_11->vx;
+                chara->attack.origin.vy = temp_v0_11->vy;
 
                 temp_s0_14                 = &D_800C4748[4 - temp_s1_3];
-                chara->field_44.field_18.vz = temp_v0_11->vz;
+                chara->attack.origin.vz = temp_v0_11->vz;
 
                 func_8008B1DC(chara, temp_s0_14->vx, temp_s0_14->vy);
 
@@ -771,19 +771,19 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
             }
 
             i     = sp28;
-            temp_v0_12 = &chara->field_44;
+            temp_v0_12 = &chara->attack;
 
-            temp_v0_12->field_18.vx       = sp6C;
-            chara->field_44.field_24[2].vx = sp6C;
-            temp_v0_12->field_18.vy       = sp70;
-            chara->field_44.field_24[2].vy = sp70;
-            temp_v0_12->field_18.vz       = sp74;
-            chara->field_44.field_24[2].vz = sp74;
+            temp_v0_12->origin.vx       = sp6C;
+            chara->attack.prevOrigin.vx = sp6C;
+            temp_v0_12->origin.vy       = sp70;
+            chara->attack.prevOrigin.vy = sp70;
+            temp_v0_12->origin.vz       = sp74;
+            chara->attack.prevOrigin.vz = sp74;
         }
 
         if (sp18 != 0)
         {
-            chara->field_44.field_0 = NO_VALUE;
+            chara->attack.state = NO_VALUE;
 
             if (chara->model.charaId == Chara_Harry)
             {
@@ -840,18 +840,18 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                 if (var_s0_2 != NO_VALUE)
                 {
-                    func_8009151C(var_s0_2, chara->field_44.field_8 != 0, func_8007FD2C());
+                    func_8009151C(var_s0_2, chara->attack.hitFlags != 0, func_8007FD2C());
                 }
             }
         }
         else
         {
-            chara->field_44.field_0  = sp10;
-            chara->field_44.field_14 = i;
+            chara->attack.state  = sp10;
+            chara->attack.hitCheckTime = i;
         }
     }
 
-    return chara->field_44.field_8;
+    return chara->attack.hitFlags;
 }
 
 void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
@@ -860,16 +860,16 @@ void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
     s32 temp_s3;
     s32 i;
 
-    temp_s3 = chara->field_44.field_C;
-    temp_s2 = chara->field_44.field_E;
+    temp_s3 = chara->attack.aimYaw;
+    temp_s2 = chara->attack.aimPitch;
 
-    chara->field_44.field_10 = temp_s3;
-    chara->field_44.field_12 = temp_s2;
+    chara->attack.prevAimYaw = temp_s3;
+    chara->attack.prevAimPitch = temp_s2;
 
     for (i = 1; i > 0; i--)
     {
         func_8008B1DC(chara, temp_s3, temp_s2);
-        chara->field_44.field_24[2] = chara->field_44.field_18;
+        chara->attack.prevOrigin = chara->attack.origin;
     }
 }
 
@@ -893,28 +893,28 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
     s32                vy3;
     s32                vz3;
     s_AttackInfo*      attackInfo;
-    s_SubCharacter_44* base;
+    s_CharaAttack*     base;
 
-    base  = &chara->field_44;
-    idx46 = chara->field_44.field_2;
+    base  = &chara->attack;
+    idx46 = chara->attack.weaponAttack;
 
     for (i = 0; i >= 0; i--)
     {
-        vx = base->field_48[i].vx;
-        vy = base->field_48[i].vy;
-        vz = base->field_48[i].vz;
+        vx = base->segVec[i].vx;
+        vy = base->segVec[i].vy;
+        vz = base->segVec[i].vz;
 
-        base->field_48[i + 1].vx = vx;
-        base->field_48[i + 1].vy = vy;
-        base->field_48[i + 1].vz = vz;
+        base->segVec[i + 1].vx = vx;
+        base->segVec[i + 1].vy = vy;
+        base->segVec[i + 1].vz = vz;
 
-        vx2 = base->field_24[i].vx;
-        vy2 = base->field_24[i].vy;
-        vz2 = base->field_24[i].vz;
+        vx2 = base->segStart[i].vx;
+        vy2 = base->segStart[i].vy;
+        vz2 = base->segStart[i].vz;
 
-        base->field_24[i + 1].vx = vx2;
-        base->field_24[i + 1].vy = vy2;
-        base->field_24[i + 1].vz = vz2;
+        base->segStart[i + 1].vx = vx2;
+        base->segStart[i + 1].vy = vy2;
+        base->segStart[i + 1].vz = vz2;
     }
 
     attackInfo = &g_Items_WeaponAttackInfos[idx46];
@@ -922,9 +922,9 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
     temp_s2 = attackInfo->rangeMax;
     temp_s0 = attackInfo->rangeMin;
 
-    vx3 = chara->field_44.field_18.vx;
-    vy3 = chara->field_44.field_18.vy;
-    vz3 = chara->field_44.field_18.vz;
+    vx3 = chara->attack.origin.vx;
+    vy3 = chara->attack.origin.vy;
+    vz3 = chara->attack.origin.vz;
 
     vx2 = vx3;
     vy2 = vy3;
@@ -939,22 +939,22 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
     temp_s2 -= temp_s0;
 
     vx2                          += Q12_MULT(temp_s0, temp_s3);
-    chara->field_44.field_24[0].vx = vx2;
+    chara->attack.segStart[0].vx = vx2;
 
     vy2                          += Q12_MULT(temp_s0, cosAngle1);
-    chara->field_44.field_24[0].vy = vy2;
+    chara->attack.segStart[0].vy = vy2;
 
     vz2                          += Q12_MULT(temp_s0, temp_v1_2);
-    chara->field_44.field_24[0].vz = vz2;
+    chara->attack.segStart[0].vz = vz2;
 
     vx                            = Q12_MULT(temp_s2, temp_s3);
-    chara->field_44.field_48[0].vx = vx;
+    chara->attack.segVec[0].vx = vx;
 
     vy                            = Q12_MULT(temp_s2, cosAngle1);
-    chara->field_44.field_48[0].vy = vy;
+    chara->attack.segVec[0].vy = vy;
 
     vz                            = Q12_MULT(temp_s2, temp_v1_2);
-    chara->field_44.field_48[0].vz = vz;
+    chara->attack.segVec[0].vz = vz;
 }
 
 void func_8008B398(void) // 0x8008B398
@@ -1182,10 +1182,10 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
     s32           z2;
     s_AttackInfo* attackInfo;
 
-    weaponAttack = (u8)attacker->field_44.field_2;
+    weaponAttack = (u8)attacker->attack.weaponAttack;
     attackInfo   = &g_Items_WeaponAttackInfos[weaponAttack];
     offsetY      = attackInfo->type;
-    sp14         = attacker->field_44.field_8;
+    sp14         = attacker->attack.hitFlags;
     offsetZ      = arg3;
 
     if (target == &PLAYER_CHARA())
@@ -1249,7 +1249,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
         case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
-            if (func_8008A35C(attackInfo, attacker->field_44.field_14) == 0)
+            if (func_8008A35C(attackInfo, attacker->attack.hitCheckTime) == 0)
             {
                 var_s0 = 0;
             }
@@ -1296,9 +1296,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
         case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
         case NO_VALUE:
-            offsetX = attacker->field_44.field_48[1].vx;
-            offsetY   = attacker->field_44.field_48[1].vy;
-            offsetZ   = attacker->field_44.field_48[1].vz;
+            offsetX = attacker->attack.segVec[1].vx;
+            offsetY   = attacker->attack.segVec[1].vy;
+            offsetZ   = attacker->attack.segVec[1].vz;
 
             if (weaponAttack == WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap))
             {
@@ -1328,31 +1328,31 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
             if (weaponAttack == WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap) ||
                 weaponAttack == WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap))
             {
-                offsetX = attacker->field_44.field_48[0].vx;
+                offsetX = attacker->attack.segVec[0].vx;
                 offsetY   = 0;
-                offsetZ   = attacker->field_44.field_48[0].vz;
+                offsetZ   = attacker->attack.segVec[0].vz;
             }
             else
             {
-                x0 = attacker->field_44.field_24[2].vx;
-                y0 = attacker->field_44.field_24[2].vy;
-                z0 = attacker->field_44.field_24[2].vz;
+                x0 = attacker->attack.prevOrigin.vx;
+                y0 = attacker->attack.prevOrigin.vy;
+                z0 = attacker->attack.prevOrigin.vz;
 
-                x1 = attacker->field_44.field_48[2].vx;
-                y1 = attacker->field_44.field_48[2].vy;
-                z1 = attacker->field_44.field_48[2].vz;
+                x1 = attacker->attack.field_60.vx;
+                y1 = attacker->attack.field_60.vy;
+                z1 = attacker->attack.field_60.vz;
 
-                x2 = attacker->field_44.field_48[0].vx;
-                y2 = attacker->field_44.field_48[0].vy;
-                z2 = attacker->field_44.field_48[0].vz;
+                x2 = attacker->attack.segVec[0].vx;
+                y2 = attacker->attack.segVec[0].vy;
+                z2 = attacker->attack.segVec[0].vz;
 
                 x1 += x0;
                 y1 += y0;
                 z1 += z0;
 
-                x0 = attacker->field_44.field_24[0].vx;
-                y0 = attacker->field_44.field_24[0].vy;
-                z0 = attacker->field_44.field_24[0].vz;
+                x0 = attacker->attack.segStart[0].vx;
+                y0 = attacker->attack.segStart[0].vy;
+                z0 = attacker->attack.segStart[0].vz;
 
                 x2 += x0;
                 y2 += y0;
@@ -1399,7 +1399,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
 
     target->attackReceived     = weaponAttack;
     sp14                      |= sp10;
-    attacker->field_44.field_8 = sp14;
+    attacker->attack.hitFlags = sp14;
 
     if (damageAmount | var_s7)
     {
@@ -1569,9 +1569,9 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo,
     static s32        __pad_bss_800C4F4;
     static s_RayTrace D_800C47F8;
 
-    countX = chara->field_44.field_24[0].vx;
-    countY = chara->field_44.field_24[0].vy;
-    countZ = chara->field_44.field_24[0].vz;
+    countX = chara->attack.segStart[0].vx;
+    countY = chara->attack.segStart[0].vy;
+    countZ = chara->attack.segStart[0].vz;
 
     sinAngle = Math_Sin(angle);
     cosAngle = Math_Cos(angle);
@@ -1580,8 +1580,8 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo,
     D_800C4788[0].vy = Q12(0.0f);
     D_800C4788[0].vz = Q12(0.0f);
 
-    sp34   = chara->field_44.field_48[0].vx;
-    var_fp = chara->field_44.field_48[0].vz;
+    sp34   = chara->attack.segVec[0].vx;
+    var_fp = chara->attack.segVec[0].vz;
 
     sp44 = 0;
     sp38 = 0;
@@ -1590,7 +1590,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo,
     sp4C = 0;
     sp40 = 0;
 
-    var_s7           = chara->field_44.field_48[0].vy;
+    var_s7           = chara->attack.segVec[0].vy;
     D_800C4788[1].vy = var_s7;
 
     temp_t4          = Q12_MULT_PRECISE(sp34, cosAngle) - Q12_MULT_PRECISE(var_fp, sinAngle);
@@ -1874,6 +1874,6 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo,
         }
     }
 
-    chara->field_44.field_8 |= sp14;
+    chara->attack.hitFlags |= sp14;
     return sp14;
 }

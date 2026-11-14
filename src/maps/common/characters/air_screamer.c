@@ -3467,7 +3467,7 @@ void AirScreamer_Control_12(s_SubCharacter* airScreamer)
             {
                 cond0 = true;
             }
-            else if (airScreamer->field_44.field_8 == NO_VALUE)
+            else if (airScreamer->attack.hitFlags == NO_VALUE)
             {
                 cond0                            = true;
                 cond1                            = true;
@@ -5673,7 +5673,7 @@ void AirScreamer_Control_25(s_SubCharacter* airScreamer)
             {
                 var_s1 = true;
             }
-            else if (airScreamer->field_44.field_8 == NO_VALUE)
+            else if (airScreamer->attack.hitFlags == NO_VALUE)
             {
                 var_s1                           = true;
                 var_s2                           = true;
@@ -8028,7 +8028,7 @@ void AirScreamer_Control_40(s_SubCharacter* airScreamer)
             {
                 cond0 = true;
             }
-            else if (airScreamer->field_44.field_8 == NO_VALUE)
+            else if (airScreamer->attack.hitFlags == NO_VALUE)
             {
                 cond0                            = true;
                 cond1                            = true;
@@ -8987,7 +8987,7 @@ void AirScreamer_Control_49(s_SubCharacter* airScreamer)
             {
                 cond0 = true;
             }
-            else if (airScreamer->field_44.field_8 == NO_VALUE)
+            else if (airScreamer->attack.hitFlags == NO_VALUE)
             {
                 cond0                            = true;
                 cond1                            = true;
@@ -13484,17 +13484,17 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
     s32                animStatus;
     VECTOR3*           vec;
     GsCOORDINATE2*     coords;
-    s_SubCharacter_44* temp_s1;
+    s_CharaAttack*     temp_s1;
 
     animStatus = airScreamer->model.anim.status;
-    temp_s1    = &airScreamer->field_44;
+    temp_s1    = &airScreamer->attack;
 
     if (!Chara_HasFlag(&PLAYER_CHARA(), CharaFlag_Unk4) &&
         g_SysWork.npcIdxs[0] == NO_VALUE && g_SysWork.npcIdxs[1] == NO_VALUE &&
         airScreamer->model.controlState != AirScreamerControl_12 && airScreamer->model.controlState != AirScreamerControl_25 &&
         airScreamer->model.controlState != AirScreamerControl_40 && airScreamer->model.controlState != AirScreamerControl_49)
     {
-        airScreamer->field_44.field_0 = 0;
+        airScreamer->attack.state = 0;
     }
     else
     {
@@ -13505,27 +13505,27 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
         {
             case ANIM_STATUS(AirScreamerAnim_HoverBiteAttack, true):
             case ANIM_STATUS(AirScreamerAnim_StandBiteAttack, true):
-                if (temp_s1->field_0 == 0)
+                if (temp_s1->state == 0)
                 {
                     if (animStatus == ANIM_STATUS(AirScreamerAnim_StandBiteAttack, true))
                     {
-                        temp_s1->field_2 = 40;
+                        temp_s1->weaponAttack = 40;
                     }
                     else
                     {
-                        temp_s1->field_2 = 41;
+                        temp_s1->weaponAttack = 41;
                     }
 
-                    temp_s1->field_0 = 1;
+                    temp_s1->state = 1;
                 }
 
                 func_800805BC(&vec[0], sharedData_800CAA98_0_s01.ptr_D48[1], &coords[sharedData_800CAA98_0_s01.ptr_D48[1]->pad], 2);
 
                 temp_v0           = func_80080478(&vec[0], &vec[1]);
                 temp_v1_2         = temp_v0 >> 16;
-                temp_s1->field_18 = *vec;
-                temp_s1->field_C  = temp_v0;
-                temp_s1->field_E  = temp_v1_2;
+                temp_s1->origin = *vec;
+                temp_s1->aimYaw  = temp_v0;
+                temp_s1->aimPitch  = temp_v1_2;
 
                 if (func_8008A3E0(airScreamer) != 0)
                 {
@@ -13534,10 +13534,10 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
                 break;
 
             case ANIM_STATUS(AirScreamerAnim_GlideScratchAttack, true):
-                if (temp_s1->field_0 == 0)
+                if (temp_s1->state == 0)
                 {
-                    temp_s1->field_2 = 42;
-                    temp_s1->field_0 = 1;
+                    temp_s1->weaponAttack = 42;
+                    temp_s1->state = 1;
                 }
 
                 func_800805BC(vec, sharedData_800CAA98_0_s01.ptr_D48[2], &coords[sharedData_800CAA98_0_s01.ptr_D48[2]->pad], 2);
@@ -13553,9 +13553,9 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
                 temp_v0   = func_80080478(vec, &vec[1]);
                 temp_v1_2 = temp_v0 >> 16;
 
-                temp_s1->field_18 = sharedData_800E21D0_0_s01.matrices_C[0];
-                temp_s1->field_C  = temp_v0;
-                temp_s1->field_E  = temp_v1_2;
+                temp_s1->origin = sharedData_800E21D0_0_s01.matrices_C[0];
+                temp_s1->aimYaw  = temp_v0;
+                temp_s1->aimPitch  = temp_v1_2;
 
                 if (func_8008A3E0(airScreamer) != 0)
                 {

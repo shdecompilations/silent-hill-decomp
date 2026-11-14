@@ -105,7 +105,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
     if (ANIM_STATUS_IDX_GET(larvalStalker->model.anim.status) != LarvalStalkerAnim_GrabAttack)
     {
-        larvalStalker->field_44.field_0 = 0;
+        larvalStalker->attack.state = 0;
     }
 
     if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())

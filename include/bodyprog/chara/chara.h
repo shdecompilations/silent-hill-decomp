@@ -578,25 +578,33 @@ typedef struct _PropsTwinfeeler
 } s_PropsTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropsTwinfeeler, 64);
 
-typedef struct
+/** @brief State of the attack a character is currently performing.
+ *
+ * @note SH2 keeps similar data to this inside `shBattleInfo`, and also seemed 
+ * to move some SubCharacter fields (`flags`, `field_40`, `attackReceived`) inside it.
+ */
+typedef struct _CharaAttack
 {
-    /* 0x0  */ s16     field_0; // Something dependent on `CharaFlag_Unk8`.
-    /* 0x2  */ u8      field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
-                                // This is not the same as `attackReceived`, as this value only resets when player is aiming.
-                                // In NPCs: Indicates attack performed on player.
-    /* 0x3  */ u8      field_3;
-    /* 0x4  */ u8      field_4;
+    /* 0x0  */ s16     state;        /** 0: idle, 1: requested, 2: first active tick, 3: hit checks running, `NO_VALUE`: finished.
+                                       * Reset to 0 by `func_8008A3AC` when `CharaFlag_Unk8` is clear. */
+    /* 0x2  */ u8      weaponAttack; /** Packed `WEAPON_ATTACK` being performed. Index into `g_Items_WeaponAttackInfos`. */
+    /* 0x3  */ u8      shotsLeft;    /** Gunshots only. Set to 100 on start, decremented per shot. Attack ends at 0. */
+    /* 0x4  */ u8      shotsFired;   /** Gunshots only. Compared against `s_AttackShot::shotCountMax`. */
     /* 0x5  */ s8      __pad_5[3];
-    /* 0x8  */ s32     field_8;  // } `bool`? | Fields used by `func_8008A3E0`.
-    /* 0xC  */ q3_12   field_C;  // } Stored XY player rotation to target?
-    /* 0xE  */ q3_12   field_E;  // }
-    /* 0x10 */ s16     field_10; // } Angles?
-    /* 0x12 */ s16     field_12; // }
-    /* 0x14 */ s32     field_14; // }
-    /* 0x18 */ VECTOR3 field_18; // Q19.12 | Set to player attack position.
-    /* 0x24 */ VECTOR3 field_24[3];
-    /* 0x48 */ VECTOR3 field_48[3];
-} s_SubCharacter_44;
+    /* 0x8  */ s32     hitFlags;     /** Bit `1 << npcIdx` per NPC hit by this attack, `NO_VALUE` (all bits set) if the player is hit. */
+    /* 0xC  */ q3_12   aimYaw;
+    /* 0xE  */ q3_12   aimPitch;     /** Measured from vertical, 90 degrees is level. */
+    /* 0x10 */ q3_12   prevAimYaw;
+    /* 0x12 */ q3_12   prevAimPitch;
+    /* 0x14 */ q19_12  hitCheckTime; /** Animation time that hit checks have been run up to, clamped to the attack's hit window. */
+    /* 0x18 */ VECTOR3 origin;       /** Q19.12 | Attack origin / ray start for gunshots. */
+    /* 0x24 */ VECTOR3 segStart[2];  /** Q19.12 | Hit segment start, `origin` + direction * `rangeMin`. [0]: this tick, [1]: previous tick. */
+    /* 0x3C */ VECTOR3 prevOrigin;   /** Q19.12 */
+    /* 0x48 */ VECTOR3 segVec[2];    /** Q19.12 | Hit segment, direction * (`rangeMax` - `rangeMin`). [0]: this tick, [1]: previous tick. */
+    /* 0x60 */ VECTOR3 field_60;     /** Q19.12 | Read by `func_8008B714` as the offset from `prevOrigin` to the previous segment end,
+                                       * but never written, always 0 after the `bzero` during character spawn? */
+} s_CharaAttack;
+STATIC_ASSERT_SIZEOF(s_CharaAttack, 108);
 
 /** @brief Character collision box. */
 typedef struct _CharaBox
@@ -677,7 +685,7 @@ typedef struct _SubCharacter
                                                  // In NPCs: Unknown. `Game_NpcRoomInitSpawn` sugests it indicates the NPC index in `s_Savegame::mapEnemyStates`.
     /* 0x41 */ s8                attackReceived; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
                // 2 bytes of padding.
-    /* 0x44 */ s_SubCharacter_44 field_44;
+    /* 0x44 */ s_CharaAttack     attack;
     /* 0xB0 */ q19_12            health;
     /* 0xB4 */ s_CharaDamage     damage;
     /* 0xC4 */ u16               deathTimer;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
