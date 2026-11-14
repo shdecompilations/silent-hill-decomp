@@ -1149,11 +1149,11 @@ Event_PaperMapTake                           = 0x80087AF4; // type:func
 //-------------------------------------------------------------------
 //--- PA: 0x063348   VA: 0x80087EA8   subsegment: c, events/bgm_utils
 //-------------------------------------------------------------------
-Bgm_PlayNewSong                              = 0x80087EA8; // type:func
+Bgm_NewSongPlay                              = 0x80087EA8; // type:func
 Bgm_CrossfadeToTrack                         = 0x80087EDC; // type:func
 Bgm_CrossfadeToSilence                       = 0x80088028; // type:func
-Bgm_SongStopImmediate                        = 0x80088048; // type:func
-Bgm_SongStopFadeOut                          = 0x800880F0; // type:func
+Bgm_SongStop                                 = 0x80088048; // type:func
+Bgm_SongFadeOut                              = 0x800880F0; // type:func
 
 //------------------------------------------------------------------------------
 //--- PA: 0x063658   VA: 0x800881B8   subsegment: c, events/events_2d_draw_utils
@@ -2789,7 +2789,7 @@ g_Sd_KdtBuffer                               = 0x800A9FD8;
 D_800A9FDC                                   = 0x800A9FDC;
 g_AudioData                                  = 0x800A9FEC; // size:0x5F4
 g_Sd_ReverbDepths                            = 0x800AA5E0;
-g_Sd_SongsChannelsForLayers                  = 0x800AA604;
+g_Sd_SongLayerChannels                       = 0x800AA604;
 gSDXATable                                   = 0x800AA894;
 g_Vab_InfoTable                              = 0x800ACAA8;
 
@@ -2838,7 +2838,7 @@ g_BillboardWorks                             = 0x800AE4DC;
 //----------------------------------------------------------------
 //--- PA: 0x089A04   VA: 0x800AE564   subsegment: .data, sound/sfx
 //----------------------------------------------------------------
-g_Pow2NegFracTable                           = 0x800AE564; // size:0x42
+g_Sfx_Pow2NegFracTable                       = 0x800AE564; // size:0x42
 hack_D_800AE5A6_fix                          = 0x800AE5A6;
 
 //----------------------------------------------------------------------

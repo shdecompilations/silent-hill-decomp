@@ -8,7 +8,7 @@
 #include "bodyprog/gfx/lens_flare.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/math/math.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 // VRAM position of the CLUT rows used by `func_8008E5B4` and `func_8008E794`.
 #if VERSION_REGION_IS(PAL)

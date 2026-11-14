@@ -9,7 +9,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 // @hack Explicit rodata here because these need to be referenced externally to end up in .rodata,
 // otherwise they'll go into .sdata because they're small; can't wrap them in a struct either because

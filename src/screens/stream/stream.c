@@ -11,7 +11,7 @@
 #include "bodyprog/sys/joy.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
-#include "main/fileinfo.h"
+#include "main/file_info.h"
 #include "screens/stream/stream.h"
 
 // Margin above and below the movie, PAL has 288 lines to center it in instead of 240.

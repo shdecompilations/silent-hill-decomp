@@ -25,7 +25,7 @@
 #include "bodyprog/sound/sd_call.h"
 #include "bodyprog/world/collision_trigger.h"
 #include "bodyprog/world/effects.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "main/rng.h"
 
 #ifndef PAD_HACK_IGNORE

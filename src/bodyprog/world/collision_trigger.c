@@ -11,7 +11,7 @@
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sd_call.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 

@@ -3,7 +3,7 @@
 #include <libetc.h>
 #include <libgs.h>
 
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/view/structs.h"

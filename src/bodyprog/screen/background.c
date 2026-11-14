@@ -1,6 +1,6 @@
 #include "bodyprog/game.h"
 
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/screen/background.h"

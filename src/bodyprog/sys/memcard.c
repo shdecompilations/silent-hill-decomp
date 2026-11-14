@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 #include <psyq/sys/file.h>
 
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "bodyprog/sys/memcard.h"
 
 #ifndef PAD_HACK_IGNORE

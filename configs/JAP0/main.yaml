@@ -62,7 +62,7 @@ segments:
     subsegments:
       # .rodata section
       - [0x800, .rodata, main]
-      - [0x808, .rodata, fsqueue]
+      - [0x808, .rodata, fs_queue]
       - [0x830, o, libspu/spu, .rdata]
       - [0x880, o, libetc/vsync, .rdata]
       - [0x890, o, libetc/intr, .rdata]
@@ -76,9 +76,9 @@ segments:
 
       # .text section
       - [0xF70, c, main] # Main function.
-      - [0x12D0, c, fileinfo] # File entry functions.
-      - [0x1658, c, fsqueue] # fs queue functions.
-      - [0x2470, c, fsmem] # fs heap allocator.
+      - [0x12D0, c, file_info] # File entry functions.
+      - [0x1658, c, fs_queue] # fs queue functions.
+      - [0x2470, c, fs_mem] # fs heap allocator.
       - [0x2778, c, memcpy] # Custom memcpy implementation.
       - [0x28B8, c, rng] # RNG functions.
       - [0x293C, c, memmove32] # memmove32
@@ -123,7 +123,7 @@ segments:
       - [0xB90C, o, libapi/c73] # GPU_cw
 
       # .data section
-      - [0xB91C,  .data, fileinfo]
+      - [0xB91C,  .data, file_info]
       - [0x11ADC, .data, main]
       - [0x11B4C, o, libspu/s_ini, .data]
       - [0x11BCC, o, libspu/spu, .data]
@@ -142,7 +142,7 @@ segments:
       - [0x131D0, o, libgpu/sys, .data]
 
       # .sdata section
-      - [0x133B0, .sdata, fileinfo]
+      - [0x133B0, .sdata, file_info]
       - [0x13468, pad]
       - [0x1346C, .sdata, main]
       - [0x13488, pad]
@@ -152,8 +152,8 @@ segments:
       - [0x13494, .sbss, libsn/snmain]
 
       # .bss section
-      - [0x13498, .bss, fsqueue]
-      - [0x138C0, .bss, fsmem]
+      - [0x13498, .bss, fs_queue]
+      - [0x138C0, .bss, fs_mem]
       - [0x139A0, o, libspu/spu, .bss]
       - [0x139B4, pad]
       - [0x139B8, o, libcd/event, .bss]

@@ -11,7 +11,7 @@
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sys/fs_screens.h"
 #include "bodyprog/sys/joy.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "screens/b_konami/b_konami.h"
 #include "screens/b_konami/lzss.h"
 #include "screens/stream/stream.h"

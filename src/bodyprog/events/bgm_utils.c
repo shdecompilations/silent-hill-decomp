@@ -11,13 +11,13 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sd_call.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 // ========================================
 // BGM RELATED
 // ========================================
 
-void Bgm_PlayNewSong(s32 bgmIdx) // 0x80087EA8
+void Bgm_NewSongPlay(s32 bgmIdx) // 0x80087EA8
 {
     if (!Sd_ActiveBgmCheck(bgmIdx))
     {
@@ -75,7 +75,7 @@ void Bgm_CrossfadeToSilence(void) // 0x80088028
     Bgm_CrossfadeToTrack(BgmCmd_UpdateLayers);
 }
 
-void Bgm_SongStopImmediate(void) // 0x80088048
+void Bgm_SongStop(void) // 0x80088048
 {
     if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {
@@ -102,7 +102,7 @@ void Bgm_SongStopImmediate(void) // 0x80088048
     }
 }
 
-void Bgm_SongStopFadeOut(bool useSlowFade) // 0x800880F0
+void Bgm_SongFadeOut(bool useSlowFade) // 0x800880F0
 {
     if (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {

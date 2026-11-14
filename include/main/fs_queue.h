@@ -2,7 +2,7 @@
 #define _MAIN_FSQUEUE_H
 
 #include "gpu.h"
-#include "main/fileinfo.h"
+#include "main/file_info.h"
 
  /** FS queue size. */
 #define FS_QUEUE_LENGTH 32

@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_CHARAFILEINFOS_H
 #define _BODYPROG_CHARAFILEINFOS_H
 
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 /** @brief Character file info.
  * Holds file IDs of anim/model/texture for each `e_CharaId` along with some data used in VC camera code.

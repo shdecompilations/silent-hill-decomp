@@ -1,4 +1,4 @@
-#include "main/fileinfo.h"
+#include "main/file_info.h"
 
 #define NAME_PART_CHARS  4
 #define NAME_CHAR_BITS   6
@@ -12,13 +12,13 @@
 
 s_FileInfo g_FileTable[FS_FILE_COUNT] = {
 #if VERSION_IS(USA)
-    #include "filetable.c.USA.inc"
+    #include "main/file_table.USA.inc"
 #elif VERSION_IS(JAP0)
-    #include "filetable.c.JAP0.inc"
+    #include "main/file_table.JAP0.inc"
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
-    #include "filetable.c.JAP1.inc"
+    #include "main/file_table.JAP1.inc"
 #elif VERSION_IS(EUR)
-    #include "filetable.c.EUR.inc"
+    #include "main/file_table.EUR.inc"
 #endif
 };
 

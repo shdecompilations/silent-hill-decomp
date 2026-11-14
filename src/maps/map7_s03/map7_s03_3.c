@@ -4355,7 +4355,7 @@ void func_800E0B90(void) // 0x800E0B90
 
 void func_800E0C10(void) // 0x800E0C10
 {
-    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? 40 : 35);
+    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? BgmCmd_Track40 : BgmCmd_Track35);
 }
 
 #include "maps/common/shared/sharedFunc_800D0110_7_s00.h" // 0x800E0C50
@@ -6301,7 +6301,7 @@ void func_800E514C(void) // 0x800E514C
                 Savegame_EventFlagClear(EventFlag_576);
             }
 
-            Bgm_PlayNewSong(BgmCmd_Track40);
+            Bgm_NewSongPlay(BgmCmd_Track40);
             SysWork_StateStepIncrement(0);
 
         case 22:

@@ -3,7 +3,7 @@
 
 /** @brief Main background music update.
  *
- * @note Mainly handles music layer updates. `Bgm_Update` and `Bgm_MenuUpdate` invoke the logic that updates tracks when
+ * @note Mainly handles music layer updates. `Bgm_Update` and `Bgm_MenuUpdate` invoke the logic that updates songs when
  * a map overlay event sets `g_MapOverlayHdr.bgmEvent`.
  */
 
@@ -112,7 +112,7 @@ typedef enum _BgmCmd
 // STRUCTS
 // ========
 
-/** @brief Background music track layer limits. */
+/** @brief Background music song layer limits. */
 typedef struct _BgmLayerLimits
 {
     /* 0x0 */ u8 limits[8];
@@ -125,10 +125,10 @@ typedef struct _BgmLayerLimits
 /**
  * @brief Updates the in-game background music state and invokes the map's BGM handler.
  *
- * @param updateTrack `true` when the overlay uses multiple tracks to switch the active track.
- * When passed as `false`, only the track's audio layers are updated.
+ * @param updateSong `true` when the overlay uses multiple songs to switch the active song.
+ * When passed as `false`, only the songs's layers are updated.
  */
-void Bgm_Update(bool updateTrack);
+void Bgm_Update(bool updateSong);
 
 /** @brief Mutes global variables for music layer volumes. */
 void Bgm_LayerGlobalVariablesMute(void);

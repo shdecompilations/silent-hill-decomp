@@ -13,7 +13,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sd_call.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* boneCoords, s8 forceFree,
                 s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C

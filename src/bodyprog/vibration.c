@@ -6,7 +6,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/math/math.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 // TODO: Move to `bodyprog/libkpad`.
 

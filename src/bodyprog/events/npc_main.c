@@ -15,7 +15,7 @@
 #include "bodyprog/player/player.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/sound/sd_call.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
 {

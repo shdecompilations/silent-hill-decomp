@@ -13,7 +13,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player_control.h"
 #include "bodyprog/sound/sd_call.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 // Used by `func_8008A3E0`. TODO: Are they really angles?
 q3_12 D_800AFD1C[] =

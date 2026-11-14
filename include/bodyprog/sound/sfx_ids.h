@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_SOUND_SFXIDENUM_H
-#define _BODYPROG_SOUND_SFXIDENUM_H
+#ifndef _BODYPROG_SOUND_SFXIDS_H
+#define _BODYPROG_SOUND_SFXIDS_H
 
 // TODO: Rename to `SfxId`. There's a name clash with an SFX struct.
 typedef enum _SfxId

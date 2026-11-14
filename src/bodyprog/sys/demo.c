@@ -4,7 +4,7 @@
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/text/text_draw.h"
 #include "bodyprog/screen/draw.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "main/rng.h"
 
 s32                  g_Demo_DemoFileIdx;

@@ -7,7 +7,7 @@
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/math/math.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 #if VERSION_REGION_IS(PAL)
     #define FADE_TILE_HEIGHT 255

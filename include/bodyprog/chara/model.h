@@ -4,7 +4,7 @@
 #include "bodyprog/chara/anim.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 #define BONE_NODE_COUNT_MAX 56
 

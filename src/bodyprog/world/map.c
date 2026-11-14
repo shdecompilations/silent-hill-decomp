@@ -8,7 +8,7 @@
 #include "bodyprog/gfx/billboard.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 static s_WorldMapWork g_WorldMapWork;
 

@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_FORMATS_TEXTURE_H
 #define _BODYPROG_FORMATS_TEXTURE_H
 
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 /** @brief Model texture. */
 typedef struct _Texture

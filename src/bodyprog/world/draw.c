@@ -14,7 +14,7 @@
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sd_call.h"
 #include "bodyprog/text/text_draw.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "maps/common/characters/cybil.h"
 #include "maps/common/characters/dahlia.h"
 #include "maps/common/characters/kaufmann.h"

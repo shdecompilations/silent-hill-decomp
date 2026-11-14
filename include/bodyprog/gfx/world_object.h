@@ -3,7 +3,7 @@
 
 #include "bodyprog/chara/model.h"
 #include "bodyprog/formats/model.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 #define WORLD_OBJECT_COUNT_MAX 29
 

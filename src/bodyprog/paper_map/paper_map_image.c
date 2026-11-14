@@ -7,7 +7,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/paper_map/paper_map_image.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 static const RECT D_80028A20 = { SCREEN_WIDTH, 256, 192, SCREEN_HEIGHT };
 

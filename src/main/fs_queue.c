@@ -1,8 +1,8 @@
 #include "gpu.h"
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/demo.h"
-#include "main/fsqueue.h"
-#include "main/fsmem.h"
+#include "main/fs_queue.h"
+#include "main/fs_mem.h"
 
 #include <memory.h>
 #include <psyq/libapi.h>

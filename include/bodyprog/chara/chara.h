@@ -5,7 +5,7 @@
 #include "bodyprog/chara/model.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/chara_file_infos.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 #define NPC_COUNT_MAX        6
 #define NPC_BONE_COUNT_MAX   10 * NPC_COUNT_MAX

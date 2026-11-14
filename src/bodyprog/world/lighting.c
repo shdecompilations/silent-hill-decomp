@@ -7,7 +7,7 @@
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/math/math.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 /** @note This code (except the first and possibly second functions) is used to handle an overlapping lighting system.
  *

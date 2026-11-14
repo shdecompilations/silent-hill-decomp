@@ -18,13 +18,13 @@ s32 D_800A9FDC[4] = {
 
 s_AudioItemData g_AudioData[127] = {
 #if VERSION_IS(USA)
-    #include "audiodata.USA.inc"
+    #include "bodyprog/sound/audio_data.USA.inc"
 #elif VERSION_IS(JAP0)
-    #include "audiodata.JAP0.inc"
+    #include "bodyprog/sound/audio_data.JAP0.inc"
 #elif VERSION_IS(JAP1) || VERSION_IS(JAP2)
-    #include "audiodata.JAP1.inc"
+    #include "bodyprog/sound/audio_data.JAP1.inc"
 #elif VERSION_IS(EUR)
-    #include "audiodata.EUR.inc"
+    #include "bodyprog/sound/audio_data.EUR.inc"
 #endif
 };
 
@@ -36,7 +36,7 @@ u8 g_Sd_ReverbDepths[36] = {
     40, 40, 20, 0
 };
 
-u8 g_Sd_SongsChannelsForLayers[41][16] = {
+u8 g_Sd_SongLayerChannels[41][16] = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 1, 2, 3, 4, 5, 5, 6, 0, 0, 0, 1, 1, 1, 0, 0 },
     { 0, 2, 2, 2, 0, 4, 3, 6, 6, 5, 6, 1, 1, 1, 0, 0 },
@@ -806,10 +806,10 @@ s_XaItemData gSDXATable[727] = {
     { 8, 0, 0, 0, 10297, 1, 26,    25 },
     
     // 45_28784
-    { 9, 0, 0, 0, 0,     0, 11514, 1 }, // Tears Of (Good+ Ending Credit Song)
-    { 9, 0, 0, 0, 1,     1, 10231, 1 }, // Killing Time (Good Ending Credits Song)
-    { 9, 0, 0, 0, 2,     2, 9101,  1 }, // She (Bad+ Ending Credits Song)
-    { 9, 0, 0, 0, 3,     3, 9085,  1 }  // Esperandote (Bad Ending Credits Song)
+    { 9, 0, 0, 0, 0,     0, 11514, 1 }, /** "Tears Of" (Good+ ending credits song). */
+    { 9, 0, 0, 0, 1,     1, 10231, 1 }, /** "Killing Time" (Good ending credits song). */
+    { 9, 0, 0, 0, 2,     2, 9101,  1 }, /** "She" (Bad+ ending credits song). */
+    { 9, 0, 0, 0, 3,     3, 9085,  1 }  /** "Esperandote" (Bad ending credits song). */
 };
 
 s_VabInfo g_Vab_InfoTable[420] = {

@@ -13,7 +13,7 @@
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sd_call.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 /** @brief EVENT AND INTERACTION HELPERS
  *

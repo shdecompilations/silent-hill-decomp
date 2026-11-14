@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd/libsd.h"
 #include "bodyprog/math/math.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 #define BSS_HACK_SD_CALL_C
 #include "bodyprog/sound/sd_call.h"
@@ -295,7 +295,7 @@ void Sd_AudioSystemSet(u8 isStereo) // 0x80045D28
             CdMix(&vol);
 
             gSDVolConfig.volumeSe          = Q7_CLAMPED(1.0f);
-            g_Sd_AudioWork.isStereoEnabled = false;
+            g_Sd_AudioWork.enableStereo = false;
             return;
 
         case true:
@@ -311,7 +311,7 @@ void Sd_AudioSystemSet(u8 isStereo) // 0x80045D28
             CdMix(&vol);
 
             gSDVolConfig.volumeSe          = Q7_CLAMPED(1.0f);
-            g_Sd_AudioWork.isStereoEnabled = true;
+            g_Sd_AudioWork.enableStereo = true;
             return;
     }
 }
@@ -362,7 +362,7 @@ void SD_InitStruct(void) // 0x80045E44
         g_AudioPlayingIdxList[i] = 0;
     }
 
-    g_Sd_AudioWork.bgmLoadedSongIdx     = 0;
+    g_Sd_AudioWork.loadedBgmIdx     = 0;
     g_Sd_AudioWork.activeVabAudioIdx[0] = 0;
     g_Sd_AudioWork.activeVabAudioIdx[1] = 0;
     g_Sd_AudioWork.activeVabAudioIdx[2] = 0;
@@ -443,7 +443,7 @@ u8 Sd_SfxPlay(u16 sfxId, q0_7 balance, q0_8 vol) // 0x80046048
     Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volumeLeft, &g_Sd_VabPlayingInfo.volumeRight, targetVol);
 
     // Apply stereo balance.
-    if (g_Sd_AudioWork.isStereoEnabled == true)
+    if (g_Sd_AudioWork.enableStereo == true)
     {
         if (balance < Q8(0.0f))
         {
@@ -567,7 +567,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x80
     Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volumeLeft, &g_Sd_VabPlayingInfo.volumeRight, convertedVol);
 
     // Apply stereo balance.
-    if (g_Sd_AudioWork.isStereoEnabled == true)
+    if (g_Sd_AudioWork.enableStereo == true)
     {
         if (balance < Q8(0.0f))
         {
@@ -637,7 +637,7 @@ void Sd_SfxWithPitchPlay(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch) // 0x80046
     Sd_SharedVolSet(&g_Sd_VabPlayingInfo.volumeLeft, &g_Sd_VabPlayingInfo.volumeRight, g_Sd_VabPlayingInfo.volumeLeft);
 
     // Apply stereo balance.
-    if (g_Sd_AudioWork.isStereoEnabled == true)
+    if (g_Sd_AudioWork.enableStereo == true)
     {
         if (balance < Q8(0.0f))
         {
@@ -795,7 +795,7 @@ u8 Sd_MidiChannelVolumeGet(u8 channelIdx) // 0x80046BB4
 
     for (i = 0; i < 15; i++)
     {
-        if (g_Sd_SongsChannelsForLayers[(u8)g_Sd_AudioWork.midiChannelsVolTask][i] == channelIdx)
+        if (g_Sd_SongLayerChannels[(u8)g_Sd_AudioWork.midiChannelsVolTask][i] == channelIdx)
         {
             vol = SdGetMidiVol(0, i);
             break;
@@ -823,7 +823,7 @@ void Sd_MidiChannelsVolumeSet(u8 channelIdx, u8 vol) // 0x80046C54
 
         for (i = 0; i < 15; i++)
         {
-            targetChannelIdx = g_Sd_SongsChannelsForLayers[idx][i];
+            targetChannelIdx = g_Sd_SongLayerChannels[idx][i];
             volCpy           = vol;
 
             if (targetChannelIdx == channelIdx)
@@ -1567,7 +1567,7 @@ static void Sd_VabLoad_Finalization(void) // 0x800481F8
 
 void Sd_KdtLoad_TaskAdd(u16 task) // 0x80048244
 {
-    if (g_Sd_AudioWork.bgmLoadedSongIdx == task)
+    if (g_Sd_AudioWork.loadedBgmIdx == task)
     {
         return;
     }
@@ -1582,7 +1582,7 @@ void Sd_KdtLoad_TaskAdd(u16 task) // 0x80048244
     Sd_TaskPoolAdd(task);
 
     g_Sd_DataLoadAttempts           = 0;
-    g_Sd_AudioWork.bgmLoadedSongIdx = task;
+    g_Sd_AudioWork.loadedBgmIdx = task;
     g_Sd_AudioWork.isAudioLoading   = true;
 }
 

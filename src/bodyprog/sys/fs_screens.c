@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/fs_screens.h"
 #include "bodyprog/text/text_draw.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 void GameFs_TitleGfxSeek(void) // 0x80032BD0
 {

@@ -11,7 +11,7 @@
  * Possibly a data entry error (switched 7 and 8).
  * Others match closely to `2^(-i / 32)`
  */
-q3_12 g_Pow2NegFracTable[] = {
+static q3_12 g_Sfx_Pow2NegFracTable[] = {
     Q12(1.0f),    Q12(0.9876f), Q12(0.9576f), Q12(0.9371f),
     Q12(0.917f),  Q12(0.8973f), Q12(0.878f),  Q12(0.8592f),
     Q12(0.8406f), Q12(0.8228f), Q12(0.8052f), Q12(0.788f),
@@ -50,7 +50,7 @@ q19_12 Math_Pow2Neg(q19_12 x) // 0x8005D86C
     alpha = (x & 0x7F) << 5;
     idx = fracPart >> 7;
 
-    tableVal = g_Pow2NegFracTable[idx];
+    tableVal = g_Sfx_Pow2NegFracTable[idx];
     if (intPart > 0)
     {
         tableVal >>= intPart;
@@ -62,7 +62,7 @@ q19_12 Math_Pow2Neg(q19_12 x) // 0x8005D86C
 
     if (alpha != 0)
     {
-        nextTableVal = g_Pow2NegFracTable[idx + 1];
+        nextTableVal = g_Sfx_Pow2NegFracTable[idx + 1];
         if (intPart > 0)
         {
             nextTableVal >>= intPart;

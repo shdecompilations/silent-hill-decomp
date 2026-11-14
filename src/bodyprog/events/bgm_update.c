@@ -13,7 +13,7 @@
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sd_call.h"
 #include "bodyprog/text/text_draw.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 /** Unused, dead code. Pointed to by `D_800A999C`. */
 extern const s8 D_80025234[];
@@ -37,14 +37,14 @@ static s_BgmLayerLimits g_Bgm_ChannelLimits          = { { 128, 128, 128, 128, 1
 // MUSIC UPDATE
 // ========================================
 
-void Bgm_Update(bool updateTrack) // 0x80035DB4
+void Bgm_Update(bool updateSong) // 0x80035DB4
 {
     g_Bgm_LayersUpdated = false;
 
     if (g_MapOverlayHdr.bgmEvent != NULL)
     {
-        g_MapOverlayHdr.bgmEvent(updateTrack);
-        if (updateTrack == false && g_Bgm_LayersUpdated == false)
+        g_MapOverlayHdr.bgmEvent(updateSong);
+        if (!updateSong && !g_Bgm_LayersUpdated)
         {
             Bgm_LayersUpdate(BgmFlag_Layer1, Q12(240.0f), NULL);
         }
@@ -119,7 +119,7 @@ static void Bgm_LayerGlobalVariablesUpdate(void)
 
 void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLimits* layerLimits) // 0x80035F4C
 {
-    q3_12             firstSongLayerVol; // Value in range `[0.0f, 1.0f]` used to determine the first BGM layer's volume,
+    q3_12             firstTrackLayerVol; // Value in range `[0.0f, 1.0f]` used to determine the first BGM layer's volume,
                                          // prompted by radio noise or opening a menu while in-game.
     q19_12            ducking;
     q19_12            targetVol;
@@ -240,7 +240,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
     }
 
     isBgmChannelActive = false;
-    firstSongLayerVol  = Q12(1.0f) - layerVols[8];
+    firstTrackLayerVol = Q12(1.0f) - layerVols[8];
     
     // TODO: Figure out this floating-point math.
     // @note These extremely small values likely relate to delta time, as `layerVols[8]` is derived from it.
@@ -254,7 +254,7 @@ void Bgm_LayersUpdate(e_BgmStatusFlags bgmFlags, q19_12 fadeSpeed, s_BgmLayerLim
 
         if (i == 0)
         {
-            curChannelVol = Q12_MULT_PRECISE(curChannelVol, firstSongLayerVol);
+            curChannelVol = Q12_MULT_PRECISE(curChannelVol, firstTrackLayerVol);
         }
 
         curChannelVol = Q12_MULT_PRECISE(curChannelVol, Q12(0.0312f));

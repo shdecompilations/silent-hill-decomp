@@ -6,7 +6,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 s8* D_800C15B0;
 

@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_SOUND_SOUNDSYSTEM_H
-#define _BODYPROG_SOUND_SOUNDSYSTEM_H
+#ifndef _BODYPROG_SOUND_SDCALL_H
+#define _BODYPROG_SOUND_SDCALL_H
 
 /** @brief Game-specific sound system and not part of the sound library (LIBSD) itself.
  * Specifically, handles audio file stream processing and some general sound effects.
@@ -31,16 +31,16 @@
  * This process completely changes when it comes to assign volumes for MIDI channels in order
  * to make the BGM layering system.
  * The way the game handle that is through a 2D array that specify what channels to use to represent
- * layers on specific songs. The array is `g_Sd_SongsChannelsForLayers` and more information is available
+ * layers on specific songs. The array is `g_Sd_SongLayerChannels` and more information is available
  * on it's description.
  *
- * The main confusing part comes here. The way the game determines to what row of `g_Sd_SongsChannelsForLayers`
+ * The main confusing part comes here. The way the game determines to what row of `g_Sd_SongLayerChannels`
  * access is by calling `Sd_BgmChannelSet` which uses the current playing song index to access to a list task commands
  * set in `g_BgmChannelSetTask` and assign the task to `SD_Call` that range from `0x301` to `0x328`.
  * The fundamental parts of that task handling process are: First it gives `g_Sd_AudioWork.midiChannelsVolTaskToSet`
  * the task ID, then it passed to `g_Sd_AudioWork.midiChannelsVolTask` and lastly `Sd_MidiChannelsVolumeSet` (mainly
  * used by `Bgm_LayersUpdate`) locally strips the task ID base (0x300) and the remaining value is used to access to
- * a row of `g_Sd_SongsChannelsForLayers`.
+ * a row of `g_Sd_SongLayerChannels`.
  *
  * This is an extremely simplified explanation of how it works, but process has two noticeable odd code decisions
  * that makes this part of the system hard to comprehend at first glance. Here are those odd decisions:
@@ -177,12 +177,12 @@ typedef struct _Sd_AudioWork
     /* 0x0 */   u16 cdErrorCount;             /** Counter for failed attempts when processing a primitive command. */
     /* 0x2 */   u16 xaAudioIdxCheck;          /** XA Audio index. Used to check if the file exists. */
     /* 0x4 */   u16 xaAudioIdx;               /** XA Audio index. Used to play the audio. */
-    /* 0x6 */   u16 bgmLoadedSongIdx;         /** Index of the currently loaded music. */
+    /* 0x6 */   u16 loadedBgmIdx;             /** Index of the currently loaded music song. */
     /* 0x8 */   u16 activeVabAudioIdx[3];     /** Stores the index of currently loaded VAB audio in `g_Sd_VabBuffers`, except of music notes. */
     /* 0xE */   u16 midiChannelsVolTask;      /** MIDI channel assignment for BGM layers.
-                                                  Index of `g_Sd_SongsChannelsForLayers`. Requires to be wrapped by doing `& 0xFF` as the command base to assign the value is `0x300`. */
+                                                  Index of `g_Sd_SongLayerChannels`. Requires to be wrapped by doing `& 0xFF` as the command base to assign the value is `0x300`. */
     /* 0x10 */  u16 midiChannelsVolTaskToSet; /** Temporarily stores the value intended for `midiChannelsVolTask`. Used to avoid running the same process twice for a same target MIDI channel configuration. */
-    /* 0x11 */  u8  isStereoEnabled;          /** `bool` */
+    /* 0x11 */  u8  enableStereo;             /** `bool` */
     /* 0x12 */  s8  isXaStopping;             /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`. */
     /* 0x13 */  u8  bgmFadeSpeed;             /** Music fade speed. Range: `[0, 2]`, default: 0. */
     /* 0x14 */  u8  isAudioLoading;           /** `bool` | If a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
@@ -316,7 +316,7 @@ extern u8 g_Sd_ReverbDepths[];
  *
  * @note Possibly a name that breaks our common naming conventions will be required for this?
  */
-extern u8 g_Sd_SongsChannelsForLayers[41][16];
+extern u8 g_Sd_SongLayerChannels[41][16];
 
 /** @brief Stores information to access to all XA audios available.
  *

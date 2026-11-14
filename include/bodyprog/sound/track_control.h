@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_GAMEBOOT_BACKGROUNDSOUNDINIT_H
-#define _BODYPROG_GAMEBOOT_BACKGROUNDSOUNDINIT_H
+#ifndef _BODYPROG_SOUND_TRACKCONTROL_H
+#define _BODYPROG_SOUND_TRACKCONTROL_H
 
 /** @brief Main background music and ambient track utils.
  *

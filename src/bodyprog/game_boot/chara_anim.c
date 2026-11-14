@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/game_boot/chara_anim.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "bodyprog/sys/demo.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/screen/draw.h"

@@ -3,7 +3,7 @@
 
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/lm.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 /** @brief Character spawn flags. */
 typedef enum _CharaSpawnFlags

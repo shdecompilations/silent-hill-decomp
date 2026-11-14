@@ -12,7 +12,7 @@
 #include "bodyprog/text/bodyprog_8003652C.h"
 #include "bodyprog/text/map_msg.h"
 #include "bodyprog/text/text_draw.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 /** @note This code is exclusively used in the Japanese version.
  * Something related to size and initalization of a pallete table

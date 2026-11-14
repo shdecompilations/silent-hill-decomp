@@ -5,7 +5,7 @@
 #include "bodyprog/chara/anim.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/math/math.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "types.h"
 
 /** @brief Computes the timestep of the target animation for the current tick.

@@ -1365,11 +1365,11 @@ Event_PaperMapTake                           = 0x800876D4; // type:func
 //-------------------------------------------------------------------
 //--- PA: 0x0623F8   VA: 0x80087A88   subsegment: c, events/bgm_utils
 //-------------------------------------------------------------------
-Bgm_PlayNewSong                              = 0x80087A88; // type:func
+Bgm_NewSongPlay                              = 0x80087A88; // type:func
 Bgm_CrossfadeToTrack                         = 0x80087ABC; // type:func
 Bgm_CrossfadeToSilence                       = 0x80087C08; // type:func
-Bgm_SongStopImmediate                        = 0x80087C28; // type:func
-Bgm_SongStopFadeOut                          = 0x80087CD0; // type:func
+Bgm_SongStop                                 = 0x80087C28; // type:func
+Bgm_SongFadeOut                              = 0x80087CD0; // type:func
 
 //------------------------------------------------------------------------------
 //--- PA: 0x062708   VA: 0x80087D98   subsegment: c, events/events_2d_draw_utils
@@ -3001,7 +3001,7 @@ g_Sd_KdtBuffer                               = 0x800A9BD0;
 D_800A9FDC                                   = 0x800A9BD4;
 g_AudioData                                  = 0x800A9BE4;
 g_Sd_ReverbDepths                            = 0x800AA1D8;
-g_Sd_SongsChannelsForLayers                  = 0x800AA1FC;
+g_Sd_SongLayerChannels                       = 0x800AA1FC;
 gSDXATable                                   = 0x800AA48C;
 g_Vab_InfoTable                              = 0x800AC6A0;
 
@@ -3065,7 +3065,7 @@ D_800AE520                                   = 0x800ADB18;
 //----------------------------------------------------------------
 //--- PA: 0x0884CC   VA: 0x800ADB5C   subsegment: .data, sound/sfx
 //----------------------------------------------------------------
-g_Pow2NegFracTable                           = 0x800ADB5C;
+g_Sfx_Pow2NegFracTable                       = 0x800ADB5C;
 
 //----------------------------------------------------------------------
 //--- PA: 0x088510   VA: 0x800ADBA0   subsegment: .data, gfx/env_effects

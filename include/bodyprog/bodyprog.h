@@ -45,7 +45,7 @@
 #include "bodyprog/world/draw.h"
 #include "bodyprog/world/lighting.h"
 #include "bodyprog/world/map.h"
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/gfx/materials.h"
@@ -72,7 +72,7 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
-extern u8 g_Sd_SongsChannelsForLayers[41][16];
+extern u8 g_Sd_SongLayerChannels[41][16];
 
 extern u8 D_800AE185;
 

@@ -206,19 +206,19 @@ typedef struct _GameWork
     /* 0x590 */ e_GameState        gameStatePrev;
     /* 0x594 */ e_GameState        gameState;
     /* 0x598 */ s32                gameStateSteps[3]; /** Sub-state steps used by the current `gameState`. Can be other state IDs or data. */
-    /* 0x5A4 */ s8                 unk_5A4[4];        // @unused?
+    /* 0x5A4 */ s8                 unused_5A4[4];
     /* 0x5A8 */ s32                field_5A8;
     /* 0x5AC */ s32                field_5AC;
     /* 0x5B0 */ s8                 __pad_5B0;
     /* 0x5B1 */ s8                 mapAnimIdx;
-    /* 0x5B2 */ s8                 bgmIdx;            /** `BgmCmd` | Currently player background music track. */
-    /* 0x5B4 */ s8                 ambienceIdx;       /** Index of `g_AmbienceTaskLoad`. */
+    /* 0x5B2 */ s8                 bgmIdx;            /** `e_BgmCmd` | Active background music song. */
+    /* 0x5B4 */ s8                 ambienceIdx;       /** Index into `g_AmbienceTaskLoad`. */
     /* 0x5B4 */ s_AnalogController rawController;
 #if !VERSION_REGION_IS(PAL)
     /* 0x5BC */ s8                 unused_5BC[28];    // @unused Debug data?
 #else
     /* 0x5BC */ s8                 unused_5BC[36];
-    /* 0x5E0 */ s8                 loadedPalItemLang; // Language index of the loaded item language overlay, +1 of the actual language ID so the default 0 is treated as not loaded.
+    /* 0x5E0 */ s8                 loadedPalItemLang; /** Language index of the loaded item language overlay. +1 of the actual language ID, so the default 0 is treated as not loaded. */
     /* 0x5E1 */ s8                 __pad_5E1[3];
 #endif
 } s_GameWork;
@@ -231,7 +231,7 @@ typedef struct _GameWork
 /** @brief Extra player character info. */
 typedef struct _PlayerExtra
 {
-    /* 0x0  */ s_Model     model;                 /** Manages upper half body's animations (torso, arms, head). */
+    /* 0x0  */ s_Model     model;                 /** Manages upper body's animations (torso, arms, head). */
     /* 0x18 */ s32         disabledAnimBoneFlags; /** Created using `BITMASK_RANGE`. */
     /* 0x1C */ s32         state;                 /** `e_PlayerState` */
     /* 0x20 */ s32         upperBodyState;        /** `e_PlayerUpperBodyState` */

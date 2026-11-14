@@ -2,7 +2,7 @@
 
 #include <psyq/libetc.h>
 
-#include "main/fsqueue.h"
+#include "main/fs_queue.h"
 #include "screens/b_konami/lzss.h"
 
 // Constants from `LZSS.C`
