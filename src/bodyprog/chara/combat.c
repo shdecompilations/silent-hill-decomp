@@ -216,7 +216,7 @@ u32 func_8008A270(s32 weaponAttack) // 0x8008A270
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
         case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
-            if (g_SysWork.field_275C > Q12(256.0f))
+            if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
             {
                 return 0;
             }
@@ -229,7 +229,7 @@ u32 func_8008A270(s32 weaponAttack) // 0x8008A270
     if (weaponAttack != WEAPON_ATTACK(AttackType_PuppetNurse,  AttackInputType_Tap) &&
         weaponAttack != WEAPON_ATTACK(AttackType_PuppetDoctor, AttackInputType_Tap))
     {
-        if (g_SysWork.field_275C > Q12(256.0f))
+        if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
         {
             return 0;
         }
@@ -241,7 +241,7 @@ u32 func_8008A270(s32 weaponAttack) // 0x8008A270
 
 u32 func_8008A2E0(s32 weaponAttack) // 0x8008A2E0
 {
-    if (g_SysWork.field_275C > Q12(256.0f))
+    if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
     {
         switch (weaponAttack)
         {
@@ -972,58 +972,58 @@ void func_8008B398(void) // 0x8008B398
 
 void func_8008B3E4(q23_8 vol) // 0x8008B3E4
 {
-    func_8008B474(0, vol, 0);
+    func_8008B474(GasWeaponSfx_Contact, vol, 0);
 }
 
-void func_8008B40C(q23_8 vol, s32 soundType) // 0x8008B40C
+void func_8008B40C(q23_8 vol, s32 pitch) // 0x8008B40C
 {
-    func_8008B474(3, vol, soundType);
+    func_8008B474(GasWeaponSfx_RockDrillRun, vol, pitch);
 }
 
-void func_8008B438(s32 arg0, q23_8 vol, s32 soundType) // 0x8008B438
+void func_8008B438(bool isChainsaw, q23_8 vol, s32 pitch) // 0x8008B438
 {
-    bool cond;
+    bool chainsaw;
 
-    cond = arg0 != 0;
-    if (func_8008B474(2 - cond, vol, soundType))
+    chainsaw = isChainsaw != 0;
+    if (func_8008B474(GasWeaponSfx_RockDrillStart - chainsaw, vol, pitch))
     {
-        func_80089314(cond);
+        func_80089314(chainsaw);
     }
 }
 
-bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType) // 0x8008B474
+bool func_8008B474(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch) // 0x8008B474
 {
-    s32 unkVol;
-    s32 cond;
-    u16 sfxId;
+    q19_12 level;
+    s32    wasStopped;
+    u16    sfxId;
 
-    unkVol = 0;
+    level = 0;
     sfxId = 0;
-    switch (arg0)
+    switch (sfxIdx)
     {
-        case 0:
-            sfxId = Sfx_Unk1300;
-            unkVol = g_SysWork.field_2760;
-            soundType = 0;
+        case GasWeaponSfx_Contact:
+            sfxId = Sfx_GasWeaponContact;
+            level = g_SysWork.gasWeaponContactSfxLevel;
+            pitch = 0;
             break;
 
-        case 1:
-            sfxId = Sfx_Unk1301;
-            unkVol = g_SysWork.field_275C;
+        case GasWeaponSfx_ChainsawRun:
+            sfxId = Sfx_ChainsawRun;
+            level = g_SysWork.gasWeaponEngineSfxLevel;
             break;
 
-        case 2:
-            sfxId = Sfx_Unk1302;
-            unkVol = g_SysWork.field_275C;
+        case GasWeaponSfx_RockDrillStart:
+            sfxId = Sfx_RockDrillStart;
+            level = g_SysWork.gasWeaponEngineSfxLevel;
             break;
 
-        case 3:
-            sfxId = Sfx_Unk1303;
-            unkVol = g_SysWork.field_2764;
+        case GasWeaponSfx_RockDrillRun:
+            sfxId = Sfx_RockDrillRun;
+            level = g_SysWork.rockDrillRunSfxLevel;
             break;
     }
 
-    cond = unkVol == Q12(0.0f);
+    wasStopped = level == Q12(0.0f);
 
     if (g_DeltaTime == Q12(0.0f))
     {
@@ -1036,71 +1036,71 @@ bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType) // 0x8008B474
         {
             if (vol > Q8_CLAMPED(1.0f))
             {
-                unkVol = Q12(511.0f);
+                level = Q12(511.0f);
             }
             else
             {
-                unkVol = Q12(vol) + Q12(256.0f);
+                level = Q12(vol) + Q12(256.0f);
             }
         }
         else
         {
-            unkVol = 0;
+            level = 0;
         }
     }
     else
     {
-        unkVol -= g_DeltaTime << 9;
-        if (unkVol < 0)
+        level -= g_DeltaTime * Q8(2.0f); // TODO: Mixed Q formats?
+        if (level < 0)
         {
-            unkVol = 0;
+            level = 0;
         }
     }
 
-    if (unkVol == 0)
+    if (level == 0)
     {
         Sd_SfxStop(sfxId);
     }
-    else if (cond)
+    else if (wasStopped)
     {
-        // NOTE: Sfx_WithFlagsPlay calls Sfx_WithFlagsAndPitchPlay. `soundType` is `pitch` when calling `Sfx_WithFlagsAndPitchPlay` directly.
-        if (unkVol > Q12(256.0f))
+        // `pitch` is passed as `sfxFlags` here, but sounds are only ever started with a pitch of 0.
+        if (level > Q12(256.0f))
         {
-            Sfx_WithFlagsPlay(sfxId, &PLAYER_CHARA().position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
+            Sfx_WithFlagsPlay(sfxId, &PLAYER_CHARA().position, FP_FROM(level - Q12(256.0f), Q12_SHIFT), pitch);
         }
         else
         {
-            Sfx_WithFlagsPlay(sfxId, &PLAYER_CHARA().position, Q8_CLAMPED(0.0f), soundType);
+            Sfx_WithFlagsPlay(sfxId, &PLAYER_CHARA().position, Q8_CLAMPED(0.0f), pitch);
         }
     }
     else
     {
-        if (unkVol > Q12(256.0f))
+        if (level > Q12(256.0f))
         {
-            Sfx_WithFlagsAndPitchPlay(sfxId, &PLAYER_CHARA().position, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
+            Sfx_WithFlagsAndPitchPlay(sfxId, &PLAYER_CHARA().position, FP_FROM(level - Q12(256.0f), Q12_SHIFT), SfxFlag_UpdateAttribs, pitch);
         }
         else
         {
-            Sfx_WithFlagsAndPitchPlay(sfxId, &PLAYER_CHARA().position, 0, 4, soundType);
+            Sfx_WithFlagsAndPitchPlay(sfxId, &PLAYER_CHARA().position, 0, SfxFlag_UpdateAttribs, pitch);
         }
     }
 
-    switch (arg0)
+    switch (sfxIdx)
     {
-        case 0:
-            g_SysWork.field_2760 = unkVol;
+        case GasWeaponSfx_Contact:
+            g_SysWork.gasWeaponContactSfxLevel = level;
             break;
 
-        case 1:
-        case 2:
-            g_SysWork.field_275C = unkVol;
+        case GasWeaponSfx_ChainsawRun:
+        case GasWeaponSfx_RockDrillStart:
+            g_SysWork.gasWeaponEngineSfxLevel = level;
             break;
 
-        case 3:
-            g_SysWork.field_2764 = unkVol;
+        case GasWeaponSfx_RockDrillRun:
+            g_SysWork.rockDrillRunSfxLevel = level;
     }
 
-    return unkVol > Q12(256.0f);
+    return level > Q12(256.0f);
 }
 
 void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
@@ -1141,7 +1141,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 5:
         case 15:
         case 25:
-            if (g_SysWork.field_275C > Q12(256.0f))
+            if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
             {
                 func_8008B3E4(Q8(0.5f));
                 break;
@@ -1198,7 +1198,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                 case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
                 case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
                 case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
-                    if (g_SysWork.field_275C > Q12(256.0f))
+                    if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
                     {
                         func_8008B3E4(Q8(0.5f));
                     }
@@ -1248,7 +1248,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                 damage = 0;
             }
 
-            if (g_SysWork.field_275C > Q12(256.0f))
+            if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
             {
                 damage += Q12(200.0f);
             }

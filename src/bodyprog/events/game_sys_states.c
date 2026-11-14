@@ -365,15 +365,15 @@ void func_8003943C(void) // 0x8003943C
 
     func_8008B3E4(0);
 
-    if (g_SysWork.field_275C > Q12(256.0f))
+    if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
     {
-        val0        = g_SysWork.field_275C - Q12(256.0f);
+        val0        = g_SysWork.gasWeaponEngineSfxLevel - Q12(256.0f);
         roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
         func_8008B438(!isRockDrillAttack, roundedVal0, 0);
 
         if (isRockDrillAttack)
         {
-            val1        = g_SysWork.field_2764 - Q12(256.0f);
+            val1        = g_SysWork.rockDrillRunSfxLevel - Q12(256.0f);
             roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
             func_8008B40C(roundedVal1, 0);
         }

@@ -281,16 +281,16 @@ s32 g_Player_IsMultiTapAttack = 0;
 
 s_EquippedWeaponInfo g_Player_EquippedWeaponInfos[11] = {
     {},
-    { Sfx_Unk1293, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
-    { Sfx_Unk1294, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
-    { Sfx_Unk1295, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
-    { Sfx_Unk1301, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
-    { Sfx_Unk1303, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_Unk29,         false), ANIM_STATUS(HarryAnim_Unk29,         true), 0,  20, 0 },
-    { Sfx_Unk1283, Sfx_Unk1284, Sfx_Unk1285, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 37, 37, 0 },
-    { Sfx_Unk1290, Sfx_Unk1291, Sfx_Unk1292, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 24, 37, 0 },
-    { Sfx_Unk1287, Sfx_Unk1288, Sfx_Unk1289, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 23, 37, 0 },
-    { Sfx_Unk1299, 0,           0,           ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 0,  37, 0 },
-    { Sfx_Unk1298, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 }
+    { Sfx_Unk1293,      0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
+    { Sfx_Unk1294,      0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
+    { Sfx_Unk1295,      0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
+    { Sfx_ChainsawRun,  0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 },
+    { Sfx_RockDrillRun, 0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_Unk29,         false), ANIM_STATUS(HarryAnim_Unk29,         true), 0,  20, 0 },
+    { Sfx_Unk1283,      Sfx_Unk1284, Sfx_Unk1285, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 37, 37, 0 },
+    { Sfx_Unk1290,      Sfx_Unk1291, Sfx_Unk1292, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 24, 37, 0 },
+    { Sfx_Unk1287,      Sfx_Unk1288, Sfx_Unk1289, ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 23, 37, 0 },
+    { Sfx_Unk1299,      0,           0,           ANIM_STATUS(HarryAnim_Unk33, false), ANIM_STATUS(HarryAnim_Unk36,         false), ANIM_STATUS(HarryAnim_Unk30,         true), 0,  37, 0 },
+    { Sfx_Unk1298,      0,           0,           ANIM_STATUS(HarryAnim_Unk32, false), ANIM_STATUS(HarryAnim_HandgunRecoil, false), ANIM_STATUS(HarryAnim_HandgunRecoil, true), 0,  52, 0 }
 };
 
 /** @brief Cached collision point data. Generic collision global used by high-level getters. */
@@ -1349,7 +1349,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
     if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
         PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
     {
-        func_8004C564(PLAYER_COMBAT().weaponAttack, (PLAYER_PROPS().gasWeaponPowerTimer != 0) ? 4 : 2);
+        func_8004C564(PLAYER_COMBAT().weaponAttack, (PLAYER_PROPS().gasWeaponPowerTimer != 0) ? GasWeaponSfxCmd_Update : GasWeaponSfxCmd_WindDown);
     }
 
     g_SavegamePtr->healthSaturation -= g_DeltaTime;
@@ -3818,7 +3818,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     PLAYER_PROPS().gasWeaponPowerTimer = Q12(60.0f);
 
-                    func_8004C564(PLAYER_COMBAT().weaponAttack, 0);
+                    func_8004C564(PLAYER_COMBAT().weaponAttack, GasWeaponSfxCmd_Start);
 
                     player->properties.player.field_10C                       = 0x40;
                     PLAYER_PROPS().flags |= PlayerFlag_Unk2;
@@ -3849,7 +3849,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx)
                     {
-                        func_8004C564(PLAYER_COMBAT().weaponAttack, 1);
+                        func_8004C564(PLAYER_COMBAT().weaponAttack, GasWeaponSfxCmd_StartEnd);
                     }
 
                     PLAYER_EXTRA().upperBodyState             = PlayerUpperBodyState_Aim;
@@ -7166,7 +7166,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
             if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
-                func_8004C564(2, 3);
+                func_8004C564(WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap), GasWeaponSfxCmd_Cancel);
             }
 
             if (PLAYER_EXTRA().state >= PlayerState_FallForward &&
@@ -8253,7 +8253,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_PrevAttackReceived = NO_VALUE;
     PLAYER_COMBAT().isAiming       = false;
 
-    func_8004C564(0, NO_VALUE);
+    func_8004C564(0, GasWeaponSfxCmd_Reset);
 
     player->angleToTarget   = Q12_ANGLE(90.0f);
     g_Player_IsDead         = false;

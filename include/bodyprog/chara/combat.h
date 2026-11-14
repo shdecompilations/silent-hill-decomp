@@ -4,6 +4,16 @@
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/items/weapon_data.h"
 
+/** @brief Chainsaw and rock drill sounds driven by `func_8008B474`. TODO: Move to appropriate header. */
+typedef enum _GasWeaponSfx
+{
+    GasWeaponSfx_Contact        = 0, /** `Sfx_GasWeaponContact` */
+    GasWeaponSfx_ChainsawRun    = 1, /** `Sfx_ChainsawRun` */
+    GasWeaponSfx_RockDrillStart = 2, /** `Sfx_RockDrillStart` */
+    GasWeaponSfx_RockDrillRun   = 3, /** `Sfx_RockDrillRun` */
+    GasWeaponSfx_Hack           = NO_VALUE // @hack Force enum to be treated as `s32`.
+} e_GasWeaponSfx;
+
 // Q12 square root?
 u32 func_8008A058(s32 arg0);
 
@@ -48,12 +58,11 @@ void func_8008B398(void);
 
 void func_8008B3E4(q23_8 vol);
 
-void func_8008B40C(q23_8 vol, s32 soundType);
+void func_8008B40C(q23_8 vol, s32 pitch);
 
-/** `arg0` is boolean. */
-void func_8008B438(s32 arg0, q23_8 vol, s32 soundType);
+void func_8008B438(bool isChainsaw, q23_8 vol, s32 pitch);
 
-bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType);
+bool func_8008B474(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch);
 
 void func_8008B664(VECTOR3* pos, u32 caseVar);
 

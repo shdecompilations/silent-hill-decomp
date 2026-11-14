@@ -1,6 +1,17 @@
 #ifndef _BODYPROG_ITEMS_UTILS_H
 #define _BODYPROG_ITEMS_UTILS_H
 
+/** @brief Commands for controlling chainsaw/rock-drill looping sound effects, used with `func_8004C564`. */
+typedef enum _GasWeaponSfxCmd
+{
+    GasWeaponSfxCmd_Reset    = NO_VALUE, /** Stops all gas weapon sounds and clears state. */
+    GasWeaponSfxCmd_Start    = 0,        /** Starts playing `Sfx_ChainsawRun` or `Sfx_RockDrillStart`, called partway through startup anim. */
+    GasWeaponSfxCmd_StartEnd = 1,        /** Plays `Sfx_RockDrillRun` for the rock drill, once startup anim has finished. */
+    GasWeaponSfxCmd_WindDown = 2,        /** Winds `Sfx_RockDrillRun` down in volume and pitch, then stops all sounds, when the weapon runs out of power? */
+    GasWeaponSfxCmd_Cancel   = 3,        /** Stops `Sfx_RockDrillStart` and empties the power timer. */
+    GasWeaponSfxCmd_Update   = 4         /** Keeps the weapon's sounds looping, restarts them after a map change. */
+} e_GasWeaponSfxCmd;
+
 /** @brief Used to correct aim animations when exiting the inventory screen.
  *
  * If removed, when the user enters the inventory between the transition of the
@@ -40,8 +51,12 @@ s32 Inventory_HyperBlasterFunctionalTest(void);
 /** @note Rough name. */
 s32 Game_HyperBlasterBeamColorGet(void);
 
-/** `flags` might not be a bitfield. */
-void func_8004C564(u8 flags, s8 weaponAttack);
+/** @brief Drives the chainsaw and rock drill sounds.
+ *
+ * @param weaponAttack Equipped weapon attack.
+ * @param cmd `e_GasWeaponSfxCmd`
+ */
+void func_8004C564(u8 weaponAttack, s8 cmd);
 
 void Game_TimerUpdate(void);
 

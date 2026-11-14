@@ -403,9 +403,9 @@ typedef struct _SysWork
     /* 0x2744   */ s8               unk_2744[4];
     /* 0x2748   */ q3_12            bgmLayerVolumes[BGM_LAYER_COUNT]; // Last index value is not a layer, but some sort of timer. See `Bgm_LayersUpdate`.
                    // 2 bytes of padding.
-    /* 0x275C   */ q23_8            field_275C; // } SFX volumes?
-    /* 0x2760   */ q23_8            field_2760; // }
-    /* 0x2764   */ q23_8            field_2764; // }
+    /* 0x275C   */ q19_12           gasWeaponEngineSfxLevel;  // } Chainsaw and rock drill sound levels. TODO: Might be wrong Q format?
+    /* 0x2760   */ q19_12           gasWeaponContactSfxLevel; // }
+    /* 0x2764   */ q19_12           rockDrillRunSfxLevel;     // }
 } s_SysWork;
 STATIC_ASSERT_SIZEOF(s_SysWork, 10088);
 

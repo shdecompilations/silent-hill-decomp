@@ -9,7 +9,7 @@ typedef enum _SfxFlags
     SfxFlag_None          = 0,
     SfxFlag_Mono          = 1 << 0, /** Monophonic. */
     SfxFlag_NoDistAtten   = 1 << 1, /** No distance attenuation. */
-    SfxFlag_UpdateAttribs = 1 << 2  /** @unused Update attributes. */
+    SfxFlag_UpdateAttribs = 1 << 2  /** Update attributes of an already playing sound. */
 } e_SfxFlags;
 
 /** @brief SFX pair indices. Used for `SFX_PAIRS`. */

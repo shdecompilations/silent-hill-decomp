@@ -25,10 +25,10 @@ typedef enum _SfxId
     Sfx_Unk1297 = Sfx_Base + 17,
     Sfx_Unk1298 = Sfx_Base + 18,
     Sfx_Unk1299 = Sfx_Base + 19,
-    Sfx_Unk1300 = Sfx_Base + 20,
-    Sfx_Unk1301 = Sfx_Base + 21,
-    Sfx_Unk1302 = Sfx_Base + 22,
-    Sfx_Unk1303 = Sfx_Base + 23,
+    Sfx_GasWeaponContact = Sfx_Base + 20, // Tone 0 of `SND/SAW.VAB` or `SND/DRILL.VAB`, whichever the weapon code has loaded.
+    Sfx_ChainsawRun      = Sfx_Base + 21, // `SND/SAW.VAB`
+    Sfx_RockDrillStart   = Sfx_Base + 22, // `SND/DRILL.VAB`
+    Sfx_RockDrillRun     = Sfx_Base + 23, // `SND/DRILL.VAB`
 
     Sfx_MenuError        = Sfx_Base + 0x18, // 1304, `1ST/BASE.VAB` onward, but loaded out of order?
     Sfx_MenuMove         = Sfx_Base + 0x19, // 1305

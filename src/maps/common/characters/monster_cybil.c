@@ -447,7 +447,7 @@ void func_800D8B14(s_SubCharacter* monsterCybil, s_Model* modelUpper) // 0x800D8
             {
                 Player_DisableDamage(&sp10, true);
                 Savegame_EventFlagSet(EventFlag_446);
-                func_8004C564(0, NO_VALUE);
+                func_8004C564(0, GasWeaponSfxCmd_Reset);
             }
             else
             {

@@ -259,37 +259,37 @@ s32 Game_HyperBlasterBeamColorGet(void) // 0x8004C54C
     return g_SavegamePtr->pickedUpSpecialItemCount >> 3;
 }
 
-void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
+void func_8004C564(u8 weaponAttack, s8 cmd) // 0x8004C564
 {
-    s32 flagsCpy;
+    #define isRockDrillAttack (weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
 
     static s8 curMapIdx;
     static s8 curVol;
-    static s8 curSoundType;
-    static u8 curFlags; // TODO: Or weapon attack?
+    static s8 curPitch;
+    static u8 curFlags; // Bit 0: chainsaw started, bit 1: rock drill started, bit 2: `GasWeaponSfxCmd_StartEnd` reached.
 
-    switch (weaponAttack)
+    switch (cmd)
     {
-        case NO_VALUE:
-            curMapIdx    = g_SavegamePtr->mapIdx;
-            curSoundType = 0;
-            curFlags     = 0;
-            curVol       = 32;
+        case GasWeaponSfxCmd_Reset:
+            curMapIdx = g_SavegamePtr->mapIdx;
+            curPitch  = 0;
+            curFlags  = 0;
+            curVol    = 32;
 
             func_8008B398();
 
             PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
             break;
 
-        case 0:
-            curMapIdx    = g_SavegamePtr->mapIdx;
-            curSoundType = 0;
-            curVol       = 32;
+        case GasWeaponSfxCmd_Start:
+            curMapIdx = g_SavegamePtr->mapIdx;
+            curPitch  = 0;
+            curVol    = 32;
 
-            func_8008B438(arg0 != (1 << 1), 32, 0);
+            func_8008B438(!isRockDrillAttack, 32, 0);
             func_8008B3E4(Q8(0.0f));
 
-            if (arg0 != (1 << 1))
+            if (!isRockDrillAttack)
             {
                 curFlags |= 1 << 0;
             }
@@ -299,42 +299,42 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
             }
             break;
 
-        case 1:
-            if (arg0 == (1 << 1))
+        case GasWeaponSfxCmd_StartEnd:
+            if (isRockDrillAttack)
             {
-                func_8008B40C((u8)curVol, curSoundType);
+                func_8008B40C((u8)curVol, curPitch);
                 curFlags |= 1 << 2;
             }
             break;
 
-        case 2:
+        case GasWeaponSfxCmd_WindDown:
             if (curVol != 0)
             {
-                curVol      -= ((g_DeltaTime / 68) == 0) ? 1 : (g_DeltaTime / 68);
-                curSoundType = curVol - 32;
-                curVol       = CLAMP(curVol, 0, 32);
+                curVol  -= ((g_DeltaTime / TIMESTEP_60_FPS) == 0) ? 1 : (g_DeltaTime / TIMESTEP_60_FPS);
+                curPitch = curVol - 32;
+                curVol   = CLAMP(curVol, 0, 32);
 
-                func_8008B438(arg0 != 2, 0, 0);
+                func_8008B438(!isRockDrillAttack, 0, 0);
                 func_8008B3E4(NO_VALUE);
 
-                if (arg0 == 2)
+                if (isRockDrillAttack)
                 {
-                    func_8008B40C((u8)curVol, curSoundType);
+                    func_8008B40C((u8)curVol, curPitch);
                 }
 
                 if (curVol == 0)
                 {
                     func_8008B398();
 
-                    curFlags                        = 0;
-                    curSoundType                    = 0;
+                    curFlags                           = 0;
+                    curPitch                           = 0;
                     PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
-                    PLAYER_CHARA().attack.state    = 0;
+                    PLAYER_CHARA().attack.state        = 0;
                 }
             }
             break;
 
-        case 3:
+        case GasWeaponSfxCmd_Cancel:
             if (curFlags & (1 << 1))
             {
                 if (!(curFlags & (1 << 2)))
@@ -343,40 +343,39 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                     func_8008B3E4(Q8(0.0f));
 
                     PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
-                    curFlags                       -= 2;
+                    curFlags                          -= 1 << 1;
                 }
             }
             break;
 
-        case 4:
+        case GasWeaponSfxCmd_Update:
             if (g_SavegamePtr->mapIdx != curMapIdx)
             {
-                curMapIdx    = g_SavegamePtr->mapIdx;
-                curFlags     = 0;
-                curSoundType = 0;
-                curVol       = 32;
+                curMapIdx = g_SavegamePtr->mapIdx;
+                curFlags  = 0;
+                curPitch  = 0;
+                curVol    = 32;
 
-                flagsCpy = arg0;
-                if (flagsCpy != (1 << 1))
+                if (!isRockDrillAttack)
                 {
                     curFlags = 1 << 0;
                 }
                 else
                 {
-                    curFlags = flagsCpy;
+                    curFlags = 1 << 1;
                 }
 
-                if (arg0 == (1 << 1))
+                if (isRockDrillAttack)
                 {
                     curFlags |= 1 << 2;
                 }
             }
 
-            func_8008B438(arg0 != 2, (u8)curVol, curSoundType);
+            func_8008B438(!isRockDrillAttack, (u8)curVol, curPitch);
 
-            if (arg0 == (1 << 1))
+            if (isRockDrillAttack)
             {
-                func_8008B40C((u8)curVol, curSoundType);
+                func_8008B40C((u8)curVol, curPitch);
             }
 
             func_8008B3E4(NO_VALUE);

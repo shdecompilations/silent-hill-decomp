@@ -1782,7 +1782,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
         case ANIM_STATUS(SplitHeadAnim_8, true):
         case ANIM_STATUS(SplitHeadAnim_13, false):
         case ANIM_STATUS(SplitHeadAnim_13, true):
-            splitHeadProps.field_EA = MAX(0, splitHeadProps.field_EA - g_DeltaTime / 68);
+            splitHeadProps.field_EA = MAX(0, splitHeadProps.field_EA - g_DeltaTime / TIMESTEP_60_FPS);
 
         case ANIM_STATUS(SplitHeadAnim_1, true):
         case ANIM_STATUS(SplitHeadAnim_BiteAttack, true):
