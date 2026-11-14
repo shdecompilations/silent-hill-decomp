@@ -50,7 +50,7 @@ bool func_8008B474(s32 arg0, q23_8 vol, s32 soundType);
 void func_8008B664(VECTOR3* pos, u32 caseVar);
 
 /** Main attack handling function. */
-s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* attackPos, s32 arg3);
+s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale);
 
 s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo, s32 arg3);
 

@@ -1156,48 +1156,36 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
     }
 }
 
-s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* attackPos, s32 arg3) // 0x8008B714
+s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale) // 0x8008B714
 {
-    s32           sp10;
-    s32           sp14;
-    s32           var_a3;
-    u32           var_s0;
-    q19_12        offsetX;
-    q19_12        offsetY;
-    q19_12        offsetZ;
+    s32           targetBit;
+    s32           hitFlags;
+    u32           damage;
+    q19_12        pushX;
+    q19_12        pushY;
+    q19_12        pushZ;
+    s32           attackType;
     q20_12        damageAmount;
-    s32           var_v1;
-    u32           var_s7;
+    s32           pushLength;
+    u32           shock;
     s32           weaponAttack;
-    s32           var_a2;
-    s32           temp;
-    s32           x0;
-    s32           y0;
-    s32           z0;
-    s32           x1;
-    s32           y1;
-    s32           z1;
-    s32           x2;
-    s32           y2;
-    s32           z2;
     s_AttackInfo* attackInfo;
 
     weaponAttack = (u8)attacker->attack.weaponAttack;
     attackInfo   = &g_Items_WeaponAttackInfos[weaponAttack];
-    offsetY      = attackInfo->type;
-    sp14         = attacker->attack.hitFlags;
-    offsetZ      = arg3;
+    attackType   = attackInfo->type;
+    hitFlags     = attacker->attack.hitFlags;
 
     if (target == &PLAYER_CHARA())
     {
-        sp10             = NO_VALUE;
+        targetBit        = NO_VALUE;
         target->field_40 = attacker - g_SysWork.npcs; // Sets `field_40` to attacker index inside `g_SysWork.npcs`
     }
     else
     {
-        sp10 = 1 << (target - g_SysWork.npcs);
+        targetBit = 1 << (target - g_SysWork.npcs);
 
-        if (sp14 & sp10)
+        if (hitFlags & targetBit)
         {
             switch (weaponAttack)
             {
@@ -1214,32 +1202,32 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         }
         else
         {
-            switch (offsetY)
+            switch (attackType)
             {
-                case 2:
+                case AttackInfoType_Melee1Hit:
                     func_800892A4(6);
                     break;
 
-                case 1:
+                case AttackInfoType_Melee:
                     func_800892A4(7);
                     break;
 
-                case 3:
+                case AttackInfoType_Gunshot:
                     break;
             }
 
             if (target->model.charaId == Chara_Padlock)
             {
-                Sfx_WithFlagsPlay(Sfx_Unk1392, attackPos, Q8(0.5f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1392, hitPos, Q8(0.5f), SfxFlag_None);
             }
             else
             {
-                func_8008B664(attackPos, weaponAttack);
+                func_8008B664(hitPos, weaponAttack);
             }
         }
     }
 
-    var_s0 = Q12(attackInfo->damage);
+    damage = Q12(attackInfo->damage);
 
     switch (weaponAttack)
     {
@@ -1249,14 +1237,15 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
         case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
+            // @bug `hitCheckTime` is Q12 but `func_8008A35C` compares whole keyframes?
             if (func_8008A35C(attackInfo, attacker->attack.hitCheckTime) == 0)
             {
-                var_s0 = 0;
+                damage = 0;
             }
 
             if (g_SysWork.field_275C > Q12(256.0f))
             {
-                var_s0 += Q12(200.0f);
+                damage += Q12(200.0f);
             }
             break;
 
@@ -1267,12 +1256,12 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
                     break;
 
                 case 1:
-                    var_s0 += var_s0 * 2;
+                    damage += damage * 2;
                     break;
 
                 case 2:
-                    var_s0 += Rng_RandQ12() * 50;
-                    var_s0 *= 5;
+                    damage += Rng_RandQ12() * 50;
+                    damage *= 5;
                     break;
             }
             break;
@@ -1281,13 +1270,13 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
             if (target->flags & CharaFlag_Unk2)
             {
-                var_s0 = Q12(1000.0f);
+                damage = Q12(1000.0f);
             }
             break;
     }
 
-    var_s7       = attackInfo->shock;
-    damageAmount = Q12_MULT_PRECISE(var_s0, (Q12(4.5f) - Rng_RandQ12()) / 4);
+    shock        = attackInfo->shock;
+    damageAmount = Q12_MULT_PRECISE(damage, (Q12(4.5f) - Rng_RandQ12()) / 4);
 
     switch (weaponAttack)
     {
@@ -1296,20 +1285,20 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
         case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
         case NO_VALUE:
-            offsetX = attacker->attack.segVec[1].vx;
-            offsetY   = attacker->attack.segVec[1].vy;
-            offsetZ   = attacker->attack.segVec[1].vz;
+            pushX = attacker->attack.segVec[1].vx;
+            pushY = attacker->attack.segVec[1].vy;
+            pushZ = attacker->attack.segVec[1].vz;
 
             if (weaponAttack == WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap))
             {
-                if (sp14 & sp10)
+                if (hitFlags & targetBit)
                 {
-                    var_s7 = 0;
+                    shock = 0;
                 }
 
-                offsetZ   = 0;
-                offsetY   = 0;
-                offsetX = 0;
+                pushZ = 0;
+                pushY = 0;
+                pushX = 0;
             }
             break;
 
@@ -1319,65 +1308,75 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
                 damageAmount *= 4;
             }
 
-            if (offsetY == 1)
+            if (attackType == AttackInfoType_Melee)
             {
-                damageAmount = Q12_MULT_PRECISE(damageAmount, offsetZ);
-                var_s7 = Q12_MULT_PRECISE(var_s7, offsetZ);
+                damageAmount = Q12_MULT_PRECISE(damageAmount, damageScale);
+                shock        = Q12_MULT_PRECISE(shock, damageScale);
             }
 
             if (weaponAttack == WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap) ||
                 weaponAttack == WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap))
             {
-                offsetX = attacker->attack.segVec[0].vx;
-                offsetY   = 0;
-                offsetZ   = attacker->attack.segVec[0].vz;
+                pushX = attacker->attack.segVec[0].vx;
+                pushY = 0;
+                pushZ = attacker->attack.segVec[0].vz;
             }
             else
             {
-                x0 = attacker->attack.prevOrigin.vx;
-                y0 = attacker->attack.prevOrigin.vy;
-                z0 = attacker->attack.prevOrigin.vz;
+                s32 baseX;
+                s32 baseY;
+                s32 baseZ;
+                s32 prevTipX;
+                s32 prevTipY;
+                s32 prevTipZ;
+                s32 tipX;
+                s32 tipY;
+                s32 tipZ;
 
-                x1 = attacker->attack.field_60.vx;
-                y1 = attacker->attack.field_60.vy;
-                z1 = attacker->attack.field_60.vz;
+                baseX = attacker->attack.prevOrigin.vx;
+                baseY = attacker->attack.prevOrigin.vy;
+                baseZ = attacker->attack.prevOrigin.vz;
 
-                x2 = attacker->attack.segVec[0].vx;
-                y2 = attacker->attack.segVec[0].vy;
-                z2 = attacker->attack.segVec[0].vz;
+                prevTipX = attacker->attack.field_60.vx;
+                prevTipY = attacker->attack.field_60.vy;
+                prevTipZ = attacker->attack.field_60.vz;
 
-                x1 += x0;
-                y1 += y0;
-                z1 += z0;
+                tipX = attacker->attack.segVec[0].vx;
+                tipY = attacker->attack.segVec[0].vy;
+                tipZ = attacker->attack.segVec[0].vz;
 
-                x0 = attacker->attack.segStart[0].vx;
-                y0 = attacker->attack.segStart[0].vy;
-                z0 = attacker->attack.segStart[0].vz;
+                prevTipX += baseX;
+                prevTipY += baseY;
+                prevTipZ += baseZ;
 
-                x2 += x0;
-                y2 += y0;
-                z2 += z0;
+                baseX = attacker->attack.segStart[0].vx;
+                baseY = attacker->attack.segStart[0].vy;
+                baseZ = attacker->attack.segStart[0].vz;
 
-                offsetX = x2 - x1;
-                offsetY   = y2 - y1;
-                offsetZ   = z2 - z1;
+                tipX += baseX;
+                tipY += baseY;
+                tipZ += baseZ;
+
+                pushX = tipX - prevTipX;
+                pushY = tipY - prevTipY;
+                pushZ = tipZ - prevTipZ;
             }
 
-            var_v1 = func_8008A058(func_80080540(offsetX, offsetY, offsetZ));
-            if (var_v1 >= 64)
+            pushLength = func_8008A058(func_80080540(pushX, pushY, pushZ));
+            if (pushLength >= 64)
             {
-                if (var_v1 >= Q12(4096.0f))
+                if (pushLength >= Q12(4096.0f))
                 {
-                    var_v1 /= Q12(1.0f);
-                    offsetX /= Q12(1.0f);
-                    offsetY /= Q12(1.0f);
-                    offsetZ /= Q12(1.0f);
+                    pushLength /= Q12(1.0f);
+                    pushX      /= Q12(1.0f);
+                    pushY      /= Q12(1.0f);
+                    pushZ      /= Q12(1.0f);
                 }
 
-                var_v1  = Q12(4096.0f) / var_v1;
-                offsetX = Q12_MULT_PRECISE(offsetX, var_v1);
-                offsetY = Q12_MULT_PRECISE(offsetY, var_v1);
-                offsetZ = Q12_MULT_PRECISE(offsetZ, var_v1);
+                pushLength = Q12(4096.0f) / pushLength;
+                pushX      = Q12_MULT_PRECISE(pushX, pushLength);
+                pushY      = Q12_MULT_PRECISE(pushY, pushLength);
+                pushZ      = Q12_MULT_PRECISE(pushZ, pushLength);
             }
             break;
     }
@@ -1387,86 +1386,88 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
         target->damage.amount += damageAmount;
     }
 
-    if (var_s7 != 0)
+    if (shock != 0)
     {
-        temp                        = Q12_MULT_PRECISE(var_s7, offsetX);
-        target->damage.position.vx += temp;
-        temp                        = Q12_MULT_PRECISE(var_s7, offsetY);
-        target->damage.position.vy += temp;
-        temp                        = Q12_MULT_PRECISE(var_s7, offsetZ);
-        target->damage.position.vz += temp;
+        s32 pushDelta;
+
+        pushDelta                   = Q12_MULT_PRECISE(shock, pushX);
+        target->damage.position.vx += pushDelta;
+        pushDelta                   = Q12_MULT_PRECISE(shock, pushY);
+        target->damage.position.vy += pushDelta;
+        pushDelta                   = Q12_MULT_PRECISE(shock, pushZ);
+        target->damage.position.vz += pushDelta;
     }
 
-    target->attackReceived     = weaponAttack;
-    sp14                      |= sp10;
-    attacker->attack.hitFlags = sp14;
+    target->attackReceived    = weaponAttack;
+    hitFlags                 |= targetBit;
+    attacker->attack.hitFlags = hitFlags;
 
-    if (damageAmount | var_s7)
+    if (damageAmount | shock)
     {
-        var_a2 = attackInfo->impactSfxGroup;
+        s32 impactSfxGroup = attackInfo->impactSfxGroup;
 
-        if (var_a2 > 0 && var_a2 < 8)
+        if (impactSfxGroup > 0 && impactSfxGroup < 8)
         {
-            var_a3 = NO_VALUE;
+            s32 impactCharaType = NO_VALUE; // TODO: Enum for these chara types.
 
             switch (target->model.charaId)
             {
                 case Chara_Harry:
                     if (target->health >= Q12(0.0f))
                     {
-                        var_a3 = 1;
+                        impactCharaType = 1;
                     }
                     break;
 
                 case Chara_AirScreamer:
                 case Chara_NightFlutter:
-                    var_a3 = 2;
+                    impactCharaType = 2;
                     break;
 
                 case Chara_Stalker:
-                    var_a3 = 4;
+                    impactCharaType = 4;
                     break;
 
                 case Chara_LarvalStalker:
                 case Chara_GreyChild:
                 case Chara_Mumbler:
-                    var_a3 = 3;
+                    impactCharaType = 3;
                     break;
 
                 case Chara_Creeper:
-                    var_a3 = 5;
+                    impactCharaType = 5;
                     break;
 
                 case Chara_Groaner:
                 case Chara_Wormhead:
-                    var_a3 = 6;
+                    impactCharaType = 6;
                     break;
 
                 case Chara_SplitHead:
-                    var_a3 = 7;
+                    impactCharaType = 7;
                     break;
 
                 case Chara_HangedScratcher:
-                    var_a3 = 8;
+                    impactCharaType = 8;
                     break;
 
                 case Chara_Floatstinger:
                 case Chara_Twinfeeler:
-                    var_a3 = 10;
+                    impactCharaType = 10;
                     break;
 
                 case Chara_Romper:
-                    var_a3 = 9;
+                    impactCharaType = 9;
                     break;
 
                 case Chara_PuppetNurse:
                 case Chara_PuppetDoctor:
-                    var_a3 = 11;
+                    impactCharaType = 11;
                     break;
 
                 case Chara_Bloodsucker:
-                    var_a3 = 12;
-                    var_a2 = 1;
+                    impactCharaType = 12;
+                    impactSfxGroup  = 1;
                     break;
 
                 case Chara_Incubus:
@@ -1476,31 +1477,31 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* att
                     {
                         if (weaponAttack == WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap))
                         {
-                            var_a2 = 4;
+                            impactSfxGroup = 4;
                         }
                         else
                         {
-                            var_a2 = 7;
+                            impactSfxGroup = 7;
                         }
                     }
 
                 default:
-                    var_a3 = 16;
+                    impactCharaType = 16;
                     break;
 
                 case Chara_Padlock:
-                    var_a3 = NO_VALUE;
+                    impactCharaType = NO_VALUE;
                     break;
             }
 
-            if (var_a3 >= 0)
+            if (impactCharaType >= 0)
             {
-                func_8005F6B0(target, attackPos, var_a2, var_a3);
+                func_8005F6B0(target, hitPos, impactSfxGroup, impactCharaType);
             }
         }
     }
 
-    return sp10;
+    return targetBit;
 }
 
 s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo, s32 arg3) // 0x8008BF84
