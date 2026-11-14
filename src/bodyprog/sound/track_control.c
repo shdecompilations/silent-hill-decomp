@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/sound/sound.h"
+#include "bodyprog/sound/track_control.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/sound/sd_call.h"
@@ -35,7 +35,7 @@ static u16 g_BgmChannelSetTask[42] = {
 };
 
 /** @brief Task commands for `SD_Call` to load ambient VAB files. */
-static u16 g_AmbientVabTaskLoad[40] = {
+static u16 g_AmbienceTaskLoad[40] = {
     0,   162, 170, 171, 204, 172, 173, 174,
     175, 176, 177, 178, 179, 179, 179, 180,
     181, 182, 183, 184, 185, 186, 187, 188,
@@ -43,22 +43,23 @@ static u16 g_AmbientVabTaskLoad[40] = {
     196, 197, 198, 199, 200, 201, 202, 203
 };
 
-s32 Sd_BgmInit(void) // 0x80035780
+s32 Sd_BgmControl(void) // 0x80035780
 {
-    if (Sd_AudioStreamingCheck() != AudioStreamingState_None || Fs_QueueGetLength() > 0)
+    if (Sd_AudioStreamingCheck() != AudioStreamingState_None ||
+        Fs_QueueGetLength() > 0)
     {
         return NO_VALUE;
     }
 
-    // Handle background music initialization step.
+    // Handle BGM state step.
     switch (g_GameWork.gameStateSteps[1])
     {
         case 0:
-            Sd_BgmUpdateTrack();
+            Sd_BgmUpdate();
             g_GameWork.gameStateSteps[1]++;
 
         case 1:
-            if (!Sd_BgmActiveSongCheck(g_MapOverlayHdr.bgmCmd))
+            if (!Sd_ActiveBgmCheck(g_MapOverlayHdr.bgmCmd))
             {
                 g_GameWork.gameStateSteps[1] += 2;
             }
@@ -75,7 +76,7 @@ s32 Sd_BgmInit(void) // 0x80035780
             // Checks if no BGM channel is being used.
             if (Sd_MidiChannelTaskGet() == 0)
             {
-                Sd_BgmSongSet(g_MapOverlayHdr.bgmCmd);
+                Sd_BgmSet(g_MapOverlayHdr.bgmCmd);
                 g_GameWork.gameStateSteps[1]++;
             }
             break;
@@ -87,7 +88,7 @@ s32 Sd_BgmInit(void) // 0x80035780
     return 1;
 }
 
-bool Sd_BgmActiveSongCheck(s32 bgmIdx) // 0x800358A8
+bool Sd_ActiveBgmCheck(s32 bgmIdx) // 0x800358A8
 {
     if (bgmIdx == BgmCmd_UpdateLayers)
     {
@@ -102,7 +103,7 @@ bool Sd_BgmActiveSongCheck(s32 bgmIdx) // 0x800358A8
     return g_GameWork.bgmIdx != bgmIdx;
 }
 
-void Sd_BgmSongSet(s32 bgmIdx) // 0x800358DC
+void Sd_BgmSet(s32 bgmIdx) // 0x800358DC
 {
     if (bgmIdx == BgmCmd_UpdateLayers)
     {
@@ -133,7 +134,7 @@ void Sd_BgmChannelSet(void) // 0x80035924
     SD_Call(g_BgmChannelSetTask[g_GameWork.bgmIdx]);
 }
 
-void Sd_BgmUpdateTrack(void)
+void Sd_BgmUpdate(void)
 {
     if (g_MapOverlayHdr.bgmCmd == BgmCmd_UpdateTrack)
     {
@@ -141,29 +142,32 @@ void Sd_BgmUpdateTrack(void)
     }
 }
 
-s32 Sd_AmbientSfxInit(void) // 0x8003599C
+s32 Sd_AmbienceControl(void) // 0x8003599C
 {
-    if (Sd_AudioStreamingCheck() != AudioStreamingState_None || Fs_QueueGetLength() > 0)
+    if (Sd_AudioStreamingCheck() != AudioStreamingState_None ||
+        Fs_QueueGetLength() > 0)
     {
         return NO_VALUE;
     }
 
+    // Handle ambience state step.
     switch (g_GameWork.gameStateSteps[1])
     {
         case 0:
             if (g_SavegamePtr->mapIdx == MapIdx_MAP2_S00)
             {
-                if (Savegame_EventFlagGet(EventFlag_133) || Savegame_EventFlagGet(EventFlag_181))
+                if (Savegame_EventFlagGet(EventFlag_133) ||
+                    Savegame_EventFlagGet(EventFlag_181))
                 {
-                    g_MapOverlayHdr.ambientAudioIdx = 11;
+                    g_MapOverlayHdr.ambienceIdx = 11;
                 }
                 else
                 {
-                    g_MapOverlayHdr.ambientAudioIdx = 4;
+                    g_MapOverlayHdr.ambienceIdx = 4;
                 }
             }
 
-            if (Sd_ActiveAmbientSfxCheck((s8)g_MapOverlayHdr.ambientAudioIdx))
+            if (Sd_ActiveAmbienceCheck((s8)g_MapOverlayHdr.ambienceIdx))
             {
                 SD_Call(17);
                 g_GameWork.gameStateSteps[1]++;
@@ -172,7 +176,7 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
             break;
 
         case 1:
-            Sd_AmbientSfxSet((s8)g_MapOverlayHdr.ambientAudioIdx);
+            Sd_AmbienceSet((s8)g_MapOverlayHdr.ambienceIdx);
             g_GameWork.gameStateSteps[1]++;
             return 1;
 
@@ -183,13 +187,13 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
     return 0;
 }
 
-bool Sd_ActiveAmbientSfxCheck(s32 ambientIdx) // 0x80035AB0
+bool Sd_ActiveAmbienceCheck(s32 ambienceIdx) // 0x80035AB0
 {
-    return g_GameWork.ambientIdx != ambientIdx;
+    return g_GameWork.ambienceIdx != ambienceIdx;
 }
 
-void Sd_AmbientSfxSet(s32 bgmIdx) // 0x80035AC8
+void Sd_AmbienceSet(s32 ambienceIdx) // 0x80035AC8
 {
-    g_GameWork.ambientIdx = bgmIdx;
-    SD_Call(g_AmbientVabTaskLoad[bgmIdx]);
+    g_GameWork.ambienceIdx = ambienceIdx;
+    SD_Call(g_AmbienceTaskLoad[ambienceIdx]);
 }

@@ -137,7 +137,7 @@ void func_800E9FDC(void) // 0x800E9FDC
             SysWork_StateStepIncrement(0);
 
         case 1:
-            if (Sd_AmbientSfxInit() != 0)
+            if (Sd_AmbienceControl() != 0)
             {
                 break;
             }
@@ -302,7 +302,7 @@ void func_800EAA50(void) // 0x800EAA50
         if (!Savegame_EventFlagGet(EventFlag_194))
         {
             Savegame_EventFlagSet(EventFlag_194);
-            Sd_AmbientSfxInit();
+            Sd_AmbienceControl();
         }
     }
 }

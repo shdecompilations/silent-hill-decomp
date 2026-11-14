@@ -19,12 +19,12 @@
 
 void Bgm_PlayNewSong(s32 bgmIdx) // 0x80087EA8
 {
-    if (!Sd_BgmActiveSongCheck(bgmIdx))
+    if (!Sd_ActiveBgmCheck(bgmIdx))
     {
         return;
     }
 
-    Sd_BgmSongSet(bgmIdx);
+    Sd_BgmSet(bgmIdx);
 }
 
 void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
@@ -37,7 +37,7 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
     switch (g_SysWork.sysStateSteps[1])
     {
         case 0:
-            if (!Sd_BgmActiveSongCheck(bgmIdx))
+            if (!Sd_ActiveBgmCheck(bgmIdx))
             {
                 SysWork_StateStepSet(1, 3);
                 break;
@@ -59,7 +59,7 @@ void Bgm_CrossfadeToTrack(s32 bgmIdx) // 0x80087EDC
 
             if (Sd_MidiChannelTaskGet() == 0)
             {
-                Sd_BgmSongSet(bgmIdx);
+                Sd_BgmSet(bgmIdx);
                 SysWork_StateStepIncrement(1);
             }
             break;

@@ -118,7 +118,7 @@ void Game_WarmBoot(void) // 0x80034264
     Fs_QueueReset();
     Fs_QueueWaitForEmpty();
     SD_InitStruct();
-    Sd_AmbientSfxSet(1);
+    Sd_AmbienceSet(1);
 
     while (Sd_AudioStreamingCheck() != AudioStreamingState_None)
     {

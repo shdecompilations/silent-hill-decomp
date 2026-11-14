@@ -112,6 +112,7 @@ typedef enum _BgmCmd
 // STRUCTS
 // ========
 
+/** @brief Background music track layer limits. */
 typedef struct _BgmLayerLimits
 {
     /* 0x0 */ u8 limits[8];
@@ -124,10 +125,10 @@ typedef struct _BgmLayerLimits
 /**
  * @brief Updates the in-game background music state and invokes the map's BGM handler.
  *
- * @param updateTrack `true` when the overlay uses multiple songs to switch the active track.
- * When set to `false`, only the track's audio layers are updated.
+ * @param updateTrack `true` when the overlay uses multiple tracks to switch the active track.
+ * When passed as `false`, only the track's audio layers are updated.
  */
-void Bgm_Update(bool updateSong);
+void Bgm_Update(bool updateTrack);
 
 /** @brief Mutes global variables for music layer volumes. */
 void Bgm_LayerGlobalVariablesMute(void);

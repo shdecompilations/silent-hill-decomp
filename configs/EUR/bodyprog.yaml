@@ -167,7 +167,7 @@ segments:
       - [0xEAAC,     c, sys/npc_anims_clear]
       - [0xEAD4,     c, game_boot/game_boot]
       - [0xF514,    c, game_boot/chara_anim]
-      - [0xFA08,    c, sound/sound]
+      - [0xFA08,    c, sound/track_control]
       - [0xFD8C,    c, game_boot/load_screen]
                                                   # All this files could be part of a same folder. 
                                                   # Both SH2 and 4 symbols shows that developers usually place
@@ -463,7 +463,7 @@ segments:
       - [0x83CB4, .data, sys/game_main]
       - [0x83D20, .data, sys/memcard_2]
       # TODO: Addrs seem off for next 3 splits, need to recheck them.
-      - [0x83D54, .data, sound/sound]
+      - [0x83D54, .data, sound/track_control]
       - [0x83E4C, .data, game_boot/chara_anim]
       - [0x83F14, .data, events/bgm_update]
       - [0x83F24, .data, text/map_msg]

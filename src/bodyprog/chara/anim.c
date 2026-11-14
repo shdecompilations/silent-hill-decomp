@@ -4,7 +4,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/anim.h"
 #include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 #include "types.h"

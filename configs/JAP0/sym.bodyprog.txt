@@ -390,17 +390,17 @@ Fs_CharaAnimDataAlloc                        = 0x80035008; // type:func
 Fs_CharaAnimDataUpdate                       = 0x80035230; // type:func
 Fs_CharaAnimBoneInfoSet                      = 0x8003536C; // type:func
 
-//--------------------------------------------------------------
-//--- PA: 0x0108F0   VA: 0x80035450   subsegment: c, sound/sound
-//--------------------------------------------------------------
-Sd_BgmInit                                   = 0x80035450; // type:func
-Sd_BgmActiveSongCheck                        = 0x80035578; // type:func
-Sd_BgmSongSet                                = 0x800355AC; // type:func
+//----------------------------------------------------------------------
+//--- PA: 0x0108F0   VA: 0x80035450   subsegment: c, sound/track_control
+//----------------------------------------------------------------------
+Sd_BgmControl                                = 0x80035450; // type:func
+Sd_ActiveBgmCheck                            = 0x80035578; // type:func
+Sd_BgmSet                                    = 0x800355AC; // type:func
 Sd_BgmChannelSet                             = 0x800355F4; // type:func
-Sd_BgmUpdateTrack                            = 0x8003563C; // type:func
-Sd_AmbientSfxInit                            = 0x8003566C; // type:func
-Sd_ActiveAmbientSfxCheck                     = 0x80035780; // type:func
-Sd_AmbientSfxSet                             = 0x80035798; // type:func
+Sd_BgmUpdate                                 = 0x8003563C; // type:func
+Sd_AmbienceControl                           = 0x8003566C; // type:func
+Sd_ActiveAmbienceCheck                       = 0x80035780; // type:func
+Sd_AmbienceSet                               = 0x80035798; // type:func
 
 //------------------------------------------------------------------------
 //--- PA: 0x010C74   VA: 0x800357D4   subsegment: c, game_boot/load_screen
@@ -2870,12 +2870,12 @@ D_800A97DC                                   = 0x800ABB78;
 unavailableMemCardSlotIdx                    = 0x800ABB7C;
 fileStatuses                                 = 0x800ABB80;
 
-//------------------------------------------------------------------
-//--- PA: 0x087040   VA: 0x800ABBA0   subsegment: .data, sound/sound
-//------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--- PA: 0x087040   VA: 0x800ABBA0   subsegment: .data, sound/track_control
+//--------------------------------------------------------------------------
 g_BgmTaskLoad                                = 0x800ABBA0; // type:u16 size:0x54
 g_BgmChannelSetTask                          = 0x800ABBF4; // type:u16 size:0x54
-g_AmbientVabTaskLoad                         = 0x800ABC48; // type:u16 size:0x50
+g_AmbienceTaskLoad                           = 0x800ABC48; // type:u16 size:0x50
 
 //---------------------------------------------------------------------------
 //--- PA: 0x087138   VA: 0x800ABC98   subsegment: .data, game_boot/chara_anim

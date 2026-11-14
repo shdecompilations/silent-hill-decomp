@@ -22,7 +22,7 @@ s_EventData MAP_EVENTS[4] = {
         .triggerType       = EventTriggerType_Tick,
         .sysState          = SysState_LoadOverlay,
         .eventParam        = 1,
-        .transitionFlags   = AreaTransitionFlag_SkipAmbientSfxInit,
+        .transitionFlags   = AreaTransitionFlag_SkipAmbienceUpdate,
         .mapIdx            = MapIdx_MAP1_S06,
     },
     // [3]

@@ -166,7 +166,7 @@ segments:
       - [0xFA30, c, sys/npc_anims_clear]
       - [0xFA58, c, game_boot/game_boot]
       - [0x103FC, c, game_boot/chara_anim]
-      - [0x108F0, c, sound/sound]
+      - [0x108F0, c, sound/track_control]
       - [0x10C74, c, game_boot/load_screen]
       - [0x10F24, c, events/bgm_update]        # }
       - [0x1169C, c, text/bodyprog_8003652C]
@@ -419,7 +419,7 @@ segments:
       - [0x86C08, .data, sys/map_info]
       - [0x86FA4, .data, sys/game_main]
       - [0x87010, .data, sys/memcard_2]
-      - [0x87040, .data, sound/sound]
+      - [0x87040, .data, sound/track_control]
       - [0x87138, .data, game_boot/chara_anim]
       - [0x871D8, .data, events/bgm_update]
       - [0x871E8, .data, text/map_msg]

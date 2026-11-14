@@ -69,7 +69,7 @@ s_EventData MAP_EVENTS[53] = {
         .triggerType       = EventTriggerType_Tick,
         .sysState          = SysState_LoadOverlay,
         .eventParam        = 39,
-        .transitionFlags   = AreaTransitionFlag_SkipAmbientSfxInit,
+        .transitionFlags   = AreaTransitionFlag_SkipAmbienceUpdate,
         .mapIdx            = MapIdx_MAP3_S06,
     },
     // [8]

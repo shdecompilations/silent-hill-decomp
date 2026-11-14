@@ -215,7 +215,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 7:
-            if (Sd_AmbientSfxInit() == 0)
+            if (Sd_AmbienceControl() == 0)
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -354,7 +354,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 32:
-            if (Sd_AmbientSfxInit() == 0)
+            if (Sd_AmbienceControl() == 0)
             {
                 SysWork_StateStepIncrement(0);
             }

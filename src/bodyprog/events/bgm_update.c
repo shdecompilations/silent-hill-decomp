@@ -37,14 +37,14 @@ static s_BgmLayerLimits g_Bgm_ChannelLimits          = { { 128, 128, 128, 128, 1
 // MUSIC UPDATE
 // ========================================
 
-void Bgm_Update(bool updateSong) // 0x80035DB4
+void Bgm_Update(bool updateTrack) // 0x80035DB4
 {
     g_Bgm_LayersUpdated = false;
 
-    if (g_MapOverlayHdr.bgmEvent != NULL) // Checks if function exists.
+    if (g_MapOverlayHdr.bgmEvent != NULL)
     {
-        g_MapOverlayHdr.bgmEvent(updateSong);
-        if (updateSong == false && g_Bgm_LayersUpdated == false)
+        g_MapOverlayHdr.bgmEvent(updateTrack);
+        if (updateTrack == false && g_Bgm_LayersUpdated == false)
         {
             Bgm_LayersUpdate(BgmFlag_Layer1, Q12(240.0f), NULL);
         }
@@ -399,8 +399,9 @@ s32 func_80036498(void) // 80036498
 
 u32 func_800364BC(void) // 0x800364BC
 {
-    u32        var0;
-    u32        var1;
+    u32 var0;
+    u32 var1;
+
     static u32 D_800BCD58;
 
     D_800BCD58 += g_DeltaTimeRaw * (Q12(64.0f) + 1);

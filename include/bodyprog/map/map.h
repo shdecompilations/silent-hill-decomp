@@ -162,7 +162,7 @@ typedef enum _AreaTransitionFlags
     AreaTransitionFlag_None               = 0,
     AreaTransitionFlag_UnfreezeWorld      = 1 << 0, /** TODO: Dual purpose: `SysState_ReadMessage` unfreezes the world if set, while `GameBoot_WorldStartup` calls `Map_WorldClear`? */
     AreaTransitionFlag_SkipFadeIn         = 1 << 1, /** Skips fade-in when returning to `GameState_InGame`. */
-    AreaTransitionFlag_SkipAmbientSfxInit = 1 << 2  /** TODO: Skips the `Sd_AmbientSfxInit` call in `GameBoot_WorldStartup`? */
+    AreaTransitionFlag_SkipAmbienceUpdate = 1 << 2  /** TODO: Skips the `Sd_AmbienceControl` call in `GameBoot_WorldStartup`? */
 } e_AreaTransitionFlags;
 
 /** @brief World map model data locations. */
@@ -438,7 +438,7 @@ typedef struct _MapOverlayHdr
                 // 3 bytes of padding.
     /* 0x10  */ void                   (*bgmEvent)(bool);
     /* 0x14  */ s8                     bgmCmd;
-    /* 0x15  */ u8                     ambientAudioIdx; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
+    /* 0x15  */ u8                     ambienceIdx;     // Ambient file index from `g_AmbienceTaskLoadCmds`.
     /* 0x16  */ s8                     field_16;        // Set ambient tint and draw distance.
                                                         // A value of 3 sets the map to night.
                                                         // A value of 2 will sets the map to use a tint used during the hallaway

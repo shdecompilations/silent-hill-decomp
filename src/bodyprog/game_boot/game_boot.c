@@ -165,7 +165,7 @@ void GameBoot_InGameStartup(void) // 0x80034964
             break;
 
         case 9:
-            if (Sd_BgmInit() == 0)
+            if (Sd_BgmControl() == 0)
             {
                 g_GameWork.gameState = GameState_MainLoadScreen;
                 Game_StateStepIncrement(0);
@@ -179,7 +179,7 @@ void GameBoot_InGameStartup(void) // 0x80034964
                 g_SysWork.sysFlags |= SysFlag_DemoActive;
             }
 
-            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipAmbientSfxInit || Sd_AmbientSfxInit() == 0)
+            if (AreaLoad_TransitionFlags() & AreaTransitionFlag_SkipAmbienceUpdate || Sd_AmbienceControl() == 0)
             {
                 Game_StateStepIncrement(0);
             }
