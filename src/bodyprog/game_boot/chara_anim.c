@@ -17,12 +17,12 @@
 #include "bodyprog/sound/sd_call.h"
 
 s8 g_CharaAnimDataIdxs[Chara_Count] = {
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE,
+    NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE,
+    NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE,
+    NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE,
+    NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE,
+    NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE
     // 3 bytes of padding.
 };
 
@@ -58,14 +58,14 @@ s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT] = {
     };
 #endif
 
-s_AnimInfo D_800A998C = {
+s_AnimInfo g_Harry_LoadAnimInfo = {
     .playbackFunc        = Anim_PlayLoop,
-    .status              = 0,
+    .status              = ANIM_STATUS(HarryAnim_Still, false),
     .hasVariableDuration = false,
-    .linkStatus          = ANIM_STATUS(0, false),
+    .linkStatus          = ANIM_STATUS(HarryAnim_Still, false),
     .duration            = { Q12(8.0f) },
-    .startKeyframeIdx    = 26,
-    .endKeyframeIdx      = 44
+    .startKeyframeIdx    = 26, // } `HarryAnim_RunForward` keyframe range.
+    .endKeyframeIdx      = 44  // }
 };
 
 /** @brief Checks if the raw file streaming memory allocations of two character animation data slots overlap.

@@ -554,13 +554,13 @@ void SysState_Fmv_Update(void) // 0x80039A58
 {
     #define BASE_AUDIO_FILE_IDX FILE_XA_ZC_14392
 
-    static RECT D_800A9A6C = { 320, 256, 160, 240 };
+    static RECT D_800A9A6C = { SCREEN_WIDTH, 256, SCREEN_WIDTH / 2, SCREEN_HEIGHT };
 
     switch (g_SysWork.sysStateSteps[0])
     {
         case 0:
             Screen_FadeStart(false, false, false);
-            g_IsLoadingFinished                 = false;
+            g_IsLoadingFinished        = false;
             g_SysWork.sysStateSteps[0] = 1;
 
         case 1:

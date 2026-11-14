@@ -70,7 +70,7 @@ typedef enum _MapIdx
     MapIdx_MAPX_S00 = 44  // }
 } e_MapIdx;
 
-/** @brief Paper map indices. Used for the navigation map screen. */
+/** @brief Paper map indices. Used for the paper map screen. */
 typedef enum _PaperMapIdx
 {
     PaperMapIdx_OtherPlaces    = 0,

@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_GAMEBOOT_FSCHARAANIM_H
-#define _BODYPROG_GAMEBOOT_FSCHARAANIM_H
+#ifndef _BODYPROG_GAMEBOOT_CHARAANIM_H
+#define _BODYPROG_GAMEBOOT_CHARAANIM_H
 
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/anm.h"
@@ -25,14 +25,14 @@ typedef struct _CharaAnimData
 // GLOBALS
 // ========
 
-/** Loaded NPC types in memory and their `g_CharaModelAnimsData` indices. */
+/** @brief Loaded NPC types in memory and their `g_CharaModelAnimsData` indices. Written to by `Fs_CharaAnimDataUpdate`. */
 extern s8 g_CharaAnimDataIdxs[Chara_Count];
 
 /** @brief Animation data for loaded character models. */
 extern s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT];
 
-/** Player anim info? */
-extern s_AnimInfo D_800A998C;
+/** @brief Harry load screen run anim info. */
+extern s_AnimInfo g_Harry_LoadAnimInfo;
 
 // ==========
 // FUNCTIONS
@@ -66,7 +66,8 @@ void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmH
 void Fs_CharaAnimDataUpdate(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 /** @brief Dynamically allocates where the next character animation data bone coords should be stored in
- * `g_SysWork.npcBoneCoordBuffer` based on the space consumed by the current character. */
+ * `g_SysWork.npcBoneCoordBuffer` based on the space consumed by the current character.
+ */
 void Fs_CharaAnimBoneInfoSet(void);
 
 #endif

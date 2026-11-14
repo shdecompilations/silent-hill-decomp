@@ -2660,7 +2660,7 @@ g_AmbienceTaskLoad                           = 0x800A98AC; // type:u16 size:0x50
 //---------------------------------------------------------------------------
 g_CharaAnimDataIdxs                          = 0x800A98FC;
 g_CharaModelAnimsData                        = 0x800A992C; // size:0x60
-D_800A998C                                   = 0x800A998C; // type:AnimInfo size:0x10
+g_Harry_LoadAnimInfo                                   = 0x800A998C; // type:AnimInfo size:0x10
 
 //------------------------------------------------------------------------
 //--- PA: 0x084E3C   VA: 0x800A999C   subsegment: .data, events/bgm_update

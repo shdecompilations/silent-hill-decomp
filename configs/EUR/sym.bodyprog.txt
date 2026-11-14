@@ -2927,7 +2927,7 @@ g_CharaAnimDataIdxs                          = 0x800A94DC;
 g_CharaModelAnimsData                        = 0x800A950C; // size:0x60
 g_MapLanguageBaseIds                         = 0x800A957C; // size:0x4
 g_ItemLanguageFileIds                        = 0x800A9580; // size:0x14
-D_800A998C                                   = 0x800A9594; // type:AnimInfo size:0x10
+g_Harry_LoadAnimInfo                                   = 0x800A9594; // type:AnimInfo size:0x10
 
 //------------------------------------------------------------------------
 //--- PA: 0x083F14   VA: 0x800A95A4   subsegment: .data, events/bgm_update

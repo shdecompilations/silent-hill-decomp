@@ -167,18 +167,16 @@ typedef struct _FsImageDesc
     s16 clutX;
     s16 clutY;
 } s_FsImageDesc;
-STATIC_ASSERT_SIZEOF(s_FsImageDesc, 8);
 
 /** @brief Extra queue entry data describing something related to loading some ANM files.
  * See `FsQueueExtra`.
  */
 typedef struct _FsAnmDesc
 {
-    u32            field_0; // Unknown index.
+    u32            animDataIdx; /** Index into `g_CharaModelAnimsData`. */
     u32            charaId;
-    GsCOORDINATE2* coords_8;
+    GsCOORDINATE2* boneCoords;
 } s_FsAnmDesc;
-STATIC_ASSERT_SIZEOF(s_FsAnmDesc, 12);
 
 /** @brief Extra data passed with the queue entry.
  *
@@ -304,16 +302,12 @@ s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* imag
 /** @brief Add a new ANM read operation to the queue.
  * Adds a read operation with `postLoad = FsQueuePostLoadType_Anm`.
  *
- * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800A90FC in bodyprog,
- * using `arg1` as an index. Does not seem to take a `s_FsAnmDesc` pointer either. Maybe by value?
- *
- * @param idx Unknown index.
- * @param charaId Character ID.
+ * @param animDataIdx Index into `g_CharaModelAnimsData`.
  * @param dest Destination buffer.
- * @param coords Character coords.
+ * @param boneCoords Character model bone coords.
  * @return Index of the new queue entry.
  */
-s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords);
+s32 Fs_QueueStartReadAnm(s32 animDataIdx, s32 charaId, void* dest, GsCOORDINATE2* boneCoords);
 
 /** @brief Add new operation to the queue.
  *

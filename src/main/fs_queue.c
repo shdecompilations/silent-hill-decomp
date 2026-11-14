@@ -99,15 +99,15 @@ s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* imag
     return Fs_QueueEnqueue(fileIdx, FsQueueOp_Read, FsQueuePostLoadType_Tim, false, dest, 0, &extra);
 }
 
-s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords)
+s32 Fs_QueueStartReadAnm(s32 animDataIdx, s32 charaId, void* dest, GsCOORDINATE2* boneCoords)
 {
     s32            fileIdx;
     s_FsQueueExtra extra;
 
-    fileIdx            = CHARA_FILE_INFOS[charaId].animFileIdx;
-    extra.anm.charaId  = charaId;
-    extra.anm.field_0  = idx;
-    extra.anm.coords_8 = coords;
+    fileIdx               = CHARA_FILE_INFOS[charaId].animFileIdx;
+    extra.anm.charaId     = charaId;
+    extra.anm.animDataIdx = animDataIdx;
+    extra.anm.boneCoords  = boneCoords;
     return Fs_QueueEnqueue(fileIdx, FsQueueOp_Read, FsQueuePostLoadType_Anm, false, dest, 0, &extra);
 }
 
@@ -679,6 +679,7 @@ bool Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
 
 bool Fs_QueuePostLoadAnm(s_FsQueueEntry* entry)
 {
-    Fs_CharaAnimDataUpdate(entry->extra.anm.field_0, entry->extra.anm.charaId, entry->externalData, entry->extra.anm.coords_8);
+    Fs_CharaAnimDataUpdate(entry->extra.anm.animDataIdx, entry->extra.anm.charaId, entry->externalData,
+                           entry->extra.anm.boneCoords);
     return true;
 }

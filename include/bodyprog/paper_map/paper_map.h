@@ -16,6 +16,13 @@ typedef struct // Maybe the same? Both related to `s_800AEDBC`.
     /* 0x2 */ u8 field_2;
     /* 0x3 */ u8 field_3;
 } s_800AE8A0_4;
+typedef struct
+{
+    u32* ptr_0;
+    u32* ptr_4;
+    s16  field_8;
+    s16  field_A;
+} s_800AEDBC;
 
 /** Paper map marking graphic data? */
 typedef struct
@@ -33,7 +40,7 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, q4_12 scale);
 bool func_80068CC0(s32 arg0);
 
 /** Paper map func. Seems to draw map marking sprites. */
-bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q4_12 scale);
+bool func_80068E0C(s32 arg0, s32 paperMapIdx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q4_12 scale);
 
 void PaperMap_DrawScaled(u16 scrollX, u16 scrollY, q4_12 scale);
 

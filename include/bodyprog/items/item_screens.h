@@ -61,14 +61,6 @@ typedef struct
 
 typedef struct
 {
-    u32* ptr_0;
-    u32* ptr_4;
-    s16  field_8;
-    s16  field_A;
-} s_800AEDBC;
-
-typedef struct
-{
     u8 field_0;
     u8 field_1;
     u8 field_2;

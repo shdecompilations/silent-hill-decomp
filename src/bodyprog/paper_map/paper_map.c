@@ -913,7 +913,7 @@ bool func_80068CC0(s32 arg0) // 0x80068CC0
     return true;
 }
 
-bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q4_12 scale) // 0x80068E0C
+bool func_80068E0C(s32 arg0, s32 paperMapIdx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q4_12 scale) // 0x80068E0C
 {
     s32              sp0;
     u16              sp4;
@@ -932,17 +932,17 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q
 
     ptr = PSX_SCRATCH;
 
-    if (g_PaperMapMarkingFileIdxs[idx] == NO_VALUE)
+    if (g_PaperMapMarkingFileIdxs[paperMapIdx] == NO_VALUE)
     {
         return false;
     }
 
-    if (D_800AEDBC[idx].ptr_0 == NULL)
+    if (D_800AEDBC[paperMapIdx].ptr_0 == NULL)
     {
         return false;
     }
 
-    if (D_800AEDBC[idx].ptr_4 == NULL)
+    if (D_800AEDBC[paperMapIdx].ptr_4 == NULL)
     {
         return false;
     }
@@ -952,20 +952,20 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q
 
     if (arg0 == 2)
     {
-        i            = (arg2 - D_800AEDBC[idx].field_8) >> 1;
+        i            = (arg2 - D_800AEDBC[paperMapIdx].field_8) >> 1;
         ptr->field_C = i + 1;
     }
     else
     {
         shade        = 128;
-        ptr->field_C = (D_800AEDBC[idx].field_A - D_800AEDBC[idx].field_8) >> 1;
+        ptr->field_C = (D_800AEDBC[paperMapIdx].field_A - D_800AEDBC[paperMapIdx].field_8) >> 1;
     }
 
     for (; i < ptr->field_C; i++)
     {
         for (j = 0; j < 2; j++)
         {
-            if (arg0 == 1 && !Savegame_EventFlagGet(((D_800AEDBC[idx].field_8 + (i * 2)) + j) + 1))
+            if (arg0 == 1 && !Savegame_EventFlagGet(((D_800AEDBC[paperMapIdx].field_8 + (i * 2)) + j) + 1))
             {
                 continue;
             }
@@ -975,12 +975,12 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q
                 continue;
             }
 
-            ptr->field_8 = *(s_800AE8A0_4*)&D_800AEDBC[idx].ptr_4[i];
+            ptr->field_8 = *(s_800AE8A0_4*)&D_800AEDBC[paperMapIdx].ptr_4[i];
             if (j != 0)
             {
                 if (ptr->field_8.field_3)
                 {
-                    ptr->field_4 = *(s_800AE8A0_0*)&D_800AEDBC[idx].ptr_0[ptr->field_8.field_3];
+                    ptr->field_4 = *(s_800AE8A0_0*)&D_800AEDBC[paperMapIdx].ptr_0[ptr->field_8.field_3];
                 }
                 else
                 {
@@ -989,7 +989,7 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, q
             }
             else if (ptr->field_8.field_2)
             {
-                ptr->field_4 = *(s_800AE8A0_0*)&D_800AEDBC[idx].ptr_0[ptr->field_8.field_2];
+                ptr->field_4 = *(s_800AE8A0_0*)&D_800AEDBC[paperMapIdx].ptr_0[ptr->field_8.field_2];
             }
             else
             {
