@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/events/events_main.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/screen/data.h"
@@ -216,19 +216,19 @@ bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
 {
     q19_12 deltaX;
     q19_12 deltaZ;
-    q3_12  rotY;
+    q3_12  headingAngle;
     q19_12 deltaRotY;
 
-    static q19_12 D_800A9A20 = Q12(0.0f);
-    static q19_12 D_800A9A24 = Q12(0.0f);
-    static q19_12 D_800A9A28 = Q12(0.0f);
+    static q19_12 D_800A9A20 = Q12(0.0f); // tickCount
+    static q19_12 D_800A9A24 = Q12(0.0f); // offsetX
+    static q19_12 D_800A9A28 = Q12(0.0f); // offsetZ
 
     if (g_TickCount > D_800A9A20)
     {
-        rotY       = PLAYER_CHARA().rotation.vy;
-        D_800A9A24 = PLAYER_CHARA().position.vx - DIV_FAST(Math_Sin(rotY), 8);
-        D_800A9A28 = PLAYER_CHARA().position.vz - DIV_FAST(Math_Cos(rotY), 8);
-        D_800A9A20 = g_TickCount;
+        headingAngle = PLAYER_CHARA().rotation.vy;
+        D_800A9A24   = PLAYER_CHARA().position.vx - DIV_FAST(Math_Sin(headingAngle), 8);
+        D_800A9A28   = PLAYER_CHARA().position.vz - DIV_FAST(Math_Cos(headingAngle), 8);
+        D_800A9A20   = g_TickCount;
     }
 
     deltaX = mapPoint->positionX - D_800A9A24;

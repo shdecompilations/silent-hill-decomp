@@ -1,7 +1,7 @@
 #include "inline_no_dmpsx.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"

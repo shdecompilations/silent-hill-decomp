@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/sys/demo.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/game_boot/chara_anim.h"
@@ -127,9 +127,10 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
             NPC_CHARA(npcIdx).model.stateStep    = curCharaSpawn->flags;
             NPC_CHARA(npcIdx).position.vx        = curCharaSpawn->positionX;
             NPC_CHARA(npcIdx).position.vz        = curCharaSpawn->positionZ;
+
             Collision_SurfaceGet(&surface, curCharaSpawn->positionX, curCharaSpawn->positionZ);
-            NPC_CHARA(npcIdx).position.vy        = surface.floorHeight;
-            NPC_CHARA(npcIdx).rotation.vy        = Q8_TO_Q12(curCharaSpawn->rotationY);
+            NPC_CHARA(npcIdx).position.vy = surface.floorHeight;
+            NPC_CHARA(npcIdx).rotation.vy = Q8_TO_Q12(curCharaSpawn->rotationY);
 
             SET_FLAG(&g_SysWork.npcFlags, npcIdx);
             SET_FLAG(g_SysWork.field_228C, i);

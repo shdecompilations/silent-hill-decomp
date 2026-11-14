@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"

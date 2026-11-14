@@ -7,7 +7,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/paper_map/paper_map.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/events/radio.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"

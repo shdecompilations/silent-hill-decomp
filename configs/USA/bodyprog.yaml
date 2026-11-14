@@ -78,7 +78,7 @@ segments:
       - [0x6FC, pad]
       - [0x700,  .rodata, text/map_msg]
       - [0x758, pad]
-      - [0x75C,  .rodata, events/event_data]
+      - [0x75C,  .rodata, events/data]
       - [0x814, pad]
       - [0x818,  .rodata, events/game_sys_states]
       - [0x91C,  .rodata, events/title]
@@ -146,7 +146,7 @@ segments:
       - [auto,       c, game]
       - [auto,       c, sys/chara_file_infos]
       - [auto,       c, sys/map_info]
-      - [auto,       c, events/event_data]
+      - [auto,       c, events/data]
       - [auto,       c, sound/sd_dat] # Possibly `sd_dat.c` from SH2 symbols?
       - [auto,       c, player/weapon_anim_data]
       
@@ -167,7 +167,7 @@ segments:
       - [0xFD60,     c, sys/npc_anims_clear]
       - [0xFD88,     c, game_boot/game_boot]
       - [0x1072C,    c, game_boot/chara_anim]
-      - [0x10C20,    c, sound/track_control]
+      - [0x10C20,    c, sound/song_control]
       - [0x10FA4,    c, game_boot/load_screen]
                                                   # All this files could be part of a same folder. 
                                                   # Both SH2 and 4 symbols shows that developers usually place
@@ -463,11 +463,11 @@ segments:
       - [0x84C08, .data, sys/game_main]
       - [0x84C74, .data, sys/memcard_2]
       # TODO: Addrs seem off for next 3 splits, need to recheck them.
-      - [0x84CA4, .data, sound/track_control]
+      - [0x84CA4, .data, sound/song_control]
       - [0x84D9C, .data, game_boot/chara_anim]
       - [0x84E3C, .data, events/bgm_update]
       - [0x84E4C, .data, text/map_msg]
-      - [0x84E54, .data, events/event_data]
+      - [0x84E54, .data, events/data]
       - [0x84EC0, .data, events/events_main]
       - [0x84ECC, .data, events/game_sys_states]
       - [0x84F14, .data, events/title]

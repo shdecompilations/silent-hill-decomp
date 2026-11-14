@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 
 /** @brief SFX pairs.
  *
@@ -64,7 +64,7 @@ char* g_CommonWorldObjectNames[8] = {
 #if !VERSION_REGION_IS(PAL)
 s_FsImageDesc D_800A9A04             = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
 #endif
-bool          g_IsLoadingFinished             = false;
+bool          g_IsLoadingFinished    = false;
 s32           g_MapEventSysState     = SysState_Gameplay;
 u32           g_MapEventParam        = 0;
 s32           g_MapEventLastUsedItem = 0;

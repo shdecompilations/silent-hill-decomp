@@ -7,15 +7,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/events/bgm_utils.h"
-#include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sd_call.h"
 #include "main/fs_queue.h"
-
-// ========================================
-// BGM RELATED
-// ========================================
 
 void Bgm_NewSongPlay(s32 bgmIdx) // 0x80087EA8
 {

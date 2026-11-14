@@ -41,7 +41,7 @@ MAP_INFOS                                    = 0x8002500C; // type:MapType size:
 DEFAULT_CONTROLLER_CONFIGS.44                = 0x8002511C;
 
 //--------------------------------------------------------------------------
-//--- PA: 0x00075C   VA: 0x800252BC   subsegment: .rodata, events/event_data
+//--- PA: 0x00075C   VA: 0x800252BC   subsegment: .rodata, events/data
 //--------------------------------------------------------------------------
 SFX_PAIRS                                    = 0x800252BC; // type:AreaLoadSfx size:0x64
 
@@ -331,7 +331,7 @@ Fs_CharaAnimDataUpdate                       = 0x80035560; // type:func
 Fs_CharaAnimBoneInfoSet                      = 0x8003569C; // type:func
 
 //----------------------------------------------------------------------
-//--- PA: 0x010C20   VA: 0x80035780   subsegment: c, sound/track_control
+//--- PA: 0x010C20   VA: 0x80035780   subsegment: c, sound/song_control
 //----------------------------------------------------------------------
 Sd_BgmControl                                = 0x80035780; // type:func
 Sd_ActiveBgmCheck                            = 0x800358A8; // type:func
@@ -2649,7 +2649,7 @@ unavailableMemCardSlotIdx.47                 = 0x800A97E0;
 fileStatuses.48                              = 0x800A97E4;
 
 //--------------------------------------------------------------------------
-//--- PA: 0x084CA4   VA: 0x800A9804   subsegment: .data, sound/track_control
+//--- PA: 0x084CA4   VA: 0x800A9804   subsegment: .data, sound/song_control
 //--------------------------------------------------------------------------
 g_BgmTaskLoad                                = 0x800A9804; // type:u16 size:0x54
 g_BgmChannelSetTask                          = 0x800A9858; // type:u16 size:0x54
@@ -2676,7 +2676,7 @@ g_MapMsg_SelectFlashTimer                    = 0x800A99B0; // size:0x2 type:s16
 hack_D_800A99B2_fix                          = 0x800A99B2;
 
 //------------------------------------------------------------------------
-//--- PA: 0x084E54   VA: 0x800A99B4   subsegment: .data, events/event_data
+//--- PA: 0x084E54   VA: 0x800A99B4   subsegment: .data, events/data
 //------------------------------------------------------------------------
 g_PaperMapFileIdxs                           = 0x800A99B4;
 g_PaperMapMarkingFileIdxs                    = 0x800A99CC; // size:0x18

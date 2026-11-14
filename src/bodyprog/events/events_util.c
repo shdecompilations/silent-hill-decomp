@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/events/events_util.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"

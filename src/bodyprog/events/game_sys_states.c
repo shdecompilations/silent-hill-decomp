@@ -7,7 +7,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/game_sys_states.h"
 #include "bodyprog/events/bgm_update.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/events/events_main.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"

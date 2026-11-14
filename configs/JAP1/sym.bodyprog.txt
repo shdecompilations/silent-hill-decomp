@@ -49,7 +49,7 @@ D_80025234                                   = 0x8002522C;
 D_8002523C                                   = 0x80025234;
 
 //--------------------------------------------------------------------------
-//--- PA: 0x000754   VA: 0x800252B4   subsegment: .rodata, events/event_data
+//--- PA: 0x000754   VA: 0x800252B4   subsegment: .rodata, events/data
 //--------------------------------------------------------------------------
 SFX_PAIRS                                    = 0x800252B4; // type:AreaLoadSfx size:0x64
 
@@ -485,7 +485,7 @@ Fs_CharaAnimDataUpdate                       = 0x800352D4; // type:func
 Fs_CharaAnimBoneInfoSet                      = 0x80035410; // type:func
 
 //----------------------------------------------------------------------
-//--- PA: 0x010994   VA: 0x800354F4   subsegment: c, sound/track_control
+//--- PA: 0x010994   VA: 0x800354F4   subsegment: c, sound/song_control
 //----------------------------------------------------------------------
 Sd_BgmControl                                = 0x800354F4; // type:func
 Sd_ActiveBgmCheck                            = 0x8003561C; // type:func
@@ -2972,7 +2972,7 @@ unavailableMemCardSlotIdx                    = 0x800ABCA0;
 fileStatuses                                 = 0x800ABCA4;
 
 //--------------------------------------------------------------------------
-//--- PA: 0x087164   VA: 0x800ABCC4   subsegment: .data, sound/track_control
+//--- PA: 0x087164   VA: 0x800ABCC4   subsegment: .data, sound/song_control
 //--------------------------------------------------------------------------
 g_BgmTaskLoad                                = 0x800ABCC4; // type:u16 size:0x54
 g_BgmChannelSetTask                          = 0x800ABD18; // type:u16 size:0x54
@@ -2993,7 +2993,7 @@ g_Bgm_ChannelSetProcessState                 = 0x800ABE60;
 g_Bgm_ChannelLimits                          = 0x800ABE64;
 
 //------------------------------------------------------------------------
-//--- PA: 0x087314   VA: 0x800ABE74   subsegment: .data, events/event_data
+//--- PA: 0x087314   VA: 0x800ABE74   subsegment: .data, events/data
 //------------------------------------------------------------------------
 g_PaperMapFileIdxs                           = 0x800ABE74;
 D_800A99B5                                   = 0x800ABE75;

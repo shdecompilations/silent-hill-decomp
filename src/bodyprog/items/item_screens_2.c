@@ -2,7 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/items/item_screens.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/events/events_main.h"
 #include "bodyprog/events/npc_main.h"
 #include "bodyprog/events/radio.h"

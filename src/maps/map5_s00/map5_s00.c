@@ -4,7 +4,7 @@
 #include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/gfx/env_effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"

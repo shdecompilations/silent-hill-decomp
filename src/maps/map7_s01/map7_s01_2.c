@@ -1,7 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/bgm_update.h"
-#include "bodyprog/events/event_data.h"
+#include "bodyprog/events/data.h"
 #include "bodyprog/game_boot/chara_anim.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/map/terrain.h"
