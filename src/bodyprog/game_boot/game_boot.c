@@ -129,9 +129,9 @@ void GameBoot_InGameStartup(void) // 0x80034964
             break;
 
         case 5:
-            Fs_CharaAnimDataAlloc(1, g_MapOverlayHdr.charaGroupIds[0], NULL, 0);
-            Fs_CharaAnimDataAlloc(2, g_MapOverlayHdr.charaGroupIds[1], NULL, 0);
-            Fs_CharaAnimDataAlloc(3, g_MapOverlayHdr.charaGroupIds[2], NULL, 0);
+            Fs_CharaAnimDataAlloc(1, g_MapOverlayHdr.charaGroupIds[0], NULL, NULL);
+            Fs_CharaAnimDataAlloc(2, g_MapOverlayHdr.charaGroupIds[1], NULL, NULL);
+            Fs_CharaAnimDataAlloc(3, g_MapOverlayHdr.charaGroupIds[2], NULL, NULL);
             WorldGfx_MapInitCharaLoad(&g_MapOverlayHdr);
 
             g_GameWork.gameStateSteps[0]++;

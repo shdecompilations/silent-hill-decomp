@@ -65,13 +65,13 @@ bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_Sf
  * @note SH2 symbols have a similar function named `PlayerFunction`, but code-wise they
  * doesn't share many similarities.
  */
-void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 /** Player anim handler? */
-void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 /** @brief Main update function for player logic. */
-void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords);
+void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords);
 
 /** @brief Updates `PLAYER_EXTRA().upperBodyState` and prepares
  * transitions between running to and from walking animations.

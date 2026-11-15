@@ -995,7 +995,7 @@ void func_800D87C0(void) // 0x800D87C0
             break;
 
         default:
-            g_Cutscene_Timer                         = NO_VALUE;
+            g_Cutscene_Timer            = NO_VALUE;
             PLAYER_CHARA().position.vx += FP_FROM((Math_Sin(PLAYER_CHARA().rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
             PLAYER_CHARA().position.vz += FP_FROM((Math_Cos(PLAYER_CHARA().rotation.vy + Q12_ANGLE(180.0f)) * Q12(1.1f)), Q12_SHIFT);
 
@@ -1009,12 +1009,13 @@ void func_800D87C0(void) // 0x800D87C0
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
+            // Grey Child/Mumber.
             Chara_BonesInit(0);
-
             Savegame_EventFlagSet(EventFlag_76);
             Chara_ModelCharaIdClear(&NPC_CHARA(0), 0, 0);
-            func_8003D01C();
 
+            // Held weapon.
+            func_8003D01C();
             if (D_800DD598 == 0)
             {
                 Player_WeaponAttackRestore();

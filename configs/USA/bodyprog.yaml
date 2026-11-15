@@ -164,7 +164,7 @@ segments:
       - [0xE978,     c, sys/memcard_2] # `memcard_update.c?`
       - [0xF580,     c, sys/warm_boot] # Possibly `sh_init` or some `init` derivative name considering SH2 and 4 symbols.
       - [0xF8BC,     c, sys/joy]
-      - [0xFD60,     c, sys/npc_anims_clear]
+      - [0xFD60,     c, game_boot/npc_anims_clear]
       - [0xFD88,     c, game_boot/game_boot]
       - [0x1072C,    c, game_boot/chara_anim]
       - [0x10C20,    c, sound/song_control]

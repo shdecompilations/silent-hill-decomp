@@ -8,7 +8,7 @@
 #include "bodyprog/items/ranking.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/memcard.h"
-#include "bodyprog/sys/npc_anims_clear.h"
+#include "bodyprog/game_boot/npc_anims_clear.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/sound/sd_call.h"
 #include "bodyprog/world/effects.h"
@@ -8072,39 +8072,39 @@ void func_800E8D20(void) // 0x800E8D20
     }
 }
 
-void func_800E9260(e_CharaId charaId, s32 arg1) // 0x800E9260
+void func_800E9260(e_CharaId charaId, s32 animDataIdx) // 0x800E9260
 {
     // TODO: Setup buffer defines for these (or maybe they're included in existing buffer?)
 
-    WorldGfx_CharaLmBufferAssign(1 << (arg1 - 1));
+    WorldGfx_CharaLmBufferAssign(1 << (animDataIdx - 1));
 
-    switch (arg1)
+    switch (animDataIdx)
     {
         case 1:
-            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcBoneCoordBuffer[0]);
+            Fs_CharaAnimDataAlloc(animDataIdx, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcBoneCoordBuffer[0]);
             WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)FS_BUFFER_31, &D_800ED218);
             break;
 
         case 2:
-            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_30, &g_SysWork.npcBoneCoordBuffer[30]);
+            Fs_CharaAnimDataAlloc(animDataIdx, charaId, (s_AnmHeader*)FS_BUFFER_30, &g_SysWork.npcBoneCoordBuffer[30]);
             WorldGfx_CharaLoad(charaId, 1, LM_BUFFER_2, &D_800ED220);
             break;
 
         case 3:
-            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_26, &g_NpcBoneCoords[HarryBone_Root]);
+            Fs_CharaAnimDataAlloc(animDataIdx, charaId, (s_AnmHeader*)FS_BUFFER_26, &g_NpcBoneCoords[HarryBone_Root]);
             WorldGfx_CharaLoad(charaId, 2, (s_LmHeader*)FS_BUFFER_32, &D_800ED228);
             break;
 
         case 4:
             func_800E94C0();
-            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcBoneCoordBuffer[0]);
+            Fs_CharaAnimDataAlloc(animDataIdx - 3, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcBoneCoordBuffer[0]);
             WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)FS_BUFFER_31, &D_800ED218);
             func_800E94F4();
             break;
 
         case 5:
             func_800E94C0();
-            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)FS_BUFFER_33, &g_SysWork.npcBoneCoordBuffer[30]);
+            Fs_CharaAnimDataAlloc(animDataIdx - 3, charaId, (s_AnmHeader*)FS_BUFFER_33, &g_SysWork.npcBoneCoordBuffer[30]);
             WorldGfx_CharaLoad(charaId, 1, (s_LmHeader*)FS_BUFFER_34, &D_800ED220);
             func_800E94F4();
             break;

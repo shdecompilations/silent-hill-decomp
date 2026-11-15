@@ -37,9 +37,9 @@ D_800251F4                                   = 0x80025D24;
 //------------------------------------------------------
 D_80025234                                   = 0x80025D64;
 
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------
 //--- PA: 0x00075C   VA: 0x80025DEC   subsegment: .rodata, events/data
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------
 SFX_PAIRS                                    = 0x80025DEC; // type:AreaLoadSfx size:0x64
 
 //------------------------------------------------------
@@ -331,7 +331,7 @@ ControllerData_AnalogToDigital               = 0x80033EEC; // type:func
 func_8003483C                                = 0x800340B8; // type:func
 
 //----------------------------------------------------------------------
-//--- PA: 0x00EAAC   VA: 0x8003413C   subsegment: c, sys/npc_anims_clear
+//--- PA: 0x00EAAC   VA: 0x8003413C   subsegment: c, game_boot/npc_anims_clear
 //----------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x8003413C; // type:func
 
@@ -359,9 +359,9 @@ Fs_CharaAnimDataAlloc                        = 0x80034C50; // type:func
 Fs_CharaAnimDataUpdate                       = 0x80034E78; // type:func
 Fs_CharaAnimBoneInfoSet                      = 0x80034FB4; // type:func
 
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------
 //--- PA: 0x00FA08   VA: 0x80035098   subsegment: c, sound/song_control
-//----------------------------------------------------------------------
+//---------------------------------------------------------------------
 Sd_BgmControl                                = 0x80035098; // type:func
 Sd_ActiveBgmCheck                            = 0x800351C0; // type:func
 Sd_BgmSet                                    = 0x800351F4; // type:func
@@ -2913,9 +2913,9 @@ D_800A97DC                                   = 0x800A93BC;
 unavailableMemCardSlotIdx                    = 0x800A93C0;
 fileStatuses                                 = 0x800A93C4;
 
-//--------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 //--- PA: 0x083D54   VA: 0x800A93E4   subsegment: .data, sound/song_control
-//--------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 g_BgmTaskLoad                                = 0x800A93E4; // type:u16 size:0x54
 g_BgmChannelSetTask                          = 0x800A9438; // type:u16 size:0x54
 g_AmbienceTaskLoad                           = 0x800A948C; // type:u16 size:0x50
@@ -2927,7 +2927,7 @@ g_CharaAnimDataIdxs                          = 0x800A94DC;
 g_CharaModelAnimsData                        = 0x800A950C; // size:0x60
 g_MapLanguageBaseIds                         = 0x800A957C; // size:0x4
 g_ItemLanguageFileIds                        = 0x800A9580; // size:0x14
-g_Harry_LoadAnimInfo                                   = 0x800A9594; // type:AnimInfo size:0x10
+g_PlayerLoadScreenAnimInfo                   = 0x800A9594; // type:AnimInfo size:0x10
 
 //------------------------------------------------------------------------
 //--- PA: 0x083F14   VA: 0x800A95A4   subsegment: .data, events/bgm_update
@@ -2942,9 +2942,9 @@ g_Bgm_ChannelLimits                          = 0x800A95AC;
 g_MapMsg_CurrentIdx                          = 0x800A95B4; // type:s32
 g_MapMsg_SelectFlashTimer                    = 0x800A95B8; // type:s16
 
-//------------------------------------------------------------------------
+//------------------------------------------------------------------
 //--- PA: 0x083F2C   VA: 0x800A95BC   subsegment: .data, events/data
-//------------------------------------------------------------------------
+//------------------------------------------------------------------
 g_PaperMapFileIdxs                           = 0x800A95BC;
 g_PaperMapMarkingFileIdxs                    = 0x800A95D4; // size:0x18
 g_CommonWorldObjectNames                     = 0x800A95EC; // size:0x20

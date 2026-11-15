@@ -581,7 +581,7 @@ STATIC_ASSERT_SIZEOF(s_PropsTwinfeeler, 64);
 /** @brief State of the attack a character is currently performing.
  *
  * @note SH2 keeps similar data to this inside `shBattleInfo`, and also seemed 
- * to move some SubCharacter fields (`flags`, `field_40`, `attackReceived`) inside it.
+ * to move some `s_SubCharacter` fields (`flags`, `field_40`, `attackReceived`) inside it.
  */
 typedef struct _CharaAttack
 {
@@ -593,16 +593,16 @@ typedef struct _CharaAttack
     /* 0x5  */ s8      __pad_5[3];
     /* 0x8  */ s32     hitFlags;     /** Bit `1 << npcIdx` per NPC hit by this attack, `NO_VALUE` (all bits set) if the player is hit. */
     /* 0xC  */ q3_12   aimYaw;
-    /* 0xE  */ q3_12   aimPitch;     /** Measured from vertical, 90 degrees is level. */
+    /* 0xE  */ q3_12   aimPitch;     /** Measured from vertical. 90 degrees is level. */
     /* 0x10 */ q3_12   prevAimYaw;
     /* 0x12 */ q3_12   prevAimPitch;
     /* 0x14 */ q19_12  hitCheckTime; /** Animation time that hit checks have been run up to, clamped to the attack's hit window. */
-    /* 0x18 */ VECTOR3 origin;       /** Q19.12 | Attack origin / ray start for gunshots. */
+    /* 0x18 */ VECTOR3 origin;       /** Q19.12 | Attack origin or ray start for gunshots. */
     /* 0x24 */ VECTOR3 segStart[2];  /** Q19.12 | Hit segment start, `origin` + direction * `rangeMin`. [0]: this tick, [1]: previous tick. */
     /* 0x3C */ VECTOR3 prevOrigin;   /** Q19.12 */
     /* 0x48 */ VECTOR3 segVec[2];    /** Q19.12 | Hit segment, direction * (`rangeMax` - `rangeMin`). [0]: this tick, [1]: previous tick. */
     /* 0x60 */ VECTOR3 field_60;     /** Q19.12 | Read by `func_8008B714` as the offset from `prevOrigin` to the previous segment end,
-                                       * but never written, always 0 after the `bzero` during character spawn? */
+                                       * but never written. Always 0 after the `bzero` during character spawn? */
 } s_CharaAttack;
 STATIC_ASSERT_SIZEOF(s_CharaAttack, 108);
 

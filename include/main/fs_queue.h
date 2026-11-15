@@ -168,29 +168,24 @@ typedef struct _FsImageDesc
     s16 clutY;
 } s_FsImageDesc;
 
-/** @brief Extra queue entry data describing something related to loading some ANM files.
+/** @brief Extra queue entry for character animation allocation.
  * See `FsQueueExtra`.
  */
-typedef struct _FsAnmDesc
+typedef struct _FsAnmAlloc
 {
     u32            animDataIdx; /** Index into `g_CharaModelAnimsData`. */
     u32            charaId;
     GsCOORDINATE2* boneCoords;
-} s_FsAnmDesc;
+} s_FsAnmAlloc;
 
 /** @brief Extra data passed with the queue entry.
  *
- * Seems to be either a TIM descriptor (`image`), or something for ANM files (`anm`).
- *
  * For `image` usage, see `Fs_QueuePostLoadTim`.
- *
- * Unknown what exactly `anm` is, but it is used with preprocess type 2, which is only used
- * for some ANM files, but not others. See `Fs_QueuePostLoadAnm`.
  */
 typedef union _FsQueueExtra
 {
     s_FsImageDesc image; /** Location in VRAM where to upload a TIM during post-load. */
-    s_FsAnmDesc   anm;   /** Unknown. Used when loading some ANM files. */
+    s_FsAnmAlloc  anm;   /** Character bone anim allocation data. */
 } s_FsQueueExtra;
 
 /** @brief FS queue entry.
@@ -274,14 +269,14 @@ bool Fs_QueueChunksLoad(void);
  */
 void Fs_QueueWaitForEmpty(void);
 
-/** @brief Add a new seek operation to the queue.
+/** @brief Adds a new seek operation to the queue.
  *
  * @param fileIdx File table index of the file to seek to.
  * @return Index of the new queue entry.
  */
 s32 Fs_QueueStartSeek(e_FsFile fileIdx);
 
-/** @brief Add a new read operation to the queue.
+/** @brief Adds a new read operation to the queue.
  *
  * @param fileIdx File table index of the file to read.
  * @param dest Destination buffer. Seems there are no size checks.
@@ -289,7 +284,7 @@ s32 Fs_QueueStartSeek(e_FsFile fileIdx);
  */
 s32 Fs_QueueStartRead(e_FsFile fileIdx, void* dest);
 
-/** @brief Add a new TIM read operation to the queue.
+/** @brief Adds a new TIM read operation to the queue.
  * Adds a read operation with `post-load = FsQueuePostLoadType_Tim`.
  *
  * @param fileIdx File table index of the file to read.
@@ -299,7 +294,7 @@ s32 Fs_QueueStartRead(e_FsFile fileIdx, void* dest);
  */
 s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* image);
 
-/** @brief Add a new ANM read operation to the queue.
+/** @brief Adds a new ANM read operation to the queue.
  * Adds a read operation with `postLoad = FsQueuePostLoadType_Anm`.
  *
  * @param animDataIdx Index into `g_CharaModelAnimsData`.
@@ -309,7 +304,7 @@ s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* imag
  */
 s32 Fs_QueueStartReadAnm(s32 animDataIdx, s32 charaId, void* dest, GsCOORDINATE2* boneCoords);
 
-/** @brief Add new operation to the queue.
+/** @brief Adds a new operation to the queue.
  *
  * If the queue is full, it will spin while calling `Fs_QueueUpdate` and wait until space frees up.
  * Called by all of the `Fs_QueueStart...` functions.
@@ -324,7 +319,7 @@ s32 Fs_QueueStartReadAnm(s32 animDataIdx, s32 charaId, void* dest, GsCOORDINATE2
  */
 s32 Fs_QueueEnqueue(e_FsFile fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra);
 
-/** @brief Initialize FS queue and FS memory.
+/** @brief Initializes the FS queue and FS memory.
  * Initializes `g_FsQueue` and calls `Fs_InitializeMem`.
  */
 void Fs_QueueInitialize(void);
@@ -360,14 +355,14 @@ bool Fs_QueueUpdateSeek(s_FsQueueEntry* entry);
  */
 bool Fs_QueueUpdateRead(s_FsQueueEntry* entry);
 
-/** If `entry->allocate` is set, allocate memory for `entry->data`, otherwise use `entry->externalData`.
+/** If `entry->allocate` is set, allocates memory for `entry->data`, otherwise uses `entry->externalData`.
  *
  * @param entry Entry to allocate memory for.
  * @return `true` if allocation was successful or was not needed, `false` otherwise.
  */
 bool Fs_QueueAllocEntryData(s_FsQueueEntry* entry);
 
-/** @brief Check if the specified read operation entry can be processed.
+/** @brief Checks if a specified read operation entry can be processed.
  *
  * Checks if loading `entry` will clobber any memory that was allocated for pending entries in the queue
  * or memory that's used for post-loading.
@@ -377,7 +372,7 @@ bool Fs_QueueAllocEntryData(s_FsQueueEntry* entry);
  */
 bool Fs_QueueCanRead(s_FsQueueEntry* entry);
 
-/** @brief Check if two buffers overlap in memory. Used by `Fs_QueueCanRead`.
+/** @brief Checks if two buffers overlap in memory. Used by `Fs_QueueCanRead`.
  *
  * @param data0 Start of the first buffer.
  * @param size0 Size of the first buffer in bytes.
@@ -387,7 +382,7 @@ bool Fs_QueueCanRead(s_FsQueueEntry* entry);
  */
 bool Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1);
 
-/** @brief Process `FsQueueReadState_SetLoc` or `FSQS_SEEK_SETLOC` state: set target sector.
+/** @brief Processes the `FsQueueReadState_SetLoc` or `FSQS_SEEK_SETLOC` state: sets the target sector.
  *
  * Calls `CdControl(CdlSetloc, ...)`.
  *
@@ -396,7 +391,7 @@ bool Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1);
  */
 bool Fs_QueueTickSetLoc(s_FsQueueEntry* entry);
 
-/** @brief Process `FsQueueReadState_Read` state: read from CD.
+/** @brief Processes the `FsQueueReadState_Read` state: reads from CD.
  *
  * Calls `CdRead()`.
  *
@@ -405,7 +400,8 @@ bool Fs_QueueTickSetLoc(s_FsQueueEntry* entry);
  */
 bool Fs_QueueTickRead(s_FsQueueEntry* entry);
 
-/** @brief Process `FsQueueReadState_Reset` or `FsQueueSeekState_Reset` state: wait for a bit and reset CD driver.
+/** @brief Processes the `FsQueueReadState_Reset` or `FsQueueSeekState_Reset` state: waits for a bit and resets the CD
+ * driver.
  *
  * Increments `g_FsQueue.resetTimer0` once. If it has reached 8, clears it and increments `g_FsQueue.resetTimer1`.
  * If `g_FsQueue.resetTimer1` has reached 9, clears it and calls `CdReset()`.
@@ -415,7 +411,8 @@ bool Fs_QueueTickRead(s_FsQueueEntry* entry);
  */
 bool Fs_QueueResetTick(s_FsQueueEntry* entry);
 
-/** Process a read from PCDRV. Seems to be unused in release.
+/** @brief @unused Processes a read from PCDRV.
+ *
  * @param entry PCDRV read operation entry to process.
  * @return `true` if succeeded, `false` otherwise.
  */
@@ -430,25 +427,22 @@ bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry);
  */
 bool Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry);
 
-/** @brief Parse a TIM file after loading it.
+/** @brief Parses a TIM file after loading it.
  *
  * Called during post-loading for TIM files (`entry->postLoad = 1`).
- * Will use `OpenTIM`/`ReadTIM` to parse the loaded data and then upload it via `LoadImage`.
- * If `entry->extra.image.u` is not 0xFF, will override the XY components of the pixel and CLUT rects with values from `image`.
+ * Uses `OpenTIM`/`ReadTIM` to parse the loaded data and then uploads it via `LoadImage`.
+ * If `entry->extra.image.u` isn't `0xFF`, it overrides the XY components of the pixel and CLUT rects with values from
+ * `image`.
  *
  * @param entry Entry to parse.
  * @return Always `true`.
  */
 bool Fs_QueuePostLoadTim(s_FsQueueEntry* entry);
 
-/** @brief Parse an ANM file after loading it?
+/** @brief Handles character animation allocation after loading an ANM.
  *
- * Called during post-loading for some ANM files (when `entry->postLoad = 2`).
- * For example, it is called for CLD2.ANM, SRL.ANM, SBL.ANM (maybe ones used for NPCs?), but not for others
- * (e.g. HB_M0S01.ANM).
- *
- * Calls into BODYPROG, where a function gets a `GsCOORDINATE2` from somewhere in the loaded data.
- * Always uses data from `entry->extra.anm`.
+ * Called during post-loading for ANM files (when `entry->postLoad = 2`).
+ * Supplementary files containing extra map-specific keyframes for Harry `HB_M0S01.ANM` aren't handled by this function.
  *
  * @param entry Entry to parse.
  * @return Always `true`.

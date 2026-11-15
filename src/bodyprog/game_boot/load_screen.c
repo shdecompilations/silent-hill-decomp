@@ -87,13 +87,13 @@ void GameBoot_LoadScreen_PlayerRun(void) // 0x80035BE0
         model->anim.time                     = Q12(26.0f);
         PLAYER_CHARA().position.vy           = Q12(0.2f);
 
-        g_Harry_LoadAnimInfo.status = model->anim.status;
+        g_PlayerLoadScreenAnimInfo.status = model->anim.status;
 
         Math_MatrixTransform(&PLAYER_CHARA().position, &PLAYER_CHARA().rotation, boneCoords);
         g_SysWork.sysState++;
     }
 
-    Anim_PlayLoop(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &g_Harry_LoadAnimInfo);
+    Anim_PlayLoop(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &g_PlayerLoadScreenAnimInfo);
     vcMoveAndSetCamera(true, false, false, false, false, false, false, false);
     WorldEnv_Update();
     WorldGfx_CharaDraw(Chara_Harry, boneCoords, 1, PLAYER_CHARA().timer_C6, 0);

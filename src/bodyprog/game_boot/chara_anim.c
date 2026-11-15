@@ -1,20 +1,11 @@
 #include "bodyprog/game.h"
 
-#include <psyq/libetc.h>
-#include <psyq/libpad.h>
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/game_boot/chara_anim.h"
-#include "main/fs_queue.h"
-#include "bodyprog/sys/demo.h"
-#include "bodyprog/game_boot/game_boot.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/text/text_draw.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/player/player.h"
-#include "bodyprog/items/ranking.h"
-#include "bodyprog/sound/sd_call.h"
+#include "main/fs_queue.h"
 
 s8 g_CharaAnimDataIdxs[Chara_Count] = {
     NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE, NO_VALUE,
@@ -58,7 +49,7 @@ s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT] = {
     };
 #endif
 
-s_AnimInfo g_Harry_LoadAnimInfo = {
+s_AnimInfo g_PlayerLoadScreenAnimInfo = {
     .playbackFunc        = Anim_PlayLoop,
     .status              = ANIM_STATUS(HarryAnim_Still, false),
     .hasVariableDuration = false,
@@ -120,11 +111,11 @@ void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmH
 {
     s32              i;
     s_AnmHeader*     localAnmHdr;
-    s_CharaAnimData* initAnimData;
+    s_CharaAnimData* newAnimData;
     s_CharaAnimData* npcAnimData;
 
-    localAnmHdr  = anmHdr;
-    initAnimData = &g_CharaModelAnimsData[animDataIdx];
+    localAnmHdr = anmHdr;
+    newAnimData = &g_CharaModelAnimsData[animDataIdx];
 
     if (charaId == Chara_None)
     {
@@ -132,7 +123,7 @@ void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmH
     }
 
     // Estimate pointer to ANM data by summing buffer size and current pointer position.
-    for (npcAnimData = &initAnimData[-1]; localAnmHdr == NULL; npcAnimData--)
+    for (npcAnimData = &newAnimData[-1]; localAnmHdr == NULL; npcAnimData--)
     {
         localAnmHdr = npcAnimData->allocAddr + npcAnimData->allocSize;
     }
@@ -145,16 +136,16 @@ void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmH
     // If any of the previous checks fail, values previously assigned at the index are cleared. If
     // the character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the
     // animation file is loaded.
-    if (initAnimData->activeCharaId == charaId)
+    if (newAnimData->activeCharaId == charaId)
     {
-        if (animDataIdx == 1 || localAnmHdr == initAnimData->activeAnmHdr)
+        if (animDataIdx == 1 || localAnmHdr == newAnimData->activeAnmHdr)
         {
-            Fs_CharaAnimDataUpdate(animDataIdx, charaId, initAnimData->activeAnmHdr, boneCoords);
+            Fs_CharaAnimDataUpdate(animDataIdx, charaId, newAnimData->activeAnmHdr, boneCoords);
             return;
         }
-        else if (localAnmHdr < initAnimData->activeAnmHdr)
+        else if (localAnmHdr < newAnimData->activeAnmHdr)
         {
-            initAnimData->allocAddr = localAnmHdr;
+            newAnimData->allocAddr = localAnmHdr;
 
             Mem_Move32(localAnmHdr,
                        g_CharaModelAnimsData[animDataIdx].activeAnmHdr,
@@ -164,33 +155,32 @@ void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmH
         }
     }
 
-    initAnimData->boneCoords    = &g_SysWork.npcBoneCoordBuffer[0];
-    initAnimData->activeCharaId = Chara_None;
-    initAnimData->activeAnmHdr  = NULL;
-    initAnimData->activeSize    = 0;
-    initAnimData->allocCharaId  = charaId;
-    initAnimData->allocAddr     = localAnmHdr;
-    initAnimData->allocSize     = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
+    newAnimData->boneCoords    = &g_SysWork.npcBoneCoordBuffer[0];
+    newAnimData->activeCharaId = Chara_None;
+    newAnimData->activeAnmHdr  = NULL;
+    newAnimData->activeSize    = 0;
+    newAnimData->allocCharaId  = charaId;
+    newAnimData->allocAddr     = localAnmHdr;
+    newAnimData->allocSize     = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
 
     i = Fs_CharaAnimDataIdxGet(charaId);
-
     if (i > 0)
     {
         Mem_Move32(g_CharaModelAnimsData[animDataIdx].allocAddr,
                    g_CharaModelAnimsData[i].activeAnmHdr,
                    g_CharaModelAnimsData[i].activeSize);
-        Fs_CharaAnimDataUpdate(animDataIdx, charaId, initAnimData->allocAddr, boneCoords);
+        Fs_CharaAnimDataUpdate(animDataIdx, charaId, newAnimData->allocAddr, boneCoords);
     }
     else
     {
         Fs_QueueStartReadAnm(animDataIdx, charaId, localAnmHdr, boneCoords);
     }
 
-    // Run through character group.
+    // Wipe overlapped slots.
     for (i = 1; i < CHARA_GROUP_COUNT; i++)
     {
         if (i != animDataIdx && g_CharaModelAnimsData[i].activeCharaId != Chara_None &&
-            Fs_CharaAnimDataOverlapCheck(animDataIdx, i) != false)
+            Fs_CharaAnimDataOverlapCheck(animDataIdx, i))
         {
             bzero(&g_CharaModelAnimsData[i], sizeof(s_CharaAnimData));
         }
@@ -245,7 +235,7 @@ void Fs_CharaAnimBoneInfoSet(void) // 0x8003569C
     s_AnmHeader*   anmHdr;
 
     // Run through character group.
-    for (i = 1; i < (CHARA_GROUP_COUNT - 1); i++)
+    for (i = 1; i < (ARRAY_SIZE(g_MapOverlayHdr.charaGroupIds) - 1); i++)
     {
         // Skip if no valid character model.
         if (g_MapOverlayHdr.charaGroupIds[i] == Chara_None)

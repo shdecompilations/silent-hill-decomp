@@ -890,7 +890,7 @@ bool func_80071620(u32 animStatus, s_SubCharacter* player, s32 keyframeIdx, e_Sf
     }
 }
 
-void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800717D0
+void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800717D0
 {
     s_PlayerExtra* extra;
 
@@ -921,24 +921,24 @@ void Player_Update(s_SubCharacter* player, s_AnmHeader* anmHdr, GsCOORDINATE2* c
 
         if (!g_Player_DisableControl)
         {
-            Player_LogicUpdate(player, extra, coords);
+            Player_LogicUpdate(player, extra, boneCoords);
         }
         else
         {
-            g_MapOverlayHdr.func_B8(player, extra, coords);
+            g_MapOverlayHdr.func_B8(player, extra, boneCoords);
         }
 
         if (!g_Player_DisableControl)
         {
-            Player_PositionUpdate(player, extra, coords);
+            Player_PositionUpdate(player, extra, boneCoords);
         }
         else
         {
-            g_MapOverlayHdr.func_BC(player, extra, coords);
+            g_MapOverlayHdr.func_BC(player, extra, boneCoords);
         }
 
-        Player_AnimUpdate(player, extra, anmHdr, coords);
-        func_8007D090(player, extra, coords);
+        Player_AnimUpdate(player, extra, anmHdr, boneCoords);
+        func_8007D090(player, extra, boneCoords);
     }
 
     D_800C45B0.vx = 0;
@@ -1065,7 +1065,7 @@ static inline void func_80071968_Switch1(void)
     }
 }
 
-void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x80071968
+void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x80071968
 {
     s_AnimInfo* animInfo;
 
@@ -1264,13 +1264,13 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
         PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_UPPER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[player->model.anim.status];
-        animInfo->playbackFunc(&player->model, anmHdr, coords, animInfo);
+        animInfo->playbackFunc(&player->model, anmHdr, boneCoords, animInfo);
 
         // Re-enable upper body bones, disable lower body bones.
         PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
         animInfo = &HARRY_BASE_ANIM_INFOS[extra->model.anim.status];
-        animInfo->playbackFunc(&extra->model, anmHdr, coords, animInfo);
+        animInfo->playbackFunc(&extra->model, anmHdr, boneCoords, animInfo);
         return;
     }
 
@@ -1279,13 +1279,13 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
     player->model.anim.status                     = ANIM_STATUS(HarryAnim_Still, false);
 
     animInfo = &HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)];
-    animInfo->playbackFunc(&player->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&player->model, anmHdr, boneCoords, animInfo);
 
     // Re-enable upper body bones, disable lower body bones.
     PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &HARRY_BASE_ANIM_INFOS[extra->model.anim.status];
-    animInfo->playbackFunc(&extra->model, anmHdr, coords, animInfo);
+    animInfo->playbackFunc(&extra->model, anmHdr, boneCoords, animInfo);
 
     if (player->model.anim.status == HARRY_BASE_ANIM_INFOS[ANIM_STATUS(HarryAnim_Still, false)].linkStatus)
     {
@@ -1293,7 +1293,7 @@ void Player_AnimUpdate(s_SubCharacter* player, s_PlayerExtra* extra, s_AnmHeader
     }
 }
 
-void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* coords) // 0x80071CE8
+void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINATE2* boneCoords) // 0x80071CE8
 {
     SVECTOR       playerAngles;
     q3_12         headingAngle0;
@@ -2535,9 +2535,9 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
     player->moveSpeed        = g_Player_PrevMoveSpeed;
     player->fallSpeed       += g_GravitySpeed;
     player->rotationSpeed.vy = (D_800C454C << 8) / g_DeltaTime;
-    coords->flg              = false;
+    boneCoords->flg              = false;
 
-    Math_RotMatrixZxyNegGte(&player->rotation, &coords->coord);
+    Math_RotMatrixZxyNegGte(&player->rotation, &boneCoords->coord);
 }
 
 void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3) // 0x80073FC0

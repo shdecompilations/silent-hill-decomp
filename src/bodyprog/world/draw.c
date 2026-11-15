@@ -926,7 +926,7 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHdr* mapHdr) // 0x8003D21C
     s_CharaModel* curModel;
 
     for (queueIdx = 0, i = 0, g_WorldGfxWork.charaLmBuffer = MAP_CHARA_LM_BUFFER, cond = false;
-         i < CHARA_GROUP_COUNT;
+         i < ARRAY_SIZE(mapHdr->charaGroupIds);
          i++)
     {
         curCharaId = mapHdr->charaGroupIds[i];

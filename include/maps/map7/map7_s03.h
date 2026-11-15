@@ -755,7 +755,7 @@ void func_800E86BC(void);
 
 void func_800E8D20(void);
 
-void func_800E9260(e_CharaId charaId, s32 arg1);
+void func_800E9260(e_CharaId charaId, s32 animDataIdx);
 
 void func_800E941C(void);
 

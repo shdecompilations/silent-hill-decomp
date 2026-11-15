@@ -8,7 +8,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/sound/sd_call.h"
-#include "bodyprog/sys/npc_anims_clear.h"
+#include "bodyprog/game_boot/npc_anims_clear.h"
 #include "bodyprog/world/effects.h"
 #include "main/rng.h"
 #include "maps/map7/map7_s01.h"
