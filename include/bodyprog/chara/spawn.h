@@ -1,9 +1,10 @@
 #ifndef _BODYPROG_CHARA_SPAWN_H
 #define _BODYPROG_CHARA_SPAWN_H
 
-#include "bodyprog/chara/chara.h"
-#include "bodyprog/formats/lm.h"
-#include "main/fs_queue.h"
+enum   _CharaId;
+struct _FsImageDesc;
+struct _LmHeader;
+struct _SubCharacter;
 
 /** @brief Character spawn flags. */
 typedef enum _CharaSpawnFlags
@@ -26,7 +27,7 @@ typedef enum _CharaSpawnFlags
  * @param tex Model texture.
  */
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* boneCoords, s8 forceFree,
-                s_LmHeader* lmHdr, s_FsImageDesc* tex);
+                struct _LmHeader* lmHdr, struct _FsImageDesc* tex);
 
 /** @brief Processes character model loads. */
 bool Chara_ProcessLoads(void);
@@ -47,7 +48,7 @@ void Chara_BonesInit(s32 modelAnimsIdx);
  * @param stateStep Character model state step to set.
  * @return @unused Spawned NPC slot index.
  */
-s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
+s32 Chara_Spawn(enum _CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
 
 /** @brief Clears character ID in a character model.
  *
@@ -55,7 +56,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
  * @param unused0 @unused
  * @param unused1 @unused
  */
-void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unused1);
+void Chara_ModelCharaIdClear(struct _SubCharacter* chara, s32 unused0, s32 unused1);
 
 /** @brief Sets the spawn flags for a character ID.
  *
@@ -63,7 +64,7 @@ void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unused1);
  * @param spawnIdx Spawn index.
  * @param spawnFlags Spawn flags to set (`e_SpawnFlags`).
  */
-void Chara_SpawnFlagsSet(e_CharaId charaId, s32 spawnIdx, s32 spawnFlags);
+void Chara_SpawnFlagsSet(enum _CharaId charaId, s32 spawnIdx, s32 spawnFlags);
 
 /** @brief Sets a character's spawn position.
  *
@@ -72,6 +73,6 @@ void Chara_SpawnFlagsSet(e_CharaId charaId, s32 spawnIdx, s32 spawnFlags);
  * @param posX X position. 
  * @param posZ Z position. 
  */
-void Chara_SpawnPositionSet(e_CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
+void Chara_SpawnPositionSet(enum _CharaId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
 
 #endif

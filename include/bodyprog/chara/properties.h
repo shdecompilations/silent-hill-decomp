@@ -3,7 +3,22 @@
 
 #include "bodyprog/chara/combat.h"
 
-// TODO: It would make sense to move each property struct into its respective character's header.
+// TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
+typedef struct
+{
+    /* 0x0  */ q19_12      health_0;
+    /* 0x4  */ s32         field_4;
+    /* 0x8  */ s32         field_8;
+    /* 0xC  */ s32         field_C;
+    /* 0x10 */ s8          unk_10[8];
+    /* 0x18 */ q19_12      field_18; // Angle?
+    /* 0x1C */ s32         idx_1C;
+    /* 0x20 */ s32         field_20;
+    /* 0x24 */ s_AnimInfo* animInfo_24;
+    /* 0x28 */ s8          unk_28[4];
+    /* 0x2C */ q19_12      field_2C;
+    /* 0x30 */ s8          unk_30[4];
+} s_800D5710;
 
 typedef union
 {
@@ -21,45 +36,28 @@ typedef struct _PropsDummy
 /** @brief Player character properties. */
 typedef struct _PropsPlayer
 {
-    /* 0xE8  */ q19_12        afkTimer; // Increments every tick for 10 seconds before AFK anim starts.
-    /* 0xEC  */ q19_12        floorHeight;
-    /* 0xF0  */ q19_12        field_F0;
-    /* 0xF4  */ q19_12        field_F4; // Angle related to X axis flex rotation.
-    /* 0xF8  */ s32           runStepSfxCount;
-    /* 0xFC  */ q19_12        exhaustionTimer;
-    /* 0x100 */ q19_12        field_100;    // Angle?
-    /* 0x104 */ q19_12        field_104;    // Distance?
-    /* 0x108 */ q19_12        runDistance;
-    /* 0x10C */ u8            field_10C;    // Player SFX pitch?
-    /* 0x10D */ u8            field_10D;    // @unused? Set to 0 or 1.
-    /* 0x10E */ s8            __pad_10E[2];
-    /* 0x110 */ q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
-    /* 0x114 */ q19_12        gasWeaponPowerTimer; /** Timer for the Chainsaw and Rock Drill power. */
-    /* 0x118 */ s16           field_118; // q3_12?
-    /* 0x11A */ s8            __pad_11A[2];
-    /* 0x11C */ s32           flags; /** `e_PlayerFlags` */
-    /* 0x120 */ q3_12         quickTurnHeadingAngle; /** Target quick turn heading angle. */
-    /* 0x122 */ q3_12         field_122; // Specially used when aiming an enemy. Y angle delta to target? 
-    /* 0x124 */ q3_12         headingAngle;
-    /* 0x126 */ q3_12         moveSpeed; // Used to indicate how much the player should move foward. Seems to be squared.
+    /* 0xE8  */ q19_12 afkTimer; // Increments every tick for 10 seconds before AFK anim starts.
+    /* 0xEC  */ q19_12 floorHeight;
+    /* 0xF0  */ q19_12 field_F0;
+    /* 0xF4  */ q19_12 field_F4; // Angle related to X axis flex rotation.
+    /* 0xF8  */ s32    runStepSfxCount;
+    /* 0xFC  */ q19_12 exhaustionTimer;
+    /* 0x100 */ q19_12 field_100;    // Angle?
+    /* 0x104 */ q19_12 field_104;    // Distance?
+    /* 0x108 */ q19_12 runDistance;
+    /* 0x10C */ u8     field_10C;    // Player SFX pitch?
+    /* 0x10D */ u8     field_10D;    // @unused? Set to 0 or 1.
+    /* 0x10E */ s8     __pad_10E[2];
+    /* 0x110 */ q19_12 timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
+    /* 0x114 */ q19_12 gasWeaponPowerTimer; /** Timer for the Chainsaw and Rock Drill power. */
+    /* 0x118 */ s16    field_118; // q3_12?
+    /* 0x11A */ s8     __pad_11A[2];
+    /* 0x11C */ s32    flags; /** `e_PlayerFlags` */
+    /* 0x120 */ q3_12  quickTurnHeadingAngle; /** Target quick turn heading angle. */
+    /* 0x122 */ q3_12  field_122; // Specially used when aiming an enemy. Y angle delta to target? 
+    /* 0x124 */ q3_12  headingAngle;
+    /* 0x126 */ q3_12  moveSpeed; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_PropsPlayer;
-
-// TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
-typedef struct
-{
-    /* 0x0  */ q19_12      health_0;
-    /* 0x4  */ s32         field_4;
-    /* 0x8  */ s32         field_8;
-    /* 0xC  */ s32         field_C;
-    /* 0x10 */ s8          unk_10[8];
-    /* 0x18 */ q19_12      field_18; // Angle?
-    /* 0x1C */ s32         idx_1C;
-    /* 0x20 */ s32         field_20;
-    /* 0x24 */ s_AnimInfo* animInfo_24;
-    /* 0x28 */ s8          unk_28[4];
-    /* 0x2C */ q19_12      field_2C;
-    /* 0x30 */ s8          unk_30[4];
-} s_800D5710;
 
 // Used by Alessa, Bloody Incubator, BloodyLisa, Cheryl, Cybil, Dahlia, Ghost Child Alessa, Ghost Doctor, Incubator,
 // Kaufmann, Lisa.
