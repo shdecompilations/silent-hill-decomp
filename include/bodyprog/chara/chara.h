@@ -2,6 +2,7 @@
 #define _BODYPROG_CHARA_CHARA_H
 
 #include "bodyprog/chara/anim.h"
+#include "bodyprog/chara/collision.h"
 #include "bodyprog/chara/combat.h"
 #include "bodyprog/chara/model.h"
 #include "bodyprog/chara/properties.h"
@@ -59,17 +60,6 @@ typedef enum _CharaGroupFlags
     CharaGroupFlag_0    = 1 << 0,
     CharaGroupFlag_1    = 1 << 1
 } e_CharaGroupFlags;
-
-/** @brief Character collision states. */
-typedef enum _CharaCollisionState
-{
-    CharaCollisionState_Ignore  = 0,
-    CharaCollisionState_Player  = 1,
-    CharaCollisionState_2       = 2,
-    CharaCollisionState_Npc     = 3,
-    CharaCollisionState_4       = 4,
-    CharaCollisionState_Default = 5
-} e_CharaCollisionState;
 
 /** @brief Character IDs.
  *
@@ -146,68 +136,6 @@ typedef enum _CharaId
     Chara_Hack = NO_VALUE // @hack Force enum to be treated as `s32`.
 } e_CharaId;
 
-/** @brief Character collision box. */
-typedef struct _CharaBox
-{
-    /* 0x0 */ q3_12 topExtent;
-    /* 0x2 */ q3_12 bottomExtent;
-    /* 0x4 */ q3_12 height;
-    /* 0x6 */ q3_12 offsetY;
-    // TODO: Maybe nested inner and outer XZ extents. See `s_CharaCylinder`.
-    /* 0x8 */ q3_12 field_8; // Outer XZ extent? Always nagative, might be unsigned? `s_CharaCylinder::outerRadius` is set to this.
-    /* 0xA */ q3_12 field_A; // Innter XZ extent? `s_CharaCylinder::innerRadius` is set to this.
-} s_CharaBox;
-STATIC_ASSERT_SIZEOF(s_CharaBox, 12);
-
-// TODO: Too similar to `s_CharaCollisionCylinder`. Maybe more like character detection ranges?
-/** @brief Character collision cylinder. */
-typedef struct _CharaCylinder
-{
-    /* 0x0 */ q3_12 outerRadius;
-    /* 0x2 */ q3_12 innerRadius;
-} s_CharaCylinder;
-STATIC_ASSERT_SIZEOF(s_CharaCylinder, 4);
-
-/** @brief Character shape offsets for `s_CharaBox` and `s_CharaCylinder`. */
-typedef struct _CharaShapeOffsets
-{
-    /* 0x0 */ DVECTOR_XZ box;
-    /* 0x4 */ DVECTOR_XZ cylinder;
-} s_CharaShapeOffsets;
-STATIC_ASSERT_SIZEOF(s_CharaShapeOffsets, 8);
-
-/** @brief Character keyframe collision info. */
-typedef struct _CharaKeyframe
-{
-    /* 0x0 */ s_CharaBox          box;
-    /* 0xC */ s_CharaShapeOffsets shapeOffsets;
-} s_CharaKeyframe;
-
-/** @brief Recorded character-to-character collision.
- * Similar to `s_CharaCollisionCylinder` but with extra `passStamp` field.
- */
-typedef struct _CharaCollisionRecord
-{
-    /* 0x0  */ VECTOR3 position;     /** Q19.12 */
-    /* 0xC  */ q3_12   bottomExtent;
-    /* 0xE  */ q3_12   topExtent;
-    /* 0x10 */ q3_12   radius;
-    /* 0x12 */ s8      state;        /** `e_CharaCollisionState` */
-    /* 0x13 */ u8      passStamp;    /** Tracks visited characters per query pass. */
-} s_CharaCollisionRecord;
-
-/** @brief Character collision info for the active tick. */
-typedef struct _CharaCollision
-{
-    /* 0x0    */ s_CharaBox              box;
-    /* 0xC    */ s_CharaCylinder         cylinder;
-    /* 0x10   */ s_CharaShapeOffsets     shapeOffsets;         // Translation data?
-    /* 0x18+0 */ u8                      passStamp;            /** Same usage as `s_IpdCollisionData::shapePassStampBuffer`. */
-    /* 0x19+0 */ s8                      state            : 4; /** `e_CharaCollisionState` */
-    /* 0x19+4 */ u8                      charaRecordCount : 4; /** `charaRecords` array size. */
-    /* 0x1C   */ s_CharaCollisionRecord* charaRecords;
-} s_CharaCollision;
-
 /** @brief Character info. */
 typedef struct _SubCharacter
 {
@@ -255,39 +183,6 @@ typedef struct _SubCharacter
                    s_PropsTwinfeeler      twinfeeler;
     /* 0xE8 */ } properties;
 } s_SubCharacter;
-STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
-
-/** @brief Sets the collision shapes of a character from keyframe collision data.
- *
- * @param chara Character to update (`s_SubCharacter`).
- * @param keyframe Keyframe collision data (`s_CharaKeyframe`).
- */
-#define Chara_CollisionSet(chara, keyframe)                                        \
-{                                                                                  \
-    s32 __temp;                                                                    \
-    s32 __temp2;                                                                   \
-                                                                                   \
-    chara->collision.box.topExtent = keyframe.box.topExtent;                       \
-                                                                                   \
-    __temp                            = keyframe.box.bottomExtent;                 \
-    chara->collision.box.bottomExtent = __temp;                                    \
-    chara->collision.box.height       = keyframe.box.height;                       \
-                                                                                   \
-    __temp                                    = keyframe.box.offsetY;              \
-    chara->collision.box.offsetY              = __temp;                            \
-    chara->collision.shapeOffsets.cylinder.vx = keyframe.shapeOffsets.cylinder.vx; \
-                                                                                   \
-    __temp                                    = keyframe.shapeOffsets.cylinder.vz; \
-    chara->collision.shapeOffsets.cylinder.vz = __temp;                            \
-    chara->collision.cylinder.outerRadius     = keyframe.box.field_8;              \
-    chara->collision.shapeOffsets.box.vx      = keyframe.shapeOffsets.box.vx;      \
-                                                                                   \
-    __temp                               = keyframe.shapeOffsets.box.vz;           \
-    chara->collision.shapeOffsets.box.vz = __temp;                                 \
-                                                                                   \
-    __temp2                               = keyframe.box.field_A;                  \
-    chara->collision.cylinder.innerRadius = __temp2;                               \
-}
 
 /** @brief Checks if a character has given flags set.
  *
