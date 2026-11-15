@@ -536,7 +536,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             Chara_Load(0, Chara_Kaufmann, &g_SysWork.npcBoneCoordBuffer[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_Load(1, Chara_Mumbler, &g_SysWork.npcBoneCoordBuffer[30], 0, NULL, NULL);
 
-            func_8007F14C(32);
+            func_8007F14C(WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap));
             func_8003D03C();
             Player_EmptyWeaponHandSet();
             WorldGfx_PlayerHeldItemSet(InvItemId_Handgun);

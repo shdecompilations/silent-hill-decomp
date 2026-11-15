@@ -25,10 +25,12 @@ typedef enum _AttackType
     AttackType_Shotgun              = 34,
     AttackType_HyperBlaster         = 35,
     AttackType_Unk36                = 36, /** @unused Unused gun. Might be an automatic-firing gun based on having `interval` set in the attack info table. */
+    
+    AttackType_PlayerAttackCount    = 39, /** Attack types following this are non-player attacks which don't seem to use `WEAPON_ATTACK` macro. */
 
-    AttackType_Unk40                = 40,
-    AttackType_Unk41                = 41,
-    AttackType_Unk42                = 42,
+    AttackType_AirScreamerStandBite = 40, /** Air Screamer bite while standing. */
+    AttackType_AirScreamerHoverBite = 41, /** Air Screamer bite while hovering. */
+    AttackType_AirScreamerScratch   = 42, /** Air Screamer scratch while gliding. */
     AttackType_Groaner              = 43, /** Groaner jump attack. */
     AttackType_HangedScratcher0     = 44,
     AttackType_HangedScratcher1     = 45,
@@ -36,11 +38,12 @@ typedef enum _AttackType
     AttackType_SplitHeadInstantKill = 47,
     AttackType_Stalker              = 48,
     AttackType_StalkerLegGrab       = 49,
-    AttackType_Unk50                = 50,
+    AttackType_StalkerLegGrabDrain  = 50, /** Damage while leg-grabbed. */
     AttackType_LarvalStalkerGrab    = 51, /** @unused? Set from `LarvalStalkerControl_Unused5`. */
     AttackType_LarvalStalkerDrain   = 52, /** @unused? Damage while grabbed. Set from `LarvalStalkerControl_Unused5`. */
     AttackType_Creeper              = 53,
     AttackType_RomperGrab           = 54, /** Pins the player. */
+    AttackType_RomperGrabDrain      = 55, /** Damage while pinned. */
     AttackType_PuppetNurseGrab      = 56, /** Torso grab. Used by Puppet Nurse and Puppet Doctor. */
     AttackType_PuppetNurse          = 57,
     AttackType_PuppetDoctor         = 58,

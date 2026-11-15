@@ -7219,8 +7219,8 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     Player_ExtraStateSet(player, extra, PlayerState_DamageHead);
                     break;
 
-                case WEAPON_ATTACK(AttackType_Unk41, AttackInputType_Tap):
-                case WEAPON_ATTACK(AttackType_Unk42, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_AirScreamerHoverBite, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_AirScreamerScratch, AttackInputType_Tap):
                     Player_ExtraStateSet(player, extra, PlayerState_DamageHead);
                     break;
 
@@ -7299,13 +7299,13 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                         g_Player_HeadingAngle = headingAngle;
                     }
 
-                case WEAPON_ATTACK(AttackType_Unk40, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_AirScreamerStandBite, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_Groaner, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_HangedScratcher0, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_HangedScratcher1, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_Unk46, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_Stalker, AttackInputType_Tap):
-                case WEAPON_ATTACK(AttackType_Unk50, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_StalkerLegGrabDrain, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_LarvalStalkerDrain, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_PuppetNurse, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_PuppetDoctor, AttackInputType_Tap):

@@ -13509,11 +13509,11 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
                 {
                     if (animStatus == ANIM_STATUS(AirScreamerAnim_StandBiteAttack, true))
                     {
-                        temp_s1->weaponAttack = 40;
+                        temp_s1->weaponAttack = AttackType_AirScreamerStandBite;
                     }
                     else
                     {
-                        temp_s1->weaponAttack = 41;
+                        temp_s1->weaponAttack = AttackType_AirScreamerHoverBite;
                     }
 
                     temp_s1->state = 1;
@@ -13536,7 +13536,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
             case ANIM_STATUS(AirScreamerAnim_GlideScratchAttack, true):
                 if (temp_s1->state == 0)
                 {
-                    temp_s1->weaponAttack = 42;
+                    temp_s1->weaponAttack = WEAPON_ATTACK(AttackType_AirScreamerScratch, AttackInputType_Tap);
                     temp_s1->state = 1;
                 }
 
