@@ -266,7 +266,7 @@ void Game_GasWeaponSfxUpdate(u8 weaponAttack, s8 cmd) // 0x8004C564
     static s8 curMapIdx;
     static s8 curVol;
     static s8 curPitch;
-    static u8 curFlags; // Bit 0: chainsaw started, bit 1: rock drill started, bit 2: `GasWeaponSfxCmd_StartEnd` reached.
+    static u8 curFlags; // Bit 0: chainsaw started, bit 1: Rock Drill started, bit 2: `GasWeaponSfxCmd_StartEnd` reached.
 
     switch (cmd)
     {

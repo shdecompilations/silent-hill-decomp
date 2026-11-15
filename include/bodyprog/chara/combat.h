@@ -4,7 +4,7 @@
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/items/weapon_data.h"
 
-/** @brief Chainsaw and rock drill sounds driven by `Combat_GasWeaponSfxUpdate`. TODO: Move to appropriate header. */
+/** @brief Chainsaw and Rock Drill sounds driven by `Combat_GasWeaponSfxUpdate`. TODO: Move to appropriate header. */
 typedef enum _GasWeaponSfx
 {
     GasWeaponSfx_Contact        = 0, /** `Sfx_GasWeaponContact` */

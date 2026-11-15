@@ -151,9 +151,9 @@ void open_main(s32 file_idx, s16 num_frames) // 0x801E2AA4
         num_frames = g_FileTable[file_idx].blockCount - 7;
     }
 
-    Screen_RectInterlacedClear(0, 16, 480, 480, 0, 0, 0);
+    Screen_RectInterlacedClear(0, 16, SCREEN_HEIGHT * 2, SCREEN_HEIGHT * 2, 0, 0, 0);
     movie_main(NULL, num_frames, g_FileTable[file_idx].startSector);
-    Screen_RectInterlacedClear(0, 16, 480, 480, 0, 0, 0);
+    Screen_RectInterlacedClear(0, 16, SCREEN_HEIGHT * 2, SCREEN_HEIGHT * 2, 0, 0, 0);
     VSync(SyncMode_Wait);
     GsSwapDispBuff();
 }

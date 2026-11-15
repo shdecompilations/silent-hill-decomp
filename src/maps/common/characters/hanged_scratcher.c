@@ -460,7 +460,7 @@ void HangedScratcher_Control_3(s_SubCharacter* scratcher)
     }
     else
     {
-        if (!Chara_HasFlag(&PLAYER_CHARA(), 8) && !(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1))
+        if (!Chara_HasFlag(&PLAYER_CHARA(), CharaFlag_Unk4) && !(g_SysWork.charaGroupFlags[3] & CharaGroupFlag_1))
         {
             if (PLAYER_CHARA().health > Q12(0.0f) &&
                 distToPlayer < Q12(1.0f) && angleDeltaToPlayer < Q12_ANGLE(30.0f))

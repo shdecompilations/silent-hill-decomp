@@ -25,6 +25,7 @@ typedef struct _DECENV
     /* 0x2C */ s32     isdone;
 } DECENV;
 
+/** @brief FMV stream. */
 typedef struct _MOVIE_STR
 {
     /* 0x0     */ CdlLOC loc;
@@ -55,9 +56,9 @@ typedef struct _CDSECTOR
     u_long user;
 } CDSECTOR;
 
-// =========================
-// MOVIE GAME STATE HANDLERS
-// =========================
+// ===============
+// FMV GAME STATES
+// ===============
 
 /** @brief Updates intro movie fade-in game state. */
 void GameState_MovieIntroFadeIn_Update(void);
@@ -74,21 +75,36 @@ void GameState_ExitMovie_Update(void);
 /** @brief @unused Updates debug movie player game state. The movie to play is decided by `LStickLeft`/`LStickRight`. */
 void GameState_DebugMoviePlayer_Update(void);
 
-/** @brief Updates alternative intro movie game state. */
+/** @brief Updates the alternative intro movie game state. */
 void GameState_MovieIntroAlternate_Update(void);
 
 // ==========
 // `MOVIESYS`
 // ==========
 
-void    open_main(s32 file_idx, s16 num_frames);
-void    movie_main(char* file_name, s32 f_size, s32 sector);
-void    strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1);
-void    strInit(CdlLOC* loc, void (*callback)());
-void    strCallback(void);
-void    strKickCD(CdlLOC* loc);
-s32     strNextVlc(DECENV* dec);
+// TODO: Docs for the rest of these.
+
+/** @brief Plays a fullscreen FMV.
+ *
+ * @param File index of the FMV to play.
+ * @param num_frames Frame count in the FMV.
+ */
+void open_main(s32 file_idx, s16 num_frames);
+
+void movie_main(char* file_name, s32 f_size, s32 sector);
+
+void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1);
+
+void strInit(CdlLOC* loc, void (*callback)());
+
+void strCallback(void);
+
+void strKickCD(CdlLOC* loc);
+
+s32 strNextVlc(DECENV* dec);
+
 u_long* strNext(DECENV* dec);
-void    strSync(DECENV* dec);
+
+void strSync(DECENV* dec);
 
 #endif

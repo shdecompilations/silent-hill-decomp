@@ -7768,7 +7768,7 @@ void AirScreamer_Control_38(s_SubCharacter* airScreamer)
                 case 1:
                     if (!Chara_HasFlag(&PLAYER_CHARA(), CharaFlag_Unk4) &&
                         (g_SysWork.npcIdxs[0] == NO_VALUE && g_SysWork.npcIdxs[1] == NO_VALUE) &&
-                        temp_s7 == 0x23)
+                        temp_s7 == 35)
                     {
                         airScreamer->model.controlState = AirScreamerControl_40;
                         airScreamer->model.stateStep    = 0;

@@ -181,7 +181,7 @@ typedef struct _PropsPlayer
     /* 0x10D */ u8            field_10D;    // @unused? Set to 0 or 1.
     /* 0x10E */ s8            __pad_10E[2];
     /* 0x110 */ q19_12        timer_110; // Increases when `flags & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
-    /* 0x114 */ q19_12        gasWeaponPowerTimer; // Timer for the rock drill and chainsaw power.
+    /* 0x114 */ q19_12        gasWeaponPowerTimer; /** Timer for the Chainsaw and Rock Drill power. */
     /* 0x118 */ s16           field_118; // q3_12?
     /* 0x11A */ s8            __pad_11A[2];
     /* 0x11C */ s32           flags; /** `e_PlayerFlags` */
@@ -749,7 +749,12 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
     chara->collision.cylinder.innerRadius = __temp2;                               \
 }
 
-/** @brief Checks if the `s_SubCharacter*` has the given `flags` value set. */
+/** @brief Checks if a character has given flags set.
+ *
+ * @param chara Character to check (`s_SubCharacter`).
+ * @param flag Flag to check (`e_CharaFlags`).
+ * @return `true` if the flags are set, `false` otherwise.
+ */
 #define Chara_HasFlag(chara, flag) \
     ((chara)->flags & (flag))
 
@@ -763,7 +768,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
         chara->properties.dummy.properties_E8[i].val32 = 0; \
     }
 
-/** @brief Clears a character's damage field.
+/** @brief Clears a character's damage parameters.
  *
  * @param chara Character to update.
  */
@@ -779,7 +784,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
  * Maybe devs did similar thing, which is why this separate macro/inline is needed for a match?
  *
  * @param chara Character to update.
- * @param attack Attack type to set.
+ * @param attack Packed weapona attack to set. See `WEAPON_ATTACK`.
  */
 #define Chara_AttackReceivedSet(chara, attack) \
     (chara)->attackReceived = (attack)
@@ -810,9 +815,9 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
     }                                                                              \
 }
 
-/** @brief Sets the animation of a character.
+/** @brief Sets a character's animation.
  *
- * @param chara Character to set animation for. TODO: Maybe should take `s_ModelAnim` instead? If fits better, also rename to `Anim_Set`.
+ * @param chara Character to set the animation for.
  * @param animStatus Packed anim status. See `s_ModelAnim::status`.
  * @param keyframeIdx Active keyframe index.
  */

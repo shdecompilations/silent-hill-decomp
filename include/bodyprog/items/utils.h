@@ -6,7 +6,7 @@ typedef enum _GasWeaponSfxCmd
 {
     GasWeaponSfxCmd_Reset    = NO_VALUE, /** Stops all gas weapon sounds and clears state. */
     GasWeaponSfxCmd_Start    = 0,        /** Starts playing `Sfx_ChainsawRun` or `Sfx_RockDrillStart`, called partway through startup anim. */
-    GasWeaponSfxCmd_StartEnd = 1,        /** Plays `Sfx_RockDrillRun` for the rock drill, once startup anim has finished. */
+    GasWeaponSfxCmd_StartEnd = 1,        /** Plays `Sfx_RockDrillRun` for the Rock Drill, once startup anim has finished. */
     GasWeaponSfxCmd_WindDown = 2,        /** Winds `Sfx_RockDrillRun` down in volume and pitch, then stops all sounds, when the weapon runs out of power? */
     GasWeaponSfxCmd_Cancel   = 3,        /** Stops `Sfx_RockDrillStart` and empties the power timer. */
     GasWeaponSfxCmd_Update   = 4         /** Keeps the weapon's sounds looping, restarts them after a map change. */
@@ -51,7 +51,7 @@ s32 Inventory_HyperBlasterFunctionalTest(void);
 /** @note Rough name. */
 s32 Game_HyperBlasterBeamColorGet(void);
 
-/** @brief Drives the chainsaw and rock drill sounds.
+/** @brief Drives the Chainsaw and Rock Drill sounds.
  *
  * @param weaponAttack Equipped weapon attack.
  * @param cmd `e_GasWeaponSfxCmd`
