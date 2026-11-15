@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_CHARA_CHARAMODEL_H
-#define _BODYPROG_CHARA_CHARAMODEL_H
+#ifndef _BODYPROG_CHARA_MODEL_H
+#define _BODYPROG_CHARA_MODEL_H
 
 #include "bodyprog/chara/anim.h"
 #include "bodyprog/formats/lm.h"

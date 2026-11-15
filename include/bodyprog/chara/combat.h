@@ -1,8 +1,8 @@
 #ifndef _BODYPROG_CHARA_COMBAT_H
 #define _BODYPROG_CHARA_COMBAT_H
 
-#include "bodyprog/chara/chara.h"
-#include "bodyprog/items/weapon_data.h"
+struct _AttackInfo;
+struct _SubCharacter;
 
 /** @brief Chainsaw and Rock Drill sounds driven by `Combat_GasWeaponSfxUpdate`. TODO: Move to appropriate header. */
 typedef enum _GasWeaponSfx
@@ -11,8 +11,43 @@ typedef enum _GasWeaponSfx
     GasWeaponSfx_ChainsawRun    = 1, /** `Sfx_ChainsawRun` */
     GasWeaponSfx_RockDrillStart = 2, /** `Sfx_RockDrillStart` */
     GasWeaponSfx_RockDrillRun   = 3, /** `Sfx_RockDrillRun` */
-    GasWeaponSfx_Hack           = NO_VALUE // @hack Force enum to be treated as `s32`.
+
+    GasWeaponSfx_Hack = NO_VALUE // @hack Force enum to be treated as `s32`.
 } e_GasWeaponSfx;
+
+/** @brief Character damage info. */
+typedef struct _CharaDamage
+{
+    /* 0x0 */ VECTOR3 position;
+    /* 0xC */ q19_12  amount;
+} s_CharaDamage;
+
+/** @brief State of the attack a character is currently performing.
+ *
+ * @note SH2 keeps similar data to this inside `shBattleInfo`, and also seemed 
+ * to move some `struct _SubCharacter` fields (`flags`, `field_40`, `attackReceived`) inside it.
+ */
+typedef struct _CharaAttack
+{
+    /* 0x0  */ s16     state;        /** 0: idle, 1: requested, 2: first active tick, 3: hit checks running, `NO_VALUE`: finished.
+                                       * Reset to 0 by `func_8008A3AC` when `CharaFlag_Unk8` is clear. */
+    /* 0x2  */ u8      weaponAttack; /** Packed `WEAPON_ATTACK` being performed. Index into `g_Items_WeaponAttackInfos`. */
+    /* 0x3  */ u8      shotsLeft;    /** Gunshots only. Set to 100 on start, decremented per shot. Attack ends at 0. */
+    /* 0x4  */ u8      shotsFired;   /** Gunshots only. Compared against `s_AttackShot::shotCountMax`. */
+    /* 0x5  */ s8      __pad_5[3];
+    /* 0x8  */ s32     hitFlags;     /** Bit `1 << npcIdx` per NPC hit by this attack, `NO_VALUE` (all bits set) if the player is hit. */
+    /* 0xC  */ q3_12   aimYaw;
+    /* 0xE  */ q3_12   aimPitch;     /** Measured from vertical. 90 degrees is level. */
+    /* 0x10 */ q3_12   prevAimYaw;
+    /* 0x12 */ q3_12   prevAimPitch;
+    /* 0x14 */ q19_12  hitCheckTime; /** Animation time that hit checks have been run up to, clamped to the attack's hit window. */
+    /* 0x18 */ VECTOR3 origin;       /** Q19.12 | Attack origin or ray start for gunshots. */
+    /* 0x24 */ VECTOR3 segStart[2];  /** Q19.12 | Hit segment start, `origin` + direction * `rangeMin`. [0]: this tick, [1]: previous tick. */
+    /* 0x3C */ VECTOR3 prevOrigin;   /** Q19.12 */
+    /* 0x48 */ VECTOR3 segVec[2];    /** Q19.12 | Hit segment, direction * (`rangeMax` - `rangeMin`). [0]: this tick, [1]: previous tick. */
+    /* 0x60 */ VECTOR3 field_60;     /** Q19.12 | Read by `func_8008B714` as the offset from `prevOrigin` to the previous segment end,
+                                       * but never written. Always 0 after the `bzero` during character spawn? */
+} s_CharaAttack;
 
 // Q12 square root?
 u32 func_8008A058(s32 arg0);
@@ -29,7 +64,7 @@ s64 func_8008A0D4(void);
  * @return Player: `NPC_COUNT_MAX - (index of the lowest NPC hit)`, `NO_VALUE` if none.
  *         Others: 0 if the player has an `attackReceived` set, otherwise `NO_VALUE`.
  */
-s32 func_8008A0E4(s32 request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
+s32 func_8008A0E4(s32 request, s32 weaponAttack, struct _SubCharacter* chara, VECTOR3* attackPos, struct _SubCharacter* unused,
                   q3_12 aimYaw, q3_12 aimPitch);
 
 /** @brief Gets the first keyframe of an attack's hit window. */
@@ -39,20 +74,20 @@ u32 func_8008A270(s32 weaponAttack);
 u32 func_8008A2E0(s32 weaponAttack);
 
 /** @brief Checks if `keyframe` is inside an attack's hit window. */
-s32 func_8008A35C(s_AttackInfo* attackInfo, s32 keyframe);
+s32 func_8008A35C(struct _AttackInfo* attackInfo, s32 keyframe);
 
-void Chara_Flag8Clear(s_SubCharacter* chara);
+void Chara_Flag8Clear(struct _SubCharacter* chara);
 
-void Chara_Flag8Set(s_SubCharacter* chara);
+void Chara_Flag8Set(struct _SubCharacter* chara);
 
 /** Large function. Runs if `CharaFlag_Unk8` is set. */
-void func_8008A3AC(s_SubCharacter* chara);
+void func_8008A3AC(struct _SubCharacter* chara);
 
-s32 func_8008A3E0(s_SubCharacter* chara);
+s32 func_8008A3E0(struct _SubCharacter* chara);
 
-void func_8008B15C(s_SubCharacter* chara);
+void func_8008B15C(struct _SubCharacter* chara);
 
-void func_8008B1DC(s_SubCharacter* chara, q19_12 aimYaw, q19_12 aimPitch);
+void func_8008B1DC(struct _SubCharacter* chara, q19_12 aimYaw, q19_12 aimPitch);
 
 void Combat_GasWeaponSfxAllStop(void);
 
@@ -67,8 +102,8 @@ bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch);
 void func_8008B664(VECTOR3* pos, u32 weaponAttack);
 
 /** Main attack handling function. */
-s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale);
+s32 func_8008B714(struct _SubCharacter* attacker, struct _SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale);
 
-s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo, s32 arg3);
+s32 func_8008BF84(struct _SubCharacter* chara, q19_12 angle, struct _AttackInfo* attackInfo, s32 arg3);
 
 #endif
