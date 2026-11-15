@@ -2187,7 +2187,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 D_800C3BA8                   = temp3;
 
                 Inventory_ItemCommandSet();
-                func_8004C564(0, GasWeaponSfxCmd_Reset);
+                Game_GasWeaponSfxUpdate(0, GasWeaponSfxCmd_Reset);
             }
             else
             {
@@ -2225,7 +2225,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 D_800C3BA8                   = temp3;
 
                 Inventory_ItemCommandSet();
-                func_8004C564(0, GasWeaponSfxCmd_Reset);
+                Game_GasWeaponSfxUpdate(0, GasWeaponSfxCmd_Reset);
             }
             else
             {

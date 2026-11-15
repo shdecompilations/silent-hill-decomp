@@ -206,7 +206,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
     player->properties.player.field_10C >>= 1;
     PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
 
-    func_8004C564(0, GasWeaponSfxCmd_Reset);
+    Game_GasWeaponSfxUpdate(0, GasWeaponSfxCmd_Reset);
 
     player->properties.player.afkTimer        = Q12(0.0f);
     player->properties.player.exhaustionTimer = Q12(0.0f);

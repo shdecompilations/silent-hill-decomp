@@ -856,7 +856,7 @@ Inventory_GunsAvailableCheck                 = 0x8004BBE0;
 Inventory_HyperBlasterUnlockTest             = 0x8004BD14; // type:func
 Inventory_HyperBlasterFunctionalTest         = 0x8004BDB0; // type:func
 Game_HyperBlasterBeamColorGet                = 0x8004BE04; // type:func
-func_8004C564                                = 0x8004BE1C; // type:func
+Game_GasWeaponSfxUpdate                 = 0x8004BE1C; // type:func
 Game_TimerUpdate                             = 0x8004C194; // type:func
 
 //-----------------------------------------------------------------------
@@ -1433,11 +1433,11 @@ func_8008A3AC                                = 0x80089F90; // type:func
 func_8008A3E0                                = 0x80089FC4; // type:func
 func_8008B15C                                = 0x8008AD40; // type:func
 func_8008B1DC                                = 0x8008ADC0; // type:func
-func_8008B398                                = 0x8008AF7C; // type:func
-func_8008B3E4                                = 0x8008AFC8; // type:func
-func_8008B40C                                = 0x8008AFF0; // type:func
-func_8008B438                                = 0x8008B01C; // type:func
-func_8008B474                                = 0x8008B058; // type:func
+Combat_GasWeaponSfxAllStop                   = 0x8008AF7C; // type:func
+Combat_GasWeaponContactSfxUpdate             = 0x8008AFC8; // type:func
+Combat_RockDrillRunSfxUpdate                 = 0x8008AFF0; // type:func
+Combat_GasWeaponEngineSfxUpdate              = 0x8008B01C; // type:func
+Combat_GasWeaponSfxUpdate                    = 0x8008B058; // type:func
 func_8008B664                                = 0x8008B248; // type:func
 func_8008B714                                = 0x8008B2F8; // type:func
 func_8008BF84                                = 0x8008BB68; // type:func

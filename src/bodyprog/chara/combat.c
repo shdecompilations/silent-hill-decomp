@@ -962,36 +962,38 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 aimYaw, q19_12 aimPitch) // 0x8
     chara->attack.segVec[0].vz = segVecZ;
 }
 
-void func_8008B398(void) // 0x8008B398
+void Combat_GasWeaponSfxAllStop(void) // 0x8008B398
 {
-    func_8008B3E4(Q8(0.0f));
-    func_8008B438(0, 0, 0);
-    func_8008B438(1, 0, 0);
-    func_8008B40C(0, 0);
+    Combat_GasWeaponContactSfxUpdate(Q8(0.0f));
+    Combat_GasWeaponEngineSfxUpdate(0, 0, 0);
+    Combat_GasWeaponEngineSfxUpdate(1, 0, 0);
+    Combat_RockDrillRunSfxUpdate(0, 0);
 }
 
-void func_8008B3E4(q23_8 vol) // 0x8008B3E4
+void Combat_GasWeaponContactSfxUpdate(q23_8 vol) // 0x8008B3E4
 {
-    func_8008B474(GasWeaponSfx_Contact, vol, 0);
+    Combat_GasWeaponSfxUpdate(GasWeaponSfx_Contact, vol, 0);
 }
 
-void func_8008B40C(q23_8 vol, s32 pitch) // 0x8008B40C
+void Combat_RockDrillRunSfxUpdate(q23_8 vol, s32 pitch) // 0x8008B40C
 {
-    func_8008B474(GasWeaponSfx_RockDrillRun, vol, pitch);
+    Combat_GasWeaponSfxUpdate(GasWeaponSfx_RockDrillRun, vol, pitch);
 }
 
-void func_8008B438(bool isChainsaw, q23_8 vol, s32 pitch) // 0x8008B438
+void Combat_GasWeaponEngineSfxUpdate(bool isChainsaw, q23_8 vol, s32 pitch) // 0x8008B438
 {
     bool chainsaw;
 
     chainsaw = isChainsaw != 0;
-    if (func_8008B474(GasWeaponSfx_RockDrillStart - chainsaw, vol, pitch))
+
+    // `isChainsaw`: `GasWeaponSfx_ChainsawRun`, `!isChainsaw`: `GasWeaponSfx_RockDrillStart`.
+    if (Combat_GasWeaponSfxUpdate(GasWeaponSfx_RockDrillStart - chainsaw, vol, pitch))
     {
         func_80089314(chainsaw);
     }
 }
 
-bool func_8008B474(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch) // 0x8008B474
+bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch) // 0x8008B474
 {
     q19_12 level;
     s32    wasStopped;
@@ -1103,56 +1105,56 @@ bool func_8008B474(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch) // 0x8008B474
     return level > Q12(256.0f);
 }
 
-void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
+void func_8008B664(VECTOR3* pos, u32 weaponAttack) // 0x8008B664
 {
     s32 sfxId;
 
     sfxId = 0;
-    switch (caseVar)
+    switch (weaponAttack)
     {
-        case 0:
-        case 6:
-        case 10:
-        case 16:
-        case 20:
-        case 26:
+        case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_KitchenKnife, AttackInputType_Multitap):
+        case WEAPON_ATTACK(AttackType_Katana,       AttackInputType_Multitap):
             sfxId = Sfx_Unk1297;
             break;
 
-        case 1:
-        case 4:
-        case 7:
-        case 11:
-        case 14:
-        case 17:
-        case 21:
-        case 24:
-        case 27:
+        case WEAPON_ATTACK(AttackType_SteelPipe, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Hammer,    AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Axe,       AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_SteelPipe, AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_Hammer,    AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_Axe,       AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_SteelPipe, AttackInputType_Multitap):
+        case WEAPON_ATTACK(AttackType_Hammer,    AttackInputType_Multitap):
+        case WEAPON_ATTACK(AttackType_Axe,       AttackInputType_Multitap):
             sfxId = Sfx_Unk1296;
             break;
 
-        case 32:
-        case 33:
-        case 34:
+        case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
             sfxId = Sfx_Unk1286;
             break;
 
-        case 2:
-        case 5:
-        case 15:
-        case 25:
+        case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
+        case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
             if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
             {
-                func_8008B3E4(Q8(0.5f));
+                Combat_GasWeaponContactSfxUpdate(Q8(0.5f));
                 break;
             }
 
-        case 8:
-        case 9:
+        case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap):
+        case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
             sfxId = Sfx_Unk1316;
             break;
 
-        case 35:
+        case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap): // No impact sound.
     }
 
     if (sfxId != 0)
@@ -1200,7 +1202,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                 case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
                     if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
                     {
-                        func_8008B3E4(Q8(0.5f));
+                        Combat_GasWeaponContactSfxUpdate(Q8(0.5f));
                     }
                     break;
             }

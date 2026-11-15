@@ -356,35 +356,26 @@ void SysState_OptionsMenu_Update(void) // 0x80039344
 
 void func_8003943C(void) // 0x8003943C
 {
-    s32 roundedVal0;
-    s32 roundedVal1;
-    s32 val0;
-    s32 val1;
-
     #define isRockDrillAttack (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
 
-    func_8008B3E4(0);
+    Combat_GasWeaponContactSfxUpdate(0);
 
     if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
     {
-        val0        = g_SysWork.gasWeaponEngineSfxLevel - Q12(256.0f);
-        roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
-        func_8008B438(!isRockDrillAttack, roundedVal0, 0);
+        Combat_GasWeaponEngineSfxUpdate(!isRockDrillAttack, FP_ROUND_TO_ZERO(g_SysWork.gasWeaponEngineSfxLevel - Q12(256.0f), Q12_SHIFT), 0);
 
         if (isRockDrillAttack)
         {
-            val1        = g_SysWork.rockDrillRunSfxLevel - Q12(256.0f);
-            roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
-            func_8008B40C(roundedVal1, 0);
+            Combat_RockDrillRunSfxUpdate(FP_ROUND_TO_ZERO(g_SysWork.rockDrillRunSfxLevel - Q12(256.0f), Q12_SHIFT), 0);
         }
     }
     else
     {
-        func_8008B438(!isRockDrillAttack, 0, 0);
+        Combat_GasWeaponEngineSfxUpdate(!isRockDrillAttack, 0, 0);
 
         if (isRockDrillAttack)
         {
-            func_8008B40C(0, 0);
+            Combat_RockDrillRunSfxUpdate(0, 0);
         }
     }
 

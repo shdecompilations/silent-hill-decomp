@@ -259,7 +259,7 @@ s32 Game_HyperBlasterBeamColorGet(void) // 0x8004C54C
     return g_SavegamePtr->pickedUpSpecialItemCount >> 3;
 }
 
-void func_8004C564(u8 weaponAttack, s8 cmd) // 0x8004C564
+void Game_GasWeaponSfxUpdate(u8 weaponAttack, s8 cmd) // 0x8004C564
 {
     #define isRockDrillAttack (weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
 
@@ -276,7 +276,7 @@ void func_8004C564(u8 weaponAttack, s8 cmd) // 0x8004C564
             curFlags  = 0;
             curVol    = 32;
 
-            func_8008B398();
+            Combat_GasWeaponSfxAllStop();
 
             PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
             break;
@@ -286,8 +286,8 @@ void func_8004C564(u8 weaponAttack, s8 cmd) // 0x8004C564
             curPitch  = 0;
             curVol    = 32;
 
-            func_8008B438(!isRockDrillAttack, 32, 0);
-            func_8008B3E4(Q8(0.0f));
+            Combat_GasWeaponEngineSfxUpdate(!isRockDrillAttack, 32, 0);
+            Combat_GasWeaponContactSfxUpdate(Q8(0.0f));
 
             if (!isRockDrillAttack)
             {
@@ -302,7 +302,7 @@ void func_8004C564(u8 weaponAttack, s8 cmd) // 0x8004C564
         case GasWeaponSfxCmd_StartEnd:
             if (isRockDrillAttack)
             {
-                func_8008B40C((u8)curVol, curPitch);
+                Combat_RockDrillRunSfxUpdate((u8)curVol, curPitch);
                 curFlags |= 1 << 2;
             }
             break;
@@ -314,17 +314,17 @@ void func_8004C564(u8 weaponAttack, s8 cmd) // 0x8004C564
                 curPitch = curVol - 32;
                 curVol   = CLAMP(curVol, 0, 32);
 
-                func_8008B438(!isRockDrillAttack, 0, 0);
-                func_8008B3E4(NO_VALUE);
+                Combat_GasWeaponEngineSfxUpdate(!isRockDrillAttack, 0, 0);
+                Combat_GasWeaponContactSfxUpdate(NO_VALUE);
 
                 if (isRockDrillAttack)
                 {
-                    func_8008B40C((u8)curVol, curPitch);
+                    Combat_RockDrillRunSfxUpdate((u8)curVol, curPitch);
                 }
 
                 if (curVol == 0)
                 {
-                    func_8008B398();
+                    Combat_GasWeaponSfxAllStop();
 
                     curFlags                           = 0;
                     curPitch                           = 0;
@@ -339,8 +339,8 @@ void func_8004C564(u8 weaponAttack, s8 cmd) // 0x8004C564
             {
                 if (!(curFlags & (1 << 2)))
                 {
-                    func_8008B438(0, 0, 0);
-                    func_8008B3E4(Q8(0.0f));
+                    Combat_GasWeaponEngineSfxUpdate(0, 0, 0);
+                    Combat_GasWeaponContactSfxUpdate(Q8(0.0f));
 
                     PLAYER_PROPS().gasWeaponPowerTimer = Q12(0.0f);
                     curFlags                          -= 1 << 1;
@@ -371,14 +371,14 @@ void func_8004C564(u8 weaponAttack, s8 cmd) // 0x8004C564
                 }
             }
 
-            func_8008B438(!isRockDrillAttack, (u8)curVol, curPitch);
+            Combat_GasWeaponEngineSfxUpdate(!isRockDrillAttack, (u8)curVol, curPitch);
 
             if (isRockDrillAttack)
             {
-                func_8008B40C((u8)curVol, curPitch);
+                Combat_RockDrillRunSfxUpdate((u8)curVol, curPitch);
             }
 
-            func_8008B3E4(NO_VALUE);
+            Combat_GasWeaponContactSfxUpdate(NO_VALUE);
             break;
     }
 }

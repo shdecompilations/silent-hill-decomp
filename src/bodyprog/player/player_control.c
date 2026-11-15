@@ -1349,7 +1349,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
     if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap) ||
         PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
     {
-        func_8004C564(PLAYER_COMBAT().weaponAttack, (PLAYER_PROPS().gasWeaponPowerTimer != 0) ? GasWeaponSfxCmd_Update : GasWeaponSfxCmd_WindDown);
+        Game_GasWeaponSfxUpdate(PLAYER_COMBAT().weaponAttack, (PLAYER_PROPS().gasWeaponPowerTimer != 0) ? GasWeaponSfxCmd_Update : GasWeaponSfxCmd_WindDown);
     }
 
     g_SavegamePtr->healthSaturation -= g_DeltaTime;
@@ -3818,7 +3818,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     PLAYER_PROPS().gasWeaponPowerTimer = Q12(60.0f);
 
-                    func_8004C564(PLAYER_COMBAT().weaponAttack, GasWeaponSfxCmd_Start);
+                    Game_GasWeaponSfxUpdate(PLAYER_COMBAT().weaponAttack, GasWeaponSfxCmd_Start);
 
                     player->properties.player.field_10C                       = 0x40;
                     PLAYER_PROPS().flags |= PlayerFlag_Unk2;
@@ -3849,7 +3849,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (extra->model.anim.keyframeIdx == D_800C44F0[0].endKeyframeIdx)
                     {
-                        func_8004C564(PLAYER_COMBAT().weaponAttack, GasWeaponSfxCmd_StartEnd);
+                        Game_GasWeaponSfxUpdate(PLAYER_COMBAT().weaponAttack, GasWeaponSfxCmd_StartEnd);
                     }
 
                     PLAYER_EXTRA().upperBodyState             = PlayerUpperBodyState_Aim;
@@ -7166,7 +7166,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
             if (PLAYER_COMBAT().weaponAttack == WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap))
             {
-                func_8004C564(WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap), GasWeaponSfxCmd_Cancel);
+                Game_GasWeaponSfxUpdate(WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap), GasWeaponSfxCmd_Cancel);
             }
 
             if (PLAYER_EXTRA().state >= PlayerState_FallForward &&
@@ -8253,7 +8253,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_PrevAttackReceived = NO_VALUE;
     PLAYER_COMBAT().isAiming       = false;
 
-    func_8004C564(0, GasWeaponSfxCmd_Reset);
+    Game_GasWeaponSfxUpdate(0, GasWeaponSfxCmd_Reset);
 
     player->angleToTarget   = Q12_ANGLE(90.0f);
     g_Player_IsDead         = false;

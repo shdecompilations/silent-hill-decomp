@@ -4,7 +4,7 @@
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/items/weapon_data.h"
 
-/** @brief Chainsaw and rock drill sounds driven by `func_8008B474`. TODO: Move to appropriate header. */
+/** @brief Chainsaw and rock drill sounds driven by `Combat_GasWeaponSfxUpdate`. TODO: Move to appropriate header. */
 typedef enum _GasWeaponSfx
 {
     GasWeaponSfx_Contact        = 0, /** `Sfx_GasWeaponContact` */
@@ -54,17 +54,17 @@ void func_8008B15C(s_SubCharacter* chara);
 
 void func_8008B1DC(s_SubCharacter* chara, q19_12 aimYaw, q19_12 aimPitch);
 
-void func_8008B398(void);
+void Combat_GasWeaponSfxAllStop(void);
 
-void func_8008B3E4(q23_8 vol);
+void Combat_GasWeaponContactSfxUpdate(q23_8 vol);
 
-void func_8008B40C(q23_8 vol, s32 pitch);
+void Combat_RockDrillRunSfxUpdate(q23_8 vol, s32 pitch);
 
-void func_8008B438(bool isChainsaw, q23_8 vol, s32 pitch);
+void Combat_GasWeaponEngineSfxUpdate(bool isChainsaw, q23_8 vol, s32 pitch);
 
-bool func_8008B474(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch);
+bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch);
 
-void func_8008B664(VECTOR3* pos, u32 caseVar);
+void func_8008B664(VECTOR3* pos, u32 weaponAttack);
 
 /** Main attack handling function. */
 s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale);

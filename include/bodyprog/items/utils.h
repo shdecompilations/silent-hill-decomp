@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_ITEMS_UTILS_H
 #define _BODYPROG_ITEMS_UTILS_H
 
-/** @brief Commands for controlling chainsaw/rock-drill looping sound effects, used with `func_8004C564`. */
+/** @brief Commands for controlling chainsaw/rock-drill looping sound effects, used with `Game_GasWeaponSfxUpdate`. */
 typedef enum _GasWeaponSfxCmd
 {
     GasWeaponSfxCmd_Reset    = NO_VALUE, /** Stops all gas weapon sounds and clears state. */
@@ -56,7 +56,7 @@ s32 Game_HyperBlasterBeamColorGet(void);
  * @param weaponAttack Equipped weapon attack.
  * @param cmd `e_GasWeaponSfxCmd`
  */
-void func_8004C564(u8 weaponAttack, s8 cmd);
+void Game_GasWeaponSfxUpdate(u8 weaponAttack, s8 cmd);
 
 void Game_TimerUpdate(void);
 
