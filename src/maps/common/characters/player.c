@@ -323,10 +323,10 @@ void Player_ControlUnfreeze(bool setIdle)
         Player_ExtraStateSet(player, extra, PlayerState_None);
     }
 
-    player->attackReceived = NO_VALUE;
-    player->field_40          = NO_VALUE;
-    g_SysWork.npcIdxs[1] = NO_VALUE;
-    g_SysWork.npcIdxs[0] = NO_VALUE;
+    player->attackReceived  = NO_VALUE;
+    player->attackingNpcIdx = NO_VALUE;
+    g_SysWork.npcIdxs[1]    = NO_VALUE;
+    g_SysWork.npcIdxs[0]    = NO_VALUE;
 
 #if !defined(MAP0_S00) && !defined(MAP0_S01)
     func_8003D01C();
@@ -899,7 +899,7 @@ bool sharedFunc_800D2E94_0_s00(void)
             npc->collision.box.bottomExtent         = Q12(0.2f);
             npc->collision.cylinder.outerRadius     = Q12(0.05f);
             npc->collision.cylinder.innerRadius     = Q12(0.5f);
-            npc->field_40                           = 0;
+            npc->attackingNpcIdx                    = 0;
             npc->collision.box.offsetY              = Q12(0.0f);
             npc->collision.box.field_8              = Q12(0.0f);
             npc->collision.shapeOffsets.cylinder.vz = Q12(0.0f);

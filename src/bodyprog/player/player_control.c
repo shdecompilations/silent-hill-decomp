@@ -7028,7 +7028,7 @@ void Player_PositionUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORD
 void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8007C800
 {
     q3_12 headingAngle;
-    q4_12 enemyRotY;
+    q4_12 enemyHeadingAngle;
     s32   i;
     s32   sfxId;
     s32   angleState;
@@ -7176,22 +7176,23 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 Player_CollisionReset();
             }
 
-            enemyRotY = NPC_CHARA(player->field_40).rotation.vy;
+            enemyHeadingAngle = NPC_CHARA(player->attackingNpcIdx).rotation.vy;
             if (player->attackReceived == WEAPON_ATTACK(AttackType_MonsterCybil0, AttackInputType_Tap) ||
                 player->attackReceived == WEAPON_ATTACK(AttackType_MonsterCybil1, AttackInputType_Tap))
             {
-                enemyRotY -= Q12_ANGLE(90.0f);
+                enemyHeadingAngle -= Q12_ANGLE(90.0f);
             }
             else if (player->attackReceived == WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
             {
-                enemyRotY = Q12_ANGLE(90.0f);
+                enemyHeadingAngle = Q12_ANGLE(90.0f);
             }
             else if (player->attackReceived == WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap))
             {
-                enemyRotY = player->damage.position.vy;
+                // TODO: Odd non-angle assignment?
+                enemyHeadingAngle = player->damage.position.vy;
             }
 
-            enemyRotY = Q12_ANGLE_NORM_U((enemyRotY - player->rotation.vy) + Q12_ANGLE(360.0f));
+            enemyHeadingAngle = Q12_ANGLE_NORM_U((enemyHeadingAngle - player->rotation.vy) + Q12_ANGLE(360.0f));
 
             switch (player->attackReceived)
             {
@@ -7204,7 +7205,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     Math_ShortestAngleGet(player->rotation.vy, attacker.rotation.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
-                    if (enemyRotY >= Q12_ANGLE(90.0f) && enemyRotY < Q12_ANGLE(270.0f))
+                    if (enemyHeadingAngle >= Q12_ANGLE(90.0f) && enemyHeadingAngle < Q12_ANGLE(270.0f))
                     {
                         Player_ExtraStateSet(player, extra, PlayerState_DamageThrownFront);
                     }
@@ -7229,10 +7230,10 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 case WEAPON_ATTACK(AttackType_RomperGrab, AttackInputType_Tap): // Romper grab.
                 case WEAPON_ATTACK(AttackType_PuppetNurseGrab, AttackInputType_Tap): // Torso grab.
                 case WEAPON_ATTACK(AttackType_MonsterCybilNeckGrab, AttackInputType_Tap):
-                    if (enemyRotY >= Q12_ANGLE(90.0f) &&
-                        enemyRotY <  Q12_ANGLE(270.0f))
+                    if (enemyHeadingAngle >= Q12_ANGLE(90.0f) &&
+                        enemyHeadingAngle <  Q12_ANGLE(270.0f))
                     {
-                        g_SysWork.npcIdxs[0] = player->field_40;
+                        g_SysWork.npcIdxs[0] = player->attackingNpcIdx;
 
                         switch (player->attackReceived)
                         {
@@ -7257,7 +7258,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     }
                     else
                     {
-                        g_SysWork.npcIdxs[1] = player->field_40;
+                        g_SysWork.npcIdxs[1] = player->attackingNpcIdx;
 
                         switch (player->attackReceived)
                         {
@@ -7315,17 +7316,17 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 case WEAPON_ATTACK(AttackType_MonsterCybil0, AttackInputType_Tap):
                 case WEAPON_ATTACK(AttackType_MonsterCybil1, AttackInputType_Tap):
                     // Left harm animation.
-                    if (enemyRotY >= Q12_ANGLE(45.0f) && enemyRotY < Q12_ANGLE(135.0f))
+                    if (enemyHeadingAngle >= Q12_ANGLE(45.0f) && enemyHeadingAngle < Q12_ANGLE(135.0f))
                     {
                         angleState = PlayerState_DamageTorsoLeft;
                     }
                     // Front harm animation.
-                    else if (enemyRotY >= Q12_ANGLE(135.0f) && enemyRotY < Q12_ANGLE(225.0f))
+                    else if (enemyHeadingAngle >= Q12_ANGLE(135.0f) && enemyHeadingAngle < Q12_ANGLE(225.0f))
                     {
                         angleState = PlayerState_DamageTorsoFront;
                     }
                     // Right harm animation.
-                    else if (enemyRotY >= Q12_ANGLE(225.0f) && enemyRotY < Q12_ANGLE(315.0f))
+                    else if (enemyHeadingAngle >= Q12_ANGLE(225.0f) && enemyHeadingAngle < Q12_ANGLE(315.0f))
                     {
                         angleState = PlayerState_DamageTorsoRight;
                     }
@@ -7339,7 +7340,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     break;
 
                 case WEAPON_ATTACK(AttackType_Creeper, AttackInputType_Tap):
-                    if (enemyRotY < Q12_ANGLE(179.95f))
+                    if (enemyHeadingAngle < Q12_ANGLE(179.95f))
                     {
                         angleState = PlayerState_DamageFeetFront;
                     }
@@ -7421,7 +7422,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
         PLAYER_EXTRA().state != PlayerState_OnFloorBehind        &&
         !g_Player_IsInWalkToRunTransition)
     {
-        player->field_40                     = NO_VALUE;
+        player->attackingNpcIdx         = NO_VALUE;
         g_SavegamePtr->healthSaturation = Q12(0.0f);
 
         for (i = 0; i < 4; i++)
@@ -8276,17 +8277,17 @@ void func_8007E9C4(void) // 0x8007E9C4
 
     Chara_DamageClear(player);
 
-    g_Player_IsHoldAttack  = false;
-    player->flags         &= ~CharaFlag_Unk4;
-    g_Player_PrevPosition  = player->position;
-    g_SysWork.targetNpcIdx = NO_VALUE;
-    player->field_40       = NO_VALUE;
-    player->attackReceived = NO_VALUE;
+    g_Player_IsHoldAttack   = false;
+    player->flags          &= ~CharaFlag_Unk4;
+    g_Player_PrevPosition   = player->position;
+    g_SysWork.targetNpcIdx  = NO_VALUE;
+    player->attackingNpcIdx = NO_VALUE;
+    player->attackReceived  = NO_VALUE;
 
-    g_SysWork.npcIdxs[3]               = NO_VALUE;
-    g_SysWork.npcIdxs[2]               = NO_VALUE;
-    g_SysWork.npcIdxs[1]               = NO_VALUE;
-    g_SysWork.npcIdxs[0]               = NO_VALUE;
+    g_SysWork.npcIdxs[3]                   = NO_VALUE;
+    g_SysWork.npcIdxs[2]                   = NO_VALUE;
+    g_SysWork.npcIdxs[1]                   = NO_VALUE;
+    g_SysWork.npcIdxs[0]                   = NO_VALUE;
     player->collision.cylinder.innerRadius = DEFAULT_PLAYER_CYLINDER_INNER_RADIUS;
 
     g_Player_IsAiming            = false;
@@ -8917,7 +8918,7 @@ void func_8007FD4C(bool resetColl) // 0x8007FD4C
     player = &PLAYER_CHARA();
 
     g_Player_GrabReleaseInputTimer = Q12(0.0f);
-    player->field_40               = NO_VALUE;
+    player->attackingNpcIdx        = NO_VALUE;
 
     PLAYER_PROPS().flags &= ~PlayerFlag_DamageReceived;
 

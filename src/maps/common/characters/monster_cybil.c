@@ -1622,7 +1622,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             if (temp_v0_2 != NO_VALUE)
             {
-                PLAYER_CHARA().field_40 = monsterCybil->field_40;
+                PLAYER_CHARA().attackingNpcIdx = monsterCybil->attackingNpcIdx;
             }
 
             if (modelUpper->anim.keyframeIdx == D_800EA7D6)
@@ -1660,7 +1660,7 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
             PLAYER_CHARA().damage.amount = g_DeltaTime * 4;
 
-            if (PLAYER_CHARA().field_40 == NO_VALUE ||
+            if (PLAYER_CHARA().attackingNpcIdx == NO_VALUE ||
                 PLAYER_CHARA().health <= Q12(0.0f) ||
                 PLAYER_CHARA().attackReceived == NO_VALUE)
             {

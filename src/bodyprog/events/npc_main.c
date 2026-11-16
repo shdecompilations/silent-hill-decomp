@@ -21,7 +21,7 @@ void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
 {
     if (g_SavegamePtr->gameDifficulty <= GameDifficulty_Normal || Rng_RandQ12() >= Q12(0.3f))
     {
-        g_SavegamePtr->mapEnemyStates[g_SavegamePtr->mapIdx] &= ~(1 << chara->field_40);
+        g_SavegamePtr->mapEnemyStates[g_SavegamePtr->mapIdx] &= ~(1 << chara->attackingNpcIdx);
     }
 }
 
@@ -122,7 +122,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
                 NPC_CHARA(npcIdx).model.charaId = (i < 16) ? groupCharaId0 : groupCharaId1;
             }
 
-            NPC_CHARA(npcIdx).field_40           = i;
+            NPC_CHARA(npcIdx).attackingNpcIdx    = i;
             NPC_CHARA(npcIdx).model.controlState = 0;
             NPC_CHARA(npcIdx).model.stateStep    = curCharaSpawn->flags;
             NPC_CHARA(npcIdx).position.vx        = curCharaSpawn->positionX;
@@ -310,7 +310,7 @@ void Game_NpcUpdate(void) // 0x80038354
                 curNpc->model.charaId = Chara_None;
 
                 SysWork_NpcFlagClear(k);
-                CLEAR_FLAG(g_SysWork.field_228C, curNpc->field_40);
+                CLEAR_FLAG(g_SysWork.field_228C, curNpc->attackingNpcIdx);
                 continue;
             }
 

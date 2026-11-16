@@ -346,7 +346,7 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
                         continue;
                     }
 
-                    if (curNpc.field_40 != creeper->field_40 &&
+                    if (curNpc.attackingNpcIdx != creeper->attackingNpcIdx &&
                         (curNpc.properties.creeper.flags & CreeperFlag_6) &&
                         curNpc.model.controlState == CreeperControl_Idle &&
                         !Math_Distance2dCheck(&creeper->position, &curNpc.position, Q12(16.0f)))

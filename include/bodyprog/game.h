@@ -360,7 +360,7 @@ typedef struct _SysWork
     /* 0x2283   */ s8               sfxPairIdx;                         /** `e_SfxPairIdx` | Index into `SFX_PAIRS`. */
     /* 0x2284   */ u16              charaGroupFlags[CHARA_GROUP_COUNT]; /** `e_CharaGroupFlags` */
                                                                         // Enabling a flag for Larval Stalkers causes them to die.
-    /* 0x228C   */ s32              field_228C[1];  // Spawn flags for enemy characters?
+    /* 0x228C   */ s32              field_228C[1];  // Spawn flags for enemy characters? Attacking NPC index flags?
     /* 0x2290   */ s32              npcFlags;       // Flags related to NPCs. Each bit corresponds to an `npcs` array entry.
     /* 0x2294   */ s8               __pad_2294[4];
     /* 0x2298   */ e_ProcessFlags   processFlags;

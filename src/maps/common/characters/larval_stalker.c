@@ -315,9 +315,9 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                         Sfx_WithFlagsPlay(0, &larvalStalker->position, Q8(0.5f), SfxFlag_None);
                         larvalStalkerProps.timer_EC = Q12(0.0f);
 
-                        if (PLAYER_CHARA().field_40 == NO_VALUE)
+                        if (PLAYER_CHARA().attackingNpcIdx == NO_VALUE)
                         {
-                            PLAYER_CHARA().field_40 = Chara_NpcIdxGet(larvalStalker);
+                            PLAYER_CHARA().attackingNpcIdx = Chara_NpcIdxGet(larvalStalker);
                         }
 
                         Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(AttackType_LarvalStalkerDrain, AttackInputType_Tap));

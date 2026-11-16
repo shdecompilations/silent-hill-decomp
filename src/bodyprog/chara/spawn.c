@@ -62,7 +62,7 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         {
             for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
             {
-                if (NPC_CHARA(i).field_40 == activeSpawnFlags)
+                if (NPC_CHARA(i).attackingNpcIdx == activeSpawnFlags)
                 {
                     return i;
                 }
@@ -98,8 +98,8 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         // Clear character data.
         bzero(&NPC_CHARA(i), sizeof(s_SubCharacter));
 
-        NPC_CHARA(i).model.charaId = charaId;
-        NPC_CHARA(i).field_40      = activeSpawnFlags;
+        NPC_CHARA(i).model.charaId   = charaId;
+        NPC_CHARA(i).attackingNpcIdx = activeSpawnFlags;
 
         if (charaId <= CHARA_LAST_ENEMY_ID && spawnFlags < (1 << 6))
         {
@@ -138,7 +138,7 @@ void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unuse1) // 
 
     if (chara->model.charaId <= CHARA_LAST_ENEMY_ID)
     {
-        CLEAR_FLAG(g_SysWork.field_228C, chara->field_40);
+        CLEAR_FLAG(g_SysWork.field_228C, chara->attackingNpcIdx);
     }
 
     chara->model.charaId = Chara_None;

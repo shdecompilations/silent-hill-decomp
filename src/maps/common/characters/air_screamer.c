@@ -1465,7 +1465,7 @@ void AirScreamer_Control_0(s_SubCharacter* airScreamer)
     s32  field40;
     u32  animStatus;
 
-    field40 = airScreamer->field_40;
+    field40 = airScreamer->attackingNpcIdx;
     switch (field40 % 0x3)
     {
         case 0:
@@ -1703,9 +1703,9 @@ void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer)
     q19_12 chance;
     s32    spawnFlags; // `e_SpawnFlags`
 
-    if (airScreamer->field_40 < 32)
+    if (airScreamer->attackingNpcIdx < 32)
     {
-        spawnFlags = g_MapOverlayHdr.charaSpawnInfos[0][airScreamer->field_40].flags;
+        spawnFlags = g_MapOverlayHdr.charaSpawnInfos[0][airScreamer->attackingNpcIdx].flags;
         switch (spawnFlags)
         {
             case CharaSpawnFlag_0:
@@ -2903,7 +2903,7 @@ void AirScreamer_Control_8(s_SubCharacter* airScreamer)
                     {
                         if (airScreamerProps.field_E8_0 == 3)
                         {
-                            sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.6f));
+                            sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->attackingNpcIdx + 1, Q12(0.6f));
                         }
 
                         airScreamer->model.controlState = AirScreamerControl_10;
@@ -3993,7 +3993,7 @@ void AirScreamer_ControlRecoil(s_SubCharacter* airScreamer)
 
             if (airScreamerProps.field_E8_0 == 3)
             {
-                sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.7f));
+                sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->attackingNpcIdx + 1, Q12(0.7f));
             }
 
             if (field14C_2)
@@ -5210,7 +5210,7 @@ void AirScreamer_Control_22(s_SubCharacter* airScreamer)
                     {
                         if (airScreamerProps.field_E8_0 == 3)
                         {
-                            sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.6f));
+                            sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->attackingNpcIdx + 1, Q12(0.6f));
                         }
 
                         airScreamer->model.controlState = AirScreamerControl_23;
@@ -6186,7 +6186,7 @@ void AirScreamer_Control_29(s_SubCharacter* airScreamer)
 
                 if (airScreamerProps.field_E8_0 == 3)
                 {
-                    sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.7f));
+                    sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->attackingNpcIdx + 1, Q12(0.7f));
                 }
 
                 if (temp_s2 != 0)
@@ -7587,7 +7587,7 @@ void AirScreamer_Control_37(s_SubCharacter* airScreamer)
                     {
                         if (airScreamerProps.field_E8_0 == 3)
                         {
-                            sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.6f));
+                            sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->attackingNpcIdx + 1, Q12(0.6f));
                         }
 
                         airScreamer->model.controlState = AirScreamerControl_38;
@@ -8548,7 +8548,7 @@ void AirScreamer_Control_44(s_SubCharacter* airScreamer)
 
             if (airScreamerProps.field_E8_0 == 3)
             {
-                sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.7f));
+                sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->attackingNpcIdx + 1, Q12(0.7f));
             }
 
             if (field14C_2)
@@ -9435,7 +9435,7 @@ bool sharedFunc_800DC67C_2_s00(s_SubCharacter* airScreamer)
 {
     if (airScreamerProps.field_E8_0 == 1)
     {
-        func_800803FC(&sharedData_800F217C_2_s00, airScreamer->field_40);
+        func_800803FC(&sharedData_800F217C_2_s00, airScreamer->attackingNpcIdx);
         return Math_Distance2dGet(&airScreamer->position, &sharedData_800F217C_2_s00) > Q12(CHUNK_SIZE);
     }
 
@@ -10356,7 +10356,7 @@ void sharedFunc_800DDE14_2_s00(s_SubCharacter* airScreamer)
         distMin = Q12(2.0f);
     }
 
-    func_800803FC(&sharedData_800F21BC_2_s00, airScreamer->field_40);
+    func_800803FC(&sharedData_800F21BC_2_s00, airScreamer->attackingNpcIdx);
 
     radius = Math_Distance2dGet(&sharedData_800F21BC_2_s00, &airScreamer->position);
 
@@ -10668,7 +10668,7 @@ void sharedFunc_800DE7E0_2_s00(s_SubCharacter* airScreamer)
         distMin = Q12(3.0f);
     }
 
-    func_800803FC(&sharedData_800F21DC_2_s00, airScreamer->field_40);
+    func_800803FC(&sharedData_800F21DC_2_s00, airScreamer->attackingNpcIdx);
 
     radius = Math_Distance2dGet(&sharedData_800F21DC_2_s00, &airScreamer->position);
 
@@ -10837,7 +10837,7 @@ void sharedFunc_800DECC4_2_s00(s_SubCharacter* airScreamer)
         distMin = Q12(4.0f);
     }
 
-    func_800803FC(&sharedData_800F21EC_2_s00, airScreamer->field_40);
+    func_800803FC(&sharedData_800F21EC_2_s00, airScreamer->attackingNpcIdx);
 
     radius = Math_Distance2dGet(&sharedData_800F21EC_2_s00, &airScreamer->position);
 

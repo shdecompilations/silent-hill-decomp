@@ -1185,8 +1185,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
 
     if (target == &PLAYER_CHARA())
     {
-        targetBit        = NO_VALUE;
-        target->field_40 = attacker - g_SysWork.npcs; // Sets `field_40` to attacker index inside `g_SysWork.npcs`
+        targetBit               = NO_VALUE;
+        target->attackingNpcIdx = attacker - g_SysWork.npcs; // Obtuse way of setting NPC index.
     }
     else
     {
