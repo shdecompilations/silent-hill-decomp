@@ -1440,7 +1440,7 @@ Combat_GasWeaponEngineSfxUpdate              = 0x8008B01C; // type:func
 Combat_GasWeaponSfxUpdate                    = 0x8008B058; // type:func
 func_8008B664                                = 0x8008B248; // type:func
 func_8008B714                                = 0x8008B2F8; // type:func
-func_8008BF84                                = 0x8008BB68; // type:func
+Combat_MeleeHitCheck                         = 0x8008BB68; // type:func
 
 //------------------------------------------------------------
 //--- PA: 0x066EF4   VA: 0x8008C584   subsegment: c, chara/dms

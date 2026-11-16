@@ -104,6 +104,19 @@ void func_8008B664(VECTOR3* pos, u32 weaponAttack);
 /** Main attack handling function. */
 s32 func_8008B714(struct _SubCharacter* attacker, struct _SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale);
 
-s32 func_8008BF84(struct _SubCharacter* chara, q19_12 angle, struct _AttackInfo* attackInfo, s32 arg3);
+/** @brief Runs one step of a melee/non-gunshot attack's hit check and applies damage to every character hit.
+ *
+ * Builds a box around the current hit segment in attacker-local space, padded to the `s_AttackFight` size.
+ * Attacks from the player test against every NPC, while NPC attacks only test against the player.
+ * A hit is counted when it's within 3 m, has line of sight from the attacker, and collision overlaps the hit
+ * segment box.
+ *
+ * @param attacker Attacking character.
+ * @param yaw Attack yaw, used to rotate candidates into attacker-local space.
+ * @param attackInfo Attack being performed.
+ * @param damageScale Damage scale passed to `func_8008B714`.
+ * @return `1 << npcIdx` per NPC hit, `NO_VALUE` if the player is hit. Also ORed into `s_CharaAttack::hitFlags`.
+ */
+s32 Combat_MeleeHitCheck(struct _SubCharacter* attacker, q19_12 yaw, struct _AttackInfo* attackInfo, q19_12 damageScale);
 
 #endif

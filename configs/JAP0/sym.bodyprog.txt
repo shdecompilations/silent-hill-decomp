@@ -1476,7 +1476,7 @@ Combat_GasWeaponEngineSfxUpdate              = 0x8008CE54; // type:func
 Combat_GasWeaponSfxUpdate                    = 0x8008CE90; // type:func
 func_8008B664                                = 0x8008D080; // type:func
 func_8008B714                                = 0x8008D130; // type:func
-func_8008BF84                                = 0x8008D9A0; // type:func
+Combat_MeleeHitCheck                         = 0x8008D9A0; // type:func
 
 //------------------------------------------------------------
 //--- PA: 0x06985C   VA: 0x8008E3BC   subsegment: c, chara/dms
@@ -3751,11 +3751,11 @@ g_Event_TweenTimers                          = 0x800C6C40;
 D_800C4728                                   = 0x800C6C58;
 D_800C4748                                   = 0x800C6C78;
 D_800C4758                                   = 0x800C6C88;
-D_800C4788                                   = 0x800C6CB8;
-D_800C47B8                                   = 0x800C6CE8;
-D_800C47C8                                   = 0x800C6CF8;
-D_800C47E8                                   = 0x800C6D18;
-D_800C47F8                                   = 0x800C6D28;
+localSegPoints.83                               = 0x800C6CB8;
+hitPos.83                                       = 0x800C6CE8;
+rayPoints.83                                    = 0x800C6CF8;
+otherCenter.83                                  = 0x800C6D18;
+rayTrace.83                                     = 0x800C6D28;
 
 //--------------------------------------------------------------------
 //--- PA: 0x0A21E8   VA: 0x800C6D48   subsegment: .bss, gfx/lens_flare

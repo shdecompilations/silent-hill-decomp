@@ -763,7 +763,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                 func_8008B1DC(chara, temp_s0_14->vx, temp_s0_14->vy);
 
-                if (func_8008BF84(chara, temp_s0_14->vx, attackInfo, sp5C) != 0)
+                if (Combat_MeleeHitCheck(chara, temp_s0_14->vx, attackInfo, sp5C) != 0)
                 {
                     var_s2 = sp58;
                     sp18  |= var_s2;
@@ -1511,377 +1511,377 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
     return targetBit;
 }
 
-s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_AttackInfo* attackInfo, s32 arg3) // 0x8008BF84
+s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* attackInfo, q19_12 damageScale) // 0x8008BF84
 {
-    s_SubCharacter* chara1;
-    s32             sp14;
-    s32             sp18;
+    s_SubCharacter* other;
+    s_SubCharacter* firstChara;
+    s32             charaCount;
+    s32             hitFlags;
+    s32             charaBit;
+    s32             firstCharaBit;
     s32             i;
     q19_12          sinAngle;
     q19_12          cosAngle;
-    s32             countX;
-    s32             countY;
-    s32             countZ;
-    q19_12          sp34;
-    s32             sp38;
-    s32             sp3C;
-    s32             sp40;
-    s32             sp44;
-    s32             sp48;
-    s32             sp4C;
-    q19_12          posX;
-    q19_12          posZ;
-    q19_12          sp58;
-    s32             sp5C;
-    s32             temp_s5;
-    s32             temp_s6;
-    q19_12          temp_a0;
-    s32             temp_a0_2;
-    q19_12          temp_a0_3;
-    s32             temp_lo_5;
-    s32             temp_s0;
-    s32             temp_s1;
-    q19_12          unkX;
-    q19_12          innerRadius;
-    q19_12          temp_t2;
-    s32             j;
-    q19_12          temp_t4;
-    q19_12          temp_t4_2;
-    q19_12          temp_t5;
-    s32             angle1;
-    s32             temp_v0_6;
-    s32             temp_v0_7;
-    q19_12          temp_v0_8;
-    q19_12          var_a1_2;
-    s32             var_fp;
-    q19_12          unkZ;
-    q19_12          var_s7;
-    s32             var_t1;
-    s32             var_t2;
-    s32             var_v0;
-    q19_12          var_v0_3;
-    s32             var_v0_6;
-    q19_12          var_v1;
-    s32             temp_a2;
-    u16             temp_v1;
-    q19_12          posY;
-    s32             temp4;
-    s_SubCharacter* chara0;
+    q19_12          segStartX;
+    q19_12          segStartY;
+    q19_12          segStartZ;
+    q19_12          segVecX;
+    q19_12          segVecY;
+    q19_12          segVecZ;
+    q19_12          localSegX;
+    q19_12          localSegY;
+    q19_12          localSegZ;
+    q19_12          boxMaxX;
+    q19_12          boxMaxY;
+    q19_12          boxMaxZ;
+    q19_12          boxMinX;
+    q19_12          boxMinY;
+    q19_12          boxMinZ;
+    q19_12          boxSizeX;
+    q19_12          boxSizeY;
+    q19_12          boxSizeZ;
+    q19_12          hitSizeY;
+    q19_12          hitSizeZ;
+    q19_12          rayX;
+    q19_12          rayFromY;
+    q19_12          rayZ;
 
-    static VECTOR3    D_800C4788[4]; // Q19.12
-    static VECTOR3    D_800C47B8;
+    static VECTOR3    localSegPoints[4]; // Q19.12 | Hit segment in attacker-local space. Written but never read.
+    static VECTOR3    hitPos;
     static s32        __pad_bss_800C47C4;
-    static VECTOR3    D_800C47C8[2];
-    static s32        __pad_bss_800C4E0[2];
-    static VECTOR3    D_800C47E8;
-    static s32        __pad_bss_800C4F4;
-    static s_RayTrace D_800C47F8;
+    static VECTOR3    rayPoints[2];      // Line-of-sight ray from the attacker to each candidate.
+    static s32        __pad_bss_800C47E0[2];
+    static VECTOR3    otherCenter;
+    static s32        __pad_bss_800C47F4;
+    static s_RayTrace rayTrace;
 
-    countX = chara->attack.segStart[0].vx;
-    countY = chara->attack.segStart[0].vy;
-    countZ = chara->attack.segStart[0].vz;
+    segStartX = attacker->attack.segStart[0].vx;
+    segStartY = attacker->attack.segStart[0].vy;
+    segStartZ = attacker->attack.segStart[0].vz;
 
-    sinAngle = Math_Sin(angle);
-    cosAngle = Math_Cos(angle);
+    sinAngle = Math_Sin(yaw);
+    cosAngle = Math_Cos(yaw);
 
-    D_800C4788[0].vx = Q12(0.0f);
-    D_800C4788[0].vy = Q12(0.0f);
-    D_800C4788[0].vz = Q12(0.0f);
+    localSegPoints[0].vx = Q12(0.0f);
+    localSegPoints[0].vy = Q12(0.0f);
+    localSegPoints[0].vz = Q12(0.0f);
 
-    sp34   = chara->attack.segVec[0].vx;
-    var_fp = chara->attack.segVec[0].vz;
+    segVecX = attacker->attack.segVec[0].vx;
+    segVecZ = attacker->attack.segVec[0].vz;
 
-    sp44 = 0;
-    sp38 = 0;
-    sp48 = 0;
-    sp3C = 0;
-    sp4C = 0;
-    sp40 = 0;
+    boxMinX = 0;
+    boxMaxX = 0;
+    boxMinY = 0;
+    boxMaxY = 0;
+    boxMinZ = 0;
+    boxMaxZ = 0;
 
-    var_s7           = chara->attack.segVec[0].vy;
-    D_800C4788[1].vy = var_s7;
+    segVecY          = attacker->attack.segVec[0].vy;
+    localSegPoints[1].vy = segVecY;
 
-    temp_t4          = Q12_MULT_PRECISE(sp34, cosAngle) - Q12_MULT_PRECISE(var_fp, sinAngle);
-    D_800C4788[1].vx = temp_t4;
+    localSegX        = Q12_MULT_PRECISE(segVecX, cosAngle) - Q12_MULT_PRECISE(segVecZ, sinAngle);
+    localSegPoints[1].vx = localSegX;
 
-    temp_a0          = Q12_MULT_PRECISE(sp34, sinAngle) + Q12_MULT_PRECISE(var_fp, cosAngle);
-    D_800C4788[1].vz = temp_a0;
+    localSegZ        = Q12_MULT_PRECISE(segVecX, sinAngle) + Q12_MULT_PRECISE(segVecZ, cosAngle);
+    localSegPoints[1].vz = localSegZ;
 
-    temp4 = var_s7;
+    localSegY = segVecY;
 
-    if (temp_t4 > 0)
+    if (localSegX > 0)
     {
-        sp38 = temp_t4;
+        boxMaxX = localSegX;
     }
-    else if (temp_t4 < 0)
+    else if (localSegX < 0)
     {
-        sp44 = temp_t4;
-    }
-
-    if (sp3C < temp4)
-    {
-        sp3C = temp4;
-    }
-    else if (temp4 < sp48)
-    {
-        sp48 = temp4;
+        boxMinX = localSegX;
     }
 
-    if (sp40 < temp_a0)
+    if (boxMaxY < localSegY)
     {
-        sp40 = temp_a0;
+        boxMaxY = localSegY;
     }
-    else if (temp_a0 < sp4C)
+    else if (localSegY < boxMinY)
     {
-        sp4C = temp_a0;
-    }
-
-    temp_v1   = attackInfo->hitCheck.fight.sizeX;
-    temp_a0_2 = attackInfo->hitCheck.fight.sizeY;
-    temp_a2   = attackInfo->hitCheck.fight.sizeZ;
-
-    var_v0    = (sp38 - sp44);
-    temp_v0_7 = (sp3C - sp48);
-    var_v0_6  = (sp40 - sp4C);
-
-    if (var_v0 < temp_v1)
-    {
-        sp38 += DIV_FAST(attackInfo->hitCheck.fight.sizeX, 2);
-        sp44 -= DIV_FAST(attackInfo->hitCheck.fight.sizeX, 2);
+        boxMinY = localSegY;
     }
 
-    if (temp_v0_7 < temp_a0_2)
+    if (boxMaxZ < localSegZ)
     {
-        sp3C += DIV_FAST(attackInfo->hitCheck.fight.sizeY, 2);
-        sp48 -= DIV_FAST(attackInfo->hitCheck.fight.sizeY, 2);
+        boxMaxZ = localSegZ;
+    }
+    else if (localSegZ < boxMinZ)
+    {
+        boxMinZ = localSegZ;
     }
 
-    if (var_v0_6 < temp_a2)
+    hitSizeY = attackInfo->hitCheck.fight.sizeY;
+    hitSizeZ = attackInfo->hitCheck.fight.sizeZ;
+
+    boxSizeX = (boxMaxX - boxMinX);
+    boxSizeY = (boxMaxY - boxMinY);
+    boxSizeZ = (boxMaxZ - boxMinZ);
+
+    if (boxSizeX < attackInfo->hitCheck.fight.sizeX)
     {
-        sp40 += DIV_FAST(attackInfo->hitCheck.fight.sizeZ, 2);
-        sp4C -= DIV_FAST(attackInfo->hitCheck.fight.sizeZ, 2);
+        boxMaxX += DIV_FAST(attackInfo->hitCheck.fight.sizeX, 2);
+        boxMinX -= DIV_FAST(attackInfo->hitCheck.fight.sizeX, 2);
     }
 
-    if (chara == &PLAYER_CHARA())
+    if (boxSizeY < hitSizeY)
     {
-        chara0 = &NPC_CHARA(0);
-        var_v0 = NPC_COUNT_MAX;
-        var_v1 = 1;
+        boxMaxY += DIV_FAST(attackInfo->hitCheck.fight.sizeY, 2);
+        boxMinY -= DIV_FAST(attackInfo->hitCheck.fight.sizeY, 2);
+    }
+
+    if (boxSizeZ < hitSizeZ)
+    {
+        boxMaxZ += DIV_FAST(attackInfo->hitCheck.fight.sizeZ, 2);
+        boxMinZ -= DIV_FAST(attackInfo->hitCheck.fight.sizeZ, 2);
+    }
+
+    if (attacker == &PLAYER_CHARA())
+    {
+        firstChara    = &NPC_CHARA(0);
+        charaCount    = NPC_COUNT_MAX;
+        firstCharaBit = 1;
     }
     else
     {
-        chara0 = &PLAYER_CHARA();
-        var_v0 = 1;
-        var_v1 = -1;
+        firstChara    = &PLAYER_CHARA();
+        charaCount    = 1;
+        firstCharaBit = -1;
     }
 
-    sp18 = var_v1;
-    chara1 = chara0;
-    sp14 = 0;
+    charaBit = firstCharaBit;
+    other    = firstChara;
+    hitFlags = 0;
 
-    posX = chara->position.vx;
-    posZ = chara->position.vz;
+    rayX = attacker->position.vx;
+    rayZ = attacker->position.vz;
 
-    posY  = chara->position.vy;
-    posY += chara->collision.box.topExtent;
+    rayFromY  = attacker->position.vy;
+    rayFromY += attacker->collision.box.topExtent;
 
-    D_800C47C8[0].vx = posX;
-    D_800C47C8[0].vy = posY;
-    D_800C47C8[0].vz = posZ;
+    rayPoints[0].vx = rayX;
+    rayPoints[0].vy = rayFromY;
+    rayPoints[0].vz = rayZ;
 
-    for (i = var_v0; i > 0; i--, chara1++, sp18 *= 2)
+    for (i = charaCount; i > 0; i--, other++, charaBit <<= 1)
     {
+        q19_12 targetX;
+        q19_12 rayToY;
+        q19_12 targetZ;
+        q19_12 offsetX;
+        q19_12 innerRadius;
+        q19_12 angleToOther;
+        q19_12 cosAngleToOther;
+        bool   isBlocked;
+
         if (g_SysWork.sysState == SysState_GameOver ||
             PLAYER_CHARA().health <= Q12(0.0f) ||
-            chara1 == chara ||
-            chara1->model.charaId == Chara_None ||
-            chara1->health < Q12(0.0f) ||
-            chara1->collision.state == CharaCollisionState_Ignore)
+            other == attacker ||
+            other->model.charaId == Chara_None ||
+            other->health < Q12(0.0f) ||
+            other->collision.state == CharaCollisionState_Ignore)
         {
             continue;
         }
 
-        D_800C47E8.vx = chara1->position.vx + chara1->collision.shapeOffsets.box.vx;
-        D_800C47E8.vy = chara1->position.vy;
-        D_800C47E8.vz = chara1->position.vz + chara1->collision.shapeOffsets.box.vz;
-        if (Math_Distance2dGet(&chara->position, &D_800C47E8) > Q12(3.0f))
+        otherCenter.vx = other->position.vx + other->collision.shapeOffsets.box.vx;
+        otherCenter.vy = other->position.vy;
+        otherCenter.vz = other->position.vz + other->collision.shapeOffsets.box.vz;
+        if (Math_Distance2dGet(&attacker->position, &otherCenter) > Q12(3.0f))
         {
             continue;
         }
 
-        temp_s1 = chara1->position.vx;
-        var_v1  = chara1->position.vy;
-        unkX = chara1->position.vz;
+        targetX = other->position.vx;
+        rayToY  = other->position.vy;
+        targetZ = other->position.vz;
 
-        temp_s0 = chara1->collision.shapeOffsets.box.vx;
-        innerRadius = chara1->collision.shapeOffsets.box.vz;
+        // @hack Box offsets loaded through `offsetX` and `innerRadius`, required for match.
+        offsetX     = other->collision.shapeOffsets.box.vx;
+        innerRadius = other->collision.shapeOffsets.box.vz;
 
-        temp_s1 += temp_s0;
+        targetX += offsetX;
+        rayToY  += other->collision.box.topExtent;
+        targetZ += innerRadius;
 
-        var_v1  += chara1->collision.box.topExtent;
-        unkX += innerRadius;
+        rayPoints[1].vy = rayToY;
+        innerRadius      = other->collision.cylinder.innerRadius;
 
-        D_800C47C8[1].vy = var_v1;
-        innerRadius          = chara1->collision.cylinder.innerRadius;
+        // @bug `rayX` and `rayZ` are meant to stay at the ray start, but are overwritten with each candidate's ray end
+        // below. From the second candidate on, this angle is measured from the previous candidate's ray end instead.
+        angleToOther = ratan2(targetX - rayX, targetZ - rayZ);
+        offsetX      = Q12_MULT_PRECISE(innerRadius, Math_Sin(angleToOther));
+        cosAngleToOther = Math_Cos(angleToOther);
 
-        angle1 = ratan2(temp_s1 - posX, unkX - posZ);
-        temp_v0_6 = Math_Sin(angle1);
-        temp_s0   = Q12_MULT_PRECISE(innerRadius, temp_v0_6);
+        rayX = targetX - offsetX;
+        rayZ = targetZ - Q12_MULT_PRECISE(innerRadius, cosAngleToOther);
 
-        unkZ = Math_Cos(angle1);
+        rayPoints[1].vx = rayX;
+        rayPoints[1].vz = rayZ;
 
-        posX = temp_s1 - temp_s0;
-
-        D_800C47C8[1].vx = posX;
-        posZ             = unkX - Q12_MULT_PRECISE(innerRadius, unkZ);
-
-        D_800C47C8[1].vz = posZ;
-        var_v1           = Ray_GeomTraceGet(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
-
-        if (var_v1 != false)
+        isBlocked = Ray_GeomTraceGet(&rayTrace, &rayPoints[0], &rayPoints[1]);
+        if (isBlocked != false)
         {
-            var_v1 = true;
+            isBlocked = true; // @hack Redundant normalize, required for match.
         }
 
-        if (var_v1 == true)
+        if (isBlocked != true)
         {
-            continue;
-        }
+            q19_12 otherCenterX;
+            q19_12 otherPosY;
+            q19_12 otherCenterZ;
+            q19_12 otherHeight;
+            q19_12 otherTopExtent;
+            q19_12 otherMidY;
+            q19_12 relX;
+            q19_12 relY;
+            q19_12 relZ;
+            q19_12 localX;
+            q19_12 localZ;
+            q19_12 outsideX;
+            q19_12 outsideZ;
+            q19_12 hitOffsetZ;
+            q19_12 hitOffsetY;
+            q19_12 hitOffsetX;
+            q19_12 hitOffsetXZ;
+            q19_12 halfHeight;
+            s32    j;
 
-        temp_t4_2  = chara1->position.vx;
-        temp_t4_2 += chara1->collision.shapeOffsets.box.vx;
+            otherCenterX  = other->position.vx;
+            otherCenterX += other->collision.shapeOffsets.box.vx;
+            otherCenterZ  = other->position.vz;
+            otherCenterZ += other->collision.shapeOffsets.box.vz;
 
-        var_v1   = temp_t4_2 - countX;
-        temp_t5  = chara1->position.vz;
-        temp_t5 += chara1->collision.shapeOffsets.box.vz;
+            relX = otherCenterX - segStartX;
+            relZ = otherCenterZ - segStartZ;
 
-        temp_v0_8 = temp_t5 - countZ;
+            otherPosY      = other->position.vy;
+            otherHeight    = other->collision.box.height;
+            otherTopExtent = other->collision.box.topExtent;
 
-        sp58    = chara1->position.vy;
-        temp_s6 = chara1->collision.box.height;
-        temp_s5 = chara1->collision.box.topExtent;
+            relY   = otherPosY - segStartY;
+            localX = Q12_MULT_PRECISE(relX, cosAngle) - Q12_MULT_PRECISE(relZ, sinAngle);
+            localZ = Q12_MULT_PRECISE(relX, sinAngle) + Q12_MULT_PRECISE(relZ, cosAngle);
 
-        j   = sp58 - countY;
-        temp_t2   = Q12_MULT_PRECISE(var_v1, cosAngle) - Q12_MULT_PRECISE(temp_v0_8, sinAngle);
-        temp_a0_3 = Q12_MULT_PRECISE(var_v1, sinAngle) + Q12_MULT_PRECISE(temp_v0_8, cosAngle);
-
-        if ((j < (sp48 - temp_s6)) || ((sp3C - temp_s5) < j))
-        {
-            continue;
-        }
-
-        innerRadius  = chara1->collision.cylinder.innerRadius;
-        var_a1_2 = Q12(0.0f);
-
-        if (temp_t2 < sp44)
-        {
-            var_a1_2 = sp44 - temp_t2;
-        }
-        else if (sp38 < temp_t2)
-        {
-            var_a1_2 = temp_t2 - sp38;
-        }
-
-        var_v1 = Q12(0.0f);
-
-        if (temp_a0_3 < sp4C)
-        {
-            var_v1 = sp4C - temp_a0_3;
-        }
-        else if (sp40 < temp_a0_3)
-        {
-            var_v1 = temp_a0_3 - sp40;
-        }
-
-        if (var_a1_2 | var_v1)
-        {
-            if (var_a1_2 == Q12(0.0f))
+            if ((relY < (boxMinY - otherHeight)) || ((boxMaxY - otherTopExtent) < relY))
             {
-                if (innerRadius < var_v1)
-                {
-                    continue;
-                }
+                continue;
             }
-            else
+
+            innerRadius = other->collision.cylinder.innerRadius;
+            outsideX    = Q12(0.0f);
+
+            if (localX < boxMinX)
             {
-                if (var_v1 == Q12(0.0f))
+                outsideX = boxMinX - localX;
+            }
+            else if (boxMaxX < localX)
+            {
+                outsideX = localX - boxMaxX;
+            }
+
+            outsideZ = Q12(0.0f);
+
+            if (localZ < boxMinZ)
+            {
+                outsideZ = boxMinZ - localZ;
+            }
+            else if (boxMaxZ < localZ)
+            {
+                outsideZ = localZ - boxMaxZ;
+            }
+
+            if (outsideX | outsideZ)
+            {
+                if (outsideX == Q12(0.0f))
                 {
-                    if (innerRadius < var_a1_2)
+                    if (innerRadius < outsideZ)
+                    {
+                        continue;
+                    }
+                }
+                else if (outsideZ == Q12(0.0f))
+                {
+                    if (innerRadius < outsideX)
                     {
                         continue;
                     }
                 }
                 else
                 {
-                    var_v0_3 = Q12_MULT_PRECISE(var_a1_2, var_a1_2) + Q12_MULT_PRECISE(var_v1, var_v1);
-                    if (Q12_MULT_PRECISE(innerRadius, innerRadius) < var_v0_3)
+                    q19_12 outsideDistSqr;
+
+                    outsideDistSqr = Q12_SQUARE_PRECISE(outsideX) + Q12_SQUARE_PRECISE(outsideZ);
+                    if (Q12_SQUARE_PRECISE(innerRadius) < outsideDistSqr)
                     {
                         continue;
                     }
                 }
             }
-        }
 
-        sp34   -= sp34 / 4;
-        var_s7 -= var_s7 / 4;
-        var_fp -= var_fp / 4;
+            // @bug Overwrites the current `segVec` with the point 3/4 along the segment, each later
+            // candidate that reaches here converts the already converted point again.
+            segVecX -= segVecX / 4;
+            segVecY -= segVecY / 4;
+            segVecZ -= segVecZ / 4;
 
-        sp34   += countX;
-        var_s7 += countY;
-        var_fp += countZ;
+            segVecX += segStartX;
+            segVecY += segStartY;
+            segVecZ += segStartZ;
 
-        sp5C = (temp_s5 + temp_s6) / 2;
+            otherMidY = (otherTopExtent + otherHeight) / 2;
 
-        unkX = sp34 - temp_t4_2;
-        unkZ  = var_fp - temp_t5;
-        temp_s0 = var_s7 - (sp58 + sp5C);
+            hitOffsetX = segVecX - otherCenterX;
+            hitOffsetZ = segVecZ - otherCenterZ;
+            hitOffsetY = segVecY - (otherPosY + otherMidY);
 
-        var_t1 = func_8008A058(func_80080540(unkX, Q12(0.0f), unkZ));
-        var_t2 = (temp_s6 - temp_s5) / 2;
+            hitOffsetXZ = func_8008A058(func_80080540(hitOffsetX, Q12(0.0f), hitOffsetZ));
+            halfHeight  = CLAMP_LOW((otherHeight - otherTopExtent) / 2, 0);
 
-        if (var_t2 < 0)
-        {
-            var_t2 = 0;
-        }
-
-        for (j = 2; (var_t2 < temp_s0 || temp_s0 < -var_t2 || innerRadius < var_t1) && j > 0; j--)
-        {
-            if (innerRadius < var_t1)
+            for (j = 2; (halfHeight < hitOffsetY || hitOffsetY < -halfHeight || innerRadius < hitOffsetXZ) && j > 0; j--)
             {
-                temp_lo_5 = Q12(innerRadius) / var_t1;
-                var_t1    = innerRadius;
-                unkX   = Q12_MULT_PRECISE(temp_lo_5, unkX);
-                temp_s0   = Q12_MULT_PRECISE(temp_lo_5, temp_s0);
-                unkZ    = Q12_MULT_PRECISE(temp_lo_5, unkZ);
-            }
-            else if (var_t2 < temp_s0)
-            {
-                temp_lo_5 = Q12(var_t2) / temp_s0;
-                temp_s0   = var_t2;
-                var_t1    = Q12_MULT_PRECISE(temp_lo_5, var_t1);
-                unkX   = Q12_MULT_PRECISE(temp_lo_5, unkX);
-                unkZ    = Q12_MULT_PRECISE(temp_lo_5, unkZ);
-            }
-            else if (temp_s0 < -var_t2)
-            {
-                temp_lo_5 = Q12(-var_t2) / temp_s0;
-                temp_s0   = -var_t2;
-                var_t1    = Q12_MULT_PRECISE(temp_lo_5, var_t1);
-                unkX   = Q12_MULT_PRECISE(temp_lo_5, unkX);
-                unkZ    = Q12_MULT_PRECISE(temp_lo_5, unkZ);
-            }
-        }
+                s32 clampScale;
 
-        D_800C47B8.vx = temp_t4_2 + unkX;
-        D_800C47B8.vy = (sp58 + sp5C) + temp_s0;
-        D_800C47B8.vz = temp_t5 + unkZ;
+                if (innerRadius < hitOffsetXZ)
+                {
+                    clampScale  = Q12_DIV(innerRadius, hitOffsetXZ);
+                    hitOffsetXZ = innerRadius;
+                    hitOffsetX  = Q12_MULT_PRECISE(clampScale, hitOffsetX);
+                    hitOffsetY  = Q12_MULT_PRECISE(clampScale, hitOffsetY);
+                    hitOffsetZ  = Q12_MULT_PRECISE(clampScale, hitOffsetZ);
+                }
+                else if (halfHeight < hitOffsetY)
+                {
+                    clampScale  = Q12_DIV(halfHeight, hitOffsetY);
+                    hitOffsetY  = halfHeight;
+                    hitOffsetXZ = Q12_MULT_PRECISE(clampScale, hitOffsetXZ);
+                    hitOffsetX  = Q12_MULT_PRECISE(clampScale, hitOffsetX);
+                    hitOffsetZ  = Q12_MULT_PRECISE(clampScale, hitOffsetZ);
+                }
+                else if (hitOffsetY < -halfHeight)
+                {
+                    clampScale  = Q12_DIV(-halfHeight, hitOffsetY);
+                    hitOffsetY  = -halfHeight;
+                    hitOffsetXZ = Q12_MULT_PRECISE(clampScale, hitOffsetXZ);
+                    hitOffsetX  = Q12_MULT_PRECISE(clampScale, hitOffsetX);
+                    hitOffsetZ  = Q12_MULT_PRECISE(clampScale, hitOffsetZ);
+                }
+            }
 
-        if (func_8008B714(chara, chara1, &D_800C47B8, arg3))
-        {
-            sp14 |= sp18;
+            hitPos.vx = otherCenterX + hitOffsetX;
+            hitPos.vy = (otherPosY + otherMidY) + hitOffsetY;
+            hitPos.vz = otherCenterZ + hitOffsetZ;
+
+            if (func_8008B714(attacker, other, &hitPos, damageScale))
+            {
+                hitFlags |= charaBit;
+            }
         }
     }
 
-    chara->attack.hitFlags |= sp14;
-    return sp14;
+    attacker->attack.hitFlags |= hitFlags;
+    return hitFlags;
 }
