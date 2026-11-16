@@ -50,6 +50,7 @@ typedef struct
 
 extern s32 D_800DAB78;
 
+// Hanged Scratcher NPC indices.
 extern u8 D_800DAB7C[3];
 
 extern s_WorldObjectPose  g_WorldObject_Map;

@@ -52,10 +52,10 @@ typedef enum _SfxId
     Sfx_DoorOpenM2S01         = 1323,            // } Pair.
     Sfx_DoorCloseM2S01        = 1324,            // }
     Sfx_MenuHealthItemUse     = 1325,
-    Sfx_Unk1326               = 1326,
-    Sfx_Unk1327               = 1327,
-    Sfx_Unk1328               = 1328,
-    Sfx_Unk1329               = 1329,
+    Sfx_Unk1326               = 1326, // } Hurt SFX.
+    Sfx_Unk1327               = 1327, // }
+    Sfx_Unk1328               = 1328, // }
+    Sfx_Unk1329               = 1329, // }
 
     Sfx_FootstepUnk1330       = 1330, // Harry footstep for unknown material.
     Sfx_FootstepUnk1331       = 1331, // Harry footstep for unknown material.

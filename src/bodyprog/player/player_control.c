@@ -7035,25 +7035,26 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
 
     #define attacker NPC_CHARA(0)
 
-    // Set damage SFX according to something.
+    // Set hurt SFX.
+    // @note `HurtSfxType_None` and `HurtSfxType_Unused3` are synonymous with `HurtSfxType_0`. Possibly a result of sloppy refactoring.
     sfxId = Sfx_Unk1326;
     if (player->attackReceived != NO_VALUE)
     {
         switch (g_Items_WeaponAttackInfos[player->attackReceived].hurtSfxType)
         {
-            case 2:
+            case HurtSfxType_2:
                 sfxId = Sfx_Unk1327;
                 break;
 
-            case 4:
+            case HurtSfxType_4:
                 sfxId = Sfx_Unk1328;
                 break;
 
-            case 5:
+            case HurtSfxType_5:
                 sfxId = Sfx_Unk1329;
                 break;
 
-            case 0:
+            case HurtSfxType_0:
                 break;
         }
     }

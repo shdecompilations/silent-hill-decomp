@@ -4,7 +4,7 @@
 /** @brief Attack types. Packed with an `e_AttackInputType` by `WEAPON_ATTACK` to index into `g_Items_WeaponAttackInfos`.
  *
  * @note Attacks here are associated with the `e_InvItemId` enum. Game code adds 128 to attack types from player weapons
- * (0-7, 32-35, and 96-98) to find the `e_InvItemId` for a given attack.
+ * (`[0, 7]`, `[32, 35]`, and `[96, 98]`) to find the `e_InvItemId` for a given attack.
  */
 typedef enum _AttackType
 {
@@ -26,11 +26,11 @@ typedef enum _AttackType
     AttackType_HyperBlaster         = 35,
     AttackType_Unk36                = 36, /** @unused Unused gun. Might be an automatic-firing gun based on having `interval` set in the attack info table. */
     
-    AttackType_PlayerAttackCount    = 39, /** Attack types following this are non-player attacks which don't seem to use `WEAPON_ATTACK` macro. */
+    AttackType_PlayerAttackCount    = 39, /** Attack types following this are non-player attacks which don't use the `WEAPON_ATTACK` macro. */
 
-    AttackType_AirScreamerStandBite = 40, /** Air Screamer bite while standing. */
-    AttackType_AirScreamerHoverBite = 41, /** Air Screamer bite while hovering. */
-    AttackType_AirScreamerScratch   = 42, /** Air Screamer scratch while gliding. */
+    AttackType_AirScreamerStandBite = 40, /** Air Screamer standing bite. */
+    AttackType_AirScreamerHoverBite = 41, /** Air Screamer hovering bite. */
+    AttackType_AirScreamerScratch   = 42, /** Air Screamer gliding scratch . */
     AttackType_Groaner              = 43, /** Groaner jump attack. */
     AttackType_HangedScratcher0     = 44,
     AttackType_HangedScratcher1     = 45,
@@ -65,13 +65,25 @@ typedef enum _AttackType
 typedef enum _AttackInfoType
 {
     AttackInfoType_Unk0    = 0,
-    AttackInfoType_Slash   = 1, /** Bladed and drilling melee. Keeps hitting through the hit window, damage split across it. SH2: `shBattleAttackByEnemySlash`. */
+    AttackInfoType_Slash   = 1, /** Bladed and drilling melee. Keeps hitting through the hit window, with damage split across it. SH2 name: `shBattleAttackByEnemySlash`. */
     AttackInfoType_Strike  = 2, /** Blunt melee and kicks. Stops on first hit, full damage. SH2: `shBattleAttackByEnemyStrike`. */
     AttackInfoType_Gunshot = 3,
-    AttackInfoType_Bite    = 4, /** Drain and instant kill attacks, damage applied directly by character code. Hit-tested like `Strike`. SH2: `shBattleAttackByEnemyBite` (empty stub, leftover from SH1?). */
+    AttackInfoType_Bite    = 4, /** Drain and instant kill attacks, with damage applied directly by character code. Hit-tested like `Strike`. SH2 name: `shBattleAttackByEnemyBite` (empty stub, leftover from SH1?). */
     AttackInfoType_Grab    = 5, /** Enemy grab. */
     AttackInfoType_Area    = 6  /** Enemy area attack (acid sprays, contact effects). SH2 calls them "Fog" attacks, based on `shBattleAttackByEnemyFog`. */
 } e_AttackInfoType;
+
+/** @brief Hurt SFX types. */
+typedef enum _HurtSfxType
+{
+    HurtSfxType_None    = -1, /** Treated the same as `HurtSfxType_0`. Maybe the result of a hasty refactor to make all attacks trigger hurt sounds. */
+    HurtSfxType_0       = 0,
+    HurtSfxType_1       = 1,
+    HurtSfxType_2       = 2,
+    HurtSfxType_Unused3 = 3, /** @unused Treated the same as `HurtSfxType_0` */
+    HurtSfxType_4       = 4,
+    HurtSfxType_5       = 5
+} e_HurtSfxType;
 
 /** @brief Melee attack hitbox.
  *
@@ -119,10 +131,10 @@ typedef struct _AttackInfo
     /* 0xE  */ u8    hitStartKeyframe;    /** SH2 name: `atk_start`. Keyframe into the attack animation where hit checks begin. */
     /* 0xF  */ u8    hitKeyframeCount;    /** SH2 name: `atk_end`. Number of keyframes for which hit checks stay active for after `hitStartKeyframe`. */
     /* 0x10 */ u8    type;                /** `e_AttackInfoType` | SH2 name: `kind`. */
-    /* 0x11 */ u8    hurtSfxType;         /** SH2 name: `sd`. Player hurt SFX type. TODO: Enum. */
+    /* 0x11 */ u8    hurtSfxType;         /** `e_HurtSfxType` | SH2 name: `sd`. Player hurt SFX type. */
     /* 0x12 */ u8    impactSfxGroup;      /** SH2 name: `eff`. Impact SFX per target, uses values 0-4. */
     /* 0x13 */ s8    __pad_13;
-    /* 0x14 */ u32*  unk_14;              /** Some pointer. All `g_Items_WeaponAttackInfos` entries point to `D_800AD4C4`. */
+    /* 0x14 */ u32*  unused_14;           /** Unused, dead code. All `g_Items_WeaponAttackInfos` entries point to `D_800AD4C4`. */
 } s_AttackInfo;
 
 extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
