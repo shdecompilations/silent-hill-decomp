@@ -64,13 +64,13 @@ typedef enum _AttackType
 /** @brief Attack info types. */
 typedef enum _AttackInfoType
 {
-    AttackInfoType_Unk0      = 0,
-    AttackInfoType_Melee     = 1, /** Melee hitting every frame. */
-    AttackInfoType_Melee1Hit = 2, /** Melee stopping on first hit. */
-    AttackInfoType_Gunshot   = 3,
-    AttackInfoType_Enemy0    = 4, // } TODO: Better naming.
-    AttackInfoType_Enemy1    = 5, // }
-    AttackInfoType_Enemy2    = 6  // }
+    AttackInfoType_Unk0    = 0,
+    AttackInfoType_Slash   = 1, /** Bladed and drilling melee. Keeps hitting through the hit window, damage split across it. SH2: `shBattleAttackByEnemySlash`. */
+    AttackInfoType_Strike  = 2, /** Blunt melee and kicks. Stops on first hit, full damage. SH2: `shBattleAttackByEnemyStrike`. */
+    AttackInfoType_Gunshot = 3,
+    AttackInfoType_Bite    = 4, /** Drain and instant kill attacks, damage applied directly by character code. Hit-tested like `Strike`. SH2: `shBattleAttackByEnemyBite` (empty stub, leftover from SH1?). */
+    AttackInfoType_Grab    = 5, /** Enemy grab. */
+    AttackInfoType_Area    = 6  /** Enemy area attack (acid sprays, contact effects). SH2 calls them "Fog" attacks, based on `shBattleAttackByEnemyFog`. */
 } e_AttackInfoType;
 
 /** @brief Melee attack hitbox.

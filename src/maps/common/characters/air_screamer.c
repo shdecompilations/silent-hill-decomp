@@ -982,20 +982,20 @@ s32 AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
                 damageType = AirScreamerHit_Stun;
             }
         }
-        else if (airScreamerProps.field_E8_0 != 3 && attackType == AttackInfoType_Melee1Hit && Math_CheckSignedRange(angle, Q12_ANGLE(120.0f)))
+        else if (airScreamerProps.field_E8_0 != 3 && attackType == AttackInfoType_Strike && Math_CheckSignedRange(angle, Q12_ANGLE(120.0f)))
         {
             damageType = AirScreamerHit_Rear;
         }
         else if (airScreamerProps.field_E8_0 == 3)
         {
-            if (damage > Q12(45.0f) || attackType == AttackInfoType_Melee)
+            if (damage > Q12(45.0f) || attackType == AttackInfoType_Slash)
             {
                 damageType = AirScreamerHit_Recoil;
             }
         }
         else
         {
-            if (damage > Q12(20.0f) || attackType == AttackInfoType_Melee)
+            if (damage > Q12(20.0f) || attackType == AttackInfoType_Slash)
             {
                 damageType = AirScreamerHit_Recoil;
             }

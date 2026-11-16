@@ -464,7 +464,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
         sp20 = chara->attack.aimYaw;
         sp24 = chara->attack.aimPitch;
 
-        if (temp_s1 == 3)
+        if (temp_s1 == AttackInfoType_Gunshot)
         {
             sp3C = chara->attack.shotsLeft;
             sp40 = chara->attack.shotsFired;
@@ -665,7 +665,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 var_a0 = 1;
             }
 
-            if (temp_s1 == 1)
+            if (temp_s1 == AttackInfoType_Slash)
             {
                 sp58 = 0;
                 if (i < sp28)
@@ -1211,11 +1211,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
         {
             switch (attackType)
             {
-                case AttackInfoType_Melee1Hit:
+                case AttackInfoType_Strike:
                     func_800892A4(6);
                     break;
 
-                case AttackInfoType_Melee:
+                case AttackInfoType_Slash:
                     func_800892A4(7);
                     break;
 
@@ -1315,7 +1315,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                 damageAmount *= 4;
             }
 
-            if (attackType == AttackInfoType_Melee)
+            if (attackType == AttackInfoType_Slash)
             {
                 damageAmount = Q12_MULT_PRECISE(damageAmount, damageScale);
                 shock        = Q12_MULT_PRECISE(shock, damageScale);
