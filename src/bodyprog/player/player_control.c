@@ -8050,16 +8050,16 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
             {
                 if (g_Player_RotationToTargetX != NO_VALUE || g_Player_RotationToTargetY != g_Player_RotationToTargetX)
                 {
-                    func_8008A0E4(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, g_Player_RotationToTargetY, g_Player_RotationToTargetX);
+                    Combat_AttackPerform(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, g_Player_RotationToTargetY, g_Player_RotationToTargetX);
                 }
                 else
                 {
-                    func_8008A0E4(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
+                    Combat_AttackPerform(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &attackPos, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
                 }
             }
             else
             {
-                func_8008A0E4(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &PLAYER_COMBAT().attackPosition, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
+                Combat_AttackPerform(player->attack.state, PLAYER_COMBAT().weaponAttack, player, &PLAYER_COMBAT().attackPosition, &unused, rotDeltaToTarget.vx, rotDeltaToTarget.vy);
             }
 
             g_Player_RotationDeltaToTargetX = rotDeltaToTarget.vx;
@@ -9168,7 +9168,7 @@ q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1) // 0x80080478
     deltaZ     = z1 - z0;
     atan2Delta = ratan2(deltaX, deltaZ);
 
-    unk = func_8008A058(func_80080540(deltaX, Q12(0.0f), deltaZ));
+    unk = Math_SquareRootQ12(func_80080540(deltaX, Q12(0.0f), deltaZ));
     return (ratan2(unk, y1 - y0) << 16) | atan2Delta;
 }
 

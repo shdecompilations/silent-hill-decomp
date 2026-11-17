@@ -396,7 +396,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 pos     = larvalStalker->position;
                 pos.vy += larvalStalker->collision.box.field_8;
 
-                if (func_8008A0E4(1, WEAPON_ATTACK(AttackType_LarvalStalkerGrab, AttackInputType_Tap), larvalStalker, &pos, &PLAYER_CHARA(), larvalStalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+                if (Combat_AttackPerform(CharaAttackState_Requested, WEAPON_ATTACK(AttackType_LarvalStalkerGrab, AttackInputType_Tap), larvalStalker, &pos, &PLAYER_CHARA(), larvalStalker->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
                 {
                     larvalStalkerProps.timer_EC = Q12(0.0f);
                     larvalStalkerProps.flags_E8 |= LarvalStalkerFlag_6;

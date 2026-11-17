@@ -296,5 +296,5 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
 
     bloodsucker->attack.state = CharaAttackState_Requested;
 
-    func_8008A0E4(1, WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap), bloodsucker, &scratchData->field_38, &PLAYER_CHARA(), Q12_ANGLE(90.0f), Q12_ANGLE(90.0f));
+    Combat_AttackPerform(CharaAttackState_Requested, WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap), bloodsucker, &scratchData->field_38, &PLAYER_CHARA(), Q12_ANGLE(90.0f), Q12_ANGLE(90.0f));
 }

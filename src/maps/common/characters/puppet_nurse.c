@@ -1284,7 +1284,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* boneCoords)
             weaponAttack = AttackType_PuppetNurseGrab;
         }
 
-        if (func_8008A0E4(1, weaponAttack, nurse, &pos, &PLAYER_CHARA(), nurse->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (Combat_AttackPerform(CharaAttackState_Requested, weaponAttack, nurse, &pos, &PLAYER_CHARA(), nurse->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             localNurseProps.flags_122 |= PuppetNurseFlag_0;
         }

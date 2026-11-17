@@ -715,8 +715,8 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
         newPos.vx = groaner->position.vx + groaner->collision.shapeOffsets.cylinder.vx;
         newPos.vy = groaner->position.vy - Q12(0.8f);
         newPos.vz = groaner->position.vz + groaner->collision.shapeOffsets.cylinder.vz;
-        func_8008A0E4(1, WEAPON_ATTACK(AttackType_Groaner, AttackInputType_Tap), groaner, &newPos,
-                      &PLAYER_CHARA(), groaner->rotation.vy, Q12_ANGLE(90.0f));
+        Combat_AttackPerform(CharaAttackState_Requested, WEAPON_ATTACK(AttackType_Groaner, AttackInputType_Tap), groaner, &newPos,
+                             &PLAYER_CHARA(), groaner->rotation.vy, Q12_ANGLE(90.0f));
     }
 
     if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 222, 235))

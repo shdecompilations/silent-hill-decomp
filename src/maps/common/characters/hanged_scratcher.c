@@ -537,8 +537,8 @@ void HangedScratcher_Control_4(s_SubCharacter* scratcher)
             attackPos.vz             = scratcher->position.vz;
             scratcherProps.flags |= HangedScratcherFlag_5;
 
-            func_8008A0E4(1, WEAPON_ATTACK(AttackType_HangedScratcher0, AttackInputType_Tap), scratcher, &attackPos, &PLAYER_CHARA(), scratcher->rotation.vy,
-                          ratan2(distToPlayer, (PLAYER_CHARA().position.vy + PLAYER_CHARA().collision.box.offsetY) - attackPos.vy));
+            Combat_AttackPerform(CharaAttackState_Requested, WEAPON_ATTACK(AttackType_HangedScratcher0, AttackInputType_Tap), scratcher, &attackPos, &PLAYER_CHARA(), scratcher->rotation.vy,
+                                 ratan2(distToPlayer, (PLAYER_CHARA().position.vy + PLAYER_CHARA().collision.box.offsetY) - attackPos.vy));
         }
         else if (ANIM_STATUS_IDX_GET(scratcher->model.anim.status) == HangedScratcherAnim_14)
         {
@@ -1072,7 +1072,7 @@ void HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
         scratcherProps.flags |= HangedScratcherFlag_5;
 
-        func_8008A0E4(1, WEAPON_ATTACK(AttackType_HangedScratcher1, AttackInputType_Tap), scratcher, &attackPos, &PLAYER_CHARA(), scratcher->rotation.vy, Q12_ANGLE(90.0f));
+        Combat_AttackPerform(CharaAttackState_Requested, WEAPON_ATTACK(AttackType_HangedScratcher1, AttackInputType_Tap), scratcher, &attackPos, &PLAYER_CHARA(), scratcher->rotation.vy, Q12_ANGLE(90.0f));
     }
 
     if (scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_15, true))

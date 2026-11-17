@@ -2848,7 +2848,7 @@ void func_800D54B4(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x8
         pos.vy = posX;
         pos.vz = posZ;
 
-        if (func_8008A0E4(1, var_s0, twinfeeler, &pos, &PLAYER_CHARA(), twinfeeler->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
+        if (Combat_AttackPerform(CharaAttackState_Requested, var_s0, twinfeeler, &pos, &PLAYER_CHARA(), twinfeeler->rotation.vy, Q12_ANGLE(90.0f)) != NO_VALUE)
         {
             localChara->properties.twinfeeler.flags |= TwinfeelerFlag_0;
         }

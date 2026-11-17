@@ -44,7 +44,7 @@ typedef enum _CharaAttackState
  */
 typedef struct _CharaAttack
 {
-    /* 0x0  */ s16     state;           /** `e_CharaAttackState`. Reset to `CharaAttackState_Idle` by `func_8008A3AC` when `CharaFlag_Unk8` is clear. */
+    /* 0x0  */ s16     state;           /** `e_CharaAttackState`. Reset to `CharaAttackState_Idle` by `Combat_AttackCleanup` when `CharaFlag_AttackTicked` is clear. */
     /* 0x2  */ u8      weaponAttack;    /** Packed `WEAPON_ATTACK` being performed. Index into `g_Items_WeaponAttackInfos`. */
     /* 0x3  */ u8      shotsLeft;       /** Gunshots only. Set to 100 on start, decremented per shot. Attack ends at 0. */
     /* 0x4  */ u8      shotsFired;      /** Gunshots only. Compared against `s_AttackShot::shotCountMax`. */
@@ -64,8 +64,10 @@ typedef struct _CharaAttack
                                           * Always 0 after the `bzero` during character spawn? */
 } s_CharaAttack;
 
-// Q12 square root?
-u32 func_8008A058(s32 arg0);
+/** @brief Computes a Q12 square root using the GTE leading zero count and the `SQRT` table.
+ * Same algorithm as PsyQ `SquareRoot12`.
+ */
+u32 Math_SquareRootQ12(s32 arg0);
 
 /** @brief @unused Returns 0. */
 s32 func_8008A0CC(void);
@@ -75,12 +77,16 @@ s64 func_8008A0D4(void);
 
 /** @brief Starts, continues or cancels an attack and runs its hit checks for this tick.
  *
- * @param request `> 0` starts the attack if idle, `<= 0` cancels.
+ * Called each tick by the attacking character's update. Not calling it cancels the attack, see `CharaFlag_AttackTicked`.
+ *
+ * @param request `CharaAttackState_Requested` (or any other active state) starts the attack if idle, otherwise continues it.
+ *                `CharaAttackState_Idle` or `CharaAttackState_Finished` cancels it.
+ *                Callers pass `CharaAttackState_Requested`, or their own `s_CharaAttack::state` to continue until it goes idle.
  * @return Player: `NPC_COUNT_MAX - (index of the lowest NPC hit)`, `NO_VALUE` if none.
  *         Others: 0 if the player has an `attackReceived` set, otherwise `NO_VALUE`.
  */
-s32 func_8008A0E4(s32 request, s32 weaponAttack, struct _SubCharacter* chara, VECTOR3* attackPos, struct _SubCharacter* unused,
-                  q3_12 aimYaw, q3_12 aimPitch);
+s32 Combat_AttackPerform(e_CharaAttackState request, s32 weaponAttack, struct _SubCharacter* chara, VECTOR3* attackPos, struct _SubCharacter* unused,
+                         q3_12 aimYaw, q3_12 aimPitch);
 
 /** @brief Gets the first keyframe of an attack's hit window from `s_AttackInfo::hitStartKeyframe`.
  * Returns 0 while a gas weapon's engine is revved, so hit window is always open.
@@ -103,12 +109,22 @@ u32 Combat_AttackKeyframeCountGet(s32 weaponAttack);
  */
 bool Combat_AttackHitWindowCheck(struct _AttackInfo* attackInfo, s32 keyframe);
 
-void Chara_Flag8Clear(struct _SubCharacter* chara);
+/** @brief Clears `CharaFlag_AttackTicked`. Called before a character's update. */
+void Combat_CharaAttackTickedClear(struct _SubCharacter* chara);
 
-void Chara_Flag8Set(struct _SubCharacter* chara);
+/** @brief Sets `CharaFlag_AttackTicked`. Called by `Combat_AttackUpdate`. */
+void Combat_CharaAttackTickedSet(struct _SubCharacter* chara);
 
-/** Large function. Runs if `CharaFlag_Unk8` is set. */
-void func_8008A3AC(struct _SubCharacter* chara);
+/** @brief Resets an attack the character stopped performing.
+ *
+ * Character code ends an attack by no longer calling `Combat_AttackPerform` each tick, so `Combat_AttackUpdate`
+ * doesn't run and doesn't set `CharaFlag_AttackTicked`.
+ * This function checks if `CharaFlag_AttackTicked` is still unset, and changes state to `CharaAttackState_Idle` if not.
+ * `Combat_AttackUpdate` is then called with the state set to Idle to clear hit flags/timers.
+ *
+ * @param chara Character that is being updated.
+ */
+void Combat_AttackCleanup(struct _SubCharacter* chara);
 
 /** @brief Advances an attack's state and runs its hit checks for this tick.
  *
@@ -116,7 +132,7 @@ void func_8008A3AC(struct _SubCharacter* chara);
  * Other attacks check 4 hit lines spaced between the previous tick's aim and origin and the current ones, running
  * `Combat_MeleeHitCheck` on each. Non-Slash attacks stop at the first hit.
  * When one of Harry's attacks finishes, it's recorded in the ranking statistics with `func_8009151C`.
- * Also sets `CharaFlag_Unk8` (TODO: decode this flag, might mean attack has been processed this tick?)
+ * Also sets `CharaFlag_AttackTicked`, so `Combat_AttackCleanup` leaves the attack alone this tick.
  *
  * @param attacker Attacking character.
  * @return `1 << npcIdx` per NPC hit so far during the whole attack, `NO_VALUE` if the player was hit.

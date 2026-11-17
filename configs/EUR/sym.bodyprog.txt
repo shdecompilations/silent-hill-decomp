@@ -1420,16 +1420,16 @@ func_80089DF0                                = 0x800899D4; // type:func
 //---------------------------------------------------------------
 //--- PA: 0x0645AC   VA: 0x80089C3C   subsegment: c, chara/combat
 //---------------------------------------------------------------
-func_8008A058                                = 0x80089C3C; // type:func
+Math_SquareRootQ12                           = 0x80089C3C; // type:func
 func_8008A0CC                                = 0x80089CB0; // type:func
 func_8008A0D4                                = 0x80089CB8; // type:func
-func_8008A0E4                                = 0x80089CC8; // type:func
+Combat_AttackPerform                         = 0x80089CC8; // type:func
 Combat_AttackStartKeyframeGet                = 0x80089E54; // type:func
 Combat_AttackKeyframeCountGet                = 0x80089EC4; // type:func
 Combat_AttackHitWindowCheck                  = 0x80089F40; // type:func
-Chara_Flag8Clear                             = 0x80089F68; // type:func
-Chara_Flag8Set                               = 0x80089F7C; // type:func
-func_8008A3AC                                = 0x80089F90; // type:func
+Combat_CharaAttackTickedClear                = 0x80089F68; // type:func
+Combat_CharaAttackTickedSet                  = 0x80089F7C; // type:func
+Combat_AttackCleanup                         = 0x80089F90; // type:func
 Combat_AttackUpdate                          = 0x80089FC4; // type:func
 Combat_AttackHitLineInit                     = 0x8008AD40; // type:func
 Combat_AttackHitLineUpdate                   = 0x8008ADC0; // type:func

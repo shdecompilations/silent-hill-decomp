@@ -27,11 +27,10 @@ q3_12 D_800AFD1C[] =
 // ========================================
 // COMBAT RELATED?
 // ========================================
-// Will: Possibly combat? I only found that stubbing `Combat_AttackUpdate` and `Combat_HitApply`
-// makes enemies unable to perform any attack. Also there are some sound related functions,
-// they seem to be specifically done for something related to weapons in the inventory.
 
-u32 func_8008A058(s32 arg0) // 0x8008A058
+// TODO: Could be handwritten asm based on the register pins needed here, maybe as a separate `.s` from this file since this also gets called from player_control.c.
+// Uncertain though, the rest of the code does match as C.
+u32 Math_SquareRootQ12(s32 arg0) // 0x8008A058
 {
     // @hack
     register s32  temp_t0 asm("t0");
@@ -103,15 +102,15 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
-                  q3_12 aimYaw, q3_12 aimPitch) // 0x8008A0E4
+s32 Combat_AttackPerform(e_CharaAttackState request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
+                         q3_12 aimYaw, q3_12 aimPitch) // 0x8008A0E4
 {
-    s32          prevState;
-    s32          hitFlags;
-    s32          ret;
-    s32          firstNpcBit;
-    s32          count;
-    s_ModelAnim* modelAnim;
+    e_CharaAttackState prevState;
+    s32                hitFlags;
+    s32                ret;
+    s32                firstNpcBit;
+    s32                count;
+    s_ModelAnim*       modelAnim;
 
     prevState = chara->attack.state;
     modelAnim = &chara->model.anim;
@@ -136,9 +135,9 @@ s32 func_8008A0E4(s32 request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3*
         modelAnim->mapAnimStatusStart = ANIM_STATUS(38, false);
     }
 
-    if (request <= 0)
+    if (request <= CharaAttackState_Idle)
     {
-        prevState           = 0;
+        prevState           = CharaAttackState_Idle;
         chara->attack.state = CharaAttackState_Idle;
     }
 
@@ -149,7 +148,7 @@ s32 func_8008A0E4(s32 request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3*
         chara->attack.state    = CharaAttackState_Idle;
         chara->attack.hitFlags = 0;
     }
-    else if (!prevState && request > 0)
+    else if (prevState == CharaAttackState_Idle && request > CharaAttackState_Idle)
     {
         chara->attack.state    = CharaAttackState_Requested;
         chara->attack.hitFlags = 0;
@@ -277,19 +276,19 @@ bool Combat_AttackHitWindowCheck(s_AttackInfo* attackInfo, s32 keyframe) // 0x80
     return result;
 }
 
-void Chara_Flag8Clear(s_SubCharacter* chara) // 0x8008A384
+void Combat_CharaAttackTickedClear(s_SubCharacter* chara) // 0x8008A384
 {
-    chara->flags &= ~CharaFlag_Unk8;
+    chara->flags &= ~CharaFlag_AttackTicked;
 }
 
-void Chara_Flag8Set(s_SubCharacter* chara) // 0x8008A398
+void Combat_CharaAttackTickedSet(s_SubCharacter* chara) // 0x8008A398
 {
-    chara->flags |= CharaFlag_Unk8;
+    chara->flags |= CharaFlag_AttackTicked;
 }
 
-void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
+void Combat_AttackCleanup(s_SubCharacter* chara) // 0x8008A3AC
 {
-    if (!(chara->flags & CharaFlag_Unk8))
+    if (!(chara->flags & CharaFlag_AttackTicked))
     {
         chara->attack.state = CharaAttackState_Idle;
         Combat_AttackUpdate(chara);
@@ -326,7 +325,7 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
     static VECTOR3    stepOrigins[4]; // Q19.12 | Attack origin for each hit check step.
 
     targetDistLevel = NO_VALUE;
-    Chara_Flag8Set(attacker);
+    Combat_CharaAttackTickedSet(attacker);
 
     state        = attacker->attack.state;
     weaponAttack = attacker->attack.weaponAttack;
@@ -1381,7 +1380,7 @@ s32 Combat_HitApply(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* h
             }
 
             // Normalize push to Q12 unit length.
-            pushLength = func_8008A058(func_80080540(pushX, pushY, pushZ));
+            pushLength = Math_SquareRootQ12(func_80080540(pushX, pushY, pushZ));
             if (pushLength >= 64)
             {
                 if (pushLength >= Q12(4096.0f))
@@ -1853,7 +1852,7 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
             hitOffsetZ = hitLineVecZ - otherCenterZ;
             hitOffsetY = hitLineVecY - (otherPosY + otherMidY);
 
-            hitOffsetXZ = func_8008A058(func_80080540(hitOffsetX, Q12(0.0f), hitOffsetZ));
+            hitOffsetXZ = Math_SquareRootQ12(func_80080540(hitOffsetX, Q12(0.0f), hitOffsetZ));
             halfHeight  = CLAMP_LOW((otherHeight - otherTopExtent) / 2, 0);
 
             for (j = 2; (halfHeight < hitOffsetY || hitOffsetY < -halfHeight || innerRadius < hitOffsetXZ) && j > 0; j--)

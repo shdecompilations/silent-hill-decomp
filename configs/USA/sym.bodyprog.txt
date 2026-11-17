@@ -303,9 +303,9 @@ Joy_Update                                   = 0x8003446C; // type:func
 Joy_ControllerDataUpdate                     = 0x80034494; // type:func
 ControllerData_AnalogToDigital               = 0x80034670; // type:func
 
-//----------------------------------------------------------------------
+//----------------------------------------------------------------------------
 //--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, game_boot/npc_anims_clear
-//----------------------------------------------------------------------
+//----------------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x800348C0; // type:func
 
 //----------------------------------------------------------------------
@@ -776,7 +776,7 @@ Inventory_GunsAvailableCheck                 = 0x8004C328;
 Inventory_HyperBlasterUnlockTest             = 0x8004C45C; // type:func
 Inventory_HyperBlasterFunctionalTest         = 0x8004C4F8; // type:func
 Game_HyperBlasterBeamColorGet                = 0x8004C54C; // type:func
-Game_GasWeaponSfxUpdate                 = 0x8004C564; // type:func
+Game_GasWeaponSfxUpdate                      = 0x8004C564; // type:func
 Game_TimerUpdate                             = 0x8004C8DC; // type:func
 
 //-----------------------------------------------------------------------
@@ -1176,8 +1176,17 @@ Chara_SpawnPositionSet                       = 0x80089034; // type:func
 //---------------------------------------------------------------
 //--- PA: 0x0654F8   VA: 0x8008A058   subsegment: c, chara/combat
 //---------------------------------------------------------------
-Chara_Flag8Clear                             = 0x8008A384; // type:func
-Chara_Flag8Set                               = 0x8008A398; // type:func
+Math_SquareRootQ12                           = 0x8008A058; // type:func
+Combat_AttackPerform                         = 0x8008A0E4; // type:func
+Combat_AttackStartKeyframeGet                = 0x8008A270; // type:func
+Combat_AttackKeyframeCountGet                = 0x8008A2E0; // type:func
+Combat_AttackHitWindowCheck                  = 0x8008A35C; // type:func
+Combat_CharaAttackTickedClear                = 0x8008A384; // type:func
+Combat_CharaAttackTickedSet                  = 0x8008A398; // type:func
+Combat_AttackCleanup                         = 0x8008A3AC; // type:func
+Combat_AttackUpdate                          = 0x8008A3E0; // type:func
+Combat_AttackHitLineInit                     = 0x8008B15C; // type:func
+Combat_AttackHitLineUpdate                   = 0x8008B1DC; // type:func
 Combat_GasWeaponSfxAllStop                   = 0x8008B398; // type:func
 Combat_GasWeaponContactSfxUpdate             = 0x8008B3E4; // type:func
 Combat_RockDrillRunSfxUpdate                 = 0x8008B40C; // type:func
@@ -1185,12 +1194,6 @@ Combat_GasWeaponEngineSfxUpdate              = 0x8008B438; // type:func
 Combat_GasWeaponSfxUpdate                    = 0x8008B474; // type:func
 Combat_HitApply                              = 0x8008B714; // type:func
 Combat_MeleeHitCheck                         = 0x8008BF84; // type:func
-Combat_AttackUpdate                          = 0x8008A3E0; // type:func
-Combat_AttackStartKeyframeGet                = 0x8008A270; // type:func
-Combat_AttackKeyframeCountGet                = 0x8008A2E0; // type:func
-Combat_AttackHitWindowCheck                  = 0x8008A35C; // type:func
-Combat_AttackHitLineInit                     = 0x8008B15C; // type:func
-Combat_AttackHitLineUpdate                   = 0x8008B1DC; // type:func
 
 //------------------------------------------------------------
 //--- PA: 0x067E40   VA: 0x8008C9A0   subsegment: c, chara/dms

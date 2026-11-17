@@ -1168,13 +1168,13 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
 
                 func_8006342C(AttackType_CybilHandgun, monsterCybilProps.field_11A, monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
 
-                if (func_8008A0E4(monsterCybil->attack.state,
-                                  WEAPON_ATTACK(AttackType_CybilHandgun, AttackInputType_Tap),
-                                  monsterCybil,
-                                  &D_800ED570,
-                                  &PLAYER_CHARA(),
-                                  monsterCybil->rotation.vy,
-                                  monsterCybilProps.field_11A) != NO_VALUE)
+                if (Combat_AttackPerform(monsterCybil->attack.state,
+                                         WEAPON_ATTACK(AttackType_CybilHandgun, AttackInputType_Tap),
+                                         monsterCybil,
+                                         &D_800ED570,
+                                         &PLAYER_CHARA(),
+                                         monsterCybil->rotation.vy,
+                                         monsterCybilProps.field_11A) != NO_VALUE)
                 {
                     monsterCybilProps.field_115 = 1;
                     monsterCybilProps.field_116 = 1;
@@ -1250,7 +1250,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybil->attack.state = CharaAttackState_Idle;
             }
 
-            if (func_8008A0E4(monsterCybil->attack.state, WEAPON_ATTACK(AttackType_MonsterCybil0, AttackInputType_Tap), monsterCybil, &D_800ED570, &PLAYER_CHARA(), monsterCybil->rotation.vy, 0x400) != -1)
+            if (Combat_AttackPerform(monsterCybil->attack.state, WEAPON_ATTACK(AttackType_MonsterCybil0, AttackInputType_Tap), monsterCybil, &D_800ED570, &PLAYER_CHARA(), monsterCybil->rotation.vy, 0x400) != -1)
             {
                 PLAYER_CHARA().damage.position.vz = Q12(1.0f);
 
@@ -1612,13 +1612,13 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybil->attack.state = CharaAttackState_Idle;
             }
 
-            temp_v0_2 = func_8008A0E4(monsterCybil->attack.state,
-                                      WEAPON_ATTACK(AttackType_MonsterCybilNeckGrab, AttackInputType_Tap),
-                                      monsterCybil,
-                                      &D_800ED570,
-                                      &PLAYER_CHARA(),
-                                      monsterCybil->rotation.vy,
-                                      Q12_ANGLE(90.0f));
+            temp_v0_2 = Combat_AttackPerform(monsterCybil->attack.state,
+                                             WEAPON_ATTACK(AttackType_MonsterCybilNeckGrab, AttackInputType_Tap),
+                                             monsterCybil,
+                                             &D_800ED570,
+                                             &PLAYER_CHARA(),
+                                             monsterCybil->rotation.vy,
+                                             Q12_ANGLE(90.0f));
 
             if (temp_v0_2 != NO_VALUE)
             {
@@ -1725,13 +1725,13 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybil->attack.state = CharaAttackState_Idle;
             }
 
-            if (func_8008A0E4(monsterCybil->attack.state,
-                              WEAPON_ATTACK(AttackType_MonsterCybil1, AttackInputType_Tap),
-                              monsterCybil,
-                              &D_800ED570,
-                              &PLAYER_CHARA(),
-                              monsterCybil->rotation.vy,
-                              Q12_ANGLE(90.0f)) != NO_VALUE)
+            if (Combat_AttackPerform(monsterCybil->attack.state,
+                                     WEAPON_ATTACK(AttackType_MonsterCybil1, AttackInputType_Tap),
+                                     monsterCybil,
+                                     &D_800ED570,
+                                     &PLAYER_CHARA(),
+                                     monsterCybil->rotation.vy,
+                                     Q12_ANGLE(90.0f)) != NO_VALUE)
             {
                 PLAYER_CHARA().damage.position.vz = Q12(1.0f);
 

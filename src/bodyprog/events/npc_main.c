@@ -332,7 +332,7 @@ void Game_NpcUpdate(void) // 0x80038354
         animDataIdx = g_CharaAnimDataIdxs[curNpc->model.charaId];
         boneCoords  = g_CharaModelAnimsData[animDataIdx].boneCoords;
 
-        Chara_Flag8Clear(curNpc);
+        Combat_CharaAttackTickedClear(curNpc);
         Chara_DamagedFlagUpdate(curNpc);
         Collision_TriggerFlagsLocationUpdate(curNpc);
 
@@ -340,7 +340,7 @@ void Game_NpcUpdate(void) // 0x80038354
 
         Collision_TriggerFlagsUpdate();
         func_80037E78(curNpc);
-        func_8008A3AC(curNpc);
+        Combat_AttackCleanup(curNpc);
 
         if (curNpc->model.anim.flags & AnimFlag_Visible)
         {
