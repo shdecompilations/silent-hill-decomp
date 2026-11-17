@@ -1160,7 +1160,7 @@ void Stalker_Control_4(s_SubCharacter* stalker)
     offsetZ      = stalker->position.vz - stalkerProps.targetPositionZ;
     distToTarget = MAX(ABS(offsetX), ABS(offsetZ));
 
-    if (!(*(s32*)&stalkerProps.flags & 0x18))
+    if (!(stalkerProps.flags & StalkerFlag_3) && !(stalkerProps.flags & StalkerFlag_4))
     {
         if (!(Rng_GenerateInt(0, 511) && distToTarget <= Q12(4.0f)) || // 1 in 512 chance.
             (!Rng_GenerateInt(0, 127) &&                               // 1 in 128 chance.
@@ -1797,8 +1797,7 @@ void Stalker_Control_10(s_SubCharacter* stalker)
         }
     }
 
-    // @hack Odd `stalkerProps.flags` aaccess.
-    if (stalker->moveSpeed == Q12(0.0f) && !(*(s32*)&stalkerProps.flags & (StalkerFlag_Falling |StalkerFlag_9)))
+    if (stalker->moveSpeed == Q12(0.0f) && !(stalkerProps.flags & StalkerFlag_Falling) && !(stalkerProps.flags & StalkerFlag_9))
     {
         newAnimStatus = (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_31, true)) ? ANIM_STATUS(StalkerAnim_Still, true) :
                                                                                             ANIM_STATUS(StalkerAnim_Still, false);

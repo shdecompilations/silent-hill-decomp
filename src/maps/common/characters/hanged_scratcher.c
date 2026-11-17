@@ -916,9 +916,8 @@ void HangedScratcher_Control_13(s_SubCharacter* scratcher)
         }
     }
 
-    // TODO: Weird 32-bit flags access, maybe `if` is checking both `flags` and `field_EA`?
     if (scratcher->moveSpeed == Q12(0.0f) &&
-        !(*(u32*)&scratcherProps.flags & (HangedScratcherFlag_Airborne | HangedScratcherFlag_2)))
+        !(scratcherProps.flags & HangedScratcherFlag_Airborne) && !(scratcherProps.flags & HangedScratcherFlag_2))
     {
         func_800622B8(3, scratcher, ANIM_STATUS(HangedScratcherAnim_4, false), 8);
         scratcherProps.flags |= HangedScratcherFlag_2;

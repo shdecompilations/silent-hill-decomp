@@ -185,7 +185,8 @@ typedef struct _PropsFloatstinger
 /** @brief Groaner character properties. */
 typedef struct _PropsGroaner
 {
-    /* 0xE8  */ u_Property flags; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
+    /* 0xE8  */ s16        flags; /** `e_GroanerFlags` */
+    /* 0xEA  */ s8         __pad_EA[2];
     /* 0xEC  */ q3_12      targetHeadingAngle;
     /* 0xEE  */ q3_12      flexAngle;
     /* 0xF0  */ q3_12      field_F0; // } XZ offset?

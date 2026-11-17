@@ -398,7 +398,7 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
     {
         if (distToPlayer > Q12(1.2f))
         {
-            if ((*(s32*)&creeperProps.flags & (CreeperFlag_Leader | CreeperFlag_TargetPlayer)) == CreeperFlag_Leader)
+            if ((creeperProps.flags & CreeperFlag_Leader) && !(creeperProps.flags & CreeperFlag_TargetPlayer))
             {
                 creeperProps.flags          |= CreeperFlag_TargetPlayer;
                 creeperProps.targetPositionX = creeperProps.homePositionX;
@@ -634,7 +634,7 @@ void Creeper_ControlDamage(s_SubCharacter* creeper)
         creeper->collision.state = CharaCollisionState_Ignore;
     }
 
-    if (creeper->moveSpeed == Q12(0.0f) && !(*(s32*)&creeperProps.flags & (CreeperFlag_Falling | CreeperFlag_3)))
+    if (creeper->moveSpeed == Q12(0.0f) && !(creeperProps.flags & CreeperFlag_Falling) && !(creeperProps.flags & CreeperFlag_3))
     {
         creeper->properties.creeper.flags |= CreeperFlag_3;
         Savegame_EnemyStateUpdate(creeper);

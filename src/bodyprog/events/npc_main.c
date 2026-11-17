@@ -42,9 +42,7 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     s8  idx;
     s32 cond;
 
-    // @hack Odd check for `(chara->flags & (CharaFlag_Damaged | CharaFlag_Dead)) == CharaFlag_Damaged`.
-    if (chara->health <= Q12(0.0f) &&
-        (*(s32*)&chara->headingAngle & ((CharaFlag_Damaged | CharaFlag_Dead) << 16)) == (CharaFlag_Damaged << 16))
+    if (chara->health <= Q12(0.0f) && (chara->flags & CharaFlag_Damaged) && !(chara->flags & CharaFlag_Dead))
     {
         idx = chara->attackReceived;
         if (idx < AttackType_PlayerAttackCount)

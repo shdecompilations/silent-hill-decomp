@@ -725,8 +725,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalker->collision.state = CharaCollisionState_Ignore;
             }
 
-            // TODO: Weird property cast. Originally, maybe a wrong properties struct was mistakenly accessed?
-            if (larvalStalker->moveSpeed == Q12(0.0f) && !(*(s32*)&larvalStalkerProps.flags_E8 & (LarvalStalkerFlag_4 | LarvalStalkerFlag_5)))
+            if (larvalStalker->moveSpeed == Q12(0.0f) && !(larvalStalkerProps.flags_E8 & LarvalStalkerFlag_4) && !(larvalStalkerProps.flags_E8 & LarvalStalkerFlag_5))
             {
                 if (ANIM_STATUS_IDX_GET(larvalStalker->model.anim.status) == LarvalStalkerAnim_DeathFrontEnd)
                 {
