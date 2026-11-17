@@ -24,7 +24,7 @@ static u32 D_800AD4C4 = 0;
  * TODO: Identify `UnkXX` attacks, add better names for the enemy attacks.
 */
 s_AttackInfo g_Items_WeaponAttackInfos[70] = {
-/* Weapon attack            { `rangeMax`, `rangeMin`, `damage`, `hitCheck`,                           `shock`,    `hitStartKeyframe`, `hitKeyframeCount`,     `type`,                   `hurtSfxType`,    `impactSfxGroup`, `pad`, `unused_14` } */
+/* Weapon attack            { `rangeMax`, `rangeMin`, `damage`, `hitCheck`,                           `shock`,    `hitStartKeyframe`, `hitKeyframeCount`,     `type`,                   `hurtSfxType`,    `bloodSize`,      `pad`, `unused_14` } */
 /* Melee attacks         */
 /* KitchenKnife          */ { Q12(0.4f),  Q12(0.1f),  130,      ATTACK_FIGHT(0.5f, 0.5f, 0.2f),       Q12(0.0f),  3,                  3,                      AttackInfoType_Slash,     HurtSfxType_None, 2,                0,     &D_800AD4C4 },
 /* SteelPipe             */ { Q12(1.0f),  Q12(-0.1f), 70,       ATTACK_FIGHT(0.4f, 0.5f, 0.3f),       Q12(1.0f),  7,                  4,                      AttackInfoType_Strike,    HurtSfxType_None, 3,                0,     &D_800AD4C4 },

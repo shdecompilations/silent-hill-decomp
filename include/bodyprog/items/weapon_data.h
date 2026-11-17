@@ -132,7 +132,7 @@ typedef struct _AttackInfo
     /* 0xF  */ u8    hitKeyframeCount;    /** SH2 name: `atk_end`. Number of keyframes for which hit checks stay active for after `hitStartKeyframe`. */
     /* 0x10 */ u8    type;                /** `e_AttackInfoType` | SH2 name: `kind`. */
     /* 0x11 */ u8    hurtSfxType;         /** `e_HurtSfxType` | SH2 name: `sd`. Player hurt SFX type. */
-    /* 0x12 */ u8    impactSfxGroup;      /** SH2 name: `eff`. Impact SFX per target, uses values 0-4. */
+    /* 0x12 */ u8    bloodSize;           /** SH2 name: `eff`. Blood splatter size passed to `func_8005F6B0`, 0 for none. */
     /* 0x13 */ s8    __pad_13;
     /* 0x14 */ u32*  unused_14;           /** Unused, dead code. All `g_Items_WeaponAttackInfos` entries point to `D_800AD4C4`. */
 } s_AttackInfo;

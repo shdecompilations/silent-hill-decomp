@@ -27,7 +27,7 @@ q3_12 D_800AFD1C[] =
 // ========================================
 // COMBAT RELATED?
 // ========================================
-// Will: Possibly combat? I only found that stubbing `Combat_AttackUpdate` and `func_8008B714`
+// Will: Possibly combat? I only found that stubbing `Combat_AttackUpdate` and `Combat_HitApply`
 // makes enemies unable to perform any attack. Also there are some sound related functions,
 // they seem to be specifically done for something related to weapons in the inventory.
 
@@ -604,7 +604,7 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
                     attacker->attack.hitLineVec[1].vx = pelletDirX;
                     attacker->attack.hitLineVec[1].vy = pelletDirY;
                     attacker->attack.hitLineVec[1].vz = pelletDirZ;
-                    func_8008B714(attacker, hitChara, &shotTrace.target, 0);
+                    Combat_HitApply(attacker, hitChara, &shotTrace.target, 0);
                 }
             }
         }
@@ -1167,20 +1167,19 @@ void func_8008B664(VECTOR3* pos, u32 weaponAttack) // 0x8008B664
     }
 }
 
-s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale) // 0x8008B714
+s32 Combat_HitApply(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale) // 0x8008B714
 {
+    s32           weaponAttack;
+    s_AttackInfo* attackInfo;
+    s32           attackType;
     s32           targetBit;
     s32           hitFlags;
     u32           damage;
     q19_12        pushX;
     q19_12        pushY;
     q19_12        pushZ;
-    s32           attackType;
-    q20_12        damageAmount;
-    s32           pushLength;
+    q20_12        finalDamage;
     u32           shock;
-    s32           weaponAttack;
-    s_AttackInfo* attackInfo;
 
     weaponAttack = attacker->attack.weaponAttack;
     attackInfo   = &g_Items_WeaponAttackInfos[weaponAttack];
@@ -1249,7 +1248,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
         case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
             // @bug `hitCheckTime` is Q12 but `Combat_AttackHitWindowCheck` compares whole keyframes?
-            if (Combat_AttackHitWindowCheck(attackInfo, attacker->attack.hitCheckTime) == false)
+            if (!Combat_AttackHitWindowCheck(attackInfo, attacker->attack.hitCheckTime))
             {
                 damage = 0;
             }
@@ -1267,7 +1266,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                     break;
 
                 case 1:
-                    damage += damage * 2;
+                    damage *= 3;
                     break;
 
                 case 2:
@@ -1286,8 +1285,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
             break;
     }
 
-    shock        = attackInfo->shock;
-    damageAmount = Q12_MULT_PRECISE(damage, (Q12(4.5f) - Rng_RandQ12()) / 4);
+    // Random spread of 87.5% to 112.5%.
+    shock       = attackInfo->shock;
+    finalDamage = Q12_MULT_PRECISE(damage, (Q12(4.5f) - Rng_RandQ12()) / 4);
 
     switch (weaponAttack)
     {
@@ -1295,7 +1295,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
         case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
         case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
         case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
-        case NO_VALUE:
+        case NO_VALUE: // @bug This `NO_VALUE` check could never trigger here, `weaponAttack` is zero-extended to `s32` from a `u8`, 0xFF would read as 255 and not `NO_VALUE`.
+                       // Possible this was another Gunshot type attack at one point, which they removed from here by changing to NO_VALUE?
+            // Push along the pellet direction. Shotgun pellets don't push.
             pushX = attacker->attack.hitLineVec[1].vx;
             pushY = attacker->attack.hitLineVec[1].vy;
             pushZ = attacker->attack.hitLineVec[1].vz;
@@ -1314,15 +1316,18 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
             break;
 
         default:
+        {
+            s32 pushLength;
+
             if (target != &PLAYER_CHARA() && !(target->flags & CharaFlag_Hit))
             {
-                damageAmount *= 4;
+                finalDamage *= 4;
             }
 
             if (attackType == AttackInfoType_Slash)
             {
-                damageAmount = Q12_MULT_PRECISE(damageAmount, damageScale);
-                shock        = Q12_MULT_PRECISE(shock, damageScale);
+                finalDamage = Q12_MULT_PRECISE(finalDamage, damageScale);
+                shock       = Q12_MULT_PRECISE(shock, damageScale);
             }
 
             if (weaponAttack == WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap) ||
@@ -1334,6 +1339,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
             }
             else
             {
+                // Push along the swing, from last tick's hit line end to this step's.
+                // @bug `prevTip` is never written, so last tick's end is just `prevOrigin`.
                 s32 baseX;
                 s32 baseY;
                 s32 baseZ;
@@ -1348,9 +1355,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                 baseY = attacker->attack.prevOrigin.vy;
                 baseZ = attacker->attack.prevOrigin.vz;
 
-                prevTipX = attacker->attack.field_60.vx;
-                prevTipY = attacker->attack.field_60.vy;
-                prevTipZ = attacker->attack.field_60.vz;
+                prevTipX = attacker->attack.prevTip.vx;
+                prevTipY = attacker->attack.prevTip.vy;
+                prevTipZ = attacker->attack.prevTip.vz;
 
                 tipX = attacker->attack.hitLineVec[0].vx;
                 tipY = attacker->attack.hitLineVec[0].vy;
@@ -1373,6 +1380,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                 pushZ = tipZ - prevTipZ;
             }
 
+            // Normalize push to Q12 unit length.
             pushLength = func_8008A058(func_80080540(pushX, pushY, pushZ));
             if (pushLength >= 64)
             {
@@ -1390,11 +1398,12 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                 pushZ      = Q12_MULT_PRECISE(pushZ, pushLength);
             }
             break;
+        }
     }
 
-    if (damageAmount != Q12(0.0f))
+    if (finalDamage != Q12(0.0f))
     {
-        target->damage.amount += damageAmount;
+        target->damage.amount += finalDamage;
     }
 
     if (shock != 0)
@@ -1413,72 +1422,72 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
     hitFlags                 |= targetBit;
     attacker->attack.hitFlags = hitFlags;
 
-    if (damageAmount | shock)
+    if (finalDamage | shock)
     {
-        s32 impactSfxGroup = attackInfo->impactSfxGroup;
+        s32 bloodSize = attackInfo->bloodSize;
 
-        if (impactSfxGroup > 0 && impactSfxGroup < 8)
+        if (bloodSize > 0 && bloodSize < 8)
         {
-            s32 impactCharaType = NO_VALUE; // TODO: Enum for these chara types.
+            s32 bloodType = NO_VALUE; // TODO: Enum for blood types.
 
             switch (target->model.charaId)
             {
                 case Chara_Harry:
                     if (target->health >= Q12(0.0f))
                     {
-                        impactCharaType = 1;
+                        bloodType = 1;
                     }
                     break;
 
                 case Chara_AirScreamer:
                 case Chara_NightFlutter:
-                    impactCharaType = 2;
+                    bloodType = 2;
                     break;
 
                 case Chara_Stalker:
-                    impactCharaType = 4;
+                    bloodType = 4;
                     break;
 
                 case Chara_LarvalStalker:
                 case Chara_GreyChild:
                 case Chara_Mumbler:
-                    impactCharaType = 3;
+                    bloodType = 3;
                     break;
 
                 case Chara_Creeper:
-                    impactCharaType = 5;
+                    bloodType = 5;
                     break;
 
                 case Chara_Groaner:
                 case Chara_Wormhead:
-                    impactCharaType = 6;
+                    bloodType = 6;
                     break;
 
                 case Chara_SplitHead:
-                    impactCharaType = 7;
+                    bloodType = 7;
                     break;
 
                 case Chara_HangedScratcher:
-                    impactCharaType = 8;
+                    bloodType = 8;
                     break;
 
                 case Chara_Floatstinger:
                 case Chara_Twinfeeler:
-                    impactCharaType = 10;
+                    bloodType = 10;
                     break;
 
                 case Chara_Romper:
-                    impactCharaType = 9;
+                    bloodType = 9;
                     break;
 
                 case Chara_PuppetNurse:
                 case Chara_PuppetDoctor:
-                    impactCharaType = 11;
+                    bloodType = 11;
                     break;
 
                 case Chara_Bloodsucker:
-                    impactCharaType = 12;
-                    impactSfxGroup  = 1;
+                    bloodType = 12;
+                    bloodSize = 1;
                     break;
 
                 case Chara_Incubus:
@@ -1488,26 +1497,28 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                     {
                         if (weaponAttack == WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap))
                         {
-                            impactSfxGroup = 4;
+                            bloodSize = 4;
                         }
                         else
                         {
-                            impactSfxGroup = 7;
+                            bloodSize = 7;
                         }
                     }
+                    bloodType = 16;
+                    break;
 
                 default:
-                    impactCharaType = 16;
+                    bloodType = 16;
                     break;
 
                 case Chara_Padlock:
-                    impactCharaType = NO_VALUE;
+                    bloodType = NO_VALUE;
                     break;
             }
 
-            if (impactCharaType >= 0)
+            if (bloodType >= 0)
             {
-                func_8005F6B0(target, hitPos, impactSfxGroup, impactCharaType);
+                func_8005F6B0(target, hitPos, bloodSize, bloodType);
             }
         }
     }
@@ -1879,7 +1890,7 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
             hitPos.vy = (otherPosY + otherMidY) + hitOffsetY;
             hitPos.vz = otherCenterZ + hitOffsetZ;
 
-            if (func_8008B714(attacker, other, &hitPos, damageScale))
+            if (Combat_HitApply(attacker, other, &hitPos, damageScale))
             {
                 hitFlags |= charaBit;
             }

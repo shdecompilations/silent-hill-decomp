@@ -457,9 +457,9 @@ Joy_ControllerDataUpdate                     = 0x80034208; // type:func
 ControllerData_AnalogToDigital               = 0x800343E4; // type:func
 func_8003483C                                = 0x800345B0; // type:func
 
-//----------------------------------------------------------------------
+//----------------------------------------------------------------------------
 //--- PA: 0x00FAD4   VA: 0x80034634   subsegment: c, game_boot/npc_anims_clear
-//----------------------------------------------------------------------
+//----------------------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x80034634; // type:func
 
 //----------------------------------------------------------------------
@@ -993,7 +993,7 @@ Inventory_GunsAvailableCheck                 = 0x8004D424; // type:func
 Inventory_HyperBlasterUnlockTest             = 0x8004D558; // type:func
 Inventory_HyperBlasterFunctionalTest         = 0x8004D5F4; // type:func
 Game_HyperBlasterBeamColorGet                = 0x8004D648; // type:func
-Game_GasWeaponSfxUpdate                 = 0x8004D660; // type:func
+Game_GasWeaponSfxUpdate                      = 0x8004D660; // type:func
 Game_TimerUpdate                             = 0x8004D9D8; // type:func
 
 //-----------------------------------------------------------------------
@@ -1578,7 +1578,7 @@ Combat_RockDrillRunSfxUpdate                 = 0x8008CF1C; // type:func
 Combat_GasWeaponEngineSfxUpdate              = 0x8008CF48; // type:func
 Combat_GasWeaponSfxUpdate                    = 0x8008CF84; // type:func
 func_8008B664                                = 0x8008D174; // type:func
-func_8008B714                                = 0x8008D224; // type:func
+Combat_HitApply                              = 0x8008D224; // type:func
 Combat_MeleeHitCheck                         = 0x8008DA94; // type:func
 
 //------------------------------------------------------------
@@ -3866,11 +3866,11 @@ g_Event_TweenTimers                          = 0x800C6D68;
 shotTrace                                    = 0x800C6D80;
 stepAims                                     = 0x800C6DA0;
 stepOrigins                                  = 0x800C6DB0;
-localHitLinePoints.83                           = 0x800C6DE0;
-hitPos.83                                       = 0x800C6E10;
-rayPoints.83                                    = 0x800C6E20;
-otherCenter.83                                  = 0x800C6E40;
-rayTrace.83                                     = 0x800C6E50;
+localHitLinePoints.83                        = 0x800C6DE0;
+hitPos.83                                    = 0x800C6E10;
+rayPoints.83                                 = 0x800C6E20;
+otherCenter.83                               = 0x800C6E40;
+rayTrace.83                                  = 0x800C6E50;
 
 //--------------------------------------------------------------------
 //--- PA: 0x0A2310   VA: 0x800C6E70   subsegment: .bss, gfx/lens_flare

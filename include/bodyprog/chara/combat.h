@@ -56,12 +56,12 @@ typedef struct _CharaAttack
     /* 0x12 */ q3_12   prevAimPitch;
     /* 0x14 */ q19_12  hitCheckTime;    /** Animation time that hit checks have been run up to, clamped to the attack's hit window. */
     /* 0x18 */ VECTOR3 origin;          /** Q19.12 | Attack origin or ray start for gunshots. */
-    /* 0x24 */ VECTOR3 hitLineStart[2]; /** Q19.12 | Hit line start, `origin` + direction * `rangeMin`. [0]: this tick, [1]: previous tick. */
-    /* 0x3C */ VECTOR3 prevOrigin;      /** Q19.12 */
-    /* 0x48 */ VECTOR3 hitLineVec[2];   /** Q19.12 | Hit line, direction * (`rangeMax` - `rangeMin`). [0]: this tick, [1]: previous tick.
-                                          * Gunshots put the pellet ray in [0] and the pellet direction in [1]. */
-    /* 0x60 */ VECTOR3 field_60;        /** Q19.12 | Read by `func_8008B714` as the offset from `prevOrigin` to the previous hit line end,
-                                          * but never written. Always 0 after the `bzero` during character spawn? */
+    /* 0x24 */ VECTOR3 hitLineStart[2]; /** Q19.12 | Hit line start, `origin` + direction * `rangeMin`. [0]: this step, [1]: previous step. */
+    /* 0x3C */ VECTOR3 prevOrigin;      /** Q19.12 | `origin` at the end of the previous tick. */
+    /* 0x48 */ VECTOR3 hitLineVec[2];   /** Q19.12 | Hit line, direction * (`rangeMax` - `rangeMin`). [0]: this step, [1]: previous step.
+                                          * Melee attacks run 4 steps per tick. Gunshots put the pellet ray in [0] and the pellet direction in [1]. */
+    /* 0x60 */ VECTOR3 prevTip;         /** Q19.12 | Previous tick's hit line end, relative to `prevOrigin`. Read by `Combat_HitApply`, but never written.
+                                          * Always 0 after the `bzero` during character spawn? */
 } s_CharaAttack;
 
 // Q12 square root?
@@ -155,8 +155,20 @@ bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch);
 
 void func_8008B664(VECTOR3* pos, u32 weaponAttack);
 
-/** Main attack handling function. */
-s32 func_8008B714(struct _SubCharacter* attacker, struct _SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale);
+/** @brief Applies one hit from an attack to a target. Applies damage/push/vibration/impact SFX/blood.
+ *
+ * Damage is `s_AttackInfo::damage` with weapon specific bonuses and a random 87.5%-112.5% spread.
+ * Non-gunshot hits on NPCs without `CharaFlag_Hit` deal 4x damage, and Slash attacks scale damage and shock
+ * by `damageScale`.
+ * Vibration and impact SFX only play on the first hit of an in-progress attack against an NPC.
+ *
+ * @param attacker Attacking character.
+ * @param target Character being hit.
+ * @param hitPos Hit position for SFX and blood (Q19.12).
+ * @param damageScale Slash attack damage and shock scale (Q19.12).
+ * @return Target bit: `1 << npcIdx` for NPCs, `NO_VALUE` for the player. Also ORed into `s_CharaAttack::hitFlags`.
+ */
+s32 Combat_HitApply(struct _SubCharacter* attacker, struct _SubCharacter* target, VECTOR3* hitPos, q19_12 damageScale);
 
 /** @brief Runs one step of a melee/non-gunshot attack's hit check and applies damage to every character hit.
  *
@@ -168,7 +180,7 @@ s32 func_8008B714(struct _SubCharacter* attacker, struct _SubCharacter* target, 
  * @param attacker Attacking character.
  * @param yaw Attack yaw, used to rotate candidates into attacker-local space.
  * @param attackInfo Attack being performed.
- * @param damageScale Damage scale passed to `func_8008B714`.
+ * @param damageScale Damage scale passed to `Combat_HitApply`.
  * @return `1 << npcIdx` per NPC hit, `NO_VALUE` if the player is hit. Also ORed into `s_CharaAttack::hitFlags`.
  */
 s32 Combat_MeleeHitCheck(struct _SubCharacter* attacker, q19_12 yaw, struct _AttackInfo* attackInfo, q19_12 damageScale);

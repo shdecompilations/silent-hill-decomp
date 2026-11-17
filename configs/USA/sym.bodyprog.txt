@@ -1183,6 +1183,7 @@ Combat_GasWeaponContactSfxUpdate             = 0x8008B3E4; // type:func
 Combat_RockDrillRunSfxUpdate                 = 0x8008B40C; // type:func
 Combat_GasWeaponEngineSfxUpdate              = 0x8008B438; // type:func
 Combat_GasWeaponSfxUpdate                    = 0x8008B474; // type:func
+Combat_HitApply                              = 0x8008B714; // type:func
 Combat_MeleeHitCheck                         = 0x8008BF84; // type:func
 Combat_AttackUpdate                          = 0x8008A3E0; // type:func
 Combat_AttackStartKeyframeGet                = 0x8008A270; // type:func
