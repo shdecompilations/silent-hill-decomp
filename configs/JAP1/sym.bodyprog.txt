@@ -1563,15 +1563,15 @@ func_8008A058                                = 0x8008BB68; // type:func
 func_8008A0CC                                = 0x8008BBDC; // type:func
 func_8008A0D4                                = 0x8008BBE4; // type:func
 func_8008A0E4                                = 0x8008BBF4; // type:func
-func_8008A270                                = 0x8008BD80; // type:func
-func_8008A2E0                                = 0x8008BDF0; // type:func
-func_8008A35C                                = 0x8008BE6C; // type:func
+Combat_AttackStartKeyframeGet                = 0x8008BD80; // type:func
+Combat_AttackKeyframeCountGet                = 0x8008BDF0; // type:func
+Combat_AttackHitWindowCheck                  = 0x8008BE6C; // type:func
 Chara_Flag8Clear                             = 0x8008BE94; // type:func
 Chara_Flag8Set                               = 0x8008BEA8; // type:func
 func_8008A3AC                                = 0x8008BEBC; // type:func
-func_8008A3E0                                = 0x8008BEF0; // type:func
-func_8008B15C                                = 0x8008CC6C; // type:func
-func_8008B1DC                                = 0x8008CCEC; // type:func
+Combat_AttackUpdate                          = 0x8008BEF0; // type:func
+Combat_AttackHitLineInit                     = 0x8008CC6C; // type:func
+Combat_AttackHitLineUpdate                   = 0x8008CCEC; // type:func
 Combat_GasWeaponSfxAllStop                   = 0x8008CEA8; // type:func
 Combat_GasWeaponContactSfxUpdate             = 0x8008CEF4; // type:func
 Combat_RockDrillRunSfxUpdate                 = 0x8008CF1C; // type:func
@@ -3863,10 +3863,10 @@ g_Event_TweenTimers                          = 0x800C6D68;
 //------------------------------------------------------------------
 //--- PA: 0x0A2220   VA: 0x800C6D80   subsegment: .bss, chara/combat
 //------------------------------------------------------------------
-D_800C4728                                   = 0x800C6D80;
-D_800C4748                                   = 0x800C6DA0;
-D_800C4758                                   = 0x800C6DB0;
-localSegPoints.83                               = 0x800C6DE0;
+shotTrace                                    = 0x800C6D80;
+stepAims                                     = 0x800C6DA0;
+stepOrigins                                  = 0x800C6DB0;
+localHitLinePoints.83                           = 0x800C6DE0;
 hitPos.83                                       = 0x800C6E10;
 rayPoints.83                                    = 0x800C6E20;
 otherCenter.83                                  = 0x800C6E40;

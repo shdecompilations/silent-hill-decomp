@@ -1164,7 +1164,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 monsterCybilProps.field_115 == 0)
             {
                 monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
-                monsterCybil->attack.state         = 1;
+                monsterCybil->attack.state             = CharaAttackState_Requested;
 
                 func_8006342C(AttackType_CybilHandgun, monsterCybilProps.field_11A, monsterCybil->rotation.vy, g_SysWork.npcBoneCoordBuffer);
 
@@ -1182,7 +1182,7 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             }
             else
             {
-                monsterCybil->attack.state = 0;
+                monsterCybil->attack.state = CharaAttackState_Idle;
             }
 
             if (modelUpper->anim.keyframeIdx >= (MONSTER_CYBIL_ANIM_INFOS[7].startKeyframeIdx + 4))
@@ -1243,11 +1243,11 @@ void func_800D9AB4(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             if (modelUpper->anim.keyframeIdx > 169 && modelUpper->anim.keyframeIdx < 173)
             {
                 monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
-                monsterCybil->attack.state         = 1;
+                monsterCybil->attack.state             = CharaAttackState_Requested;
             }
             else
             {
-                monsterCybil->attack.state = 0;
+                monsterCybil->attack.state = CharaAttackState_Idle;
             }
 
             if (func_8008A0E4(monsterCybil->attack.state, WEAPON_ATTACK(AttackType_MonsterCybil0, AttackInputType_Tap), monsterCybil, &D_800ED570, &PLAYER_CHARA(), monsterCybil->rotation.vy, 0x400) != -1)
@@ -1605,11 +1605,11 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
             if (modelUpper->anim.keyframeIdx == MONSTER_CYBIL_ANIM_INFOS[11].endKeyframeIdx)
             {
                 monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
-                monsterCybil->attack.state         = 1;
+                monsterCybil->attack.state             = CharaAttackState_Requested;
             }
             else
             {
-                monsterCybil->attack.state = 0;
+                monsterCybil->attack.state = CharaAttackState_Idle;
             }
 
             temp_v0_2 = func_8008A0E4(monsterCybil->attack.state,
@@ -1718,11 +1718,11 @@ void func_800DA9C8(s_SubCharacter* monsterCybil, s_Model* modelUpper, GsCOORDINA
                 modelUpper->anim.keyframeIdx < 173)
             {
                 monsterCybil->model.anim.baseAnimInfos = MONSTER_CYBIL_ANIM_INFOS;
-                monsterCybil->attack.state         = 1;
+                monsterCybil->attack.state             = CharaAttackState_Requested;
             }
             else
             {
-                monsterCybil->attack.state = 0;
+                monsterCybil->attack.state = CharaAttackState_Idle;
             }
 
             if (func_8008A0E4(monsterCybil->attack.state,

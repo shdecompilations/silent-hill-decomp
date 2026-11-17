@@ -523,7 +523,7 @@ void Stalker_ControlUpdate(s_SubCharacter* stalker)
 
         if (animStatus != unkAnimStatus)
         {
-            stalker->attack.state = 0;
+            stalker->attack.state = CharaAttackState_Idle;
         }
     }
 
@@ -1032,7 +1032,7 @@ void Stalker_Control_3(s_SubCharacter* stalker)
 
             stalkerProps.keyframeIdx_FC = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model.anim.time, 477);
             g_SysWork.charaGroupFlags[3]    |= CharaGroupFlag_0 | CharaGroupFlag_1;
-            stalker->attack.state   = 1;
+            stalker->attack.state            = CharaAttackState_Requested;
         }
         else if (distToPlayer < Q12(0.7f))
         {

@@ -1184,6 +1184,12 @@ Combat_RockDrillRunSfxUpdate                 = 0x8008B40C; // type:func
 Combat_GasWeaponEngineSfxUpdate              = 0x8008B438; // type:func
 Combat_GasWeaponSfxUpdate                    = 0x8008B474; // type:func
 Combat_MeleeHitCheck                         = 0x8008BF84; // type:func
+Combat_AttackUpdate                          = 0x8008A3E0; // type:func
+Combat_AttackStartKeyframeGet                = 0x8008A270; // type:func
+Combat_AttackKeyframeCountGet                = 0x8008A2E0; // type:func
+Combat_AttackHitWindowCheck                  = 0x8008A35C; // type:func
+Combat_AttackHitLineInit                     = 0x8008B15C; // type:func
+Combat_AttackHitLineUpdate                   = 0x8008B1DC; // type:func
 
 //------------------------------------------------------------
 //--- PA: 0x067E40   VA: 0x8008C9A0   subsegment: c, chara/dms
@@ -3620,10 +3626,10 @@ g_Event_TweenTimers                          = 0x800C4710;
 //------------------------------------------------------------------
 //--- PA: 0x09FBC8   VA: 0x800C4728   subsegment: .bss, chara/combat
 //------------------------------------------------------------------
-D_800C4728.60                                = 0x800C4728;
-D_800C4748.61                                = 0x800C4748;
-D_800C4758.62                                = 0x800C4758;
-localSegPoints.83                            = 0x800C4788;
+shotTrace.60                                 = 0x800C4728;
+stepAims.61                                  = 0x800C4748;
+stepOrigins.62                               = 0x800C4758;
+localHitLinePoints.83                        = 0x800C4788;
 hitPos.84                                    = 0x800C47B8;
 __pad_bss_800C47C4.85                        = 0x800C47C4;
 rayPoints.86                                 = 0x800C47C8;

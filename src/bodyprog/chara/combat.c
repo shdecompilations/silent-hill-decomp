@@ -15,19 +15,19 @@
 #include "bodyprog/sound/sd_call.h"
 #include "main/fs_queue.h"
 
-// Used by `func_8008A3E0`. TODO: Are they really angles?
+// Used by `Combat_AttackUpdate`.
 q3_12 D_800AFD1C[] =
 {
     Q12_ANGLE(360.0f), Q12_ANGLE(360.0f), Q12_ANGLE(180.0f), Q12_ANGLE(120.0f),
     Q12_ANGLE(90.0f),  Q12_ANGLE(72.0f),  Q12_ANGLE(60.0f),  Q12_ANGLE(51.5f),
-    Q12_ANGLE(45.0f),  Q12_ANGLE(40.0f),  Q12_ANGLE(36.0f),  0x174,
-    Q12_ANGLE(30.0f),  0x13B,             0x124,             Q12_ANGLE(24.0f)
+    Q12_ANGLE(45.0f),  Q12_ANGLE(40.0f),  Q12_ANGLE(36.0f),  Q12_ANGLE(32.7f),
+    Q12_ANGLE(30.0f),  Q12_ANGLE(27.7f),  Q12_ANGLE(25.7f),  Q12_ANGLE(24.0f)
 };
 
 // ========================================
 // COMBAT RELATED?
 // ========================================
-// Will: Possibly combat? I only found that stubbing `func_8008A3E0` and `func_8008B714`
+// Will: Possibly combat? I only found that stubbing `Combat_AttackUpdate` and `func_8008B714`
 // makes enemies unable to perform any attack. Also there are some sound related functions,
 // they seem to be specifically done for something related to weapons in the inventory.
 
@@ -139,19 +139,19 @@ s32 func_8008A0E4(s32 request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3*
     if (request <= 0)
     {
         prevState           = 0;
-        chara->attack.state = 0;
+        chara->attack.state = CharaAttackState_Idle;
     }
 
     chara->attack.weaponAttack = weaponAttack;
 
     if (!(modelAnim->status & (1 << 0)))
     {
-        chara->attack.state    = 0;
+        chara->attack.state    = CharaAttackState_Idle;
         chara->attack.hitFlags = 0;
     }
     else if (!prevState && request > 0)
     {
-        chara->attack.state    = 1;
+        chara->attack.state    = CharaAttackState_Requested;
         chara->attack.hitFlags = 0;
     }
 
@@ -159,7 +159,7 @@ s32 func_8008A0E4(s32 request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3*
     chara->attack.aimYaw    = aimYaw;
     chara->attack.aimPitch  = aimPitch;
     chara->attack.origin    = *attackPos;
-    hitFlags                = func_8008A3E0(chara);
+    hitFlags                = Combat_AttackUpdate(chara);
     ret                     = NO_VALUE;
 
     if (chara == &PLAYER_CHARA())
@@ -205,7 +205,7 @@ s32 func_8008A0E4(s32 request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3*
     return ret;
 }
 
-u32 func_8008A270(s32 weaponAttack) // 0x8008A270
+u32 Combat_AttackStartKeyframeGet(s32 weaponAttack) // 0x8008A270
 {
 #if VERSION_EQUAL_OR_NEWER(USA)
     switch (weaponAttack)
@@ -239,7 +239,7 @@ u32 func_8008A270(s32 weaponAttack) // 0x8008A270
     return g_Items_WeaponAttackInfos[weaponAttack].hitStartKeyframe;
 }
 
-u32 func_8008A2E0(s32 weaponAttack) // 0x8008A2E0
+u32 Combat_AttackKeyframeCountGet(s32 weaponAttack) // 0x8008A2E0
 {
     if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
     {
@@ -262,13 +262,13 @@ u32 func_8008A2E0(s32 weaponAttack) // 0x8008A2E0
     return g_Items_WeaponAttackInfos[weaponAttack].hitKeyframeCount;
 }
 
-s32 func_8008A35C(s_AttackInfo* attackInfo, s32 keyframe) // 0x8008A35C
+bool Combat_AttackHitWindowCheck(s_AttackInfo* attackInfo, s32 keyframe) // 0x8008A35C
 {
-    s32 hitEnd;
-    s32 result;
+    s32  hitEnd;
+    bool result;
 
     hitEnd = attackInfo->hitStartKeyframe + attackInfo->hitKeyframeCount;
-    result = 0;
+    result = false;
     if (keyframe >= attackInfo->hitStartKeyframe)
     {
         result = (keyframe < hitEnd);
@@ -291,675 +291,679 @@ void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
 {
     if (!(chara->flags & CharaFlag_Unk8))
     {
-        chara->attack.state = 0;
-        func_8008A3E0(chara);
+        chara->attack.state = CharaAttackState_Idle;
+        Combat_AttackUpdate(chara);
     }
 }
 
-s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
+s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
 {
-    s32                sp10;
-    s32                weaponAttack;
-    s32                sp18;
-    s_AttackInfo*      attackInfo;
-    s32                sp20;
-    s32                sp24;
-    s32                sp28;
-    s32                sp2C;
-    s32                sp30;
-    s32                sp34;
-    u32                shotCountMax;
-    s32                sp3C;
-    u32                sp40;
-    s32                pelletCount;
-    s32                sp48;
-    s32                sp4C;
-    s32                sp50;
-    s32                sp54;
-    s32                sp58;
-    s32                sp5C;
-    s32                sp60;
-    s32                sp64;
-    s32                sp68;
-    s32                sp6C;
-    s32                sp70;
-    s32                sp74;
-    q19_12             sp78;
-    s32                sp7C;
-    q19_12             sp80;
-    s32                sp84;
-    q19_12             sp88;
-    q19_12             sp8C;
-    s32                sp90;
-    s32                sp94;
-    DVECTOR*           temp_s0_14;
-    VECTOR3*           temp_a0;
-    VECTOR3*           temp_v0_11;
-    s_CharaAttack*     temp_v0_12;
-    s32                temp_s0;
-    s32                temp_s0_11;
-    q19_12             angle;
-    s32                temp_s0_7;
-    s32                temp_s0_8;
-    s32                temp_s0_9;
-    q19_12             temp_s0_10;
-    s32                var_s0_2;
-    s32                temp_s1_3;
-    s32                temp_s1_4;
-    q19_12             temp_s1_5;
-    s32                temp_s2_2;
-    s32                var_s2;
-    s32                temp_v0_10;
-    s32                scaledDistSqr;
-    s32                temp_v1;
-    s32                var_a0_2;
-    s32                var_a0_3;
-    s32                temp_a1;
-    s32                var_a1;
-    s32                var_fp;
-    s32                var_s3;
-    s32                j;
-    s32                var_s6;
-    s32                i;
-    s32                var_v1;
-    s_ModelAnim*       var_s0;
-    s_SubCharacter*    temp_s1_2;
-    u32                temp_s1;
-    s32                var_a0;
-    s_AnimInfo*        anim;
-    s_SubCharacter*    ptr;
-    bool               hasHit;
-    s32                temp_t3_2;
-    s32                temp2;
-    s32                temp3;
-    s32                temp4;
-    s32                temp5;
-    static s_RayTrace  D_800C4728;
-    static DVECTOR     D_800C4748[4];
-    static VECTOR3     D_800C4758[4];
+    s32            state;
+    u32            attackType;
+    s32            weaponAttack;
+    bool           isDone;
+    s_AttackInfo*  attackInfo;
+    s_ModelAnim*   modelAnim;
+    s_AnimInfo*    animInfo;
+    q19_12         aimYaw;
+    q19_12         aimPitch;
+    q19_12         hitWindowStart;
+    s32            hitKeyframeCount;
+    q19_12         hitCheckTime;
+    q19_12         attackTime;
+    q19_12         hitWindowEnd;
+    s32            targetDistLevel;
+    q19_12         shotInterval;
+    u32            shotCountMax;
+    s32            shotsLeft;
+    u32            shotsFired;
+    s32            pelletCount;
+    q19_12         inaccuracy;
+    s_CharaAttack* attack;
 
-    sp30 = NO_VALUE;
-    Chara_Flag8Set(chara);
+    static s_RayTrace shotTrace;
+    static DVECTOR    stepAims[4];    // Yaw (`vx`) and pitch (`vy`) for each hit check step.
+    static VECTOR3    stepOrigins[4]; // Q19.12 | Attack origin for each hit check step.
 
-    sp10         = chara->attack.state;
-    weaponAttack = chara->attack.weaponAttack;
+    targetDistLevel = NO_VALUE;
+    Chara_Flag8Set(attacker);
 
-    if (sp10 == 0)
+    state        = attacker->attack.state;
+    weaponAttack = attacker->attack.weaponAttack;
+
+    if (state == CharaAttackState_Idle)
     {
-        chara->attack.shotsFired  = 0;
-        chara->attack.hitFlags  = 0;
-        chara->attack.hitCheckTime = 0;
+        attacker->attack.shotsFired   = 0;
+        attacker->attack.hitFlags     = 0;
+        attacker->attack.hitCheckTime = 0;
         return 0;
     }
 
-    if (sp10 == sp30)
+    if (state == CharaAttackState_Finished)
     {
-        chara->attack.hitFlags  = 0;
-        chara->attack.hitCheckTime = 0;
+        attacker->attack.hitFlags     = 0;
+        attacker->attack.hitCheckTime = 0;
         return 0;
     }
 
-    sp18 = 0;
+    isDone = false;
 
     attackInfo = &g_Items_WeaponAttackInfos[weaponAttack];
+    attackType = attackInfo->type;
 
-    temp_s1 = attackInfo->type;
-
-    if (chara == &PLAYER_CHARA())
+    if (attacker == &PLAYER_CHARA())
     {
-        var_s0 = &PLAYER_EXTRA().model.anim;
+        modelAnim = &PLAYER_EXTRA().model.anim;
     }
     else
     {
-        var_s0 = &chara->model.anim;
+        modelAnim = &attacker->model.anim;
     }
 
-    anim  = Anim_InfoGet(var_s0);
-    sp28  = var_s0->time;
-    sp28 -= Q12(anim->startKeyframeIdx);
+    animInfo    = Anim_InfoGet(modelAnim);
+    attackTime  = modelAnim->time;
+    attackTime -= Q12(animInfo->startKeyframeIdx);
 
-    var_s0_2 = func_8008A270(weaponAttack);
-    var_a0   = func_8008A2E0(weaponAttack);
+    hitWindowStart   = Combat_AttackStartKeyframeGet(weaponAttack);
+    hitKeyframeCount = Combat_AttackKeyframeCountGet(weaponAttack);
+    hitWindowEnd     = Q12(hitWindowStart + hitKeyframeCount);
+    hitWindowStart   = Q12(hitWindowStart);
 
-    i   = chara->attack.hitCheckTime;
-    sp2C     = Q12(var_s0_2 + var_a0);
-    var_s0_2 = Q12(var_s0_2);
+    hitCheckTime = attacker->attack.hitCheckTime;
 
-    if (sp28 < i)
+    // Anim time went backwards, so the attack anim must have restarted.
+    if (attackTime < hitCheckTime)
     {
-        sp10                   = 1;
-        chara->attack.state = sp10;
+        state                  = CharaAttackState_Requested;
+        attacker->attack.state = state;
     }
 
-    if (sp10 == 1)
+    if (state == CharaAttackState_Requested)
     {
-        chara->attack.shotsFired = 0;
-        sp10                   = 2;
+        attacker->attack.shotsFired = 0;
+        state                       = CharaAttackState_Started;
     }
 
-    if (i < var_s0_2)
+    // `hitCheckTime` is how far hit checks have got, keep it inside the window.
+    if (hitCheckTime < hitWindowStart)
     {
-        i                  = var_s0_2;
-        chara->attack.hitCheckTime = i;
+        hitCheckTime                  = hitWindowStart;
+        attacker->attack.hitCheckTime = hitCheckTime;
     }
-    else if (sp2C < i)
+    else if (hitWindowEnd < hitCheckTime)
     {
-        i                  = sp2C;
-        chara->attack.hitCheckTime = i;
+        hitCheckTime                  = hitWindowEnd;
+        attacker->attack.hitCheckTime = hitCheckTime;
     }
 
-    if (sp28 < var_s0_2)
+    // Window hasn't opened yet.
+    if (attackTime < hitWindowStart)
     {
         return 0;
     }
 
-    if (g_DeltaTime != Q12(0.0f))
+    // Paused.
+    if (g_DeltaTime == Q12(0.0f))
     {
-        if (sp28 >= sp2C)
+        return attacker->attack.hitFlags;
+    }
+
+    if (attackTime >= hitWindowEnd)
+    {
+        attackTime = hitWindowEnd;
+        isDone     = true;
+    }
+
+    aimYaw   = attacker->attack.aimYaw;
+    aimPitch = attacker->attack.aimPitch;
+
+    if (attackType == AttackInfoType_Gunshot)
+    {
+        q19_12 pelletAngleStep;
+        q19_12 ringAngle;
+        q19_12 rangeMax;
+        q19_12 pelletAngle;
+
+        shotsLeft    = attacker->attack.shotsLeft;
+        shotsFired   = attacker->attack.shotsFired;
+        shotInterval = attackInfo->hitCheck.shot.interval;
+        rangeMax     = attackInfo->rangeMax;
+
+        // Only weapons with a shot interval get more than one shot per attack.
+        if (shotInterval != 0)
         {
-            sp28 = sp2C;
-            sp18 = 1;
-        }
-
-        sp20 = chara->attack.aimYaw;
-        sp24 = chara->attack.aimPitch;
-
-        if (temp_s1 == AttackInfoType_Gunshot)
-        {
-            sp3C = chara->attack.shotsLeft;
-            sp40 = chara->attack.shotsFired;
-            sp34 = attackInfo->hitCheck.shot.interval;
-
-            sp54 = attackInfo->rangeMax;
-
-            if (sp34 != 0)
-            {
-                shotCountMax = attackInfo->hitCheck.shot.shotCountMax;
-                if (shotCountMax == 0)
-                {
-                    shotCountMax = 1;
-                }
-            }
-            else
+            shotCountMax = attackInfo->hitCheck.shot.shotCountMax;
+            if (shotCountMax == 0)
             {
                 shotCountMax = 1;
             }
-
-            sp50 = attackInfo->hitCheck.shot.spread;
-            sp4C = sp50 >> 4;
-            sp48 = attackInfo->hitCheck.shot.inaccuracy;
-            sp4C--;
-            sp4C &= 0xF;
-            sp50  = D_800AFD1C[sp50 & 0xF];
-            sp4C++;
-            pelletCount = attackInfo->hitCheck.shot.pelletCount;
-            sp4C = sp4C * sp50;
-
-            if (sp34 == 0 && pelletCount == 1)
-            {
-                if (chara->model.charaId == Chara_Harry)
-                {
-                    var_a0_2 = func_8007FD2C();
-                }
-                else
-                {
-                    var_a0_2 = Q12(2.0f);
-                }
-
-                if (var_a0_2 < Q12(0.5f))
-                {
-                    var_a0_2 = Q12(0.5f);
-                }
-                else if (var_a0_2 > Q12(2.0f))
-                {
-                    var_a0_2 = Q12(2.0f);
-                }
-
-                temp_v1 = Q12(var_a0_2 - Q12(0.5f)) / Q12(1.5f);
-                var_s2  = Q12_MULT_PRECISE(temp_v1, Q12(-1.5f)) + Q12(1.75f);
-                var_s2  = Q12_MULT_PRECISE(var_s2, sp48);
-
-                if (var_s2 < 170)
-                {
-                    if (WorldEnv_IsInDarkness())
-                    {
-                        var_s2 = (var_s2 + 170) / 2;
-                    }
-                }
-                else
-                {
-                    var_s2 = 170;
-                }
-
-                temp_t3_2 = sp54 / 3;
-                sp30      = NO_VALUE;
-
-                if (g_SysWork.targetNpcIdx >= 0)
-                {
-                    temp_s1_2 = &NPC_CHARA(g_SysWork.targetNpcIdx);
-
-                    if (temp_s1_2->model.charaId >= Chara_AirScreamer)
-                    {
-                        do
-                        {
-                            if (temp_s1_2->model.charaId <= CHARA_LAST_ENEMY_ID)
-                            {
-                                temp_s0 = Q12_SQUARE_PRECISE(chara->position.vx - temp_s1_2->position.vx) +
-                                          Q12_SQUARE_PRECISE(chara->position.vy - temp_s1_2->position.vy) +
-                                          Q12_SQUARE_PRECISE(chara->position.vz - temp_s1_2->position.vz);
-                                sp30    = SquareRoot12(temp_s0);
-
-                                if (temp_s1_2->flags & CharaFlag_Unk2)
-                                {
-                                    temp_s0 = temp_s0 - 0x800;
-                                    if (temp_s0 < 0)
-                                    {
-                                        var_s2 = 0;
-                                    }
-                                    else if (temp_s0 <= 0xFFFF)
-                                    {
-                                        scaledDistSqr = Q12(temp_s0);
-                                        var_s2        = Q12_MULT_PRECISE(var_s2, scaledDistSqr / 0x10000);
-                                    }
-                                }
-
-                                if (WorldEnv_IsInDarkness())
-                                {
-                                    sp30 = 3;
-                                }
-                                else if (temp_t3_2 < sp30)
-                                {
-                                    sp30 = 2;
-                                }
-                                else if (sp30 > Q12(2.0f))
-                                {
-                                    sp30    = 1;
-                                    var_s2 -= var_s2 / 2;
-                                }
-                                else
-                                {
-                                    sp30   = 0;
-                                    var_s2 = 0;
-                                }
-                            }
-                        } while (0); // @hack
-                    }
-                }
-
-                sp48 = Q12_MULT_PRECISE(var_s2, Rng_RandQ12());
-            }
-
-            var_s6 = Q12_MULT(sp4C, sp10 - 2);
-
-            for (i = i + sp34;
-                 sp3C != 0 && sp40 < shotCountMax && sp28 >= i;
-                 i += sp34, sp40++, sp3C--)
-            {
-                for (j = pelletCount; j > 0; j--)
-                {
-                    temp_v0_10 = Rng_RandQ12();
-                    temp_s2_2  = Q12_MULT_PRECISE(sp48, temp_v0_10);
-
-                    temp_v0_10 = Rng_RandQ12() - Q12_ANGLE(180.0f);
-                    angle  = var_s6 + Q12_MULT_PRECISE(sp50, temp_v0_10);
-
-                    temp3     = sp20 + Q12_MULT(temp_s2_2, Math_Sin(angle));
-                    temp_s0_7 = sp24 + Q12_MULT(temp_s2_2, Math_Cos(angle));
-                    temp2     = Math_Cos(temp_s0_7);
-                    temp_s0_8 = Math_Sin(temp_s0_7);
-                    temp_s1_4 = Q12_MULT(temp_s0_8, Math_Sin(temp3));
-                    temp_s0_9 = Q12_MULT(temp_s0_8, Math_Cos(temp3));
-
-                    chara->attack.segVec[0].vx = Q12_MULT(sp54, temp_s1_4);
-                    chara->attack.segVec[0].vy = Q12_MULT(sp54, temp2);
-                    chara->attack.segVec[0].vz = Q12_MULT(sp54, temp_s0_9);
-
-                    var_s6 += sp4C;
-
-                    if (chara->model.charaId == Chara_Harry)
-                    {
-                        func_800892A4(5);
-                    }
-
-                    hasHit = Ray_GeomAndCharaTraceGet(&D_800C4728, &chara->attack.origin, &chara->attack.segVec[0], chara);
-                    ptr  = D_800C4728.character;
-                    if (hasHit && ptr != NULL)
-                    {
-                        chara->attack.segVec[1].vx = temp_s1_4;
-                        chara->attack.segVec[1].vy = temp2;
-                        chara->attack.segVec[1].vz = temp_s0_9;
-                        func_8008B714(chara, ptr, &D_800C4728.target, 0);
-                    }
-                }
-            }
-
-            if (i >= sp2C)
-            {
-                sp18 = 1;
-            }
-            else
-            {
-                i -= sp34;
-            }
-
-            if (sp3C == 0)
-            {
-                i = sp28;
-                sp18   = 1;
-            }
-
-            if (sp40 >= shotCountMax)
-            {
-                i = sp28;
-                sp18   = 1;
-            }
-
-            chara->attack.hitCheckTime = i;
-            chara->attack.shotsFired  = sp40;
-            chara->attack.shotsLeft  = sp3C;
         }
         else
         {
-            if (var_a0 <= 0)
+            shotCountMax = 1;
+        }
+
+        inaccuracy  = attackInfo->hitCheck.shot.inaccuracy;
+        pelletCount = attackInfo->hitCheck.shot.pelletCount;
+
+        // Upper 4 bits of `spread` are the pellet step count (0 means 16), lower 4 pick the ring angle.
+        ringAngle       = attackInfo->hitCheck.shot.spread;
+        pelletAngleStep = ringAngle >> 4;
+        pelletAngleStep--;
+        pelletAngleStep &= 0xF;
+        ringAngle        = D_800AFD1C[ringAngle & 0xF];
+        pelletAngleStep++;
+        pelletAngleStep = pelletAngleStep * ringAngle;
+
+        if (shotInterval == 0 && pelletCount == 1)
+        {
+            q19_12 aimTime;
+            q19_12 spreadRadius;
+            q19_12 rangeThird;
+
+            // Single shot weapons get tighter the longer the aim is held, capped at 15 degrees.
+            // Darkness makes it worse.
+            aimTime = (attacker->model.charaId == Chara_Harry) ? func_8007FD2C() : Q12(2.0f);
+
+            if (aimTime < Q12(0.5f))
             {
-                var_a0 = 1;
+                aimTime = Q12(0.5f);
+            }
+            else if (aimTime > Q12(2.0f))
+            {
+                aimTime = Q12(2.0f);
             }
 
-            if (temp_s1 == AttackInfoType_Slash)
+            spreadRadius = Q12_MULT_PRECISE(Q12(aimTime - Q12(0.5f)) / Q12(1.5f), Q12(-1.5f)) + Q12(1.75f);
+            spreadRadius = Q12_MULT_PRECISE(spreadRadius, inaccuracy);
+
+            if (spreadRadius < Q12_ANGLE(15.0f))
             {
-                sp58 = 0;
-                if (i < sp28)
+                if (WorldEnv_IsInDarkness())
                 {
-                    sp5C = (sp28 - i) / (var_a0 * 4);
-                }
-                else
-                {
-                    sp5C = Q12(0.0f);
+                    spreadRadius = (spreadRadius + Q12_ANGLE(15.0f)) / 2;
                 }
             }
             else
             {
-                sp58 = 1;
-                sp5C = Q12(1.0f);
+                spreadRadius = Q12_ANGLE(15.0f);
             }
 
-            if (sp10 == 2)
+            rangeThird      = rangeMax / 3;
+            targetDistLevel = NO_VALUE;
+
+            if (g_SysWork.targetNpcIdx >= 0)
             {
-                func_8008B15C(chara);
-                sp10 = 3;
-            }
+                q19_12          distSqr;
+                s_SubCharacter* target;
 
-            temp_s0_10 = chara->attack.prevAimPitch;
-            temp_s1_5  = chara->attack.prevAimYaw;
+                target = &NPC_CHARA(g_SysWork.targetNpcIdx);
 
-            sp60 = chara->attack.prevOrigin.vx;
-            sp64 = chara->attack.prevOrigin.vy;
-            sp68 = chara->attack.prevOrigin.vz;
-
-            sp6C = chara->attack.origin.vx;
-            sp70 = chara->attack.origin.vy;
-            sp74 = chara->attack.origin.vz;
-
-            sp7C = Math_Cos(temp_s0_10);
-            sp80 = Math_Sin(temp_s0_10);
-
-            sp78 = Q12_MULT(sp80, Math_Sin(temp_s1_5));
-            sp80 = Q12_MULT(sp80, Math_Cos(temp_s1_5));
-
-            sp88 = Math_Cos(sp24);
-            sp8C = Math_Sin(sp24);
-
-            sp84 = Q12_MULT(sp8C, Math_Sin(sp20));
-            sp8C = Q12_MULT(sp8C, Math_Cos(sp20));
-            sp90 = 0;
-            sp94 = 0;
-
-            for (var_s2 = 4, var_fp = 0, var_s3 = 0, i = 0, var_s6 = 0;
-                 var_s2 > 0;
-                 sp90  += sp68,
-                 sp94   += sp64,
-                 var_fp += sp60,
-                 var_s3 += sp80,
-                 i += sp7C,
-                 var_s6 += sp78,
-                 var_s2--)
-            {
-                var_a0_3 = (sp84 * var_s2) + var_s6;
-                temp5 = var_a0_3 / 4;
-
-                var_a1 = (sp88 * var_s2) + i;
-                temp4 = var_a1 / 4;
-
-                temp_s0_11 = ((sp8C * var_s2) + var_s3) / 4;
-
-                temp_s0 = ratan2(temp5, temp_s0_11);
-
-                D_800C4748[var_s2 - 1].vy = ratan2(Math_Vector2MagCalc(temp5, temp_s0_11), temp4);
-                D_800C4748[var_s2 - 1].vx = temp_s0;
-
-                temp_a1 = var_s2 - 1;
-                temp_a0 = &D_800C4758[temp_a1];
-
-                var_v1 = (sp6C * var_s2) + var_fp;
-                temp_a0->vx = var_v1 / 4;
-
-                temp_a0->vy = ((sp70 * var_s2) + sp94) / 4;
-
-                temp_v0_10 = (sp74 * var_s2) + sp90;
-                temp_a0->vz = temp_v0_10 / 4;
-            }
-
-            chara->attack.prevAimYaw = chara->attack.aimYaw;
-            chara->attack.prevAimPitch = chara->attack.aimPitch;
-
-            for (var_s2 = 0, temp_s1_3 = 4; (temp_s1_3 > 0) && (var_s2 == 0); temp_s1_3--)
-            {
-                temp_v0_11                 = &D_800C4758[4 - temp_s1_3];
-                chara->attack.origin.vx = temp_v0_11->vx;
-                chara->attack.origin.vy = temp_v0_11->vy;
-
-                temp_s0_14                 = &D_800C4748[4 - temp_s1_3];
-                chara->attack.origin.vz = temp_v0_11->vz;
-
-                func_8008B1DC(chara, temp_s0_14->vx, temp_s0_14->vy);
-
-                if (Combat_MeleeHitCheck(chara, temp_s0_14->vx, attackInfo, sp5C) != 0)
+                do
                 {
-                    var_s2 = sp58;
-                    sp18  |= var_s2;
-                }
+                    if (target->model.charaId < Chara_AirScreamer)
+                    {
+                        break;
+                    }
+
+                    if (target->model.charaId > CHARA_LAST_ENEMY_ID)
+                    {
+                        break;
+                    }
+
+                    distSqr = Q12_SQUARE_PRECISE(attacker->position.vx - target->position.vx) +
+                              Q12_SQUARE_PRECISE(attacker->position.vy - target->position.vy) +
+                              Q12_SQUARE_PRECISE(attacker->position.vz - target->position.vz);
+                    targetDistLevel = SquareRoot12(distSqr);
+
+                    if (target->flags & CharaFlag_Unk2)
+                    {
+                        distSqr -= Q12(0.5f);
+                        if (distSqr < 0)
+                        {
+                            spreadRadius = 0;
+                        }
+                        else if (distSqr < Q12(16.0f))
+                        {
+                            spreadRadius = Q12_MULT_PRECISE(spreadRadius, Q12_DIV(distSqr, Q12(16.0f)));
+                        }
+                    }
+
+                    // Make closer targets easier to hit, also works out the range stat for ranking.
+                    if (WorldEnv_IsInDarkness())
+                    {
+                        targetDistLevel = 3;
+                    }
+                    else if (rangeThird < targetDistLevel)
+                    {
+                        targetDistLevel = 2;
+                    }
+                    else if (targetDistLevel > Q12(2.0f))
+                    {
+                        targetDistLevel = 1;
+                        spreadRadius   -= spreadRadius / 2;
+                    }
+                    else
+                    {
+                        targetDistLevel = 0;
+                        spreadRadius    = 0;
+                    }
+                } while (0);
             }
 
-            i     = sp28;
-            temp_v0_12 = &chara->attack;
-
-            temp_v0_12->origin.vx       = sp6C;
-            chara->attack.prevOrigin.vx = sp6C;
-            temp_v0_12->origin.vy       = sp70;
-            chara->attack.prevOrigin.vy = sp70;
-            temp_v0_12->origin.vz       = sp74;
-            chara->attack.prevOrigin.vz = sp74;
+            inaccuracy = Q12_MULT_PRECISE(spreadRadius, Rng_RandQ12());
         }
 
-        if (sp18 != 0)
-        {
-            chara->attack.state = NO_VALUE;
+        pelletAngle = Q12_MULT(pelletAngleStep, state - CharaAttackState_Started);
 
-            if (chara->model.charaId == Chara_Harry)
+        for (hitCheckTime += shotInterval;
+             shotsLeft != 0 && shotsFired < shotCountMax && attackTime >= hitCheckTime;
+             hitCheckTime += shotInterval, shotsFired++, shotsLeft--)
+        {
+            s32 pelletsLeft;
+
+            for (pelletsLeft = pelletCount; pelletsLeft > 0; pelletsLeft--)
             {
-                switch (weaponAttack)
+                q19_12          pelletOffset;
+                q19_12          ringOffsetAngle;
+                q19_12          pelletYaw;
+                q19_12          pelletPitch;
+                q19_12          sinPelletPitch;
+                q19_12          pelletDirX;
+                q19_12          pelletDirY;
+                q19_12          pelletDirZ;
+                bool            hasHit;
+                s_SubCharacter* hitChara;
+
+                // Random offset from the aim, in a random direction around the pellet's spot on the ring.
+                pelletOffset    = Q12_MULT_PRECISE(inaccuracy, Rng_RandQ12());
+                ringOffsetAngle = pelletAngle + Q12_MULT_PRECISE(ringAngle, Rng_RandQ12() - Q12_ANGLE(180.0f));
+
+                pelletYaw      = aimYaw + Q12_MULT(pelletOffset, Math_Sin(ringOffsetAngle));
+                pelletPitch    = aimPitch + Q12_MULT(pelletOffset, Math_Cos(ringOffsetAngle));
+                pelletDirY     = Math_Cos(pelletPitch);
+                sinPelletPitch = Math_Sin(pelletPitch);
+                pelletDirX     = Q12_MULT(sinPelletPitch, Math_Sin(pelletYaw));
+                pelletDirZ     = Q12_MULT(sinPelletPitch, Math_Cos(pelletYaw));
+
+                attacker->attack.hitLineVec[0].vx = Q12_MULT(rangeMax, pelletDirX);
+                attacker->attack.hitLineVec[0].vy = Q12_MULT(rangeMax, pelletDirY);
+                attacker->attack.hitLineVec[0].vz = Q12_MULT(rangeMax, pelletDirZ);
+
+                pelletAngle += pelletAngleStep;
+
+                if (attacker->model.charaId == Chara_Harry)
                 {
-                    case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
-                    case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
-                        if (sp30 != NO_VALUE)
+                    func_800892A4(5);
+                }
+
+                hasHit   = Ray_GeomAndCharaTraceGet(&shotTrace, &attacker->attack.origin, &attacker->attack.hitLineVec[0], attacker);
+                hitChara = shotTrace.character;
+                if (hasHit && hitChara != NULL)
+                {
+                    attacker->attack.hitLineVec[1].vx = pelletDirX;
+                    attacker->attack.hitLineVec[1].vy = pelletDirY;
+                    attacker->attack.hitLineVec[1].vz = pelletDirZ;
+                    func_8008B714(attacker, hitChara, &shotTrace.target, 0);
+                }
+            }
+        }
+
+        // Rewind to the last shot that went off, next tick carries on from there.
+        if (hitCheckTime >= hitWindowEnd)
+        {
+            isDone = true;
+        }
+        else
+        {
+            hitCheckTime -= shotInterval;
+        }
+
+        // Out of shots for this attack.
+        if (shotsLeft == 0)
+        {
+            hitCheckTime = attackTime;
+            isDone       = true;
+        }
+
+        if (shotsFired >= shotCountMax)
+        {
+            hitCheckTime = attackTime;
+            isDone       = true;
+        }
+
+        attacker->attack.hitCheckTime = hitCheckTime;
+        attacker->attack.shotsFired   = shotsFired;
+        attacker->attack.shotsLeft    = shotsLeft;
+    }
+    else
+    {
+        bool   stopOnHit;
+        q19_12 damageScale;
+        q19_12 prevAimYaw;
+        q19_12 prevAimPitch;
+        q19_12 prevOriginX;
+        q19_12 prevOriginY;
+        q19_12 prevOriginZ;
+        q19_12 originX;
+        q19_12 originY;
+        q19_12 originZ;
+        q19_12 prevDirX;
+        q19_12 prevDirY;
+        q19_12 prevDirZ;
+        q19_12 dirX;
+        q19_12 dirY;
+        q19_12 dirZ;
+        s32    stepWeight;
+        q19_12 prevOriginSumX;
+        q19_12 prevOriginSumZ;
+        q19_12 prevOriginSumY;
+        q19_12 prevDirSumX;
+        q19_12 prevDirSumY;
+        q19_12 prevDirSumZ;
+        s32    stepsLeft;
+        bool   stopped;
+
+        if (hitKeyframeCount <= 0)
+        {
+            hitKeyframeCount = 1;
+        }
+
+        // Slash attacks spread their damage over the whole window, so each step only gets its share of
+        // the time since last tick.
+        if (attackType == AttackInfoType_Slash)
+        {
+            stopOnHit = false;
+            if (hitCheckTime < attackTime)
+            {
+                damageScale = (attackTime - hitCheckTime) / (hitKeyframeCount * 4);
+            }
+            else
+            {
+                damageScale = Q12(0.0f);
+            }
+        }
+        else
+        {
+            stopOnHit   = true;
+            damageScale = Q12(1.0f);
+        }
+
+        if (state == CharaAttackState_Started)
+        {
+            Combat_AttackHitLineInit(attacker);
+            state = CharaAttackState_Active;
+        }
+
+        prevAimYaw   = attacker->attack.prevAimYaw;
+        prevAimPitch = attacker->attack.prevAimPitch;
+
+        prevOriginX = attacker->attack.prevOrigin.vx;
+        prevOriginY = attacker->attack.prevOrigin.vy;
+        prevOriginZ = attacker->attack.prevOrigin.vz;
+
+        originX = attacker->attack.origin.vx;
+        originY = attacker->attack.origin.vy;
+        originZ = attacker->attack.origin.vz;
+
+        prevDirY = Math_Cos(prevAimPitch);
+        prevDirZ = Math_Sin(prevAimPitch);
+        prevDirX = Q12_MULT(prevDirZ, Math_Sin(prevAimYaw));
+        prevDirZ = Q12_MULT(prevDirZ, Math_Cos(prevAimYaw));
+
+        dirY = Math_Cos(aimPitch);
+        dirZ = Math_Sin(aimPitch);
+        dirX = Q12_MULT(dirZ, Math_Sin(aimYaw));
+        dirZ = Q12_MULT(dirZ, Math_Cos(aimYaw));
+
+        // Split the movement since last tick into 4 steps so fast swings don't skip over anything.
+        // Last step [3] is this tick.
+        for (stepWeight = 4, prevOriginSumZ = 0, prevOriginSumY = 0, prevOriginSumX = 0,
+             prevDirSumZ = 0, prevDirSumY = 0, prevDirSumX = 0;
+             stepWeight > 0;
+             prevOriginSumZ += prevOriginZ,
+             prevOriginSumY += prevOriginY,
+             prevOriginSumX += prevOriginX,
+             prevDirSumZ    += prevDirZ,
+             prevDirSumY    += prevDirY,
+             prevDirSumX    += prevDirX,
+             stepWeight--)
+        {
+            q19_12 stepYaw;
+            q19_12 stepDirX;
+            q19_12 stepDirY;
+            q19_12 stepDirZ;
+
+            stepDirX = ((dirX * stepWeight) + prevDirSumX) / 4;
+            stepDirY = ((dirY * stepWeight) + prevDirSumY) / 4;
+            stepDirZ = ((dirZ * stepWeight) + prevDirSumZ) / 4;
+
+            stepYaw = ratan2(stepDirX, stepDirZ);
+
+            stepAims[stepWeight - 1].vy = ratan2(Math_Vector2MagCalc(stepDirX, stepDirZ), stepDirY);
+            stepAims[stepWeight - 1].vx = stepYaw;
+
+            stepOrigins[stepWeight - 1].vx = ((originX * stepWeight) + prevOriginSumX) / 4;
+            stepOrigins[stepWeight - 1].vy = ((originY * stepWeight) + prevOriginSumY) / 4;
+            stepOrigins[stepWeight - 1].vz = ((originZ * stepWeight) + prevOriginSumZ) / 4;
+        }
+
+        attacker->attack.prevAimYaw   = attacker->attack.aimYaw;
+        attacker->attack.prevAimPitch = attacker->attack.aimPitch;
+
+        for (stopped = false, stepsLeft = 4; stepsLeft > 0 && !stopped; stepsLeft--)
+        {
+            VECTOR3* stepOrigin;
+            DVECTOR* stepAngles;
+
+            stepOrigin                 = &stepOrigins[4 - stepsLeft];
+            stepAngles                 = &stepAims[4 - stepsLeft];
+            attacker->attack.origin.vx = stepOrigin->vx;
+            attacker->attack.origin.vy = stepOrigin->vy;
+            attacker->attack.origin.vz = stepOrigin->vz;
+
+            Combat_AttackHitLineUpdate(attacker, stepAngles->vx, stepAngles->vy);
+
+            if (Combat_MeleeHitCheck(attacker, stepAngles->vx, attackInfo, damageScale) != 0)
+            {
+                stopped = stopOnHit;
+                isDone |= stopped;
+            }
+        }
+
+        hitCheckTime = attackTime;
+
+        // Steps above moved the origin around, put it back and save it for next tick.
+        attack = &attacker->attack;
+
+        attack->origin.vx              = originX;
+        attacker->attack.prevOrigin.vx = originX;
+        attack->origin.vy              = originY;
+        attacker->attack.prevOrigin.vy = originY;
+        attack->origin.vz              = originZ;
+        attacker->attack.prevOrigin.vz = originZ;
+    }
+
+    if (isDone)
+    {
+        attacker->attack.state = CharaAttackState_Finished;
+
+        // Log the attack for the end of game ranking.
+        if (attacker->model.charaId == Chara_Harry)
+        {
+            s32 rankingShotType;
+
+            switch (weaponAttack)
+            {
+                case WEAPON_ATTACK(AttackType_Handgun,      AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
+                    if (targetDistLevel != NO_VALUE)
+                    {
+                        if (WorldEnv_IsInDarkness())
                         {
-                            if (WorldEnv_IsInDarkness())
-                            {
-                                var_s0_2 = 3;
-                            }
-                            else
-                            {
-                                var_s0_2 = sp30;
-                            }
+                            rankingShotType = 3;
                         }
                         else
                         {
-                            var_s0_2 = 5;
+                            rankingShotType = targetDistLevel;
                         }
-                        break;
+                    }
+                    else
+                    {
+                        rankingShotType = 5;
+                    }
+                    break;
 
-                    case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
-                        var_s0_2 = 5;
-                        break;
+                case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
+                    rankingShotType = 5;
+                    break;
 
-                    case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
-                        var_s0_2 = 4;
-                        break;
+                case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
+                    rankingShotType = 4;
+                    break;
 
-                    case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
-                    case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap):
-                    case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Tap):
-                    case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Hold):
-                    case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
-                    case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Hold):
-                    case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
-                    case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
-                    case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Multitap):
-                        var_s0_2 = 7;
-                        break;
+                case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Hold):
+                case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
+                case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Hold):
+                case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
+                case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
+                case WEAPON_ATTACK(AttackType_Katana,    AttackInputType_Multitap):
+                    rankingShotType = 7;
+                    break;
 
-                    case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap):
-                    case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
-                        var_s0_2 = NO_VALUE;
-                        break;
+                case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
+                    rankingShotType = NO_VALUE;
+                    break;
 
-                    default:
-                        var_s0_2 = 6;
-                        break;
-                }
+                default:
+                    rankingShotType = 6;
+                    break;
+            }
 
-                if (var_s0_2 != NO_VALUE)
-                {
-                    func_8009151C(var_s0_2, chara->attack.hitFlags != 0, func_8007FD2C());
-                }
+            if (rankingShotType != NO_VALUE)
+            {
+                func_8009151C(rankingShotType, attacker->attack.hitFlags != 0, func_8007FD2C());
             }
         }
-        else
-        {
-            chara->attack.state  = sp10;
-            chara->attack.hitCheckTime = i;
-        }
+    }
+    else
+    {
+        attacker->attack.state        = state;
+        attacker->attack.hitCheckTime = hitCheckTime;
     }
 
-    return chara->attack.hitFlags;
+    return attacker->attack.hitFlags;
 }
 
-void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
+void Combat_AttackHitLineInit(s_SubCharacter* attacker) // 0x8008B15C
 {
     s32 aimPitch;
     s32 aimYaw;
     s32 i;
 
-    aimYaw   = chara->attack.aimYaw;
-    aimPitch = chara->attack.aimPitch;
+    aimYaw   = attacker->attack.aimYaw;
+    aimPitch = attacker->attack.aimPitch;
 
-    chara->attack.prevAimYaw   = aimYaw;
-    chara->attack.prevAimPitch = aimPitch;
+    attacker->attack.prevAimYaw   = aimYaw;
+    attacker->attack.prevAimPitch = aimPitch;
 
-    // @hack Loop is required for match, might be based on `attack->segVec` ARRAY_SIZE but not totally sure.
+    // @hack Loop is required for match, might be based on `attack->hitLineVec` ARRAY_SIZE but not totally sure.
     // Code in this loop only runs once.
-    for (i = ARRAY_SIZE(chara->attack.segVec) - 1; i > 0; i--)
+    for (i = ARRAY_SIZE(attacker->attack.hitLineVec) - 1; i > 0; i--)
     {
-        func_8008B1DC(chara, aimYaw, aimPitch);
-        chara->attack.prevOrigin = chara->attack.origin;
+        Combat_AttackHitLineUpdate(attacker, aimYaw, aimPitch);
+        attacker->attack.prevOrigin = attacker->attack.origin;
     }
 }
 
-void func_8008B1DC(s_SubCharacter* chara, q19_12 aimYaw, q19_12 aimPitch) // 0x8008B1DC
+void Combat_AttackHitLineUpdate(s_SubCharacter* attacker, q19_12 aimYaw, q19_12 aimPitch) // 0x8008B1DC
 {
-    s32                rangeMin;
-    q19_12             sinPitch;
-    q19_12             cosPitch;
-    s32                dirX;
-    s32                dirZ;
-    s32                i;
-    s32                segLength;
-    s32                weaponAttack;
-    s32                segVecX;
-    s32                segVecY;
-    s32                segVecZ;
-    s32                segStartX;
-    s32                segStartY;
-    s32                segStartZ;
-    s32                originX;
-    s32                originY;
-    s32                originZ;
-    s_AttackInfo*      attackInfo;
-    s_CharaAttack*     attack;
+    s32            rangeMin;
+    q19_12         sinPitch;
+    q19_12         dirY;
+    s32            dirX;
+    s32            dirZ;
+    s32            i;
+    s32            hitLineLength;
+    s32            weaponAttack;
+    s32            hitLineVecX;
+    s32            hitLineVecY;
+    s32            hitLineVecZ;
+    s32            hitLineStartX;
+    s32            hitLineStartY;
+    s32            hitLineStartZ;
+    s32            originX;
+    s32            originY;
+    s32            originZ;
+    s_AttackInfo*  attackInfo;
+    s_CharaAttack* attack;
 
-    attack       = &chara->attack;
-    weaponAttack = chara->attack.weaponAttack;
+    attack       = &attacker->attack;
+    weaponAttack = attacker->attack.weaponAttack;
 
-    // Shift segment history.
-    // @hack Loop is required for match, might be based on `attack->segVec` ARRAY_SIZE but not totally sure.
+    // Shift hit line history.
+    // @hack Loop is required for match, might be based on `attack->hitLineVec` ARRAY_SIZE but not totally sure.
     // Code in this loop only runs once.
-    for (i = ARRAY_SIZE(attack->segVec) - 2; i >= 0; i--)
+    for (i = ARRAY_SIZE(attack->hitLineVec) - 2; i >= 0; i--)
     {
-        segVecX = attack->segVec[i].vx;
-        segVecY = attack->segVec[i].vy;
-        segVecZ = attack->segVec[i].vz;
+        hitLineVecX = attack->hitLineVec[i].vx;
+        hitLineVecY = attack->hitLineVec[i].vy;
+        hitLineVecZ = attack->hitLineVec[i].vz;
 
-        attack->segVec[i + 1].vx = segVecX;
-        attack->segVec[i + 1].vy = segVecY;
-        attack->segVec[i + 1].vz = segVecZ;
+        attack->hitLineVec[i + 1].vx = hitLineVecX;
+        attack->hitLineVec[i + 1].vy = hitLineVecY;
+        attack->hitLineVec[i + 1].vz = hitLineVecZ;
 
-        segStartX = attack->segStart[i].vx;
-        segStartY = attack->segStart[i].vy;
-        segStartZ = attack->segStart[i].vz;
+        hitLineStartX = attack->hitLineStart[i].vx;
+        hitLineStartY = attack->hitLineStart[i].vy;
+        hitLineStartZ = attack->hitLineStart[i].vz;
 
-        attack->segStart[i + 1].vx = segStartX;
-        attack->segStart[i + 1].vy = segStartY;
-        attack->segStart[i + 1].vz = segStartZ;
+        attack->hitLineStart[i + 1].vx = hitLineStartX;
+        attack->hitLineStart[i + 1].vy = hitLineStartY;
+        attack->hitLineStart[i + 1].vz = hitLineStartZ;
     }
 
     attackInfo = &g_Items_WeaponAttackInfos[weaponAttack];
 
-    segLength = attackInfo->rangeMax;
-    rangeMin  = attackInfo->rangeMin;
+    hitLineLength = attackInfo->rangeMax;
+    rangeMin      = attackInfo->rangeMin;
 
-    originX = chara->attack.origin.vx;
-    originY = chara->attack.origin.vy;
-    originZ = chara->attack.origin.vz;
+    originX = attacker->attack.origin.vx;
+    originY = attacker->attack.origin.vy;
+    originZ = attacker->attack.origin.vz;
 
-    segStartX = originX;
-    segStartY = originY;
-    segStartZ = originZ;
+    hitLineStartX = originX;
+    hitLineStartY = originY;
+    hitLineStartZ = originZ;
 
-    cosPitch = Math_Cos(aimPitch);
+    dirY     = Math_Cos(aimPitch);
     sinPitch = Math_Sin(aimPitch);
+    dirX     = Q12_MULT(sinPitch, Math_Sin(aimYaw));
+    dirZ     = Q12_MULT(sinPitch, Math_Cos(aimYaw));
 
-    dirX = Q12_MULT(sinPitch, Math_Sin(aimYaw));
-    dirZ = Q12_MULT(sinPitch, Math_Cos(aimYaw));
+    hitLineLength -= rangeMin;
 
-    segLength -= rangeMin;
+    hitLineStartX                      += Q12_MULT(rangeMin, dirX);
+    attacker->attack.hitLineStart[0].vx = hitLineStartX;
 
-    segStartX                   += Q12_MULT(rangeMin, dirX);
-    chara->attack.segStart[0].vx = segStartX;
+    hitLineStartY                      += Q12_MULT(rangeMin, dirY);
+    attacker->attack.hitLineStart[0].vy = hitLineStartY;
 
-    segStartY                   += Q12_MULT(rangeMin, cosPitch);
-    chara->attack.segStart[0].vy = segStartY;
+    hitLineStartZ                      += Q12_MULT(rangeMin, dirZ);
+    attacker->attack.hitLineStart[0].vz = hitLineStartZ;
 
-    segStartZ                   += Q12_MULT(rangeMin, dirZ);
-    chara->attack.segStart[0].vz = segStartZ;
+    hitLineVecX                       = Q12_MULT(hitLineLength, dirX);
+    attacker->attack.hitLineVec[0].vx = hitLineVecX;
 
-    segVecX                    = Q12_MULT(segLength, dirX);
-    chara->attack.segVec[0].vx = segVecX;
+    hitLineVecY                       = Q12_MULT(hitLineLength, dirY);
+    attacker->attack.hitLineVec[0].vy = hitLineVecY;
 
-    segVecY                    = Q12_MULT(segLength, cosPitch);
-    chara->attack.segVec[0].vy = segVecY;
-
-    segVecZ                    = Q12_MULT(segLength, dirZ);
-    chara->attack.segVec[0].vz = segVecZ;
+    hitLineVecZ                       = Q12_MULT(hitLineLength, dirZ);
+    attacker->attack.hitLineVec[0].vz = hitLineVecZ;
 }
 
 void Combat_GasWeaponSfxAllStop(void) // 0x8008B398
@@ -1244,8 +1248,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Hold):
         case WEAPON_ATTACK(AttackType_RockDrill, AttackInputType_Multitap):
         case WEAPON_ATTACK(AttackType_Chainsaw,  AttackInputType_Multitap):
-            // @bug `hitCheckTime` is Q12 but `func_8008A35C` compares whole keyframes?
-            if (func_8008A35C(attackInfo, attacker->attack.hitCheckTime) == 0)
+            // @bug `hitCheckTime` is Q12 but `Combat_AttackHitWindowCheck` compares whole keyframes?
+            if (Combat_AttackHitWindowCheck(attackInfo, attacker->attack.hitCheckTime) == false)
             {
                 damage = 0;
             }
@@ -1292,9 +1296,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
         case WEAPON_ATTACK(AttackType_Shotgun,      AttackInputType_Tap):
         case WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap):
         case NO_VALUE:
-            pushX = attacker->attack.segVec[1].vx;
-            pushY = attacker->attack.segVec[1].vy;
-            pushZ = attacker->attack.segVec[1].vz;
+            pushX = attacker->attack.hitLineVec[1].vx;
+            pushY = attacker->attack.hitLineVec[1].vy;
+            pushZ = attacker->attack.hitLineVec[1].vz;
 
             if (weaponAttack == WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap))
             {
@@ -1324,9 +1328,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
             if (weaponAttack == WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap) ||
                 weaponAttack == WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap))
             {
-                pushX = attacker->attack.segVec[0].vx;
+                pushX = attacker->attack.hitLineVec[0].vx;
                 pushY = 0;
-                pushZ = attacker->attack.segVec[0].vz;
+                pushZ = attacker->attack.hitLineVec[0].vz;
             }
             else
             {
@@ -1348,17 +1352,17 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* hit
                 prevTipY = attacker->attack.field_60.vy;
                 prevTipZ = attacker->attack.field_60.vz;
 
-                tipX = attacker->attack.segVec[0].vx;
-                tipY = attacker->attack.segVec[0].vy;
-                tipZ = attacker->attack.segVec[0].vz;
+                tipX = attacker->attack.hitLineVec[0].vx;
+                tipY = attacker->attack.hitLineVec[0].vy;
+                tipZ = attacker->attack.hitLineVec[0].vz;
 
                 prevTipX += baseX;
                 prevTipY += baseY;
                 prevTipZ += baseZ;
 
-                baseX = attacker->attack.segStart[0].vx;
-                baseY = attacker->attack.segStart[0].vy;
-                baseZ = attacker->attack.segStart[0].vz;
+                baseX = attacker->attack.hitLineStart[0].vx;
+                baseY = attacker->attack.hitLineStart[0].vy;
+                baseZ = attacker->attack.hitLineStart[0].vz;
 
                 tipX += baseX;
                 tipY += baseY;
@@ -1520,17 +1524,17 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
     s32             charaBit;
     s32             firstCharaBit;
     s32             i;
-    q19_12          sinAngle;
-    q19_12          cosAngle;
-    q19_12          segStartX;
-    q19_12          segStartY;
-    q19_12          segStartZ;
-    q19_12          segVecX;
-    q19_12          segVecY;
-    q19_12          segVecZ;
-    q19_12          localSegX;
-    q19_12          localSegY;
-    q19_12          localSegZ;
+    q19_12          sinYaw;
+    q19_12          cosYaw;
+    q19_12          hitLineStartX;
+    q19_12          hitLineStartY;
+    q19_12          hitLineStartZ;
+    q19_12          hitLineVecX;
+    q19_12          hitLineVecY;
+    q19_12          hitLineVecZ;
+    q19_12          localHitLineX;
+    q19_12          localHitLineY;
+    q19_12          localHitLineZ;
     q19_12          boxMaxX;
     q19_12          boxMaxY;
     q19_12          boxMaxZ;
@@ -1546,7 +1550,7 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
     q19_12          rayFromY;
     q19_12          rayZ;
 
-    static VECTOR3    localSegPoints[4]; // Q19.12 | Hit segment in attacker-local space. Written but never read.
+    static VECTOR3    localHitLinePoints[4]; // Q19.12 | Hit line in attacker-local space. Written but never read.
     static VECTOR3    hitPos;
     static s32        __pad_bss_800C47C4;
     static VECTOR3    rayPoints[2];      // Line-of-sight ray from the attacker to each candidate.
@@ -1555,19 +1559,19 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
     static s32        __pad_bss_800C47F4;
     static s_RayTrace rayTrace;
 
-    segStartX = attacker->attack.segStart[0].vx;
-    segStartY = attacker->attack.segStart[0].vy;
-    segStartZ = attacker->attack.segStart[0].vz;
+    hitLineStartX = attacker->attack.hitLineStart[0].vx;
+    hitLineStartY = attacker->attack.hitLineStart[0].vy;
+    hitLineStartZ = attacker->attack.hitLineStart[0].vz;
 
-    sinAngle = Math_Sin(yaw);
-    cosAngle = Math_Cos(yaw);
+    sinYaw = Math_Sin(yaw);
+    cosYaw = Math_Cos(yaw);
 
-    localSegPoints[0].vx = Q12(0.0f);
-    localSegPoints[0].vy = Q12(0.0f);
-    localSegPoints[0].vz = Q12(0.0f);
+    localHitLinePoints[0].vx = Q12(0.0f);
+    localHitLinePoints[0].vy = Q12(0.0f);
+    localHitLinePoints[0].vz = Q12(0.0f);
 
-    segVecX = attacker->attack.segVec[0].vx;
-    segVecZ = attacker->attack.segVec[0].vz;
+    hitLineVecX = attacker->attack.hitLineVec[0].vx;
+    hitLineVecZ = attacker->attack.hitLineVec[0].vz;
 
     boxMinX = 0;
     boxMaxX = 0;
@@ -1576,42 +1580,42 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
     boxMinZ = 0;
     boxMaxZ = 0;
 
-    segVecY          = attacker->attack.segVec[0].vy;
-    localSegPoints[1].vy = segVecY;
+    hitLineVecY              = attacker->attack.hitLineVec[0].vy;
+    localHitLinePoints[1].vy = hitLineVecY;
 
-    localSegX        = Q12_MULT_PRECISE(segVecX, cosAngle) - Q12_MULT_PRECISE(segVecZ, sinAngle);
-    localSegPoints[1].vx = localSegX;
+    localHitLineX            = Q12_MULT_PRECISE(hitLineVecX, cosYaw) - Q12_MULT_PRECISE(hitLineVecZ, sinYaw);
+    localHitLinePoints[1].vx = localHitLineX;
 
-    localSegZ        = Q12_MULT_PRECISE(segVecX, sinAngle) + Q12_MULT_PRECISE(segVecZ, cosAngle);
-    localSegPoints[1].vz = localSegZ;
+    localHitLineZ            = Q12_MULT_PRECISE(hitLineVecX, sinYaw) + Q12_MULT_PRECISE(hitLineVecZ, cosYaw);
+    localHitLinePoints[1].vz = localHitLineZ;
 
-    localSegY = segVecY;
+    localHitLineY = hitLineVecY;
 
-    if (localSegX > 0)
+    if (localHitLineX > 0)
     {
-        boxMaxX = localSegX;
+        boxMaxX = localHitLineX;
     }
-    else if (localSegX < 0)
+    else if (localHitLineX < 0)
     {
-        boxMinX = localSegX;
-    }
-
-    if (boxMaxY < localSegY)
-    {
-        boxMaxY = localSegY;
-    }
-    else if (localSegY < boxMinY)
-    {
-        boxMinY = localSegY;
+        boxMinX = localHitLineX;
     }
 
-    if (boxMaxZ < localSegZ)
+    if (boxMaxY < localHitLineY)
     {
-        boxMaxZ = localSegZ;
+        boxMaxY = localHitLineY;
     }
-    else if (localSegZ < boxMinZ)
+    else if (localHitLineY < boxMinY)
     {
-        boxMinZ = localSegZ;
+        boxMinY = localHitLineY;
+    }
+
+    if (boxMaxZ < localHitLineZ)
+    {
+        boxMaxZ = localHitLineZ;
+    }
+    else if (localHitLineZ < boxMinZ)
+    {
+        boxMinZ = localHitLineZ;
     }
 
     hitSizeY = attackInfo->hitCheck.fight.sizeY;
@@ -1712,8 +1716,8 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
 
         // @bug `rayX` and `rayZ` are meant to stay at the ray start, but are overwritten with each candidate's ray end
         // below. From the second candidate on, this angle is measured from the previous candidate's ray end instead.
-        angleToOther = ratan2(targetX - rayX, targetZ - rayZ);
-        offsetX      = Q12_MULT_PRECISE(innerRadius, Math_Sin(angleToOther));
+        angleToOther    = ratan2(targetX - rayX, targetZ - rayZ);
+        offsetX         = Q12_MULT_PRECISE(innerRadius, Math_Sin(angleToOther));
         cosAngleToOther = Math_Cos(angleToOther);
 
         rayX = targetX - offsetX;
@@ -1755,16 +1759,16 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
             otherCenterZ  = other->position.vz;
             otherCenterZ += other->collision.shapeOffsets.box.vz;
 
-            relX = otherCenterX - segStartX;
-            relZ = otherCenterZ - segStartZ;
+            relX = otherCenterX - hitLineStartX;
+            relZ = otherCenterZ - hitLineStartZ;
 
             otherPosY      = other->position.vy;
             otherHeight    = other->collision.box.height;
             otherTopExtent = other->collision.box.topExtent;
 
-            relY   = otherPosY - segStartY;
-            localX = Q12_MULT_PRECISE(relX, cosAngle) - Q12_MULT_PRECISE(relZ, sinAngle);
-            localZ = Q12_MULT_PRECISE(relX, sinAngle) + Q12_MULT_PRECISE(relZ, cosAngle);
+            relY   = otherPosY - hitLineStartY;
+            localX = Q12_MULT_PRECISE(relX, cosYaw) - Q12_MULT_PRECISE(relZ, sinYaw);
+            localZ = Q12_MULT_PRECISE(relX, sinYaw) + Q12_MULT_PRECISE(relZ, cosYaw);
 
             if ((relY < (boxMinY - otherHeight)) || ((boxMaxY - otherTopExtent) < relY))
             {
@@ -1822,21 +1826,21 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
                 }
             }
 
-            // @bug Overwrites the current `segVec` with the point 3/4 along the segment, each later
+            // @bug Overwrites the current `hitLineVec` with the point 3/4 along the hit line, each later
             // candidate that reaches here converts the already converted point again.
-            segVecX -= segVecX / 4;
-            segVecY -= segVecY / 4;
-            segVecZ -= segVecZ / 4;
+            hitLineVecX -= hitLineVecX / 4;
+            hitLineVecY -= hitLineVecY / 4;
+            hitLineVecZ -= hitLineVecZ / 4;
 
-            segVecX += segStartX;
-            segVecY += segStartY;
-            segVecZ += segStartZ;
+            hitLineVecX += hitLineStartX;
+            hitLineVecY += hitLineStartY;
+            hitLineVecZ += hitLineStartZ;
 
             otherMidY = (otherTopExtent + otherHeight) / 2;
 
-            hitOffsetX = segVecX - otherCenterX;
-            hitOffsetZ = segVecZ - otherCenterZ;
-            hitOffsetY = segVecY - (otherPosY + otherMidY);
+            hitOffsetX = hitLineVecX - otherCenterX;
+            hitOffsetZ = hitLineVecZ - otherCenterZ;
+            hitOffsetY = hitLineVecY - (otherPosY + otherMidY);
 
             hitOffsetXZ = func_8008A058(func_80080540(hitOffsetX, Q12(0.0f), hitOffsetZ));
             halfHeight  = CLAMP_LOW((otherHeight - otherTopExtent) / 2, 0);

@@ -13494,7 +13494,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
         airScreamer->model.controlState != AirScreamerControl_12 && airScreamer->model.controlState != AirScreamerControl_25 &&
         airScreamer->model.controlState != AirScreamerControl_40 && airScreamer->model.controlState != AirScreamerControl_49)
     {
-        airScreamer->attack.state = 0;
+        airScreamer->attack.state = CharaAttackState_Idle;
     }
     else
     {
@@ -13527,7 +13527,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
                 temp_s1->aimYaw  = temp_v0;
                 temp_s1->aimPitch  = temp_v1_2;
 
-                if (func_8008A3E0(airScreamer) != 0)
+                if (Combat_AttackUpdate(airScreamer) != 0)
                 {
                     airScreamerProps.flags |= AirScreamerFlag_0;
                 }
@@ -13557,7 +13557,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
                 temp_s1->aimYaw  = temp_v0;
                 temp_s1->aimPitch  = temp_v1_2;
 
-                if (func_8008A3E0(airScreamer) != 0)
+                if (Combat_AttackUpdate(airScreamer) != 0)
                 {
                     airScreamerProps.flags |= AirScreamerFlag_1;
                 }

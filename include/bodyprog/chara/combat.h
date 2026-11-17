@@ -22,31 +22,46 @@ typedef struct _CharaDamage
     /* 0xC */ q19_12  amount;
 } s_CharaDamage;
 
+/** @brief `s_CharaAttack::state` values. */
+typedef enum _CharaAttackState
+{
+    CharaAttackState_Idle      = 0,
+    CharaAttackState_Requested = 1, /** Set by character code to start an attack, or when its animation restarts. */
+    CharaAttackState_Started   = 2, /** First tick of hit checks. Melee attacks set up their hit line history. */
+    CharaAttackState_Active    = 3,
+    CharaAttackState_Finished  = NO_VALUE
+} e_CharaAttackState;
+
 /** @brief State of the attack a character is currently performing.
+ *
+ * Hits are checked along a hit line, which runs along the aim from `rangeMin` to `rangeMax`
+ * past `origin`, which character code moves with the animation (e.g. Harry's hand origin).
+ * Last tick's hit line is kept too, so melee checks can also check the swing in between,
+ * in case a fast animation moved past something hittable between ticks.
  *
  * @note SH2 keeps similar data to this inside `shBattleInfo`, and also seemed 
  * to move some `struct _SubCharacter` fields (`flags`, `field_40`, `attackReceived`) inside it.
  */
 typedef struct _CharaAttack
 {
-    /* 0x0  */ s16     state;        /** 0: idle, 1: requested, 2: first active tick, 3: hit checks running, `NO_VALUE`: finished.
-                                       * Reset to 0 by `func_8008A3AC` when `CharaFlag_Unk8` is clear. */
-    /* 0x2  */ u8      weaponAttack; /** Packed `WEAPON_ATTACK` being performed. Index into `g_Items_WeaponAttackInfos`. */
-    /* 0x3  */ u8      shotsLeft;    /** Gunshots only. Set to 100 on start, decremented per shot. Attack ends at 0. */
-    /* 0x4  */ u8      shotsFired;   /** Gunshots only. Compared against `s_AttackShot::shotCountMax`. */
+    /* 0x0  */ s16     state;           /** `e_CharaAttackState`. Reset to `CharaAttackState_Idle` by `func_8008A3AC` when `CharaFlag_Unk8` is clear. */
+    /* 0x2  */ u8      weaponAttack;    /** Packed `WEAPON_ATTACK` being performed. Index into `g_Items_WeaponAttackInfos`. */
+    /* 0x3  */ u8      shotsLeft;       /** Gunshots only. Set to 100 on start, decremented per shot. Attack ends at 0. */
+    /* 0x4  */ u8      shotsFired;      /** Gunshots only. Compared against `s_AttackShot::shotCountMax`. */
     /* 0x5  */ s8      __pad_5[3];
-    /* 0x8  */ s32     hitFlags;     /** Bit `1 << npcIdx` per NPC hit by this attack, `NO_VALUE` (all bits set) if the player is hit. */
+    /* 0x8  */ s32     hitFlags;        /** Bit `1 << npcIdx` per NPC hit by this attack, `NO_VALUE` (all bits set) if the player is hit. */
     /* 0xC  */ q3_12   aimYaw;
-    /* 0xE  */ q3_12   aimPitch;     /** Measured from vertical. 90 degrees is level. */
+    /* 0xE  */ q3_12   aimPitch;        /** Measured from vertical. 90 degrees is level. */
     /* 0x10 */ q3_12   prevAimYaw;
     /* 0x12 */ q3_12   prevAimPitch;
-    /* 0x14 */ q19_12  hitCheckTime; /** Animation time that hit checks have been run up to, clamped to the attack's hit window. */
-    /* 0x18 */ VECTOR3 origin;       /** Q19.12 | Attack origin or ray start for gunshots. */
-    /* 0x24 */ VECTOR3 segStart[2];  /** Q19.12 | Hit segment start, `origin` + direction * `rangeMin`. [0]: this tick, [1]: previous tick. */
-    /* 0x3C */ VECTOR3 prevOrigin;   /** Q19.12 */
-    /* 0x48 */ VECTOR3 segVec[2];    /** Q19.12 | Hit segment, direction * (`rangeMax` - `rangeMin`). [0]: this tick, [1]: previous tick. */
-    /* 0x60 */ VECTOR3 field_60;     /** Q19.12 | Read by `func_8008B714` as the offset from `prevOrigin` to the previous segment end,
-                                       * but never written. Always 0 after the `bzero` during character spawn? */
+    /* 0x14 */ q19_12  hitCheckTime;    /** Animation time that hit checks have been run up to, clamped to the attack's hit window. */
+    /* 0x18 */ VECTOR3 origin;          /** Q19.12 | Attack origin or ray start for gunshots. */
+    /* 0x24 */ VECTOR3 hitLineStart[2]; /** Q19.12 | Hit line start, `origin` + direction * `rangeMin`. [0]: this tick, [1]: previous tick. */
+    /* 0x3C */ VECTOR3 prevOrigin;      /** Q19.12 */
+    /* 0x48 */ VECTOR3 hitLineVec[2];   /** Q19.12 | Hit line, direction * (`rangeMax` - `rangeMin`). [0]: this tick, [1]: previous tick.
+                                          * Gunshots put the pellet ray in [0] and the pellet direction in [1]. */
+    /* 0x60 */ VECTOR3 field_60;        /** Q19.12 | Read by `func_8008B714` as the offset from `prevOrigin` to the previous hit line end,
+                                          * but never written. Always 0 after the `bzero` during character spawn? */
 } s_CharaAttack;
 
 // Q12 square root?
@@ -67,14 +82,26 @@ s64 func_8008A0D4(void);
 s32 func_8008A0E4(s32 request, s32 weaponAttack, struct _SubCharacter* chara, VECTOR3* attackPos, struct _SubCharacter* unused,
                   q3_12 aimYaw, q3_12 aimPitch);
 
-/** @brief Gets the first keyframe of an attack's hit window. */
-u32 func_8008A270(s32 weaponAttack);
+/** @brief Gets the first keyframe of an attack's hit window from `s_AttackInfo::hitStartKeyframe`.
+ * Returns 0 while a gas weapon's engine is revved, so hit window is always open.
+ */
+u32 Combat_AttackStartKeyframeGet(s32 weaponAttack);
 
-/** @brief Gets the keyframe count of an attack's hit window. */
-u32 func_8008A2E0(s32 weaponAttack);
+/** @brief Gets the keyframe count of an attack's hit window from `s_AttackInfo::hitKeyframeCount`.
+ * Revved Chainsaw and Rock Drill attacks use fixed counts instead.
+ */
+u32 Combat_AttackKeyframeCountGet(s32 weaponAttack);
 
-/** @brief Checks if `keyframe` is inside an attack's hit window. */
-s32 func_8008A35C(struct _AttackInfo* attackInfo, s32 keyframe);
+/** @brief Checks if a keyframe is inside an attack's hit window.
+ *
+ * Reads `s_AttackInfo::hitStartKeyframe` and `s_AttackInfo::hitKeyframeCount` directly, unlike
+ * `Combat_AttackStartKeyframeGet` and `Combat_AttackKeyframeCountGet`, ignores the revved gas weapon overrides.
+ *
+ * @param attackInfo Attack to check.
+ * @param keyframe Keyframe relative to the start of the attack animation.
+ * @return `true` if `keyframe` is in `[hitStartKeyframe, hitStartKeyframe + hitKeyframeCount)`, otherwise `false`.
+ */
+bool Combat_AttackHitWindowCheck(struct _AttackInfo* attackInfo, s32 keyframe);
 
 void Chara_Flag8Clear(struct _SubCharacter* chara);
 
@@ -83,11 +110,38 @@ void Chara_Flag8Set(struct _SubCharacter* chara);
 /** Large function. Runs if `CharaFlag_Unk8` is set. */
 void func_8008A3AC(struct _SubCharacter* chara);
 
-s32 func_8008A3E0(struct _SubCharacter* chara);
+/** @brief Advances an attack's state and runs its hit checks for this tick.
+ *
+ * Gunshots fire one shot per elapsed `s_AttackShot::interval` since the last tick, tracing a ray for each pellet.
+ * Other attacks check 4 hit lines spaced between the previous tick's aim and origin and the current ones, running
+ * `Combat_MeleeHitCheck` on each. Non-Slash attacks stop at the first hit.
+ * When one of Harry's attacks finishes, it's recorded in the ranking statistics with `func_8009151C`.
+ * Also sets `CharaFlag_Unk8` (TODO: decode this flag, might mean attack has been processed this tick?)
+ *
+ * @param attacker Attacking character.
+ * @return `1 << npcIdx` per NPC hit so far during the whole attack, `NO_VALUE` if the player was hit.
+ *         0 when the attack is idle/finished/inactive.
+ */
+s32 Combat_AttackUpdate(struct _SubCharacter* attacker);
 
-void func_8008B15C(struct _SubCharacter* chara);
+/** @brief Sets up a melee attack's hit line on its first active tick.
+ *
+ * Computes the hit line for the current aim with `Combat_AttackHitLineUpdate`, and sets `prevAimYaw`,
+ * `prevAimPitch` and `prevOrigin` to the current values.
+ *
+ * @param attacker Attacking character.
+ */
+void Combat_AttackHitLineInit(struct _SubCharacter* attacker);
 
-void func_8008B1DC(struct _SubCharacter* chara, q19_12 aimYaw, q19_12 aimPitch);
+/** @brief Moves the current hit line into the history slot and computes a new one for the given aim.
+ *
+ * The hit line starts `s_AttackInfo::rangeMin` from `s_CharaAttack::origin` and ends at `rangeMax`.
+ *
+ * @param attacker Attacking character.
+ * @param aimYaw Aim yaw (Q19.12).
+ * @param aimPitch Aim pitch, measured from vertical (Q19.12).
+ */
+void Combat_AttackHitLineUpdate(struct _SubCharacter* attacker, q19_12 aimYaw, q19_12 aimPitch);
 
 void Combat_GasWeaponSfxAllStop(void);
 
@@ -106,10 +160,10 @@ s32 func_8008B714(struct _SubCharacter* attacker, struct _SubCharacter* target, 
 
 /** @brief Runs one step of a melee/non-gunshot attack's hit check and applies damage to every character hit.
  *
- * Builds a box around the current hit segment in attacker-local space, padded to the `s_AttackFight` size.
+ * Builds a box around the current hit line in attacker-local space, padded to the `s_AttackFight` size.
  * Attacks from the player test against every NPC, while NPC attacks only test against the player.
  * A hit is counted when it's within 3 m, has line of sight from the attacker, and collision overlaps the hit
- * segment box.
+ * hit line box.
  *
  * @param attacker Attacking character.
  * @param yaw Attack yaw, used to rotate candidates into attacker-local space.

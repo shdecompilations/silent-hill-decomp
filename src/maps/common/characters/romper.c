@@ -396,7 +396,7 @@ void Romper_ControlUpdate(s_SubCharacter* romper)
 
     if (romper->model.controlState != RomperControl_Jump)
     {
-        romper->attack.state = 0;
+        romper->attack.state = CharaAttackState_Idle;
     }
 
     // Handle control state.
@@ -737,7 +737,7 @@ void Romper_Control_3(s_SubCharacter* romper)
     {
         romper->model.controlState    = RomperControl_Jump;
         romper->model.anim.status     = ANIM_STATUS(RomperAnim_RunToJump, false);
-        romper->attack.state      = 1;
+        romper->attack.state          = CharaAttackState_Requested;
         g_SysWork.charaGroupFlags[3] |= CharaGroupFlag_0 | CharaGroupFlag_1;
         romperProps.flags            |= RomperFlag_4 | RomperFlag_11;
     }
@@ -1537,7 +1537,7 @@ void Romper_CollisionUpdate(s_SubCharacter* romper)
 
     if (ANIM_STATUS_IDX_GET(romper->model.anim.status) != RomperAnim_RunToJump)
     {
-        romper->attack.state = 0;
+        romper->attack.state = CharaAttackState_Idle;
     }
 }
 

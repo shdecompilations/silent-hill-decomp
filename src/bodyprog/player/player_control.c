@@ -617,7 +617,7 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* player, s32 weaponAttac
 
         if (!(PLAYER_PROPS().flags & PlayerFlag_Unk2))
         {
-            player->attack.state = 1;
+            player->attack.state  = CharaAttackState_Requested;
             PLAYER_PROPS().flags |= PlayerFlag_Unk2;
         }
     }
@@ -3043,7 +3043,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 {
                     if (!(PLAYER_PROPS().flags & PlayerFlag_Unk2))
                     {
-                        player->attack.state = 1;
+                        player->attack.state = CharaAttackState_Requested;
 
                         Sfx_WithFlagsPlay(g_Player_EquippedWeaponInfo.attackSfx, &player->position, Q8(0.5f), SfxFlag_None);
 
@@ -3061,15 +3061,15 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
                 if (extra->model.anim.keyframeIdx >= D_800C44D0 && D_800C44D4 >= extra->model.anim.keyframeIdx &&
                     !(PLAYER_PROPS().flags & PlayerFlag_Unk2))
                 {
-                    player->attack.state = 1;
+                    player->attack.state        = CharaAttackState_Requested;
                     PLAYER_PROPS().flags       |= PlayerFlag_Unk2;
                 }
             }
             else
             {
-                if (player->attack.state <= 0)
+                if (player->attack.state <= CharaAttackState_Idle)
                 {
-                    player->attack.state = 1;
+                    player->attack.state = CharaAttackState_Requested;
                 }
 
                 player->properties.player.field_10C = 0x40;
@@ -3084,7 +3084,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                 if (PLAYER_COMBAT().currentWeaponAmmo != 0)
                 {
-                    player->attack.state = 1;
+                    player->attack.state = CharaAttackState_Requested;
 
                     if (PLAYER_COMBAT().weaponAttack != WEAPON_ATTACK(AttackType_HyperBlaster, AttackInputType_Tap))
                     {
@@ -3614,9 +3614,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
             {
                 if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                 {
-                    if (player->attack.state <= 0)
+                    if (player->attack.state <= CharaAttackState_Idle)
                     {
-                        player->attack.state = 1;
+                        player->attack.state = CharaAttackState_Requested;
                     }
 
                     if (extra->model.stateStep == 0)
@@ -3858,7 +3858,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* player, s_PlayerExtra* extra) //
 
                     if (PLAYER_PROPS().gasWeaponPowerTimer != Q12(0.0f))
                     {
-                        player->attack.state = 1;
+                        player->attack.state = CharaAttackState_Requested;
                     }
                 }
             }
@@ -7360,7 +7360,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk12;
                 PLAYER_COMBAT().isAiming              = false;
                 PLAYER_PROPS().flags                 &= ~PlayerFlag_Unk9;
-                player->attack.state           = NO_VALUE;
+                player->attack.state                  = CharaAttackState_Finished;
             }
             break;
     }
@@ -7875,7 +7875,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
                 angleDeltaToTargetY = Q12_ANGLE(33.75f);
             }
 
-            if (player->attack.state > 0)
+            if (player->attack.state > CharaAttackState_Idle)
             {
                 func_8006342C(PLAYER_COMBAT().weaponAttack, angleDeltaToTargetY, rotDeltaToTarget.vx, boneCoords);
             }
