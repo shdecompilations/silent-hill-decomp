@@ -45,6 +45,7 @@
 
 // Version defines that code can test against.
 #define VERSION_DATE_PROTO_981216  981216
+#define VERSION_DATE_PROTO_990107  990107
 #define VERSION_DATE_JAP0          990126
 #define VERSION_DATE_USA           990210
 #define VERSION_DATE_JAP1          990602
