@@ -51,7 +51,7 @@
  * * `g_Sd_AudioWork.midiChannelsVolTaskToSet` may be useless. This is a failsafe to avoid running a same task twice,
  * * however, this could either be an unnecessary failsafe as this could only ever happen if the console suddenly start
  * * misbehaving or this is a particular fix or failsafe for the Nowhere section of the game as for some reason there
- * * is another function (`sharedFunc_800D0110_7_s00`) that calls `Sd_BgmChannelSet`.
+ * * is another function (`Map_BgmLayersUpdate` in the MAP7 overlays) that calls `Sd_BgmChannelSet`.
  *
  * Additional note: The OPM 16 build (earliest build available) shows that the code was completely different and
  * actually strip the base and apparently there wasn't another check.

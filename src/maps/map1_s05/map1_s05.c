@@ -91,22 +91,7 @@ s32 __pad_bss_800D868C[3];
 
 #include "../src/maps/common/map_util.c" // 0x800D489C
 
-void Map_RoomBgmInit(bool arg0) // 0x800D494C
-{
-    s32 bgmFlags;
-
-    bgmFlags = 1;
-    if (NPC_CHARA(0).health > Q12(0.0f))
-    {
-        bgmFlags = 2;
-        if (NPC_CHARA(0).properties.splitHead.flags & SplitHeadFlag_4)
-        {
-            bgmFlags = 6;
-        }
-    }
-
-    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &D_800D5C3C);
-}
+#include "../src/maps/common/bgm/bgm_SU.c" // 0x800D494C
 
 void GameBoot_LoadScreen_StageString(void) {}
 

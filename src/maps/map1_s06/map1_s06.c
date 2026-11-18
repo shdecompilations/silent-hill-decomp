@@ -25,10 +25,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D5350
 
-void Map_RoomBgmInit(bool arg0) // 0x800D5400
-{
-    Bgm_LayersUpdate(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), &D_800D71E8);
-}
+#include "../src/maps/common/bgm/bgm_SC.c" // 0x800D5400
 
 void GameBoot_LoadScreen_StageString(void) {}
 

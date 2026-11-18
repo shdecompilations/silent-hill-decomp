@@ -1,4 +1,10 @@
-void Map_RoomBgmInit(bool arg0)
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
+#include "maps/common/shared.h"
+
+// BGM events for `MapType_RSU` maps.
+
+void Map_RoomBgmInit(bool updateSong)
 {
     s32               var_s1;
     s32               var_s2;

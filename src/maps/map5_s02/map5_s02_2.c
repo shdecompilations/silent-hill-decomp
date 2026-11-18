@@ -38,11 +38,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D450C
 
-#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D45B4
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D45E8
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D4664
+#include "../src/maps/common/bgm/bgm_ER.c" // 0x800D45B4
 
 void GameBoot_LoadScreen_StageString(void) {}
 

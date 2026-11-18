@@ -22,51 +22,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800CFF40
 
-void func_800CFFE8(bool arg0) // 0x800CFFE8
-{
-    (arg0 != 0) ? func_800D0050() : sharedFunc_800D0110_7_s00();
-}
-
-void func_800D001C(s32 arg0) // 0x800D001C
-{
-    (arg0 != 0) ? func_800D00D0() : sharedFunc_800D0110_7_s00();
-}
-
-void func_800D0050(void) // 0x800D0050
-{
-    s32 bgmIdx; // `e_BgmCmd`
-    u32 temp_v1;
-
-    if (g_SavegamePtr->mapRoomIdx == 3)
-    {
-        bgmIdx = BgmCmd_Track15;
-    }
-    else if (Savegame_EventFlagGet(EventFlag_481))
-    {
-        if (!Savegame_EventFlagGet(EventFlag_574))
-        {
-            Savegame_EventFlagSet(EventFlag_574);
-            bgmIdx = BgmCmd_UpdateTrack;
-        }
-        else
-        {
-            bgmIdx = BgmCmd_Track22;
-        }
-    }
-    else
-    {
-        bgmIdx = BgmCmd_Track14;
-    }
-
-    Bgm_SongChange(bgmIdx);
-}
-
-void func_800D00D0(void) // 0x800D00D0
-{
-    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? BgmCmd_Track40 : BgmCmd_Track35);
-}
-
-#include "maps/common/shared/sharedFunc_800D0110_7_s00.h" // 0x800D0110
+#include "../src/maps/common/bgm/bgm_ER2.c" // 0x800CFFE8
 
 void GameBoot_LoadScreen_StageString(void) {}
 

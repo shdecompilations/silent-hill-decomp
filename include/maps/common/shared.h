@@ -206,9 +206,6 @@ extern VECTOR3          sharedData_800EB750_6_s04;
 
 extern s16 sharedData_800D5880_1_s05;
 
-extern s_BgmLayerLimits sharedData_800E1208_1_s02;
-extern u16 sharedData_800E1210_1_s02[42]; // Flags.
-
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -317,11 +314,15 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx);
 
-void Map_RoomBgmInit(bool arg0);
+void Map_RoomBgmInit(bool updateSong);
 
-void Map_RoomBgmInit_CondTrue(void);
+void Map_BgmSongChange(void);
 
-void Map_RoomBgmInit_CondFalse(void);
+void Map_BgmLayersUpdate(void);
+
+void Map_FinalBossBgmInit(bool updateSong);
+
+void Map_FinalBossBgmSongChange(void);
 
 void sharedFunc_800CAAD0_1_s05(void);
 
@@ -451,8 +452,6 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx);
 // Setup func? Twinfeeler and Floatstinger acid particle effect. Included in M4S03 and M4S05
 // TODO: Make this separate split in each map instead of `#include`.
 void Particle_AcidSpawn(VECTOR3* from, VECTOR3* to);
-
-void sharedFunc_800D0110_7_s00(void);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

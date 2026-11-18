@@ -1,4 +1,45 @@
-void Map_RoomBgmInit_CondFalse(void)
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
+#include "maps/common/shared.h"
+
+// BGM events for `MapType_ER` maps.
+// `MAP6_S01` has map-specific BGM.
+
+void Map_RoomBgmInit(bool updateSong)
+{
+    (updateSong != 0) ? Map_BgmSongChange() : Map_BgmLayersUpdate();
+}
+
+void Map_BgmSongChange(void)
+{
+#if defined(MAP6_S01)
+    if (!Savegame_EventFlagGet(EventFlag_424) || (Savegame_EventFlagGet(EventFlag_425) && !Savegame_EventFlagGet(EventFlag_426)))
+    {
+        Bgm_SongChange(BgmCmd_Track23);
+    }
+    else
+    {
+        Bgm_SongChange(BgmCmd_Track20);
+    }
+#else
+    switch (g_SavegamePtr->mapRoomIdx)
+    {
+        case 5:
+            Bgm_SongChange(BgmCmd_Track6);
+            break;
+
+        case 18:
+            Bgm_SongChange(!Savegame_EventFlagGet(EventFlag_379) ? BgmCmd_Track29 : BgmCmd_Track7);
+            break;
+
+        case 17:
+            Bgm_SongChange(BgmCmd_Track7);
+            break;
+    }
+#endif
+}
+
+void Map_BgmLayersUpdate(void)
 {
     s32               bgmFlags;
     q19_12            fadeSpeed;

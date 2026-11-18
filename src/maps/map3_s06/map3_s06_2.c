@@ -20,11 +20,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D06E8
 
-#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D07A0
-
-#include "maps/common/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D07D4
-
-#include "maps/common/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D0814
+#include "../src/maps/common/bgm/bgm_HP.c" // 0x800D07A0
 
 void GameBoot_LoadScreen_StageString(void) {}
 

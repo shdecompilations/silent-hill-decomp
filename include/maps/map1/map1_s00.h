@@ -22,10 +22,6 @@
 
 #include "maps/common/shared.h"
 
-extern s_BgmLayerLimits D_800DCC4C;
-
-extern u16 D_800DCC54[42];
-
 extern s_MapPoint2d MAP_POINTS[]; // 0x800DCCB8
 
 extern s32 D_800DD718;

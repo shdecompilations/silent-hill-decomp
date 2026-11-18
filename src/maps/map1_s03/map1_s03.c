@@ -202,7 +202,7 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
 
 #include "../src/maps/common/map_util.c" // 0x800DA424
 
-#include "maps/common/shared/Map_RoomBgmInit_1_s02.h" // 0x800DA4D4
+#include "../src/maps/common/bgm/bgm_SU.c" // 0x800DA4D4
 
 void GameBoot_LoadScreen_StageString(void) {}
 

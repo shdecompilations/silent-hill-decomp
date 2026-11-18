@@ -1587,11 +1587,7 @@ void func_800E10F8(void) // 0x800E10F8
 
 #include "../src/maps/common/map_util.c" // 0x800E1104
 
-#include "maps/common/shared/Map_RoomBgmInit_6_s04.h" // 0x800E1258
-
-#include "maps/common/shared/Map_RoomBgmInit_6_s04_CondTrue.h" // 0x800E1290
-
-#include "maps/common/shared/Map_RoomBgmInit_6_s04_CondFalse.h" // 0x800E12D0
+#include "../src/maps/common/bgm/bgm_APU.c" // 0x800E1258
 
 // TODO: Might be part of shared block above with `map6_s05::func_800CCBFC`
 void GameBoot_LoadScreen_StageString(void) {}

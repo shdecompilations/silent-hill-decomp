@@ -24,36 +24,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D929C
 
-void Map_RoomBgmInit(bool arg0) // 0x800D94F8
-{
-    s32    i;
-    q19_12 fadeSpeed;
-    s32    bgmFlags;
-    u32    saveByte;
-
-    // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
-    saveByte = g_SavegamePtr->eventFlags[0];
-    fadeSpeed     = Q12(0.1f);
-    bgmFlags    = 1 << 8;
-
-    if (PLAYER_CHARA().health > 0 && (!(Savegame_EventFlagGet(EventFlag_23) && !Savegame_EventFlagGet(EventFlag_20))))
-    {
-        for (i = 1; i < 7; i++)
-        {
-            if (Savegame_EventFlagGet(D_800DF300[i]))
-            {
-                bgmFlags |= 1 << i;
-            }
-        }
-    }
-    else
-    {
-        Savegame_EventFlagClear(EventFlag_20);
-        fadeSpeed = Q12(0.3f);
-    }
-
-    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &D_800DF2F8);
-}
+#include "../src/maps/common/bgm/bgm_THR.c" // 0x800D94F8
 
 void GameBoot_LoadScreen_StageString(void) // 0x800D95D4
 {

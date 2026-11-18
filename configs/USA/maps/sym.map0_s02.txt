@@ -55,8 +55,8 @@ Player_WeaponAttackRestore       = 0x800CE7C8; // type:func
 sharedFunc_800D929C_0_s00        = 0x800CE7DC; // type:func
 Map_RoomIdxGet                   = 0x800CE7EC; // type:func
 Map_RoomBgmInit                  = 0x800CE884; // type:func
-Map_RoomBgmInit_CondTrue         = 0x800CE8B8; // type:func
-Map_RoomBgmInit_CondFalse        = 0x800CE934; // type:func
+Map_BgmSongChange                = 0x800CE8B8; // type:func
+Map_BgmLayersUpdate              = 0x800CE934; // type:func
 GameBoot_LoadScreen_StageString  = 0x800CEBC0; // type:func
 
 //------------------------------------------------------------------

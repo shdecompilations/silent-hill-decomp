@@ -45,7 +45,7 @@ s8  __pad_bss_800CD4FB;
 
 #include "../src/maps/common/map_util.c" // 0x800CC790
 
-#include "maps/common/shared/Map_RoomBgmInit_2_s02.h" // 0x800CC99C
+#include "../src/maps/common/bgm/bgm_SPR.c" // 0x800CC99C
 
 void GameBoot_LoadScreen_StageString(void) {}
 

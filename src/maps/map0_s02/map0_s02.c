@@ -11,10 +11,6 @@
 
 #include "../src/maps/common/map_util.c" // 0x800CE7DC
 
-#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CE884
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800CE8B8
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CE934
+#include "../src/maps/common/bgm/bgm_ER.c" // 0x800CE884
 
 void GameBoot_LoadScreen_StageString(void) {}

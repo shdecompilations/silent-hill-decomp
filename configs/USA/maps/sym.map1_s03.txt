@@ -196,8 +196,8 @@ sharedData_800E11A8_1_s02           = 0x800E13E8;
 sharedData_800E11BC_1_s02           = 0x800E13FC;
 LOCKER_DEAD_BODY_ANIM_INFOS         = 0x800E1410; // type:AnimInfo size:0x80
 MAP_ROOM_IDXS                       = 0x800E1490; // type:u8
-sharedData_800E1208_1_s02           = 0x800E14C8; // type:u8 size:8
-sharedData_800E1210_1_s02           = 0x800E14D0; // type:u16 size:0x54
+sharedData_800DCC4C_1_s00           = 0x800E14C8; // type:u8 size:8
+sharedData_800DCC54_1_s00           = 0x800E14D0; // type:u16 size:0x54
 
 //-------------------------------------------------------------
 //--- PA: 0x017FAC   VA: 0x800E1524   subsegment: .data, header

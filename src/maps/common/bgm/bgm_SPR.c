@@ -1,4 +1,10 @@
-void Map_RoomBgmInit(bool arg0) // 0x800CC99C
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
+#include "maps/common/shared.h"
+
+// BGM events for `MapType_SPR` maps.
+
+void Map_RoomBgmInit(bool updateSong)
 {
     s32 bgmFlags;
 

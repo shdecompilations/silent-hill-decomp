@@ -684,11 +684,6 @@ void func_800DD868(void);
 void func_800DD8CC(VECTOR3* charaPos);
 
 void func_800E0A34(void);
-void func_800E0B28(s32 arg0);
-void func_800E0B5C(bool arg0);
-
-void func_800E0B90(void);
-void func_800E0C10(void);
 
 /** Camera function. */
 void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warpCamera);

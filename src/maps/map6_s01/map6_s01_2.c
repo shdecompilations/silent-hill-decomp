@@ -26,21 +26,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D0DD0
 
-#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D0E78
-
-void Map_RoomBgmInit_CondTrue(void) // 0x800D0EAC
-{
-    if (!Savegame_EventFlagGet(EventFlag_424) || (Savegame_EventFlagGet(EventFlag_425) && !Savegame_EventFlagGet(EventFlag_426)))
-    {
-        Bgm_SongChange(BgmCmd_Track23);
-    }
-    else
-    {
-        Bgm_SongChange(BgmCmd_Track20);
-    }
-}
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D0EF8
+#include "../src/maps/common/bgm/bgm_ER.c" // 0x800D0E78
 
 void GameBoot_LoadScreen_StageString(void) {}
 

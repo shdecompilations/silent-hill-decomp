@@ -219,8 +219,8 @@ sharedData_800E1194_1_s02               = 0x800E364C;
 sharedData_800E11A8_1_s02               = 0x800E3660;
 sharedData_800E11BC_1_s02               = 0x800E3674;
 MAP_ROOM_IDXS                           = 0x800E3688; // type:u8
-sharedData_800E1208_1_s02               = 0x800E36C0; // type:u8 size:8
-sharedData_800E1210_1_s02               = 0x800E36C8; // type:u16 size:0x54
+sharedData_800DCC4C_1_s00               = 0x800E36C0; // type:u8 size:8
+sharedData_800DCC54_1_s00               = 0x800E36C8; // type:u16 size:0x54
 
 //-------------------------------------------------------------
 //--- PA: 0x017C74   VA: 0x800E371C   subsegment: .data, header

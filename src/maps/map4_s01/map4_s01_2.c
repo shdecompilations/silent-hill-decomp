@@ -22,11 +22,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D1AD0
 
-#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1B78
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D1BAC
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D1C28
+#include "../src/maps/common/bgm/bgm_ER.c" // 0x800D1B78
 
 void GameBoot_LoadScreen_StageString(void) {}
 

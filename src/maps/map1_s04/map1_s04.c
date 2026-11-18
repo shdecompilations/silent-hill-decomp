@@ -60,68 +60,7 @@ s8  __pad_bss_800CE047;
 
 #include "../src/maps/common/map_util.c" // 0x800CC818
 
-void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
-{
-    s32 fadeSpeed;
-    s32 mapRoomIdx;
-    s32 bgmFlags;
-
-    mapRoomIdx = g_SavegamePtr->mapRoomIdx;
-    bgmFlags     = D_800CCF5C[mapRoomIdx];
-    fadeSpeed     = Q12(0.1f);
-
-    switch (mapRoomIdx)
-    {
-        case 23:
-            bgmFlags = 1;
-            if (Savegame_EventFlagGet(EventFlag_MapMark_AltSchool1F_CourtyardQuestion))
-            {
-                bgmFlags = 0x1FE;
-                if (Savegame_EventFlagGet(EventFlag_MapMark_308) || Savegame_EventFlagGet(EventFlag_MapMark_AltSchool1F_CourtyardTopArrows))
-                {
-                    bgmFlags = 0x10;
-                }
-            }
-            break;
-
-        case 38:
-            if (Savegame_EventFlagGet(EventFlag_100) && !Savegame_EventFlagGet(EventFlag_107))
-            {
-                bgmFlags = 1;
-                fadeSpeed = Q12(0.3f);
-            }
-            break;
-
-        case 5:
-            if (Savegame_EventFlagGet(EventFlag_121))
-            {
-                fadeSpeed = Q12(240.0f);
-                if (Savegame_EventFlagGet(EventFlag_96))
-                {
-                    bgmFlags |= 8;
-                }
-                else
-                {
-                    bgmFlags = 1;
-                }
-            }
-            break;
-
-        case 11:
-            Savegame_EventFlagClear(EventFlag_121);
-            break;
-
-        case 7:
-            if (!Savegame_EventFlagGet(EventFlag_98) && Savegame_EventFlagGet(EventFlag_122))
-            {
-                fadeSpeed = Q12(240.0f);
-                bgmFlags = 1;
-            }
-            break;
-    }
-
-    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &D_800CCF54);
-}
+#include "../src/maps/common/bgm/bgm_SU.c" // 0x800CC8C8
 
 void GameBoot_LoadScreen_StageString(void) {} // 0x800CCA24
 

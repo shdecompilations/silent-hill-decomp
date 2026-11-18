@@ -27,9 +27,6 @@
 
 #include "maps/common/shared.h"
 
-extern s_BgmLayerLimits D_800DC9FC;
-extern u16 D_800DCA04[42];
-
 extern s32 D_800DD4FC;
 
 extern s8 g_PianoKeys[11];

@@ -45,7 +45,7 @@ s8  __pad_bss_800CDE8B;
 
 #include "../src/maps/common/map_util.c" // 0x800CC7C0
 
-#include "maps/common/shared/Map_RoomBgmInit_2_s00.h" // 0x800CCA1C
+#include "../src/maps/common/bgm/bgm_THR.c" // 0x800CCA1C
 
 void GameBoot_LoadScreen_StageString(void) {} // 0x800CCB24
 

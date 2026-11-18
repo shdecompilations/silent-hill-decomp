@@ -56,11 +56,7 @@ s32 __pad_bss_800CF218[2];
 
 #include "../src/maps/common/map_util.c" // 0x800CCA88
 
-#include "maps/common/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CCB30
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800CCB64
-
-#include "maps/common/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CCBE0
+#include "../src/maps/common/bgm/bgm_ER.c" // 0x800CCB30
 
 void GameBoot_LoadScreen_StageString(void) {} // 0x800CCE6C
 

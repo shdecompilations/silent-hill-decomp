@@ -1,4 +1,20 @@
-void Map_RoomBgmInit_CondFalse(void)
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
+#include "maps/common/shared.h"
+
+// BGM events for `MapType_APU` maps.
+
+void Map_RoomBgmInit(bool updateSong)
+{
+    (updateSong == true) ? Map_BgmSongChange() : Map_BgmLayersUpdate();
+}
+
+void Map_BgmSongChange(void)
+{
+    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_440) ? BgmCmd_Track39 : BgmCmd_Track37);
+}
+
+void Map_BgmLayersUpdate(void)
 {
     q19_12            dist0;
     s32               bgmFlags;

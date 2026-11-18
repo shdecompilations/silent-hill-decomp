@@ -618,17 +618,7 @@ void func_800D6490(VECTOR3* arg0) // 0x800D6490
 
 #include "../src/maps/common/map_util.c" // 0x800D64F8
 
-void func_800D6790(bool arg0) // 0x800D6790
-{
-    u32 bgmFlags = D_800DA578[g_SavegamePtr->mapRoomIdx];
-
-    if (Savegame_EventFlagGet(EventFlag_354))
-    {
-        bgmFlags |= BgmFlag_Layer6 | BgmFlag_Layer4 | BgmFlag_Layer2;
-    }
-
-    Bgm_LayersUpdate(bgmFlags, Q12(0.25f), &D_800DA570);
-}
+#include "../src/maps/common/bgm/bgm_DR.c" // 0x800D6790
 
 void GameBoot_LoadScreen_StageString(void) {}
 

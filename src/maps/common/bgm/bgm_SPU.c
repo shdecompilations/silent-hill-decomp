@@ -1,4 +1,10 @@
-void Map_RoomBgmInit(bool arg0)
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
+#include "maps/common/shared.h"
+
+// BGM events for `MapType_SPU` maps.
+
+void Map_RoomBgmInit(bool updateSong)
 {
     s32               bgmFlags;
     s32               fadeSpeed;

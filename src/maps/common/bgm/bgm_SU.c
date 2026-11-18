@@ -1,11 +1,36 @@
-void Map_RoomBgmInit(bool arg0)
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
+#include "maps/common/shared.h"
+
+// BGM events for `MapType_SU` maps.
+// `MAP1_S05` has map-specific BGM.
+
+extern s_BgmLayerLimits sharedData_800DCC4C_1_s00;
+extern u16 sharedData_800DCC54_1_s00[42]; // Flags.
+
+void Map_RoomBgmInit(bool updateSong)
 {
+#if defined(MAP1_S05)
+    s32 bgmFlags;
+
+    bgmFlags = 1;
+    if (NPC_CHARA(0).health > Q12(0.0f))
+    {
+        bgmFlags = 2;
+        if (NPC_CHARA(0).properties.splitHead.flags & SplitHeadFlag_4)
+        {
+            bgmFlags = 6;
+        }
+    }
+
+    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &D_800D5C3C);
+#else
     s32 fadeSpeed;
     s32 roomIdx;
     s32 bgmFlags;
 
     roomIdx   = g_SavegamePtr->mapRoomIdx;
-    bgmFlags  = sharedData_800E1210_1_s02[roomIdx];
+    bgmFlags  = sharedData_800DCC54_1_s00[roomIdx];
     fadeSpeed = Q12(0.1f);
 
     switch (roomIdx)
@@ -61,5 +86,6 @@ void Map_RoomBgmInit(bool arg0)
             break;
     }
 
-    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &sharedData_800E1208_1_s02);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &sharedData_800DCC4C_1_s00);
+#endif
 }

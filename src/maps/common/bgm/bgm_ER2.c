@@ -1,4 +1,53 @@
-void sharedFunc_800D0110_7_s00(void)
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
+#include "maps/common/shared.h"
+
+// BGM events for `MapType_ER2` maps.
+
+void Map_RoomBgmInit(bool updateSong)
+{
+    (updateSong != 0) ? Map_BgmSongChange() : Map_BgmLayersUpdate();
+}
+
+void Map_FinalBossBgmInit(bool updateSong)
+{
+    (updateSong != 0) ? Map_FinalBossBgmSongChange() : Map_BgmLayersUpdate();
+}
+
+void Map_BgmSongChange(void)
+{
+    s32 bgmIdx; // `e_BgmCmd`
+
+    if (g_SavegamePtr->mapRoomIdx == 3)
+    {
+        bgmIdx = BgmCmd_Track15;
+    }
+    else if (Savegame_EventFlagGet(EventFlag_481))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_574))
+        {
+            Savegame_EventFlagSet(EventFlag_574);
+            bgmIdx = BgmCmd_UpdateTrack;
+        }
+        else
+        {
+            bgmIdx = BgmCmd_Track22;
+        }
+    }
+    else
+    {
+        bgmIdx = BgmCmd_Track14;
+    }
+
+    Bgm_SongChange(bgmIdx);
+}
+
+void Map_FinalBossBgmSongChange(void)
+{
+    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_M5S03_KaufmannHasMotorcycleVial) ? BgmCmd_Track40 : BgmCmd_Track35);
+}
+
+void Map_BgmLayersUpdate(void)
 {
     s32               bgmFlagsAndLayer2;
     s32               bgmFlagsAndLayer3;

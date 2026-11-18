@@ -1,4 +1,26 @@
-void Map_RoomBgmInit_CondFalse(void)
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/events/bgm_update.h"
+#include "maps/common/shared.h"
+
+// BGM events for `MapType_HP` maps.
+
+void Map_RoomBgmInit(bool updateSong)
+{
+    (updateSong != 0) ? Map_BgmSongChange() : Map_BgmLayersUpdate();
+}
+
+void Map_BgmSongChange(void)
+{
+    #define OVERLAY_VAL_ON  0x10
+    #define OVERLAY_VAL_OFF 0x19
+
+    s32 mapOverlayVal;
+
+    mapOverlayVal = !Savegame_EventFlagGet(EventFlag_295) ? OVERLAY_VAL_OFF : OVERLAY_VAL_ON;
+    Bgm_SongChange(mapOverlayVal);
+}
+
+void Map_BgmLayersUpdate(void)
 {
     s32    bgmFlags;
     q19_12 fadeSpeed;

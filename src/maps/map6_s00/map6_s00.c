@@ -31,7 +31,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800EAB00
 
-#include "maps/common/shared/Map_RoomBgmInit_6_s00.h" // 0x800EAD0C
+#include "../src/maps/common/bgm/bgm_RSU.c" // 0x800EAD0C
 
 void GameBoot_LoadScreen_StageString(void) {}
 

@@ -24,7 +24,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800E76B8
 
-#include "maps/common/shared/Map_RoomBgmInit_2_s00.h" // 0x800E7914
+#include "../src/maps/common/bgm/bgm_THR.c" // 0x800E7914
 
 void GameBoot_LoadScreen_StageString(void) {}
 

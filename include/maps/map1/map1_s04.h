@@ -13,10 +13,6 @@
 
 extern u8 MAP_ROOM_IDXS[];
 
-extern s_BgmLayerLimits D_800CCF54;
-
-extern u16 D_800CCF5C[];
-
 extern s32 D_800CD768;
 
 // @hack Added `D_800CD768_tbl` to `lib_externs.ld`, as `D_800CD768_tbl` has to live at same offset as `D_800CD768`.

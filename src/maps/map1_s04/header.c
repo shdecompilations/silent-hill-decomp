@@ -18,12 +18,12 @@ u8 MAP_ROOM_IDXS[] = {
      0,  0, 13, 18, 19, 17, 16,
 };
 
-s_BgmLayerLimits D_800CCF54 = {
+s_BgmLayerLimits sharedData_800DCC4C_1_s00 = {
     { 128, 128, 128, 128, 128, 128, 128, 128 }
 };
 
 /** BGM layer flags per room index, used by `Map_RoomBgmInit`. */
-u16 D_800CCF5C[] = {
+u16 sharedData_800DCC54_1_s00[] = {
     0,              BgmFlag_Layer3, BgmFlag_Layer1, BgmFlag_Layer2, BgmFlag_Layer3, BgmFlag_Layer3,
     BgmFlag_Layer3, BgmFlag_Layer3, BgmFlag_Layer3, BgmFlag_Layer1, BgmFlag_Layer3, BgmFlag_Layer2,
     BgmFlag_Layer2, BgmFlag_Layer2, BgmFlag_Layer4, BgmFlag_Layer3, BgmFlag_Layer2, BgmFlag_Layer4,

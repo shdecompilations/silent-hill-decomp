@@ -218,8 +218,8 @@ Chara_CollisionReset              = 0x800DA4BC; // type:func
 sharedFunc_800D929C_0_s00         = 0x800DA51C; // type:func
 Map_RoomIdxGet                    = 0x800DA52C; // type:func
 Map_RoomBgmInit                   = 0x800DA778; // type:func
-Map_RoomBgmInit_CondTrue          = 0x800DA7AC; // type:func
-Map_RoomBgmInit_CondFalse         = 0x800DA7FC; // type:func
+Map_BgmSongChange                 = 0x800DA7AC; // type:func
+Map_BgmLayersUpdate               = 0x800DA7FC; // type:func
 GameBoot_LoadScreen_StageString   = 0x800DA8A4;
 Event_CutsceneTimerAdvance        = 0x800DA8E8; // type:func
 

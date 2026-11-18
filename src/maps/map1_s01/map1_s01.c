@@ -27,27 +27,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D6F34
 
-void Map_RoomBgmInit(bool arg0) // 0x800D6FE4
-{
-    u16 bgmFlags;
-
-    if (g_SavegamePtr->mapRoomIdx == 23)
-    {
-        bgmFlags = BgmFlag_Layer6;
-        if (Savegame_EventFlagGet(EventFlag_71) && Savegame_EventFlagGet(EventFlag_72))
-        {
-            bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5 |
-                       BgmFlag_Layer6 | BgmFlag_Layer7 | BgmFlag_Layer8 |
-                       BgmFlag_KeepAlive;
-        }
-    }
-    else
-    {
-        bgmFlags = D_800DCA04[g_SavegamePtr->mapRoomIdx];
-    }
-
-    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &D_800DC9FC);
-}
+#include "../src/maps/common/bgm/bgm_SC.c" // 0x800D6FE4
 
 void GameBoot_LoadScreen_StageString(void) {}
 

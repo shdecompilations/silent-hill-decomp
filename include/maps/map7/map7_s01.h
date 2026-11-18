@@ -145,14 +145,6 @@ extern s32 D_800E1574;
 extern u8  D_800E1578[3][3][3][2];
 extern u32 D_800E1694;
 
-void func_800D6810(bool arg0);
-
-void func_800D6844(s32 arg0);
-
-void func_800D6878(void);
-
-void func_800D68F8(void);
-
 void func_800D725C(void);
 
 /** Cutscene. */

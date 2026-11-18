@@ -26,7 +26,7 @@
 
 #include "../src/maps/common/map_util.c" // 0x800D9E0C
 
-#include "maps/common/shared/Map_RoomBgmInit_1_s02.h" // 0x800D9EBC
+#include "../src/maps/common/bgm/bgm_SU.c" // 0x800D9EBC
 
 void GameBoot_LoadScreen_StageString(void) {}
 
