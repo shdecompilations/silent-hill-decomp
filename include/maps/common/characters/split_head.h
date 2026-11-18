@@ -62,25 +62,37 @@ typedef enum _SplitHeadVariantMesh
 {
     SplitHeadVariantMesh_None = 0,
     SplitHeadVariantMesh_1    = 1, // } Open and closed heads?
-    SplitHeadVariantMesh_2    = 2  // }
+    SplitHeadVariantMesh_2    = 2, // }
+    SplitHeadVariantMesh_3    = 3,
+    SplitHeadVariantMesh_7    = 7,
+    SplitHeadVariantMesh_17   = 17,
+
+    SplitHeadVariantMesh_19   = 19,
+    SplitHeadVariantMesh_20   = 20,
+    SplitHeadVariantMesh_21   = 21,
+    SplitHeadVariantMesh_23   = 23
+    // TODO: Maybe more, check model.
 } e_SplitHeadVariantMesh;
 
 typedef struct
 {
-    s32 field_0; // Distance/Magnitude?
-    s32 field_4; // X
-    s32 field_8; // Z
-    u8  field_C; // 0 / 1 / 2
-    u8  field_D; // `bool`
-    u8  field_E;
-    s8  unk_F;
+    q19_12 field_0; // Distance/Magnitude?
+    s32    field_4; // X
+    s32    field_8; // Z
+    u8     field_C; // 0 / 1 / 2
+    u8     field_D; // `bool`
+    u8     field_E;
+    s8     unk_F;
 } s_sharedFunc_800D4594_1_s05;
 
-typedef struct
+/** @brief Split Head character relative bone offsets for special positions.
+ * TODO: Used in `sharedData_800D8618_1_s05` array. Find out what they're for.
+ * */
+typedef struct _SplitHeadBoneOffset
 {
-    SVECTOR3 vec;
-    s16      idx;
-} s_sharedData_800D5AB0_1_s05;
+    SVECTOR3 offset; /** Q23.8 */
+    s16      boneIdx;
+} s_SplitHeadBoneOffset;
 
 /*s_AnimInfo SPLIT_HEAD_ANIM_INFOS[] = {
     { Anim_BlendLinear, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
@@ -117,7 +129,6 @@ typedef struct
 
 extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 
-/** Set to Split Head bone coords. */
 extern GsCOORDINATE2* g_SplitHead_BoneCoords;
 
 extern q3_12 g_SplitHead_MovementOffsetX;
@@ -135,8 +146,9 @@ extern u8       sharedData_800D5D08_1_s05[];
 extern VECTOR3  sharedData_800D8618_1_s05[]; // Size 9. Effects positions??
 extern SVECTOR3 sharedData_800D5A90_1_s05[]; // Q7.8
 
-extern s_sharedData_800D5AB0_1_s05 sharedData_800D5AB0_1_s05[];
-extern s16                         sharedData_800D5BE0_1_s05[6][3];
+// Particle effect offsets. Used for drool, anything else?
+extern s_SplitHeadBoneOffset g_SplitHead_BoneOffsets[];
+extern s16                   sharedData_800D5BE0_1_s05[6][3]; // Indices into `g_SplitHead_BoneOffsets`.
 
 extern q19_12 sharedData_800D8684_1_s05; // Offset X for player target.
 extern q19_12 sharedData_800D8688_1_s05; // Offset Z for player target.

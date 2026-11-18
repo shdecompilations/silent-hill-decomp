@@ -212,7 +212,7 @@ typedef struct
         struct
         {
             q3_12 field_0; // Angle.
-            q3_12 field_2; // Angle.
+            q3_12 field_2; // Angle. Or particle speed according to Split Head?
         } s_0;
         struct
         {
@@ -237,10 +237,10 @@ typedef struct
         } s_0;
         struct
         {
-            s16 field_0;
-            u8  field_2;
-            u8  field_3;
-        } s_1;
+            q3_12 field_0; // Heading angle.
+            u8    field_2; // X?
+            u8    field_3; // Z?
+        } s_1; // Relative particle offset?
         struct
         {
             u8 field_0;

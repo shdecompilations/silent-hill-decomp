@@ -11,20 +11,20 @@
 // Split Head drool particles included in M1S05 and M1S06.
 // Handles drops that fall and splat on the floor, and strands when Split Head mouth is open.
 
-void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+void sharedFunc_800CBE7C_1_s05(q23_8 posX, q23_8 posY, q23_8 posZ, q19_12 speed, q19_12 headingAngle)
 {
     s32 i;
 
     i = func_8005E7E0(7);
     if (i != NO_VALUE)
     {
-        sharedData_800DFB7C_0_s00[i].field_0.vx_0         = Rng_AddGeneratedUInt(arg0, -32, 31) * 16;
-        sharedData_800DFB7C_0_s00[i].vy_8                 = Rng_AddGeneratedUInt(arg1, 0, 63) * 16;
-        sharedData_800DFB7C_0_s00[i].field_4.vz_4         = Rng_AddGeneratedUInt(arg2, -32, 31) * 16;
+        sharedData_800DFB7C_0_s00[i].field_0.vx_0         = Rng_AddGeneratedUInt(posX, -32, 31) * 16;
+        sharedData_800DFB7C_0_s00[i].vy_8                 = Rng_AddGeneratedUInt(posY, 0, 63) * 16;
+        sharedData_800DFB7C_0_s00[i].field_4.vz_4         = Rng_AddGeneratedUInt(posZ, -32, 31) * 16;
         sharedData_800DFB7C_0_s00[i].field_B              = 0;
         sharedData_800DFB7C_0_s00[i].field_C.s_0.field_0  = 0;
-        sharedData_800DFB7C_0_s00[i].field_C.s_0.field_2  = arg3;
-        sharedData_800DFB7C_0_s00[i].field_10.s_1.field_0 = arg4;
+        sharedData_800DFB7C_0_s00[i].field_C.s_0.field_2  = speed;
+        sharedData_800DFB7C_0_s00[i].field_10.s_1.field_0 = headingAngle;
         sharedData_800DFB7C_0_s00[i].field_10.s_1.field_2 = Rng_GenerateUInt(16, 47);
         sharedData_800DFB7C_0_s00[i].field_10.s_1.field_3 = Rng_GenerateUInt(0, 15);
     }
@@ -59,14 +59,14 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
     temp_v0_2 = Q12_MULT(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2, Math_Cos(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0));
 
     sharedData_800DFB7C_0_s00[idx].field_4.vz_4        += Q12_MULT_PRECISE(g_DeltaTime, temp_v0_2);
-    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_GravitySpeed >> 1;
+    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += DIV_FAST(g_GravitySpeed, 2);
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = CLAMP_LOW(sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 - Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(180.0f)), Q12_ANGLE(0.0f));
 
     Collision_SurfaceGet(&ptr->surface, sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].field_4.vz_4);
 
     if (ptr->surface.floorHeight < sharedData_800DFB7C_0_s00[idx].vy_8 || sharedData_800DFB7C_0_s00[idx].vy_8 > Q12(0.0f))
     {
-        sharedData_800DFB7C_0_s00[idx].vy_8                = MIN(ptr->surface.floorHeight, 0);
+        sharedData_800DFB7C_0_s00[idx].vy_8                = MIN(ptr->surface.floorHeight, Q12(0.0f)); // "Max".
         sharedData_800DFB7C_0_s00[idx].field_B             = 1;
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = Q12_ANGLE(0.0f);
 
@@ -80,9 +80,8 @@ bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx)
     gte_SetRotMatrix(&ptr->field_0.worldToScreenMat);
     gte_SetTransMatrix(&ptr->field_0.worldToScreenMat);
 
-    if (ABS(PLAYER_CHARA().position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
-        ABS(PLAYER_CHARA().position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4) >
-        Q12(20.0f))
+    if ((ABS(PLAYER_CHARA().position.vx - sharedData_800DFB7C_0_s00[idx].field_0.vx_0) +
+         ABS(PLAYER_CHARA().position.vz - sharedData_800DFB7C_0_s00[idx].field_4.vz_4)) > Q12(20.0f))
     {
         return false;
     }

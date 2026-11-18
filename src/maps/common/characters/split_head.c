@@ -1259,8 +1259,8 @@ void SplitHead_AnimUpdate(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
 
 void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
 {
-    VECTOR3 sp20[4];
-    VECTOR3 sp50[4];
+    VECTOR3 bonesPos0[4];
+    VECTOR3 bonesPos1[4];
     s32     sp80[4];
     s16     sp90[4];
     s16     sp98[3];
@@ -1270,19 +1270,18 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
     q19_12  offsetX;
     q19_12  offsetZ;
 
-    // TODO: Demagic Q8 values.
-    SplitHead_OffsetBonePositionGet(&sp20[0], 2, Q8(0.0f), Q8(-0.27f), Q8(0.981f));
-    SplitHead_OffsetBonePositionGet(&sp50[0], 2, Q8(0.0f), Q8(0.926f), Q8(0.65f));
-    SplitHead_OffsetBonePositionGet(&sp20[1], 19, Q8(-0.141f), Q8(0.02f), Q8(0.445f));
-    SplitHead_OffsetBonePositionGet(&sp20[2], 23, Q8(0.141f), Q8(0.02f), Q8(0.445f));
+    SplitHead_OffsetBonePositionGet(&bonesPos0[0], SplitHeadVariantMesh_2, Q8(0.0f), Q8(-0.27f), Q8(0.981f));
+    SplitHead_OffsetBonePositionGet(&bonesPos1[0], SplitHeadVariantMesh_2, Q8(0.0f), Q8(0.926f), Q8(0.65f));
+    SplitHead_OffsetBonePositionGet(&bonesPos0[1], SplitHeadVariantMesh_19, Q8(-0.141f), Q8(0.02f), Q8(0.445f));
+    SplitHead_OffsetBonePositionGet(&bonesPos0[2], SplitHeadVariantMesh_23, Q8(0.141f), Q8(0.02f), Q8(0.445f));
 
     dist   = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - splitHead->position.vx,
                                        PLAYER_CHARA().position.vz - splitHead->position.vz);
 
-    sp98[0] = ratan2(PLAYER_CHARA().position.vx - sp20[0].vx,
-                     PLAYER_CHARA().position.vz - sp20[0].vz);
-    sp98[1] = Math_AngleNormalizeSigned((ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz) - sp98[0]));
-    sp98[2] = Math_AngleNormalizeSigned((ratan2(sp20[2].vx - sp20[0].vx, sp20[2].vz - sp20[0].vz) - sp98[0]));
+    sp98[0] = ratan2(PLAYER_CHARA().position.vx - bonesPos0[0].vx,
+                     PLAYER_CHARA().position.vz - bonesPos0[0].vz);
+    sp98[1] = Math_AngleNormalizeSigned((ratan2(bonesPos0[1].vx - bonesPos0[0].vx, bonesPos0[1].vz - bonesPos0[0].vz) - sp98[0]));
+    sp98[2] = Math_AngleNormalizeSigned((ratan2(bonesPos0[2].vx - bonesPos0[0].vx, bonesPos0[2].vz - bonesPos0[0].vz) - sp98[0]));
 
     if (sp98[1] < Q12_ANGLE(90.0f) && sp98[2] > Q12_ANGLE(-90.0f))
     {
@@ -1292,18 +1291,18 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
             if (ABS(sp98[1] - sp98[2]) >= 114)
             {
                 splitHeadProps.flags                 |= SplitHeadFlag_0;
-                splitHead->collision.box.topExtent    = sp20[0].vy;
-                splitHead->collision.box.height       = sp50[0].vy;
+                splitHead->collision.box.topExtent    = bonesPos0[0].vy;
+                splitHead->collision.box.height       = bonesPos1[0].vy;
                 splitHead->collision.cylinder.innerRadius = Q12(0.6f);
 
-                offsetX = (sp20[0].vx - splitHead->position.vx) * 3;
+                offsetX = (bonesPos0[0].vx - splitHead->position.vx) * 3;
                 if (offsetX < Q12(0.0f))
                 {
                     offsetX += Q12(0.0008f);
                 }
                 splitHead->collision.shapeOffsets.box.vx = DIV_FAST(offsetX, 4);
 
-                offsetZ = (sp20[0].vz - splitHead->position.vz) * 3;
+                offsetZ = (bonesPos0[0].vz - splitHead->position.vz) * 3;
                 if (offsetZ < Q12(0.0f))
                 {
                     offsetZ += Q12(0.0008f);
@@ -1320,18 +1319,18 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
         splitHeadProps.flags &= ~SplitHeadFlag_0;
     }
 
-    SplitHead_OffsetBonePositionGet(&sp20[3], 1, Q8(0.0f), Q8(-0.275f), Q8(-0.715f));
+    SplitHead_OffsetBonePositionGet(&bonesPos0[3], SplitHeadVariantMesh_1, Q8(0.0f), Q8(-0.275f), Q8(-0.715f));
 
     unkIdx = 1;
 
     sp80[0] = func_8005C478(&sp90[0], PLAYER_CHARA().position.vx,
-                            PLAYER_CHARA().position.vz, sp20[0].vx, sp20[0].vz,
-                            (sp20[1].vx + sp20[2].vx) >> 1, (sp20[1].vz + sp20[2].vz) >> 1);
+                            PLAYER_CHARA().position.vz, bonesPos0[0].vx, bonesPos0[0].vz,
+                            (bonesPos0[1].vx + bonesPos0[2].vx) >> 1, (bonesPos0[1].vz + bonesPos0[2].vz) >> 1);
 
     for (i = 1; i < 4; i++)
     {
         sp80[i] = func_8005C478(&sp90[i], PLAYER_CHARA().position.vx,
-                                PLAYER_CHARA().position.vz, sp20[0].vx, sp20[0].vz, sp20[i].vx, sp20[i].vz);
+                                PLAYER_CHARA().position.vz, bonesPos0[0].vx, bonesPos0[0].vz, bonesPos0[i].vx, bonesPos0[i].vz);
 
         if (sp80[i] < sp80[unkIdx])
         {
@@ -1352,11 +1351,11 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
 
         if (unkIdx == 1)
         {
-            SplitHead_OffsetBonePositionGet(&sp50[1], 19, Q8(-0.141f), Q8(0.535f), Q8(0.086f));
+            SplitHead_OffsetBonePositionGet(&bonesPos1[1], SplitHeadVariantMesh_19, Q8(-0.141f), Q8(0.535f), Q8(0.086f));
         }
         else
         {
-            SplitHead_OffsetBonePositionGet(&sp50[2], 23, Q8(0.141f), Q8(0.535f), Q8(0.086f));
+            SplitHead_OffsetBonePositionGet(&bonesPos1[2], SplitHeadVariantMesh_23, Q8(0.141f), Q8(0.535f), Q8(0.086f));
         }
     }
     else
@@ -1365,11 +1364,11 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
         {
             sp90[3] = Q12(0.9f);
         }
-        SplitHead_OffsetBonePositionGet(&sp50[3], 1, Q8(0.0f), Q8(0.585f), Q8(-1.249f));
+        SplitHead_OffsetBonePositionGet(&bonesPos1[3], SplitHeadVariantMesh_1, Q8(0.0f), Q8(0.585f), Q8(-1.249f));
     }
 
-    splitHead->collision.box.topExtent = FP_FROM((sp20[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vy * sp90[unkIdx]), Q12_SHIFT);
-    splitHead->collision.box.height    = FP_FROM((sp50[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx + 4].vy * sp90[unkIdx]), Q12_SHIFT);
+    splitHead->collision.box.topExtent = FP_FROM((bonesPos0[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (bonesPos0[unkIdx].vy * sp90[unkIdx]), Q12_SHIFT);
+    splitHead->collision.box.height    = FP_FROM((bonesPos1[0].vy * (Q12(1.0f) - sp90[unkIdx])) + (bonesPos0[unkIdx + 4].vy * sp90[unkIdx]), Q12_SHIFT);
     splitHead->collision.box.offsetY   = (splitHead->collision.box.topExtent + splitHead->collision.box.height) >> 1;
 
     if (unkIdx == 3)
@@ -1381,8 +1380,8 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
         splitHead->collision.cylinder.innerRadius = FP_FROM(((Q12(1.0f) - sp90[unkIdx]) * Q12(0.6f)) + (sp90[unkIdx] * Q12(0.35f)), Q12_SHIFT);
     }
 
-    splitHead->collision.shapeOffsets.box.vx = FP_FROM((sp20[0].vx * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vx * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vx;
-    splitHead->collision.shapeOffsets.box.vz = FP_FROM((sp20[0].vz * (Q12(1.0f) - sp90[unkIdx])) + (sp20[unkIdx].vz * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vz;
+    splitHead->collision.shapeOffsets.box.vx = FP_FROM((bonesPos0[0].vx * (Q12(1.0f) - sp90[unkIdx])) + (bonesPos0[unkIdx].vx * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vx;
+    splitHead->collision.shapeOffsets.box.vz = FP_FROM((bonesPos0[0].vz * (Q12(1.0f) - sp90[unkIdx])) + (bonesPos0[unkIdx].vz * sp90[unkIdx]), Q12_SHIFT) - splitHead->position.vz;
 }
 
 void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_12* offsetZ)
@@ -1567,7 +1566,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
         *offsetX += Q12_MULT(sp38[i].field_0, Math_Sin(spC8[i]));
         *offsetZ += Q12_MULT(sp38[i].field_0, Math_Cos(spC8[i]));
 
-        if (FP_FROM(splitHead->model.anim.time, Q12_SHIFT) > 13 && FP_FROM(splitHead->model.anim.time, Q12_SHIFT) < 34 &&
+        if (ANIM_TIME_RANGE_CHECK(splitHead->model.anim.time, 14, 33) &&
             (sp38[i].field_E < 2 || sp38[i].field_E > 6))
         {
             sharedData_800D5AAF_1_s05 = 1;
@@ -1607,21 +1606,21 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     splitHead->collision.state                    = CharaCollisionState_Ignore;
     splitHead->collision.state                    = CharaCollisionState_4;
 
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[0], 17, sharedData_800D5A90_1_s05[0].vx, sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[1], 21, (s16)((u16)sharedData_800D5A90_1_s05[0].vx * -1), sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[0], SplitHeadVariantMesh_17, sharedData_800D5A90_1_s05[0].vx, sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[1], SplitHeadVariantMesh_21, (s16)((u16)sharedData_800D5A90_1_s05[0].vx * -1), sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
 
     sharedData_800D8618_1_s05[0].vx = (sharedData_800D8618_1_s05[0].vx + sharedData_800D8618_1_s05[1].vx) >> 1;
     sharedData_800D8618_1_s05[0].vy = (sharedData_800D8618_1_s05[0].vy + sharedData_800D8618_1_s05[1].vy) >> 1;
     sharedData_800D8618_1_s05[0].vz = (sharedData_800D8618_1_s05[0].vz + sharedData_800D8618_1_s05[1].vz) >> 1;
 
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[1], 19, sharedData_800D5A90_1_s05[2].vx, sharedData_800D5A90_1_s05[2].vy, sharedData_800D5A90_1_s05[2].vz);
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[2], 19, sharedData_800D5A90_1_s05[3].vx, sharedData_800D5A90_1_s05[3].vy, sharedData_800D5A90_1_s05[3].vz);
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[3], 2, (s16)((u16)sharedData_800D5A90_1_s05[1].vx * -1), sharedData_800D5A90_1_s05[1].vy, sharedData_800D5A90_1_s05[1].vz);
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[4], 3, sharedData_800D5A90_1_s05[4].vx, sharedData_800D5A90_1_s05[4].vy, sharedData_800D5A90_1_s05[4].vz);
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[5], 7, (s16)((u16)sharedData_800D5A90_1_s05[4].vx * -1), sharedData_800D5A90_1_s05[4].vy, sharedData_800D5A90_1_s05[4].vz);
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[6], 2, sharedData_800D5A90_1_s05[1].vx, sharedData_800D5A90_1_s05[1].vy, sharedData_800D5A90_1_s05[1].vz);
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[7], 23, (s16)((u16)sharedData_800D5A90_1_s05[3].vx * -1), sharedData_800D5A90_1_s05[3].vy, sharedData_800D5A90_1_s05[3].vz);
-    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[8], 23, (s16)((u16)sharedData_800D5A90_1_s05[2].vx * -1), sharedData_800D5A90_1_s05[2].vy, sharedData_800D5A90_1_s05[2].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[1], SplitHeadVariantMesh_19, sharedData_800D5A90_1_s05[2].vx, sharedData_800D5A90_1_s05[2].vy, sharedData_800D5A90_1_s05[2].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[2], SplitHeadVariantMesh_19, sharedData_800D5A90_1_s05[3].vx, sharedData_800D5A90_1_s05[3].vy, sharedData_800D5A90_1_s05[3].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[3], SplitHeadVariantMesh_2, (s16)((u16)sharedData_800D5A90_1_s05[1].vx * -1), sharedData_800D5A90_1_s05[1].vy, sharedData_800D5A90_1_s05[1].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[4], SplitHeadVariantMesh_3, sharedData_800D5A90_1_s05[4].vx, sharedData_800D5A90_1_s05[4].vy, sharedData_800D5A90_1_s05[4].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[5], SplitHeadVariantMesh_7, (s16)((u16)sharedData_800D5A90_1_s05[4].vx * -1), sharedData_800D5A90_1_s05[4].vy, sharedData_800D5A90_1_s05[4].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[6], SplitHeadVariantMesh_2, sharedData_800D5A90_1_s05[1].vx, sharedData_800D5A90_1_s05[1].vy, sharedData_800D5A90_1_s05[1].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[7], SplitHeadVariantMesh_23, (s16)((u16)sharedData_800D5A90_1_s05[3].vx * -1), sharedData_800D5A90_1_s05[3].vy, sharedData_800D5A90_1_s05[3].vz);
+    SplitHead_OffsetBonePositionGet(&sharedData_800D8618_1_s05[8], SplitHeadVariantMesh_23, (s16)((u16)sharedData_800D5A90_1_s05[2].vx * -1), sharedData_800D5A90_1_s05[2].vy, sharedData_800D5A90_1_s05[2].vz);
 
     if (!(splitHeadProps.flags & SplitHeadFlag_0))
     {
@@ -1736,7 +1735,10 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     i = Rng_GenerateInt(0, 21);
                 }
 
-                SplitHead_OffsetBonePositionGet(&unkPos, sharedData_800D5AB0_1_s05[i].idx, sharedData_800D5AB0_1_s05[i].vec.vx, sharedData_800D5AB0_1_s05[i].vec.vy, sharedData_800D5AB0_1_s05[i].vec.vz);
+                SplitHead_OffsetBonePositionGet(&unkPos, g_SplitHead_BoneOffsets[i].boneIdx,
+                                                g_SplitHead_BoneOffsets[i].offset.vx,
+                                                g_SplitHead_BoneOffsets[i].offset.vy,
+                                                g_SplitHead_BoneOffsets[i].offset.vz);
 
                 sp30[0].vx = Q12_TO_Q8(unkPos.vx);
                 sp30[0].vy = Q12_TO_Q8(unkPos.vy);
@@ -1745,7 +1747,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                 if (ANIM_TIME_RANGE_CHECK(splitHead->model.anim.time, 15, 19))
                 {
                     moveSpeedDiv2 = new_var;
-                    if (sharedData_800D5AB0_1_s05[i].idx < 20)
+                    if (g_SplitHead_BoneOffsets[i].boneIdx < SplitHeadVariantMesh_20)
                     {
                         headingAngle = splitHead->rotation.vy + Q12_ANGLE(90.0f);
                     }
@@ -1761,12 +1763,12 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     if (splitHead->moveSpeed > Q12(0.0f))
                     {
                         headingAngle = splitHead->rotation.vy;
-                        moveSpeedDiv2 = moveSpeed >> 1;
+                        moveSpeedDiv2 = DIV_FAST(moveSpeed, 2);
                     }
                     else
                     {
                         moveSpeed = -moveSpeed;
-                        moveSpeedDiv2  = moveSpeed >> 1;
+                        moveSpeedDiv2  = DIV_FAST(moveSpeed, 2);
                         headingAngle  = splitHead->rotation.vy + Q12_ANGLE(180.0f);
                     }
                 }
@@ -1792,8 +1794,10 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
             {
                 for (j = 0; j < 2; j++)
                 {
-                    SplitHead_OffsetBonePositionGet(&unkPos, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].idx, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vx,
-                                              sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vy, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vz);
+                    SplitHead_OffsetBonePositionGet(&unkPos, g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].boneIdx,
+                                                    g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].offset.vx,
+                                                    g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].offset.vy,
+                                                    g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].offset.vz);
 
                     sp30[j].vx = Q12_TO_Q8(unkPos.vx);
                     sp30[j].vy = Q12_TO_Q8(unkPos.vy);

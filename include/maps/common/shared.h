@@ -331,7 +331,8 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx);
 
-void sharedFunc_800CBE7C_1_s05(q23_8 posX, q23_8 posY, q23_8 posZ, s32 arg3, s32 arg4);
+// Setup for Split Head drool particles?
+void sharedFunc_800CBE7C_1_s05(q23_8 posX, q23_8 posY, q23_8 posZ, q19_12 speed, q19_12 headingAngle);
 
 void sharedFunc_800CCDD4_1_s05(POLY_FT4** poly, s32 idx);
 
