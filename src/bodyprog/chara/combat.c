@@ -1492,7 +1492,7 @@ s32 Combat_HitApply(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* h
                     break;
 
                 case Chara_Incubus:
-                case Chara_Unknown23:
+                case Chara_MonsterIncubator:
                 case Chara_Incubator:
                     if (!(target->flags & CharaFlag_Hit))
                     {

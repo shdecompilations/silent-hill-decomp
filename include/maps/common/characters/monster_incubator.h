@@ -1,15 +1,15 @@
-#ifndef _MAPS_CHARACTERS_UNKNOWN23_H
-#define _MAPS_CHARACTERS_UNKNOWN23_H
+#ifndef _MAPS_CHARACTERS_MONSTERINCUBATOR_H
+#define _MAPS_CHARACTERS_MONSTERINCUBATOR_H
 
-/** @brief Unknown23 character animation indices. */
-typedef enum _Unknown23Anim
+/** @brief Monster Incubator character animation indices. */
+typedef enum _MonsterIncubatorAnim
 {
-    Unknown23Anim_Still = 0,
-    Unknown23Anim_1     = 1,
-    Unknown23Anim_2     = 2,
-    Unknown23Anim_3     = 3,
-    Unknown23Anim_4     = 4
-} e_Unknown23Anim;
+    MonsterIncubatorAnim_Still = 0,
+    MonsterIncubatorAnim_1     = 1,
+    MonsterIncubatorAnim_2     = 2,
+    MonsterIncubatorAnim_3     = 3,
+    MonsterIncubatorAnim_4     = 4
+} e_MonsterIncubatorAnim;
 
 typedef struct
 {
@@ -45,7 +45,7 @@ typedef struct
     s32     field_588;
 } s_func_800DFA48;
 
-extern s_AnimInfo UNKKOWN_23_ANIM_INFOS[];
+extern s_AnimInfo MONSTER_INCUBATOR_ANIM_INFOS[];
 
 extern s32 D_800ECA50[];
 
@@ -83,7 +83,7 @@ void func_800DFB50(s_SubCharacter* chara);
 
 void func_800DFB74(s_SubCharacter* chara);
 
-bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
+bool MonsterIncubator_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 
 void func_800DFCE4(s_SubCharacter* chara);
 
@@ -117,6 +117,6 @@ void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* boneCoords);
 
 void func_800E0914(s_SubCharacter* chara);
 
-void Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void MonsterIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 #endif

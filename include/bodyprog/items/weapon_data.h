@@ -56,7 +56,7 @@ typedef enum _AttackType
     AttackType_MonsterCybil1        = 65,
     AttackType_MonsterCybilNeckGrab = 66,
     AttackType_Unk67                = 67, /** Effect in the map7_s03 boss room. Damages on contact. */
-    AttackType_Unknown23            = 68, /** `Chara_Unknown23` attack. Pushes the player away. */
+    AttackType_MonsterIncubator     = 68, /** `Chara_MonsterIncubator` attack. Pushes the player away. */
     AttackType_Bloodsucker          = 69,
     AttackType_KaufmannHandgun      = 70  // Muzzle flash only, never hit-tested?
 } e_AttackType;

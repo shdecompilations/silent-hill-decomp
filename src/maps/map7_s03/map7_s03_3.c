@@ -22,7 +22,7 @@
 #include "maps/common/characters/incubator.h"
 #include "maps/common/characters/incubus.h"
 #include "maps/common/characters/kaufmann.h"
-#include "maps/common/characters/unknown23.h"
+#include "maps/common/characters/monster_incubator.h"
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
 #include "screens/stf_roll/credits.h"
@@ -4296,7 +4296,7 @@ void func_800DD8CC(VECTOR3* charaPos) // 0x800DD8CC
 }
 
 #include "../src/maps/common/characters/incubus.c" // 0x800DD964
-#include "../src/maps/common/characters/unknown23.c" // 0x800DF1D4
+#include "../src/maps/common/characters/monster_incubator.c" // 0x800DF1D4
 
 extern u8 g_EndingIdx; /** `e_GameEnding` */
 
@@ -8090,7 +8090,7 @@ void func_800E9490(s_SubCharacter* chara) // 0x800E9490
 
 void func_800E9498(void) // 0x800E9498
 {
-    g_MapOverlayHdr.charaUpdateFuncs[Chara_Incubator] = Unknown23_Update;
+    g_MapOverlayHdr.charaUpdateFuncs[Chara_Incubator] = MonsterIncubator_Update;
 }
 
 void func_800E94AC(void) // 0x800E94AC

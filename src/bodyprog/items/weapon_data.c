@@ -100,6 +100,6 @@ s_AttackInfo g_Items_WeaponAttackInfos[70] = {
 /* MonsterCybil1         */ { Q12(0.5f),  Q12(0.0f),  25,       ATTACK_FIGHT(0.0f, 0.0f, 0.0f),       Q12(0.25f), 11,                 3,                      AttackInfoType_Strike,    HurtSfxType_1,    0,                0,     &D_800AD4C4 },
 /* MonsterCybilNeckGrab  */ { Q12(0.4f),  Q12(0.0f),  1,        ATTACK_FIGHT(0.4f, 0.4f, 0.4f),       Q12(0.0f),  0,                  HIT_KEYFRAME_COUNT_MAX, AttackInfoType_Grab,      HurtSfxType_5,    0,                0,     &D_800AD4C4 },
 /* Unk67                 */ { Q12(0.0f),  Q12(0.0f),  0,        ATTACK_FIGHT(0.0f, 0.0f, 0.0f),       Q12(0.0f),  0,                  HIT_KEYFRAME_COUNT_MAX, AttackInfoType_Area,      HurtSfxType_4,    0,                0,     &D_800AD4C4 },
-/* Unknown23             */ { Q12(0.0f),  Q12(0.0f),  0,        ATTACK_FIGHT(0.0f, 0.0f, 0.0f),       Q12(0.0f),  0,                  HIT_KEYFRAME_COUNT_MAX, AttackInfoType_Area,      HurtSfxType_1,    0,                0,     &D_800AD4C4 },
+/* MonsterIncubator      */ { Q12(0.0f),  Q12(0.0f),  0,        ATTACK_FIGHT(0.0f, 0.0f, 0.0f),       Q12(0.0f),  0,                  HIT_KEYFRAME_COUNT_MAX, AttackInfoType_Area,      HurtSfxType_1,    0,                0,     &D_800AD4C4 },
 /* Bloodsucker           */ { Q12(0.1f),  Q12(0.0f),  6,        ATTACK_FIGHT(0.1f, 0.1f, 0.0f),       Q12(0.0f),  0,                  HIT_KEYFRAME_COUNT_MAX, AttackInfoType_Area,      HurtSfxType_2,    2,                0,     &D_800AD4C4 }
 };

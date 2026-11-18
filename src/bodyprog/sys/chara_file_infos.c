@@ -28,7 +28,7 @@ s_CharaFileInfo CHARA_FILE_INFOS[] = {
 /* Twinfeeler       */ {  FILE_ANIM_WRM_ANM,     FILE_CHARA_WRM_ILM,    FILE_CHARA_WORM_TIM,   Q8(0.0f),  BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.7f)          },
 /* Bloodsucker      */ {  FILE_ANIM_ROD_ANM,     FILE_CHARA_ROD_ILM,    FILE_CHARA_ROD_TIM,    Q8(0.0f),  BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.7f)          },
 /* Incubus          */ {  FILE_ANIM_BOS_ANM,     FILE_CHARA_BOS_ILM,    FILE_CHARA_BOS_TIM,    Q8(0.0f),  BlendMode_Additive,      NULL,        CameraAnchor_Camera,    Q8(0.0f)           },
-/* Unknown23        */ {  FILE_ANIM_MAR_ANM,     FILE_CHARA_MAR_ILM,    FILE_CHARA_MAR_TIM,    Q8(0.0f),  BlendMode_Average,       NULL,        CameraAnchor_Camera,    Q8(0.0f)           },
+/* MonsterIncubator */ {  FILE_ANIM_MAR_ANM,     FILE_CHARA_MAR_ILM,    FILE_CHARA_MAR_TIM,    Q8(0.0f),  BlendMode_Average,       NULL,        CameraAnchor_Camera,    Q8(0.0f)           },
 /* MonsterCybil     */ {  FILE_ANIM_MSB_ANM,     FILE_CHARA_MSB_ILM,    FILE_CHARA_MSB_TIM,    Q8(0.25f), BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-1.35f)         },
 /* LockerDeadBody   */ {  FILE_ANIM_DEAD_ANM,    FILE_CHARA_DEAD_ILM,   FILE_CHARA_DEAD_TIM,   Q8(0.25f), BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.5f)          },
 /* Cybil            */ {  FILE_ANIM_SBL_ANM,     FILE_CHARA_SIBYL_ILM,  FILE_CHARA_SIBYL_TIM,  Q8(0.3f),  BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.5f)          },

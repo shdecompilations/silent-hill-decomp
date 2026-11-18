@@ -232,7 +232,7 @@ typedef struct _PropsHangedScratcher
     /* 0x10E */ q4_12  radiusMin_10E; // }
 } s_PropsHangedScratcher;
 
-/** @brief Incubus character properties, shared with Unknown23? */
+/** @brief Incubus character properties, also used by Monster Incubator. */
 typedef struct _PropsIncubus
 {
     /* 0xE8 */ q19_12 timer_E8;

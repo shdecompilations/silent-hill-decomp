@@ -12,7 +12,7 @@
 #include "maps/common/characters/incubus.h"
 #include "maps/common/characters/kaufmann.h"
 #include "maps/common/characters/little_incubus.h"
-#include "maps/common/characters/unknown23.h"
+#include "maps/common/characters/monster_incubator.h"
 
 extern s_AnimInfo HARRY_M7S03_ANIM_INFOS[];
 
@@ -147,7 +147,7 @@ const s_MapOverlayHdr g_MapOverlayHdr = {
     .charaUpdateFuncs             = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, Incubus_Update, Unknown23_Update,
+        NULL, NULL, NULL, NULL, NULL, NULL, Incubus_Update, MonsterIncubator_Update,
         NULL, NULL, Cybil_Update, Cybil_Update, NULL, NULL, Dahlia_Update, Dahlia_Update,
         NULL, BloodyLisa_Update, Alessa_Update, NULL, Incubator_Update, BloodyIncubator_Update, Kaufmann_Update, Kaufmann_Update,
         NULL, LittleIncubus_Update },

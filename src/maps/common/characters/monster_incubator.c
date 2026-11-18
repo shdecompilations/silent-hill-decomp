@@ -1,15 +1,17 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
-#include "maps/common/characters/unknown23.h"
+#include "maps/common/characters/monster_incubator.h"
 #include "maps/map7/map7_s03.h"
 #include "maps/common/unk_m3s03.h"
 
-// Unknown23: Incubator transforms into this based on `map7_s03::func_800E9498`?
-// Seems to include parts of Incubus code here exactly, maybe some half-way chara before Incubus spawns?
+// Incubator boss, fought in the Bad and Bad+ endings.
+// `Chara_MonsterIncubator` is never spawned in, map7_s03 points `Chara_Incubator` update function at
+// `MonsterIncubator_Update` (`func_800E9498`) so the cutscene Incubator turns into the boss.
+// Reuses `s_PropsIncubus` and parts of the Incubus logic.
 
-#define unknown23Props      chara->properties.incubus
-#define localUnknown23Props localChara->properties.incubus
+#define monsterIncubatorProps      chara->properties.incubus
+#define localMonsterIncubatorProps localChara->properties.incubus
 
 void func_800DF1D4(void) // 0x800DF1D4
 {
@@ -368,7 +370,7 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
 
     ptr = FS_BUFFER_26;
 
-    Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap));
+    Chara_AttackReceivedSet(&PLAYER_CHARA(), WEAPON_ATTACK(AttackType_MonsterIncubator, AttackInputType_Tap));
 
     angle                                          = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
     PLAYER_CHARA().damage.amount      = 1;
@@ -425,7 +427,7 @@ void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
     }
 }
 
-bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFB98
+bool MonsterIncubator_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFB98
 {
     s_SubCharacter* localChara; // TODO: Not sure why this is needed here, might be an inline in this func.
 
@@ -450,7 +452,7 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DF
     chara->headingAngle                       = chara->rotation.vy;
     chara->flags                             |= CharaFlag_Hit;
 
-    localUnknown23Props.someState_F0 = 0;
+    localMonsterIncubatorProps.someState_F0 = 0;
 
     if (chara->model.stateStep == 0)
     {
@@ -463,18 +465,18 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DF
         chara->model.stateStep    = 0;
     }
 
-    Chara_AnimSet(chara, ANIM_STATUS(Unknown23Anim_2, false), 115);
-    ModelAnim_AnimInfoSet(&chara->model.anim, UNKKOWN_23_ANIM_INFOS);
+    Chara_AnimSet(chara, ANIM_STATUS(MonsterIncubatorAnim_2, false), 115);
+    ModelAnim_AnimInfoSet(&chara->model.anim, MONSTER_INCUBATOR_ANIM_INFOS);
 
     Chara_DamageClear(chara);
 
     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
     {
-        localUnknown23Props.bossFightTimer_F4 = Q12(300.0f);
+        localMonsterIncubatorProps.bossFightTimer_F4 = Q12(300.0f);
     }
     else
     {
-        localUnknown23Props.bossFightTimer_F4 = Q12(30.0f);
+        localMonsterIncubatorProps.bossFightTimer_F4 = Q12(30.0f);
     }
 
     func_800DD67C(&chara->position, chara, boneCoords);
@@ -486,9 +488,9 @@ bool Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DF
 
 void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
 {
-    if (unknown23Props.someState_F0 == 0)
+    if (monsterIncubatorProps.someState_F0 == 0)
     {
-        if (unknown23Props.bossFightTimer_F4 < Q12(0.0f))
+        if (monsterIncubatorProps.bossFightTimer_F4 < Q12(0.0f))
         {
             chara->health        = 0;
             chara->damage.amount = 1;
@@ -496,7 +498,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
 
         if (!Inventory_GunsAvailableCheck(false))
         {
-            unknown23Props.bossFightTimer_F4 -= g_DeltaTime;
+            monsterIncubatorProps.bossFightTimer_F4 -= g_DeltaTime;
         }
 
         if (!(chara->flags & CharaFlag_Hit))
@@ -514,7 +516,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
                 chara->model.stateStep    = 0;
                 chara->health             = NO_VALUE;
                 chara->flags             |= CharaFlag_Unk2;
-                unknown23Props.someState_F0++;
+                monsterIncubatorProps.someState_F0++;
             }
         }
     }
@@ -557,7 +559,7 @@ void func_800DFEF0(s_SubCharacter* chara) // 0x800DFEF0
         return;
     }
 
-    if (chara->model.anim.status == ANIM_STATUS(Unknown23Anim_4, false))
+    if (chara->model.anim.status == ANIM_STATUS(MonsterIncubatorAnim_4, false))
     {
         chara->model.controlState = 2;
         chara->model.stateStep    = 0;
@@ -592,7 +594,7 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFF
     if (chara->model.stateStep == 0)
     {
         chara->model.stateStep++;
-        unknown23Props.timer_E8 = Q12(1.5f);
+        monsterIncubatorProps.timer_E8 = Q12(1.5f);
         chara->flags           &= ~CharaFlag_Hit;
         return;
     }
@@ -627,21 +629,21 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFF
                     func_800DD0EC(&pos, 10);
                 }
 
-                if (localUnknown23Props.timer_E8 < Q12(0.0f))
+                if (localMonsterIncubatorProps.timer_E8 < Q12(0.0f))
                 {
                     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
-                        localUnknown23Props.timer_E8 = Q12(2.0f);
+                        localMonsterIncubatorProps.timer_E8 = Q12(2.0f);
                     }
                     else
                     {
-                        localUnknown23Props.timer_E8 = Q12(2.5f);
+                        localMonsterIncubatorProps.timer_E8 = Q12(2.5f);
                     }
 
                     chara->model.stateStep++;
                 }
 
-                localUnknown23Props.timer_E8 -= g_DeltaTime;
+                localMonsterIncubatorProps.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -686,14 +688,14 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFF
                 angleDeltaToPlayer = abs(Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(chara->position, PLAYER_CHARA().position) -
                                                        chara->rotation.vy));
 
-                if (localUnknown23Props.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
+                if (localMonsterIncubatorProps.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < Q12_ANGLE(12.0f))
                 {
-                    localUnknown23Props.timer_E8 = Q12(0.3f);
+                    localMonsterIncubatorProps.timer_E8 = Q12(0.3f);
                     chara->model.stateStep++;
                     break;
                 }
 
-                localUnknown23Props.timer_E8 -= g_DeltaTime;
+                localMonsterIncubatorProps.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -735,21 +737,21 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFF
                     func_800DD464(&pos);
                 }
 
-                if (localUnknown23Props.timer_E8 < Q12(0.0f))
+                if (localMonsterIncubatorProps.timer_E8 < Q12(0.0f))
                 {
                     chara->model.stateStep++;
 
                     if (g_SavegamePtr->gameDifficulty == GameDifficulty_Hard)
                     {
-                        localUnknown23Props.timer_E8 = Q12(2.5f);
+                        localMonsterIncubatorProps.timer_E8 = Q12(2.5f);
                     }
                     else
                     {
-                        localUnknown23Props.timer_E8 = Q12(1.5f);
+                        localMonsterIncubatorProps.timer_E8 = Q12(1.5f);
                     }
                 }
 
-                localUnknown23Props.timer_E8 -= g_DeltaTime;
+                localMonsterIncubatorProps.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -781,12 +783,12 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800DFF
                     func_800DD464(&pos);
                 }
 
-                if (localUnknown23Props.timer_E8 < Q12(0.0f))
+                if (localMonsterIncubatorProps.timer_E8 < Q12(0.0f))
                 {
                     chara->model.stateStep++;
                 }
 
-                localUnknown23Props.timer_E8 -= g_DeltaTime;
+                localMonsterIncubatorProps.timer_E8 -= g_DeltaTime;
             }
             break;
 
@@ -818,7 +820,7 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
 {
     if (chara->model.stateStep == 0)
     {
-        unknown23Props.timer_E8 = func_800E04C4();
+        monsterIncubatorProps.timer_E8 = func_800E04C4();
         chara->model.stateStep++;
         return;
     }
@@ -828,7 +830,7 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
     switch (chara->model.stateStep)
     {
         case 1:
-            if (unknown23Props.timer_E8 <= Q12(0.0f))
+            if (monsterIncubatorProps.timer_E8 <= Q12(0.0f))
             {
                 chara->model.stateStep = 2;
             }
@@ -840,7 +842,7 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
             break;
     }
 
-    unknown23Props.timer_E8 -= g_DeltaTime;
+    monsterIncubatorProps.timer_E8 -= g_DeltaTime;
 }
 
 void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* boneCoords) // 0x800E05DC
@@ -906,9 +908,9 @@ void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* bo
 
     Math_MatrixTransform(&chara->position, &chara->rotation, boneCoords);
 
-    if (chara->model.anim.status != ANIM_STATUS(Unknown23Anim_Still, false))
+    if (chara->model.anim.status != ANIM_STATUS(MonsterIncubatorAnim_Still, false))
     {
-        animInfo = &UNKKOWN_23_ANIM_INFOS[chara->model.anim.status];
+        animInfo = &MONSTER_INCUBATOR_ANIM_INFOS[chara->model.anim.status];
         animInfo->playbackFunc(&chara->model, anmHdr, boneCoords, animInfo);
     }
 }
@@ -969,11 +971,11 @@ void func_800E0914(s_SubCharacter* chara) // 0x800E0914
     func_800DF944();
 }
 
-void Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800E093C
+void MonsterIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords) // 0x800E093C
 {
     if (chara->model.controlState == 0)
     {
-        Unknown23_Init(chara, boneCoords);
+        MonsterIncubator_Init(chara, boneCoords);
     }
 
     if (chara->model.controlState != 1)

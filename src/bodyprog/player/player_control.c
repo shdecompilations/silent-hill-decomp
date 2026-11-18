@@ -1421,7 +1421,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            if (player->attackReceived != WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap) && 
+            if (player->attackReceived != WEAPON_ATTACK(AttackType_MonsterIncubator, AttackInputType_Tap) && 
                 player->attackReceived != WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
             {
                 g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) - player->rotation.vy;
@@ -2496,7 +2496,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                 }
             }
 
-            if (player->attackReceived != WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap) && 
+            if (player->attackReceived != WEAPON_ATTACK(AttackType_MonsterIncubator, AttackInputType_Tap) && 
                 player->attackReceived != WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
             {
                 g_Player_HeadingAngle = ratan2(player->damage.position.vx, player->damage.position.vz) -
@@ -7136,7 +7136,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 return;
             }
 
-            if (player->attackReceived == WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap) ||
+            if (player->attackReceived == WEAPON_ATTACK(AttackType_MonsterIncubator, AttackInputType_Tap) ||
                 player->attackReceived == WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
             {
                 player->damage.amount = Q12(0.0f);
@@ -7186,7 +7186,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             {
                 enemyHeadingAngle = Q12_ANGLE(90.0f);
             }
-            else if (player->attackReceived == WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap))
+            else if (player->attackReceived == WEAPON_ATTACK(AttackType_MonsterIncubator, AttackInputType_Tap))
             {
                 // TODO: Odd non-angle assignment?
                 enemyHeadingAngle = player->damage.position.vy;
@@ -7293,7 +7293,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                     Math_ShortestAngleGet(player->rotation.vy, Q12_ANGLE(90.0f), &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
-                case WEAPON_ATTACK(AttackType_Unknown23, AttackInputType_Tap):
+                case WEAPON_ATTACK(AttackType_MonsterIncubator, AttackInputType_Tap):
                     if (player->attackReceived != WEAPON_ATTACK(AttackType_Bloodsucker, AttackInputType_Tap))
                     {
                         PLAYER_PROPS().moveSpeed = Q12(4.0f);
