@@ -1,6 +1,8 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 
+#include "bodyprog/events/bgm_update.h"
+
 // TODO: 
 // - `Map_RoomIdxGet` uses defines from the `mapX_sXX.h` headers, the map .c that includes this file handles including that atm.
 //   To split this .c properly it'd need to handle including the right map header though.

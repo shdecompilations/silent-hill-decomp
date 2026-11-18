@@ -68,7 +68,7 @@
     (((PLAYER_CHARA().position.comp - Q12(base)) >= Q12(0.0f)) ? ((PLAYER_CHARA().position.comp - Q12(base)) < Q12(tol)) : \
                                                                  ((Q12(base) - PLAYER_CHARA().position.comp) < Q12(tol)))
 
-/** @brief System flags. TODO: Give this a more specific name. */
+/** @brief System flags. */
 typedef enum _SysFlags
 {
     SysFlag_None           = 0,

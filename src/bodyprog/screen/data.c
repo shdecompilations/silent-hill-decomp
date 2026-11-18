@@ -121,13 +121,13 @@ s_FsImageDesc g_Font24AtlasImg             = { { 0,   31  }, 0,    0,   960, 496
 #endif
 /* Not sure if these are really `s_FsImageDesc`. Seems plausible but not sure about negative values here. */
 s_FsImageDesc D_800A90A4                   = { { 0,   0   }, 35,   0,   35,  3   };
-s_FsImageDesc D_800A90AC                   = { { 0,   0   }, 0,    0,   0,  -1   }; // @unused?
+s_FsImageDesc D_800A90AC                   = { { 0,   0   }, 0,    0,   0,  -1   }; // @unused
 s_FsImageDesc D_800A90B4                   = { { 0,   0   }, 15,   0,  -53,  10  };
-s_FsImageDesc D_800A90BC                   = { { 0,   0   }, 76,   0,   140, 2   }; // } @unused?
-s_FsImageDesc D_800A90C4                   = { { 168, 0   }, 246,  255, 7,   13  }; // }
-s_FsImageDesc D_800A90CC                   = { { 153, 0   }, 94,   0,   35,  13  }; // }
-s_FsImageDesc D_800A90D4                   = { { 205, 255 }, 122,  0,   56,  12  }; // }
-s_FsImageDesc D_800A90DC                   = { { 168, 0   }, 246,  255,-7,   15  }; // }
-s_FsImageDesc D_800A90E4                   = { { 153, 0   }, 94,   0,  -38,  15  }; // }
-s_FsImageDesc D_800A90EC                   = { { 51,  0   }, 125,  0,  -56,  14  }; // }
-s_FsImageDesc D_800A90F4                   = { { 0,   0   }, 0,    0,   0,   -1  }; // }
+s_FsImageDesc D_800A90BC                   = { { 0,   0   }, 76,   0,   140, 2   }; // @unused
+s_FsImageDesc D_800A90C4                   = { { 168, 0   }, 246,  255, 7,   13  }; // @unused
+s_FsImageDesc D_800A90CC                   = { { 153, 0   }, 94,   0,   35,  13  }; // @unused
+s_FsImageDesc D_800A90D4                   = { { 205, 255 }, 122,  0,   56,  12  }; // @unused
+s_FsImageDesc D_800A90DC                   = { { 168, 0   }, 246,  255,-7,   15  }; // @unused
+s_FsImageDesc D_800A90E4                   = { { 153, 0   }, 94,   0,  -38,  15  }; // @unused
+s_FsImageDesc D_800A90EC                   = { { 51,  0   }, 125,  0,  -56,  14  }; // @unused
+s_FsImageDesc D_800A90F4                   = { { 0,   0   }, 0,    0,   0,   -1  }; // @unused

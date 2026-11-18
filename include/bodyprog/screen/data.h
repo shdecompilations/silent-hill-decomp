@@ -139,6 +139,10 @@ extern s_FsImageDesc D_800A9094;
 
 extern s_FsImageDesc g_Font24AtlasImg;
 
+extern s_FsImageDesc D_800A90A4;
+
+extern s_FsImageDesc D_800A90B4;
+
 // ====================
 // GLOBALS (BSS; Hack)
 // ====================

@@ -17,6 +17,7 @@
 #include "bodyprog/sys/warm_boot.h"
 #include "bodyprog/sound/sd_call.h"
 #include "bodyprog/sys/game_main.h"
+#include "main/main.h"
 #include "screens/b_konami/b_konami.h"
 #include "screens/stf_roll/credits.h"
 #include "screens/options/options.h"

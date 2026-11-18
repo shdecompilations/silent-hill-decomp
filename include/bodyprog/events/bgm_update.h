@@ -118,6 +118,8 @@ typedef struct _BgmLayerLimits
     /* 0x0 */ u8 limits[8];
 } s_BgmLayerLimits;
 
+extern u32 D_800A999C;
+
 // ==========
 // FUNCTIONS
 // ==========

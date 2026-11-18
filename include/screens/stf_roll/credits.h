@@ -69,6 +69,12 @@ typedef struct
 } s_801E5558;
 STATIC_ASSERT_SIZEOF(s_801E5558, 6);
 
+extern s32 D_800C48F0;
+
+extern s_CreditTextState g_CreditTextState;
+
+extern s_CreditText3dState g_CreditText3dState;
+
 extern s_801E5558 D_801E5558[];
 
 extern char* D_801E5590[]; // Credits string table.

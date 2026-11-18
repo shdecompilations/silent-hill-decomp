@@ -31,6 +31,11 @@ extern s8 g_CharaAnimDataIdxs[Chara_Count];
 /** @brief Animation data for loaded character models. */
 extern s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT];
 
+#if VERSION_REGION_IS(PAL)
+    extern e_FsFile g_MapLanguageBaseIds[];
+    extern e_FsFile g_ItemLanguageFileIds[];
+#endif
+
 /** @brief Player load screen run anim info. */
 extern s_AnimInfo g_PlayerLoadScreenAnimInfo;
 

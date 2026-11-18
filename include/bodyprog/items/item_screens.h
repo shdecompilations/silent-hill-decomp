@@ -105,6 +105,10 @@ extern s32 g_Items_DisplayedCount; // 0x800AE180
 /** `e_InvItemId` */
 extern u8 g_Inventory_EquippedItem; // 0x800AE184
 
+extern u8 D_800AE185;
+
+extern u8 D_800AE186;
+
 extern s32 D_800AE190;
 
 /** Timer used for the black scanline gradient in the health status effect. */

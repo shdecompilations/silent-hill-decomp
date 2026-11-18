@@ -8,6 +8,7 @@
 #include <psyq/libspu.h>
 
 #include "bodyprog/bodyprog.h"
+#include "main/main.h"
 #include "bodyprog/math/math.h"
 #include "main/fs_queue.h"
 

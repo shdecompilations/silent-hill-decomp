@@ -50,45 +50,14 @@
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/gfx/materials.h"
 
-extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
+// TODO: Remaining externs here are all unmigrated data.
 
 extern char D_80028544[16];
 
 extern u_Filename D_8002B2CC;
 
-#if VERSION_REGION_IS(PAL)
-    extern e_FsFile g_MapLanguageBaseIds[];
-    extern e_FsFile g_ItemLanguageFileIds[];
-#endif
-
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
-
-extern void (*g_SysStateFuncs[])(void);
-
-extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
-
-extern u32 D_800A9FB0;
-
-extern s32 D_800A9FB4[];
-
-extern u8 g_Sd_SongLayerChannels[41][16];
-
-extern u8 D_800AE185;
-
-extern u8 D_800AE186;
-
-extern const char* g_ItemDescriptions[];
-
-extern s_FsImageDesc D_800A90A4;
-
-extern s_FsImageDesc D_800A90B4;
-
-extern s_SubCharacter D_800BA00C; // Often passed to `Los_NpcToPlayerHitCheck`, might not be full `s_SubCharacter`?
-
-extern u32 D_800A999C;
-
-extern s32 g_Bgm_LayersUpdated;
 
 extern s8 D_800C15B4;
 
@@ -106,10 +75,9 @@ extern q3_12 D_800C4454;
 
 extern s_CollisionSurface D_800C4620;
 
-extern s32 D_800C48F0;
-
-extern const s_MapOverlayHdr g_MapOverlayHdr;
-
 extern s16 SQRT[100];
+
+// TODO: Defined per map.
+extern const s_MapOverlayHdr g_MapOverlayHdr;
 
 #endif

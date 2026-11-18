@@ -16,6 +16,7 @@
 #include "maps/map6/map6_s02.h"
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
+#include "screens/stf_roll/credits.h"
 
 #include "../src/maps/common/particles/ufo.c"
 
