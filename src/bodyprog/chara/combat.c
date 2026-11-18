@@ -205,7 +205,7 @@ s32 Combat_AttackPerform(e_CharaAttackState request, s32 weaponAttack, s_SubChar
     #undef DEFAULT_SHOT_COUNT
 }
 
-u32 Combat_AttackStartKeyframeGet(s32 weaponAttack) // 0x8008A270
+u32 Combat_HitWindowStartGet(s32 weaponAttack) // 0x8008A270
 {
 #if VERSION_EQUAL_OR_NEWER(USA)
     switch (weaponAttack)
@@ -239,7 +239,7 @@ u32 Combat_AttackStartKeyframeGet(s32 weaponAttack) // 0x8008A270
     return g_Items_WeaponAttackInfos[weaponAttack].hitStartKeyframe;
 }
 
-u32 Combat_AttackKeyframeCountGet(s32 weaponAttack) // 0x8008A2E0
+u32 Combat_HitWindowLengthGet(s32 weaponAttack) // 0x8008A2E0
 {
     if (g_SysWork.gasWeaponEngineSfxLevel > Q12(256.0f))
     {
@@ -364,8 +364,8 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
     attackTime  = modelAnim->time;
     attackTime -= Q12(animInfo->startKeyframeIdx);
 
-    hitWindowStart   = Combat_AttackStartKeyframeGet(weaponAttack);
-    hitKeyframeCount = Combat_AttackKeyframeCountGet(weaponAttack);
+    hitWindowStart   = Combat_HitWindowStartGet(weaponAttack);
+    hitKeyframeCount = Combat_HitWindowLengthGet(weaponAttack);
     hitWindowEnd     = Q12(hitWindowStart + hitKeyframeCount);
     hitWindowStart   = Q12(hitWindowStart);
 
@@ -1108,7 +1108,7 @@ bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch) // 0
     return level > Q12(256.0f);
 }
 
-void func_8008B664(VECTOR3* pos, u32 weaponAttack) // 0x8008B664
+void Combat_HitSfxPlay(VECTOR3* pos, u32 weaponAttack) // 0x8008B664
 {
     s32 sfxId;
 
@@ -1151,6 +1151,8 @@ void func_8008B664(VECTOR3* pos, u32 weaponAttack) // 0x8008B664
                 Combat_GasWeaponContactSfxUpdate(Q8(0.5f));
                 break;
             }
+            sfxId = Sfx_Unk1316;
+            break;
 
         case WEAPON_ATTACK(AttackType_Kick,  AttackInputType_Tap):
         case WEAPON_ATTACK(AttackType_Stomp, AttackInputType_Tap):
@@ -1231,7 +1233,7 @@ s32 Combat_HitApply(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* h
             }
             else
             {
-                func_8008B664(hitPos, weaponAttack);
+                Combat_HitSfxPlay(hitPos, weaponAttack);
             }
         }
     }

@@ -1178,8 +1178,8 @@ Chara_SpawnPositionSet                       = 0x80089034; // type:func
 //---------------------------------------------------------------
 Math_SquareRootQ12                           = 0x8008A058; // type:func
 Combat_AttackPerform                         = 0x8008A0E4; // type:func
-Combat_AttackStartKeyframeGet                = 0x8008A270; // type:func
-Combat_AttackKeyframeCountGet                = 0x8008A2E0; // type:func
+Combat_HitWindowStartGet                     = 0x8008A270; // type:func
+Combat_HitWindowLengthGet                    = 0x8008A2E0; // type:func
 Combat_AttackHitWindowCheck                  = 0x8008A35C; // type:func
 Combat_CharaAttackTickedClear                = 0x8008A384; // type:func
 Combat_CharaAttackTickedSet                  = 0x8008A398; // type:func
@@ -1192,6 +1192,7 @@ Combat_GasWeaponContactSfxUpdate             = 0x8008B3E4; // type:func
 Combat_RockDrillRunSfxUpdate                 = 0x8008B40C; // type:func
 Combat_GasWeaponEngineSfxUpdate              = 0x8008B438; // type:func
 Combat_GasWeaponSfxUpdate                    = 0x8008B474; // type:func
+Combat_HitSfxPlay                            = 0x8008B664; // type:func
 Combat_HitApply                              = 0x8008B714; // type:func
 Combat_MeleeHitCheck                         = 0x8008BF84; // type:func
 

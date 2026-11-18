@@ -106,17 +106,17 @@ s32 Combat_AttackPerform(e_CharaAttackState request, s32 weaponAttack, struct _S
  *
  * @param weaponAttack Packed weapon attack.
  */
-u32 Combat_AttackStartKeyframeGet(s32 weaponAttack);
+u32 Combat_HitWindowStartGet(s32 weaponAttack);
 
 /** @brief Gets the keyframe count of an attack's hit window from `s_AttackInfo::hitKeyframeCount`.
  * Revved Chainsaw and Rock Drill attacks use fixed counts instead.
  */
-u32 Combat_AttackKeyframeCountGet(s32 weaponAttack);
+u32 Combat_HitWindowLengthGet(s32 weaponAttack);
 
 /** @brief Checks if a keyframe is inside an attack's hit window.
  *
  * Reads `s_AttackInfo::hitStartKeyframe` and `s_AttackInfo::hitKeyframeCount` directly, unlike
- * `Combat_AttackStartKeyframeGet` and `Combat_AttackKeyframeCountGet`, ignores the revved gas weapon overrides.
+ * `Combat_HitWindowStartGet` and `Combat_HitWindowLengthGet`, ignores the revved gas weapon overrides.
  *
  * @param attackInfo Attack to check.
  * @param keyframe Keyframe relative to the start of the attack animation.
@@ -184,7 +184,14 @@ void Combat_GasWeaponEngineSfxUpdate(bool isChainsaw, q23_8 vol, s32 pitch);
 
 bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch);
 
-void func_8008B664(VECTOR3* pos, u32 weaponAttack);
+/** @brief Plays the impact SFX for an attack hitting an NPC, picked by weapon type (slash, blunt, gunshot or kick).
+ *
+ * Revved Chainsaw and Rock Drill hits update the gas weapon contact SFX volume instead.
+ *
+ * @param pos Hit position (Q19.12).
+ * @param weaponAttack Packed `WEAPON_ATTACK` that hit.
+ */
+void Combat_HitSfxPlay(VECTOR3* pos, u32 weaponAttack);
 
 /** @brief Applies one hit from an attack to a target. Applies damage/push/vibration/impact SFX/blood.
  *
