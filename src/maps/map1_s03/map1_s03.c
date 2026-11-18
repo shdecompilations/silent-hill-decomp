@@ -103,7 +103,7 @@ void func_800CE0CC(s32 arg0) // 0x800CE0CC
 
     for (i = 0; i < D_800E3A40[arg0].field_12; i++)
     {
-        partIdx = Particle_FreeSlotGet(28);
+        partIdx = Particle_FreeSlotGet(ParticleType_28);
         if (partIdx == NO_VALUE)
         {
             break;

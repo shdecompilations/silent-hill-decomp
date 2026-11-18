@@ -14,7 +14,7 @@ void Particle_UfoSpawn(VECTOR3* pos, u16 arg1, u16 arg2, u32 arg3)
 {
     s32 partIdx;
 
-    partIdx = Particle_FreeSlotGet(35);
+    partIdx = Particle_FreeSlotGet(ParticleType_Ufo);
     if (partIdx == NO_VALUE)
     {
         return;

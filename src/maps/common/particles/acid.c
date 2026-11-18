@@ -12,7 +12,7 @@ void Particle_AcidSpawn(VECTOR3* from, VECTOR3* to)
 {
     s32 partIdx;
 
-    partIdx = Particle_FreeSlotGet(33);
+    partIdx = Particle_FreeSlotGet(ParticleType_Acid);
     if (partIdx == NO_VALUE)
     {
         return;
@@ -240,7 +240,7 @@ void sharedFunc_800CBE54_4_s03(VECTOR3* arg0, s32 arg1)
     // Spawn spray of acid particles.
     for (i = 0; i < COUNT; i++)
     {
-        partIdx = Particle_FreeSlotGet(34);
+        partIdx = Particle_FreeSlotGet(ParticleType_AcidSpray);
         if (partIdx == NO_VALUE)
         {
             break;

@@ -108,7 +108,7 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
                 continue;
             }
 
-            partIdx = Particle_FreeSlotGet(arg7 + 23);
+            partIdx = Particle_FreeSlotGet(arg7 + ParticleType_Glass0);
             if (partIdx == NO_VALUE)
             {
                 return;

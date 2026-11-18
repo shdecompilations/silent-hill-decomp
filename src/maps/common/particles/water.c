@@ -74,7 +74,7 @@ void sharedFunc_800CBC98_1_s02(void)
 
     for (i = 0; i < sharedData_800E30C8_1_s02.field_74; i++)
     {
-        partIdx = Particle_FreeSlotGet(27);
+        partIdx = Particle_FreeSlotGet(ParticleType_Water);
         if (partIdx == NO_VALUE)
         {
             break;

@@ -905,7 +905,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3) // 0
 
     for (j = 0; j < var_s5; j++)
     {
-        partIdx = Particle_FreeSlotGet(1);
+        partIdx = Particle_FreeSlotGet(ParticleType_1);
         if (partIdx != NO_VALUE)
         {
             if (arg2 != 9)
@@ -1042,7 +1042,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3) // 0
             g_MapOverlayHdr.bloodSplats[j].field_0                                                   = NO_VALUE;
         }
 
-        partIdx = Particle_FreeSlotGet(2);
+        partIdx = Particle_FreeSlotGet(ParticleType_2);
         if (partIdx != NO_VALUE)
         {
             g_MapOverlayHdr.particleBuffer[partIdx].field_B      = i * 4;
@@ -1820,7 +1820,7 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
     i = D_800AE5CC[animStatus + 1] - D_800AE5CC[animStatus];
     while (i > 0)
     {
-        partIdx = Particle_FreeSlotGet(3);
+        partIdx = Particle_FreeSlotGet(ParticleType_3);
         if (partIdx == NO_VALUE)
         {
             break;
@@ -1865,7 +1865,7 @@ void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3) // 0x800625F4
 
     var = func_8005F55C(arg2);
 
-    idx = Particle_FreeSlotGet(4);
+    idx = Particle_FreeSlotGet(ParticleType_4);
     if (idx == NO_VALUE)
     {
         return;
@@ -2177,52 +2177,52 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
     switch (weaponAttack)
     {
         case WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap):
-            ptr->field_38 = Particle_FreeSlotGet(15);
+            ptr->field_38 = Particle_FreeSlotGet(ParticleType_15);
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = Particle_FreeSlotGet(20);
+                ptr->field_3C[i] = Particle_FreeSlotGet(ParticleType_20);
             }
             break;
 
         case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
-            ptr->field_38 = Particle_FreeSlotGet(16);
+            ptr->field_38 = Particle_FreeSlotGet(ParticleType_16);
             ptr->field_50 = 5;
 
             for (i = 0; i < 5; i++)
             {
-                ptr->field_3C[i] = Particle_FreeSlotGet(21);
+                ptr->field_3C[i] = Particle_FreeSlotGet(ParticleType_21);
             }
             break;
 
         case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
-            ptr->field_38 = Particle_FreeSlotGet(17);
+            ptr->field_38 = Particle_FreeSlotGet(ParticleType_17);
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = Particle_FreeSlotGet(22);
+                ptr->field_3C[i] = Particle_FreeSlotGet(ParticleType_22);
             }
             break;
 
         case WEAPON_ATTACK(AttackType_KaufmannHandgun, AttackInputType_Tap):
-            ptr->field_38 = Particle_FreeSlotGet(18);
+            ptr->field_38 = Particle_FreeSlotGet(ParticleType_18);
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = Particle_FreeSlotGet(20);
+                ptr->field_3C[i] = Particle_FreeSlotGet(ParticleType_20);
             }
             break;
 
         case WEAPON_ATTACK(AttackType_CybilHandgun, AttackInputType_Tap):
-            ptr->field_38 = Particle_FreeSlotGet(19);
+            ptr->field_38 = Particle_FreeSlotGet(ParticleType_19);
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = Particle_FreeSlotGet(20);
+                ptr->field_3C[i] = Particle_FreeSlotGet(ParticleType_20);
             }
             break;
 
@@ -2232,7 +2232,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = Particle_FreeSlotGet(20);
+                ptr->field_3C[i] = Particle_FreeSlotGet(ParticleType_20);
             }
             break;
     }
@@ -2630,7 +2630,7 @@ void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 angle) // 0x80064F04
 {
     s32 partIdx;
 
-    partIdx = Particle_FreeSlotGet(31);
+    partIdx = Particle_FreeSlotGet(ParticleType_31);
     if (partIdx != NO_VALUE)
     {
         g_MapOverlayHdr.particleBuffer[partIdx].field_0.vx_0        = Q12_TO_Q8(arg0->vx);

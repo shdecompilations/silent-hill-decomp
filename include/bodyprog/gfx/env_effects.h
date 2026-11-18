@@ -13,6 +13,47 @@ typedef enum _EffectTextureFlags
     EffectTextureFlag_WarmTest     = 1 << 7  /** @unused Test lens flare? */
 } e_EffectTextureFlags;
 
+/** @brief Generic particle types. */
+typedef enum _ParticleType
+{
+    ParticleType_None      = 0,
+    ParticleType_1         = 1,
+    ParticleType_2         = 2,
+    ParticleType_3         = 3,
+    ParticleType_4         = 4,
+    ParticleType_Drool0    = 5,  // } TODO: Distinguish them.
+    ParticleType_Drool1    = 6,  // }
+    ParticleType_Drool2    = 7,  // }
+    ParticleType_8         = 8,  /** @unused */
+    ParticleType_9         = 9,  /** @unused */
+    ParticleType_10        = 10, /** @unused */
+    ParticleType_11        = 11, /** @unused */
+    ParticleType_12        = 12, /** @unused */
+    ParticleType_13        = 13, /** @unused */
+    ParticleType_14        = 14, /** @unused */
+    ParticleType_15        = 15,
+    ParticleType_16        = 16,
+    ParticleType_17        = 17,
+    ParticleType_18        = 18,
+    ParticleType_19        = 19,
+    ParticleType_20        = 20,
+    ParticleType_21        = 21,
+    ParticleType_22        = 22,
+    ParticleType_Glass0    = 23,
+    ParticleType_Glass1    = 24, /** @unused */
+    ParticleType_Glass2    = 25, /** @unused */
+    ParticleType_Glass3    = 26, /** @unused */
+    ParticleType_Water     = 27,
+    ParticleType_28        = 28,
+    ParticleType_29        = 29, /** @unused */
+    ParticleType_30        = 30, /** @unused */
+    ParticleType_31        = 31,
+    ParticleType_32        = 32,
+    ParticleType_Acid      = 33,
+    ParticleType_AcidSpray = 34,
+    ParticleType_Ufo       = 35  // TODO: Bad name, what is it actually?
+} e_ParticleType;
+
 typedef struct
 {
     /* 0x0   */ VECTOR3 field_0; // Q23.8 | Position.

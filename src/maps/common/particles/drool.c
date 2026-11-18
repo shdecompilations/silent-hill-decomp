@@ -15,7 +15,7 @@ void Particle_DroolSpawn(q23_8 posX, q23_8 posY, q23_8 posZ, q19_12 speed, q19_1
 {
     s32 partIdx;
 
-    partIdx = Particle_FreeSlotGet(7);
+    partIdx = Particle_FreeSlotGet(ParticleType_Drool2);
     if (partIdx == NO_VALUE)
     {
         return;
@@ -376,13 +376,13 @@ void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
     s32 partIdx0;
     s32 partIdx1;
 
-    partIdx0 = Particle_FreeSlotGet(5);
+    partIdx0 = Particle_FreeSlotGet(ParticleType_Drool0);
     if (partIdx0 == NO_VALUE)
     {
         return;
     }
 
-    partIdx1 = Particle_FreeSlotGet(6);
+    partIdx1 = Particle_FreeSlotGet(ParticleType_Drool1);
     if (partIdx1 == NO_VALUE)
     {
         g_Particle_Buffer[partIdx0].field_A = 0;

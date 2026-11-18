@@ -24,7 +24,7 @@ void func_800CB0D8(void) // 0x800CB0D8
     s32 partIdx;
     s32 i;
 
-    partIdx = Particle_FreeSlotGet(32);
+    partIdx = Particle_FreeSlotGet(ParticleType_32);
     if (partIdx == NO_VALUE)
     {
         return;
@@ -36,7 +36,7 @@ void func_800CB0D8(void) // 0x800CB0D8
     // Spawn spray of some particle.
     for (i = 0; i < 12; i++)
     {
-        partIdx = Particle_FreeSlotGet(32);
+        partIdx = Particle_FreeSlotGet(ParticleType_32);
         if (partIdx == NO_VALUE)
         {
             break;
