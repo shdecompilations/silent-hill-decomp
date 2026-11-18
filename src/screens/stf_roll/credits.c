@@ -978,7 +978,7 @@ void Credits_TextBlendSet(bool semiTrans, u32 arg1) // 0x801E434C
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    g_CreditTextState.semiTrans = semiTrans != 0;
+    g_CreditTextState.semiTrans = semiTrans != false;
 
     if (arg1 < 4)
     {
@@ -1259,7 +1259,7 @@ void Credits_Text3dBlendSet(bool semiTrans, u32 arg1) // 0x801E4BD4
     u32 shiftedField_18;
     u32 maskedField_18;
 
-    g_CreditText3dState.sub_0.semiTrans = (semiTrans != 0);
+    g_CreditText3dState.sub_0.semiTrans = semiTrans != false;
 
     if (arg1 < 4)
     {
@@ -1296,11 +1296,11 @@ void Credits_Text3dDraw(u8* str) // 0x801E4C1C
     q19_12 var_t4 = g_CreditText3dState.field_50;
     q19_12 var_t5 = g_CreditText3dState.field_54;
 
-    u32       clut       = (u16)g_CreditText3dState.sub_0.clut;
-    u32       tPage      = g_CreditText3dState.sub_0.tpage;
-    s16*      widths = g_CreditText3dState.sub_0.widths;
-    s32*      colors = g_CreditText3dState.sub_0.colors;
-    u32       blendFlag  = (u8)g_CreditText3dState.sub_0.semiTrans << 25;
+    u32       clut      = (u16)g_CreditText3dState.sub_0.clut;
+    u32       tPage     = g_CreditText3dState.sub_0.tpage;
+    s16*      widths    = g_CreditText3dState.sub_0.widths;
+    s32*      colors    = g_CreditText3dState.sub_0.colors;
+    u32       blendFlag = (u8)g_CreditText3dState.sub_0.semiTrans << 25;
     s32       charWidth;
     bool      textXChanged;
     bool      textYChanged;

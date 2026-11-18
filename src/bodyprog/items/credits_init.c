@@ -82,7 +82,7 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, q19_12 arg3, q19_12 arg4, q19_1
     g_CreditText3dState.sub_0.textY      = 0;
     g_CreditText3dState.sub_0.leftMargin = 0;
     g_CreditText3dState.sub_0.lineHeight = 24;
-    g_CreditText3dState.sub_0.semiTrans  = 0;
+    g_CreditText3dState.sub_0.semiTrans  = false;
     g_CreditText3dState.sub_0.color      = COLOR_RGBC(255, 255, 255, RECT_TEXTURE | RECT_SIZE_1 | PRIM_POLY);
     g_CreditText3dState.sub_0.uv         = g_CreditTextState.uv;
     g_CreditText3dState.sub_0.clut       = g_CreditTextState.clut;

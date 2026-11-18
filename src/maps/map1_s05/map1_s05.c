@@ -38,7 +38,7 @@ extern s8                           sharedData_800E0CBA_0_s00;
 extern s8                           __pad_bss_800D8607;
 extern s32                          sharedData_800E39D8_0_s00;
 extern q19_12                       g_Player_MoveSpeed;
-extern GsCOORDINATE2*               sharedData_800D8610_1_s05;
+extern GsCOORDINATE2*               g_SplitHead_BoneCoords;
 extern q3_12                        g_SplitHead_MovementOffsetX;
 extern q3_12                        g_SplitHead_MovementOffsetZ;
 extern VECTOR3                      sharedData_800D8618_1_s05[];

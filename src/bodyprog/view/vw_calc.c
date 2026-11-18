@@ -328,39 +328,39 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
     vbSetWorldScreenMatrix(&coord);
 }
 
-void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* boneCoords, MATRIX* transformMat) // 0x80049984
+void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* coord, MATRIX* transformMat) // 0x80049984
 {
-    GsCOORDINATE2* prevBoneCoord;
-    GsCOORDINATE2* parentBoneCoord;
-    GsCOORDINATE2* curBoneCoord;
+    GsCOORDINATE2* prevCoord;
+    GsCOORDINATE2* parentCoord;
+    GsCOORDINATE2* curCoord;
 
     // If no root coord provided, set output matrix to identity.
-    if (boneCoords == NULL)
+    if (coord == NULL)
     {
         *transformMat = GsIDMATRIX;
     }
 
-    curBoneCoord  = boneCoords;
-    prevBoneCoord = NULL;
+    curCoord  = coord;
+    prevCoord = NULL;
 
     // Traverse coord parent hierarchy upward.
     while (true)
     {
-        parentBoneCoord = curBoneCoord->super;
+        parentCoord = curCoord->super;
 
         // Stop if node has already been processed.
-        if (curBoneCoord->flg)
+        if (curCoord->flg)
         {
             break;
         }
 
-        prevBoneCoord = curBoneCoord;
+        prevCoord = curCoord;
 
         // If parent node exists, link it downward for later traversal.
-        if (parentBoneCoord != NULL)
+        if (parentCoord != NULL)
         {
-            parentBoneCoord->sub = curBoneCoord;
-            curBoneCoord         = parentBoneCoord;
+            parentCoord->sub = curCoord;
+            curCoord         = parentCoord;
         }
         else
         {
@@ -369,39 +369,39 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* boneCoords, MATRIX* transform
     }
 
     // If at least one unprocessed node found, process coord hierarchy downward.
-    if (prevBoneCoord != NULL)
+    if (prevCoord != NULL)
     {
-        curBoneCoord    = prevBoneCoord;
-        boneCoords->sub = NULL; // Detach child link to prevent cycles.
+        curCoord    = prevCoord;
+        coord->sub = NULL; // Detach child link to prevent cycles.
         do
         {
-            prevBoneCoord = curBoneCoord->super;
-            curBoneCoord->flg++; // Mark node as processed.
+            prevCoord = curCoord->super;
+            curCoord->flg++; // Mark node as processed.
 
             // Compute cumulative transformation matrix.
-            if (prevBoneCoord == NULL)
+            if (prevCoord == NULL)
             {
-                curBoneCoord->workm = curBoneCoord->coord;
+                curCoord->workm = curCoord->coord;
             }
             else
             {
-                Vw_MultiplyAndTransformMatrix(&prevBoneCoord->workm, &curBoneCoord->coord, &curBoneCoord->workm);
+                Vw_MultiplyAndTransformMatrix(&prevCoord->workm, &curCoord->coord, &curCoord->workm);
             }
 
-            curBoneCoord = curBoneCoord->sub;
+            curCoord = curCoord->sub;
         }
-        while (curBoneCoord != NULL);
+        while (curCoord != NULL);
     }
 
     // Set output.
-    *transformMat = boneCoords->workm;
+    *transformMat = coord->workm;
 }
 
-void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* boneCoords, MATRIX* viewMat) // 0x80049AF8
+void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* coord, MATRIX* viewMat) // 0x80049AF8
 {
     MATRIX worldMat;
 
-    Vw_CoordHierarchyMatrixCompute(boneCoords, &worldMat);
+    Vw_CoordHierarchyMatrixCompute(coord, &worldMat);
     worldMat.t[0] -= VwCrdVwMat.t[0];
     worldMat.t[1] -= VwCrdVwMat.t[1];
     worldMat.t[2] -= VwCrdVwMat.t[2];
@@ -409,9 +409,9 @@ void Vw_CoordToViewSpaceMatrix(GsCOORDINATE2* boneCoords, MATRIX* viewMat) // 0x
     Vw_MultiplyAndTransformMatrix(&VwCrdWsRotMat, &worldMat, viewMat);
 }
 
-void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* boneCoords, MATRIX* worldMat, MATRIX* viewMat) // 0x80049B6C
+void Vw_CoordToWorldAndViewMatrices(GsCOORDINATE2* coord, MATRIX* worldMat, MATRIX* viewMat) // 0x80049B6C
 {
-    Vw_CoordHierarchyMatrixCompute(boneCoords, worldMat);
+    Vw_CoordHierarchyMatrixCompute(coord, worldMat);
     worldMat->t[0] -= VwCrdVwMat.t[0];
     worldMat->t[1] -= VwCrdVwMat.t[1];
     worldMat->t[2] -= VwCrdVwMat.t[2];

@@ -118,7 +118,7 @@ typedef struct
 extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 
 /** Set to Split Head bone coords. */
-extern GsCOORDINATE2* sharedData_800D8610_1_s05;
+extern GsCOORDINATE2* g_SplitHead_BoneCoords;
 
 extern q3_12 g_SplitHead_MovementOffsetX;
 extern q3_12 g_SplitHead_MovementOffsetZ;

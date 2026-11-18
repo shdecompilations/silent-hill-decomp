@@ -339,7 +339,15 @@ void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1,
                                q19_12 posX0, q19_12 posY0, q19_12 posZ0,
                                q19_12 posX1, q19_12 posY1, q19_12 posZ1);
 
-void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ);
+/** @brief Computes the world-space position of one of the Split Head character's skeleton bones with a relative offset.
+ *
+ * @param pos Output position.
+ * @param boneIdx Index of the Split Head bone to reference.
+ * @param offsetX Relative X offset.
+ * @param offsetY Relative Y offset.
+ * @param offsetZ Relative Z offset.
+ */
+void SplitHead_OffsetBonePositionGet(VECTOR3* pos, s32 boneIdx, q23_8 offsetX, q23_8 offsetY, q23_8 offsetZ);
 
 /** NPC-only. Among other things, sets the NPC's anim to anim 3 (which might actually be flags if the field packs more data). */
 void Chara_AnimReset(s_SubCharacter* npc, bool cond);

@@ -174,6 +174,7 @@ void Credits_Text3dColorSet(s32 r, s32 g, s32 b);
 
 void Credits_Text3dLineHeightSet(s8 arg0);
 
+/** @unused */
 void Credits_Text3dBlendSet(bool semiTrans, u32 arg1);
 
 void Credits_Text3dDraw(u8* str);
