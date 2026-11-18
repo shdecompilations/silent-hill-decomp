@@ -411,7 +411,6 @@ void Romper_ControlUpdate(s_SubCharacter* romper)
 void Romper_Control_1(s_SubCharacter* romper)
 {
     s32    flags;
-    q19_12 newMoveSpeed;
     s32    var;
 
     if (!WorldEnv_IsInDarkness() && !WorldEnv_IsFlashlightAllowed())
@@ -432,8 +431,7 @@ void Romper_Control_1(s_SubCharacter* romper)
         var += func_80070360(romper, Q12(0.0f), Q12(0.4f));
     }
 
-    newMoveSpeed      = romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f));
-    romper->moveSpeed = MAX(newMoveSpeed, Q12(0.0f));
+    Chara_MoveSpeedDecrease(romper, Q12(15.0f), Q12(0.0f));
 
     if (romper->model.anim.status == ANIM_STATUS(RomperAnim_GrabAttack, true) &&
         (Rng_GenerateUInt(0, 4095) == 0 || var)) // 1 in 4096 chance.
@@ -869,7 +867,7 @@ void Romper_Control_4(s_SubCharacter* romper)
         angle1 = angle0 + Q12_ANGLE(180.0f);
     }
 
-    Chara_MoveSpeedUpdate4(romper, Q12(1.2f), Q12_MULT_PRECISE(angle1 * 2, Q12(2.4f)));
+    Chara_MoveSpeedUpdate(romper, Q12(1.2f), Q12_MULT_PRECISE(angle1 * 2, Q12(2.4f)));
 }
 
 void Romper_ControlJump(s_SubCharacter* romper)
@@ -915,7 +913,7 @@ void Romper_ControlJump(s_SubCharacter* romper)
 
     if (romper->model.anim.status == ANIM_STATUS(RomperAnim_RunToJump, false))
     {
-        romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
+        Chara_MoveSpeedDecrease(romper, Q12(15.0f), Q12(0.0f));
 
         for (i = 0; i < 4; i++)
         {
@@ -994,11 +992,11 @@ void Romper_ControlJump(s_SubCharacter* romper)
     {
         if (romperProps.flags & RomperFlag_Falling)
         {
-            Chara_MoveSpeedUpdate(romper, Q12_MULT_PRECISE(romper->moveSpeed, Q12(3.0f)) + Q12(3.0f));
+            Chara_MoveSpeedUpdate(romper, Q12_MULT_PRECISE(romper->moveSpeed, Q12(3.0f)) + Q12(3.0f), Q12(0.0f));
         }
         else
         {
-            romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
+            Chara_MoveSpeedDecrease(romper, Q12(15.0f), Q12(0.0f));
         }
     }
 }
@@ -1007,7 +1005,7 @@ void Romper_Control_6(s_SubCharacter* romper)
 {
     q3_12 moveDist;
 
-    romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
+    Chara_MoveSpeedDecrease(romper, Q12(15.0f), Q12(0.0f));
 
     if (ANIM_STATUS_IDX_GET(romper->model.anim.status) == RomperAnim_WalkToRunForwardRightEnd ||
         ANIM_STATUS_IDX_GET(romper->model.anim.status) == RomperAnim_WalkToRunForwardLeftEnd)
@@ -1024,11 +1022,11 @@ void Romper_Control_7(s_SubCharacter* romper)
 
     if (romperProps.flags & RomperFlag_Falling)
     {
-        Chara_MoveSpeedUpdate(romper, Q12_MULT_PRECISE(romper->moveSpeed, Q12(3.0f)) + Q12(3.0f));
+        Chara_MoveSpeedUpdate(romper, Q12_MULT_PRECISE(romper->moveSpeed, Q12(3.0f)) + Q12(3.0f), Q12(0.0f));
     }
     else
     {
-        romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, Q12(15.0f)), Q12(0.0f));
+        Chara_MoveSpeedDecrease(romper, Q12(15.0f), Q12(0.0f));
     }
 
     if (romper->model.anim.status == ANIM_STATUS(RomperAnim_JumpStunStart, false) ||
@@ -1089,11 +1087,11 @@ void Romper_Control_10(s_SubCharacter* romper)
 
     if (romper->model.anim.status == ANIM_STATUS(RomperAnim_JumpToIdleEnd, true))
     {
-        romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, romperProps.field_124 * 4), Q12(0.0f));
+        Chara_MoveSpeedDecrease(romper, romperProps.field_124 * 4, Q12(0.0f));
     }
     else
     {
-        romper->moveSpeed = MAX(romper->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, romperProps.field_124), Q12(0.0f));
+        Chara_MoveSpeedDecrease(romper, romperProps.field_124, Q12(0.0f));
     }
 
     romper->collision.state = CharaCollisionState_Ignore;

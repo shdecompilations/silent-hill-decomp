@@ -322,11 +322,11 @@ void PuppetNurse_Move(s_SubCharacter* nurse)
             limit = Q12(-0.02f);
         }
 
-        Chara_MoveSpeedUpdate2(nurse, Q12(4.0f), limit);
+        Chara_MoveSpeedUpdate(nurse, Q12(4.0f), limit);
     }
     else
     {
-        Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
+        Chara_MoveSpeedUpdate(nurse, Q12(4.0f), Q12(0.0f));
     }
 
     if (absAngle > Q12_ANGLE(10.0f))
@@ -422,7 +422,7 @@ void PuppetNurse_Control2(s_SubCharacter* nurse)
         nurse->model.stateStep    = 0;
     }
 
-    Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
+    Chara_MoveSpeedUpdate(nurse, Q12(4.0f), Q12(0.0f));
 }
 
 void PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
@@ -465,7 +465,7 @@ void PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
         }
     }
 
-    Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
+    Chara_MoveSpeedUpdate(nurse, Q12(4.0f), Q12(0.0f));
 }
 
 bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
@@ -527,7 +527,7 @@ bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
         }
     }
 
-    Chara_MoveSpeedUpdate2(nurse, Q12(2.0f), limit);
+    Chara_MoveSpeedUpdate(nurse, Q12(2.0f), limit);
 
     if (absAngleDeltaToPlayer > Q12_ANGLE(4.0f))
     {
@@ -630,7 +630,7 @@ void PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor)
         nurse->model.stateStep    = 0;
     }
 
-    Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
+    Chara_MoveSpeedUpdate(nurse, Q12(4.0f), Q12(0.0f));
 }
 
 void PuppetNurse_Control8(s_SubCharacter* nurse)
@@ -691,7 +691,7 @@ void PuppetNurse_Control8(s_SubCharacter* nurse)
             else
             {
                 speed = Rng_GenerateUInt(0, 0x1FF); // TODO: Combine with the +0.8f below?
-                Chara_MoveSpeedUpdate(nurse, (speed + Q12(0.8f)));
+                Chara_MoveSpeedUpdate(nurse, (speed + Q12(0.8f)), Q12(0.0f));
             }
         }
         break;
@@ -718,14 +718,13 @@ s32 sharedFunc_800CEEAC_3_s03(void)
 
 void sharedFunc_800CEEE0_3_s03(s_SubCharacter* nurse)
 {
-    s32             limit;
-    s16             angle;
+    q19_12          limit;
+    q3_12           angle;
     s_SubCharacter* localNurse;
 
     limit      = Q12_MULT_PRECISE(nurseProps.field_124->field_C, Q12(0.27f));
     localNurse = nurse;
-    Chara_MoveSpeedUpdate2(nurse, Q12(1.4f), limit);
-    limit = 0;
+    Chara_MoveSpeedUpdate(nurse, Q12(1.4f), limit);
 
     if (Rng_GenerateUInt(0, 63) == 0) // 1 in 64 chance.
     {
@@ -755,8 +754,7 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
     limit      = Q12_MULT_PRECISE(nurseProps.field_124->field_C, Q12(0.27f));
     localNurse = nurse;
 
-    Chara_MoveSpeedUpdate2(nurse, Q12(1.4f), limit);
-    limit = Q12(0.0f);
+    Chara_MoveSpeedUpdate(nurse, Q12(1.4f), limit);
 
     // @note Did they forget to make it an if?
     Rng_Rand16();
@@ -901,11 +899,11 @@ s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse)
             speed = Q12(2.0f);
         }
 
-        Chara_MoveSpeedUpdate2(nurse, speed, limit);
+        Chara_MoveSpeedUpdate(nurse, speed, limit);
     }
     else
     {
-        Chara_MoveSpeedUpdate(nurse, Q12(3.0f));
+        Chara_MoveSpeedUpdate(nurse, Q12(3.0f), Q12(0.0f));
     }
 
     return mag;
@@ -1005,7 +1003,7 @@ void PuppetNurse_Control12(s_SubCharacter* nurse)
                     nurse->rotation.vy -= rotAmount;
                 }
 
-                Chara_MoveSpeedUpdate3(nurse, Q12(1.0f), Q12(0.0f));
+                Chara_MoveSpeedUpdate(nurse, Q12(1.0f), Q12(0.0f));
                 return;
             }
 
@@ -1147,7 +1145,7 @@ void PuppetNurse_Control11(s_SubCharacter* nurse)
 
     localNurse = nurse;
 
-    Chara_MoveSpeedUpdate3(nurse, Q12(1.4f), Q12(0.27f));
+    Chara_MoveSpeedUpdate(nurse, Q12(1.4f), Q12(0.27f));
 
     if (Rng_GenerateUInt(0, 63) == 0) // 1 in 64 chance.
     {
@@ -1187,7 +1185,7 @@ void PuppetNurse_Control13(s_SubCharacter* nurse)
         nurse->model.stateStep    = 0;
     }
 
-    Chara_MoveSpeedUpdate3(nurse, Q12(4.0f), Q12(0.0f));
+    Chara_MoveSpeedUpdate(nurse, Q12(4.0f), Q12(0.0f));
 }
 
 void PuppetNurse_Control(s_SubCharacter* nurse)

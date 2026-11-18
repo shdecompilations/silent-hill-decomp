@@ -667,11 +667,11 @@ void Stalker_Control_2(s_SubCharacter* stalker)
         {
             if (ABS(angleDeltaToPlayer) > Q12_ANGLE(90.0f))
             {
-                Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
+                Chara_MoveSpeedUpdate(stalker, Q12(1.5f), Q12(0.0f));
             }
             else
             {
-                Chara_MoveSpeedUpdate3(stalker, Q12_ANGLE(180.0f), (Q12_ANGLE(90.0f) - ABS(angleDeltaToPlayer)) * 4);
+                Chara_MoveSpeedUpdate(stalker, Q12_ANGLE(180.0f), (Q12_ANGLE(90.0f) - ABS(angleDeltaToPlayer)) * 4);
             }
         }
 
@@ -782,7 +782,7 @@ void Stalker_Control_2(s_SubCharacter* stalker)
     }
     else
     {
-        Chara_MoveSpeedUpdate3(stalker, Q12(0.5f), Q12(1.0f));
+        Chara_MoveSpeedUpdate(stalker, Q12(0.5f), Q12(1.0f));
 
         // Set target heading angle.
         if (stalkerProps.timer_F8 == Q12(0.0f))
@@ -926,7 +926,7 @@ void Stalker_Control_3(s_SubCharacter* stalker)
 
         if (!(stalkerProps.flags & StalkerFlag_Moving))
         {
-            Chara_MoveSpeedUpdate3(stalker, Q12_ANGLE(180.0f), (Q12_ANGLE(180.0f) - ABS(angleDeltaToPlayer)) * 2);
+            Chara_MoveSpeedUpdate(stalker, Q12_ANGLE(180.0f), (Q12_ANGLE(180.0f) - ABS(angleDeltaToPlayer)) * 2);
         }
 
         if (stalkerProps.flags & StalkerFlag_WarpRotation)
@@ -1043,7 +1043,7 @@ void Stalker_Control_3(s_SubCharacter* stalker)
     {
         if (!(stalkerProps.flags & StalkerFlag_Moving))
         {
-            Chara_MoveSpeedUpdate3(stalker, Q12(0.5f), Q12(0.7f));
+            Chara_MoveSpeedUpdate(stalker, Q12(0.5f), Q12(0.7f));
         }
 
         if (stalkerProps.timer_F8 == Q12(0.0f))
@@ -1148,11 +1148,11 @@ void Stalker_Control_4(s_SubCharacter* stalker)
     {
         if (stalkerProps.flags & StalkerFlag_11)
         {
-            Chara_MoveSpeedUpdate3(stalker, Q12(0.5f), Q12(0.35f));
+            Chara_MoveSpeedUpdate(stalker, Q12(0.5f), Q12(0.35f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(stalker, Q12(0.5f), Q12(0.7f));
+            Chara_MoveSpeedUpdate(stalker, Q12(0.5f), Q12(0.7f));
         }
     }
 
@@ -1338,22 +1338,22 @@ void Stalker_Control_5(s_SubCharacter* stalker)
         {
             if (distToPlayer > DIST_TO_PLAYER_MAX)
             {
-                Chara_MoveSpeedUpdate3(stalker, Q12(1.0f), MOVE_SPEED_MAX);
+                Chara_MoveSpeedUpdate(stalker, Q12(1.0f), MOVE_SPEED_MAX);
                 return;
             }
 
             if (distToPlayer < MOVE_SPEED_MAX)
             {
-                Chara_MoveSpeedUpdate3(stalker, Q12(1.0f), -MOVE_SPEED_MAX);
+                Chara_MoveSpeedUpdate(stalker, Q12(1.0f), -MOVE_SPEED_MAX);
                 return;
             }
 
-            Chara_MoveSpeedUpdate(stalker, Q12(6.0f));
+            Chara_MoveSpeedUpdate(stalker, Q12(6.0f), Q12(0.0f));
         }
     }
     else
     {
-        Chara_MoveSpeedUpdate(stalker, Q12(6.0f));
+        Chara_MoveSpeedUpdate(stalker, Q12(6.0f), Q12(0.0f));
     }
 }
 
@@ -1367,7 +1367,7 @@ void Stalker_Control_6(s_SubCharacter* stalker)
     u32     animStatus;
 
     stalker->collision.state = CharaCollisionState_Npc;
-    Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
+    Chara_MoveSpeedUpdate(stalker, Q12(1.5f), Q12(0.0f));
 
     distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - stalker->position.vx,
                                PLAYER_CHARA().position.vz - stalker->position.vz);
@@ -1514,7 +1514,7 @@ void Stalker_Control_7(s_SubCharacter* stalker)
 
     if (!(stalkerProps.flags & StalkerFlag_Moving))
     {
-        Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
+        Chara_MoveSpeedUpdate(stalker, Q12(1.5f), Q12(0.0f));
     }
 
     if (stalker->model.anim.status == ANIM_STATUS(StalkerAnim_27, true) &&
@@ -1550,10 +1550,10 @@ void Stalker_Control_8(s_SubCharacter* stalker)
     stalker->flags &= ~CharaFlag_Unk2;
     if (!(stalkerProps.flags & StalkerFlag_Moving))
     {
-        Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
+        Chara_MoveSpeedUpdate(stalker, Q12(1.5f), Q12(0.0f));
     }
 
-    Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
+    Chara_MoveSpeedUpdate(stalker, Q12(1.5f), Q12(0.0f));
 
     activeKeyframeIdx = FP_FROM(stalker->model.anim.time, Q12_SHIFT);
     animDivTmp = 0;
@@ -1651,7 +1651,7 @@ void Stalker_Control_9(s_SubCharacter* stalker)
     stalkerProps.flags |= StalkerFlag_6;
     if (!(stalkerProps.flags & StalkerFlag_Moving))
     {
-        Chara_MoveSpeedUpdate(stalker, Q12(FRICTION_PER_FRAME));
+        Chara_MoveSpeedUpdate(stalker, Q12(FRICTION_PER_FRAME), Q12(0.0f));
     }
 
     distDiv = 0;
@@ -1783,7 +1783,7 @@ void Stalker_Control_10(s_SubCharacter* stalker)
 
     if (!(stalkerProps.flags & StalkerFlag_Moving))
     {
-        Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
+        Chara_MoveSpeedUpdate(stalker, Q12(1.5f), Q12(0.0f));
     }
 
     if (stalker->health == Q12(0.0f))
@@ -1942,7 +1942,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 
     if (stalkerProps.flags & StalkerFlag_Moving)
     {
-        Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
+        Chara_MoveSpeedUpdate(stalker, Q12(1.5f), Q12(0.0f));
         if (stalker->moveSpeed == Q12(0.0f))
         {
             stalkerProps.flags &= ~StalkerFlag_Moving;

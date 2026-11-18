@@ -356,7 +356,7 @@ void HangedScratcher_ControlRunForward(s_SubCharacter* chara)
     distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - chara->position.vx,
                                              PLAYER_CHARA().position.vz - chara->position.vz);
 
-    Chara_MoveSpeedUpdate(chara, Q12(4.0f));
+    Chara_MoveSpeedUpdate(chara, Q12(4.0f), Q12(0.0f));
 
     if (distToPlayer < Q12(5.0f) || (distToPlayer < Q12(20.0f) && Rng_Rand16() == 0))
     {
@@ -380,7 +380,7 @@ void HangedScratcher_Control_3(s_SubCharacter* scratcher)
 
     if (angleDeltaToPlayer < TIMESTEP_ANGLE(1, 2))
     {
-        Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C);
+        Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C);
 
         scratcherProps.timer_EA = Q12(0.0f);
     }
@@ -388,15 +388,15 @@ void HangedScratcher_Control_3(s_SubCharacter* scratcher)
     {
         if (angleDeltaToPlayer < Q12_ANGLE(60.0f) && distToPlayer > Q12(2.0f))
         {
-            Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C);
+            Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C);
         }
         else if (angleDeltaToPlayer < Q12_ANGLE(120.0f) && distToPlayer > Q12(4.0f))
         {
-            Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C / 2);
+            Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C / 2);
         }
         else
         {
-            Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+            Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), Q12(0.0f));
         }
 
         scratcherProps.timer_EA += g_DeltaTime;
@@ -597,7 +597,7 @@ void HangedScratcher_Control_6(s_SubCharacter* scratcher)
     distToPlayer = Math_Vector2MagCalcSafeQ6(PLAYER_CHARA().position.vx - scratcher->position.vx,
                                        PLAYER_CHARA().position.vz - scratcher->position.vz);
 
-    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), Q12(0.0f));
 
     if (scratcherProps.timer_EA == Q12(0.0f) &&
         scratcher->model.anim.status == ANIM_STATUS(HangedScratcherAnim_15, true))
@@ -653,7 +653,7 @@ void HangedScratcher_ControlWalkForward(s_SubCharacter* scratcher)
     hasLosToPlayer = Los_NpcToPlayerHitCheck(scratcher, &PLAYER_CHARA());
     if (angleDeltaToPlayerAbs < TIMESTEP_ANGLE(1, 3) && !hasLosToPlayer)
     {
-        Chara_MoveSpeedUpdate4(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);
+        Chara_MoveSpeedUpdate(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);
         scratcherProps.timer_EA = Q12(0.0f);
     }
     else
@@ -662,20 +662,20 @@ void HangedScratcher_ControlWalkForward(s_SubCharacter* scratcher)
         {
             if (angleDeltaToPlayerAbs < Q12_ANGLE(45.0f) && distToPlayer > Q12(2.0f))
             {
-                Chara_MoveSpeedUpdate4(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);
+                Chara_MoveSpeedUpdate(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);
             }
             else if (angleDeltaToPlayerAbs < Q12_ANGLE(90.0f) && distToPlayer > Q12(4.0f))
             {
-                Chara_MoveSpeedUpdate4(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E / 2);
+                Chara_MoveSpeedUpdate(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E / 2);
             }
             else
             {
-                Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+                Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), Q12(0.0f));
             }
         }
         else
         {
-            Chara_MoveSpeedUpdate4(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);
+            Chara_MoveSpeedUpdate(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);
         }
 
         scratcherProps.timer_EA += g_DeltaTime;
@@ -783,7 +783,7 @@ void HangedScratcher_Control_9(s_SubCharacter* scratcher)
 {
     s_CollisionSurface surface;
 
-    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), Q12(0.0f));
 
     if (ANIM_STATUS_IDX_GET(scratcher->model.anim.status) == HangedScratcherAnim_14 &&
         scratcher->moveSpeed == Q12(0.0f))
@@ -812,7 +812,7 @@ void HangedScratcher_Control_9(s_SubCharacter* scratcher)
 
 void HangedScratcher_Control_10(s_SubCharacter* scratcher)
 {
-    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), Q12(0.0f));
 
     if (ANIM_STATUS_IDX_GET(scratcher->model.anim.status) == HangedScratcherAnim_15 &&
         scratcher->moveSpeed == Q12(0.0f) &&
@@ -840,7 +840,7 @@ void HangedScratcher_Control_11(s_SubCharacter* scratcher)
     }
     else
     {
-        Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+        Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), Q12(0.0f));
 
         if (ANIM_STATUS_IDX_GET(scratcher->model.anim.status) == HangedScratcherAnim_10)
         {
@@ -878,7 +878,7 @@ void HangedScratcher_Control_12(s_SubCharacter* scratcher)
     q19_12 duration;
     q19_12 durationScaled;
 
-    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), Q12(0.0f));
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model.anim.time, 192, 199))
     {
@@ -903,7 +903,7 @@ void HangedScratcher_Control_12(s_SubCharacter* scratcher)
 
 void HangedScratcher_Control_13(s_SubCharacter* scratcher)
 {
-    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f), Q12(0.0f));
 
     if (scratcher->health == Q12(0.0f))
     {

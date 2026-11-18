@@ -304,7 +304,7 @@ void SplitHead_Control_1(s_SubCharacter* splitHead)
     {
         if (distToPlayer > Q12(3.5f))
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f), Q12(2.4f));
         }
         else
         {
@@ -315,7 +315,7 @@ void SplitHead_Control_1(s_SubCharacter* splitHead)
             else
             {
                 splitHeadProps.flags |= SplitHeadFlag_3;
-                Chara_MoveSpeedUpdate(splitHead, Q12(4.8f));
+                Chara_MoveSpeedUpdate(splitHead, Q12(4.8f), Q12(0.0f));
 
                 if (sharedFunc_800D4530_1_s05(splitHead) != false)
                 {
@@ -343,11 +343,11 @@ void SplitHead_Control_1(s_SubCharacter* splitHead)
     }
     else if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_4)
     {
-        Chara_MoveSpeedUpdate(splitHead, Q12(4.8f));
+        Chara_MoveSpeedUpdate(splitHead, Q12(4.8f), Q12(0.0f));
     }
     else if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_StandIdle)
     {
-        Chara_MoveSpeedUpdate(splitHead, Q12(4.8f));
+        Chara_MoveSpeedUpdate(splitHead, Q12(4.8f), Q12(0.0f));
 
         if (splitHeadProps.flags & SplitHeadFlag_6)
         {
@@ -377,7 +377,7 @@ void SplitHead_Control_1(s_SubCharacter* splitHead)
             splitHead->model.anim.status = ANIM_STATUS(SplitHeadAnim_14, false);
         }
 
-        Chara_MoveSpeedUpdate3(splitHead, Q12(1.2f), Q12(0.0f));
+        Chara_MoveSpeedUpdate(splitHead, Q12(1.2f), Q12(0.0f));
 
         if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
         {
@@ -407,11 +407,11 @@ void SplitHead_Control_1(s_SubCharacter* splitHead)
     {
         if (distToPlayer < Q12(2.8f))
         {
-            Chara_MoveSpeedUpdate(splitHead, Q12(1.2f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(1.2f), Q12(0.0f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(1.2f), Q12(0.6f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(1.2f), Q12(0.6f));
         }
 
         if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
@@ -554,27 +554,27 @@ void SplitHead_Control_2(s_SubCharacter* splitHead)
     {
         if (distToPlayer <= Q12(5.75f) && angleToPlayer < Q12_ANGLE(60.0f))
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(-1.2f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f), Q12(-1.2f));
         }
         else if ((distToPlayer <= Q12(5.75f) && angleToPlayer > Q12_ANGLE(60.0f)) ||
                  (distToPlayer >  Q12(5.75f) && angleToPlayer > Q12_ANGLE(90.0f)))
         {
-            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f), Q12(0.0f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(1.2f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f), Q12(1.2f));
         }
     }
     else
     {
         if (angleToPlayer < Q12_ANGLE(30.0f))
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(1.2f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f), Q12(1.2f));
         }
         else
         {
-            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f), Q12(0.0f));
         }
     }
 
@@ -617,7 +617,7 @@ void SplitHead_Control_3(s_SubCharacter* splitHead)
     {
         if (distToPlayer > Q12(4.0f))
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(4.0f), Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(4.0f), Q12(2.4f));
         }
         else
         {
@@ -630,7 +630,7 @@ void SplitHead_Control_3(s_SubCharacter* splitHead)
             else
             {
                 splitHeadProps.flags |= SplitHeadFlag_3;
-                Chara_MoveSpeedUpdate(splitHead, Q12(16.0f));
+                Chara_MoveSpeedUpdate(splitHead, Q12(16.0f), Q12(0.0f));
 
                 if (sharedFunc_800D4530_1_s05(splitHead))
                 {
@@ -658,7 +658,7 @@ void SplitHead_Control_3(s_SubCharacter* splitHead)
     }
     else if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_StandIdle)
     {
-        Chara_MoveSpeedUpdate(splitHead, Q12(1.6f) - 1);
+        Chara_MoveSpeedUpdate(splitHead, Q12(1.6f) - 1, Q12(0.0f));
 
         sharedData_800D5A8C_1_s05 += g_DeltaTime;
 
@@ -674,11 +674,11 @@ void SplitHead_Control_3(s_SubCharacter* splitHead)
     {
         if (distToPlayer < Q12(6.4f))
         {
-            Chara_MoveSpeedUpdate(splitHead, Q12(4.0f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(4.0f), Q12(0.0f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(4.0f), Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(4.0f), Q12(2.4f));
         }
 
         if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
@@ -706,7 +706,7 @@ void SplitHead_Control_4(s_SubCharacter* splitHead)
     s16 timer1;
     s16 timer1_div6;
 
-    Chara_MoveSpeedUpdate(splitHead, Q12(1.5997f));
+    Chara_MoveSpeedUpdate(splitHead, Q12(1.5997f), Q12(0.0f));
 
     switch (splitHead->model.anim.status)
     {
@@ -883,27 +883,27 @@ void SplitHead_Control_5(s_SubCharacter* splitHead)
     {
         if (distToPlayer <= Q12(4.8f) && angle2 > Q12_ANGLE(3.75f) && angleToPlayer < Q12_ANGLE(60.0f))
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(-2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f), Q12(-2.4f));
         }
         else if ((distToPlayer <= Q12(4.8f) && angleToPlayer > Q12_ANGLE(60.0f)) ||
                  (distToPlayer >  Q12(4.8f) && angleToPlayer > Q12_ANGLE(90.0f)))
         {
-            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f), Q12(0.0f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f), Q12(2.4f));
         }
     }
     else
     {
         if (angleToPlayer < Q12_ANGLE(30.0f))
         {
-            Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f), Q12(2.4f));
         }
         else
         {
-            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f), Q12(0.0f));
         }
     }
 
@@ -942,7 +942,7 @@ void SplitHead_Control_6(s_SubCharacter* splitHead)
     switch (splitHead->model.anim.status)
     {
         case ANIM_STATUS(SplitHeadAnim_WalkForward, true):
-            Chara_MoveSpeedUpdate(splitHead, Q12(0.5f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.5f), Q12(0.0f));
 
             if (!sharedFunc_800D4530_1_s05(splitHead))
             {
@@ -955,7 +955,7 @@ void SplitHead_Control_6(s_SubCharacter* splitHead)
         case ANIM_STATUS(SplitHeadAnim_StandIdle, true):
         case ANIM_STATUS(SplitHeadAnim_WalkForward, false):
             splitHead->model.anim.status = ANIM_STATUS(SplitHeadAnim_7, false);
-            Chara_MoveSpeedUpdate(splitHead, Q12(1.0f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(1.0f), Q12(0.0f));
             break;
 
         default:
@@ -969,7 +969,7 @@ void SplitHead_Control_6(s_SubCharacter* splitHead)
         case ANIM_STATUS(SplitHeadAnim_12, true):
         case ANIM_STATUS(SplitHeadAnim_13, false):
         case ANIM_STATUS(SplitHeadAnim_13, true):
-            Chara_MoveSpeedUpdate(splitHead, Q12(1.0f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(1.0f), Q12(0.0f));
 
             if (!Savegame_EventFlagGet(EventFlag_131))
             {
@@ -987,7 +987,7 @@ void SplitHead_Control_7(s_SubCharacter* splitHead)
 
     if (ANIM_STATUS_IDX_GET(splitHead->model.anim.status) == SplitHeadAnim_9)
     {
-        Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(-1.2f));
+        Chara_MoveSpeedUpdate(splitHead, Q12(0.8f), Q12(-1.2f));
 
         angleDeltaToPlayer = Math_AngleNormalizeSigned(Math_AngleBetweenPositionsGet(splitHead->position, PLAYER_CHARA().position) -
                                                        splitHead->rotation.vy);

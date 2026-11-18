@@ -357,7 +357,7 @@ void Groaner_ControlWalkForward(s_SubCharacter* groaner)
     q19_12 posX;
     q19_12 posZ;
 
-    Chara_MoveSpeedUpdate4(groaner, Q12(6.0f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(0.5f)));
+    Chara_MoveSpeedUpdate(groaner, Q12(6.0f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(0.5f)));
 
     if (groanerProps.flags & GroanerFlag_0)
     {
@@ -546,12 +546,12 @@ void Groaner_ControlRunForward(s_SubCharacter* groaner)
     angleDeltaToTarget = Math_AngleNormalizeSigned(groanerProps.angleToTarget - groaner->rotation.vy);
     if (angleDeltaToTarget < Q12_ANGLE(20.0f))
     {
-        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
+        Chara_MoveSpeedUpdate(groaner, Q12(9.5f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
     }
     else
     {
         speedLimit = Q12(1.0f) - (((angleDeltaToTarget - Q12_ANGLE(20.0f)) * 3) >> 1);
-        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)), speedLimit));
+        Chara_MoveSpeedUpdate(groaner, Q12(9.5f), Q12_MULT_PRECISE(Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)), speedLimit));
     }
 
     if (distToPlayer > Q12(3.0f))
@@ -692,7 +692,7 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
 
     if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_StandToJumpAttack)
     {
-        Chara_MoveSpeedUpdate3(groaner, Q12(9.5f), Q12(0.0f));
+        Chara_MoveSpeedUpdate(groaner, Q12(9.5f), Q12(0.0f));
     }
     else if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_JumpAttack)
     {
@@ -722,12 +722,12 @@ void Groaner_ControlJumpAttack(s_SubCharacter* groaner)
     if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 222, 235))
     {
         groaner->fallSpeed += g_GravitySpeed;
-        Chara_MoveSpeedUpdate3(groaner, Q12(0.3f), Q12(0.0f));
+        Chara_MoveSpeedUpdate(groaner, Q12(0.3f), Q12(0.0f));
     }
 
     if (ANIM_TIME_RANGE_CHECK(groaner->model.anim.time, 236, 242))
     {
-        Chara_MoveSpeedUpdate3(groaner, Q12(1.2f), Q12(0.0f));
+        Chara_MoveSpeedUpdate(groaner, Q12(1.2f), Q12(0.0f));
     }
 
     if (ANIM_STATUS_IDX_GET(groaner->model.anim.status) == GroanerAnim_RunForward)
@@ -827,12 +827,12 @@ void Groaner_Control4(s_SubCharacter* groaner)
 
     if (groanerProps.timer_104 >= Q12(0.0f))
     {
-        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
+        Chara_MoveSpeedUpdate(groaner, Q12(9.5f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
     }
     else
     {
         headingAngleDeltaToTarget = Q12(1.0f) - (((headingAngleDeltaToTarget - 227) * 3) >> 1);
-        Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(headingAngleDeltaToTarget, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))));
+        Chara_MoveSpeedUpdate(groaner, Q12(9.5f), Q12_MULT_PRECISE(headingAngleDeltaToTarget, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))));
     }
 
     runForwardChance        = Q12(0.0f);
@@ -890,7 +890,7 @@ void Groaner_ControlStun(s_SubCharacter* groaner)
 
     if (!(groanerProps.flags & GroanerFlag_1))
     {
-        Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
+        Chara_MoveSpeedUpdate(groaner, Q12(1.8f), Q12(0.0f));
     }
 
     if (!(groanerProps.flags & GroanerFlag_Airborne))
@@ -1000,7 +1000,7 @@ void Groaner_ControlDeath(s_SubCharacter* groaner)
 
     if (!(groanerProps.flags & GroanerFlag_1))
     {
-        Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
+        Chara_MoveSpeedUpdate(groaner, Q12(1.8f), Q12(0.0f));
     }
 
     if (groaner->health == Q12(0.0f))
@@ -1059,11 +1059,11 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
         {
             if (groaner->model.anim.status == ANIM_STATUS(GroanerAnim_RunForward, true))
             {
-                Chara_MoveSpeedUpdate(groaner, Q12(7.2f) - 3);
+                Chara_MoveSpeedUpdate(groaner, Q12(7.2f) - 3, Q12(0.0f));
             }
             else
             {
-                Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
+                Chara_MoveSpeedUpdate(groaner, Q12(1.8f), Q12(0.0f));
             }
         }
 

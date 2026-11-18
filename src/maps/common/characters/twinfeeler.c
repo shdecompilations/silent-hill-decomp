@@ -2738,7 +2738,7 @@ void Twinfeeler_Control_9(s_SubCharacter* twinfeeler) // 0x800D511C
 
     if (twinfeeler->model.stateStep < 5)
     {
-        Chara_MoveSpeedUpdate(twinfeeler, Q12(1.0f));
+        Chara_MoveSpeedUpdate(twinfeeler, Q12(1.0f), Q12(0.0f));
     }
 
     localTwinfeeler->properties.twinfeeler.digTimer -= g_DeltaTime;

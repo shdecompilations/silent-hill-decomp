@@ -267,7 +267,7 @@ void Creeper_ControlIdle(s_SubCharacter* creeper)
 {
     bool cond;
 
-    Chara_MoveSpeedUpdate3(creeper, Q12(4.0f), Q12(0.0f));
+    Chara_MoveSpeedUpdate(creeper, Q12(4.0f), Q12(0.0f));
     creeperProps.chirpTimer += g_DeltaTime;
 
     if (!WorldEnv_IsInDarkness() && WorldEnv_IsFlashlightAllowed())
@@ -424,11 +424,11 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
         {
             if (ABS(angleDeltaToPlayer) >= Q12_ANGLE(90.0f))
             {
-                Chara_MoveSpeedUpdate(creeper, Q12(4.0f));
+                Chara_MoveSpeedUpdate(creeper, Q12(4.0f), Q12(0.0f));
             }
             else
             {
-                Chara_MoveSpeedUpdate3(creeper, Q12(1.5f), (creeperProps.moveSpeed * (Q12_ANGLE(90.0f) - ABS(angleDeltaToPlayer))) >> 10);
+                Chara_MoveSpeedUpdate(creeper, Q12(1.5f), (creeperProps.moveSpeed * (Q12_ANGLE(90.0f) - ABS(angleDeltaToPlayer))) >> 10);
             }
 
             if (TIMESTEP_ANGLE(1, 2) < ABS(angleDeltaToPlayer) && Rng_GenerateInt(0, 7)) // 1 in 8 chance.
@@ -446,7 +446,7 @@ void Creeper_ControlWalkForward(s_SubCharacter* creeper)
     }
     else
     {
-        Chara_MoveSpeedUpdate4(creeper, Q12(1.5f), creeperProps.moveSpeed);
+        Chara_MoveSpeedUpdate(creeper, Q12(1.5f), creeperProps.moveSpeed);
 
         creeperProps.attackTimer += g_DeltaTime;
 
@@ -512,13 +512,13 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
                                            PLAYER_CHARA().position.vz - creeper->position.vz);
         if (distToPlayer < Q12(0.4f))
         {
-            Chara_MoveSpeedUpdate3(creeper, Q12(16.0f), Q12(0.0f));
+            Chara_MoveSpeedUpdate(creeper, Q12(16.0f), Q12(0.0f));
         }
         else
         {
             moveSpeed0 = creeperProps.moveSpeed / 2;
 
-            Chara_MoveSpeedUpdate2(creeper, Q12(6.0f), moveSpeed0);
+            Chara_MoveSpeedUpdate(creeper, Q12(6.0f), moveSpeed0);
         }
 
         if (TIMESTEP_ANGLE(1, 2) < ABS(Math_AngleNormalizeSigned((Math_AngleBetweenPositionsGet(creeper->position, PLAYER_CHARA().position) - creeper->rotation.vy))))
@@ -541,7 +541,7 @@ void Creeper_ControlAttack(s_SubCharacter* creeper)
         return;
     }
 
-    Chara_MoveSpeedUpdate3(creeper, Q12(2.0f), Q12(0.0f));
+    Chara_MoveSpeedUpdate(creeper, Q12(2.0f), Q12(0.0f));
 
     if (ANIM_TIME_RANGE_CHECK(creeper->model.anim.time, 9, 10))
     {
@@ -658,7 +658,7 @@ void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper)
 
     if (creeperProps.flags & CreeperFlag_1)
     {
-        Chara_MoveSpeedUpdate(creeper, Q12(4.0f));
+        Chara_MoveSpeedUpdate(creeper, Q12(4.0f), Q12(0.0f));
     }
     else
     {

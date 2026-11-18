@@ -311,4 +311,35 @@ static inline void Chara_AnimStateReset(s_SubCharacter* chara)
     chara->collision.cylinder.innerRadius = __temp2;                               \
 }
 
+/** @brief Lowers a character's move speed toward a target speed, without going below it.
+ *
+ * @param chara Character to update.
+ * @param speed Speed change per second (Q*.12).
+ * @param limit Lowest move speed (Q*.12).
+ */
+#define Chara_MoveSpeedDecrease(chara, speed, limit) \
+    chara->moveSpeed = MAX(chara->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, speed), (limit))
+
+/** @brief Moves a character's move speed toward a target speed, without overshooting.
+ *
+ * @param chara Character to update.
+ * @param speed Speed change per second (Q*.12).
+ * @param limit Target move speed (Q*.12).
+ */
+#define Chara_MoveSpeedUpdate(chara, speed, limit)                                                   \
+{                                                                                                    \
+    q19_12 newMoveSpeed;                                                                             \
+                                                                                                     \
+    if (chara->moveSpeed > (limit))                                                                  \
+    {                                                                                                \
+        newMoveSpeed = MAX(chara->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, speed), (limit));        \
+    }                                                                                                \
+    else                                                                                             \
+    {                                                                                                \
+        newMoveSpeed = CLAMP_HIGH(Q12_MULT_PRECISE(g_DeltaTime, speed) + chara->moveSpeed, (limit)); \
+    }                                                                                                \
+                                                                                                     \
+    chara->moveSpeed = newMoveSpeed;                                                                 \
+}
+
 #endif

@@ -144,7 +144,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_2:
-            Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.3f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.3f));
 
             if (Los_CharaToCharaDistCheck(larvalStalker, Q12(1.0f), larvalStalker->rotation.vy) || !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
             {
@@ -161,7 +161,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_3:
-            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.0f));
 
             if (larvalStalker->model.anim.status == ANIM_STATUS(LarvalStalkerAnim_WalkForward, true))
             {
@@ -222,7 +222,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_WalkForward:
-            Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.3f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.3f));
 
             if ((larvalStalkerProps.flags_E8 & LarvalStalkerFlag_2) &&
                 ANIM_STATUS_IDX_GET(larvalStalker->model.anim.status) == LarvalStalkerAnim_WalkForward &&
@@ -390,7 +390,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 if (distToTarget < ((larvalStalker->collision.cylinder.outerRadius + Q12(0.02f)) +
                                     PLAYER_CHARA().collision.cylinder.outerRadius))
                 {
-                    Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
+                    Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.0f));
                 }
 
                 pos     = larvalStalker->position;
@@ -411,7 +411,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_6:
-            Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(1.0f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(1.0f));
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
@@ -468,7 +468,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 if (Q12_ANGLE(1.5f) <= ABS(angleDeltaToPlayer) &&
                     ANIM_STATUS_IDX_GET(larvalStalker->model.anim.status) != LarvalStalkerAnim_Idle)
                 {
-                    Chara_MoveSpeedUpdate3(larvalStalker, Q12(0.375f), Q12(0.0f));
+                    Chara_MoveSpeedUpdate(larvalStalker, Q12(0.375f), Q12(0.0f));
 
                     if (ANIM_STATUS_IDX_GET(larvalStalker->model.anim.status) != ANIM_STATUS(LarvalStalkerAnim_StunBackToIdle, true))
                     {
@@ -486,7 +486,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 }
                 else
                 {
-                    Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
+                    Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.0f));
 
                     if (ANIM_STATUS_IDX_GET(larvalStalker->model.anim.status) != LarvalStalkerAnim_Idle)
                     {
@@ -533,7 +533,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalkerProps.timer_10A = Q12(3.5f);
             }
 
-            Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(1.0f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(1.0f));
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
@@ -587,7 +587,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalkerProps.timer_10A = Q12(3.5f);
             }
 
-            Chara_MoveSpeedUpdate(larvalStalker, Q12(0.5f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(0.5f), Q12(0.0f));
 
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model.anim.time, 86, 92))
             {
@@ -607,7 +607,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
 
         case LarvalStalkerControl_Stun:
-            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.0f));
 
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model.anim.time, 86, 92))
             {
@@ -668,7 +668,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             if (larvalStalkerProps.flags_E8 & LarvalStalkerFlag_1)
             {
-                Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
+                Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.0f));
 
                 if (larvalStalker->moveSpeed == Q12(0.0f))
                 {
@@ -677,7 +677,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 break;
             }
 
-            Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.1f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.1f));
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
@@ -713,7 +713,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 Savegame_EnemyStateUpdate(larvalStalker);
             }
 
-            Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.0f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.0f));
             break;
 
         case LarvalStalkerControl_Death:
@@ -739,7 +739,7 @@ void LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 }
             }
 
-            Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.0f));
+            Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f), Q12(0.0f));
             break;
     }
 

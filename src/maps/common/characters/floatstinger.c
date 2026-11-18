@@ -1226,10 +1226,21 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
     }
     else
     {
-        floatstinger->rotation.vy  = newRotY;
-        floatstingerProps.field_EE = APPROACH_ALT2(floatstingerProps.field_EE, Q12_ANGLE(0.0f),
-                                                   (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? (Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(135.0f)) * 2) :
-                                                                                                       (Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f)) * 2));
+        floatstinger->rotation.vy = newRotY;
+
+        // Slow the turn down to 0 at twice the turn acceleration.
+        if (floatstingerProps.field_EE > Q12_ANGLE(0.0f))
+        {
+            floatstingerProps.field_EE = MAX(Q12_ANGLE(0.0f),
+                                             floatstingerProps.field_EE - (((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(135.0f)) :
+                                                                                                                                 Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f))) * 2));
+        }
+        else
+        {
+            floatstingerProps.field_EE = CLAMP_HIGH(Q12_ANGLE(0.0f),
+                                                    floatstingerProps.field_EE + (((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(135.0f)) :
+                                                                                                                                        Q12_MULT_PRECISE(g_DeltaTime, Q12_ANGLE(90.0f))) * 2));
+        }
     }
 
     if (floatstingerProps.field_F0 == Q12(0.0f) || dist < Q12(4.0f))
