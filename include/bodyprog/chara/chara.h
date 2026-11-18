@@ -48,8 +48,8 @@ typedef enum _CharaFlags
     CharaFlag_Unk4          = 1 << 3,
     CharaFlag_Unk5          = 1 << 4, // Camera-related. Only used by Stalker? Maybe only for alley scenario?
     CharaFlag_Damaged       = 1 << 5,
-    CharaFlag_Dead          = 1 << 6, // Unure.
-    CharaFlag_AttackTicked  = 1 << 7, /** `Combat_AttackUpdate` ran for this character this tick. If not, `Combat_AttackCleanup` cancels its attack. */
+    CharaFlag_Dead          = 1 << 6, // Unsure.
+    CharaFlag_AttackTicked  = 1 << 7, /** `Combat_AttackUpdate` ran for this character on the current tick. If not, `Combat_AttackCleanup` cancels its attack. */
     CharaFlag_NoRadioStatic = 1 << 8
 } e_CharaFlags;
 

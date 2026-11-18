@@ -28,9 +28,7 @@ q3_12 D_800AFD1C[] =
 // COMBAT RELATED?
 // ========================================
 
-// TODO: Could be handwritten asm based on the register pins needed here, maybe as a separate `.s` from this file since this also gets called from player_control.c.
-// Uncertain though, the rest of the code does match as C.
-u32 Math_SquareRootQ12(s32 arg0) // 0x8008A058
+u32 Math_SquareRootQ12(s32 x) // 0x8008A058
 {
     // @hack
     register s32  temp_t0 asm("t0");
@@ -40,19 +38,19 @@ u32 Math_SquareRootQ12(s32 arg0) // 0x8008A058
 
     var_t1 = 0;
 
-    if (arg0)
+    if (x)
     {
-        gte_ldlzc(arg0);
+        gte_ldlzc(x);
 
         var_t2  = var_t1;
         ptr = SQRT;
 
-        if (arg0 > 0)
+        if (x > 0)
         {
             gte_stlzcr(var_t2);
         }
 
-        var_t1 = arg0;
+        var_t1 = x;
 
         var_t2 &= 0x1E;
         temp_t0 = var_t2 - 24;
@@ -102,9 +100,11 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 Combat_AttackPerform(e_CharaAttackState request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos, s_SubCharacter* unused,
-                         q3_12 aimYaw, q3_12 aimPitch) // 0x8008A0E4
+s32 Combat_AttackPerform(e_CharaAttackState request, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* attackPos,
+                         s_SubCharacter* unused, q3_12 aimYaw, q3_12 aimPitch) // 0x8008A0E4
 {
+    #define DEFAULT_SHOT_COUNT 100
+
     e_CharaAttackState prevState;
     s32                hitFlags;
     s32                ret;
@@ -154,7 +154,7 @@ s32 Combat_AttackPerform(e_CharaAttackState request, s32 weaponAttack, s_SubChar
         chara->attack.hitFlags = 0;
     }
 
-    chara->attack.shotsLeft = 100;
+    chara->attack.shotsLeft = DEFAULT_SHOT_COUNT;
     chara->attack.aimYaw    = aimYaw;
     chara->attack.aimPitch  = aimPitch;
     chara->attack.origin    = *attackPos;
@@ -200,8 +200,9 @@ s32 Combat_AttackPerform(e_CharaAttackState request, s32 weaponAttack, s_SubChar
             ret = NO_VALUE;
         }
     }
-
     return ret;
+
+    #undef DEFAULT_SHOT_COUNT
 }
 
 u32 Combat_AttackStartKeyframeGet(s32 weaponAttack) // 0x8008A270
@@ -383,7 +384,7 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
         state                       = CharaAttackState_Started;
     }
 
-    // `hitCheckTime` is how far hit checks have got, keep it inside the window.
+    // `hitCheckTime` is how far hit checks have got, keep it within window.
     if (hitCheckTime < hitWindowStart)
     {
         hitCheckTime                  = hitWindowStart;
@@ -463,7 +464,6 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
             // Single shot weapons get tighter the longer the aim is held, capped at 15 degrees.
             // Darkness makes it worse.
             aimTime = (attacker->model.charaId == Chara_Harry) ? func_8007FD2C() : Q12(2.0f);
-
             if (aimTime < Q12(0.5f))
             {
                 aimTime = Q12(0.5f);
@@ -528,7 +528,7 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
                         }
                     }
 
-                    // Make closer targets easier to hit, also works out the range stat for ranking.
+                    // Make closer targets easier to hit. AAlso works out the range stat for ranking.
                     if (WorldEnv_IsInDarkness())
                     {
                         targetDistLevel = 3;
@@ -608,7 +608,7 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
             }
         }
 
-        // Rewind to the last shot that went off, next tick carries on from there.
+        // Rewind to the last shot that went off. Next tick carries on from there.
         if (hitCheckTime >= hitWindowEnd)
         {
             isDone = true;
@@ -1032,12 +1032,12 @@ bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch) // 0
 
     if (g_DeltaTime == Q12(0.0f))
     {
-        vol = 0;
+        vol = Q8(0.0f);
     }
 
-    if (vol >= 0)
+    if (vol >= Q8(0.0f))
     {
-        if (vol != 0)
+        if (vol != Q8(0.0f))
         {
             if (vol > Q8_CLAMPED(1.0f))
             {
@@ -1563,7 +1563,7 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
     static VECTOR3    localHitLinePoints[4]; // Q19.12 | Hit line in attacker-local space. Written but never read.
     static VECTOR3    hitPos;
     static s32        __pad_bss_800C47C4;
-    static VECTOR3    rayPoints[2];      // Line-of-sight ray from the attacker to each candidate.
+    static VECTOR3    rayPoints[2];          // Line-of-sight ray from the attacker to each candidate.
     static s32        __pad_bss_800C47E0[2];
     static VECTOR3    otherCenter;
     static s32        __pad_bss_800C47F4;
@@ -1601,11 +1601,11 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
 
     localHitLineY = hitLineVecY;
 
-    if (localHitLineX > 0)
+    if (localHitLineX > Q12(0.0f))
     {
         boxMaxX = localHitLineX;
     }
-    else if (localHitLineX < 0)
+    else if (localHitLineX < Q12(0.0f))
     {
         boxMinX = localHitLineX;
     }
@@ -1713,7 +1713,7 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
         rayToY  = other->position.vy;
         targetZ = other->position.vz;
 
-        // @hack Box offsets loaded through `offsetX` and `innerRadius`, required for match.
+        // @hack Box offsets loaded through `offsetX` and `innerRadius` required for match.
         offsetX     = other->collision.shapeOffsets.box.vx;
         innerRadius = other->collision.shapeOffsets.box.vz;
 
@@ -1739,7 +1739,7 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
         isBlocked = Ray_GeomTraceGet(&rayTrace, &rayPoints[0], &rayPoints[1]);
         if (isBlocked != false)
         {
-            isBlocked = true; // @hack Redundant normalize, required for match.
+            isBlocked = true; // @hack Redundant normalize required for match.
         }
 
         if (isBlocked != true)
@@ -1836,8 +1836,8 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
                 }
             }
 
-            // @bug Overwrites the current `hitLineVec` with the point 3/4 along the hit line, each later
-            // candidate that reaches here converts the already converted point again.
+            // @bug Overwrites the current `hitLineVec` with the point 3/4 along the hit line.
+            // Each later candidate that reaches here converts the already converted point again.
             hitLineVecX -= hitLineVecX / 4;
             hitLineVecY -= hitLineVecY / 4;
             hitLineVecZ -= hitLineVecZ / 4;
@@ -1855,7 +1855,9 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
             hitOffsetXZ = Math_SquareRootQ12(func_80080540(hitOffsetX, Q12(0.0f), hitOffsetZ));
             halfHeight  = CLAMP_LOW((otherHeight - otherTopExtent) / 2, 0);
 
-            for (j = 2; (halfHeight < hitOffsetY || hitOffsetY < -halfHeight || innerRadius < hitOffsetXZ) && j > 0; j--)
+            for (j = 2;
+                 (halfHeight < hitOffsetY || hitOffsetY < -halfHeight || innerRadius < hitOffsetXZ) && j > 0;
+                 j--)
             {
                 s32 clampScale;
 
