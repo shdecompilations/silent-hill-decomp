@@ -593,9 +593,9 @@ void func_800D64E0(void) // 0x800D64E0
 
             for (i = 0; i < 450; i++)
             {
-                if (sharedData_800DFB7C_0_s00[i].field_A == 8 || sharedData_800DFB7C_0_s00[i].field_A == 11)
+                if (g_Particle_Buffer[i].field_A == 8 || g_Particle_Buffer[i].field_A == 11)
                 {
-                    sharedData_800DFB7C_0_s00[i].field_A = 0;
+                    g_Particle_Buffer[i].field_A = 0;
                 }
             }
 

@@ -20,7 +20,7 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
-#define MAP_FIELD_4C_COUNT 300
+#define MAP_PARTICLE_COUNT_MAX 300
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
 #if VERSION_REGION_IS(NTSC)
@@ -90,7 +90,7 @@ typedef struct
 } s_800E3A40;
 extern s_800E3A40 D_800E3A40[];
 
-void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2);
+void func_800CDCE0(s32 partIdx, s32 arg1, s32 arg2);
 
 void func_800CE0CC(s32 arg0);
 

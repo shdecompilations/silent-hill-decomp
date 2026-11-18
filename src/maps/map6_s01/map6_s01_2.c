@@ -788,7 +788,7 @@ void func_800D2658(void) // 0x800D2658
 
             for (i = 0; i < ARRAY_SIZE(D_800D4174); i++)
             {
-                sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
+                Particle_UfoSpawn(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
             }
             break;
 
@@ -797,7 +797,7 @@ void func_800D2658(void) // 0x800D2658
 
             for (i = 0; i < ARRAY_SIZE(D_800D4174); i++)
             {
-                sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
+                Particle_UfoSpawn(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
             }
             break;
 
@@ -806,7 +806,7 @@ void func_800D2658(void) // 0x800D2658
 
             for (i = 0; i < 5; i++)
             {
-                sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), i == 0);
+                Particle_UfoSpawn(&D_800D4174[i], Q12(0.5f), Q12(0.05f), i == 0);
             }
 
             Event_WaitTimer(Q12(2.5f), false);
@@ -834,7 +834,7 @@ void func_800D2658(void) // 0x800D2658
 
             for (i = 0; i < ARRAY_SIZE(D_800D4174); i++)
             {
-                sharedFunc_800CE5D4_1_s03(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
+                Particle_UfoSpawn(&D_800D4174[i], Q12(0.5f), Q12(0.05f), 0);
             }
 
             g_SysWork.sysStateStepData[0] += g_DeltaTime;

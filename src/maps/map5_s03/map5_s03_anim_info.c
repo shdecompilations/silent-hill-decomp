@@ -92,4 +92,4 @@ u8 LOADABLE_INVENTORY_ITEMS[] = {
 
 u8 sharedData_800DD584_0_s00 = 0;
 
-s32 g_ParticlesAddedCount = 0;
+s32 g_WeatherParticlesAddedCount = 0;

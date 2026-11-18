@@ -281,12 +281,12 @@ void func_800D7308(void)
             break;
 
         case 9:
-            for (i = 0; i < ARRAY_SIZE(sharedData_800DFB7C_0_s00); i++)
+            for (i = 0; i < ARRAY_SIZE(g_Particle_Buffer); i++)
             {
-                if (sharedData_800DFB7C_0_s00[i].field_A == 13 ||
-                    sharedData_800DFB7C_0_s00[i].field_A == 14)
+                if (g_Particle_Buffer[i].field_A == 13 ||
+                    g_Particle_Buffer[i].field_A == 14)
                 {
-                    sharedData_800DFB7C_0_s00[i].field_A = 0;
+                    g_Particle_Buffer[i].field_A = 0;
                 }
             }
 

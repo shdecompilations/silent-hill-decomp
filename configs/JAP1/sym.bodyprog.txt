@@ -1177,7 +1177,7 @@ Map_EffectTexturesLoad                       = 0x8005FBE4; // type:func
 func_8005E414                                = 0x8005FF1C; // type:func
 func_8005E650                                = 0x80060158; // type:func
 func_8005E70C                                = 0x80060214; // type:func
-func_8005E7E0                                = 0x800602E8; // type:func
+Particle_FreeSlotGet                         = 0x800602E8; // type:func
 func_8005E89C                                = 0x800603A4; // type:func
 func_8005F55C                                = 0x80061064; // type:func
 func_8005F680                                = 0x80061188; // type:func
@@ -3770,7 +3770,7 @@ g_Player_RotationDeltaToTargetX              = 0x800C692A;
 //---------------------------------------------------------------------
 loadedEffectTextureFlags                     = 0x800C6930;
 D_800C42E8                                   = 0x800C6940;
-D_800C4408                                   = 0x800C6A60;
+g_Particle_ActiveCount                       = 0x800C6A60;
 D_800C440C                                   = 0x800C6A64;
 D_800C4410                                   = 0x800C6A68;
 D_800C4414                                   = 0x800C6A6C;

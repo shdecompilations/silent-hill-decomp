@@ -956,17 +956,17 @@ void func_800EC42C(void) // 0x800EC42C
         case 6:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
     block_18:
-            sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
+            Particle_UfoSpawn(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;
 
         case 7:
             Event_DisplayMapMsg(false, 19, 0, 0, 0, false);
-            sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
+            Particle_UfoSpawn(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;
 
         case 8:
             Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &Q12_VECTOR3(-196.53f, -14.25f, -9.73f));
-            sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(1.0f), Q12(0.1f), 1);
+            Particle_UfoSpawn(&D_800F0180, Q12(1.0f), Q12(0.1f), 1);
             Event_WaitTimer(Q12(2.5f), false);
             break;
 
@@ -1091,7 +1091,7 @@ void func_800EC42C(void) // 0x800EC42C
             D_800F0180.vy += Q12_MULT_PRECISE(g_DeltaTime, mulX * 4);
             D_800F0180.vz += Q12_MULT_PRECISE(g_DeltaTime, mulZ * 4);
 
-            sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
+            Particle_UfoSpawn(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;
 
         case 10:

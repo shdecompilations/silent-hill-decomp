@@ -469,7 +469,7 @@ void func_800CFC34(void) // 0x800CFC34
 
             for (i = 0; i < 15; i++)
             {
-                sharedFunc_800CE5D4_1_s03(&D_800D3B78[i], Q12(0.5f), Q12(0.05f), 0);
+                Particle_UfoSpawn(&D_800D3B78[i], Q12(0.5f), Q12(0.05f), 0);
             }
             break;
 
@@ -485,7 +485,7 @@ void func_800CFC34(void) // 0x800CFC34
             Event_DisplayMapMsg(false, 24, 0, 0, 0, false);
             for (i = 0; i < 15; i++)
             {
-                sharedFunc_800CE5D4_1_s03(&D_800D3B78[i], Q12(0.5f), Q12(0.05f), 0);
+                Particle_UfoSpawn(&D_800D3B78[i], Q12(0.5f), Q12(0.05f), 0);
             }
             break;
 
@@ -494,7 +494,7 @@ void func_800CFC34(void) // 0x800CFC34
 
             for (i = 0; i < 15; i++)
             {
-                sharedFunc_800CE5D4_1_s03(&D_800D3B78[i], Q12(0.5f), Q12(0.15f), 0);
+                Particle_UfoSpawn(&D_800D3B78[i], Q12(0.5f), Q12(0.15f), 0);
             }
 
             Event_WaitTimer(Q12(2.5f), false);
@@ -578,7 +578,7 @@ void func_800CFC34(void) // 0x800CFC34
         {
             if (Savegame_EventFlagGet(EventFlag_469) || D_800D3C8C < D_800D3C2C[i])
             {
-                sharedFunc_800CE5D4_1_s03(&D_800D3B78[i], Q12(0.5f), Q12(0.05f), 0);
+                Particle_UfoSpawn(&D_800D3B78[i], Q12(0.5f), Q12(0.05f), 0);
 
                 if (D_800D3C8C > Q12(1.5f))
                 {

@@ -936,9 +936,9 @@ void func_800D3420(void) // 0x800D3420
         case 9:
             D_800D5B06 = false;
 
-            for (i = ARRAY_SIZE(sharedData_800DFB7C_0_s00) - 1; i >= 0; i--)
+            for (i = ARRAY_SIZE(g_Particle_Buffer) - 1; i >= 0; i--)
             {
-                sharedData_800DFB7C_0_s00[i].field_A = 0;
+                g_Particle_Buffer[i].field_A = 0;
             }
 
             D_800D5AF9 = false;
@@ -1062,9 +1062,9 @@ void func_800D3420(void) // 0x800D3420
             SysWork_StateSetNext(SysState_Gameplay);
 
             D_800D5B06 = false;
-            for (i = ARRAY_SIZE(sharedData_800DFB7C_0_s00) - 1; i >= 0; i--)
+            for (i = ARRAY_SIZE(g_Particle_Buffer) - 1; i >= 0; i--)
             {
-                sharedData_800DFB7C_0_s00[i].field_A = 0;
+                g_Particle_Buffer[i].field_A = 0;
             }
 
             Event_ScreenFadeCmd(ScreenFadeCmd_Start, false, 2, Q12(0.0f), false);

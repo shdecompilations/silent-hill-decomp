@@ -1108,7 +1108,7 @@ bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch) // 0
     return level > Q12(256.0f);
 }
 
-void Combat_HitSfxPlay(VECTOR3* pos, u32 weaponAttack) // 0x8008B664
+void Combat_HitSfxPlay(const VECTOR3* pos, u32 weaponAttack) // 0x8008B664
 {
     s32 sfxId;
 

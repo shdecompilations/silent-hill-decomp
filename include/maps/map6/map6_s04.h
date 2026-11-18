@@ -29,7 +29,7 @@
 #define HAS_Chara_Alessa
 #define MAP_CHARA_COUNT 3
 
-#define MAP_FIELD_4C_COUNT 300
+#define MAP_PARTICLE_COUNT_MAX 300
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
 #include "maps/common/shared.h"

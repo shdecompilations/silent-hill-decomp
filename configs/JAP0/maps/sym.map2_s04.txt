@@ -130,16 +130,16 @@ g_CommonWorldObjectPoses         = 0x800D04F8; // type:Pose size:0x8C
 //--------------------------------------------------------------
 //--- PA: 0x004ADC   VA: 0x800D0584   subsegment: .bss, map2_s04
 //--------------------------------------------------------------
-g_ParticleMapIdx0                = 0x800D0584;
-g_ParticleMapIdx1                = 0x800D0588;
-g_Particle_SpeedX                = 0x800D058C;
-g_Particle_SpeedZ                = 0x800D0590;
+g_WeatherParticle_MapIdx0        = 0x800D0584;
+g_WeatherParticle_MapIdx1        = 0x800D0588;
+g_WeatherParticle_SpeedX         = 0x800D058C;
+g_WeatherParticle_SpeedZ         = 0x800D0590;
 sharedData_800DFB6C_0_s00        = 0x800D0594; // type:s32
 sharedData_800DFB70_0_s00        = 0x800D0598; // type:s32
-sharedData_800DFB7C_0_s00        = 0x800D05A4; // size:0xFA0
-g_Effect_BloodSplats             = 0x800D1544; // size:0x12C
-g_ParticleVectors0               = 0x800D1674; // size:0x2C type:ParticleVectors
-g_ParticleVectors1               = 0x800D16A4; // size:0x2C type:ParticleVectors
+g_Particle_Buffer                = 0x800D05A4; // size:0xFA0
+g_Particle_BloodSplats           = 0x800D1544; // size:0x12C
+g_WeatherParticleVectors0        = 0x800D1674; // size:0x2C type:ParticleVectors
+g_WeatherParticleVectors1        = 0x800D16A4; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00        = 0x800D16D0; // type:s32
 sharedData_800E0CAC_0_s00        = 0x800D16D4; // type:s32
 sharedData_800E0CB0_0_s00        = 0x800D16D8; // type:u32

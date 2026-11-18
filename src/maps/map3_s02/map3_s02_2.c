@@ -9,20 +9,20 @@
 // declare externs in semi-random order though.
 // For now we'll declare them before headers in the order they appear in the
 // map .bss, later can hopefully improve order in headers instead.
-extern e_MapIdx                g_ParticleMapIdx0;
-extern e_MapIdx                g_ParticleMapIdx1;
+extern e_MapIdx                g_WeatherParticle_MapIdx0;
+extern e_MapIdx                g_WeatherParticle_MapIdx1;
 extern s32                     D_800D1FEC;
-extern s32                     g_Particle_SpeedX;
-extern s32                     g_Particle_SpeedZ;
+extern s32                     g_WeatherParticle_SpeedX;
+extern s32                     g_WeatherParticle_SpeedZ;
 extern s32                     sharedData_800DFB6C_0_s00;
 extern s32                     sharedData_800DFB70_0_s00;
 extern s32                     __pad_bss_800D2000;
-extern s_MapHdr_field_4C       sharedData_800DFB7C_0_s00[];
-extern s_BloodSplat            g_Effect_BloodSplats[];
+extern s_Particle       g_Particle_Buffer[];
+extern s_BloodSplat            g_Particle_BloodSplats[];
 extern s8                      __pad_bss_800D30D0[4];
-extern struct _ParticleVectors g_ParticleVectors0;
+extern struct _WeatherParticleVectors g_WeatherParticleVectors0;
 extern s32                     __pad_bss_800D3100;
-extern struct _ParticleVectors g_ParticleVectors1;
+extern struct _WeatherParticleVectors g_WeatherParticleVectors1;
 extern s32                     sharedData_800E0CA8_0_s00;
 extern s32                     sharedData_800E0CAC_0_s00;
 extern u32                     sharedData_800E0CB0_0_s00;

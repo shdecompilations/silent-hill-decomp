@@ -2240,7 +2240,7 @@ void Twinfeeler_Control_5(s_SubCharacter* twinfeeler)
 
 void Twinfeeler_AcidThrow(VECTOR3* from, VECTOR3* to) // 0x800D46E0
 {
-    sharedFunc_800CB0A4_4_s03(from, to);
+    Particle_AcidSpawn(from, to);
 }
 
 void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* boneCoords) // 0x800D4700

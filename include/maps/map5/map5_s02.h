@@ -26,7 +26,7 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
-#define MAP_FIELD_4C_COUNT 200
+#define MAP_PARTICLE_COUNT_MAX 200
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
 // PAL has an extra common message at index 3, so every message after it is one higher than in USA.

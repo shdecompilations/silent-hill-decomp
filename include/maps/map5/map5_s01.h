@@ -9,7 +9,7 @@
 #define HAS_PARTICLE_CASE_10
 #define PARTICLE_CASE_COUNT 1
 
-#define MAP_FIELD_4C_COUNT 200
+#define MAP_PARTICLE_COUNT_MAX 200
 #define MAP_BLOOD_SPLAT_COUNT_MAX 150
 
 #include "maps/common/shared.h"

@@ -1485,13 +1485,17 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
 
     switch (g_SavegamePtr->items[idx].id)
     {
-#if VERSION_EQUAL_OR_OLDER(PROTO_990107) // Seen in 99-01-07, included sometime after 98-12-16, removed before 99-01-17.
+        // Seen in 99-01-07, included sometime after 98-12-16. Removed before 99-01-17.
+#if VERSION_EQUAL_OR_OLDER(PROTO_990107)
         case InvItemId_RockDrill:
         case InvItemId_Chainsaw:
             Gfx_StringPositionSet(176, 200);
             Gfx_StringDraw(D_80027F94[6], 10); // "Fuel:"
-            func_800508FC(); // Function right after Gfx_Inventory_ItemDescriptionDraw in 99-01-07. Not included in retail.
-                             // Likely draws the fuel gauge from `g_SavegamePtr->gasWeaponFuelAmount` value, other code in the proto also reads/writes that field.
+
+            // Function right after `Gfx_Inventory_ItemDescriptionDraw` in 99-01-07. Not included in retail.
+            // Likely draws the fuel gauge from `g_SavegamePtr->gasWeaponFuelAmount` value.
+            // Other code in the proto also reads/writes that field.
+            func_800508FC();
             break;
 #endif
 

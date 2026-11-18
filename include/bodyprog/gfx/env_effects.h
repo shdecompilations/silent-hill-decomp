@@ -168,12 +168,13 @@ typedef struct
     /* 0x168 */ s32             field_168;
 } s_func_80064334;
 
+// Something for particles.
 typedef struct
 {
     /* 0x0  */ MATRIX  field_0; // View matrix?
     /* 0x20 */ SVECTOR field_20;
     /* 0x28 */ VECTOR  field_28; // Q27.4
-    /* 0x38 */ s32     field_38;
+    /* 0x38 */ s32     field_38; // Particle's index in global buffer.
     /* 0x3C */ s32     field_3C[5];
     /* 0x50 */ s32     field_50;
 } s_func_8006342C;
@@ -200,7 +201,7 @@ typedef struct
 
 extern s_800C42E8 D_800C42E8[24];
 
-extern s16 D_800C4408;
+extern s16 g_Particle_ActiveCount;
 
 extern s16 __pad_bss_800C440A;
 
@@ -217,12 +218,18 @@ void Map_EffectTexturesLoad(s32 mapIdx);
 
 void func_8005E414(s32 orgIdx);
 
-/** @brief Does something with `unkTable1_4C`, clears blood splats and initialize drawn of objects. */
+/** @brief Initializes particles, blood splats, and world objects. */
 void func_8005E650(s32 mapId);
 
 void func_8005E70C(void);
 
-s32 func_8005E7E0(s32 arg0);
+/** @brief Finds a free slot in the global particle buffer, registers a new particle, and returns its index in the
+ * buffer.
+ *
+ * @param partType New particle type.
+ * @return Buffer index of the free particle slot, or `NO_VALUE` if the particle buffer is full.
+ */
+s32 Particle_FreeSlotGet(s32 partType);
 
 // Crucial for displaying particle effects. (Not general enviroments. Blood, shoot effects)
 void func_8005E89C(void);
@@ -254,6 +261,7 @@ bool func_80063A50(POLY_FT4** poly, s32 idx);
 // Important for drawing gun smoke effect.
 bool func_80064334(POLY_FT4** poly, s32 idx);
 
+// Spawns some particle effect. Maybe gun smoke given the nearby funcs?
 void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 arg2);
 
 bool func_80064FC0(POLY_FT4** polys, s32 idx);

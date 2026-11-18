@@ -454,7 +454,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 sp68.vz = floatstinger->position.vz;
 
                 Sfx_WithFlagsPlay(Sfx_Unk1572, &sp68, Q8(0.5f), SfxFlag_None);
-                sharedFunc_800CB0A4_4_s03(&sp20[0], &sp20[1]);
+                Particle_AcidSpawn(&sp20[0], &sp20[1]);
 
                 if (floatstingerProps.flags_E8 & FloatstingerFlag_0)
                 {
@@ -482,7 +482,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                                                                                          PLAYER_CHARA().collision.box.offsetY :
                                                                                          MAX(temp_v1_12, PLAYER_CHARA().collision.box.offsetY - Q12(3.0f));
 
-                        sharedFunc_800CB0A4_4_s03(&sp20[0], &sp20[2]);
+                        Particle_AcidSpawn(&sp20[0], &sp20[2]);
                     }
                 }
 

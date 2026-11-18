@@ -909,6 +909,7 @@ Sfx_WithFalloffAndPitchPlay                  = 0x8005DE0C; // type:func
 //--- PA: 0x03957C   VA: 0x8005E0DC   subsegment: c, gfx/env_effects
 //------------------------------------------------------------------
 Map_EffectTexturesLoad                       = 0x8005E0DC; // type:func
+Particle_FreeSlotGet                         = 0x8005E7E0; // type:func
 func_8005E89C                                = 0x8005E89C;
 
 //----------------------------------------------------------------------
@@ -3537,6 +3538,7 @@ g_Player_RotationDeltaToTargetX              = 0x800C42D2;
 //---------------------------------------------------------------------
 loadedEffectTextureFlags.46                  = 0x800C42D8;
 __pad_bss_800C42DA.47                        = 0x800C42DA;
+g_Particle_ActiveCount                       = 0x800C4408;
 __pad_bss_800C440A                           = 0x800C440A;
 __pad_bss_800C4415                           = 0x800C4415;
 D_800C4418                                   = 0x800C4418; // size:0xE

@@ -4,61 +4,61 @@
 #define SNOW_COUNT_LIGHT_MAX 300
 
 #if defined(MAP7_S03)
-    #define PARTICLE_COUNT_MAX 450
+    #define WEATHER_PARTICLE_COUNT_MAX 450
 #else
-    #define PARTICLE_COUNT_MAX 300
+    #define WEATHER_PARTICLE_COUNT_MAX 300
 #endif
 
-/** @brief Particle states. */
-typedef enum _ParticleState
+/** @brief Weather particle states. */
+typedef enum _WeatherParticleState
 {
-    ParticleState_Spawn  = 0,
-    ParticleState_Active = 1,
-    ParticleState_Rest   = 2
-} e_ParticleState;
+    WeatherParticleState_Spawn  = 0,
+    WeatherParticleState_Active = 1,
+    WeatherParticleState_Rest   = 2
+} e_WeatherParticleState;
 
 /** @brief Particle types. */
-typedef enum _ParticleType
+typedef enum _WeatherParticleType
 {
-    ParticleType_Snow = 0,
-    ParticleType_Unk1 = 1,
-    ParticleType_Rain = 2
-} e_ParticleType;
+    WeatherParticleType_Snow = 0,
+    WeatherParticleType_Unk1 = 1,
+    WeatherParticleType_Rain = 2
+} e_WeatherParticleType;
 
 /** @brief Snow types. */
-typedef enum _SnowType
+typedef enum _WeatherSnowType
 {
     SnowType_Light      = 0,
     SnowType_Heavy      = 1,
     SnowType_LightWindy = 2,
     SnowType_HeavyWindy = 3
-} e_SnowType;
+} e_WeatherSnowType;
 
-/** @brief Particle effect. */
-typedef struct _Particle
+/** @brief Weather particle effect. */
+typedef struct _WeatherParticle
 {
     /* 0x0  */ VECTOR3  position0; /** Q19.12? | Snow: position, Rain: streak start (bottom). */
     /* 0xC  */ VECTOR3  position1; /** Q19.12? | Snow: unused, Rain: streak end (top). */
     /* 0x18 */ SVECTOR3 movement;  /** Q19.12? | Snow: random accumulation, Rain: Y accumulation (affects streak length). */
-    /* 0x1E */ u8       stateStep; /** `e_ParticleState` */
-    /* 0x1F */ u8       type;      /** `e_ParticleType` | TODO: Sometimes absurd values are checked for. */
-} s_Particle;
+    /* 0x1E */ u8       stateStep; /** `e_WeatherParticleState` */
+    /* 0x1F */ u8       type;      /** `e_WeatherParticleType` | TODO: Sometimes absurd values are checked for. */
+} s_WeatherParticle;
 
-typedef struct _ParticleVectors
+typedef struct _WeatherParticleVectors
 {
     /* 0x0  */ VECTOR3 vector_0;
     /* 0xC  */ VECTOR3 viewPosition; /** Q19.12 */
     /* 0x18 */ SVECTOR svec_18;      /** Rotation. */
     /* 0x20 */ SVECTOR viewRotation; /** Q19.12 */
     /* 0x28 */ s32     field_28;
-} s_ParticleVectors;
+} s_WeatherParticleVectors;
 
 /** @brief Box volume used for snow and rain particle systems. */
-typedef struct _ParticleBox
+typedef struct _WeatherParticleBox
 {
     /* 0x0 */ VECTOR3 corners[8]; /** Q19.12 */
-} s_ParticleBox;
-STATIC_ASSERT_SIZEOF(s_ParticleBox, 96);
+} s_WeatherParticleBox;
+STATIC_ASSERT_SIZEOF(s_WeatherParticleBox, 96);
 
 typedef struct
 {
@@ -74,20 +74,20 @@ typedef struct
     s_func_800CC8FC_0 field_0[8];
 } s_func_800CC8FC;
 
-extern s_Particle g_Particles[PARTICLE_COUNT_MAX];
+extern s_WeatherParticle g_WeatherParticles[WEATHER_PARTICLE_COUNT_MAX];
 
-extern s_ParticleVectors g_ParticleVectors0;
+extern s_WeatherParticleVectors g_WeatherParticleVectors0;
 
-extern s_ParticleVectors g_ParticleVectors1;
+extern s_WeatherParticleVectors g_WeatherParticleVectors1;
 
 /** Tracks how many total particles have been added. */
-extern s32 g_ParticlesAddedCount[2];
+extern s32 g_WeatherParticlesAddedCount[2];
 
 /** Tracks how many particles have been added per call. */
-extern u8 g_ParticleSpawnCount;
+extern u8 g_WeatherParticleSpawnCount;
 
-extern s32 g_Particle_SpeedX;
-extern s32 g_Particle_SpeedZ;
+extern s32 g_WeatherParticle_SpeedX;
+extern s32 g_WeatherParticle_SpeedZ;
 
 extern s32 sharedData_800E0CA8_0_s00;
 extern s32 sharedData_800E0CAC_0_s00;
@@ -97,23 +97,23 @@ extern u16 sharedData_800E0CB6_0_s00;
 extern u16 sharedData_800E0CB8_0_s00;
 extern s8  sharedData_800E0CBA_0_s00;
 
-extern s_ParticleBox g_ParticleBox;
+extern s_WeatherParticleBox g_WeatherParticle_Box;
 
 extern s32 sharedData_800E32D0_0_s00;
 
 /** `bool` */
-extern u8 g_ParticleCameraMoved;
+extern u8 g_WeatherParticle_CameraMoved;
 
 extern u8 sharedData_800DD592_0_s00;
 
-extern VECTOR3 g_Particle_Position;     // Q19_12
-extern VECTOR3 g_Particle_PrevPosition; // Q19_12
-extern q3_12   g_Particle_PrevRotationY;
+extern VECTOR3 g_WeatherParticle_Position;     // Q19_12
+extern VECTOR3 g_WeatherParticle_PrevPosition; // Q19_12
+extern q3_12   g_WeatherParticle_PrevRotationY;
 
 extern s16 D_800F23D0; // MAP7_S03 extern, TODO: Might be sharedData?
 
-extern e_MapIdx g_ParticleMapIdx0;
-extern e_MapIdx g_ParticleMapIdx1;
+extern e_MapIdx g_WeatherParticle_MapIdx0;
+extern e_MapIdx g_WeatherParticle_MapIdx1;
 
 void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3);
 
@@ -127,12 +127,12 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3);
 bool Particle_CameraMovedCheck(void);
 
 /** Snow effect init. */
-void Particle_SnowInitialize(s_Particle* particles);
+void Particle_SnowInitialize(s_WeatherParticle* particles);
 
 /** M0S00 only. */
 void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
 
-bool Particle_Update(s_Particle* partHead);
+bool Particle_Update(s_WeatherParticle* partHead);
 
 /** M0S00 only. */
 bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
@@ -152,20 +152,20 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId);
 /** M0S00 only. */
 void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2);
 
-void Particle_SnowDraw(s_Particle* part);
+void Particle_SnowDraw(s_WeatherParticle* part);
 
-void Particle_RainDraw(s_Particle* part, s32 arg1);
+void Particle_RainDraw(s_WeatherParticle* part, s32 arg1);
 
 /** @brief Adds a random offset to a snow particle movement vector. Moves particle vertically, clamps Y to 0. */
-void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
+void Particle_SpawnMovementApply(s32 arg0, s_WeatherParticle* part, u16* rand, s32* deltaTime);
 
-void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* deltaTime);
+void Particle_MovementUpdate(s32 pass, s_WeatherParticle* part, u16* rand, q19_12* deltaTime);
 
-void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand);
+void sharedFunc_800CFFF8_0_s00(s32 pass, s_WeatherParticle* part, s16* rand);
 
-void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime);
+void sharedFunc_800D0690_1_s03(s32 pass, s_WeatherParticle* part, s16* rand, q19_12* deltaTime);
 
-void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime);
+void sharedFunc_800CE954_7_s03(s32 pass, s_WeatherParticle* part, s16* rand, q19_12* deltaTime);
 
 /** M0S00: Collision space distance check. @hack Guessed types. */
 bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1);
@@ -173,7 +173,7 @@ bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1);
 void Particle_PositionRandomize(u16* arg0, VECTOR3* arg1, s32 arg2);
 
 /** @brief Spawn function for a particle. */
-void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand);
+void Particle_Spawn(s32 arg0, s_WeatherParticle* part, u16* rand);
 
 /** M0S00 only. */
 void func_800D0394(s32 count, VECTOR3* vecs);

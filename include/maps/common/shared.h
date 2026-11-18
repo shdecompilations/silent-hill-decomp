@@ -86,16 +86,16 @@ typedef struct
 
 extern s_MapOverlayHdr_94 sharedData_800E30C8_1_s02;
 
-#if defined(MAP_FIELD_4C_COUNT)
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[MAP_FIELD_4C_COUNT];
+#if defined(MAP_PARTICLE_COUNT_MAX)
+    extern s_Particle g_Particle_Buffer[MAP_PARTICLE_COUNT_MAX];
 #else
-    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[];
+    extern s_Particle g_Particle_Buffer[];
 #endif
 
 #if defined(MAP_BLOOD_SPLAT_COUNT_MAX)
-    extern s_BloodSplat g_Effect_BloodSplats[MAP_BLOOD_SPLAT_COUNT_MAX];
+    extern s_BloodSplat g_Particle_BloodSplats[MAP_BLOOD_SPLAT_COUNT_MAX];
 #else
-    extern s_BloodSplat g_Effect_BloodSplats[];
+    extern s_BloodSplat g_Particle_BloodSplats[];
 #endif
 
 extern s_MapPoint2d MAP_POINTS[];
@@ -332,7 +332,7 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx);
 bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx);
 
 // Setup for Split Head drool particles?
-void sharedFunc_800CBE7C_1_s05(q23_8 posX, q23_8 posY, q23_8 posZ, q19_12 speed, q19_12 headingAngle);
+void Particle_DroolSpawn(q23_8 posX, q23_8 posY, q23_8 posZ, q19_12 speed, q19_12 headingAngle);
 
 void sharedFunc_800CCDD4_1_s05(POLY_FT4** poly, s32 idx);
 
@@ -420,7 +420,8 @@ bool Npc_FootstepSoundPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframeId
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);
 
-void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3);
+// TODO: `ENBAN.TIM` sprite, what is it really?
+void Particle_UfoSpawn(VECTOR3* pos, u16 arg1, u16 arg2, u32 arg3);
 
 void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2);
 
@@ -447,9 +448,9 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 idx);
 
-// Twinfeeler and Floatstinger acid particle effect. Included in M4S03 and M4S05
+// Setup func? Twinfeeler and Floatstinger acid particle effect. Included in M4S03 and M4S05
 // TODO: Make this separate split in each map instead of `#include`.
-void sharedFunc_800CB0A4_4_s03(VECTOR3* from, VECTOR3* to);
+void Particle_AcidSpawn(VECTOR3* from, VECTOR3* to);
 
 void sharedFunc_800D0110_7_s00(void);
 

@@ -19,7 +19,7 @@
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
 
-#define MAP_FIELD_4C_COUNT 100
+#define MAP_PARTICLE_COUNT_MAX 100
 #define MAP_BLOOD_SPLAT_COUNT_MAX 50
 
 // JAP0 merges the messages 52 and 53 into one, so messages afterward are all indexed one lower than in USA.

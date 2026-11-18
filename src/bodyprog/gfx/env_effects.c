@@ -93,7 +93,7 @@ u8 D_800AE700[16] = {
 };
 
 s_800C42E8     D_800C42E8[24];
-s16            D_800C4408;
+s16            g_Particle_ActiveCount;
 s16            __pad_bss_800C440A;
 GsCOORDINATE2* D_800C440C;
 GsCOORDINATE2* D_800C4410;
@@ -285,19 +285,21 @@ void func_8005E650(s32 mapId) // 0x8005E650
     s32 i;
     s16 count;
 
-    count = g_MapOverlayHdr.unkTable1Count_50;
+    // Clear particle buffer.
+    count = g_MapOverlayHdr.particleBufferSize;
     for (i = 0; i < count; i++)
     {
-        g_MapOverlayHdr.unkTable1_4C[i].field_A = 0;
+        g_MapOverlayHdr.particleBuffer[i].field_A = 0;
     }
 
+    // Clear blood splat buffer.
     count = g_MapOverlayHdr.bloodSplatCount;
     for (i = 0; i < count; i++)
     {
         g_MapOverlayHdr.bloodSplats[i].field_0 = NO_VALUE;
     }
 
-    D_800C4408 = 0;
+    g_Particle_ActiveCount = 0;
     D_800C4414 = 0;
 
     if (g_MapOverlayHdr.initWorldObjects != NULL)
@@ -312,10 +314,10 @@ void func_8005E70C(void) // 0x8005E70C
     s16 count;
     u8  temp_v0;
 
-    count = g_MapOverlayHdr.unkTable1Count_50;
+    count = g_MapOverlayHdr.particleBufferSize;
     for (i = 0; i < count; i++)
     {
-        temp_v0 = g_MapOverlayHdr.unkTable1_4C[i].field_A;
+        temp_v0 = g_MapOverlayHdr.particleBuffer[i].field_A;
         switch (temp_v0)
         {
             case 1:
@@ -327,7 +329,7 @@ void func_8005E70C(void) // 0x8005E70C
             case 20:
             case 21:
             case 22:
-                g_MapOverlayHdr.unkTable1_4C[i].field_A = 0;
+                g_MapOverlayHdr.particleBuffer[i].field_A = 0;
                 break;
         }
     }
@@ -341,35 +343,40 @@ void func_8005E70C(void) // 0x8005E70C
     D_800C4414 = 0;
 }
 
-s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
+s32 Particle_FreeSlotGet(s32 partType) // 0x8005E7E0
 {
-    s32 idx;
+    s32 partIdx;
     s32 i;
 
-    idx = D_800C4408;
-
-    for (i = 0; i < g_MapOverlayHdr.unkTable1Count_50; i++, idx++)
+    // Find free slot in particle buffer.
+    partIdx = g_Particle_ActiveCount;
+    for (i = 0;
+         i < g_MapOverlayHdr.particleBufferSize;
+         i++, partIdx++)
     {
-        if (idx >= g_MapOverlayHdr.unkTable1Count_50)
+        // Wrap to first slot if buffer is full.
+        if (partIdx >= g_MapOverlayHdr.particleBufferSize)
         {
-            idx = 0;
+            partIdx = 0;
         }
 
-        if (g_MapOverlayHdr.unkTable1_4C[idx].field_A == 0)
+        // Break if free slot is found.
+        if (g_MapOverlayHdr.particleBuffer[partIdx].field_A == 0)
         {
             break;
         }
     }
 
-    if (i == g_MapOverlayHdr.unkTable1Count_50)
+    // Return `NO_VALUE` if particle buffer is full.
+    if (i == g_MapOverlayHdr.particleBufferSize)
     {
         return NO_VALUE;
     }
 
-    g_MapOverlayHdr.unkTable1_4C[idx].field_A = arg0;
-
-    D_800C4408 = idx + 1;
-    return idx;
+    // Register new particle and return buffer index.
+    g_MapOverlayHdr.particleBuffer[partIdx].field_A = partType;
+    g_Particle_ActiveCount                     = partIdx + 1;
+    return partIdx;
 }
 
 void func_8005E89C(void) // 0x8005E89C
@@ -406,12 +413,12 @@ void func_8005E89C(void) // 0x8005E89C
     ptr->field_30.vx = sp10.vx;
     ptr->field_30.vy = sp10.vy;
 
-    if (D_800C4414 & 0x1)
+    if (D_800C4414 & (1 << 0))
     {
         ptr->field_C4 = Q12_MULT_PRECISE(g_DeltaTime, g_MapOverlayHdr.field_5C->field_E);
         ptr->field_C8 = g_MapOverlayHdr.field_5C->field_4 * 16;
         ptr->field_CA = g_MapOverlayHdr.field_5C->field_5 * 16;
-        ptr->field_CC = (0x100 - g_MapOverlayHdr.field_5C->field_5) * 16;
+        ptr->field_CC = (Q12_ANGLE(22.5f) - g_MapOverlayHdr.field_5C->field_5) * 16;
         ptr->field_CE = (g_DeltaTime * g_MapOverlayHdr.field_5C->field_E) / g_MapOverlayHdr.field_5C->field_16;
         ptr->field_C6 = (u16)g_MapOverlayHdr.field_5C->field_A >> 2;
         ptr->field_D0 = g_MapOverlayHdr.field_5C->field_20;
@@ -421,9 +428,9 @@ void func_8005E89C(void) // 0x8005E89C
         switch (g_MapOverlayHdr.field_5C->field_1)
         {
             case 0:
-                for (i = 0; i < g_MapOverlayHdr.unkTable1Count_50; i++)
+                for (i = 0; i < g_MapOverlayHdr.particleBufferSize; i++)
                 {
-                    if (g_MapOverlayHdr.unkTable1_4C[i].field_A == 12)
+                    if (g_MapOverlayHdr.particleBuffer[i].field_A == 12)
                     {
                         g_MapOverlayHdr.func_60(i, 0);
                     }
@@ -436,15 +443,15 @@ void func_8005E89C(void) // 0x8005E89C
                 break;
 
             case 2:
-                for (i = 0; i < g_MapOverlayHdr.unkTable1Count_50; i++)
+                for (i = 0; i < g_MapOverlayHdr.particleBufferSize; i++)
                 {
-                    switch (g_MapOverlayHdr.unkTable1_4C[i].field_A)
+                    switch (g_MapOverlayHdr.particleBuffer[i].field_A)
                     {
                         case 8:
                         case 9:
                         case 10:
                         case 11:
-                            g_MapOverlayHdr.unkTable1_4C[i].field_A = 12;
+                            g_MapOverlayHdr.particleBuffer[i].field_A = 12;
                             break;
                     }
                 }
@@ -454,9 +461,9 @@ void func_8005E89C(void) // 0x8005E89C
                 g_MapOverlayHdr.field_5C->field_10 = CLAMP_LOW(g_MapOverlayHdr.field_5C->field_10 - ((g_DeltaTime * g_MapOverlayHdr.field_5C->field_2) >> 5),
                                                                   Q12(0.0f));
 
-                for (i = 0; i < g_MapOverlayHdr.unkTable1Count_50; i++)
+                for (i = 0; i < g_MapOverlayHdr.particleBufferSize; i++)
                 {
-                    if (g_MapOverlayHdr.unkTable1_4C[i].field_A == 12 &&
+                    if (g_MapOverlayHdr.particleBuffer[i].field_A == 12 &&
                         Rng_GenerateUInt(0, 4095) > g_MapOverlayHdr.field_5C->field_10 &&
                         Rng_GenerateInt(0, 15) != 0)
                     {
@@ -466,7 +473,7 @@ void func_8005E89C(void) // 0x8005E89C
                 break;
         }
     }
-    else if (D_800C4414 & 2)
+    else if (D_800C4414 & (1 << 1))
     {
         if (g_MapOverlayHdr.field_7C->field_1C > 0)
         {
@@ -480,7 +487,7 @@ void func_8005E89C(void) // 0x8005E89C
             g_MapOverlayHdr.field_7C->field_10 = MIN(g_MapOverlayHdr.field_7C->field_10, Q12(0.25f));
         }
     }
-    else if (D_800C4414 & 8)
+    else if (D_800C4414 & (1 << 3))
     {
         for (i = 0; i < g_MapOverlayHdr.field_94->field_78; i++)
         {
@@ -549,9 +556,9 @@ void func_8005E89C(void) // 0x8005E89C
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
-    for (i = 0; i < g_MapOverlayHdr.unkTable1Count_50; i++)
+    for (i = 0; i < g_MapOverlayHdr.particleBufferSize; i++)
     {
-        switch (g_MapOverlayHdr.unkTable1_4C[i].field_A)
+        switch (g_MapOverlayHdr.particleBuffer[i].field_A)
         {
             case 0:
                 break;
@@ -651,7 +658,7 @@ void func_8005E89C(void) // 0x8005E89C
     for (i = 0; i < g_MapOverlayHdr.bloodSplatCount; i++)
     {
         if (g_MapOverlayHdr.bloodSplats[i].field_0 != NO_VALUE &&
-            g_MapOverlayHdr.unkTable1_4C[g_MapOverlayHdr.bloodSplats[i].field_0].field_A == 0)
+            g_MapOverlayHdr.particleBuffer[g_MapOverlayHdr.bloodSplats[i].field_0].field_A == 0)
         {
             g_MapOverlayHdr.bloodSplats[i].field_0 = NO_VALUE;
         }
@@ -779,7 +786,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3) // 0
     q19_12             newPosX;
     q19_12             newPosZ;
     q20_12             dists[150];
-    s32                idx;
+    s32                partIdx;
     s32                unkCount;
     s32                var_s5;
     s32                i;
@@ -898,49 +905,48 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3) // 0
 
     for (j = 0; j < var_s5; j++)
     {
-        idx = func_8005E7E0(1);
-
-        if (idx != NO_VALUE)
+        partIdx = Particle_FreeSlotGet(1);
+        if (partIdx != NO_VALUE)
         {
             if (arg2 != 9)
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 = Rng_AddGeneratedUInt(pos->vx, -255, 256);
-                g_MapOverlayHdr.unkTable1_4C[idx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -255, 256);
-                g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -255, 256);
+                g_MapOverlayHdr.particleBuffer[partIdx].field_0.vx_0 = Rng_AddGeneratedUInt(pos->vx, -255, 256);
+                g_MapOverlayHdr.particleBuffer[partIdx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -255, 256);
+                g_MapOverlayHdr.particleBuffer[partIdx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -255, 256);
             }
             else
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 = pos->vx;
-                g_MapOverlayHdr.unkTable1_4C[idx].vy_8         = pos->vy;
-                g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 = pos->vz;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_0.vx_0 = pos->vx;
+                g_MapOverlayHdr.particleBuffer[partIdx].vy_8         = pos->vy;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_4.vz_4 = pos->vz;
             }
 
             if (Rng_GenerateInt(0, 1) != 0) // 1 in 2 chance.
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 = Rng_GenerateInt(0, 2) + (Rng_GenerateUInt(0, 7) * 8);
+                g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_0 = Rng_GenerateInt(0, 2) + (Rng_GenerateUInt(0, 7) * 8);
             }
             else
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 = Rng_GenerateUInt(3, 4) + (Rng_GenerateUInt(0, 1) * 8);
+                g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_0 = Rng_GenerateUInt(3, 4) + (Rng_GenerateUInt(0, 1) * 8);
             }
 
-            g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1  = unkCount;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2  = arg3;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_B              = i * 4;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 = Rng_GenerateUInt(0, 255);
+            g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_1  = unkCount;
+            g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_2  = arg3;
+            g_MapOverlayHdr.particleBuffer[partIdx].field_B              = i * 4;
+            g_MapOverlayHdr.particleBuffer[partIdx].field_10.s_0.field_0 = Rng_GenerateUInt(0, 255);
 
             if (chara->model.charaId == Chara_Floatstinger)
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3 = 96;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_3 = 96;
             }
             else
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3 = 32;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_3 = 32;
             }
 
             if (arg2 == 9)
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3 = 33;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_3 = 33;
             }
         }
         else
@@ -967,20 +973,20 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3) // 0
         }
         else
         {
-            if (g_MapOverlayHdr.unkTable1_4C[g_MapOverlayHdr.bloodSplats[j].field_0].field_B != 2)
+            if (g_MapOverlayHdr.particleBuffer[g_MapOverlayHdr.bloodSplats[j].field_0].field_B != 2)
             {
                 dists[j] = Q12(0.0f);
             }
             else
             {
-                newPosX = ABS(camPos.vx - g_MapOverlayHdr.unkTable1_4C[g_MapOverlayHdr.bloodSplats[j].field_0].field_0.vx_0);
-                newPosZ = ABS(camPos.vz - g_MapOverlayHdr.unkTable1_4C[g_MapOverlayHdr.bloodSplats[j].field_0].field_4.vz_4);
+                newPosX = ABS(camPos.vx - g_MapOverlayHdr.particleBuffer[g_MapOverlayHdr.bloodSplats[j].field_0].field_0.vx_0);
+                newPosZ = ABS(camPos.vz - g_MapOverlayHdr.particleBuffer[g_MapOverlayHdr.bloodSplats[j].field_0].field_4.vz_4);
 
                 dists[j] = MAX(newPosX, newPosZ) + (CLAMP_HIGH(newPosX, newPosZ) >> 1);
 
                 if (dists[j] > Q12(80.0f))
                 {
-                    g_MapOverlayHdr.unkTable1_4C[g_MapOverlayHdr.bloodSplats[j].field_0].field_A = 0;
+                    g_MapOverlayHdr.particleBuffer[g_MapOverlayHdr.bloodSplats[j].field_0].field_A = 0;
                     g_MapOverlayHdr.bloodSplats[j].field_0                                          = NO_VALUE;
                     dists[j]                                                                              = INT_MAX;
                 }
@@ -1031,42 +1037,42 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3) // 0
     {
         if (g_MapOverlayHdr.bloodSplats[j].field_0 != NO_VALUE)
         {
-            g_MapOverlayHdr.unkTable1_4C[g_MapOverlayHdr.bloodSplats[j].field_0].field_B          = 3;
-            g_MapOverlayHdr.unkTable1_4C[g_MapOverlayHdr.bloodSplats[j].field_0].field_10.field_0 = 0;
+            g_MapOverlayHdr.particleBuffer[g_MapOverlayHdr.bloodSplats[j].field_0].field_B          = 3;
+            g_MapOverlayHdr.particleBuffer[g_MapOverlayHdr.bloodSplats[j].field_0].field_10.field_0 = 0;
             g_MapOverlayHdr.bloodSplats[j].field_0                                                   = NO_VALUE;
         }
 
-        idx = func_8005E7E0(2);
-        if (idx != NO_VALUE)
+        partIdx = Particle_FreeSlotGet(2);
+        if (partIdx != NO_VALUE)
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_B      = i * 4;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 = Rng_AddGeneratedUInt(pos->vx, -1023, 1024);
-            g_MapOverlayHdr.unkTable1_4C[idx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -2047, 2048);
-            g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -1023, 1024);
+            g_MapOverlayHdr.particleBuffer[partIdx].field_B      = i * 4;
+            g_MapOverlayHdr.particleBuffer[partIdx].field_0.vx_0 = Rng_AddGeneratedUInt(pos->vx, -1023, 1024);
+            g_MapOverlayHdr.particleBuffer[partIdx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -2047, 2048);
+            g_MapOverlayHdr.particleBuffer[partIdx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -1023, 1024);
 
-            Collision_SurfaceGet(&surface, g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surface, g_MapOverlayHdr.particleBuffer[partIdx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[partIdx].field_4.vz_4);
 
             if (func_8005F680(&surface) || (surface.floorHeight < (pos->vy - Q12(0.2f))))
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_A = 0;
             }
             else
             {
-                if (surface.floorHeight < g_MapOverlayHdr.unkTable1_4C[idx].vy_8)
+                if (surface.floorHeight < g_MapOverlayHdr.particleBuffer[partIdx].vy_8)
                 {
-                    g_MapOverlayHdr.unkTable1_4C[idx].vy_8 = surface.floorHeight;
+                    g_MapOverlayHdr.particleBuffer[partIdx].vy_8 = surface.floorHeight;
 
                     // @hack
                     unkCount++;
                     unkCount--;
                 }
 
-                g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 = -(Rng_Rand16() & 0x800);
-                g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_2 = surface.floorHeight;
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0  = Rng_GenerateUInt(0, 15);
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2  = arg3;
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1  = Rng_GenerateUInt(6, 21);
-                g_MapOverlayHdr.bloodSplats[j].field_0              = idx;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_10.s_0.field_0 = -(Rng_Rand16() & 0x800);
+                g_MapOverlayHdr.particleBuffer[partIdx].field_10.s_0.field_2 = surface.floorHeight;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_0  = Rng_GenerateUInt(0, 15);
+                g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_2  = arg3;
+                g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_1  = Rng_GenerateUInt(6, 21);
+                g_MapOverlayHdr.bloodSplats[j].field_0              = partIdx;
                 unkCount++;
             }
         }
@@ -1097,25 +1103,25 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
     ptr = PSX_SCRATCH;
 
-    ptr->field_148 = g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0;
+    ptr->field_148 = g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0;
 
     if (g_GameWork.config.extraBloodColor == 14)
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime * 4;
+        g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0 += (u16)g_DeltaTime * 4;
     }
-    else if (g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3 == 33)
+    else if (g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3 == 33)
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime * 2;
+        g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0 += (u16)g_DeltaTime * 2;
     }
     else
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 += g_DeltaTime;
+        g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0 += g_DeltaTime;
     }
 
-    temp_a1 = g_MapOverlayHdr.unkTable1_4C[idx].field_B >> 2;
-    if ((u16)g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 >= 5233)
+    temp_a1 = g_MapOverlayHdr.particleBuffer[idx].field_B >> 2;
+    if ((u16)g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0 >= 5233)
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
+        g_MapOverlayHdr.particleBuffer[idx].field_A = 0;
 
         if (temp_a1 != 24)
         {
@@ -1130,22 +1136,22 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
     if (temp_a1 != 24)
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 += ptr->field_0.field_34[temp_a1];
-        g_MapOverlayHdr.unkTable1_4C[idx].vy_8 += ptr->field_0.field_64[temp_a1];
-        g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 += ptr->field_0.field_94[temp_a1];
+        g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 += ptr->field_0.field_34[temp_a1];
+        g_MapOverlayHdr.particleBuffer[idx].vy_8 += ptr->field_0.field_64[temp_a1];
+        g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 += ptr->field_0.field_94[temp_a1];
     }
 
     Math_SetSVectorFastSum(&ptr->field_138,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].vy_8) - ptr->field_0.field_0.vy,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
 
     gte_ldv0(&ptr->field_138);
     gte_rtps();
     gte_stsxy(&ptr->field_144);
     gte_stsz(&ptr->field_140);
 
-    temp_v0_2 = ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3;
+    temp_v0_2 = ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3;
 
     if (temp_v0_2 <= 0 || (temp_v0_2 >> 3) >= ORDERING_TABLE_SIZE ||
         ABS(ptr->field_144.vx) > 200 ||
@@ -1154,8 +1160,8 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
         return false;
     }
 
-    ptr->field_14C = ((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 * 3) + ((ptr->field_148 * 2) / 327) +
-                      (g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 < 3 ? g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 : 0)) *
+    ptr->field_14C = ((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 * 3) + ((ptr->field_148 * 2) / 327) +
+                      (g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_0 < 3 ? g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 : 0)) *
                      ptr->field_0.field_2C / ptr->field_140;
 
     setPolyFT4(&(*poly)[0]);
@@ -1165,7 +1171,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
     setXY2Fast(&(*poly)[0], (u16)ptr->field_144.vx - (u16)ptr->field_14C, ptr->field_144.vy + ptr->field_14C);
     setXY3Fast(&(*poly)[0], (u16)ptr->field_144.vx + (u16)ptr->field_14C, ptr->field_144.vy + ptr->field_14C);
 
-    var_a2    = (g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0) >> 3;
+    var_a2    = (g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_0) >> 3;
     temp_a2_2 = var_a2;
 
     temp_v1_5_ = temp_a2_2 ^ 0x1;
@@ -1278,7 +1284,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
         ptr->field_174 = 0;
     }
 
-    ptr->field_150 = ((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 & 0x7) + 2);
+    ptr->field_150 = ((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_0 & 0x7) + 2);
     ptr->field_164 = CLAMP_LOW_THEN_MIN((ptr->field_148 / 327), 0, 7);
 
     setSemiTrans(&(*poly)[0], true);
@@ -1317,15 +1323,15 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
             (*poly)[1].b0         = ptr->field_134.b >> 4;
 
 #if VERSION_REGION_IS(PAL)
-            (*poly)[1].clut       = ((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B;
+            (*poly)[1].clut       = ((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B;
 #else
-            (*poly)[1].clut       = (g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13;
+            (*poly)[1].clut       = (g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 << 6) | 0x13;
 #endif
 
             setSemiTrans(&(&(*poly)[0])[1], false);
 
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &(*poly)[0]);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &(&(*poly)[0])[1]);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &(*poly)[0]);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &(&(*poly)[0])[1]);
             *poly += 2;
         }
         else
@@ -1353,9 +1359,9 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
             (*poly)[0].tpage      = 43;
 
 #if VERSION_REGION_IS(PAL)
-            (*poly)[1].clut       = ((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B;
+            (*poly)[1].clut       = ((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B;
 #else
-            (*poly)[1].clut       = (g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13;
+            (*poly)[1].clut       = (g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 << 6) | 0x13;
 #endif
             
             (*poly)[3].tpage      = 43;
@@ -1364,12 +1370,12 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
             SetPriority(&ptr->field_12C[0], 0, 0);
             SetPriority(&ptr->field_12C[1], 1, 1);
 
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &(*poly)[0]);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &(&(*poly)[0])[1]);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &(&(*poly)[0])[2]);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &ptr->field_12C[0]);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &(&(*poly)[0])[3]);
-            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &ptr->field_12C[1]);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &(*poly)[0]);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &(&(*poly)[0])[1]);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &(&(*poly)[0])[2]);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &ptr->field_12C[0]);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &(&(*poly)[0])[3]);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &ptr->field_12C[1]);
             *poly = (POLY_FT4*)&ptr->field_12C[2];
         }
         return true;
@@ -1377,9 +1383,9 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
 
     if (g_GameWork.config.extraBloodColor == 14)
     {
-        temp_s0               = func_80055D78(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].vy_8, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4);
-        *(u16*)&(*poly)[0].r0 = temp_s0 + (func_80055D78(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].vy_8, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4) << 8);
-        (*poly)[0].b0         = func_80055D78(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].vy_8, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4);
+        temp_s0               = func_80055D78(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[idx].vy_8, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4);
+        *(u16*)&(*poly)[0].r0 = temp_s0 + (func_80055D78(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[idx].vy_8, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4) << 8);
+        (*poly)[0].b0         = func_80055D78(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[idx].vy_8, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4);
     }
     else
     {
@@ -1393,14 +1399,14 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
     }
 
 #if VERSION_REGION_IS(PAL)
-    *(s32*)&(*poly)[0].u0 = ((((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B) << 16) +
+    *(s32*)&(*poly)[0].u0 = ((((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B) << 16) +
         (((ptr->field_164 << 5) + ptr->field_168) << 8) + ((ptr->field_150 << 5) + ptr->field_154);
 #else
-    *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13) << 16) +
+    *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 << 6) | 0x13) << 16) +
         (((ptr->field_164 << 5) + ptr->field_168) << 8) + ((ptr->field_150 << 5) + ptr->field_154);
 #endif
 
-    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], &(*poly)[0]);
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3) >> 3], &(*poly)[0]);
 
     *poly += 1;
 
@@ -1423,22 +1429,22 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
     ptr = PSX_SCRATCH;
 
-    if (!(g_MapOverlayHdr.unkTable1_4C[idx].field_B & 0x3))
+    if (!(g_MapOverlayHdr.particleBuffer[idx].field_B & 0x3))
     {
-        idx0 = g_MapOverlayHdr.unkTable1_4C[idx].field_B >> 2;
+        idx0 = g_MapOverlayHdr.particleBuffer[idx].field_B >> 2;
 
         if (idx0 != 24)
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 += ptr->field_0.field_34[idx0];
-            g_MapOverlayHdr.unkTable1_4C[idx].vy_8 += ptr->field_0.field_64[idx0];
-            g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 += ptr->field_0.field_94[idx0];
+            g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 += ptr->field_0.field_34[idx0];
+            g_MapOverlayHdr.particleBuffer[idx].vy_8 += ptr->field_0.field_64[idx0];
+            g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 += ptr->field_0.field_94[idx0];
         }
 
-        g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 = MIN(g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 + (g_GravitySpeed >> 2), 0x2000);
+        g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0 = MIN(g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0 + (g_GravitySpeed >> 2), 0x2000);
 
-        g_MapOverlayHdr.unkTable1_4C[idx].vy_8 += g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0;
+        g_MapOverlayHdr.particleBuffer[idx].vy_8 += g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0;
 
-        if (g_MapOverlayHdr.unkTable1_4C[idx].vy_8 > g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_2)
+        if (g_MapOverlayHdr.particleBuffer[idx].vy_8 > g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_2)
         {
             if (idx0 != 24)
             {
@@ -1448,29 +1454,29 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
                 }
             }
 
-            g_MapOverlayHdr.unkTable1_4C[idx].vy_8 = g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_2;
+            g_MapOverlayHdr.particleBuffer[idx].vy_8 = g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_2;
 
             sp10 = *ptr;
 
-            ptr->field_178 = g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 << 5;
+            ptr->field_178 = g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 << 5;
 
-            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + ptr->field_178, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4);
-            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 - ptr->field_178, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4);
-            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + ptr->field_178);
-            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 - ptr->field_178);
+            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 + ptr->field_178, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 - ptr->field_178, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 + ptr->field_178);
+            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 - ptr->field_178);
 
             if (func_8005F680(&surfaces[0]) || func_8005F680(&surfaces[1]) || func_8005F680(&surfaces[2]) || func_8005F680(&surfaces[3]) ||
-                (g_MapOverlayHdr.unkTable1_4C[idx].vy_8 - surfaces[0].floorHeight) < Q12(-0.2f) ||
-                (g_MapOverlayHdr.unkTable1_4C[idx].vy_8 - surfaces[1].floorHeight) < Q12(-0.2f) ||
-                (g_MapOverlayHdr.unkTable1_4C[idx].vy_8 - surfaces[2].floorHeight) < Q12(-0.2f) ||
-                (g_MapOverlayHdr.unkTable1_4C[idx].vy_8 - surfaces[3].floorHeight) < Q12(-0.2f))
+                (g_MapOverlayHdr.particleBuffer[idx].vy_8 - surfaces[0].floorHeight) < Q12(-0.2f) ||
+                (g_MapOverlayHdr.particleBuffer[idx].vy_8 - surfaces[1].floorHeight) < Q12(-0.2f) ||
+                (g_MapOverlayHdr.particleBuffer[idx].vy_8 - surfaces[2].floorHeight) < Q12(-0.2f) ||
+                (g_MapOverlayHdr.particleBuffer[idx].vy_8 - surfaces[3].floorHeight) < Q12(-0.2f))
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
+                g_MapOverlayHdr.particleBuffer[idx].field_A = 0;
             }
             else
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_B          = 1;
-                g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 = Rng_GenerateUInt(0, 255);
+                g_MapOverlayHdr.particleBuffer[idx].field_B          = 1;
+                g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 = Rng_GenerateUInt(0, 255);
             }
 
             *ptr = sp10;
@@ -1482,16 +1488,16 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
         return true;
     }
 
-    ptr->field_168 = g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0;
+    ptr->field_168 = g_MapOverlayHdr.particleBuffer[idx].field_10.field_0;
 
-    if (g_MapOverlayHdr.unkTable1_4C[idx].field_B == 2)
+    if (g_MapOverlayHdr.particleBuffer[idx].field_B == 2)
     {
         if (*g_MapOverlayHdr.data_190 != 0)
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
-            if (g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 > Q12(50.0f))
+            g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 += g_DeltaTime;
+            if (g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 > Q12(50.0f))
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 = Q12(50.0f);
+                g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 = Q12(50.0f);
             }
 
             ptr->field_168 = 0xCC0;
@@ -1499,19 +1505,19 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
     }
     else
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
+        g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 += g_DeltaTime;
 
-        if (g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 > 0xCC0)
+        if (g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 > 0xCC0)
         {
-            if (g_MapOverlayHdr.unkTable1_4C[idx].field_B == 1)
+            if (g_MapOverlayHdr.particleBuffer[idx].field_B == 1)
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0    = 0xCC0;
-                g_MapOverlayHdr.unkTable1_4C[idx].field_B             = 2;
-                g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3 = 0x80;
+                g_MapOverlayHdr.particleBuffer[idx].field_10.field_0    = 0xCC0;
+                g_MapOverlayHdr.particleBuffer[idx].field_B             = 2;
+                g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3 = 0x80;
             }
             else
             {
-                g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
+                g_MapOverlayHdr.particleBuffer[idx].field_A = 0;
                 return false;
             }
         }
@@ -1519,42 +1525,42 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
     vwGetViewPosition(&ptr->field_14C);
 
-    if (ABS(ptr->field_14C.vx - g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0) +
-        ABS(ptr->field_14C.vz - g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4) > Q12(20.0f))
+    if (ABS(ptr->field_14C.vx - g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0) +
+        ABS(ptr->field_14C.vz - g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4) > Q12(20.0f))
     {
-        if (g_MapOverlayHdr.unkTable1_4C[idx].field_B == 3)
+        if (g_MapOverlayHdr.particleBuffer[idx].field_B == 3)
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
+            g_MapOverlayHdr.particleBuffer[idx].field_A = 0;
         }
 
         return false;
     }
 
-    if ((u32)(g_MapOverlayHdr.unkTable1_4C[idx].field_B & 3) < 3u)
+    if ((u32)(g_MapOverlayHdr.particleBuffer[idx].field_B & 3) < 3u)
     {
-        temp           = g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 * 16;
+        temp           = g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 * 16;
         temp           = (ptr->field_168 * temp) / 816;
-        ptr->field_178 = temp < (g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 << 5) ? temp : (g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 << 5);
+        ptr->field_178 = temp < (g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 << 5) ? temp : (g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 << 5);
     }
     else
     {
-        ptr->field_178 = g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 << 5;
+        ptr->field_178 = g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 << 5;
     }
 
     setPolyFT4(&(*poly)[0]);
 
     Math_SetSVectorFastSum(&ptr->field_134,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 - ptr->field_178) - (u16)ptr->field_0.field_0.vx,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].vy_8) - ptr->field_0.field_0.vy,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + ptr->field_178) - ptr->field_0.field_0.vz);
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 - ptr->field_178) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 + ptr->field_178) - ptr->field_0.field_0.vz);
     Math_SetSVectorFastSum(&ptr->field_13C,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + ptr->field_178) - (u16)ptr->field_0.field_0.vx,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].vy_8) - ptr->field_0.field_0.vy,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + ptr->field_178) - ptr->field_0.field_0.vz);
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 + ptr->field_178) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 + ptr->field_178) - ptr->field_0.field_0.vz);
     Math_SetSVectorFastSum(&ptr->field_144,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 - ptr->field_178) - (u16)ptr->field_0.field_0.vx,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].vy_8) - ptr->field_0.field_0.vy,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 - ptr->field_178) - ptr->field_0.field_0.vz);
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 - ptr->field_178) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 - ptr->field_178) - ptr->field_0.field_0.vz);
 
     gte_ldv3c(&ptr->field_134);
     gte_rtpt();
@@ -1562,9 +1568,9 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
     gte_stsz3c(&ptr->field_158);
 
     Math_SetSVectorFastSum(&ptr->field_134,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + ptr->field_178) - (u16)ptr->field_0.field_0.vx,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].vy_8) - ptr->field_0.field_0.vy,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 - ptr->field_178) - ptr->field_0.field_0.vz);
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 + ptr->field_178) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].vy_8) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 - ptr->field_178) - ptr->field_0.field_0.vz);
 
     gte_ldv0(&ptr->field_134);
     gte_rtps();
@@ -1590,9 +1596,9 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
     *(s32*)&(*poly)[0].x3 = *(s32*)&ptr->field_16C;
 
-    ptr->field_17C = !(g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 & 8) << 5;
+    ptr->field_17C = !(g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_0 & 8) << 5;
 
-    if (g_MapOverlayHdr.unkTable1_4C[idx].field_B == 3)
+    if (g_MapOverlayHdr.particleBuffer[idx].field_B == 3)
     {
         ptr->field_190 = 224;
     }
@@ -1601,7 +1607,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
         ptr->field_190 = MIN(ptr->field_168 / 408, 7) << 5;
     }
 
-    var_t0 = g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 & 7;
+    var_t0 = g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_0 & 7;
 
     temp_v1_15_ = var_t0 ^ 0x1;
     temp_v1_15_ = temp_v1_15_ & 0x1;
@@ -1713,28 +1719,28 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
         ptr->field_1A0 = 0;
     }
 
-    if (g_MapOverlayHdr.unkTable1_4C[idx].field_B == 1)
+    if (g_MapOverlayHdr.particleBuffer[idx].field_B == 1)
     {
         var_t0 = 0xFF - ((ptr->field_168 * 0x10) / 204);
         var_t0 = MAX(var_t0, 0x80);
     }
-    else if (g_MapOverlayHdr.unkTable1_4C[idx].field_B == 2)
+    else if (g_MapOverlayHdr.particleBuffer[idx].field_B == 2)
     {
         if (*g_MapOverlayHdr.data_190 != 0)
         {
-            temp_v1_6                                                 = (0x80 - (((g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 - 0xCC0) << 7) / 204800)) < 0x20;
-            var_a0_3                                                  = !(temp_v1_6) ? (0x80 - (((g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 - 0xCC0) << 7) / 204800)) : 0x20;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3 = var_a0_3;
+            temp_v1_6                                                 = (0x80 - (((g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 - 0xCC0) << 7) / 204800)) < 0x20;
+            var_a0_3                                                  = !(temp_v1_6) ? (0x80 - (((g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 - 0xCC0) << 7) / 204800)) : 0x20;
+            g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3 = var_a0_3;
             var_t0                                                    = Q8_FRACT(var_a0_3);
         }
         else
         {
-            var_t0 = g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3;
+            var_t0 = g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3;
         }
     }
     else
     {
-        var_t0 = g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_3 - ((ptr->field_168 * 8) / 204);
+        var_t0 = g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_3 - ((ptr->field_168 * 8) / 204);
         var_t0 = MAX(var_t0, 0);
     }
 
@@ -1760,9 +1766,9 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
         (*poly)[0].tpage      = 0x2B;
         
 #if VERSION_REGION_IS(PAL)
-        (*poly)[1].clut       = ((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B;
+        (*poly)[1].clut       = ((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B;
 #else
-        (*poly)[1].clut       = (g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13;
+        (*poly)[1].clut       = (g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 << 6) | 0x13;
 #endif
         
         *(u16*)&(*poly)[1].r0 = ptr->field_130.r + (ptr->field_130.g << 8);
@@ -1777,10 +1783,10 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
     else
     {
 #if VERSION_REGION_IS(PAL)
-        *(s32*)&(*poly)[0].u0 = ((((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B) << 16) +
+        *(s32*)&(*poly)[0].u0 = ((((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 + 480) << 6) | 0x3B) << 16) +
                               ((ptr->field_190 + ptr->field_194) << 8) + (ptr->field_17C + ptr->field_180);
 #else
-        *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13) << 16) +
+        *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_2 << 6) | 0x13) << 16) +
                               ((ptr->field_190 + ptr->field_194) << 8) + (ptr->field_17C + ptr->field_180);
 #endif
         *(u16*)&(*poly)[0].r0 = var_t0 + (var_t0 << 8);
@@ -1800,7 +1806,7 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
     s32                temp_s0;
     s32                temp_s2;
     s32                temp_s3;
-    s32                idx;
+    s32                partIdx;
     s32                i;
 
     if (g_GameWork.config.extraBloodColor == 14)
@@ -1814,8 +1820,8 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
     i = D_800AE5CC[animStatus + 1] - D_800AE5CC[animStatus];
     while (i > 0)
     {
-        idx = func_8005E7E0(3);
-        if (idx == NO_VALUE)
+        partIdx = Particle_FreeSlotGet(3);
+        if (partIdx == NO_VALUE)
         {
             break;
         }
@@ -1825,27 +1831,27 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
         temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4]       + D_800AE5F0[(temp_s0 * 4) + 1];
         temp_s2 = Rng_Rand16() % D_800AE5F0[(temp_s0 * 4) + 2] + D_800AE5F0[(temp_s0 * 4) + 3];
 
-        g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 = chara->position.vx +
+        g_MapOverlayHdr.particleBuffer[partIdx].field_0.vx_0 = chara->position.vx +
                                                             Q12_MULT(temp_s3, Math_Sin(chara->rotation.vy)) -
                                                             Q12_MULT(temp_s2, Math_Cos(chara->rotation.vy));
-        g_MapOverlayHdr.unkTable1_4C[idx].vy_8 = chara->position.vy;
-        g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 = chara->position.vz +
+        g_MapOverlayHdr.particleBuffer[partIdx].vy_8 = chara->position.vy;
+        g_MapOverlayHdr.particleBuffer[partIdx].field_4.vz_4 = chara->position.vz +
                                                             Q12_MULT(temp_s3, Math_Cos(chara->rotation.vy)) +
                                                             Q12_MULT(temp_s2, Math_Sin(chara->rotation.vy));
 
-        Collision_SurfaceGet(&surface, g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4);
+        Collision_SurfaceGet(&surface, g_MapOverlayHdr.particleBuffer[partIdx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[partIdx].field_4.vz_4);
 
         if (ABS_DIFF(surface.floorHeight, chara->position.vy) > Q12(0.15f))
         {
-            g_MapOverlayHdr.unkTable1_4C[(idx)].field_A = 0;
+            g_MapOverlayHdr.particleBuffer[(partIdx)].field_A = 0;
         }
         else
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2 = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
-            g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 = arg3;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_B             = Rng_GenerateUInt(4, 7);
-            g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 = Chara_NpcIdxGet(chara);
-            g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0    = Rng_GenerateUInt(0, 8191);
+            g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_0.field_2 = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
+            g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_1 = arg3;
+            g_MapOverlayHdr.particleBuffer[partIdx].field_B             = Rng_GenerateUInt(4, 7);
+            g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_0 = Chara_NpcIdxGet(chara);
+            g_MapOverlayHdr.particleBuffer[partIdx].field_10.field_0    = Rng_GenerateUInt(0, 8191);
         }
 
         i--;
@@ -1859,20 +1865,20 @@ void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3) // 0x800625F4
 
     var = func_8005F55C(arg2);
 
-    idx = func_8005E7E0(4);
+    idx = Particle_FreeSlotGet(4);
     if (idx == NO_VALUE)
     {
         return;
     }
 
-    g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0        = arg0->vx;
-    g_MapOverlayHdr.unkTable1_4C[idx].vy_8                = arg0->vy;
-    g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4        = arg0->vz;
-    g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2 = angle;
-    g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 = var;
-    g_MapOverlayHdr.unkTable1_4C[idx].field_B             = Rng_GenerateUInt(0, 3);
-    g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 = 6;
-    g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0    = arg3 * Q12(5.0f);
+    g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0        = arg0->vx;
+    g_MapOverlayHdr.particleBuffer[idx].vy_8                = arg0->vy;
+    g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4        = arg0->vz;
+    g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2 = angle;
+    g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 = var;
+    g_MapOverlayHdr.particleBuffer[idx].field_B             = Rng_GenerateUInt(0, 3);
+    g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_0 = 6;
+    g_MapOverlayHdr.particleBuffer[idx].field_10.field_0    = arg3 * Q12(5.0f);
 }
 
 bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
@@ -1889,12 +1895,12 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
     ptr = PSX_SCRATCH;
 
-    if (g_MapOverlayHdr.unkTable1_4C[idx].field_A == 3)
+    if (g_MapOverlayHdr.particleBuffer[idx].field_A == 3)
     {
         var_s7 = 0xC;
-        if (NPC_CHARA(g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0).model.charaId == Chara_None)
+        if (NPC_CHARA(g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_0).model.charaId == Chara_None)
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
+            g_MapOverlayHdr.particleBuffer[idx].field_A = 0;
             return false;
         }
     }
@@ -1903,81 +1909,81 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
         var_s7 = 0x100;
     }
 
-    if (g_MapOverlayHdr.unkTable1_4C[idx].field_B & (1 << 2))
+    if (g_MapOverlayHdr.particleBuffer[idx].field_B & (1 << 2))
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
-        if (g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 > Q12(2.5f))
+        g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 += g_DeltaTime;
+        if (g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 > Q12(2.5f))
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_B         -= 4;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 = 0;
+            g_MapOverlayHdr.particleBuffer[idx].field_B         -= 4;
+            g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 = 0;
         }
 
         return false;
     }
 
-    ptr->field_208 = g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0;
+    ptr->field_208 = g_MapOverlayHdr.particleBuffer[idx].field_10.field_0;
 
     if (*g_MapOverlayHdr.data_190 != NULL)
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
-        if (g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 > Q12(45.0f))
+        g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 += g_DeltaTime;
+        if (g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 > Q12(45.0f))
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 = Q12(45.0f);
+            g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 = Q12(45.0f);
         }
     }
     else
     {
-        if (g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 < Q12(5.0f))
+        if (g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 < Q12(5.0f))
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime;
+            g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 += g_DeltaTime;
         }
     }
 
     vwGetViewPosition(&ptr->field_1FC);
 
-    if ((ABS(ptr->field_1FC.vx - g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0) +
-         ABS(ptr->field_1FC.vz - g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4)) > Q12(20.0f))
+    if ((ABS(ptr->field_1FC.vx - g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0) +
+         ABS(ptr->field_1FC.vz - g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4)) > Q12(20.0f))
     {
         return false;
     }
 
     if (ptr->field_208 >= Q12(5.0f))
     {
-        ptr->field_2DC = (u16)g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2;
+        ptr->field_2DC = (u16)g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2;
     }
     else
     {
-        ptr->field_2DC = (ptr->field_208 * (u16)g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2) / Q12(5.0f);
+        ptr->field_2DC = (ptr->field_208 * (u16)g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2) / Q12(5.0f);
         temp_s2        = (ptr->field_2DC >> 1) * 16; // To Q12.
 
         sp10 = *ptr;
 
         if (Rng_GenerateUInt(0, 1) != 0) // 1 in 2 chance.
         {
-            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4);
-            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4);
-            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
-            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
+            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 - temp_s2, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 + temp_s2, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4);
+            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 - temp_s2);
+            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 + temp_s2);
         }
         else
         {
-            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
-            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
-            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
-            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
+            Collision_SurfaceGet(&surfaces[0], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 - temp_s2, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 - temp_s2);
+            Collision_SurfaceGet(&surfaces[1], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 + temp_s2, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 - temp_s2);
+            Collision_SurfaceGet(&surfaces[2], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 - temp_s2, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 + temp_s2);
+            Collision_SurfaceGet(&surfaces[3], g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 + temp_s2, g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 + temp_s2);
         }
 
         if (func_8005F680(&surfaces[0]) ||
             func_8005F680(&surfaces[1]) ||
             func_8005F680(&surfaces[2]) ||
             func_8005F680(&surfaces[3]) ||
-            ABS(surfaces[0].floorHeight - g_MapOverlayHdr.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
-            ABS(surfaces[1].floorHeight - g_MapOverlayHdr.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
-            ABS(surfaces[2].floorHeight - g_MapOverlayHdr.unkTable1_4C[idx].vy_8) > Q12(0.15f) ||
-            ABS(surfaces[3].floorHeight - g_MapOverlayHdr.unkTable1_4C[idx].vy_8) > Q12(0.15f))
+            ABS(surfaces[0].floorHeight - g_MapOverlayHdr.particleBuffer[idx].vy_8) > Q12(0.15f) ||
+            ABS(surfaces[1].floorHeight - g_MapOverlayHdr.particleBuffer[idx].vy_8) > Q12(0.15f) ||
+            ABS(surfaces[2].floorHeight - g_MapOverlayHdr.particleBuffer[idx].vy_8) > Q12(0.15f) ||
+            ABS(surfaces[3].floorHeight - g_MapOverlayHdr.particleBuffer[idx].vy_8) > Q12(0.15f))
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2  = ptr->field_2DC;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 = Q12(5.0f);
+            g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2  = ptr->field_2DC;
+            g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 = Q12(5.0f);
         }
 
         *ptr = sp10;
@@ -1986,16 +1992,16 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
         gte_SetTransMatrix(&ptr->field_0.worldToScreenMat);
     }
 
-    ptr->field_210 = (g_MapOverlayHdr.unkTable1_4C[idx].field_B << 13) + 224;
+    ptr->field_210 = (g_MapOverlayHdr.particleBuffer[idx].field_B << 13) + 224;
 
     for (i = 0; i < 5; i++)
     {
         for (j = 0; j < 5; j++)
         {
             Math_SetSVectorFastSum(&ptr->field_134[(i * 5) + j],
-                                   ((Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_2DC) + ((ptr->field_2DC >> 1) * j),
-                                   Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].vy_8) - ptr->field_0.field_0.vy,
-                                   ((Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4) - ptr->field_0.field_0.vz) - ptr->field_2DC) + ((ptr->field_2DC >> 1) * i));
+                                   ((Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_2DC) + ((ptr->field_2DC >> 1) * j),
+                                   Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].vy_8) - ptr->field_0.field_0.vy,
+                                   ((Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4) - ptr->field_0.field_0.vz) - ptr->field_2DC) + ((ptr->field_2DC >> 1) * i));
         }
     }
 
@@ -2045,9 +2051,9 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
             temp_s2             = (j * 8) + (i << 11) + ptr->field_210;
 
 #if VERSION_REGION_IS(PAL)
-            *(s32*)&(*poly)[0].u0 = ((((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 + 480) << 6) | 0x3B) << 16) + temp_s2;
+            *(s32*)&(*poly)[0].u0 = ((((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 + 480) << 6) | 0x3B) << 16) + temp_s2;
 #else
-            *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_1 << 6) | 0x13) << 16) + temp_s2;
+            *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.particleBuffer[idx].field_C.s_1.field_1 << 6) | 0x13) << 16) + temp_s2;
 #endif
             *(s32*)&(*poly)[0].u1 = temp_s2 + 0x4B0007;
 
@@ -2171,52 +2177,52 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
     switch (weaponAttack)
     {
         case WEAPON_ATTACK(AttackType_Handgun, AttackInputType_Tap):
-            ptr->field_38 = func_8005E7E0(15);
+            ptr->field_38 = Particle_FreeSlotGet(15);
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(20);
+                ptr->field_3C[i] = Particle_FreeSlotGet(20);
             }
             break;
 
         case WEAPON_ATTACK(AttackType_Shotgun, AttackInputType_Tap):
-            ptr->field_38 = func_8005E7E0(16);
+            ptr->field_38 = Particle_FreeSlotGet(16);
             ptr->field_50 = 5;
 
             for (i = 0; i < 5; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(21);
+                ptr->field_3C[i] = Particle_FreeSlotGet(21);
             }
             break;
 
         case WEAPON_ATTACK(AttackType_HuntingRifle, AttackInputType_Tap):
-            ptr->field_38 = func_8005E7E0(17);
+            ptr->field_38 = Particle_FreeSlotGet(17);
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(22);
+                ptr->field_3C[i] = Particle_FreeSlotGet(22);
             }
             break;
 
         case WEAPON_ATTACK(AttackType_KaufmannHandgun, AttackInputType_Tap):
-            ptr->field_38 = func_8005E7E0(18);
+            ptr->field_38 = Particle_FreeSlotGet(18);
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(20);
+                ptr->field_3C[i] = Particle_FreeSlotGet(20);
             }
             break;
 
         case WEAPON_ATTACK(AttackType_CybilHandgun, AttackInputType_Tap):
-            ptr->field_38 = func_8005E7E0(19);
+            ptr->field_38 = Particle_FreeSlotGet(19);
             ptr->field_50 = 3;
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(20);
+                ptr->field_3C[i] = Particle_FreeSlotGet(20);
             }
             break;
 
@@ -2226,7 +2232,7 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
 
             for (i = 0; i < 3; i++)
             {
-                ptr->field_3C[i] = func_8005E7E0(20);
+                ptr->field_3C[i] = Particle_FreeSlotGet(20);
             }
             break;
     }
@@ -2238,18 +2244,18 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
         {
             if (weaponAttack == WEAPON_ATTACK(AttackType_KaufmannHandgun, AttackInputType_Tap))
             {
-                g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = Q12_ANGLE(-90.0f);
-                g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = Q12_ANGLE(90.0f);
+                g_MapOverlayHdr.particleBuffer[ptr->field_38].field_C.s_0.field_0 = Q12_ANGLE(-90.0f);
+                g_MapOverlayHdr.particleBuffer[ptr->field_38].field_C.s_0.field_2 = Q12_ANGLE(90.0f);
             }
             else
             {
-                g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = rotY;
-                g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = rotX;
+                g_MapOverlayHdr.particleBuffer[ptr->field_38].field_C.s_0.field_0 = rotY;
+                g_MapOverlayHdr.particleBuffer[ptr->field_38].field_C.s_0.field_2 = rotX;
             }
 
-            g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_B              = Rng_GenerateUInt(0, 1);
-            g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_10.s_0.field_0 = Rng_GenerateUInt(0, 1023);
-            g_MapOverlayHdr.unkTable1_4C[ptr->field_38].field_10.s_0.field_2 = Q12_ANGLE(0.0f);
+            g_MapOverlayHdr.particleBuffer[ptr->field_38].field_B              = Rng_GenerateUInt(0, 1);
+            g_MapOverlayHdr.particleBuffer[ptr->field_38].field_10.s_0.field_0 = Rng_GenerateUInt(0, 1023);
+            g_MapOverlayHdr.particleBuffer[ptr->field_38].field_10.s_0.field_2 = Q12_ANGLE(0.0f);
         }
         else
         {
@@ -2264,22 +2270,22 @@ void func_8006342C(s32 weaponAttack, q3_12 rotY, q3_12 rotX, GsCOORDINATE2* coor
             break;
         }
 
-        g_MapOverlayHdr.unkTable1_4C[ptr->field_3C[i]].field_0.vx_0 = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vx), -128, 127);
-        g_MapOverlayHdr.unkTable1_4C[ptr->field_3C[i]].vy_8         = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vy), -128, 127);
-        g_MapOverlayHdr.unkTable1_4C[ptr->field_3C[i]].field_4.vz_4 = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vz), -128, 127);
+        g_MapOverlayHdr.particleBuffer[ptr->field_3C[i]].field_0.vx_0 = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vx), -128, 127);
+        g_MapOverlayHdr.particleBuffer[ptr->field_3C[i]].vy_8         = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vy), -128, 127);
+        g_MapOverlayHdr.particleBuffer[ptr->field_3C[i]].field_4.vz_4 = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vz), -128, 127);
 
         if (i < 3)
         {
-            g_MapOverlayHdr.unkTable1_4C[ptr->field_3C[i]].field_B = i;
+            g_MapOverlayHdr.particleBuffer[ptr->field_3C[i]].field_B = i;
         }
         else
         {
-            g_MapOverlayHdr.unkTable1_4C[ptr->field_3C[i]].field_B = Rng_GenerateInt(0, 2);
+            g_MapOverlayHdr.particleBuffer[ptr->field_3C[i]].field_B = Rng_GenerateInt(0, 2);
         }
 
-        g_MapOverlayHdr.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_0  = Rng_GenerateUInt(0, 4095);
-        g_MapOverlayHdr.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_2  = 0;
-        g_MapOverlayHdr.unkTable1_4C[ptr->field_3C[i]].field_10.s_0.field_0 = 0;
+        g_MapOverlayHdr.particleBuffer[ptr->field_3C[i]].field_C.s_0.field_0  = Rng_GenerateUInt(0, 4095);
+        g_MapOverlayHdr.particleBuffer[ptr->field_3C[i]].field_C.s_0.field_2  = 0;
+        g_MapOverlayHdr.particleBuffer[ptr->field_3C[i]].field_10.s_0.field_0 = 0;
     }
 }
 
@@ -2289,7 +2295,7 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
 
     ptr = PSX_SCRATCH;
 
-    switch (g_MapOverlayHdr.unkTable1_4C[idx].field_A)
+    switch (g_MapOverlayHdr.particleBuffer[idx].field_A)
     {
         case 15:
             ptr->field_1DC         = 0xCC;
@@ -2345,17 +2351,17 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
             break;
     }
 
-    if (g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_2 == 0)
+    if (g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_2 == 0)
     {
         func_8003EDA8();
     }
-    else if (ptr->field_1DC < g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_2)
+    else if (ptr->field_1DC < g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_2)
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
+        g_MapOverlayHdr.particleBuffer[idx].field_A = 0;
         return false;
     }
 
-    g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_2 += g_DeltaTime;
+    g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_2 += g_DeltaTime;
 
     gte_SetRotMatrix(&ptr->field_12C);
     gte_SetTransMatrix(&ptr->field_12C);
@@ -2363,17 +2369,17 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
     gte_rt();
     gte_stlvnl(&ptr->field_1AC);
 
-    g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 = Q4_TO_Q8(ptr->field_1AC.vx);
-    g_MapOverlayHdr.unkTable1_4C[idx].vy_8 = Q4_TO_Q8((u16)ptr->field_1AC.vy);
-    g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 = Q4_TO_Q8(ptr->field_1AC.vz);
+    g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 = Q4_TO_Q8(ptr->field_1AC.vx);
+    g_MapOverlayHdr.particleBuffer[idx].vy_8 = Q4_TO_Q8((u16)ptr->field_1AC.vy);
+    g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 = Q4_TO_Q8(ptr->field_1AC.vz);
 
     for (ptr->field_1D4 = 0; ptr->field_1D4 < 6; ptr->field_1D4++)
     {
-        ptr->field_1D0 = g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0 + (Q12(ptr->field_1D4) / 6);
+        ptr->field_1D0 = g_MapOverlayHdr.particleBuffer[idx].field_10.field_0 + (Q12(ptr->field_1D4) / 6);
 
         Math_SetSVectorFastSum(&ptr->field_14C[0],
-                               ((u16)g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_0 + Q12_MULT(ptr->field_1E8, Math_Cos(ptr->field_1D0))) - Q12_ANGLE(90.0f),
-                               g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2 + Q12_MULT(ptr->field_1E8, Math_Sin(ptr->field_1D0)),
+                               ((u16)g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_0 + Q12_MULT(ptr->field_1E8, Math_Cos(ptr->field_1D0))) - Q12_ANGLE(90.0f),
+                               g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2 + Q12_MULT(ptr->field_1E8, Math_Sin(ptr->field_1D0)),
                                ptr->field_1D0);
         Math_RotMatrixZxyNegGte(&ptr->field_14C, &ptr->field_12C);
 
@@ -2405,9 +2411,9 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
         for (ptr->field_1D8 = 0; ptr->field_1D8 < 3; ptr->field_1D8++)
         {
             Math_SetSVectorFastSum(&ptr->field_14C[ptr->field_1D8],
-                                   Q8_TO_Q4(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + ptr->field_16C[ptr->field_1D8].vx) - (u16)ptr->field_0.field_0.vx,
-                                   Q8_TO_Q4(g_MapOverlayHdr.unkTable1_4C[idx].vy_8 + ptr->field_16C[ptr->field_1D8].vy) - ptr->field_0.field_0.vy,
-                                   Q8_TO_Q4(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + ptr->field_16C[ptr->field_1D8].vz) - ptr->field_0.field_0.vz);
+                                   Q8_TO_Q4(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 + ptr->field_16C[ptr->field_1D8].vx) - (u16)ptr->field_0.field_0.vx,
+                                   Q8_TO_Q4(g_MapOverlayHdr.particleBuffer[idx].vy_8 + ptr->field_16C[ptr->field_1D8].vy) - ptr->field_0.field_0.vy,
+                                   Q8_TO_Q4(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 + ptr->field_16C[ptr->field_1D8].vz) - ptr->field_0.field_0.vz);
         }
 
         gte_ldv3c(&ptr->field_14C);
@@ -2416,9 +2422,9 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
         gte_stsz3c(&ptr->field_1BC);
 
         Math_SetSVectorFastSum(&ptr->field_14C[0],
-                               (Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 + ptr->field_19C.vx)) - (u16)ptr->field_0.field_0.vx,
-                               (Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].vy_8 + ptr->field_19C.vy)) - ptr->field_0.field_0.vy,
-                               (Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 + ptr->field_19C.vz)) - ptr->field_0.field_0.vz);
+                               (Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 + ptr->field_19C.vx)) - (u16)ptr->field_0.field_0.vx,
+                               (Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].vy_8 + ptr->field_19C.vy)) - ptr->field_0.field_0.vy,
+                               (Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 + ptr->field_19C.vz)) - ptr->field_0.field_0.vz);
 
         gte_ldv0(&ptr->field_14C);
         gte_rtps();
@@ -2446,15 +2452,15 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
         }
 
 #if VERSION_REGION_IS(PAL)
-        *(s32*)&(*poly)[0].u0 = g_MapOverlayHdr.unkTable1_4C[idx].field_B ? 0x78FB80FF : 0x78FB80E0;
+        *(s32*)&(*poly)[0].u0 = g_MapOverlayHdr.particleBuffer[idx].field_B ? 0x78FB80FF : 0x78FB80E0;
 #else
-        *(s32*)&(*poly)[0].u0 = g_MapOverlayHdr.unkTable1_4C[idx].field_B ? 0xD380FF : 0xD380E0;
+        *(s32*)&(*poly)[0].u0 = g_MapOverlayHdr.particleBuffer[idx].field_B ? 0xD380FF : 0xD380E0;
 #endif
-        *(s32*)&(*poly)[0].u1 = (g_MapOverlayHdr.unkTable1_4C[idx].field_B ? 255 : 224) +
-                              (g_MapOverlayHdr.unkTable1_4C[idx].field_B ? 0x2B7FE1 : 0x2B801F);
-        *(u16*)&(*poly)[0].u2 = g_MapOverlayHdr.unkTable1_4C[idx].field_B ? 0x9FFF : 0x9FE0;
-        *(u16*)&(*poly)[0].u3 = (g_MapOverlayHdr.unkTable1_4C[idx].field_B ? 255 : 224) -
-                              (g_MapOverlayHdr.unkTable1_4C[idx].field_B ? 0x611F : 0x60E1);
+        *(s32*)&(*poly)[0].u1 = (g_MapOverlayHdr.particleBuffer[idx].field_B ? 255 : 224) +
+                              (g_MapOverlayHdr.particleBuffer[idx].field_B ? 0x2B7FE1 : 0x2B801F);
+        *(u16*)&(*poly)[0].u2 = g_MapOverlayHdr.particleBuffer[idx].field_B ? 0x9FFF : 0x9FE0;
+        *(u16*)&(*poly)[0].u3 = (g_MapOverlayHdr.particleBuffer[idx].field_B ? 255 : 224) -
+                              (g_MapOverlayHdr.particleBuffer[idx].field_B ? 0x611F : 0x60E1);
 
         addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_1BC >> 3], &(*poly)[0], 9);
         *poly += 1;
@@ -2475,12 +2481,12 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
     temp_s4 = Q12_MULT_PRECISE(g_DeltaTime, Rng_GenerateInt(Q12(0.8f), Q12(1.2f) - 2));
 
-    if (g_MapOverlayHdr.unkTable1_4C[idx].field_A == 20)
+    if (g_MapOverlayHdr.particleBuffer[idx].field_A == 20)
     {
         ptr->field_164 = Q12(0.05f);
         ptr->field_168 = Q12(0.4f);
     }
-    else if (g_MapOverlayHdr.unkTable1_4C[idx].field_A == 21)
+    else if (g_MapOverlayHdr.particleBuffer[idx].field_A == 21)
     {
         ptr->field_164 = Q12(0.05f);
         ptr->field_168 = Q12(0.4f);
@@ -2491,22 +2497,22 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
         ptr->field_168 = Q12(0.35f);
     }
 
-    ptr->field_15A = g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2;
+    ptr->field_15A = g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2;
 
-    g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2 += temp_s4 + ((Math_Vector2MagCalcSafeQ6(*g_MapOverlayHdr.particleWindSpeedX, *g_MapOverlayHdr.particleWindSpeedZ) * temp_s4) >> 10);
+    g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2 += temp_s4 + ((Math_Vector2MagCalcSafeQ6(*g_MapOverlayHdr.weatherParticleWindSpeedX, *g_MapOverlayHdr.weatherParticleWindSpeedZ) * temp_s4) >> 10);
 
-    if (ptr->field_168 < (u16)g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2)
+    if (ptr->field_168 < (u16)g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2)
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
+        g_MapOverlayHdr.particleBuffer[idx].field_A = 0;
     }
 
-    ptr->field_158                                              = g_MapOverlayHdr.unkTable1_4C[idx].field_10.field_0;
-    g_MapOverlayHdr.unkTable1_4C[idx].field_10.s_0.field_0 += temp_s4;
+    ptr->field_158                                              = g_MapOverlayHdr.particleBuffer[idx].field_10.field_0;
+    g_MapOverlayHdr.particleBuffer[idx].field_10.s_0.field_0 += temp_s4;
 
     Math_SetSVectorFastSum(&ptr->field_138,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
-                           Q12_TO_Q8((g_MapOverlayHdr.unkTable1_4C[idx].vy_8)) - ptr->field_0.field_0.vy,
-                           Q12_TO_Q8(g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0) - (u16)ptr->field_0.field_0.vx,
+                           Q12_TO_Q8((g_MapOverlayHdr.particleBuffer[idx].vy_8)) - ptr->field_0.field_0.vy,
+                           Q12_TO_Q8(g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4) - ptr->field_0.field_0.vz);
 
     gte_ldv0(&ptr->field_138);
     gte_rtps();
@@ -2530,14 +2536,14 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
     setXY3Fast(&(*poly)[0], (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
 
 #if VERSION_REGION_IS(PAL)
-    *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.unkTable1_4C[idx].field_B << 5) + 160) << 8) + 0x793B00E0;
+    *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.particleBuffer[idx].field_B << 5) + 160) << 8) + 0x793B00E0;
 #else
-    *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.unkTable1_4C[idx].field_B << 5) + 160) << 8) + 0x011300E0;
+    *(s32*)&(*poly)[0].u0 = (((g_MapOverlayHdr.particleBuffer[idx].field_B << 5) + 160) << 8) + 0x011300E0;
 #endif
 
-    *(s32*)&(*poly)[0].u1 = (((g_MapOverlayHdr.unkTable1_4C[idx].field_B << 5) + 160) << 8) + 0x2B00FF;
-    *(u16*)&(*poly)[0].u2 = (((g_MapOverlayHdr.unkTable1_4C[idx].field_B << 5) + 191) << 8) + 0xE0;
-    *(u16*)&(*poly)[0].u3 = (((g_MapOverlayHdr.unkTable1_4C[idx].field_B << 5) + 191) << 8) + 0xFF;
+    *(s32*)&(*poly)[0].u1 = (((g_MapOverlayHdr.particleBuffer[idx].field_B << 5) + 160) << 8) + 0x2B00FF;
+    *(u16*)&(*poly)[0].u2 = (((g_MapOverlayHdr.particleBuffer[idx].field_B << 5) + 191) << 8) + 0xE0;
+    *(u16*)&(*poly)[0].u3 = (((g_MapOverlayHdr.particleBuffer[idx].field_B << 5) + 191) << 8) + 0xFF;
 
     setSemiTrans(&(*poly)[0], true);
 
@@ -2594,26 +2600,26 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
     if (ptr->field_164 < ptr->field_158)
     {
-        temp_v1_5 = Math_Sin(g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_0);
+        temp_v1_5 = Math_Sin(g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_0);
         temp_s0   = Q12_MULT_PRECISE(temp_s4, Q12(0.1f));
 
-        g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 += Q12_MULT(temp_s0, temp_v1_5);
-        g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 += Q12_MULT(temp_s0, Math_Cos(g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_0));
+        g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 += Q12_MULT(temp_s0, temp_v1_5);
+        g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 += Q12_MULT(temp_s0, Math_Cos(g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_0));
 
         if (*g_MapOverlayHdr.data_190 != 0)
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.particleWindSpeedX) >> 2;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.particleWindSpeedZ) >> 2;
+            g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.weatherParticleWindSpeedX) >> 2;
+            g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.weatherParticleWindSpeedZ) >> 2;
         }
         else if (*g_MapOverlayHdr.data_18C != 0)
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.particleWindSpeedX) >> 1;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.particleWindSpeedZ) >> 1;
+            g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.weatherParticleWindSpeedX) >> 1;
+            g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 += TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.weatherParticleWindSpeedZ) >> 1;
         }
         else
         {
-            g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 += (TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.particleWindSpeedX) * 2) / 3;
-            g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 += (TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.particleWindSpeedZ) * 2) / 3;
+            g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 += (TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.weatherParticleWindSpeedX) * 2) / 3;
+            g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 += (TIMESTEP_SCALE_30_FPS(temp_s4, *g_MapOverlayHdr.weatherParticleWindSpeedZ) * 2) / 3;
         }
     }
 
@@ -2622,16 +2628,16 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, q3_12 angle) // 0x80064F04
 {
-    s32 idx;
+    s32 partIdx;
 
-    idx = func_8005E7E0(31);
-    if (idx != NO_VALUE)
+    partIdx = Particle_FreeSlotGet(31);
+    if (partIdx != NO_VALUE)
     {
-        g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0        = Q12_TO_Q8(arg0->vx);
-        g_MapOverlayHdr.unkTable1_4C[idx].vy_8                = Q12_TO_Q8(arg0->vy);
-        g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4        = Q12_TO_Q8(arg0->vz);
-        g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_1.field_0 = arg1;
-        g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2 = angle;
+        g_MapOverlayHdr.particleBuffer[partIdx].field_0.vx_0        = Q12_TO_Q8(arg0->vx);
+        g_MapOverlayHdr.particleBuffer[partIdx].vy_8                = Q12_TO_Q8(arg0->vy);
+        g_MapOverlayHdr.particleBuffer[partIdx].field_4.vz_4        = Q12_TO_Q8(arg0->vz);
+        g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_1.field_0 = arg1;
+        g_MapOverlayHdr.particleBuffer[partIdx].field_C.s_0.field_2 = angle;
     }
 }
 
@@ -2642,12 +2648,12 @@ bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
 
     ptr = PSX_SCRATCH;
 
-    g_MapOverlayHdr.unkTable1_4C[idx].field_A = 0;
-    temp                                         = g_MapOverlayHdr.unkTable1_4C[idx].field_0.vx_0 - ptr->field_0.field_0.vx;
+    g_MapOverlayHdr.particleBuffer[idx].field_A = 0;
+    temp                                         = g_MapOverlayHdr.particleBuffer[idx].field_0.vx_0 - ptr->field_0.field_0.vx;
     Math_SetSVectorFastSum(&ptr->field_12C,
                            temp,
-                           g_MapOverlayHdr.unkTable1_4C[idx].vy_8 - ptr->field_0.field_0.vy,
-                           g_MapOverlayHdr.unkTable1_4C[idx].field_4.vz_4 - ptr->field_0.field_0.vz);
+                           g_MapOverlayHdr.particleBuffer[idx].vy_8 - ptr->field_0.field_0.vy,
+                           g_MapOverlayHdr.particleBuffer[idx].field_4.vz_4 - ptr->field_0.field_0.vz);
 
     gte_ldv0(&ptr->field_12C);
     gte_rtps();
@@ -2659,7 +2665,7 @@ bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
         return false;
     }
 
-    ptr->field_144 = ((g_MapOverlayHdr.unkTable1_4C[idx].field_C.s_0.field_2 * ptr->field_0.field_2C) / ptr->field_140) >> 4;
+    ptr->field_144 = ((g_MapOverlayHdr.particleBuffer[idx].field_C.s_0.field_2 * ptr->field_0.field_2C) / ptr->field_140) >> 4;
     setPolyFT4(*polys);
     setXY0Fast(*polys, (u16)ptr->field_13C.vx - (u16)ptr->field_144, ptr->field_13C.vy + ptr->field_144);
     setXY1Fast(*polys, (u16)ptr->field_13C.vx + (u16)ptr->field_144, ptr->field_13C.vy + ptr->field_144);

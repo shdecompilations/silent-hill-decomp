@@ -27,26 +27,30 @@
     #include "maps/map5/map5_s01.h"
 #endif
 
-#if defined(MAP1_S04) || defined(MAP1_S05) || defined(MAP2_S01) || defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP3_S02) || defined(MAP4_S00) || defined(MAP4_S06) || defined(MAP6_S05)
-// .bss data in maps we've matched .bss for
-// As more maps get matched we can hopefully find proper order for these.
-e_MapIdx          g_ParticleMapIdx0;
-e_MapIdx          g_ParticleMapIdx1;
-s32               g_Particle_SpeedX;
-s32               g_Particle_SpeedZ;
-s32               sharedData_800DFB6C_0_s00;
-s32               sharedData_800DFB70_0_s00;
-s_MapHdr_field_4C sharedData_800DFB7C_0_s00[MAP_FIELD_4C_COUNT];
-s_BloodSplat      g_Effect_BloodSplats[MAP_BLOOD_SPLAT_COUNT_MAX];
-s_ParticleVectors g_ParticleVectors0;
-s_ParticleVectors g_ParticleVectors1;
-s32               sharedData_800E0CA8_0_s00;
-s32               sharedData_800E0CAC_0_s00;
-u32               sharedData_800E0CB0_0_s00;
-u16               sharedData_800E0CB4_0_s00;
-u16               sharedData_800E0CB6_0_s00;
-u16               sharedData_800E0CB8_0_s00;
-s8                sharedData_800E0CBA_0_s00;
+#if defined(MAP1_S04) || defined(MAP1_S05) || defined(MAP2_S01) || \
+    defined(MAP2_S03) || defined(MAP2_S04) ||                      \
+    defined(MAP3_S02) ||                                           \
+    defined(MAP4_S00) || defined(MAP4_S06) ||                      \
+    defined(MAP6_S05)
+    // .bss data in maps we've matched .bss for
+    // As more maps get matched we can hopefully find proper order for these.
+    e_MapIdx          g_WeatherParticle_MapIdx0;
+    e_MapIdx          g_WeatherParticle_MapIdx1;
+    s32               g_WeatherParticle_SpeedX;
+    s32               g_WeatherParticle_SpeedZ;
+    s32               sharedData_800DFB6C_0_s00;
+    s32               sharedData_800DFB70_0_s00;
+    s_Particle        g_Particle_Buffer[MAP_PARTICLE_COUNT_MAX];
+    s_BloodSplat      g_Particle_BloodSplats[MAP_BLOOD_SPLAT_COUNT_MAX];
+    s_WeatherParticleVectors g_WeatherParticleVectors0;
+    s_WeatherParticleVectors g_WeatherParticleVectors1;
+    s32               sharedData_800E0CA8_0_s00;
+    s32               sharedData_800E0CAC_0_s00;
+    u32               sharedData_800E0CB0_0_s00;
+    u16               sharedData_800E0CB4_0_s00;
+    u16               sharedData_800E0CB6_0_s00;
+    u16               sharedData_800E0CB8_0_s00;
+    s8                sharedData_800E0CBA_0_s00;
 #endif
 
 // Particle-related functions.
@@ -87,10 +91,10 @@ s8                sharedData_800E0CBA_0_s00;
 /** @brief Sets the UVs of `poly` to the 16x16 particle cell at `u` pixels into the particle row.
  * The right edge stops at 255, the last cell of the PAL row ends at the edge of the texture page.
  */
-#define setParticleUV4(poly, u)                                                                \
-    setUV4(poly,                                                                               \
-           PARTICLE_TEX_U + (u), PARTICLE_TEX_V, PARTICLE_TEX_U + (u), PARTICLE_TEX_V + 15,      \
-           MIN(PARTICLE_TEX_U + (u) + 16, 255), PARTICLE_TEX_V,                                \
+#define setParticleUV4(poly, u)                                                             \
+    setUV4(poly,                                                                            \
+           PARTICLE_TEX_U + (u), PARTICLE_TEX_V, PARTICLE_TEX_U + (u), PARTICLE_TEX_V + 15, \
+           MIN(PARTICLE_TEX_U + (u) + 16, 255), PARTICLE_TEX_V,                             \
            MIN(PARTICLE_TEX_U + (u) + 16, 255), PARTICLE_TEX_V + 15)
 
 #if !MAP_USE_PARTICLES
@@ -100,11 +104,11 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
 {
     s32 temp_s0;
 
-    WorldEnvRender_LightPositionGet(&g_ParticleVectors0.vector_0);
-    g_ParticleVectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
+    WorldEnvRender_LightPositionGet(&g_WeatherParticleVectors0.vector_0);
+    g_WeatherParticleVectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_WeatherParticleVectors0.svec_18);
 
-    vwGetViewPosition(&g_ParticleVectors0.viewPosition);
-    vwGetViewAngle(&g_ParticleVectors0.viewRotation);
+    vwGetViewPosition(&g_WeatherParticleVectors0.viewPosition);
+    vwGetViewAngle(&g_WeatherParticleVectors0.viewRotation);
 
     switch (arg3)
     {
@@ -118,7 +122,7 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
 
             sharedData_800DD598_0_s00 = 0;
             g_SysWork.field_234A      = true;
-            g_ParticleMapIdx0 = mapIdx;
+            g_WeatherParticle_MapIdx0 = mapIdx;
 
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
@@ -131,14 +135,14 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
         default:
             sharedData_800DD584_0_s00 = g_DeltaTime == Q12(0.0f);
 
-            g_ParticleMapIdx1 = mapIdx;
+            g_WeatherParticle_MapIdx1 = mapIdx;
 
             temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
             SetSp(temp_s0);
             break;
     }
 
-    g_ParticleVectors1 = g_ParticleVectors0;
+    g_WeatherParticleVectors1 = g_WeatherParticleVectors0;
 }
 
 #else /* MAP_USE_PARTICLES */
@@ -169,14 +173,14 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
     Particle_SoundUpdate();
 #endif
 
-    WorldEnvRender_LightPositionGet(&g_ParticleVectors0.vector_0);
-    g_ParticleVectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_ParticleVectors0.svec_18);
+    WorldEnvRender_LightPositionGet(&g_WeatherParticleVectors0.vector_0);
+    g_WeatherParticleVectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_WeatherParticleVectors0.svec_18);
 
-    vwGetViewPosition(&g_ParticleVectors0.viewPosition);
-    vwGetViewAngle(&g_ParticleVectors0.viewRotation);
+    vwGetViewPosition(&g_WeatherParticleVectors0.viewPosition);
+    vwGetViewAngle(&g_WeatherParticleVectors0.viewRotation);
 
 #if defined(MAP5_S01)
-    g_Particle_SpeedX = 0;
+    g_WeatherParticle_SpeedX = 0;
 #endif
 
     switch (arg3)
@@ -186,53 +190,53 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 #if defined(MAP0_S00)
             sharedData_800DD591_0_s00 = 1;
 
-            g_ParticleBox.corners[0].vx = Q12(-5.0f);
-            g_ParticleBox.corners[0].vy = Q12(-4.5f);
-            g_ParticleBox.corners[0].vz = Q12(211.0f);
+            g_WeatherParticle_Box.corners[0].vx = Q12(-5.0f);
+            g_WeatherParticle_Box.corners[0].vy = Q12(-4.5f);
+            g_WeatherParticle_Box.corners[0].vz = Q12(211.0f);
 
-            g_ParticleBox.corners[1].vx = Q12(15.0f);
-            g_ParticleBox.corners[1].vy = Q12(-4.5f);
-            g_ParticleBox.corners[1].vz = Q12(211.0f);
+            g_WeatherParticle_Box.corners[1].vx = Q12(15.0f);
+            g_WeatherParticle_Box.corners[1].vy = Q12(-4.5f);
+            g_WeatherParticle_Box.corners[1].vz = Q12(211.0f);
 #elif defined(MAP0_S01)
             sharedData_800DD591_0_s00 = 1;
 
-            g_ParticleBox.corners[0].vx = Q12(-0.30f);
-            g_ParticleBox.corners[0].vz = Q12(275.0f);
-            g_ParticleBox.corners[1].vx = Q12(-0.30f);
-            g_ParticleBox.corners[1].vz = Q12(265.0f);
+            g_WeatherParticle_Box.corners[0].vx = Q12(-0.30f);
+            g_WeatherParticle_Box.corners[0].vz = Q12(275.0f);
+            g_WeatherParticle_Box.corners[1].vx = Q12(-0.30f);
+            g_WeatherParticle_Box.corners[1].vz = Q12(265.0f);
 #elif defined(MAP1_S06)
             switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 12:
                     sharedData_800DD591_0_s00             = 1;
-                    g_ParticleBox.corners[0].vx = Q12(105.5f);
-                    g_ParticleBox.corners[0].vz = Q12(67.0f);
-                    g_ParticleBox.corners[1].vx = Q12(105.5f);
-                    g_ParticleBox.corners[1].vz = Q12(50.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(105.5f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(67.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(105.5f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(50.0f);
                     break;
 
                 case 13:
                     sharedData_800DD591_0_s00             = 1;
-                    g_ParticleBox.corners[0].vx = Q12(145.0f);
-                    g_ParticleBox.corners[0].vz = Q12(24.0f);
-                    g_ParticleBox.corners[1].vx = Q12(132.0f);
-                    g_ParticleBox.corners[1].vz = Q12(24.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(145.0f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(24.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(132.0f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(24.0f);
                     break;
 
                 case 9:
                     sharedData_800DD591_0_s00             = 1;
-                    g_ParticleBox.corners[0].vx = Q12(55.0f);
-                    g_ParticleBox.corners[0].vz = Q12(137.0f);
-                    g_ParticleBox.corners[1].vx = Q12(62.0f);
-                    g_ParticleBox.corners[1].vz = Q12(137.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(55.0f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(137.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(62.0f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(137.0f);
                     break;
 
                 case 14:
                     sharedData_800DD591_0_s00             = 2;
-                    g_ParticleBox.corners[0].vx = Q12(96.5f);
-                    g_ParticleBox.corners[0].vz = Q12(15.0f);
-                    g_ParticleBox.corners[1].vx = Q12(103.5f);
-                    g_ParticleBox.corners[1].vz = Q12(15.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(96.5f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(15.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(103.5f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(15.0f);
                     break;
             }
 #elif defined(MAP2_S00)
@@ -240,58 +244,58 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             {
                 case 38:
                     sharedData_800DD591_0_s00                 = 10;
-                    g_ParticleBox.corners[0].vx = Q12(120.0f);
-                    g_ParticleBox.corners[0].vz = Q12(303.5f);
-                    g_ParticleBox.corners[1].vx = Q12(110.0f);
-                    g_ParticleBox.corners[1].vz = Q12(303.5f);
-                    g_ParticleBox.corners[2].vx = Q12(128.3f);
-                    g_ParticleBox.corners[2].vz = Q12(295.0f);
-                    g_ParticleBox.corners[3].vx = Q12(128.3f);
-                    g_ParticleBox.corners[3].vz = Q12(305.0f);
-                    g_ParticleBox.corners[4].vx = Q12(111.3f);
-                    g_ParticleBox.corners[4].vz = Q12(298.0f);
-                    g_ParticleBox.corners[5].vx = Q12(111.3f);
-                    g_ParticleBox.corners[5].vz = Q12(295.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(120.0f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(303.5f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(110.0f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(303.5f);
+                    g_WeatherParticle_Box.corners[2].vx = Q12(128.3f);
+                    g_WeatherParticle_Box.corners[2].vz = Q12(295.0f);
+                    g_WeatherParticle_Box.corners[3].vx = Q12(128.3f);
+                    g_WeatherParticle_Box.corners[3].vz = Q12(305.0f);
+                    g_WeatherParticle_Box.corners[4].vx = Q12(111.3f);
+                    g_WeatherParticle_Box.corners[4].vz = Q12(298.0f);
+                    g_WeatherParticle_Box.corners[5].vx = Q12(111.3f);
+                    g_WeatherParticle_Box.corners[5].vz = Q12(295.0f);
                     break;
 
                 case 23:
                     sharedData_800DD591_0_s00                 = 1;
-                    g_ParticleBox.corners[0].vx = Q12(-186.0f);
-                    g_ParticleBox.corners[0].vz = Q12(301.0f);
-                    g_ParticleBox.corners[1].vx = Q12(-188.0f);
-                    g_ParticleBox.corners[1].vz = Q12(301.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(-186.0f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(301.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(-188.0f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(301.0f);
                     break;
 
                 case 37:
                     sharedData_800DD591_0_s00                 = 9;
-                    g_ParticleBox.corners[0].vx = Q12(121.0f);
-                    g_ParticleBox.corners[0].vz = Q12(223.0f);
-                    g_ParticleBox.corners[1].vx = Q12(114.0f);
-                    g_ParticleBox.corners[1].vz = Q12(223.0f);
-                    g_ParticleBox.corners[2].vx = Q12(128.3f);
-                    g_ParticleBox.corners[2].vz = Q12(215.0f);
-                    g_ParticleBox.corners[3].vx = Q12(128.3f);
-                    g_ParticleBox.corners[3].vz = Q12(220.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(121.0f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(223.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(114.0f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(223.0f);
+                    g_WeatherParticle_Box.corners[2].vx = Q12(128.3f);
+                    g_WeatherParticle_Box.corners[2].vz = Q12(215.0f);
+                    g_WeatherParticle_Box.corners[3].vx = Q12(128.3f);
+                    g_WeatherParticle_Box.corners[3].vz = Q12(220.0f);
                     break;
 
                 case 40:
                     sharedData_800DD591_0_s00                 = 11;
-                    g_ParticleBox.corners[0].vx = Q12(-48.0f);
-                    g_ParticleBox.corners[0].vz = Q12(349.0f);
-                    g_ParticleBox.corners[1].vx = Q12(-48.0f);
-                    g_ParticleBox.corners[1].vz = Q12(343.0f);
-                    g_ParticleBox.corners[2].vx = Q12(-39.0f);
-                    g_ParticleBox.corners[2].vz = Q12(343.0f);
-                    g_ParticleBox.corners[3].vx = Q12(-39.0f);
-                    g_ParticleBox.corners[3].vz = Q12(349.0f);
-                    g_ParticleBox.corners[4].vx = Q12(-39.0f);
-                    g_ParticleBox.corners[4].vz = Q12(349.0f);
-                    g_ParticleBox.corners[5].vx = Q12(-48.0f);
-                    g_ParticleBox.corners[5].vz = Q12(349.0f);
-                    g_ParticleBox.corners[6].vx = Q12(-48.0f);
-                    g_ParticleBox.corners[6].vz = Q12(343.0f);
-                    g_ParticleBox.corners[7].vx = Q12(-39.0f);
-                    g_ParticleBox.corners[7].vz = Q12(343.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(-48.0f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(349.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(-48.0f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(343.0f);
+                    g_WeatherParticle_Box.corners[2].vx = Q12(-39.0f);
+                    g_WeatherParticle_Box.corners[2].vz = Q12(343.0f);
+                    g_WeatherParticle_Box.corners[3].vx = Q12(-39.0f);
+                    g_WeatherParticle_Box.corners[3].vz = Q12(349.0f);
+                    g_WeatherParticle_Box.corners[4].vx = Q12(-39.0f);
+                    g_WeatherParticle_Box.corners[4].vz = Q12(349.0f);
+                    g_WeatherParticle_Box.corners[5].vx = Q12(-48.0f);
+                    g_WeatherParticle_Box.corners[5].vz = Q12(349.0f);
+                    g_WeatherParticle_Box.corners[6].vx = Q12(-48.0f);
+                    g_WeatherParticle_Box.corners[6].vz = Q12(343.0f);
+                    g_WeatherParticle_Box.corners[7].vx = Q12(-39.0f);
+                    g_WeatherParticle_Box.corners[7].vz = Q12(343.0f);
                     break;
 
                 default:
@@ -300,63 +304,63 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             }
 #elif defined(MAP2_S02)
             sharedData_800DD591_0_s00                 = 0;
-            g_ParticleBox.corners[0].vx = Q12(-31.0f);
-            g_ParticleBox.corners[0].vz = Q12(-8.0f);
-            g_ParticleBox.corners[1].vx = Q12(-31.0f);
-            g_ParticleBox.corners[1].vz = Q12(-11.0f);
-            g_ParticleBox.corners[2].vx = Q12(-25.5f);
-            g_ParticleBox.corners[2].vz = Q12(-8.0f);
-            g_ParticleBox.corners[3].vx = Q12(-31.0f);
-            g_ParticleBox.corners[3].vz = Q12(-8.0f);
-            g_ParticleBox.corners[4].vx = Q12(-25.5f);
-            g_ParticleBox.corners[4].vz = Q12(-11.0f);
-            g_ParticleBox.corners[5].vx = Q12(-25.5f);
-            g_ParticleBox.corners[5].vz = Q12(-8.0f);
+            g_WeatherParticle_Box.corners[0].vx = Q12(-31.0f);
+            g_WeatherParticle_Box.corners[0].vz = Q12(-8.0f);
+            g_WeatherParticle_Box.corners[1].vx = Q12(-31.0f);
+            g_WeatherParticle_Box.corners[1].vz = Q12(-11.0f);
+            g_WeatherParticle_Box.corners[2].vx = Q12(-25.5f);
+            g_WeatherParticle_Box.corners[2].vz = Q12(-8.0f);
+            g_WeatherParticle_Box.corners[3].vx = Q12(-31.0f);
+            g_WeatherParticle_Box.corners[3].vz = Q12(-8.0f);
+            g_WeatherParticle_Box.corners[4].vx = Q12(-25.5f);
+            g_WeatherParticle_Box.corners[4].vz = Q12(-11.0f);
+            g_WeatherParticle_Box.corners[5].vx = Q12(-25.5f);
+            g_WeatherParticle_Box.corners[5].vz = Q12(-8.0f);
 #elif defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
             switch (g_SavegamePtr->mapRoomIdx)
             {
                 case 3:
                     sharedData_800DD591_0_s00                 = 2;
-                    g_ParticleBox.corners[0].vx = Q12(101.5f);
-                    g_ParticleBox.corners[0].vz = Q12(100.0f);
-                    g_ParticleBox.corners[1].vx = Q12(101.5f);
-                    g_ParticleBox.corners[1].vz = Q12(105.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(101.5f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(100.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(101.5f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(105.0f);
                     break;
 
                 case 5:
                     sharedData_800DD591_0_s00                 = 1;
-                    g_ParticleBox.corners[0].vx = Q12(17.7f);
-                    g_ParticleBox.corners[0].vz = Q12(30.0f);
-                    g_ParticleBox.corners[1].vx = Q12(17.7f);
-                    g_ParticleBox.corners[1].vz = Q12(17.0f);
-                    g_ParticleBox.corners[2].vx = Q12(17.5f);
-                    g_ParticleBox.corners[2].vz = Q12(15.0f);
-                    g_ParticleBox.corners[3].vx = Q12(15.0f);
-                    g_ParticleBox.corners[3].vz = Q12(15.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(17.7f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(30.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(17.7f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(17.0f);
+                    g_WeatherParticle_Box.corners[2].vx = Q12(17.5f);
+                    g_WeatherParticle_Box.corners[2].vz = Q12(15.0f);
+                    g_WeatherParticle_Box.corners[3].vx = Q12(15.0f);
+                    g_WeatherParticle_Box.corners[3].vz = Q12(15.0f);
                     break;
 
                 case 8:
                     sharedData_800DD591_0_s00                 = 2;
-                    g_ParticleBox.corners[0].vx = Q12(63.5f);
-                    g_ParticleBox.corners[0].vz = Q12(57.0f);
-                    g_ParticleBox.corners[1].vx = Q12(63.5f);
-                    g_ParticleBox.corners[1].vz = Q12(63.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(63.5f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(57.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(63.5f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(63.0f);
                     break;
 
                 case 9:
                     sharedData_800DD591_0_s00                 = 2;
-                    g_ParticleBox.corners[0].vx = Q12(104.0f);
-                    g_ParticleBox.corners[0].vz = Q12(56.0f);
-                    g_ParticleBox.corners[1].vx = Q12(104.0f);
-                    g_ParticleBox.corners[1].vz = Q12(61.5f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(104.0f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(56.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(104.0f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(61.5f);
                     break;
 
                 case 11:
                     sharedData_800DD591_0_s00                 = 2;
-                    g_ParticleBox.corners[0].vx = Q12(143.8f);
-                    g_ParticleBox.corners[0].vz = Q12(18.0f);
-                    g_ParticleBox.corners[1].vx = Q12(143.8f);
-                    g_ParticleBox.corners[1].vz = Q12(22.0f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(143.8f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(18.0f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(143.8f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(22.0f);
                     break;
 
                 default:
@@ -367,10 +371,10 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             if (g_SavegamePtr->mapRoomIdx == 20)
             {
                 sharedData_800DD591_0_s00                 = 1;
-                g_ParticleBox.corners[0].vx = Q12(133.0f);
-                g_ParticleBox.corners[0].vz = Q12(130.0f);
-                g_ParticleBox.corners[1].vx = Q12(133.0f);
-                g_ParticleBox.corners[1].vz = Q12(150.0f);
+                g_WeatherParticle_Box.corners[0].vx = Q12(133.0f);
+                g_WeatherParticle_Box.corners[0].vz = Q12(130.0f);
+                g_WeatherParticle_Box.corners[1].vx = Q12(133.0f);
+                g_WeatherParticle_Box.corners[1].vz = Q12(150.0f);
             }
 
 #elif defined(MAP5_S03)
@@ -399,11 +403,11 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 #if defined(MAP7_S03)
             D_800F23D4 = 0;
 #endif
-            g_Particle_PrevPosition.vz = Q12(0.0f);
-            g_Particle_PrevPosition.vx = Q12(0.0f);
+            g_WeatherParticle_PrevPosition.vz = Q12(0.0f);
+            g_WeatherParticle_PrevPosition.vx = Q12(0.0f);
 
             g_SysWork.field_234A = true;
-            g_ParticleMapIdx0 = mapIdx;
+            g_WeatherParticle_MapIdx0 = mapIdx;
 
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
@@ -411,9 +415,9 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 
             temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
 
-            Particle_SnowInitialize(g_Particles);
+            Particle_SnowInitialize(g_WeatherParticles);
 #if defined(MAP0_S00)
-            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_ParticleMapIdx0);
+            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_WeatherParticle_MapIdx0);
 #endif
             SetSp(temp_s0);
             break;
@@ -435,8 +439,8 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                     sharedData_800DD598_0_s00++;
                 }
 
-                temp_s0_2 = Q12_MULT(Math_Sin(Q12_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
-                temp_a2   = Q12_MULT(Math_Sin(Q12_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
+                temp_s0_2 = Q12_MULT(Math_Sin(Q12_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (WEATHER_PARTICLE_COUNT_MAX / 2)) + (WEATHER_PARTICLE_COUNT_MAX / 2);
+                temp_a2   = Q12_MULT(Math_Sin(Q12_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (WEATHER_PARTICLE_COUNT_MAX / 2)) + (WEATHER_PARTICLE_COUNT_MAX / 2);
                 temp_t0 = sharedData_800E0CB6_0_s00 >> 14;
 
                 for (i = 0; i < 2; i++)
@@ -449,60 +453,60 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                     {
                         case 4:
                         case 6:
-                            g_ParticlesAddedCount[i] = temp_s0_2;
+                            g_WeatherParticlesAddedCount[i] = temp_s0_2;
                             break;
 
                         case 5:
                         case 7:
                             var_v0 = temp_s0_2 * 2;
-                            g_ParticlesAddedCount[i] = var_v0;
+                            g_WeatherParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 32:
                         case 48:
-                            g_ParticlesAddedCount[i] = temp_a2;
+                            g_WeatherParticlesAddedCount[i] = temp_a2;
                             break;
 
                         case 37:
                         case 39:
                         case 53:
                         case 55:
-                            var_v0                       = temp_s0_2 + (PARTICLE_COUNT_MAX / 2);
-                            g_ParticlesAddedCount[i] = var_v0;
+                            var_v0                       = temp_s0_2 + (WEATHER_PARTICLE_COUNT_MAX / 2);
+                            g_WeatherParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 40:
                         case 56:
                             var_v0 = temp_a2 * 2;
-                            g_ParticlesAddedCount[i] = var_v0;
+                            g_WeatherParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 44:
                         case 46:
                         case 60:
                         case 62:
-                            var_v0                       = temp_a2 + (PARTICLE_COUNT_MAX / 2);
-                            g_ParticlesAddedCount[i] = var_v0;
+                            var_v0                       = temp_a2 + (WEATHER_PARTICLE_COUNT_MAX / 2);
+                            g_WeatherParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 0:
-                            g_ParticlesAddedCount[i] = 0;
+                            g_WeatherParticlesAddedCount[i] = 0;
                             break;
 
                         case 36:
                         case 38:
                         case 52:
                         case 54:
-                            var_v0                       = PARTICLE_COUNT_MAX / 2;
-                            g_ParticlesAddedCount[i] = var_v0;
+                            var_v0                       = WEATHER_PARTICLE_COUNT_MAX / 2;
+                            g_WeatherParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 45:
                         case 47:
                         case 61:
                         case 63:
-                            var_v0                       = PARTICLE_COUNT_MAX;
-                            g_ParticlesAddedCount[i] = var_v0;
+                            var_v0                       = WEATHER_PARTICLE_COUNT_MAX;
+                            g_WeatherParticlesAddedCount[i] = var_v0;
                             break;
                     }
 
@@ -524,7 +528,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                             case 6:
                             case 32:
                             case 48:
-                                var_v0_3                  = g_ParticlesAddedCount[i] < ((PARTICLE_COUNT_MAX / 4) + 1);
+                                var_v0_3                  = g_WeatherParticlesAddedCount[i] < ((WEATHER_PARTICLE_COUNT_MAX / 4) + 1);
                                 sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
@@ -532,7 +536,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                             case 7:
                             case 40:
                             case 56:
-                                var_v0_3                  = g_ParticlesAddedCount[i] < ((PARTICLE_COUNT_MAX / 2) + 1);
+                                var_v0_3                  = g_WeatherParticlesAddedCount[i] < ((WEATHER_PARTICLE_COUNT_MAX / 2) + 1);
                                 sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
@@ -615,23 +619,23 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                 }
             }
 
-            g_ParticleMapIdx1 = mapIdx;
+            g_WeatherParticle_MapIdx1 = mapIdx;
             temp_s0_3 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
 
-            Particle_Update(g_Particles);
+            Particle_Update(g_WeatherParticles);
 #if defined(MAP0_S00)
-            func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_ParticleMapIdx1);
+            func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_WeatherParticle_MapIdx1);
 #endif
             SetSp(temp_s0_3);
 
-            for (i = g_ParticlesAddedCount[0] + g_ParticlesAddedCount[1]; i < PARTICLE_COUNT_MAX; i++)
+            for (i = g_WeatherParticlesAddedCount[0] + g_WeatherParticlesAddedCount[1]; i < WEATHER_PARTICLE_COUNT_MAX; i++)
             {
-                g_Particles[i].stateStep = 0;
+                g_WeatherParticles[i].stateStep = 0;
             }
             break;
     }
 
-    g_ParticleVectors1 = g_ParticleVectors0;
+    g_WeatherParticleVectors1 = g_WeatherParticleVectors0;
 }
 
 bool Particle_CameraMovedCheck(void)
@@ -639,9 +643,9 @@ bool Particle_CameraMovedCheck(void)
     q19_12 dist;
     q19_12 rotY;
 
-    dist = SquareRoot0(SQUARE(ABS_DIFF(g_Particle_Position.vx, g_Particle_PrevPosition.vx)) +
-                       SQUARE(ABS_DIFF(g_Particle_Position.vz, g_Particle_PrevPosition.vz)));
-    rotY = ABS_DIFF(g_Particle_PrevRotationY, g_ParticleVectors0.viewRotation.vy);
+    dist = SquareRoot0(SQUARE(ABS_DIFF(g_WeatherParticle_Position.vx, g_WeatherParticle_PrevPosition.vx)) +
+                       SQUARE(ABS_DIFF(g_WeatherParticle_Position.vz, g_WeatherParticle_PrevPosition.vz)));
+    rotY = ABS_DIFF(g_WeatherParticle_PrevRotationY, g_WeatherParticleVectors0.viewRotation.vy);
     if (dist > 10000 || rotY > Q12_ANGLE(45.0f))
     {
         return true;
@@ -678,10 +682,10 @@ bool Particle_CameraMovedCheck(void)
  *     }
  * }
  */
-void Particle_SnowInitialize(s_Particle* parts)
+void Particle_SnowInitialize(s_WeatherParticle* parts)
 {
-    #define SNOW_COUNT_MAX       PARTICLE_COUNT_MAX
-    #define SNOW_SPAWN_COUNT_MAX (PARTICLE_COUNT_MAX/2)
+    #define SNOW_COUNT_MAX       WEATHER_PARTICLE_COUNT_MAX
+    #define SNOW_SPAWN_COUNT_MAX (WEATHER_PARTICLE_COUNT_MAX/2)
     #define SNOW_REST_TICKS_MAX  16
 
     s32         i;
@@ -692,7 +696,7 @@ void Particle_SnowInitialize(s_Particle* parts)
     u16         settingsState; // TODO: Rename.
     u16         snowType;
     s32         deltaTime;
-    s_Particle* part;
+    s_WeatherParticle* part;
 
     deltaTime = Q12(0.1f / 3.0f);
 
@@ -705,8 +709,8 @@ void Particle_SnowInitialize(s_Particle* parts)
     }
 
     // Reset counts. NOTE: One is unused.
-    g_ParticlesAddedCount[1] = 0;
-    g_ParticlesAddedCount[0] = 0;
+    g_WeatherParticlesAddedCount[1] = 0;
+    g_WeatherParticlesAddedCount[0] = 0;
 
     // Settings byte holds state and snow type. Can be 0-2. 1 enables snow. TODO: Move doc.
     settingsState = (sharedData_800E0CB8_0_s00 & 0xC) >> 2;
@@ -741,20 +745,20 @@ void Particle_SnowInitialize(s_Particle* parts)
         // Set wind speed on XZ plane.
         if (snowType >= SnowType_LightWindy)
         {
-            g_Particle_SpeedZ = SNOW_COUNT_LIGHT_MAX * 2;
-            g_Particle_SpeedX = SNOW_COUNT_LIGHT_MAX * 2;
+            g_WeatherParticle_SpeedZ = SNOW_COUNT_LIGHT_MAX * 2;
+            g_WeatherParticle_SpeedX = SNOW_COUNT_LIGHT_MAX * 2;
         }
         else
         {
-            g_Particle_SpeedZ = 0;
-            g_Particle_SpeedX = 0;
+            g_WeatherParticle_SpeedZ = 0;
+            g_WeatherParticle_SpeedX = 0;
         }
 
         // Set start position.
 #if defined(MAP1_S06)
-        g_Particle_Position.vy = Q12(-10.0f);
+        g_WeatherParticle_Position.vy = Q12(-10.0f);
 #else
-        g_Particle_Position.vy = Q12(-6.0f);
+        g_WeatherParticle_Position.vy = Q12(-6.0f);
 #endif
 
         // Particle type determines particle multiplier for spawn loop.
@@ -764,35 +768,35 @@ void Particle_SnowInitialize(s_Particle* parts)
         for (j = 0; j < SNOW_SPAWN_COUNT_MAX; j++)
         {
             // Reset how many particles to spawn this iteration.
-            g_ParticleSpawnCount = 0;
+            g_WeatherParticleSpawnCount = 0;
 
             rand                                  = Rng_Rand16();
-            g_ParticlesAddedCount[settingsState] += spawnMult;
+            g_WeatherParticlesAddedCount[settingsState] += spawnMult;
 
             // Clamp spawn count.
             if (snowType == SnowType_Light || snowType == SnowType_LightWindy)
             {
-                limitRange(g_ParticlesAddedCount[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
+                limitRange(g_WeatherParticlesAddedCount[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
             }
             else
             {
-                limitRange(g_ParticlesAddedCount[settingsState], 0, SNOW_COUNT_MAX);
+                limitRange(g_WeatherParticlesAddedCount[settingsState], 0, SNOW_COUNT_MAX);
             }
 
-            for (i = 0, part = parts; i < g_ParticlesAddedCount[settingsState]; i++, part++)
+            for (i = 0, part = parts; i < g_WeatherParticlesAddedCount[settingsState]; i++, part++)
             {
                 switch (part->stateStep)
                 {
-                    case ParticleState_Spawn:
+                    case WeatherParticleState_Spawn:
                         // Throttle spawning.
-                        if (g_ParticleSpawnCount < density)
+                        if (g_WeatherParticleSpawnCount < density)
                         {
-                            g_ParticleSpawnCount++;
+                            g_WeatherParticleSpawnCount++;
                             Particle_Spawn(settingsState, part, &rand);
                         }
                         break;
 
-                    case ParticleState_Active:
+                    case WeatherParticleState_Active:
                         Particle_SpawnMovementApply(settingsState, part, &rand, &deltaTime);
 
                         // Step to rest state when Y position reaches 0.
@@ -806,7 +810,7 @@ void Particle_SnowInitialize(s_Particle* parts)
                         }
                         break;
 
-                    default: // `ParticleState_Rest`
+                    default: // `WeatherParticleState_Rest`
                         part->stateStep++;
                         if (part->stateStep >= SNOW_REST_TICKS_MAX)
                         {
@@ -841,7 +845,7 @@ void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CBFB0
 }
 #endif
 
-bool Particle_Update(s_Particle* partHead)
+bool Particle_Update(s_WeatherParticle* partHead)
 {
     #define SNOW_REST_TICKS_UPDATE_MAX 32
 
@@ -856,7 +860,7 @@ bool Particle_Update(s_Particle* partHead)
     s32         density;
     s32         updateCount;
     s32         updatePrev;
-    s_Particle* curPart;
+    s_WeatherParticle* curPart;
 
     density = 0;
 
@@ -880,28 +884,28 @@ bool Particle_Update(s_Particle* partHead)
 
     GsInitCoordinate2(0, &g_SysWork.coord_22A8);
 
-    g_Particle_Position.vx = g_ParticleVectors0.viewPosition.vx + Q12_MULT(Math_Sin(g_ParticleVectors0.viewRotation.vy), Q12(3.0));
-    g_Particle_Position.vz = g_ParticleVectors0.viewPosition.vz + Q12_MULT(Math_Cos(g_ParticleVectors0.viewRotation.vy), Q12(3.0));
+    g_WeatherParticle_Position.vx = g_WeatherParticleVectors0.viewPosition.vx + Q12_MULT(Math_Sin(g_WeatherParticleVectors0.viewRotation.vy), Q12(3.0));
+    g_WeatherParticle_Position.vz = g_WeatherParticleVectors0.viewPosition.vz + Q12_MULT(Math_Cos(g_WeatherParticleVectors0.viewRotation.vy), Q12(3.0));
 #if defined(MAP1_S06)
-    g_Particle_Position.vy = Q12(-10.0);
+    g_WeatherParticle_Position.vy = Q12(-10.0);
 #else
-    g_Particle_Position.vy = Q12(-6.0);
+    g_WeatherParticle_Position.vy = Q12(-6.0);
 #endif
 
     curPart = partHead;
 
-    prevPos = g_Particle_Position;
-    if (g_Particle_PrevPosition.vx == Q12(0.0f) && g_Particle_PrevPosition.vz == Q12(0.0f))
+    prevPos = g_WeatherParticle_Position;
+    if (g_WeatherParticle_PrevPosition.vx == Q12(0.0f) && g_WeatherParticle_PrevPosition.vz == Q12(0.0f))
     {
-        g_Particle_PrevPosition.vx = prevPos.vx;
-        g_Particle_PrevPosition.vz = prevPos.vz;
+        g_WeatherParticle_PrevPosition.vx = prevPos.vx;
+        g_WeatherParticle_PrevPosition.vz = prevPos.vz;
     }
 
-    g_ParticleCameraMoved = Particle_CameraMovedCheck();
+    g_WeatherParticle_CameraMoved = Particle_CameraMovedCheck();
 
     g_SysWork.coord_22A8.coord.t[1] = Q8(0.0f);
-    g_SysWork.coord_22A8.coord.t[0] = Q12_TO_Q8(g_Particle_Position.vx);
-    g_SysWork.coord_22A8.coord.t[2] = Q12_TO_Q8(g_Particle_Position.vz);
+    g_SysWork.coord_22A8.coord.t[0] = Q12_TO_Q8(g_WeatherParticle_Position.vx);
+    g_SysWork.coord_22A8.coord.t[2] = Q12_TO_Q8(g_WeatherParticle_Position.vz);
 
     g_SysWork.coord_22A8.flg = false;
     Vw_CoordToWorldAndViewMatrices(&g_SysWork.coord_22A8, &worldMat, &viewMat);
@@ -919,47 +923,47 @@ bool Particle_Update(s_Particle* partHead)
         // Ramp up the speed to 200, then add some randomness once fast enough.
 
         // Modulate X-axis speed.
-        if (g_Particle_SpeedX < 200)
+        if (g_WeatherParticle_SpeedX < 200)
         {
-            g_Particle_SpeedX++;
+            g_WeatherParticle_SpeedX++;
         }
         else
         {
-            g_Particle_SpeedX += Rng_GenerateInt(-8, 8);
-            limitRange(g_Particle_SpeedX, 200, 800);
+            g_WeatherParticle_SpeedX += Rng_GenerateInt(-8, 8);
+            limitRange(g_WeatherParticle_SpeedX, 200, 800);
         }
 
         // Modulate Z-axis speed.
-        if (g_Particle_SpeedZ < 200)
+        if (g_WeatherParticle_SpeedZ < 200)
         {
-            g_Particle_SpeedZ++;
+            g_WeatherParticle_SpeedZ++;
         }
         else
         {
-            g_Particle_SpeedZ += Rng_GenerateInt(-8, 8);
-            limitRange(g_Particle_SpeedZ, 20, 800); // Might be a dev mistake? Makes more sense to be 200 like above.
+            g_WeatherParticle_SpeedZ += Rng_GenerateInt(-8, 8);
+            limitRange(g_WeatherParticle_SpeedZ, 20, 800); // Might be a dev mistake? Makes more sense to be 200 like above.
         }
     }
     // Wind is disabled, ramp speed down to 0.
     else
     {
         // X.
-        if (g_Particle_SpeedX != 0)
+        if (g_WeatherParticle_SpeedX != 0)
         {
-            g_Particle_SpeedX--;
+            g_WeatherParticle_SpeedX--;
         }
 
         // Z.
-        if (g_Particle_SpeedZ != 0)
+        if (g_WeatherParticle_SpeedZ != 0)
         {
-            g_Particle_SpeedZ--;
+            g_WeatherParticle_SpeedZ--;
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     // Reset how many particles to spawn this tick.
-    g_ParticleSpawnCount = 0;
+    g_WeatherParticleSpawnCount = 0;
 
 #if defined(MAP0_S00)
     if (g_SavegamePtr->mapRoomIdx == 3 && PLAYER_CHARA().position.vz > Q12(200.0f))
@@ -977,36 +981,36 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx)
     {
         case 2:
-            g_ParticleBox.corners[0].vx = Q12(-101.5f);
-            g_ParticleBox.corners[0].vz = Q12(23.8f);
-            g_ParticleBox.corners[1].vx = Q12(-101.5f);
-            g_ParticleBox.corners[1].vz = Q12(17.0f);
-            g_ParticleBox.corners[2].vx = Q12(-98.5f);
-            g_ParticleBox.corners[2].vz = Q12(17.0f);
-            g_ParticleBox.corners[3].vx = Q12(-98.5f);
-            g_ParticleBox.corners[3].vz = Q12(23.8f);
-            g_ParticleBox.corners[4].vx = Q12(-98.5f);
-            g_ParticleBox.corners[4].vz = Q12(23.8f);
-            g_ParticleBox.corners[5].vx = Q12(-101.5f);
-            g_ParticleBox.corners[5].vz = Q12(23.8f);
-            g_ParticleBox.corners[6].vx = Q12(-101.5f);
-            g_ParticleBox.corners[6].vz = Q12(17.0f);
-            g_ParticleBox.corners[7].vx = Q12(-98.5f);
-            g_ParticleBox.corners[7].vz = Q12(17.0f);
+            g_WeatherParticle_Box.corners[0].vx = Q12(-101.5f);
+            g_WeatherParticle_Box.corners[0].vz = Q12(23.8f);
+            g_WeatherParticle_Box.corners[1].vx = Q12(-101.5f);
+            g_WeatherParticle_Box.corners[1].vz = Q12(17.0f);
+            g_WeatherParticle_Box.corners[2].vx = Q12(-98.5f);
+            g_WeatherParticle_Box.corners[2].vz = Q12(17.0f);
+            g_WeatherParticle_Box.corners[3].vx = Q12(-98.5f);
+            g_WeatherParticle_Box.corners[3].vz = Q12(23.8f);
+            g_WeatherParticle_Box.corners[4].vx = Q12(-98.5f);
+            g_WeatherParticle_Box.corners[4].vz = Q12(23.8f);
+            g_WeatherParticle_Box.corners[5].vx = Q12(-101.5f);
+            g_WeatherParticle_Box.corners[5].vz = Q12(23.8f);
+            g_WeatherParticle_Box.corners[6].vx = Q12(-101.5f);
+            g_WeatherParticle_Box.corners[6].vz = Q12(17.0f);
+            g_WeatherParticle_Box.corners[7].vx = Q12(-98.5f);
+            g_WeatherParticle_Box.corners[7].vz = Q12(17.0f);
             break;
 
         case 3:
-            g_ParticleBox.corners[0].vx = Q12(-145.0f);
-            g_ParticleBox.corners[0].vz = Q12(15.5f);
-            g_ParticleBox.corners[1].vx = Q12(-135.0f);
-            g_ParticleBox.corners[1].vz = Q12(15.5f);
+            g_WeatherParticle_Box.corners[0].vx = Q12(-145.0f);
+            g_WeatherParticle_Box.corners[0].vz = Q12(15.5f);
+            g_WeatherParticle_Box.corners[1].vx = Q12(-135.0f);
+            g_WeatherParticle_Box.corners[1].vz = Q12(15.5f);
             break;
 
         case 4:
-            g_ParticleBox.corners[0].vx = Q12(-184.0f);
-            g_ParticleBox.corners[0].vz = Q12(23.0f);
-            g_ParticleBox.corners[1].vx = Q12(-184.0f);
-            g_ParticleBox.corners[1].vz = Q12(16.0f);
+            g_WeatherParticle_Box.corners[0].vx = Q12(-184.0f);
+            g_WeatherParticle_Box.corners[0].vz = Q12(23.0f);
+            g_WeatherParticle_Box.corners[1].vx = Q12(-184.0f);
+            g_WeatherParticle_Box.corners[1].vz = Q12(16.0f);
             break;
     }
 
@@ -1030,12 +1034,12 @@ bool Particle_Update(s_Particle* partHead)
             if (PLAYER_CHARA().position.vz > Q12(200.0f))
             {
                 sharedData_800DD591_0_s00 = 1;
-                g_ParticleBox.corners[0].vx = Q12(-5.0f);
-                g_ParticleBox.corners[0].vy = Q12(-4.5f);
-                g_ParticleBox.corners[0].vz = Q12(211.0f);
-                g_ParticleBox.corners[1].vx = Q12(15.0f);
-                g_ParticleBox.corners[1].vy = Q12(-4.5f);
-                g_ParticleBox.corners[1].vz = Q12(211.0f);
+                g_WeatherParticle_Box.corners[0].vx = Q12(-5.0f);
+                g_WeatherParticle_Box.corners[0].vy = Q12(-4.5f);
+                g_WeatherParticle_Box.corners[0].vz = Q12(211.0f);
+                g_WeatherParticle_Box.corners[1].vx = Q12(15.0f);
+                g_WeatherParticle_Box.corners[1].vy = Q12(-4.5f);
+                g_WeatherParticle_Box.corners[1].vz = Q12(211.0f);
             }
             else
             {
@@ -1050,18 +1054,18 @@ bool Particle_Update(s_Particle* partHead)
                 PLAYER_CHARA().position.vz < Q12(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
-                    g_ParticleBox.corners[0].vx = Q12(-44.5f);
-                    g_ParticleBox.corners[0].vz = Q12(-11.2f);
-                    g_ParticleBox.corners[1].vx = Q12(-44.5f);
-                    g_ParticleBox.corners[1].vz = Q12(-13.0f);
-                    g_ParticleBox.corners[2].vx = Q12(-43.0f);
-                    g_ParticleBox.corners[2].vz = Q12(-13.0f);
-                    g_ParticleBox.corners[3].vx = Q12(-43.0f);
-                    g_ParticleBox.corners[3].vz = Q12(-11.2f);
-                    g_ParticleBox.corners[4].vx = Q12(-43.0f);
-                    g_ParticleBox.corners[4].vz = Q12(-11.2f);
-                    g_ParticleBox.corners[5].vx = Q12(-44.5f);
-                    g_ParticleBox.corners[5].vz = Q12(-11.2f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(-44.5f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(-11.2f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(-44.5f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(-13.0f);
+                    g_WeatherParticle_Box.corners[2].vx = Q12(-43.0f);
+                    g_WeatherParticle_Box.corners[2].vz = Q12(-13.0f);
+                    g_WeatherParticle_Box.corners[3].vx = Q12(-43.0f);
+                    g_WeatherParticle_Box.corners[3].vz = Q12(-11.2f);
+                    g_WeatherParticle_Box.corners[4].vx = Q12(-43.0f);
+                    g_WeatherParticle_Box.corners[4].vz = Q12(-11.2f);
+                    g_WeatherParticle_Box.corners[5].vx = Q12(-44.5f);
+                    g_WeatherParticle_Box.corners[5].vz = Q12(-11.2f);
             }
             else if (PLAYER_CHARA().position.vx > Q12(-90.0f) &&
                      PLAYER_CHARA().position.vx < Q12(-56.0f) &&
@@ -1069,18 +1073,18 @@ bool Particle_Update(s_Particle* partHead)
                      PLAYER_CHARA().position.vz < Q12(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
-                    g_ParticleBox.corners[0].vx = Q12(-79.0f);
-                    g_ParticleBox.corners[0].vz = Q12(-10.5f);
-                    g_ParticleBox.corners[1].vx = Q12(-79.0f);
-                    g_ParticleBox.corners[1].vz = Q12(-13.0f);
-                    g_ParticleBox.corners[2].vx = Q12(-66.5f);
-                    g_ParticleBox.corners[2].vz = Q12(-13.0f);
-                    g_ParticleBox.corners[3].vx = Q12(-66.5f);
-                    g_ParticleBox.corners[3].vz = Q12(-10.5f);
-                    g_ParticleBox.corners[4].vx = Q12(-66.5f);
-                    g_ParticleBox.corners[4].vz = Q12(-10.5f);
-                    g_ParticleBox.corners[5].vx = Q12(-79.0f);
-                    g_ParticleBox.corners[5].vz = Q12(-10.5f);
+                    g_WeatherParticle_Box.corners[0].vx = Q12(-79.0f);
+                    g_WeatherParticle_Box.corners[0].vz = Q12(-10.5f);
+                    g_WeatherParticle_Box.corners[1].vx = Q12(-79.0f);
+                    g_WeatherParticle_Box.corners[1].vz = Q12(-13.0f);
+                    g_WeatherParticle_Box.corners[2].vx = Q12(-66.5f);
+                    g_WeatherParticle_Box.corners[2].vz = Q12(-13.0f);
+                    g_WeatherParticle_Box.corners[3].vx = Q12(-66.5f);
+                    g_WeatherParticle_Box.corners[3].vz = Q12(-10.5f);
+                    g_WeatherParticle_Box.corners[4].vx = Q12(-66.5f);
+                    g_WeatherParticle_Box.corners[4].vz = Q12(-10.5f);
+                    g_WeatherParticle_Box.corners[5].vx = Q12(-79.0f);
+                    g_WeatherParticle_Box.corners[5].vz = Q12(-10.5f);
             }
             else
             {
@@ -1094,31 +1098,31 @@ bool Particle_Update(s_Particle* partHead)
                 PLAYER_CHARA().position.vz > Q12(136.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                g_ParticleBox.corners[0].vx = Q12(-232.0f);
-                g_ParticleBox.corners[0].vz = Q12(151.0f);
-                g_ParticleBox.corners[1].vx = Q12(-229.0f);
-                g_ParticleBox.corners[1].vz = Q12(151.0f);
-                g_ParticleBox.corners[2].vx = Q12(-232.0f);
-                g_ParticleBox.corners[2].vz = Q12(158.0f);
-                g_ParticleBox.corners[3].vx = Q12(-232.0f);
-                g_ParticleBox.corners[3].vz = Q12(151.0f);
-                g_ParticleBox.corners[4].vx = Q12(-228.0f);
-                g_ParticleBox.corners[4].vz = Q12(151.0f);
-                g_ParticleBox.corners[5].vx = Q12(-228.0f);
-                g_ParticleBox.corners[5].vz = Q12(158.0f);
+                g_WeatherParticle_Box.corners[0].vx = Q12(-232.0f);
+                g_WeatherParticle_Box.corners[0].vz = Q12(151.0f);
+                g_WeatherParticle_Box.corners[1].vx = Q12(-229.0f);
+                g_WeatherParticle_Box.corners[1].vz = Q12(151.0f);
+                g_WeatherParticle_Box.corners[2].vx = Q12(-232.0f);
+                g_WeatherParticle_Box.corners[2].vz = Q12(158.0f);
+                g_WeatherParticle_Box.corners[3].vx = Q12(-232.0f);
+                g_WeatherParticle_Box.corners[3].vz = Q12(151.0f);
+                g_WeatherParticle_Box.corners[4].vx = Q12(-228.0f);
+                g_WeatherParticle_Box.corners[4].vz = Q12(151.0f);
+                g_WeatherParticle_Box.corners[5].vx = Q12(-228.0f);
+                g_WeatherParticle_Box.corners[5].vz = Q12(158.0f);
             }
             else if (PLAYER_CHARA().position.vx <= Q12(-240.0f) &&
                      PLAYER_CHARA().position.vz > Q12(133.0f))
             {
                 sharedData_800DD591_0_s00 = 9;
-                g_ParticleBox.corners[0].vx = Q12(-251.0f);
-                g_ParticleBox.corners[0].vz = Q12(142.0f);
-                g_ParticleBox.corners[1].vx = Q12(-248.2f);
-                g_ParticleBox.corners[1].vz = Q12(142.0f);
-                g_ParticleBox.corners[2].vx = Q12(-248.2f);
-                g_ParticleBox.corners[2].vz = Q12(142.0f);
-                g_ParticleBox.corners[3].vx = Q12(-248.2f);
-                g_ParticleBox.corners[3].vz = Q12(147.0f);
+                g_WeatherParticle_Box.corners[0].vx = Q12(-251.0f);
+                g_WeatherParticle_Box.corners[0].vz = Q12(142.0f);
+                g_WeatherParticle_Box.corners[1].vx = Q12(-248.2f);
+                g_WeatherParticle_Box.corners[1].vz = Q12(142.0f);
+                g_WeatherParticle_Box.corners[2].vx = Q12(-248.2f);
+                g_WeatherParticle_Box.corners[2].vz = Q12(142.0f);
+                g_WeatherParticle_Box.corners[3].vx = Q12(-248.2f);
+                g_WeatherParticle_Box.corners[3].vz = Q12(147.0f);
             }
             else
             {
@@ -1133,18 +1137,18 @@ bool Particle_Update(s_Particle* partHead)
                 PLAYER_CHARA().position.vz < Q12(-72.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                g_ParticleBox.corners[0].vx = Q12(-208.0f);
-                g_ParticleBox.corners[0].vz = Q12(-93.0f);
-                g_ParticleBox.corners[1].vx = Q12(-208.0f);
-                g_ParticleBox.corners[1].vz = Q12(-91.0f);
-                g_ParticleBox.corners[2].vx = Q12(-212.0f);
-                g_ParticleBox.corners[2].vz = Q12(-91.0f);
-                g_ParticleBox.corners[3].vx = Q12(-212.0f);
-                g_ParticleBox.corners[3].vz = Q12(-93.0f);
-                g_ParticleBox.corners[4].vx = Q12(-208.0f);
-                g_ParticleBox.corners[4].vz = Q12(-91.0f);
-                g_ParticleBox.corners[5].vx = Q12(-212.0f);
-                g_ParticleBox.corners[5].vz = Q12(-91.0f);
+                g_WeatherParticle_Box.corners[0].vx = Q12(-208.0f);
+                g_WeatherParticle_Box.corners[0].vz = Q12(-93.0f);
+                g_WeatherParticle_Box.corners[1].vx = Q12(-208.0f);
+                g_WeatherParticle_Box.corners[1].vz = Q12(-91.0f);
+                g_WeatherParticle_Box.corners[2].vx = Q12(-212.0f);
+                g_WeatherParticle_Box.corners[2].vz = Q12(-91.0f);
+                g_WeatherParticle_Box.corners[3].vx = Q12(-212.0f);
+                g_WeatherParticle_Box.corners[3].vz = Q12(-93.0f);
+                g_WeatherParticle_Box.corners[4].vx = Q12(-208.0f);
+                g_WeatherParticle_Box.corners[4].vz = Q12(-91.0f);
+                g_WeatherParticle_Box.corners[5].vx = Q12(-212.0f);
+                g_WeatherParticle_Box.corners[5].vz = Q12(-91.0f);
             }
             else
             {
@@ -1157,18 +1161,18 @@ bool Particle_Update(s_Particle* partHead)
                 PLAYER_CHARA().position.vz < Q12(-175.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
-                g_ParticleBox.corners[0].vx = Q12(-287.0f);
-                g_ParticleBox.corners[0].vz = Q12(-182.5f);
-                g_ParticleBox.corners[1].vx = Q12(-285.5f);
-                g_ParticleBox.corners[1].vz = Q12(-182.5f);
-                g_ParticleBox.corners[2].vx = Q12(-285.5f);
-                g_ParticleBox.corners[2].vz = Q12(-177.5f);
-                g_ParticleBox.corners[3].vx = Q12(-287.0f);
-                g_ParticleBox.corners[3].vz = Q12(-177.5f);
-                g_ParticleBox.corners[4].vx = Q12(-285.5f);
-                g_ParticleBox.corners[4].vz = Q12(-181.5f);
-                g_ParticleBox.corners[5].vx = Q12(-285.5f);
-                g_ParticleBox.corners[5].vz = Q12(-178.4f);
+                g_WeatherParticle_Box.corners[0].vx = Q12(-287.0f);
+                g_WeatherParticle_Box.corners[0].vz = Q12(-182.5f);
+                g_WeatherParticle_Box.corners[1].vx = Q12(-285.5f);
+                g_WeatherParticle_Box.corners[1].vz = Q12(-182.5f);
+                g_WeatherParticle_Box.corners[2].vx = Q12(-285.5f);
+                g_WeatherParticle_Box.corners[2].vz = Q12(-177.5f);
+                g_WeatherParticle_Box.corners[3].vx = Q12(-287.0f);
+                g_WeatherParticle_Box.corners[3].vz = Q12(-177.5f);
+                g_WeatherParticle_Box.corners[4].vx = Q12(-285.5f);
+                g_WeatherParticle_Box.corners[4].vz = Q12(-181.5f);
+                g_WeatherParticle_Box.corners[5].vx = Q12(-285.5f);
+                g_WeatherParticle_Box.corners[5].vz = Q12(-178.4f);
             }
             else
             {
@@ -1247,36 +1251,36 @@ bool Particle_Update(s_Particle* partHead)
         PLAYER_CHARA().position.vx > Q12(13.0f) &&
         PLAYER_CHARA().position.vx < Q12(44.0f))
     {
-        g_ParticleBox.corners[0].vx = Q12(24.0f);
-        g_ParticleBox.corners[0].vz = Q12(-19.0f);
-        g_ParticleBox.corners[1].vx = Q12(24.0f);
-        g_ParticleBox.corners[1].vz = Q12(-21.5f);
-        g_ParticleBox.corners[2].vx = Q12(31.5f);
-        g_ParticleBox.corners[2].vz = Q12(-21.5f);
-        g_ParticleBox.corners[3].vx = Q12(31.5f);
-        g_ParticleBox.corners[3].vz = Q12(-19.0f);
-        g_ParticleBox.corners[4].vx = Q12(24.0f);
-        g_ParticleBox.corners[4].vz = Q12(-21.5f);
-        g_ParticleBox.corners[5].vx = Q12(31.5f);
-        g_ParticleBox.corners[5].vz = Q12(-21.5f);
+        g_WeatherParticle_Box.corners[0].vx = Q12(24.0f);
+        g_WeatherParticle_Box.corners[0].vz = Q12(-19.0f);
+        g_WeatherParticle_Box.corners[1].vx = Q12(24.0f);
+        g_WeatherParticle_Box.corners[1].vz = Q12(-21.5f);
+        g_WeatherParticle_Box.corners[2].vx = Q12(31.5f);
+        g_WeatherParticle_Box.corners[2].vz = Q12(-21.5f);
+        g_WeatherParticle_Box.corners[3].vx = Q12(31.5f);
+        g_WeatherParticle_Box.corners[3].vz = Q12(-19.0f);
+        g_WeatherParticle_Box.corners[4].vx = Q12(24.0f);
+        g_WeatherParticle_Box.corners[4].vz = Q12(-21.5f);
+        g_WeatherParticle_Box.corners[5].vx = Q12(31.5f);
+        g_WeatherParticle_Box.corners[5].vz = Q12(-21.5f);
     }
     else if (PLAYER_CHARA().position.vz > Q12(-82.0f) &&
              PLAYER_CHARA().position.vz < Q12(-56.0f) &&
              PLAYER_CHARA().position.vx > Q12(43.0f) &&
              PLAYER_CHARA().position.vx < Q12(70.0f))
     {
-        g_ParticleBox.corners[0].vx = Q12(58.7f);
-        g_ParticleBox.corners[0].vz = Q12(-70.5f);
-        g_ParticleBox.corners[1].vx = Q12(58.7f);
-        g_ParticleBox.corners[1].vz = Q12(-68.0f);
-        g_ParticleBox.corners[2].vx = Q12(54.5f);
-        g_ParticleBox.corners[2].vz = Q12(-68.0f);
-        g_ParticleBox.corners[3].vx = Q12(54.5f);
-        g_ParticleBox.corners[3].vz = Q12(-70.5f);
-        g_ParticleBox.corners[4].vx = Q12(54.5f);
-        g_ParticleBox.corners[4].vz = Q12(-70.5f);
-        g_ParticleBox.corners[5].vx = Q12(58.7f);
-        g_ParticleBox.corners[5].vz = Q12(-70.5f);
+        g_WeatherParticle_Box.corners[0].vx = Q12(58.7f);
+        g_WeatherParticle_Box.corners[0].vz = Q12(-70.5f);
+        g_WeatherParticle_Box.corners[1].vx = Q12(58.7f);
+        g_WeatherParticle_Box.corners[1].vz = Q12(-68.0f);
+        g_WeatherParticle_Box.corners[2].vx = Q12(54.5f);
+        g_WeatherParticle_Box.corners[2].vz = Q12(-68.0f);
+        g_WeatherParticle_Box.corners[3].vx = Q12(54.5f);
+        g_WeatherParticle_Box.corners[3].vz = Q12(-70.5f);
+        g_WeatherParticle_Box.corners[4].vx = Q12(54.5f);
+        g_WeatherParticle_Box.corners[4].vz = Q12(-70.5f);
+        g_WeatherParticle_Box.corners[5].vx = Q12(58.7f);
+        g_WeatherParticle_Box.corners[5].vz = Q12(-70.5f);
     }
     else
     {
@@ -1289,17 +1293,17 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx)
     {
         case 7:
-            g_ParticleBox.corners[0].vx = Q12(55.5f);
-            g_ParticleBox.corners[0].vz = Q12(63.0f);
-            g_ParticleBox.corners[1].vx = Q12(55.5f);
-            g_ParticleBox.corners[1].vz = Q12(58.0f);
+            g_WeatherParticle_Box.corners[0].vx = Q12(55.5f);
+            g_WeatherParticle_Box.corners[0].vz = Q12(63.0f);
+            g_WeatherParticle_Box.corners[1].vx = Q12(55.5f);
+            g_WeatherParticle_Box.corners[1].vz = Q12(58.0f);
             break;
 
         case 8:
-            g_ParticleBox.corners[0].vx = Q12(100.0f);
-            g_ParticleBox.corners[0].vz = Q12(56.5f);
-            g_ParticleBox.corners[1].vx = Q12(104.0f);
-            g_ParticleBox.corners[1].vz = Q12(56.5f);
+            g_WeatherParticle_Box.corners[0].vx = Q12(100.0f);
+            g_WeatherParticle_Box.corners[0].vz = Q12(56.5f);
+            g_WeatherParticle_Box.corners[1].vx = Q12(104.0f);
+            g_WeatherParticle_Box.corners[1].vz = Q12(56.5f);
             break;
 
         default:
@@ -1331,7 +1335,7 @@ bool Particle_Update(s_Particle* partHead)
 
         // Handle particles in this state.
         for (updateCount = updatePrev;
-             updateCount < (updatePrev + g_ParticlesAddedCount[pass]);
+             updateCount < (updatePrev + g_WeatherParticlesAddedCount[pass]);
              updateCount++, curPart++)
         {
             // Keep only the lower 4 bits.
@@ -1353,10 +1357,10 @@ bool Particle_Update(s_Particle* partHead)
                 case 1:
                 #if MAP_PARTICLE_HAS_RAIN
                     // Changes any non-HeavyWindow snow particles into rain?
-                    if (curPart->type != ParticleType_Rain && curPart->type != SnowType_HeavyWindy)
+                    if (curPart->type != WeatherParticleType_Rain && curPart->type != SnowType_HeavyWindy)
                     {
                         curPart->stateStep = 0;
-                        curPart->type = ParticleType_Rain;
+                        curPart->type = WeatherParticleType_Rain;
                     }
                 #endif
                     break;
@@ -1375,19 +1379,19 @@ bool Particle_Update(s_Particle* partHead)
             {
                 switch (curPart->stateStep)
                 {
-                    case ParticleState_Spawn:
-                        if (g_ParticleSpawnCount < density)
+                    case WeatherParticleState_Spawn:
+                        if (g_WeatherParticleSpawnCount < density)
                         {
-                            g_ParticleSpawnCount++;
+                            g_WeatherParticleSpawnCount++;
                             Particle_Spawn(pass, curPart, &rand);
                         }
                         break;
 
-                    case ParticleState_Active:
+                    case WeatherParticleState_Active:
                         Particle_MovementUpdate(pass, curPart, &rand, &g_DeltaTime);
                         break;
 
-                    default: // `ParticleState_Rest`
+                    default: // `WeatherParticleState_Rest`
                         curPart->stateStep++;
                         if (curPart->stateStep < SNOW_REST_TICKS_UPDATE_MAX)
                         {
@@ -1404,7 +1408,7 @@ bool Particle_Update(s_Particle* partHead)
             }
         }
 
-        updatePrev += g_ParticlesAddedCount[pass];
+        updatePrev += g_WeatherParticlesAddedCount[pass];
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -1416,13 +1420,13 @@ bool Particle_Update(s_Particle* partHead)
     #if MAP_PARTICLE_HAS_RAIN
         if (pass != 0)
         {
-            sharedData_800E32D0_0_s00 += g_ParticlesAddedCount[pass];
+            sharedData_800E32D0_0_s00 += g_WeatherParticlesAddedCount[pass];
             limitRange(sharedData_800E32D0_0_s00, 0, 135000);
         }
     #endif
 
         for (updateCount = updatePrev;
-             updateCount < (updatePrev + g_ParticlesAddedCount[pass]);
+             updateCount < (updatePrev + g_WeatherParticlesAddedCount[pass]);
              updateCount++, curPart++)
         {
             switch (pass)
@@ -1441,16 +1445,16 @@ bool Particle_Update(s_Particle* partHead)
             }
         }
 
-        updatePrev += g_ParticlesAddedCount[pass];
+        updatePrev += g_WeatherParticlesAddedCount[pass];
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     // Likely previous position for next particle system update.
     // Stores XZ position and Y rotation.
-    g_Particle_PrevPosition.vx = prevPos.vx;
-    g_Particle_PrevPosition.vz = prevPos.vz;
-    g_Particle_PrevRotationY   = g_ParticleVectors0.viewRotation.vy;
+    g_WeatherParticle_PrevPosition.vx = prevPos.vx;
+    g_WeatherParticle_PrevPosition.vz = prevPos.vz;
+    g_WeatherParticle_PrevRotationY   = g_WeatherParticleVectors0.viewRotation.vy;
     return false;
 }
 
@@ -1482,7 +1486,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
 
     if (!Game_FlashlightIsOn())
     {
-        g_ParticleVectors0.svec_18.vx = Q12_ANGLE(-90.0f);
+        g_WeatherParticleVectors0.svec_18.vx = Q12_ANGLE(-90.0f);
     }
 
     temp_s4 = func_800CC8FC(&sp90, &sp120, &sp50);
@@ -1557,10 +1561,10 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
         { 0x0B, 0x06 },
     };
 
-    temp_s4 = g_ParticleVectors0.field_28 >> 6;
-    temp_s7 = g_ParticleVectors0.field_28 >> 3;
-    temp_a0 = g_ParticleVectors0.field_28 / 20;
-    temp_s5 = g_ParticleVectors0.field_28 / 12;
+    temp_s4 = g_WeatherParticleVectors0.field_28 >> 6;
+    temp_s7 = g_WeatherParticleVectors0.field_28 >> 3;
+    temp_a0 = g_WeatherParticleVectors0.field_28 / 20;
+    temp_s5 = g_WeatherParticleVectors0.field_28 / 12;
 
     for (i = 0; i < 6; i++)
     {
@@ -1577,7 +1581,7 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
     }
 
     count = 0;
-    Math_RotMatrixZxyNegGte(&g_ParticleVectors0.svec_18, &mat);
+    Math_RotMatrixZxyNegGte(&g_WeatherParticleVectors0.svec_18, &mat);
 
     for (j = 0; j < 18; j++)
     {
@@ -1589,13 +1593,13 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
         unkPos = &arg0[D_800CA7CC[j][0]];
 
-        unkPos->vx = Q8_TO_Q12(offset0.vx) + (g_ParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
-        unkPos->vy = Q8_TO_Q12(offset0.vy) + (g_ParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
-        unkPos->vz = Q8_TO_Q12(offset0.vz) + (g_ParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
+        unkPos->vx = Q8_TO_Q12(offset0.vx) + (g_WeatherParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
+        unkPos->vy = Q8_TO_Q12(offset0.vy) + (g_WeatherParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
+        unkPos->vz = Q8_TO_Q12(offset0.vz) + (g_WeatherParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
 
-        offset0.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
-        offset0.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
-        offset0.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
+        offset0.vx += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
+        offset0.vy += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
+        offset0.vz += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
 
         gte_ldv0(&offset0);
         gte_rtps();
@@ -1608,13 +1612,13 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
         unkPos = &arg0[D_800CA7CC[j][1]];
 
-        unkPos->vx = Q8_TO_Q12(offset1.vx) + (g_ParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
-        unkPos->vy = Q8_TO_Q12(offset1.vy) + (g_ParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
-        unkPos->vz = Q8_TO_Q12(offset1.vz) + (g_ParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
+        unkPos->vx = Q8_TO_Q12(offset1.vx) + (g_WeatherParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
+        unkPos->vy = Q8_TO_Q12(offset1.vy) + (g_WeatherParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
+        unkPos->vz = Q8_TO_Q12(offset1.vz) + (g_WeatherParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
 
-        offset1.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
-        offset1.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
-        offset1.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
+        offset1.vx += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
+        offset1.vy += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
+        offset1.vz += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
 
         if ((offset0.vy >= Q8(0.0f) && offset1.vy <  Q8(0.0f)) ||
             (offset0.vy <  Q8(0.0f) && offset1.vy >= Q8(0.0f)))
@@ -2458,7 +2462,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
     #define PARTICLE_CASE(id) default
 #endif
 
-void Particle_SnowDraw(s_Particle* part)
+void Particle_SnowDraw(s_WeatherParticle* part)
 {
 #if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
     VECTOR3     particlePos;
@@ -2475,7 +2479,7 @@ void Particle_SnowDraw(s_Particle* part)
     u8          primColorB;
     u8          primColorR;
 
-    s_Particle* localPart;
+    s_WeatherParticle* localPart;
     POLY_FT3*   polyFt3;
 
     localPart = part;
@@ -2503,16 +2507,16 @@ void Particle_SnowDraw(s_Particle* part)
             {
 #ifdef HAS_PARTICLE_CASE_1
                 PARTICLE_CASE(1):
-                    if (part->position0.vy < g_ParticleBox.corners[0].vy)
+                    if (part->position0.vy < g_WeatherParticle_Box.corners[0].vy)
                     {
-                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
+                        Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[0], &g_WeatherParticle_Box.corners[1], 0);
                     }
                     else
                     {
                         s32 temp_v1;
-                        partCorners[0].vx = g_ParticleBox.corners[0].vx;
-                        partCorners[1].vx = g_ParticleBox.corners[1].vx;
-                        temp_v1           = g_ParticleBox.corners[0].vz + 0x1400;
+                        partCorners[0].vx = g_WeatherParticle_Box.corners[0].vx;
+                        partCorners[1].vx = g_WeatherParticle_Box.corners[1].vx;
+                        temp_v1           = g_WeatherParticle_Box.corners[0].vz + 0x1400;
                         temp_v1          += part->position0.vy >> 2;
                         partCorners[1].vz = temp_v1;
                         partCorners[0].vz = temp_v1;
@@ -2524,33 +2528,33 @@ void Particle_SnowDraw(s_Particle* part)
 
 #if defined(HAS_PARTICLE_CASE_2)
                 PARTICLE_CASE(2):
-                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
+                    Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[0], &g_WeatherParticle_Box.corners[1], 0);
                     if (g_SavegamePtr->mapRoomIdx == 5)
                     {
-                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[2], &g_ParticleBox.corners[3], 0);
+                        Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[2], &g_WeatherParticle_Box.corners[3], 0);
                     }
                     break;
 #endif
 
 #if defined(HAS_PARTICLE_CASE_9)
                 PARTICLE_CASE(9):
-                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[0], &g_WeatherParticle_Box.corners[1], 1);
                     if (particlePos.vy == 0)
                     {
-                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[2], &g_ParticleBox.corners[3], 0);
+                        Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[2], &g_WeatherParticle_Box.corners[3], 0);
                     }
                     break;
 #endif
 
 #ifdef HAS_PARTICLE_CASE_10
                 PARTICLE_CASE(10):
-                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[0], &g_WeatherParticle_Box.corners[1], 1);
                     if (particlePos.vy == 0)
                     {
-                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[2], &g_ParticleBox.corners[3], 1);
+                        Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[2], &g_WeatherParticle_Box.corners[3], 1);
                         if (particlePos.vy == 0)
                         {
-                            Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[4], &g_ParticleBox.corners[5], 0);
+                            Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[4], &g_WeatherParticle_Box.corners[5], 0);
                         }
                     }
                     break;
@@ -2561,20 +2565,20 @@ void Particle_SnowDraw(s_Particle* part)
 #if defined(MAP0_S02) // TODO: MAP0_S02 uses value 2 instead of 11, code used in MAP0_S02 should probably be merged to case 2 above.
                     if (PLAYER_CHARA().position.vx < Q12(-120.0f))
                     {
-                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
+                        Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[0], &g_WeatherParticle_Box.corners[1], 0);
                         break;
                     }
 #endif
-                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[0], &g_WeatherParticle_Box.corners[1], 1);
                     if (particlePos.vy == 0)
                     {
-                        Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[2], &g_ParticleBox.corners[3], 1);
+                        Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[2], &g_WeatherParticle_Box.corners[3], 1);
                         if (particlePos.vy == 0)
                         {
-                            Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[4], &g_ParticleBox.corners[5], 1);
+                            Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[4], &g_WeatherParticle_Box.corners[5], 1);
                             if (particlePos.vy == 0)
                             {
-                                Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[6], &g_ParticleBox.corners[7], 0);
+                                Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[6], &g_WeatherParticle_Box.corners[7], 0);
                             }
                         }
                     }
@@ -2583,7 +2587,7 @@ void Particle_SnowDraw(s_Particle* part)
 
 #ifdef HAS_PARTICLE_FALLBACK_CASE
                 default:
-                    Particle_BoundaryClamp(&particlePos, &g_ParticleBox.corners[0], &g_ParticleBox.corners[1], 0);
+                    Particle_BoundaryClamp(&particlePos, &g_WeatherParticle_Box.corners[0], &g_WeatherParticle_Box.corners[1], 0);
                     break;
 #endif
             }
@@ -2743,7 +2747,7 @@ void Particle_SnowDraw(s_Particle* part)
 #endif
 
 #if MAP_PARTICLE_HAS_RAIN
-void Particle_RainDraw(s_Particle* part, s32 arg1)
+void Particle_RainDraw(s_WeatherParticle* part, s32 arg1)
 {
 #if defined(MAP0_S00) || defined(MAP4_S02) || defined(MAP4_S03)
     VECTOR3 sp10;
@@ -2764,7 +2768,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
     s32         gScaled;
     s32         bScaled;
     POLY_FT4*   poly;
-    s_Particle* localPart;
+    s_WeatherParticle* localPart;
 
     localPart = part;
     poly      = (POLY_FT4*)GsOUT_PACKET_P;
@@ -2780,7 +2784,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
         sp10    = localPart->position0;
         sp10.vy = -1;
 
-        Particle_BoundaryClamp(&sp10, g_ParticleBox.corners, &g_ParticleBox.corners[1], 0);
+        Particle_BoundaryClamp(&sp10, g_WeatherParticle_Box.corners, &g_WeatherParticle_Box.corners[1], 0);
 
         localPart->position0.vx = sp10.vx;
         localPart->position0.vz = sp10.vz;
@@ -3140,7 +3144,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 }
 #endif
 
-void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime)
+void Particle_SpawnMovementApply(s32 arg0, s_WeatherParticle* part, u16* rand, s32* deltaTime)
 {
     u16      localRand;
     s16      movement;
@@ -3195,7 +3199,7 @@ void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* del
 #define Rng_GenerateIntFromInput(rand, low, high) \
     (s32)((rand) % (((high) - (low)) + 1)) + (low)
 
-void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* deltaTime)
+void Particle_MovementUpdate(s32 pass, s_WeatherParticle* part, u16* rand, q19_12* deltaTime)
 {
     s_CollisionSurface surface;
     q19_12             deltaXCase0;
@@ -3203,7 +3207,7 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
     q19_12             deltaXCase1;
     q19_12             deltaZCase1;
     u16                localRand;
-    s_Particle*        localPart = part;
+    s_WeatherParticle*        localPart = part;
 
 // Value used in case 0 comparison.
 #if defined(MAP1_S06)
@@ -3215,18 +3219,18 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
 #endif
 
 #if MAP_PARTICLE_HAS_SNOW
-    deltaXCase0 = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    deltaZCase0 = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+    deltaXCase0 = g_WeatherParticle_PrevPosition.vx - g_WeatherParticle_Position.vx;
+    deltaZCase0 = g_WeatherParticle_PrevPosition.vz - g_WeatherParticle_Position.vz;
 #elif defined(MAP5_S00) || defined(MAP6_S03)
-    deltaXCase1 = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    deltaZCase1 = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+    deltaXCase1 = g_WeatherParticle_PrevPosition.vx - g_WeatherParticle_Position.vx;
+    deltaZCase1 = g_WeatherParticle_PrevPosition.vz - g_WeatherParticle_Position.vz;
 #endif
 
     switch (pass)
     {
         case 0:
 #if MAP_PARTICLE_HAS_SNOW
-            if (localPart->type == ParticleType_Snow)
+            if (localPart->type == WeatherParticleType_Snow)
             {
                 localPart->movement.vx += Rng_GenerateIntFromInput(*rand, -7, 7);
                 *rand                   = Rng_Rand16();
@@ -3238,15 +3242,15 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
             {
                 s32 localRand2 = Rng_Rand16();
                 s32 temp       = 12;
-                localPart->movement.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (g_ParticlesAddedCount[0] >> 4)) +
+                localPart->movement.vy += ((temp - g_WeatherParticle_PrevPosition.vy) - (g_WeatherParticle_PrevPosition.vy << 1) - (g_WeatherParticlesAddedCount[0] >> 4)) +
                                              Rng_GenerateIntFromInput(localRand2, -2, 2);
 
                 limitRange(localPart->movement.vy, 5, 1000);
             }
 
-            localPart->position0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement.vx << 2) + g_Particle_SpeedX + deltaXCase0);
+            localPart->position0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement.vx << 2) + g_WeatherParticle_SpeedX + deltaXCase0);
             localPart->position0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement.vy >> 1) << 2);
-            localPart->position0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement.vz << 2) + g_Particle_SpeedZ + deltaZCase0);
+            localPart->position0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, (localPart->movement.vz << 2) + g_WeatherParticle_SpeedZ + deltaZCase0);
 
 #if defined(MAP7_S03)
             localPart->position0.vz += (deltaZCase0 - D_800F23D0);
@@ -3254,7 +3258,7 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
 
             if (ABS(localPart->position0.vx) + ABS(localPart->position0.vz) > Q12(UNK_VAL))
             {
-                if (g_ParticleCameraMoved)
+                if (g_WeatherParticle_CameraMoved)
                 {
                     Particle_PositionRandomize(rand, &part->position0, UNK_VAL);
                 }
@@ -3274,7 +3278,7 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
                 localPart->stateStep++;
 #else
                 PushMatrix();
-                Collision_SurfaceGet(&surface, localPart->position0.vx + g_Particle_Position.vx, localPart->position0.vz + g_Particle_Position.vz);
+                Collision_SurfaceGet(&surface, localPart->position0.vx + g_WeatherParticle_Position.vx, localPart->position0.vz + g_WeatherParticle_Position.vz);
                 PopMatrix();
 
                 if (localPart->position0.vy >= surface.floorHeight)
@@ -3300,14 +3304,14 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
         case 1:
 #if MAP_PARTICLE_HAS_RAIN
 #if !defined(MAP5_S00) && !defined(MAP6_S03)
-            deltaXCase1 = g_ParticleVectors1.viewPosition.vx - g_ParticleVectors0.viewPosition.vx;
-            deltaZCase1 = g_ParticleVectors1.viewPosition.vz - g_ParticleVectors0.viewPosition.vz;
+            deltaXCase1 = g_WeatherParticleVectors1.viewPosition.vx - g_WeatherParticleVectors0.viewPosition.vx;
+            deltaZCase1 = g_WeatherParticleVectors1.viewPosition.vz - g_WeatherParticleVectors0.viewPosition.vz;
 
             localPart->position1.vx = localPart->position0.vx;
             localPart->position1.vz = localPart->position0.vz;
             localPart->position1.vy = localPart->position0.vy - localPart->movement.vy;
 #endif
-            localPart->position0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, g_Particle_SpeedX + deltaXCase1);
+            localPart->position0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, g_WeatherParticle_SpeedX + deltaXCase1);
             localPart->movement.vy += sharedData_800E32D4_0_s00;
             localPart->position0.vy += TIMESTEP_SCALE_30_FPS(*deltaTime, localPart->movement.vy << 2);
 
@@ -3315,14 +3319,14 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
             localPart->position1.vy = localPart->position0.vy - Q12(0.125f);
 #endif
 
-            localPart->position0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, g_Particle_SpeedZ + deltaZCase1);
+            localPart->position0.vz += TIMESTEP_SCALE_30_FPS(*deltaTime, g_WeatherParticle_SpeedZ + deltaZCase1);
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
             localPart->position1.vx = localPart->position0.vx;
             localPart->position1.vz = localPart->position0.vz;
 #endif
 
-            if (g_ParticleCameraMoved)
+            if (g_WeatherParticle_CameraMoved)
             {
                 localPart->position1.vx = localPart->position0.vx;
                 localPart->position1.vz = localPart->position0.vz;
@@ -3330,7 +3334,7 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
 
             if (ABS(localPart->position0.vx) + ABS(localPart->position0.vz) > Q12(6.0))
             {
-                if (g_ParticleCameraMoved)
+                if (g_WeatherParticle_CameraMoved)
                 {
                     Particle_PositionRandomize(rand, &part->position0, 6);
 
@@ -3353,7 +3357,7 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
             if (localPart->position0.vy >= 0)
             {
                 PushMatrix();
-                Collision_SurfaceGet(&surface, localPart->position0.vx + g_Particle_Position.vx, localPart->position0.vz + g_Particle_Position.vz);
+                Collision_SurfaceGet(&surface, localPart->position0.vx + g_WeatherParticle_Position.vx, localPart->position0.vz + g_WeatherParticle_Position.vz);
                 PopMatrix();
 
                 localPart->position0.vy = surface.floorHeight;
@@ -3376,7 +3380,7 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
     }
 }
 
-void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
+void sharedFunc_800CFFF8_0_s00(s32 pass, s_WeatherParticle* part, s16* rand)
 {
     s32 absX;
     s32 threshold;
@@ -3389,18 +3393,18 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
     #define PASS_ADD 5
 #endif
 
-    part->position0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    part->position0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+    part->position0.vx += g_WeatherParticle_PrevPosition.vx - g_WeatherParticle_Position.vx;
+    part->position0.vz += g_WeatherParticle_PrevPosition.vz - g_WeatherParticle_Position.vz;
 
 #if defined(MAP7_S03)
-    part->position0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
+    part->position0.vz += ((g_WeatherParticle_PrevPosition.vz - g_WeatherParticle_Position.vz) - D_800F23D0);
 #endif
 
 #if MAP_PARTICLE_HAS_SNOW
     if (pass == 0 && sharedData_800E0CAC_0_s00 == 3)
     {
-        part->position0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
-        part->position0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
+        part->position0.vx += FP_FROM(g_WeatherParticle_SpeedX, Q4_SHIFT);
+        part->position0.vz += FP_FROM(g_WeatherParticle_SpeedZ, Q4_SHIFT);
     }
 #endif
 
@@ -3422,7 +3426,7 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
 
     if (ABS_ADD(part->position0.vz, absX) > threshold)
     {
-        part->stateStep = ParticleState_Spawn;
+        part->stateStep = WeatherParticleState_Spawn;
     }
 
     if (part->type == SnowType_HeavyWindy || part->type == (0xF0 | SnowType_HeavyWindy)) // TODO: #define 0xF0 constant when purpose is found.
@@ -3434,10 +3438,10 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
 
 #if MAP_PARTICLE_HAS_800D0690
 
-void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime)
+void sharedFunc_800D0690_1_s03(s32 pass, s_WeatherParticle* part, s16* rand, q19_12* deltaTime)
 {
-    q19_12 x = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    q19_12 z = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+    q19_12 x = g_WeatherParticle_PrevPosition.vx - g_WeatherParticle_Position.vx;
+    q19_12 z = g_WeatherParticle_PrevPosition.vz - g_WeatherParticle_Position.vz;
 
     part->position1.vy  = part->position0.vy - part->movement.vy;
     part->position0.vx += TIMESTEP_SCALE_30_FPS(*deltaTime, x);
@@ -3450,22 +3454,22 @@ void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
 
     if ((ABS(part->position0.vx) + ABS(part->position0.vz)) > Q12(6.0f))
     {
-        part->stateStep = ParticleState_Spawn;
+        part->stateStep = WeatherParticleState_Spawn;
     }
 }
 #endif
 
-void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime)
+void sharedFunc_800CE954_7_s03(s32 pass, s_WeatherParticle* part, s16* rand, q19_12* deltaTime)
 {
 #if defined(MAP7_S03)
     q19_12      deltaX;
     q19_12      deltaZ;
-    s_Particle* ptr;
+    s_WeatherParticle* ptr;
 
     ptr = part;
 
-    deltaX = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    deltaZ = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+    deltaX = g_WeatherParticle_PrevPosition.vx - g_WeatherParticle_Position.vx;
+    deltaZ = g_WeatherParticle_PrevPosition.vz - g_WeatherParticle_Position.vz;
 
     if (pass == 0)
     {
@@ -3474,7 +3478,7 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
 
         if ((ABS(part->position0.vx) + ABS(part->position0.vz)) > Q12(8.0))
         {
-            if (g_ParticleCameraMoved)
+            if (g_WeatherParticle_CameraMoved)
             {
                 Particle_PositionRandomize(rand, &part->position0, 8);
             }
@@ -3523,7 +3527,7 @@ void Particle_PositionRandomize(u16* arg0, VECTOR3* arg1, s32 arg2)
     arg1->vz = ((*arg0 % temp_s3) + (Rng_Rand16() % temp_s3)) - temp_s3;
 }
 
-void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
+void Particle_Spawn(s32 arg0, s_WeatherParticle* part, u16* rand)
 {
     #define SNOW_Y_START_SPEED  Q12(0.0245f)
     #define RAIN_XZ_SPAWN_RANGE 6
@@ -3535,7 +3539,7 @@ void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
     #define SNOW_XZ_SPAWN_RANGE 5
 #endif
 
-    s_Particle* localPart;
+    s_WeatherParticle* localPart;
 
     localPart = part;
 
@@ -3545,15 +3549,15 @@ void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
 #if MAP_PARTICLE_HAS_SNOW
             if (sharedData_800DD592_0_s00 != 0)
             {
-                part->type = ParticleType_Snow;
+                part->type = WeatherParticleType_Snow;
             }
             else
             {
-                part->type = ParticleType_Unk1;
+                part->type = WeatherParticleType_Unk1;
             }
 
             // Set start position.
-            localPart->position0.vy = g_Particle_Position.vy;
+            localPart->position0.vy = g_WeatherParticle_Position.vy;
 
             // Set downward movement.
             localPart->movement.vz = Q12(0.0f);
@@ -3572,16 +3576,16 @@ void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
 
         case 1:
 #if MAP_PARTICLE_HAS_RAIN
-            localPart->type = ParticleType_Rain;
+            localPart->type = WeatherParticleType_Rain;
 
             // Set start position.
-            localPart->position0.vy = g_Particle_Position.vy + Q12(Rng_GenerateInt(0, 2));
+            localPart->position0.vy = g_WeatherParticle_Position.vy + Q12(Rng_GenerateInt(0, 2));
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
             localPart->position1.vy = localPart->position0.vy - Q12(0.125f);
             localPart->movement.vy = Q12(0.0091f);
 #else
-            localPart->position1.vy = g_Particle_Position.vy;
+            localPart->position1.vy = g_WeatherParticle_Position.vy;
             localPart->movement.vy = Q12(0.03675f);
 #endif
 
@@ -3695,10 +3699,10 @@ void Particle_BoundaryClamp(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd
         return;
     }
 
-    point->vx += g_Particle_Position.vx;
+    point->vx += g_WeatherParticle_Position.vx;
     offset0.vx = point->vx;
 
-    point->vz += g_Particle_Position.vz;
+    point->vz += g_WeatherParticle_Position.vz;
     offset0.vz = point->vz;
 
     offset1.vx = offset0.vx;
@@ -3754,8 +3758,8 @@ void Particle_BoundaryClamp(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd
         point->vy = 1;
     }
 
-    point->vx -= g_Particle_Position.vx;
-    point->vz -= g_Particle_Position.vz;
+    point->vx -= g_WeatherParticle_Position.vx;
+    point->vz -= g_WeatherParticle_Position.vz;
 }
 #endif
 
@@ -3976,11 +3980,11 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
 #if MAP_USE_PARTICLES
         if (sharedData_800E0CAC_0_s00 == 0 || sharedData_800E0CAC_0_s00 == 2)
         {
-            g_Particle_PrevPosition.vy = Q12(0.0005f);
+            g_WeatherParticle_PrevPosition.vy = Q12(0.0005f);
         }
         else
         {
-            g_Particle_PrevPosition.vy = Q12(0.0f);
+            g_WeatherParticle_PrevPosition.vy = Q12(0.0f);
         }
 #endif
 
@@ -4115,7 +4119,7 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
         gte_stsxy(&polyGt4->x0);
         gte_stszotz(&zScreenStart);
         zScreenStart = zScreenStart >> 1;
-        if (zScreenStart < 1 || zScreenStart >= 0xFF)
+        if (zScreenStart < 1 || zScreenStart >= 255)
         {
             continue;
         }
@@ -4337,22 +4341,22 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
         case 2:
             if (WorldEnv_IsWorldLit())
             {
-                prim->r0 = 0xFF;
-                prim->g0 = 0xFF;
-                prim->b0 = 0xFF;
+                prim->r0 = 255;
+                prim->g0 = 255;
+                prim->b0 = 255;
             }
             else
             {
-                prim->r0 = 0x30;
-                prim->g0 = 0x30;
-                prim->b0 = 0x30;
+                prim->r0 = 48;
+                prim->g0 = 48;
+                prim->b0 = 48;
             }
             break;
 
         case 3:
-            prim->r0 = 0x40;
-            prim->g0 = 0x20;
-            prim->b0 = 0x00;
+            prim->r0 = 64;
+            prim->g0 = 32;
+            prim->b0 = 0;
             break;
     }
 

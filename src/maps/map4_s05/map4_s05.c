@@ -407,22 +407,22 @@ void func_800D6BC0(void) // 0x800D6BC0
 
         case 6:
             Event_CutsceneTimerAdvance(&g_Cutscene_Timer, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
-            sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(0.6f), Q12(0.15f), 0);
+            Particle_UfoSpawn(&D_800D7D88, Q12(0.6f), Q12(0.15f), 0);
             break;
 
         case 7:
             Event_DisplayMapMsg(false, 16, 0, 0, 0, false);
-            sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(0.6f), Q12(0.15f), 0);
+            Particle_UfoSpawn(&D_800D7D88, Q12(0.6f), Q12(0.15f), 0);
             break;
 
         case 8:
             Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR3_Zero, &Q12_VECTOR3(154.31f, -15.5f, 24.07f));
-            sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(1.0f), Q12(0.2f), 1);
+            Particle_UfoSpawn(&D_800D7D88, Q12(1.0f), Q12(0.2f), 1);
             Event_WaitTimer(Q12(2.5f), false);
             break;
 
         case 9:
-            sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(0.6f), Q12(0.15f), 0);
+            Particle_UfoSpawn(&D_800D7D88, Q12(0.6f), Q12(0.15f), 0);
 
             g_SysWork.sysStateStepData[0] += g_DeltaTime;
             if (g_SysWork.sysStateStepData[0] > Q12(1.5f))

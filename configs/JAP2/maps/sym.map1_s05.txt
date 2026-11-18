@@ -164,22 +164,22 @@ MAP_MESSAGES                     = 0x800D82C4; // type:u32 size:0x3C
 //--------------------------------------------------------------
 //--- PA: 0x00C730   VA: 0x800D8300   subsegment: .bss, map1_s05
 //--------------------------------------------------------------
-g_ParticleMapIdx0                = 0x800D8300;
-g_ParticleMapIdx1                = 0x800D8304; // type:s32
+g_WeatherParticle_MapIdx0        = 0x800D8300;
+g_WeatherParticle_MapIdx1        = 0x800D8304; // type:s32
 sharedData_800D5CF8_1_s05        = 0x800D8310;
 sharedData_800D5D08_1_s05        = 0x800D8320;
 D_800D5D11                       = 0x800D8329;
-g_Particle_SpeedX                = 0x800D832C;
-g_Particle_SpeedZ                = 0x800D8330;
+g_WeatherParticle_SpeedX         = 0x800D832C;
+g_WeatherParticle_SpeedZ         = 0x800D8330;
 sharedData_800DFB6C_0_s00        = 0x800D8334; // type:s32
 sharedData_800DFB70_0_s00        = 0x800D8338; // type:s32
-sharedData_800DFB7C_0_s00        = 0x800D8340; // type:MapHdr_field_4C size:0x2710
-g_Effect_BloodSplats             = 0x800DAA50; // size:0x12C
+g_Particle_Buffer                = 0x800D8340; // type:MapHdr_field_4C size:0x2710
+g_Particle_BloodSplats           = 0x800DAA50; // size:0x12C
 sharedData_800D8568_1_s05        = 0x800DAB80;
 D_800D8569                       = 0x800DAB81;
 D_800D8578                       = 0x800DAB90;
-g_ParticleVectors0               = 0x800DABB0; // size:0x2C type:ParticleVectors
-g_ParticleVectors1               = 0x800DABE0; // size:0x2C type:ParticleVectors
+g_WeatherParticleVectors0        = 0x800DABB0; // size:0x2C type:ParticleVectors
+g_WeatherParticleVectors1        = 0x800DABE0; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00        = 0x800DAC0C; // type:s32
 sharedData_800E0CAC_0_s00        = 0x800DAC10; // type:s32
 sharedData_800E0CB0_0_s00        = 0x800DAC14; // type:u32

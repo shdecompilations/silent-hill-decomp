@@ -10,7 +10,7 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
-#define MAP_FIELD_4C_COUNT 100
+#define MAP_PARTICLE_COUNT_MAX 100
 #define MAP_BLOOD_SPLAT_COUNT_MAX 50
 
 #include "maps/common/shared.h"

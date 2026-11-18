@@ -9,7 +9,7 @@
 //-----------------------------------------------------------
 //--- PA: 0x00172C   VA: 0x800CACA4   subsegment: c, map4_s05
 //-----------------------------------------------------------
-sharedFunc_800CB0A4_4_s03       = 0x800CACA4; // type:func
+Particle_AcidSpawn              = 0x800CACA4; // type:func
 sharedFunc_800CB1B0_4_s03       = 0x800CADB0; // type:func
 sharedFunc_800CBE54_4_s03       = 0x800CBA54; // type:func
 sharedFunc_800CC004_4_s03       = 0x800CBC04; // type:func
@@ -90,9 +90,9 @@ HARRY_M4S05_ANIM_INFOS          = 0x800D75D4;
 g_MapHeaderTable_38             = 0x800D7764;
 LOADABLE_INVENTORY_ITEMS        = 0x800D77CC;
 sharedData_800DD584_0_s00       = 0x800D77EF; // type:u8
-g_ParticlesAddedCount           = 0x800D77F0; // type:s32
+g_WeatherParticlesAddedCount    = 0x800D77F0; // type:s32
 sharedData_800DD58C_0_s00       = 0x800D77F4; // type:s32
-g_ParticleCameraMoved           = 0x800D77F8; // type:u8
+g_WeatherParticle_CameraMoved   = 0x800D77F8; // type:u8
 sharedData_800DD598_0_s00       = 0x800D77FC;
 g_Player_PrevWeaponAttack       = 0x800D7800; // type:u8
 sharedData_800DD5A0_0_s00       = 0x800D7804; // type:s32 size:4
@@ -126,16 +126,16 @@ MAP_EVENTS                      = 0x800D7C8C;
 //----------------------------------------------------
 //--- PA: 0x00E7EC   VA: 0x800D7D64   subsegment: data
 //----------------------------------------------------
-g_ParticleMapIdx0               = 0x800D7D78;
-g_ParticleMapIdx1               = 0x800D7D7C;
-g_Particle_SpeedX               = 0x800D7D98; // type:s32
-g_Particle_SpeedZ               = 0x800D7D9C; // type:s32
+g_WeatherParticle_MapIdx0       = 0x800D7D78;
+g_WeatherParticle_MapIdx1       = 0x800D7D7C;
+g_WeatherParticle_SpeedX        = 0x800D7D98; // type:s32
+g_WeatherParticle_SpeedZ        = 0x800D7D9C; // type:s32
 sharedData_800DFB6C_0_s00       = 0x800D7DA0; // type:s32
 sharedData_800DFB70_0_s00       = 0x800D7DA4; // type:s32
-sharedData_800DFB7C_0_s00       = 0x800D7DA8; // size:0x1388
-g_Effect_BloodSplats            = 0x800D9138; // size:0x12C
-g_ParticleVectors0              = 0x800D9268; // size:0x2C type:ParticleVectors
-g_ParticleVectors1              = 0x800D9298; // size:0x2C type:ParticleVectors
+g_Particle_Buffer               = 0x800D7DA8; // size:0x1388
+g_Particle_BloodSplats          = 0x800D9138; // size:0x12C
+g_WeatherParticleVectors0       = 0x800D9268; // size:0x2C type:ParticleVectors
+g_WeatherParticleVectors1       = 0x800D9298; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00       = 0x800D92C4; // type:s32
 sharedData_800E0CAC_0_s00       = 0x800D92C8; // type:s32
 sharedData_800E0CB0_0_s00       = 0x800D92CC; // type:u32
@@ -143,13 +143,13 @@ sharedData_800E0CB4_0_s00       = 0x800D92D0; // type:u16
 sharedData_800E0CB6_0_s00       = 0x800D92D2; // type:u16
 sharedData_800E0CB8_0_s00       = 0x800D92D4; // type:u16
 sharedData_800E0CBA_0_s00       = 0x800D92D6; // type:s8
-g_Particles                     = 0x800D92D8; // size:0x2580
-g_Particle_Position             = 0x800DB858; // type:VECTOR3 size:0xC
-g_Particle_PrevPosition         = 0x800DB868; // type:VECTOR3 size:0xC
+g_WeatherParticles              = 0x800D92D8; // size:0x2580
+g_WeatherParticle_Position      = 0x800DB858; // type:VECTOR3 size:0xC
+g_WeatherParticle_PrevPosition  = 0x800DB868; // type:VECTOR3 size:0xC
 g_WorldEnv_SnowColor            = 0x800DB874;
 g_WorldEnv_RainColor            = 0x800DB878;
-g_Particle_PrevRotationY        = 0x800DB87C; // type:s16
-g_ParticleSpawnCount            = 0x800DB87E; // type:u8
+g_WeatherParticle_PrevRotationY = 0x800DB87C; // type:s16
+g_WeatherParticleSpawnCount     = 0x800DB87E; // type:u8
 sharedData_800E32CC_0_s00       = 0x800DB880; // type:s32
 sharedData_800E32D0_0_s00       = 0x800DB884; // type:s32
 sharedData_800E32D4_0_s00       = 0x800DB888; // type:u16

@@ -1704,19 +1704,19 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
 
 void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
 {
-    VECTOR3 unkPos;  // Q19.12
-    VECTOR  sp30[2]; // Q23.8
+    VECTOR3 bonePos;     // Q19.12
+    VECTOR  droolPos[2]; // Q23.8 | `[1]` is unused.
     s32     i;
     s32     j;
     q20_12  moveSpeed;
-    q3_12   moveSpeedDiv2;
+    q3_12   speed;
     q3_12   headingAngle;
     s32     animIdx;
-    int     new_var;
+    int     defaultSpeed;
 
     if (g_DeltaTime != Q12(0.0f))
     {
-        new_var = Q12(2.0f);
+        defaultSpeed = Q12(2.0f);
 
         animIdx = ANIM_STATUS_IDX_GET(splitHead->model.anim.status);
 
@@ -1735,18 +1735,18 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     i = Rng_GenerateInt(0, 21);
                 }
 
-                SplitHead_OffsetBonePositionGet(&unkPos, g_SplitHead_BoneOffsets[i].boneIdx,
+                // Compute drool effect position.
+                SplitHead_OffsetBonePositionGet(&bonePos, g_SplitHead_BoneOffsets[i].boneIdx,
                                                 g_SplitHead_BoneOffsets[i].offset.vx,
                                                 g_SplitHead_BoneOffsets[i].offset.vy,
                                                 g_SplitHead_BoneOffsets[i].offset.vz);
-
-                sp30[0].vx = Q12_TO_Q8(unkPos.vx);
-                sp30[0].vy = Q12_TO_Q8(unkPos.vy);
-                sp30[0].vz = Q12_TO_Q8(unkPos.vz);
+                droolPos[0].vx = Q12_TO_Q8(bonePos.vx);
+                droolPos[0].vy = Q12_TO_Q8(bonePos.vy);
+                droolPos[0].vz = Q12_TO_Q8(bonePos.vz);
 
                 if (ANIM_TIME_RANGE_CHECK(splitHead->model.anim.time, 15, 19))
                 {
-                    moveSpeedDiv2 = new_var;
+                    speed = defaultSpeed;
                     if (g_SplitHead_BoneOffsets[i].boneIdx < SplitHeadVariantMesh_20)
                     {
                         headingAngle = splitHead->rotation.vy + Q12_ANGLE(90.0f);
@@ -1759,21 +1759,20 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                 else
                 {
                     moveSpeed = splitHead->moveSpeed;
-
                     if (splitHead->moveSpeed > Q12(0.0f))
                     {
                         headingAngle = splitHead->rotation.vy;
-                        moveSpeedDiv2 = DIV_FAST(moveSpeed, 2);
+                        speed        = DIV_FAST(moveSpeed, 2);
                     }
                     else
                     {
-                        moveSpeed = -moveSpeed;
-                        moveSpeedDiv2  = DIV_FAST(moveSpeed, 2);
-                        headingAngle  = splitHead->rotation.vy + Q12_ANGLE(180.0f);
+                        moveSpeed    = -moveSpeed;
+                        speed        = DIV_FAST(moveSpeed, 2);
+                        headingAngle = splitHead->rotation.vy + Q12_ANGLE(180.0f);
                     }
                 }
 
-                sharedFunc_800CBE7C_1_s05(sp30[0].vx, sp30[0].vy, sp30[0].vz, moveSpeedDiv2, Q12_FRACT(headingAngle));
+                Particle_DroolSpawn(droolPos[0].vx, droolPos[0].vy, droolPos[0].vz, speed, Q12_FRACT(headingAngle));
             }
         }
     }
@@ -1794,18 +1793,18 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
             {
                 for (j = 0; j < 2; j++)
                 {
-                    SplitHead_OffsetBonePositionGet(&unkPos, g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].boneIdx,
+                    SplitHead_OffsetBonePositionGet(&bonePos, g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].boneIdx,
                                                     g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].offset.vx,
                                                     g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].offset.vy,
                                                     g_SplitHead_BoneOffsets[sharedData_800D5BE0_1_s05[i][j]].offset.vz);
 
-                    sp30[j].vx = Q12_TO_Q8(unkPos.vx);
-                    sp30[j].vy = Q12_TO_Q8(unkPos.vy);
-                    sp30[j].vz = Q12_TO_Q8(unkPos.vz);
+                    droolPos[j].vx = Q12_TO_Q8(bonePos.vx);
+                    droolPos[j].vy = Q12_TO_Q8(bonePos.vy);
+                    droolPos[j].vz = Q12_TO_Q8(bonePos.vz);
                 }
 
                 sharedFunc_800CCE2C_1_s05(sharedData_800D5BE0_1_s05[i][2], splitHeadProps.field_EA,
-                                          sp30[0].vx, sp30[0].vy, sp30[0].vz, sp30[1].vx, sp30[1].vy, sp30[1].vz);
+                                          droolPos[0].vx, droolPos[0].vy, droolPos[0].vz, droolPos[1].vx, droolPos[1].vy, droolPos[1].vz);
             }
             break;
     }

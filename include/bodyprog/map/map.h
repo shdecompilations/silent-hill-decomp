@@ -177,8 +177,8 @@ typedef enum _WorldModelLocation
     WorldModelLocation_Unk6   = 6
 } e_WorldModelLocation;
 
-// Something related to enemies attacks.
-typedef struct
+/** @brief Generic particle data. */
+typedef struct _Particle
 {
     union
     {
@@ -204,7 +204,7 @@ typedef struct
         } s_0;
     } field_4;
     q3_12 vy_8;
-    u8    field_A; // Particle type?
+    u8    field_A; // Particle type? 0 means slot is free for reuse.
     u8    field_B; // Flags?
     union
     {
@@ -254,8 +254,8 @@ typedef struct
             u16 field_2;
         } s_3;
     } field_10;
-} s_MapHdr_field_4C;
-STATIC_ASSERT_SIZEOF(s_MapHdr_field_4C, 20);
+} s_Particle;
+STATIC_ASSERT_SIZEOF(s_Particle, 20);
 
 /** @brief Speed zone. Defines a volume used for player speed modulation. */
 typedef struct _SpeedZone
@@ -410,7 +410,7 @@ STATIC_ASSERT_SIZEOF(s_UnkStruct3_Mo, 8);
  */
 typedef struct _BloodSplat
 {
-    s16 field_0; // Maybe an array of `u16`s? Contains indices.
+    s16 field_0; // Maybe an array of `u16`s? Contains indices. `NO_VALUE` means cleared.
 } s_BloodSplat;
 
 /** @brief Character spawn info. */
@@ -461,8 +461,8 @@ typedef struct _MapOverlayHdr
     /* 0x40  */ void                   (*updateWorldObjects)(void);
     /* 0x44  */ void                   (*func_44)();
     /* 0x48  */ void                   (*npcSpawnEvent)();
-    /* 0x4C  */ s_MapHdr_field_4C*     unkTable1_4C; // Related to collision?
-    /* 0x50  */ s16                    unkTable1Count_50;
+    /* 0x4C  */ s_Particle*            particleBuffer;     /** Always set to `g_Particle_Buffer`. */
+    /* 0x50  */ s16                    particleBufferSize; /** `particleBuffer` array size. */
                 // 2 bytes of padding.
     /* 0x54  */ s_BloodSplat*          bloodSplats;
     /* 0x58  */ s16                    bloodSplatCount;
@@ -544,8 +544,8 @@ typedef struct _MapOverlayHdr
     /* 0x17C */ void                   (*particleBeamDraw)(const VECTOR3* from, const VECTOR3* to);
     /* 0x180 */ void                   (*particleSoundStop)(); /** @unused */
 
-    /* 0x184 */ q19_12*                particleWindSpeedX;
-    /* 0x188 */ q19_12*                particleWindSpeedZ;
+    /* 0x184 */ q19_12*                weatherParticleWindSpeedX;
+    /* 0x188 */ q19_12*                weatherParticleWindSpeedZ;
     /* 0x18C */ s32*                   data_18C;
     /* 0x190 */ s32*                   data_190;
     /* 0x194 */ void                   (*charaUpdateFuncs[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharaId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */

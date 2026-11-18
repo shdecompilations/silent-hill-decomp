@@ -59,9 +59,9 @@ typedef struct _Savegame
                                                                 // Also includes map marking flags - see Sparagas' `MapMarkingsFlags` struct for details of every bit.
     /* 0x238    */ q19_12          healthSaturation;            /** Range: [0, 300]. Ampoules give extra stored health. If the player loses health, it will be slowly restored. */
     /* 0x23C    */ s16             pickedUpItemCount;
-    /* 0x23E    */ s8              gasWeaponFuelAmount;         /** @unused Used in prototypes to display fuel gauge in item screen, other proto funcs also seem to read/write it. Unused in retail. */
-    /* 0x23F    */ u8              inventoryItemFlags; /** `e_InvItemFlags` */
-    /* 0x240    */ q19_12          playerHealth;       /** Default: `Q12(100.0f)` */
+    /* 0x23E    */ s8              gasWeaponFuelAmount; /**  @unused Used in prototypes to display the fuel gauge in item screen. Other proto funcs also seem to read/write it. Unused in retail. */
+    /* 0x23F    */ u8              inventoryItemFlags;  /** `e_InvItemFlags` */
+    /* 0x240    */ q19_12          playerHealth;        /** Default: `Q12(100.0f)` */
     /* 0x244    */ q19_12          playerPositionX;
     /* 0x248    */ q3_12           playerRotationY;  /** Range [0, 0.999755859375], positive Z: 0, clockwise rotation. It can be multiplied by 360 to get degrees. */
     /* 0x24A    */ u8              clearGameCount;   /** Range [0, 99] */

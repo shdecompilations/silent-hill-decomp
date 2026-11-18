@@ -8,9 +8,9 @@
 #include "main/rng.h"
 
 #if defined(MAP1_S01)
-#include "maps/map1/map1_s01.h" // For `sharedData_800DFB7C_0_s00` size.
+#include "maps/map1/map1_s01.h" // For `g_Particle_Buffer` size.
 #elif defined(MAP6_S04)
-#include "maps/map6/map6_s04.h" // For `sharedData_800DFB7C_0_s00` size.
+#include "maps/map6/map6_s04.h" // For `g_Particle_Buffer` size.
 #endif
 
 // Smoke particles included in M1S01 and M6S04.
@@ -22,15 +22,15 @@ void sharedFunc_800CB7F4_1_s01(void)
     s32 i;
 
     count = sharedData_800DEE50_1_s01.field_4;
-    for (i = 0; i < ARRAY_SIZE(sharedData_800DFB7C_0_s00); i++)
+    for (i = 0; i < ARRAY_SIZE(g_Particle_Buffer); i++)
     {
-        if (sharedData_800DFB7C_0_s00[i].field_A != 0)
+        if (g_Particle_Buffer[i].field_A != 0)
         {
             continue;
         }
 
-        sharedData_800DFB7C_0_s00[i].field_A         = 13;
-        sharedData_800DFB7C_0_s00[i].field_C.field_0 = ((TO_FIXED(sharedData_800DEE50_1_s01.field_6 - sharedData_800DEE50_1_s01.field_8, Q12_SHIFT) / sharedData_800DEE50_1_s01.field_C) * count) / sharedData_800DEE50_1_s01.field_4;
+        g_Particle_Buffer[i].field_A         = 13;
+        g_Particle_Buffer[i].field_C.field_0 = ((TO_FIXED(sharedData_800DEE50_1_s01.field_6 - sharedData_800DEE50_1_s01.field_8, Q12_SHIFT) / sharedData_800DEE50_1_s01.field_C) * count) / sharedData_800DEE50_1_s01.field_4;
 
         count--;
         if (count == 0)
@@ -51,32 +51,32 @@ void sharedFunc_800CB8A0_1_s01(s32 idx)
 
     if (sharedData_800DEE50_1_s01.field_2 == 0)
     {
-        sharedData_800DFB7C_0_s00[idx].field_A = 14;
+        g_Particle_Buffer[idx].field_A = 14;
     }
 
     if (sharedData_800DEE50_1_s01.field_0 == 0)
     {
         rngX                                = (Rng_Rand16() % sharedData_800DEE50_1_s01.field_A);
         angleZ                              = Rng_GenerateUInt(0, 4095);
-        sharedData_800DFB7C_0_s00[idx].field_0.vx_0 = (s32)(rngX * Math_Cos(angleZ)) >> Q12_SHIFT;
-        sharedData_800DFB7C_0_s00[idx].field_4.vz_4 = (s32)(rngX * Math_Sin(angleZ)) >> Q12_SHIFT;
+        g_Particle_Buffer[idx].field_0.vx_0 = (s32)(rngX * Math_Cos(angleZ)) >> Q12_SHIFT;
+        g_Particle_Buffer[idx].field_4.vz_4 = (s32)(rngX * Math_Sin(angleZ)) >> Q12_SHIFT;
     }
     else
     {
-        sharedData_800DFB7C_0_s00[idx].field_0.vx_0 = (Rng_Rand16() % (sharedData_800DEE50_1_s01.field_A * 2)) - sharedData_800DEE50_1_s01.field_A;
-        sharedData_800DFB7C_0_s00[idx].field_4.vz_4 = (Rng_Rand16() % (sharedData_800DEE50_1_s01.field_A * 2)) - sharedData_800DEE50_1_s01.field_A;
+        g_Particle_Buffer[idx].field_0.vx_0 = (Rng_Rand16() % (sharedData_800DEE50_1_s01.field_A * 2)) - sharedData_800DEE50_1_s01.field_A;
+        g_Particle_Buffer[idx].field_4.vz_4 = (Rng_Rand16() % (sharedData_800DEE50_1_s01.field_A * 2)) - sharedData_800DEE50_1_s01.field_A;
     }
 
-    sharedData_800DFB7C_0_s00[idx].vy_8            = sharedData_800DEE50_1_s01.field_8;
-    sharedData_800DFB7C_0_s00[idx].field_B         = Rng_Rand16() % 3;
-    sharedData_800DFB7C_0_s00[idx].field_C.field_0 = 0;
+    g_Particle_Buffer[idx].vy_8            = sharedData_800DEE50_1_s01.field_8;
+    g_Particle_Buffer[idx].field_B         = Rng_Rand16() % 3;
+    g_Particle_Buffer[idx].field_C.field_0 = 0;
 }
 
 bool sharedFunc_800CBA38_1_s01(s32 idx)
 {
-    sharedData_800DFB7C_0_s00[idx].field_C.field_0 += Q12_MULT_PRECISE(g_DeltaTime, ((Rng_Rand16() % Q12_ANGLE(144.0f)) + Q12_ANGLE(288.0f)));
+    g_Particle_Buffer[idx].field_C.field_0 += Q12_MULT_PRECISE(g_DeltaTime, ((Rng_Rand16() % Q12_ANGLE(144.0f)) + Q12_ANGLE(288.0f)));
 
-    if (Q12_DIV(sharedData_800DEE50_1_s01.field_6 - sharedData_800DEE50_1_s01.field_8, sharedData_800DEE50_1_s01.field_C) < sharedData_800DFB7C_0_s00[idx].field_C.field_0)
+    if (Q12_DIV(sharedData_800DEE50_1_s01.field_6 - sharedData_800DEE50_1_s01.field_8, sharedData_800DEE50_1_s01.field_C) < g_Particle_Buffer[idx].field_C.field_0)
     {
         sharedFunc_800CB8A0_1_s01(idx);
         return true;
@@ -108,12 +108,12 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
 
     ptr = PSX_SCRATCH;
 
-    *(s32*)&(*poly)->u0 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 160) << 8) + 0x011300E0;
-    *(s32*)&(*poly)->u1 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 160) << 8) + 0x2B00FF;
-    *(u16*)&(*poly)->u2 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 191) << 8) + 0xE0;
-    *(u16*)&(*poly)->u3 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 191) << 8) + 0xFF;
+    *(s32*)&(*poly)->u0 = (((g_Particle_Buffer[idx].field_B << 5) + 160) << 8) + 0x011300E0;
+    *(s32*)&(*poly)->u1 = (((g_Particle_Buffer[idx].field_B << 5) + 160) << 8) + 0x2B00FF;
+    *(u16*)&(*poly)->u2 = (((g_Particle_Buffer[idx].field_B << 5) + 191) << 8) + 0xE0;
+    *(u16*)&(*poly)->u3 = (((g_Particle_Buffer[idx].field_B << 5) + 191) << 8) + 0xFF;
 
-    temp_v1_2 = 0x40 - (sharedData_800DFB7C_0_s00[idx].field_C.field_0 >> 6);
+    temp_v1_2 = 0x40 - (g_Particle_Buffer[idx].field_C.field_0 >> 6);
     if (temp_v1_2 >= 0)
     {
         var_a1 = Q12_MULT_PRECISE(temp_v1_2, (0x400 - MIN(sharedData_800DEE50_1_s01.field_10 * 2, 0x400)) * 4);
@@ -125,10 +125,10 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
 
     setRGBC0(*poly, var_a1, var_a1, var_a1, PRIM_POLY | RECT_BLEND | RECT_TEXTURE | RECT_SIZE_1);
 
-    temp_v0_2 = sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 6;
-    temp_v0_3 = sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 6;
+    temp_v0_2 = g_Particle_Buffer[idx].field_0.vx_0 >> 6;
+    temp_v0_3 = g_Particle_Buffer[idx].field_4.vz_4 >> 6;
 
-    sharedData_800DFB7C_0_s00[idx].vy_8 += Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DEE50_1_s01.field_C);
+    g_Particle_Buffer[idx].vy_8 += Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DEE50_1_s01.field_C);
 
     temp_v0_4 = SquareRoot0(SQUARE(temp_v0_2) + SQUARE(temp_v0_3)) << 10;
     temp_s1   = Q12_MULT_PRECISE(temp_v0_4, sharedData_800DEE50_1_s01.field_A);
@@ -136,27 +136,27 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
     temp_v1_3 = (Rng_Rand16() % temp_s1) - (temp_s1 >> 2);
 
     temp_s1   = Q12_MULT_PRECISE(g_DeltaTime, temp_v1_3) >> 1;
-    temp_v0_5 = ratan2(sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].field_4.vz_4);
+    temp_v0_5 = ratan2(g_Particle_Buffer[idx].field_0.vx_0, g_Particle_Buffer[idx].field_4.vz_4);
 
-    sharedData_800DFB7C_0_s00[idx].field_0.vx_0    += Q12_MULT(temp_s1, Math_Cos(temp_v0_5));
-    sharedData_800DFB7C_0_s00[idx].field_4.vz_4    += Q12_MULT(temp_s1, Math_Sin(temp_v0_5));
-    sharedData_800DFB7C_0_s00[idx].field_C.field_0 += MAX(temp_s1, 0);
+    g_Particle_Buffer[idx].field_0.vx_0    += Q12_MULT(temp_s1, Math_Cos(temp_v0_5));
+    g_Particle_Buffer[idx].field_4.vz_4    += Q12_MULT(temp_s1, Math_Sin(temp_v0_5));
+    g_Particle_Buffer[idx].field_C.field_0 += MAX(temp_s1, 0);
 
     Math_SetSVectorFastSum(&ptr->field_12C,
-        Q12_TO_Q8((sharedData_800DFB7C_0_s00[idx].field_0.vx_0 + sharedData_800DEE50_1_s01.field_14)) - (q8_8)ptr->field_0.field_0.vx,
-        Q12_TO_Q8(sharedData_800DFB7C_0_s00[idx].vy_8)                                                - ptr->field_0.field_0.vy,
-        Q12_TO_Q8((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + sharedData_800DEE50_1_s01.field_18)) - ptr->field_0.field_0.vz);
+        Q12_TO_Q8((g_Particle_Buffer[idx].field_0.vx_0 + sharedData_800DEE50_1_s01.field_14)) - (q8_8)ptr->field_0.field_0.vx,
+        Q12_TO_Q8(g_Particle_Buffer[idx].vy_8)                                                - ptr->field_0.field_0.vy,
+        Q12_TO_Q8((g_Particle_Buffer[idx].field_4.vz_4 + sharedData_800DEE50_1_s01.field_18)) - ptr->field_0.field_0.vz);
 
-    sharedData_800DFB7C_0_s00[idx].field_C.field_0 += CLAMP_LOW(TO_FIXED(Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DEE50_1_s01.field_C), Q12_SHIFT) /
+    g_Particle_Buffer[idx].field_C.field_0 += CLAMP_LOW(TO_FIXED(Q12_MULT_PRECISE(g_DeltaTime, sharedData_800DEE50_1_s01.field_C), Q12_SHIFT) /
                                                                 (Q12_MULT(Math_Cos(sharedData_800DEE50_1_s01.field_10), sharedData_800DEE50_1_s01.field_6) -
                                                                  sharedData_800DEE50_1_s01.field_8),
                                                                 0);
 
-    if (sharedData_800DFB7C_0_s00[idx].field_C.field_0 > Q12(1.0f) || sharedData_800DEE50_1_s01.field_10 == Q12(0.25f))
+    if (g_Particle_Buffer[idx].field_C.field_0 > Q12(1.0f) || sharedData_800DEE50_1_s01.field_10 == Q12(0.25f))
     {
         if (sharedData_800DEE50_1_s01.field_1C == 0 && Math_Cos(sharedData_800DEE50_1_s01.field_10) < Rng_GenerateUInt(0, Q12_ANGLE(360.0f) - 1))
         {
-            sharedData_800DFB7C_0_s00[idx].field_A = 0;
+            g_Particle_Buffer[idx].field_A = 0;
         }
         else
         {
@@ -186,7 +186,7 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
         return false;
     }
 
-    temp_a0 = sharedData_800DFB7C_0_s00[idx].field_C.field_0;
+    temp_a0 = g_Particle_Buffer[idx].field_C.field_0;
     var_a1  = sharedData_800DEE50_1_s01.field_1 * ptr->field_0.field_2C / ptr->field_134;
 
     if (temp_a0 < 0x200)

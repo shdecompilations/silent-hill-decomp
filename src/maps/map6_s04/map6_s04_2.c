@@ -4021,9 +4021,9 @@ void func_800E7944(u32 arg0) // 0x800E7944
 
         for (i = 0; i < 0x12C; i++)
         {
-            if (sharedData_800DFB7C_0_s00[i].field_A == 14)
+            if (g_Particle_Buffer[i].field_A == 14)
             {
-                sharedData_800DFB7C_0_s00[i].vy_8 -= temp_a3;
+                g_Particle_Buffer[i].vy_8 -= temp_a3;
             }
         }
 
@@ -4056,13 +4056,13 @@ void func_800E7944(u32 arg0) // 0x800E7944
     }
     else if (arg0 == 3)
     {
-        D_800C4414 &= 0xFD;
+        D_800C4414 &= ~(1 << 1);
 
         for (i = 0; i < 300; i++)
         {
-            if (sharedData_800DFB7C_0_s00[i].field_A == 13 || sharedData_800DFB7C_0_s00[i].field_A == 14)
+            if (g_Particle_Buffer[i].field_A == 13 || g_Particle_Buffer[i].field_A == 14)
             {
-                sharedData_800DFB7C_0_s00[i].field_A = 0;
+                g_Particle_Buffer[i].field_A = 0;
             }
         }
     }

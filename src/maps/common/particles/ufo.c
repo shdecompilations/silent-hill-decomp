@@ -10,20 +10,22 @@
 // UFO effect included in M1S03, M4S05, M5S01, M6S01 and M6S02, drawn during the Channeling Stone cutscenes.
 // Draws the `ENBAN.TIM` sprite (loaded by the map event code).
 
-void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3)
+void Particle_UfoSpawn(VECTOR3* pos, u16 arg1, u16 arg2, u32 arg3)
 {
-    s32 idx;
+    s32 partIdx;
 
-    idx = func_8005E7E0(35);
-    if (idx != NO_VALUE)
+    partIdx = Particle_FreeSlotGet(35);
+    if (partIdx == NO_VALUE)
     {
-        sharedData_800DFB7C_0_s00[idx].field_0.vx_0        = Q12_TO_Q8(arg0->vx);
-        sharedData_800DFB7C_0_s00[idx].vy_8            = Q12_TO_Q8(arg0->vy);
-        sharedData_800DFB7C_0_s00[idx].field_4.vz_4        = Q12_TO_Q8(arg0->vz);
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = arg1 / 2;
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = Q12_TO_Q8(arg2);
-        sharedData_800DFB7C_0_s00[idx].field_B         = arg3;
+        return;
     }
+
+    g_Particle_Buffer[partIdx].field_0.vx_0        = Q12_TO_Q8(pos->vx);
+    g_Particle_Buffer[partIdx].vy_8                = Q12_TO_Q8(pos->vy);
+    g_Particle_Buffer[partIdx].field_4.vz_4        = Q12_TO_Q8(pos->vz);
+    g_Particle_Buffer[partIdx].field_C.s_0.field_0 = arg1 / 2;
+    g_Particle_Buffer[partIdx].field_C.s_0.field_2 = Q12_TO_Q8(arg2);
+    g_Particle_Buffer[partIdx].field_B             = arg3;
 }
 
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
@@ -60,8 +62,8 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
-    sharedData_800DFB7C_0_s00[idx].field_A = 0;
-    if (sharedData_800DFB7C_0_s00[idx].field_B & 1)
+    g_Particle_Buffer[idx].field_A = 0;
+    if (g_Particle_Buffer[idx].field_B & 1)
     {
         scratchData->field_148.u8[1] = g_ActiveBufferIdx;
         scratchData->sprt_12C        = (SPRT*)*poly;
@@ -97,16 +99,16 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
     for (i = 0; i < 4; i++)
     {
         Math_SetSVectorFastSum(&scratchData->field_138,
-                               (u16)sharedData_800DFB7C_0_s00[idx].field_0.vx_0 - (u16)scratchData->field_0.vx,
-                               sharedData_800DFB7C_0_s00[idx].vy_8 - scratchData->field_0.vy,
-                               sharedData_800DFB7C_0_s00[idx].field_4.vz_4 - scratchData->field_0.vz);
+                               (u16)g_Particle_Buffer[idx].field_0.vx_0 - (u16)scratchData->field_0.vx,
+                               g_Particle_Buffer[idx].vy_8 - scratchData->field_0.vy,
+                               g_Particle_Buffer[idx].field_4.vz_4 - scratchData->field_0.vz);
 
         if (i != 0)
         {
 
-            scratchData->field_138.vx += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
-            scratchData->field_138.vy += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
-            scratchData->field_138.vz += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
+            scratchData->field_138.vx += Rng_SymmetricOffset(Rng_Rand16(), (u16)g_Particle_Buffer[idx].field_C.s_0.field_2);
+            scratchData->field_138.vy += Rng_SymmetricOffset(Rng_Rand16(), (u16)g_Particle_Buffer[idx].field_C.s_0.field_2);
+            scratchData->field_138.vz += Rng_SymmetricOffset(Rng_Rand16(), (u16)g_Particle_Buffer[idx].field_C.s_0.field_2);
             polyV                      = (Rng_GenerateUInt(0, 1) == 0) << 6;
         }
         else
@@ -127,7 +129,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
         }
         else
         {
-            scratchData->field_148.u16 = (((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 * scratchData->field_2C) / scratchData->z_144) >> 4;
+            scratchData->field_148.u16 = (((u16)g_Particle_Buffer[idx].field_C.s_0.field_0 * scratchData->field_2C) / scratchData->z_144) >> 4;
 
             setPolyFT4(*poly);
 

@@ -184,14 +184,15 @@ void Combat_GasWeaponEngineSfxUpdate(bool isChainsaw, q23_8 vol, s32 pitch);
 
 bool Combat_GasWeaponSfxUpdate(e_GasWeaponSfx sfxIdx, q23_8 vol, s32 pitch);
 
-/** @brief Plays the impact SFX for an attack hitting an NPC, picked by weapon type (slash, blunt, gunshot or kick).
+/** @brief Plays the impact SFX for an attack hitting an NPC according to the weapon type (slash, blunt, gunshot or
+ * kick).
  *
  * Revved Chainsaw and Rock Drill hits update the gas weapon contact SFX volume instead.
  *
  * @param pos Hit position (Q19.12).
  * @param weaponAttack Packed `WEAPON_ATTACK` that hit.
  */
-void Combat_HitSfxPlay(VECTOR3* pos, u32 weaponAttack);
+void Combat_HitSfxPlay(const VECTOR3* pos, u32 weaponAttack);
 
 /** @brief Applies one hit from an attack to a target. Applies damage/push/vibration/impact SFX/blood.
  *

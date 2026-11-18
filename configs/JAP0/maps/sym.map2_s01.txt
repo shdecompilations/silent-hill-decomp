@@ -158,21 +158,21 @@ g_CommonWorldObjectPoses        = 0x800D29BC; // type:Pose size:0x14
 //----------------------------------------------------------------
 //--- PA: 0x006F28   VA: 0x800D29D0   subsegment: .bss, map2_s01_2
 //----------------------------------------------------------------
-g_ParticleMapIdx0               = 0x800D29D0;
-g_ParticleMapIdx1               = 0x800D29D4; // type:s32
+g_WeatherParticle_MapIdx0       = 0x800D29D0;
+g_WeatherParticle_MapIdx1       = 0x800D29D4; // type:s32
 D_800D0544                      = 0x800D29D8;
 g_CameraPositionTarget          = 0x800D29E0; // type:VECTOR3 size:0xC
 D_800D0558                      = 0x800D29EC;
 g_CameraLookAtTarget            = 0x800D29F0; // type:VECTOR3 size:0xC
 g_Cutscene_MapMsgAudioIdx       = 0x800D29FC; // type:u8
-g_Particle_SpeedX               = 0x800D2A00;
-g_Particle_SpeedZ               = 0x800D2A04;
+g_WeatherParticle_SpeedX        = 0x800D2A00;
+g_WeatherParticle_SpeedZ        = 0x800D2A04;
 sharedData_800DFB6C_0_s00       = 0x800D2A08; // type:s32
 sharedData_800DFB70_0_s00       = 0x800D2A0C; // type:s32
-sharedData_800DFB7C_0_s00       = 0x800D2A10; // size:0xFA0
-g_Effect_BloodSplats            = 0x800D39B0; // size:0x12C
-g_ParticleVectors0              = 0x800D3AE0; // size:0x2C type:ParticleVectors
-g_ParticleVectors1              = 0x800D3B10; // size:0x2C type:ParticleVectors
+g_Particle_Buffer               = 0x800D2A10; // size:0xFA0
+g_Particle_BloodSplats          = 0x800D39B0; // size:0x12C
+g_WeatherParticleVectors0       = 0x800D3AE0; // size:0x2C type:ParticleVectors
+g_WeatherParticleVectors1       = 0x800D3B10; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00       = 0x800D3B3C; // type:s32
 sharedData_800E0CAC_0_s00       = 0x800D3B40; // type:s32
 sharedData_800E0CB0_0_s00       = 0x800D3B44; // type:u32

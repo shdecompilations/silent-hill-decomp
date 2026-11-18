@@ -7,27 +7,27 @@
 // declare externs in semi-random order though.
 // For now we'll declare them before headers in the order they appear in the
 // map .bss, later can hopefully improve order in headers instead.
-extern e_MapIdx                     g_ParticleMapIdx0;
-extern e_MapIdx                     g_ParticleMapIdx1;
+extern e_MapIdx                     g_WeatherParticle_MapIdx0;
+extern e_MapIdx                     g_WeatherParticle_MapIdx1;
 extern s32                          __pad_bss_800D5CF0[2];
 extern u8                           sharedData_800D5CF8_1_s05[9];
 extern s8                           __pad_bss_800D5D01[7];
 extern u8                           sharedData_800D5D08_1_s05[9];
 extern u8                           D_800D5D11;
 extern s8                           __pad_bss_800D5D12[2];
-extern s32                          g_Particle_SpeedX;
-extern s32                          g_Particle_SpeedZ;
+extern s32                          g_WeatherParticle_SpeedX;
+extern s32                          g_WeatherParticle_SpeedZ;
 extern s32                          sharedData_800DFB6C_0_s00;
 extern s32                          sharedData_800DFB70_0_s00;
 extern s32                          __pad_bss_800D5D24;
-extern s_MapHdr_field_4C            sharedData_800DFB7C_0_s00[];
-extern s_BloodSplat                 g_Effect_BloodSplats[];
+extern s_Particle            g_Particle_Buffer[];
+extern s_BloodSplat                 g_Particle_BloodSplats[];
 extern s8                           __pad_bss_800D8564[4];
 extern s_MapOverlayHdr_5C           sharedData_800D8568_1_s05;
 extern s32                          __pad_bss_800D8590[2];
-extern struct _ParticleVectors      g_ParticleVectors0;
+extern struct _WeatherParticleVectors      g_WeatherParticleVectors0;
 extern s32                          __pad_bss_800D85C4;
-extern struct _ParticleVectors      g_ParticleVectors1;
+extern struct _WeatherParticleVectors      g_WeatherParticleVectors1;
 extern s32                          sharedData_800E0CA8_0_s00;
 extern s32                          sharedData_800E0CAC_0_s00;
 extern u32                          sharedData_800E0CB0_0_s00;
@@ -125,14 +125,14 @@ void func_800D49AC(void) // 0x800D49AC
             sharedData_800D8568_1_s05.field_1  = 0;
             sharedData_800D8568_1_s05.field_10 = 0;
 
-            for (i = 0; i < ARRAY_SIZE(sharedData_800DFB7C_0_s00); i++)
+            for (i = 0; i < ARRAY_SIZE(g_Particle_Buffer); i++)
             {
-                s32 field_A = sharedData_800DFB7C_0_s00[i].field_A;
+                s32 field_A = g_Particle_Buffer[i].field_A;
                 if (field_A < 12)
                 {
                     if (field_A >= 8)
                     {
-                        sharedData_800DFB7C_0_s00[i].field_A = 12;
+                        g_Particle_Buffer[i].field_A = 12;
                     }
                 }
             }
@@ -404,7 +404,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D5400
     i = 0;
     while (1)
     {
-        if (++i >= ARRAY_SIZE(sharedData_800DFB7C_0_s00))
+        if (++i >= ARRAY_SIZE(g_Particle_Buffer))
         {
             break;
         }
