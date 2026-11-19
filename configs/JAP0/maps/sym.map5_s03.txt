@@ -129,8 +129,9 @@ g_MapHeaderTable_38             = 0x800D56C8;
 LOADABLE_INVENTORY_ITEMS        = 0x800D5748;
 sharedData_800DD584_0_s00       = 0x800D5769; // type:u8
 g_WeatherParticle_ActiveCount   = 0x800D576C; // type:s32 size:0x8
+
 //----------------------------------------------------
-//--- PA: 0x009CC8   VA: 0x800D5770   subsegment: data
+//--- PA: 0x009CCC   VA: 0x800D5774   subsegment: data
 //----------------------------------------------------
 g_WeatherParticle_CameraMoved   = 0x800D5774; // type:u8
 sharedData_800DD591_0_s00       = 0x800D5775; // type:u8

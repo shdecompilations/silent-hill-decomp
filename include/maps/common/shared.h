@@ -504,22 +504,32 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
     WorldObject_ModelNameSet(&(objPose)->object, (name));         \
 }
 
-/** @brief Model name of common pickup `pickupId` (`e_CommonPickupItemId`).
- * `g_CommonWorldObjectNames` starts with an unused entry and the save pad, so pickup names begin at index 2.
+/** @brief Gets the world object model name of a common pickup.
+ *`g_CommonWorldObjectNames` starts with an unused entry and the save padding, so pickup names begin at index 2.
+
+ * @param pickupId ID of the common pickup object (`e_CommonPickupItemId`).
+ * @return Common pickup object name.
  */
 #define WorldObject_CommonModelName(pickupId) \
     g_CommonWorldObjectNames[(pickupId) + 2]
 
-/** @brief Sets the model name of common pickup `pickupId` in `g_CommonWorldObjects`. */
+/** @brief Sets the name of a common pickup world object model in `g_CommonWorldObjects`.
+ *
+ * @param pickupId ID of the common pickup object to update (`e_CommonPickupItemId`).
+ */
 #define WorldObject_CommonModelNameSet(pickupId) \
     WorldObject_ModelNameSet(&g_CommonWorldObjects[pickupId], WorldObject_CommonModelName(pickupId))
 
-/** @brief Draws common pickup `pickupId` (`e_CommonPickupItemId`) at `pose` (`s_Pose`).
-  * Maps can call this multiple times with the same `pickupId` but different `pose`, to add multiples of a common pickup to the map. */
+/** @brief Submits a common pickup world object model to draw.
+ * Maps can call this multiple times with the same `pickupId` but different `pose` to add multiples of a common pickup.
+ *
+ * @param pickupId ID of the common pickup object to draw (`e_CommonPickupItemId`).
+ * @param pose Pickup pose. (`s_Pose`).
+ */
 #define WorldObjects_CommonAdd(pickupId, pose) \
     WorldObjects_Add(&g_CommonWorldObjects[pickupId], &(pose).position, &(pose).rotation)
 
-/** @brief Sets the model names of every common pickup in `g_CommonWorldObjects`. */
+/** @brief Sets the world object model names of every common pickup in `g_CommonWorldObjects`. */
 #define WorldObject_CommonModelNamesInit()                             \
 {                                                                      \
     WorldObject_CommonModelNameSet(CommonPickupItemId_FirstAidKit);    \

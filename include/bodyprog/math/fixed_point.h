@@ -343,6 +343,14 @@
 #define Q6_TO_Q12(x) \
     ((x) << (Q12_SHIFT - Q6_SHIFT))
 
+/** @brief Converts a fixed-point value from Q*.7 to Q*.12.
+ *
+ * @param x Q*.7 fixed-point value to convert.
+ * @return `x` converted to Q*.12 fixed-point.
+ */
+#define Q7_TO_Q12(x) \
+    ((x) << (Q12_SHIFT - Q7_SHIFT))
+
 /** @brief Converts a fixed-point value from Q*.8 to Q*.12.
  *
  * @param x Q*.8 fixed-point value to convert.

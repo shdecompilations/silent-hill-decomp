@@ -7,130 +7,134 @@
 
 void Map_RoomBgmInit(bool updateSong)
 {
-    s32               var_s1;
-    s32               var_s2;
-    s32               temp_a2;
-    s_BgmLayerLimits* var_s3;
-    u16               bgmFlags;
+    s32               fadeSpeed;
+    q24_7             var_s2; // TODO: Some limit value.
+    s32               roomIdx;
+    s_BgmLayerLimits* layerLimits;
+    u16               bgmFlags; // `e_BgmFlags`
 
-    var_s3  = &g_BgmRSU_LayerLimits0;
-    temp_a2 = g_SavegamePtr->mapRoomIdx;
-    var_s1  = Q12(0.2f);
+    layerLimits = &g_BgmRSU_LayerLimits0;
+    roomIdx     = g_SavegamePtr->mapRoomIdx;
+    fadeSpeed   = Q12(0.2f);
 
     switch (g_GameWork.bgmIdx)
     {
-        case 5:
+        case BgmCmd_Track5:
             g_SysWork.bgmStatusFlags &= ~BgmStatusFlag_Duck;
 
             switch (g_GameWork.gameState)
             {
                 case GameState_InventoryScreen:
                 case GameState_LoadStatusScreen:
-                    if ((g_GameWork.gameState != GameState_InventoryScreen) || (g_GameWork.gameStateSteps[1] != 25))
+                    if (g_GameWork.gameState != GameState_InventoryScreen || g_GameWork.gameStateSteps[1] != 25)
                     {
-                        bgmFlags = 0xFE;
+                        bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5 |
+                                   BgmFlag_Layer6 | BgmFlag_Layer7 | BgmFlag_Layer8;
 
                         if (g_GameWork.gameStatePrev != GameState_SaveScreen)
                         {
-                            var_s1 = Q12(240.0f);
+                            fadeSpeed = Q12(240.0f);
                             break;
                         }
                     }
 
-                    bgmFlags  = 0x201;
-                    var_s1 = Q12(3.0f);
+                    bgmFlags  = BgmFlag_Layer1 | BgmFlag_MuteAll;
+                    fadeSpeed = Q12(3.0f);
                     break;
 
                 case GameState_SaveScreen:
                     if (g_Screen_FadeStatus >= SCREEN_FADE_STATUS(ScreenFadeState_FadeInStart, false))
                     {
-                        bgmFlags  = 0xFE;
-                        var_s1 = Q12(240.0f);
+                        bgmFlags  = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5 |
+                                    BgmFlag_Layer6 | BgmFlag_Layer7 | BgmFlag_Layer8;
+                        fadeSpeed = Q12(240.0f);
                     }
                     else if (g_Screen_FadeStatus < SCREEN_FADE_STATUS(ScreenFadeState_FadeOutStart, false))
                     {
-                        bgmFlags  = 0xFE;
-                        var_s1 = Q12(240.0f);
+                        bgmFlags  = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5 |
+                                    BgmFlag_Layer6 | BgmFlag_Layer7 | BgmFlag_Layer8;
+                        fadeSpeed = Q12(240.0f);
                     }
                     else
                     {
-                        bgmFlags  = 0x201;
-                        var_s1 = Q12(3.0f);
+                        bgmFlags  = BgmFlag_Layer1 | BgmFlag_MuteAll;
+                        fadeSpeed = Q12(3.0f);
                     }
                     break;
 
                 default:
-                    bgmFlags  = 0x201;
-                    var_s1 = Q12(3.0f);
+                    bgmFlags  = BgmFlag_Layer1 | BgmFlag_MuteAll;
+                    fadeSpeed = Q12(3.0f);
                     break;
             }
             break;
 
-        case 41:
-            var_s3 = NULL;
+        case BgmCmd_Track41:
+            layerLimits = NULL;
             if (Savegame_EventFlagGet(EventFlag_419))
             {
-                var_s1 = Q12(2.0f);
-                bgmFlags  = 0x104;
+                fadeSpeed = Q12(2.0f);
+                bgmFlags  = BgmFlag_Layer3 | BgmFlag_KeepAlive;
             }
             else
             {
-                bgmFlags = 0x301;
+                bgmFlags = BgmFlag_Layer1 | BgmFlag_KeepAlive | BgmFlag_MuteAll;
                 if (!Savegame_EventFlagGet(EventFlag_418))
                 {
-                    var_s1 = Q12(2.0f);
-                    bgmFlags  = 0x102;
+                    fadeSpeed = Q12(2.0f);
+                    bgmFlags  = BgmFlag_Layer2 | BgmFlag_KeepAlive;
                 }
             }
 
             break;
 
-        case 21:
-            bgmFlags = 0x301;
+        case BgmCmd_Track21:
+            bgmFlags = BgmFlag_Layer1 | BgmFlag_KeepAlive | BgmFlag_MuteAll;
 
             if (!Savegame_EventFlagGet(EventFlag_469))
             {
-                bgmFlags = 0x1FE;
+                bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5 |
+                           BgmFlag_Layer6 | BgmFlag_Layer7 | BgmFlag_Layer8 | BgmFlag_KeepAlive;
 
                 if (Savegame_EventFlagGet(EventFlag_417) && !Savegame_EventFlagGet(EventFlag_460))
                 {
-                    bgmFlags = 0x101;
+                    bgmFlags = BgmFlag_Layer1 | BgmFlag_KeepAlive;
                 }
             }
             break;
 
-        case 20:
+        case BgmCmd_Track20:
         default:
             if (Savegame_EventFlagGet(EventFlag_410))
             {
-                bgmFlags = sharedData_800EFD08_6_s00[temp_a2];
+                bgmFlags = sharedData_800EFD08_6_s00[roomIdx];
                 if (Savegame_EventFlagGet(EventFlag_426))
                 {
-                    bgmFlags |= 0x80;
+                    bgmFlags |= BgmFlag_Layer8;
                 }
             }
             else if (Savegame_EventFlagGet(EventFlag_402))
             {
-                bgmFlags = sharedData_800EFD34_6_s00[temp_a2];
+                bgmFlags = sharedData_800EFD34_6_s00[roomIdx];
             }
             else
             {
-                bgmFlags = 6;
+                bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3;
             }
             break;
     }
 
-    var_s2 = 96;
-    if (temp_a2 < 20)
+    var_s2 = Q7(0.75f);
+    if (roomIdx <= 19)
     {
-        if (temp_a2 >= 15)
+        if (roomIdx >= 15)
         {
-            var_s2 = 127;
+            var_s2 = Q7_CLAMPED(1.0f);
         }
     }
 
     sharedData_800EFD04_6_s00   += g_DeltaTime;
     g_BgmRSU_LayerLimits0.limits[2] = Q12_MULT_PRECISE(var_s2, (Math_Sin(sharedData_800EFD04_6_s00 / 12) + Q12(3.0f)) / 4);
 
-    Bgm_LayersUpdate(bgmFlags, var_s1, var_s3);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, layerLimits);
 }

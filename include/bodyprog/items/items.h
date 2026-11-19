@@ -168,7 +168,7 @@ typedef enum _InvItemId
     InvItemId_GasolineTank          = 226
 } e_InvItemId;
 
-/** @brief Common pickup item IDs, used by `Event_CommonItemTake` and as index into a map's `g_CommonWorldObjects`. */
+/** @brief Common pickup item IDs. Used by `Event_CommonItemTake` and indices into a map's `g_CommonWorldObjects`. */
 typedef enum _CommonPickupItemId
 {
     CommonPickupItemId_FirstAidKit    = 0,

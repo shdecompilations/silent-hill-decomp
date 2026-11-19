@@ -347,8 +347,8 @@ extern s_VabInfo g_Vab_InfoTable[];
         extern s32                        __pad_bss_800C15EC;
         extern u_Sd_XaCdlInfo             g_Sd_XaCdlInfo;
         extern s16                        __pad_bss_800C15F2[2];
-        extern u16                        g_AudioPlayingIdxList[24];
-        extern s16                        g_AudioPlayingPitchList[24];
+        extern u16                        g_Sd_AudioPlayingIdxList[24];
+        extern s16                        g_Sd_AudioPlayingPitchList[24];
         extern s_Sd_AudioWork             g_Sd_AudioWork;
         extern s_AudioStreamingStates     g_Sd_AudioStreamingStates;
         extern s32                        __pad_bss_800C1674;
@@ -361,7 +361,7 @@ extern s_VabInfo g_Vab_InfoTable[];
         extern u8                         g_Sd_AudioType;
         extern char                       __pad_bss_800C37C9[3];
         extern u32                        g_Sd_FileDataTransferred;
-        extern u8                         g_Sd_DataLoadAttempts;
+        extern u8                         g_Sd_DataLoadAttemptCount;
         extern char                       __pad_bss_800C37D1[3];
         extern s_AudioItemData*           g_Sd_VabTargetLoad;
         extern s_AudioItemData*           g_Sd_KdtTargetLoad;
@@ -378,16 +378,14 @@ extern s_VabInfo g_Vab_InfoTable[];
  * Scratch: https://decomp.me/scratch/IniqJ
  *
  * @note Name from retrieved debug symbols.
- * Some PS1 and early PS2 KCET games and SH2 feature a function
- * with this name differing in case between each game.
- * * `Tokimeki Memorial ~Forever With You~` and `International Rally Championship` call it `SD_Call`.
- * * `Winning Eleven 6` calls it `SD_call`.
- * * `Silent Scope 3` and `Silent Hill 2` call it `sd_call`.
+ * Some PS1 and early PS2 KCET games and SH2 use this name with minor differences in styling.
+ * * `SD_Call`: `Tokimeki Memorial ~Forever With You~` and `International Rally Championship`.
+ * * `SD_call`: `Winning Eleven 6`.
+ * * `sd_call`: `Silent Scope 3` and `Silent Hill 2`.
  *
- * Each game's implementation varies slightly depending on the requirements,
- * but in all instances, it's used to pass a command/task to the
- * audio streaming system. The most similar are IRC and SH2, while the most different
- * being SS3 and WE6.
+ * Each game's implementation varies slightly depending on the requirements, but in all instances, it's used to pass a
+ * command/task to the audio streaming system. The most similar are IRC and SH2, while the most different are SS3 and
+ * WE6.
  */
 void SD_Call(u32 task);
 
@@ -470,7 +468,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_7 balance, q0_8 vol, s8 pitch);
 /** @brief Plays audio.
  *
  * @note The differences with `Sd_SfxPlay` is that this function has an option to
- * specify the audio pitch and doesn't register the playing sound in `g_AudioPlayingIdxList`.
+ * specify the audio pitch and doesn't register the playing sound in `g_Sd_AudioPlayingIdxList`.
  *
  * @param sfxId `e_SfxId`.
  * @param balance Stereo balance.
@@ -498,8 +496,8 @@ void Sd_AllSfxWithRRStop(void);
 /** Sound command func. Unknown category. */
 void Sd_SetupBgmMidiChannels(u16 task);
 
-/** Returns the current BGM audio channel volume based on the PSX's MIDI channel. Returns Q7 value?? */
-u8 Sd_MidiChannelVolumeGet(u8 channelIdx);
+/** Returns the current BGM audio channel volume based on the PSX's MIDI channel. */
+q1_7 Sd_MidiChannelVolumeGet(u8 channelIdx);
 
 /** Manipulates the BGM audio channel volume. */
 void Sd_MidiChannelsVolumeSet(u8 channelIdx, u8 vol);
