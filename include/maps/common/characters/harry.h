@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_HARRY_H
-#define _MAPS_CHARACTERS_HARRY_H
+#ifndef _MAPS_COMMON_CHARACTERS_HARRY_H
+#define _MAPS_COMMON_CHARACTERS_HARRY_H
 
 /** @brief Harry character animation indices. */
 typedef enum _HarryAnim

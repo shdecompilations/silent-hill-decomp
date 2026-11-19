@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_FLOATSTINGER_H
-#define _MAPS_CHARACTERS_FLOATSTINGER_H
+#ifndef _MAPS_COMMON_CHARACTERS_FLOATSTINGER_H
+#define _MAPS_COMMON_CHARACTERS_FLOATSTINGER_H
 
 /** @brief Floatstinger character flags. */
 typedef enum _FloatstingerFlags

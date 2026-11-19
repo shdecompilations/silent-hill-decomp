@@ -1,5 +1,5 @@
-#ifndef _MAPS_SHARED_H
-#define _MAPS_SHARED_H
+#ifndef _MAPS_COMMON_SHARED_H
+#define _MAPS_COMMON_SHARED_H
 
 #include "bodyprog/game.h"
 
@@ -7,6 +7,7 @@
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/screen/background.h"
 #include "bodyprog/screen/draw.h"
+#include "maps/common/bgm.h"
 #include "maps/common/map_util.h"
 
 /** @brief Heading angle quadrants. TODO: Order uncertain. North/South and East/West could be swapped. */
@@ -313,16 +314,6 @@ void sharedFunc_800DB60C_7_s01(void);
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx);
-
-void Map_RoomBgmInit(bool updateSong);
-
-void Map_BgmSongChange(void);
-
-void Map_BgmLayersUpdate(void);
-
-void Map_FinalBossBgmInit(bool updateSong);
-
-void Map_FinalBossBgmSongChange(void);
 
 void sharedFunc_800CAAD0_1_s05(void);
 

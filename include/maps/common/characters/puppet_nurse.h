@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_PUPPETNURSE_H
-#define _MAPS_CHARACTERS_PUPPETNURSE_H
+#ifndef _MAPS_COMMON_CHARACTERS_PUPPETNURSE_H
+#define _MAPS_COMMON_CHARACTERS_PUPPETNURSE_H
 
 /** @brief Puppet Nurse or Puppet Doctor character flags. */
 typedef enum _PuppetNurseFlags

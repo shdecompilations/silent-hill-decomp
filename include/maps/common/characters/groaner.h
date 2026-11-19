@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_GROANER_H
-#define _MAPS_CHARACTERS_GROANER_H
+#ifndef _MAPS_COMMON_CHARACTERS_GROANER_H
+#define _MAPS_COMMON_CHARACTERS_GROANER_H
 
 /** @brief Groaner character flags. */
 typedef enum _GroanerFlags

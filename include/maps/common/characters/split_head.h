@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_SPLITHEAD_H
-#define _MAPS_CHARACTERS_SPLITHEAD_H
+#ifndef _MAPS_COMMON_CHARACTERS_SPLITHEAD_H
+#define _MAPS_COMMON_CHARACTERS_SPLITHEAD_H
 
 /** @brief Split Head character flags. */
 typedef enum _SplitHeadFlags

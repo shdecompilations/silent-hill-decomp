@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_FLAUROS_H
-#define _MAPS_CHARACTERS_FLAUROS_H
+#ifndef _MAPS_COMMON_CHARACTERS_FLAUROS_H
+#define _MAPS_COMMON_CHARACTERS_FLAUROS_H
 
 /** @brief Flauros character control states. */
 typedef enum _FlaurosControl

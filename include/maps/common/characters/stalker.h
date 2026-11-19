@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_STALKER_H
-#define _MAPS_CHARACTERS_STALKER_H
+#ifndef _MAPS_COMMON_CHARACTERS_STALKER_H
+#define _MAPS_COMMON_CHARACTERS_STALKER_H
 
 /** @brief Stalker character flags. */
 typedef enum _StalkerFlags

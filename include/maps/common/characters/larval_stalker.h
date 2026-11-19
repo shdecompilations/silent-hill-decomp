@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_LARVALSTALKER_H
-#define _MAPS_CHARACTERS_LARVALSTALKER_H
+#ifndef _MAPS_COMMON_CHARACTERS_LARVALSTALKER_H
+#define _MAPS_COMMON_CHARACTERS_LARVALSTALKER_H
 
 /** @brief Larval Stalker character flags. */
 typedef enum _LarvalStalkerFlags

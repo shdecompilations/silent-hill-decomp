@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_LITTLEINCUBUS_H
-#define _MAPS_CHARACTERS_LITTLEINCUBUS_H
+#ifndef _MAPS_COMMON_CHARACTERS_LITTLEINCUBUS_H
+#define _MAPS_COMMON_CHARACTERS_LITTLEINCUBUS_H
 
 /** @brief Little Incubus character control states. */
 typedef enum _LitteIncubusControl

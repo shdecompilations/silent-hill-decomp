@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "maps/common/bgm.h"
 #include "bodyprog/events/bgm_update.h"
 #include "maps/common/shared.h"
 
@@ -6,12 +7,12 @@
 
 void Map_RoomBgmInit(bool updateSong)
 {
-    (updateSong != 0) ? Map_BgmSongChange() : Map_BgmLayersUpdate();
+    updateSong ? Map_BgmSongChange() : Map_BgmLayersUpdate();
 }
 
 void Map_FinalBossBgmInit(bool updateSong)
 {
-    (updateSong != 0) ? Map_FinalBossBgmSongChange() : Map_BgmLayersUpdate();
+    updateSong ? Map_FinalBossBgmSongChange() : Map_BgmLayersUpdate();
 }
 
 void Map_BgmSongChange(void)

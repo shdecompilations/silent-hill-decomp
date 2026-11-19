@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_MONSTERINCUBATOR_H
-#define _MAPS_CHARACTERS_MONSTERINCUBATOR_H
+#ifndef _MAPS_COMMON_CHARACTERS_MONSTERINCUBATOR_H
+#define _MAPS_COMMON_CHARACTERS_MONSTERINCUBATOR_H
 
 /** @brief Monster Incubator character animation indices. */
 typedef enum _MonsterIncubatorAnim

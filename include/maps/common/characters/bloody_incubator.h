@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_BLOODYINCUBATOR_H
-#define _MAPS_CHARACTERS_BLOODYINCUBATOR_H
+#ifndef _MAPS_COMMON_CHARACTERS_BLOODYINCUBATOR_H
+#define _MAPS_COMMON_CHARACTERS_BLOODYINCUBATOR_H
 
 /** @brief Bloody Incubator character control states. */
 typedef enum _BloodyIncubatorControl

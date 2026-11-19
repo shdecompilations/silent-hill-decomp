@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_CHARA_KAUFMANN_H
-#define _MAPS_CHARACTERS_CHARA_KAUFMANN_H
+#ifndef _MAPS_COMMON_CHARACTERS_CHARA_KAUFMANN_H
+#define _MAPS_COMMON_CHARACTERS_CHARA_KAUFMANN_H
 
 /** @brief Kaufmann character control states. */
 typedef enum _KaufmannControl

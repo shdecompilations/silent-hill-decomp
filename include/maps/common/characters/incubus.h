@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_INCUBUS_H
-#define _MAPS_CHARACTERS_INCUBUS_H
+#ifndef _MAPS_COMMON_CHARACTERS_INCUBUS_H
+#define _MAPS_COMMON_CHARACTERS_INCUBUS_H
 
 /** @brief Incubus character control states. */
 typedef enum _IncubusControl

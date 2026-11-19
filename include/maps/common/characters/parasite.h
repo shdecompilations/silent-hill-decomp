@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_PARASITE_H
-#define _MAPS_CHARACTERS_PARASITE_H
+#ifndef _MAPS_COMMON_CHARACTERS_PARASITE_H
+#define _MAPS_COMMON_CHARACTERS_PARASITE_H
 
 /** @brief Parasite character control states. */
 typedef enum _ParasiteControl

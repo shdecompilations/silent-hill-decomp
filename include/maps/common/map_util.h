@@ -1,5 +1,5 @@
-#ifndef _MAPS_MAPUTIL_H
-#define _MAPS_MAPUTIL_H
+#ifndef _MAPS_COMMON_MAPUTIL_H
+#define _MAPS_COMMON_MAPUTIL_H
 
 /** @brief @unused Map header `func_C` points to this, but nothing to calls into it. */
 s32 sharedFunc_800D929C_0_s00(void);

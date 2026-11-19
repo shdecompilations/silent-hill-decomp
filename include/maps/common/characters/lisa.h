@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_LISA_H
-#define _MAPS_CHARACTERS_LISA_H
+#ifndef _MAPS_COMMON_CHARACTERS_LISA_H
+#define _MAPS_COMMON_CHARACTERS_LISA_H
 
 /** @brief Lisa character control states. */
 typedef enum _LisaControl

@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_PLAYER_H
-#define _MAPS_CHARACTERS_PLAYER_H
+#ifndef _MAPS_COMMON_CHARACTERS_PLAYER_H
+#define _MAPS_COMMON_CHARACTERS_PLAYER_H
 
 extern q19_12 g_Player_MoveSpeed; // `sharedFunc_800CDAA8_0_s02`
 

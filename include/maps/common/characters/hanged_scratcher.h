@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_HANGEDSCRATCHER_H
-#define _MAPS_CHARACTERS_HANGEDSCRATCHER_H
+#ifndef _MAPS_COMMON_CHARACTERS_HANGEDSCRATCHER_H
+#define _MAPS_COMMON_CHARACTERS_HANGEDSCRATCHER_H
 
 /** @brief Hanged Scratcher character flags */
 typedef enum _HangedScratcherFlags

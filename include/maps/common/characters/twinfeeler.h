@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_TWINFEELER_H
-#define _MAPS_CHARACTERS_TWINFEELER_H
+#ifndef _MAPS_COMMON_CHARACTERS_TWINFEELER_H
+#define _MAPS_COMMON_CHARACTERS_TWINFEELER_H
 
 /** @brief Twinfeeler character flags. */
 typedef enum _TwinfeelerFlags

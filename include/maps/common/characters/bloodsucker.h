@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_BLOODSUCKER_H
-#define _MAPS_CHARACTERS_BLOODSUCKER_H
+#ifndef _MAPS_COMMON_CHARACTERS_BLOODSUCKER_H
+#define _MAPS_COMMON_CHARACTERS_BLOODSUCKER_H
 
 /** @brief Bloodsucker character flags. */
 typedef enum _BloodsuckerFlags

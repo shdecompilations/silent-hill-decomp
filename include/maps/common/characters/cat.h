@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_CAT_H
-#define _MAPS_CHARACTERS_CAT_H
+#ifndef _MAPS_COMMON_CHARACTERS_CAT_H
+#define _MAPS_COMMON_CHARACTERS_CAT_H
 
 /** @brief Cat character control states. */
 typedef enum _CatControl

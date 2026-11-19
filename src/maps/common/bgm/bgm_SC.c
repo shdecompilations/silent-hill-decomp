@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "maps/common/bgm.h"
 #include "bodyprog/events/bgm_update.h"
 #include "maps/common/shared.h"
 

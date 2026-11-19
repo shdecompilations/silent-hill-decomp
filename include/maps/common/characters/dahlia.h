@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_DAHLIA_H
-#define _MAPS_CHARACTERS_DAHLIA_H
+#ifndef _MAPS_COMMON_CHARACTERS_DAHLIA_H
+#define _MAPS_COMMON_CHARACTERS_DAHLIA_H
 
 /** @brief Dahlia character control states. */
 typedef enum _DahliaControl

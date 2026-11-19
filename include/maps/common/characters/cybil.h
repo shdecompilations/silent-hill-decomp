@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_CYBIL_H
-#define _MAPS_CHARACTERS_CYBIL_H
+#ifndef _MAPS_COMMON_CHARACTERS_CYBIL_H
+#define _MAPS_COMMON_CHARACTERS_CYBIL_H
 
 /** @brief Cybil character control states. */
 typedef enum _CybilControl

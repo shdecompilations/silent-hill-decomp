@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_ROMPER_H
-#define _MAPS_CHARACTERS_ROMPER_H
+#ifndef _MAPS_COMMON_CHARACTERS_ROMPER_H
+#define _MAPS_COMMON_CHARACTERS_ROMPER_H
 
 /** @brief Romper character flags. */
 typedef enum _RomperFlags

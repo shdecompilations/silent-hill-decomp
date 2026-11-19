@@ -1,5 +1,5 @@
-#ifndef MAPS_UNKM3S03_H
-#define MAPS_UNKM3S03_H
+#ifndef MAPS_COMMON_UNKM3S03_H
+#define MAPS_COMMON_UNKM3S03_H
 
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 

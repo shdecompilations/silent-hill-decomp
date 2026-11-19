@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_INCUBATOR_H
-#define _MAPS_CHARACTERS_INCUBATOR_H
+#ifndef _MAPS_COMMON_CHARACTERS_INCUBATOR_H
+#define _MAPS_COMMON_CHARACTERS_INCUBATOR_H
 
 /** @brief Incubator character control states. */
 typedef enum _IncubatorControl

@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_GHOSTCHILDALESSA_H
-#define _MAPS_CHARACTERS_GHOSTCHILDALESSA_H
+#ifndef _MAPS_COMMON_CHARACTERS_GHOSTCHILDALESSA_H
+#define _MAPS_COMMON_CHARACTERS_GHOSTCHILDALESSA_H
 
 /** @brief Ghost Child Alessa character control states. */
 typedef enum _GhostChildAlessaControl

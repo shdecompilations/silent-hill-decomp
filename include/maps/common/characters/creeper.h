@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_CREEPER_H
-#define _MAPS_CHARACTERS_CREEPER_H
+#ifndef _MAPS_COMMON_CHARACTERS_CREEPER_H
+#define _MAPS_COMMON_CHARACTERS_CREEPER_H
 
 /** @brief Creeper character flags. */
 typedef enum _CreeperFlags

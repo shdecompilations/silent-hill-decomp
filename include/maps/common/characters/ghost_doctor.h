@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_GHOSTDOCTOR_H
-#define _MAPS_CHARACTERS_GHOSTDOCTOR_H
+#ifndef _MAPS_COMMON_CHARACTERS_GHOSTDOCTOR_H
+#define _MAPS_COMMON_CHARACTERS_GHOSTDOCTOR_H
 
 /** @brief Ghost Doctor character control states. */
 typedef enum _GhostDoctorControl

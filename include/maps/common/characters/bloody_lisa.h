@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_BLOODYLISA_H
-#define _MAPS_CHARACTERS_BLOODYLISA_H
+#ifndef _MAPS_COMMON_CHARACTERS_BLOODYLISA_H
+#define _MAPS_COMMON_CHARACTERS_BLOODYLISA_H
 
 /** @brief Bloody Lisa character control states. */
 typedef enum _BloodyLisaControl

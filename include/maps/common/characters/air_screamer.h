@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_AIRSCREAMER_H
-#define _MAPS_CHARACTERS_AIRSCREAMER_H
+#ifndef _MAPS_COMMON_CHARACTERS_AIRSCREAMER_H
+#define _MAPS_COMMON_CHARACTERS_AIRSCREAMER_H
 
 /** @brief Air Screamer or Night Flutter character flags. */
 typedef enum _AirScreamerFlags

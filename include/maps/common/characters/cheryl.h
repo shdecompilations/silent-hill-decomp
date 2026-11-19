@@ -1,5 +1,5 @@
-#ifndef _MAPS_CHARACTERS_CHERYL_H
-#define _MAPS_CHARACTERS_CHERYL_H
+#ifndef _MAPS_COMMON_CHARACTERS_CHERYL_H
+#define _MAPS_COMMON_CHARACTERS_CHERYL_H
 
 /** @brief Cheryl character flags. */
 typedef enum _CherylFlags
