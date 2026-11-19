@@ -55,7 +55,7 @@ void Map_BgmLayersUpdate(void)
     s32               i;
     q19_12            fadeSpeed;
     s32               mapRoomIdx;
-    s32               bgmFlags;
+    s32               bgmFlags; // `e_BgmFlags`
     s_BgmLayerLimits* bgmLayerLimit;
 
     bgmFlags      = 1 << 0;

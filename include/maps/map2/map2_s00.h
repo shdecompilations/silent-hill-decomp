@@ -120,7 +120,7 @@ void func_800E816C(void);
 
 void func_800E8198(void);
 
-/** @brief Handles the ? map pickup event. */
+/** @brief Handles the ? paper map pickup event. */
 void MapEvent_PaperMapTake(void);
 
 void MapEvent_SteelPipeTake(void);

@@ -7,7 +7,7 @@
 
 void Map_RoomBgmInit(bool updateSong)
 {
-    s32 bgmFlags;
+    s32 bgmFlags; // `e_BgmFlags`
 
     bgmFlags = BgmFlag_Layer2;
 

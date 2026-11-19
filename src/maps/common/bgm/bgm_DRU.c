@@ -10,19 +10,19 @@ void Map_RoomBgmInit(bool updateSong)
     q19_12 dist0;
     q19_12 dist1;
     q19_12 dist2;
-    s32    fadeSpeed;
+    q19_12 fadeSpeed;
     s32    roomIdx;
-    s32    bgmFlags;
+    s32    bgmFlags; // `e_BgmFlags`
 
-    roomIdx = g_SavegamePtr->mapRoomIdx;
-    fadeSpeed = 0x400;
+    roomIdx   = g_SavegamePtr->mapRoomIdx;
+    fadeSpeed = Q12(0.25f);
 
     if (Savegame_EventFlagGet(EventFlag_435))
     {
         bgmFlags = BgmFlag_Layer1;
         if (Savegame_EventFlagGet(EventFlag_437))
         {
-            fadeSpeed = 0x547;
+            fadeSpeed = Q12(0.33f);
         }
         else
         {
@@ -100,11 +100,14 @@ void Map_RoomBgmInit(bool updateSong)
     }
     else
     {
-        bgmFlags = (1 << 1) | (1 << 2);
-        if (!Savegame_EventFlagGet(EventFlag_431))
+        if (Savegame_EventFlagGet(EventFlag_431))
         {
-            fadeSpeed = 0x547;
-            bgmFlags = BgmFlag_Layer2;
+            bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3;
+        }
+        else
+        {
+            fadeSpeed = Q12(0.33f);
+            bgmFlags  = BgmFlag_Layer2;
         }
     }
 

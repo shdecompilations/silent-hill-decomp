@@ -18,75 +18,83 @@ void Map_BgmSongChange(void)
 void Map_BgmLayersUpdate(void)
 {
     q19_12            dist0;
-    s32               bgmFlags;
+    s32               bgmFlags; // `e_BgmFlags`
     s32               fadeSpeed;
-    s32               soundCmd;
+    s32               bgmCmd;
     q19_12            dist;
-    s_BgmLayerLimits* dataPtr;
+    s_BgmLayerLimits* layerLimits;
 
-    fadeSpeed    = Q12(0.2f);
-    soundCmd = g_GameWork.bgmIdx;
-    if (soundCmd == 36)
+    fadeSpeed = Q12(0.2f);
+
+    bgmCmd = g_GameWork.bgmIdx;
+    if (bgmCmd == BgmCmd_Track36)
     {
-        dataPtr = &g_BgmAPU_LayerLimits0;
+        layerLimits = &g_BgmAPU_LayerLimits0;
         fadeSpeed   = Q12(0.1f);
+
         if (Savegame_EventFlagGet(EventFlag_465))
         {
-            bgmFlags = 0x20;
+            bgmFlags = BgmFlag_Layer6;
         }
         else if (!Savegame_EventFlagGet(EventFlag_464))
         {
             fadeSpeed = Q12(240.0f);
-            bgmFlags = 2;
+            bgmFlags  = BgmFlag_Layer2;
         }
         else
         {
-            bgmFlags = 0x10;
+            bgmFlags = BgmFlag_Layer5;
         }
     }
-    else if (soundCmd == 39)
+    else if (bgmCmd == BgmCmd_Track39)
     {
-        dataPtr = &g_BgmAPU_LayerLimits1;
+        layerLimits = &g_BgmAPU_LayerLimits1;
 
         if (Savegame_EventFlagGet(EventFlag_445))
         {
             if (Savegame_EventFlagGet(EventFlag_448))
             {
-                bgmFlags = 0x100;
                 if (Savegame_EventFlagGet(EventFlag_462))
                 {
-                    bgmFlags = 0x110;
+                    bgmFlags = BgmFlag_Layer5 | BgmFlag_KeepAlive;
+                }
+                else
+                {
+                    bgmFlags = BgmFlag_KeepAlive;
                 }
             }
             else if (Savegame_EventFlagGet(EventFlag_470))
             {
                 g_BgmAPU_LayerLimits1.limits[1] = 0x80;
-                fadeSpeed                        = Q12(0.5f);
+                fadeSpeed                       = Q12(0.5f);
 
                 if (!Savegame_EventFlagGet(EventFlag_447))
                 {
-                    bgmFlags = 0x102;
                     if (Savegame_EventFlagGet(EventFlag_463))
                     {
-                        bgmFlags = 0x101;
+                        bgmFlags = BgmFlag_Layer1 | BgmFlag_KeepAlive;
+                    }
+                    else
+                    {
+                        bgmFlags = BgmFlag_Layer2 | BgmFlag_KeepAlive;
                     }
                 }
                 else
                 {
                     fadeSpeed = Q12(240.0f);
-                    bgmFlags = 0x101;
+                    bgmFlags  = BgmFlag_Layer1 | BgmFlag_KeepAlive;
                 }
             }
             else if (Savegame_EventFlagGet(EventFlag_446))
             {
                 g_BgmAPU_LayerLimits1.limits[1] = 0;
-                fadeSpeed                        = Q12(240.0f);
-                bgmFlags                        = 0x101;
+                fadeSpeed                       = Q12(240.0f);
+                bgmFlags                        = BgmFlag_Layer1 | BgmFlag_KeepAlive;
             }
             else
             {
                 g_BgmAPU_LayerLimits1.limits[1] = 0x60;
-                bgmFlags                        = 0x10A;
+                bgmFlags                        = BgmFlag_Layer2 | BgmFlag_Layer4 | BgmFlag_KeepAlive;
             }
         }
         else
@@ -95,40 +103,45 @@ void Map_BgmLayersUpdate(void)
 
             if (Savegame_EventFlagGet(EventFlag_443))
             {
-                bgmFlags = 0x108;
+                // @unused Always overwritten, might be worth investigating.
+                bgmFlags = BgmFlag_Layer4 | BgmFlag_KeepAlive;
+
                 if (!Savegame_EventFlagGet(EventFlag_444))
                 {
                     if (Savegame_EventFlagGet(EventFlag_455))
                     {
-                        bgmFlags = 0x10A;
+                        bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer4 | BgmFlag_KeepAlive;
                     }
                 }
                 else
                 {
-                    bgmFlags = 0x10A;
+                    bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer4 | BgmFlag_KeepAlive;
                 }
             }
             else
             {
                 fadeSpeed = Q12(240.0f);
 
-                bgmFlags = 0x301;
                 if (Savegame_EventFlagGet(EventFlag_461))
                 {
-                    bgmFlags = 0x104;
+                    bgmFlags = BgmFlag_Layer3 | BgmFlag_KeepAlive;
+                }
+                else
+                {
+                    bgmFlags = BgmFlag_Layer1 | BgmFlag_KeepAlive | BgmFlag_MuteAll;
                 }
             }
         }
     }
     else
     {
-        dist    = Q12(0.0f);
-        dataPtr = &g_BgmAPU_LayerLimits2;
+        dist        = Q12(0.0f);
+        layerLimits = &g_BgmAPU_LayerLimits2;
 
         switch (g_SavegamePtr->mapRoomIdx)
         {
             case 3:
-                bgmFlags = 4;
+                bgmFlags = BgmFlag_Layer3;
 
                 dist = Math_Distance2dGet(&PLAYER_CHARA().position, &g_BgmAPU_LayerLimits3);
                 if (dist < Q12(10.0f))
@@ -149,16 +162,16 @@ void Map_BgmLayersUpdate(void)
             case 2:
             case 4:
             case 5:
-                bgmFlags = 2;
+                bgmFlags = BgmFlag_Layer2;
                 break;
 
             default:
-                bgmFlags = 1;
+                bgmFlags = BgmFlag_Layer1;
                 break;
         }
 
         g_BgmAPU_LayerLimits2.limits[2] = dist;
     }
 
-    Bgm_LayersUpdate(bgmFlags, fadeSpeed, dataPtr);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, layerLimits);
 }

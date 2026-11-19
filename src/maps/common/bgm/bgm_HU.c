@@ -7,7 +7,7 @@
 
 void Map_RoomBgmInit(bool updateSong)
 {
-    (updateSong != 0) ? Map_BgmSongChange() : Map_BgmLayersUpdate();
+    updateSong ? Map_BgmSongChange() : Map_BgmLayersUpdate();
 }
 
 void Map_BgmSongChange(void)
@@ -19,7 +19,7 @@ void Map_BgmLayersUpdate(void)
 {
     static const s_BgmLayerLimits D_800CA70C = { { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 } };
 
-    u16               bgmFlags;
+    u16               bgmFlags; // `e_BgmFlags`
     q19_12            fadeSpeed;
     s_BgmLayerLimits* dataPtr;
     s_BgmLayerLimits  data;

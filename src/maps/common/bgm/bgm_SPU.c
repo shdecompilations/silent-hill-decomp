@@ -7,7 +7,7 @@
 
 void Map_RoomBgmInit(bool updateSong)
 {
-    s32               bgmFlags;
+    s32               bgmFlags; // `e_BgmFlags`
     s32               fadeSpeed;
     s32               mapRoomIdx;
     s_BgmLayerLimits* var_a2;
@@ -26,52 +26,53 @@ void Map_RoomBgmInit(bool updateSong)
                 break;
 
             case 16:
-                bgmFlags = (1 << 1) | (1 << 2);
+                bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3;
                 break;
 
             case 14:
                 if (Savegame_EventFlagGet(EventFlag_352))
                 {
                     fadeSpeed = Q12(10.0f);
-                    bgmFlags = (1 << 0) | (1 << 8);
+                    bgmFlags  = BgmFlag_Layer1 | BgmFlag_KeepAlive;
                 }
                 else if (Savegame_EventFlagGet(EventFlag_350))
                 {
-                    fadeSpeed = Q12(0.25f / 2.0f);
-                    bgmFlags = (1 << 0) | (1 << 8);
+                    fadeSpeed = Q12(1.0f / 8.0f);
+                    bgmFlags  = BgmFlag_Layer1 | BgmFlag_KeepAlive;
                 }
                 else if (Savegame_EventFlagGet(EventFlag_348))
                 {
                     if (NPC_CHARA(0).health < Q12(1000.0f))
                     {
-                        bgmFlags = 0x1FE; // TODO: Demagic.
+                        bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5 |
+                                   BgmFlag_Layer6 | BgmFlag_Layer7 | BgmFlag_Layer8 | BgmFlag_KeepAlive;
                     }
                     else
                     {
                         if (PLAYER_CHARA().position.vy > Q12(-0.5f))
                         {
-                            sharedData_800ED420_4_s02 = (1 << 1) | (1 << 3) | (1 << 8);
+                            sharedData_800ED420_4_s02 = BgmFlag_Layer2 | BgmFlag_Layer4 | BgmFlag_KeepAlive;
                         }
                         else if (PLAYER_CHARA().position.vy < Q12(-2.5f))
                         {
-                            sharedData_800ED420_4_s02 = (1 << 1) | (1 << 4) | (1 << 8);
+                            sharedData_800ED420_4_s02 = BgmFlag_Layer2 | BgmFlag_Layer5 | BgmFlag_KeepAlive;
                         }
                         bgmFlags = sharedData_800ED420_4_s02;
 
                         if (NPC_CHARA(0).health < Q12(2000.0f))
                         {
-                            bgmFlags |= (1 << 2) | (1 << 5);
+                            bgmFlags |= BgmFlag_Layer3 | BgmFlag_Layer6;
                         }
                         else if (NPC_CHARA(0).health < Q12(3000.0f))
                         {
-                            bgmFlags |= 1 << 2;
+                            bgmFlags |= BgmFlag_Layer3;
                         }
                     }
                 }
                 else
                 {
                     fadeSpeed = Q12(1.0f);
-                    bgmFlags = (1 << 0) | (1 << 8);
+                    bgmFlags  = BgmFlag_Layer1 | BgmFlag_KeepAlive;
                 }
                 break;
 
@@ -87,7 +88,8 @@ void Map_RoomBgmInit(bool updateSong)
         switch (mapRoomIdx)
         {
             case 18:
-                if (Savegame_EventFlagGet(EventFlag_334) || !Savegame_EventFlagGet(EventFlag_333))
+                if  (Savegame_EventFlagGet(EventFlag_334) ||
+                    !Savegame_EventFlagGet(EventFlag_333))
                 {
                     bgmFlags = BgmFlag_Layer2;
                 }
@@ -95,12 +97,12 @@ void Map_RoomBgmInit(bool updateSong)
                 {
                     if (Savegame_EventFlagGet(EventFlag_330))
                     {
-                        bgmFlags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4);
+                        bgmFlags  = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5;
                         fadeSpeed = Q12(CHUNK_SIZE);
                     }
                     else
                     {
-                        bgmFlags = (1 << 1) | (1 << 2) | (1 << 3);
+                        bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4;
                     }
                 }
                 break;
@@ -110,11 +112,11 @@ void Map_RoomBgmInit(bool updateSong)
 
                 if (Savegame_EventFlagGet(EventFlag_320))
                 {
-                    bgmFlags = (1 << 0) | (1 << 8);
+                    bgmFlags = BgmFlag_Layer1 | BgmFlag_KeepAlive;
                 }
                 else
                 {
-                    bgmFlags = (1 << 2) | (1 << 8);
+                    bgmFlags = BgmFlag_Layer3 | BgmFlag_KeepAlive;
                 }
                 break;
 
@@ -125,7 +127,7 @@ void Map_RoomBgmInit(bool updateSong)
             case 20:
                 if (Savegame_EventFlagGet(EventFlag_327))
                 {
-                    bgmFlags = (1 << 4) | (1 << 8);
+                    bgmFlags = BgmFlag_Layer5 | BgmFlag_KeepAlive;
                 }
                 else if (Savegame_EventFlagGet(EventFlag_324) || Savegame_EventFlagGet(EventFlag_329))
                 {
@@ -134,21 +136,21 @@ void Map_RoomBgmInit(bool updateSong)
                     if (NPC_CHARA(0).health > Q12(0.0f) &&
                         NPC_CHARA(0).position.vy < Q12(1.0f))
                     {
-                        bgmFlags = (1 << 5) | (1 << 6) | (1 << 8);
+                        bgmFlags = BgmFlag_Layer6 | BgmFlag_Layer7 | BgmFlag_KeepAlive;
                     }
                     else
                     {
-                        bgmFlags = (1 << 5) | (1 << 8);
+                        bgmFlags = BgmFlag_Layer6 | BgmFlag_KeepAlive;
                     }
                 }
                 else
                 {
-                    bgmFlags = (1 << 4) | (1 << 8);
+                    bgmFlags = BgmFlag_Layer5 | BgmFlag_KeepAlive;
                 }
                 break;
 
             default:
-                bgmFlags = (1 << 0) | (1 << 8);
+                bgmFlags = BgmFlag_Layer1 | BgmFlag_KeepAlive;
                 break;
         }
     }

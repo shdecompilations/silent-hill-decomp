@@ -12,7 +12,7 @@ void Map_RoomBgmInit(bool updateSong)
     q19_12 posZ;
     q19_12 newPosComp;
     s32    var_v1;
-    s32    bgmFlags;
+    s32    bgmFlags; // `e_BgmFlags`
 
     posX  = PLAYER_CHARA().position.vx;
     posZ  = PLAYER_CHARA().position.vz;

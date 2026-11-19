@@ -12,23 +12,29 @@ extern u16 sharedData_800DCC54_1_s00[42]; // Flags.
 void Map_RoomBgmInit(bool updateSong)
 {
 #if defined(MAP1_S05)
-    s32 bgmFlags;
+    s32 bgmFlags; // `e_BgmFlags`
 
-    bgmFlags = 1;
     if (NPC_CHARA(0).health > Q12(0.0f))
     {
-        bgmFlags = 2;
         if (NPC_CHARA(0).properties.splitHead.flags & SplitHeadFlag_4)
         {
-            bgmFlags = 6;
+            bgmFlags = BgmFlag_Layer2 | BgmFlag_Layer3;
         }
+        else
+        {
+            bgmFlags = BgmFlag_Layer2;
+        }
+    }
+    else
+    {
+        bgmFlags = BgmFlag_Layer1;
     }
 
     Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &g_BgmSU_LayerLimits0);
 #else
     s32 fadeSpeed;
     s32 roomIdx;
-    s32 bgmFlags;
+    s32 bgmFlags; // `e_BgmFlags`
 
     roomIdx   = g_SavegamePtr->mapRoomIdx;
     bgmFlags  = sharedData_800DCC54_1_s00[roomIdx];

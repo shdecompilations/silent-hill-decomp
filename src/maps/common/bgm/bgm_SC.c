@@ -12,9 +12,12 @@ extern u16 sharedData_800DCC54_1_s00[42]; // Flags.
 void Map_RoomBgmInit(bool updateSong)
 {
 #if defined(MAP1_S06)
-    Bgm_LayersUpdate(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), &g_BgmSC_LayerLimits0);
+    Bgm_LayersUpdate(Savegame_EventFlagGet(EventFlag_133) ? (BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer4 | BgmFlag_Layer5 |
+                                                             BgmFlag_Layer6 | BgmFlag_Layer7 | BgmFlag_Layer8) :
+                                                            BgmFlag_Layer1,
+                     Q12(0.1f), &g_BgmSC_LayerLimits0);
 #else
-    u16 bgmFlags;
+    u16 bgmFlags; // `e_BgmFlags`
 
     if (g_SavegamePtr->mapRoomIdx == 23)
     {

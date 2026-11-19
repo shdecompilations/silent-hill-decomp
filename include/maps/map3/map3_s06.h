@@ -56,7 +56,7 @@ void func_800D0B10(void);
 
 void func_800D0C14(void);
 
-/** @brief Handles the ? map pickup event. */
+/** @brief Handles the ? paper map pickup event. */
 void MapEvent_PaperMapTake(void);
 
 void func_800D17D8(void);

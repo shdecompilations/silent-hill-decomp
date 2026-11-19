@@ -9,17 +9,17 @@
 void Map_RoomBgmInit(bool updateSong)
 {
 #if defined(MAP0_S01)
-    (updateSong != 0) ? Map_BgmSongChange() : Map_BgmLayersUpdate();
+    updateSong ? Map_BgmSongChange() : Map_BgmLayersUpdate();
 #elif defined(MAP0_S00)
     s32    i;
     q19_12 fadeSpeed;
-    s32    bgmFlags;
+    s32    bgmFlags; // `e_BgmFlags`
     u32    saveByte;
 
     // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
-    saveByte = g_SavegamePtr->eventFlags[0];
-    fadeSpeed     = Q12(0.1f);
-    bgmFlags    = 1 << 8;
+    saveByte  = g_SavegamePtr->eventFlags[0];
+    fadeSpeed = Q12(0.1f);
+    bgmFlags  = BgmFlag_KeepAlive;
 
     if (PLAYER_CHARA().health > 0 && (!(Savegame_EventFlagGet(EventFlag_23) && !Savegame_EventFlagGet(EventFlag_20))))
     {
@@ -40,7 +40,7 @@ void Map_RoomBgmInit(bool updateSong)
     Bgm_LayersUpdate(bgmFlags, fadeSpeed, &g_BgmTHR_LayerLimits0);
 #else
     extern s_BgmLayerLimits g_BgmTHR_LayerLimits1;
-    s32       bgmFlags;
+    s32       bgmFlags; // `e_BgmFlags`
     s32       mapRoomIdx;
 
     mapRoomIdx = g_SavegamePtr->mapRoomIdx;
@@ -109,10 +109,11 @@ void Map_BgmSongChange(void)
 
 void Map_BgmLayersUpdate(void)
 {
-    s32    bgmFlags;
+    s32    bgmFlags; // `e_BgmFlags`
     q19_12 fadeSpeed;
 
     fadeSpeed = Q12(0.333f);
+
     if (!Savegame_EventFlagGet(EventFlag_146))
     {
         // Air Screamer isn't dead or the Cybil and Harry cutscene has started.

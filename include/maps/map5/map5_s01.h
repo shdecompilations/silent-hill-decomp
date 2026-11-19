@@ -69,7 +69,7 @@ void MapEvent_CommonItemTake(void);
 /** @brief Puzzle event? Similar to M7S01 `func_800D94DC`. */
 void func_800EBA40(void);
 
-/** @brief Handles the ? map pickup event. */
+/** @brief Handles the ? paper map pickup event. */
 void MapEvent_PaperMapTake(void);
 
 void func_800EBF70(void);

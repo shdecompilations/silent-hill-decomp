@@ -8,7 +8,7 @@
 
 void Map_RoomBgmInit(bool updateSong)
 {
-    (updateSong != 0) ? Map_BgmSongChange() : Map_BgmLayersUpdate();
+    updateSong ? Map_BgmSongChange() : Map_BgmLayersUpdate();
 }
 
 void Map_BgmSongChange(void)
@@ -43,7 +43,7 @@ void Map_BgmSongChange(void)
 
 void Map_BgmLayersUpdate(void)
 {
-    s32               bgmFlags;
+    s32               bgmFlags; // `e_BgmFlags`
     q19_12            fadeSpeed;
     s_BgmLayerLimits* layerLimits;
 

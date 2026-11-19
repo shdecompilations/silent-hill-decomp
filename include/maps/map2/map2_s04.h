@@ -31,7 +31,7 @@ void func_800CD050(void);
 
 void MapEvent_PoliceChalkboardInspect(void);
 
-/** @brief Handles the ? map pickup event. */
+/** @brief Handles the ? paper map pickup event. */
 void MapEvent_PaperMapTake(void);
 
 /** @brief Handles the Shotgun item pickup event. */

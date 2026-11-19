@@ -123,7 +123,7 @@ void func_800D7940(void);
 void func_800D7C84(void);
 void func_800D7F88(void);
 
-/** @brief Handles the ? map pickup event. */
+/** @brief Handles the ? paper map pickup event. */
 void MapEvent_PaperMapTake(void);
 
 void Map_WorldObjectsInit(void);
