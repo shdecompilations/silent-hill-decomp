@@ -536,7 +536,7 @@ typedef struct _MapOverlayHdr
     /* 0x15C */ void                   (*func_15C)(); /** @unused Loads number pad. */ // Only map5_s01.
     /* 0x160 */ void                   (*func_160)(); /** @unused */ // Only map5_s01.
     /* 0x164 */ void                   (*func_164)(); /** @unused */ // Only map5_s01.
-    /* 0x168 */ void                   (*particleSystemUpdate)(s32 unused, e_MapIdx mapIdx, s32 arg3);
+    /* 0x168 */ void                   (*weatherParticleSystemUpdate)(s32 unused, e_MapIdx mapIdx, s32 arg3);
     /* 0x16C */ void                   (*particleEnviromentSet)(s8, u32);
     /* 0x170 */ void                   (*func_170)(); /** @unused */
     /* 0x174 */ bool                   (*func_174)(s32 arg0); /** @unused */

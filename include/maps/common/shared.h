@@ -172,7 +172,7 @@ extern u16 sharedData_800D21E8_3_s00[];
 
 extern u16 sharedData_800E32D4_0_s00;
 
-extern s32 sharedData_800DD598_0_s00;
+extern q19_12 sharedData_800DD598_0_s00;
 
 extern CVECTOR g_WorldEnv_SnowColor;
 

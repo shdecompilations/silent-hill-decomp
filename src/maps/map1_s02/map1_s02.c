@@ -286,7 +286,7 @@ void func_800DA384(void) // 0x800DA384
             Game_TurnFlashlightOn();
 
             Particle_EnvironmentSet(6, 127);
-            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
+            WeatherParticle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
 
             PLAYER_CHARA().position.vx = Q12(-13.3f);
             PLAYER_CHARA().position.vz = Q12(-68.1f);
@@ -1434,7 +1434,7 @@ void MapEvent_ClassroomKeyItemTake(void) // 0x800DD208
 void func_800DD420(void) // 0x800DD420
 {
     Particle_EnvironmentSet(6, 127);
-    Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
+    WeatherParticle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
     Savegame_EventFlagClear(EventFlag_225);
     SysWork_StateSetNext(SysState_Gameplay);
 }

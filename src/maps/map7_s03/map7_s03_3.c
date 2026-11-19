@@ -7261,7 +7261,7 @@ void func_800E787C(void) // 0x800E787C
 
     if (g_SysWork.sysStateSteps[0] >= 31)
     {
-        Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, g_SysWork.sysStateSteps[0] != 31);
+        WeatherParticle_SystemUpdate(0, g_SavegamePtr->mapIdx, g_SysWork.sysStateSteps[0] != 31);
     }
 
     if (g_SysWork.sysStateSteps[0] >= 1 && g_SysWork.sysStateSteps[0] < 14)
@@ -7668,7 +7668,7 @@ void func_800E86BC(void) // 0x800E86BC
 
     if (g_SysWork.sysStateSteps[0] >= 8)
     {
-        Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, g_SysWork.sysStateSteps[0] != 8);
+        WeatherParticle_SystemUpdate(0, g_SavegamePtr->mapIdx, g_SysWork.sysStateSteps[0] != 8);
     }
 
     if (g_SysWork.sysStateSteps[0] >= 1 && g_SysWork.sysStateSteps[0] < 6)

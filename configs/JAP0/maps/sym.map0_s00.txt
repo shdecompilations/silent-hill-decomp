@@ -28,11 +28,11 @@ D_800CB6A4                          = 0x800CDB94;
 //-------------------------------------------------------------
 //--- PA: 0x0020F8   VA: 0x800CDBA0   subsegment: c, map0_s00_2
 //-------------------------------------------------------------
-Particle_SystemUpdate               = 0x800CDBA0; // type:func
+WeatherParticle_SystemUpdate        = 0x800CDBA0; // type:func
 Particle_CameraMovedCheck           = 0x800CE0AC; // type:func
-Particle_SnowInitialize             = 0x800CE184; // type:func
+WeatherParticle_SnowInit            = 0x800CE184; // type:func
 func_800CBFB0                       = 0x800CE4A0; // type:func
-Particle_Update                     = 0x800CE53C; // type:func
+WeatherParticle_Update              = 0x800CE53C; // type:func
 func_800CC6E8                       = 0x800CEBD8; // type:func
 func_800CC8FC                       = 0x800CEDEC; // type:func
 func_800CD1F4                       = 0x800CF6E4; // type:func
@@ -176,7 +176,7 @@ LOADABLE_INVENTORY_ITEMS            = 0x800DFA6C;
 //--- PA: 0x013FCC   VA: 0x800DFA74   subsegment: data
 //----------------------------------------------------
 sharedData_800DD584_0_s00           = 0x800DFA74;
-g_WeatherParticlesAddedCount        = 0x800DFA78;
+g_WeatherParticle_ActiveCount       = 0x800DFA78;
 sharedData_800DD58C_0_s00           = 0x800DFA7C;
 g_WeatherParticle_CameraMoved       = 0x800DFA80;
 sharedData_800DD591_0_s00           = 0x800DFA81;
@@ -278,8 +278,8 @@ sharedData_800DFB6C_0_s00           = 0x800E2058;
 sharedData_800DFB70_0_s00           = 0x800E205C;
 g_Particle_Buffer                   = 0x800E2068; // size:0xFA0
 g_Particle_BloodSplats              = 0x800E3008; // size:0x12C
-g_WeatherParticleVectors0           = 0x800E3138; // size:0x2C
-g_WeatherParticleVectors1           = 0x800E3168; // size:0x2C
+g_WeatherParticle_Vectors0          = 0x800E3138; // size:0x2C
+g_WeatherParticle_Vectors1          = 0x800E3168; // size:0x2C
 sharedData_800E0CA8_0_s00           = 0x800E3194;
 sharedData_800E0CAC_0_s00           = 0x800E3198;
 sharedData_800E0CB0_0_s00           = 0x800E319C;
@@ -287,7 +287,7 @@ sharedData_800E0CB4_0_s00           = 0x800E31A0;
 sharedData_800E0CB6_0_s00           = 0x800E31A2;
 sharedData_800E0CB8_0_s00           = 0x800E31A4;
 sharedData_800E0CBA_0_s00           = 0x800E31A6;
-g_WeatherParticles                  = 0x800E31A8; // size:0x2580
+g_WeatherParticle_Buffer            = 0x800E31A8; // size:0x2580
 g_WeatherParticle_Position          = 0x800E5728;
 g_WeatherParticle_PrevPosition      = 0x800E5738;
 g_WorldEnv_SnowColor                = 0x800E5744;

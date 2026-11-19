@@ -42,8 +42,8 @@
     s32               sharedData_800DFB70_0_s00;
     s_Particle        g_Particle_Buffer[MAP_PARTICLE_COUNT_MAX];
     s_BloodSplat      g_Particle_BloodSplats[MAP_BLOOD_SPLAT_COUNT_MAX];
-    s_WeatherParticleVectors g_WeatherParticleVectors0;
-    s_WeatherParticleVectors g_WeatherParticleVectors1;
+    s_WeatherParticleVectors g_WeatherParticle_Vectors0;
+    s_WeatherParticleVectors g_WeatherParticle_Vectors1;
     s32               sharedData_800E0CA8_0_s00;
     s32               sharedData_800E0CAC_0_s00;
     u32               sharedData_800E0CB0_0_s00;
@@ -99,16 +99,16 @@
 
 #if !MAP_USE_PARTICLES
 
-/** Barebones version of `Particle_SystemUpdate`, missing calls to `Particle_Update` and other particle-related code. */
-void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
+/** Barebones version of `WeatherParticle_SystemUpdate`, missing calls to `WeatherParticle_Update` and other particle-related code. */
+void WeatherParticle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
 {
-    s32 temp_s0;
+    s32 stackPtr;
 
-    WorldEnvRender_LightPositionGet(&g_WeatherParticleVectors0.vector_0);
-    g_WeatherParticleVectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_WeatherParticleVectors0.svec_18);
+    WorldEnvRender_LightPositionGet(&g_WeatherParticle_Vectors0.vector_0);
+    g_WeatherParticle_Vectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_WeatherParticle_Vectors0.svec_18);
 
-    vwGetViewPosition(&g_WeatherParticleVectors0.viewPosition);
-    vwGetViewAngle(&g_WeatherParticleVectors0.viewRotation);
+    vwGetViewPosition(&g_WeatherParticle_Vectors0.viewPosition);
+    vwGetViewAngle(&g_WeatherParticle_Vectors0.viewRotation);
 
     switch (arg3)
     {
@@ -120,7 +120,7 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
                 g_SysWork.field_2348 = g_MapOverlayHdr.field_17;
             }
 
-            sharedData_800DD598_0_s00 = 0;
+            sharedData_800DD598_0_s00 = Q12_ANGLE(0.0f);
             g_SysWork.field_234A      = true;
             g_WeatherParticle_MapIdx0 = mapIdx;
 
@@ -128,8 +128,8 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
             sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
 
-            temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
-            SetSp(temp_s0);
+            stackPtr = SetSp(PSX_SCRATCH_ADDR(0x3D8));
+            SetSp(stackPtr);
             break;
 
         default:
@@ -137,18 +137,18 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3)
 
             g_WeatherParticle_MapIdx1 = mapIdx;
 
-            temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
-            SetSp(temp_s0);
+            stackPtr = SetSp(PSX_SCRATCH_ADDR(0x3D8));
+            SetSp(stackPtr);
             break;
     }
 
-    g_WeatherParticleVectors1 = g_WeatherParticleVectors0;
+    g_WeatherParticle_Vectors1 = g_WeatherParticle_Vectors0;
 }
 
 #else /* MAP_USE_PARTICLES */
 
-/** Full version of `Particle_SystemUpdate` used by most maps. */
-void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
+/** Full version of `WeatherParticle_SystemUpdate` used by most maps. */
+void WeatherParticle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 {
     s32 temp_a2;
     s32 temp_s0;
@@ -173,11 +173,11 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
     Particle_SoundUpdate();
 #endif
 
-    WorldEnvRender_LightPositionGet(&g_WeatherParticleVectors0.vector_0);
-    g_WeatherParticleVectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_WeatherParticleVectors0.svec_18);
+    WorldEnvRender_LightPositionGet(&g_WeatherParticle_Vectors0.vector_0);
+    g_WeatherParticle_Vectors0.field_28 = WorldEnvRender_LightRotationAndIntensityGet(&g_WeatherParticle_Vectors0.svec_18);
 
-    vwGetViewPosition(&g_WeatherParticleVectors0.viewPosition);
-    vwGetViewAngle(&g_WeatherParticleVectors0.viewRotation);
+    vwGetViewPosition(&g_WeatherParticle_Vectors0.viewPosition);
+    vwGetViewAngle(&g_WeatherParticle_Vectors0.viewRotation);
 
 #if defined(MAP5_S01)
     g_WeatherParticle_SpeedX = 0;
@@ -383,14 +383,14 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 
 #if MAP_PARTICLE_HAS_RAIN
     #if defined(MAP5_S00) || defined(MAP6_S03)
-        sharedData_800E32D4_0_s00 = 3;
+            sharedData_800E32D4_0_s00 = 3;
     #else
-        sharedData_800E32D4_0_s00 = 30;
+            sharedData_800E32D4_0_s00 = 30;
     #endif
 #endif
 
 #if !MAP_PARTICLE_HAS_RAIN || defined(MAP0_S00) || defined(MAP6_S00)
-    sharedData_800DD592_0_s00 = 1;
+            sharedData_800DD592_0_s00 = 1;
 #endif
 
             if (arg3 == NO_VALUE)
@@ -399,7 +399,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                 g_SysWork.field_2348 = g_MapOverlayHdr.field_17;
             }
 
-            sharedData_800DD598_0_s00 = 0;
+            sharedData_800DD598_0_s00 = Q12_ANGLE(0.0f);
 #if defined(MAP7_S03)
             D_800F23D4 = 0;
 #endif
@@ -415,7 +415,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 
             temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
 
-            Particle_SnowInitialize(g_WeatherParticles);
+            WeatherParticle_SnowInit(g_WeatherParticle_Buffer);
 #if defined(MAP0_S00)
             func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_WeatherParticle_MapIdx0);
 #endif
@@ -453,18 +453,18 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                     {
                         case 4:
                         case 6:
-                            g_WeatherParticlesAddedCount[i] = temp_s0_2;
+                            g_WeatherParticle_ActiveCount[i] = temp_s0_2;
                             break;
 
                         case 5:
                         case 7:
                             var_v0 = temp_s0_2 * 2;
-                            g_WeatherParticlesAddedCount[i] = var_v0;
+                            g_WeatherParticle_ActiveCount[i] = var_v0;
                             break;
 
                         case 32:
                         case 48:
-                            g_WeatherParticlesAddedCount[i] = temp_a2;
+                            g_WeatherParticle_ActiveCount[i] = temp_a2;
                             break;
 
                         case 37:
@@ -472,13 +472,13 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                         case 53:
                         case 55:
                             var_v0                       = temp_s0_2 + (WEATHER_PARTICLE_COUNT_MAX / 2);
-                            g_WeatherParticlesAddedCount[i] = var_v0;
+                            g_WeatherParticle_ActiveCount[i] = var_v0;
                             break;
 
                         case 40:
                         case 56:
                             var_v0 = temp_a2 * 2;
-                            g_WeatherParticlesAddedCount[i] = var_v0;
+                            g_WeatherParticle_ActiveCount[i] = var_v0;
                             break;
 
                         case 44:
@@ -486,11 +486,11 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                         case 60:
                         case 62:
                             var_v0                       = temp_a2 + (WEATHER_PARTICLE_COUNT_MAX / 2);
-                            g_WeatherParticlesAddedCount[i] = var_v0;
+                            g_WeatherParticle_ActiveCount[i] = var_v0;
                             break;
 
                         case 0:
-                            g_WeatherParticlesAddedCount[i] = 0;
+                            g_WeatherParticle_ActiveCount[i] = 0;
                             break;
 
                         case 36:
@@ -498,7 +498,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                         case 52:
                         case 54:
                             var_v0                       = WEATHER_PARTICLE_COUNT_MAX / 2;
-                            g_WeatherParticlesAddedCount[i] = var_v0;
+                            g_WeatherParticle_ActiveCount[i] = var_v0;
                             break;
 
                         case 45:
@@ -506,7 +506,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                         case 61:
                         case 63:
                             var_v0                       = WEATHER_PARTICLE_COUNT_MAX;
-                            g_WeatherParticlesAddedCount[i] = var_v0;
+                            g_WeatherParticle_ActiveCount[i] = var_v0;
                             break;
                     }
 
@@ -528,7 +528,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                             case 6:
                             case 32:
                             case 48:
-                                var_v0_3                  = g_WeatherParticlesAddedCount[i] < ((WEATHER_PARTICLE_COUNT_MAX / 4) + 1);
+                                var_v0_3                  = g_WeatherParticle_ActiveCount[i] < ((WEATHER_PARTICLE_COUNT_MAX / 4) + 1);
                                 sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
@@ -536,7 +536,7 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
                             case 7:
                             case 40:
                             case 56:
-                                var_v0_3                  = g_WeatherParticlesAddedCount[i] < ((WEATHER_PARTICLE_COUNT_MAX / 2) + 1);
+                                var_v0_3                  = g_WeatherParticle_ActiveCount[i] < ((WEATHER_PARTICLE_COUNT_MAX / 2) + 1);
                                 sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
@@ -593,9 +593,9 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
 #endif
                 }
 
-                if (sharedData_800DD598_0_s00 >= 0x200)
+                if (sharedData_800DD598_0_s00 >= Q12_ANGLE(45.0f))
                 {
-                    sharedData_800DD598_0_s00 = 0;
+                    sharedData_800DD598_0_s00 = Q12_ANGLE(0.0f);
                     g_SysWork.field_234A = true;
                     sharedData_800E0CB6_0_s00 = sharedData_800E0CB4_0_s00;
 
@@ -622,20 +622,20 @@ void Particle_SystemUpdate(s32 arg1, e_MapIdx mapIdx, s32 arg3)
             g_WeatherParticle_MapIdx1 = mapIdx;
             temp_s0_3 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
 
-            Particle_Update(g_WeatherParticles);
+            WeatherParticle_Update(g_WeatherParticle_Buffer);
 #if defined(MAP0_S00)
             func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_WeatherParticle_MapIdx1);
 #endif
             SetSp(temp_s0_3);
 
-            for (i = g_WeatherParticlesAddedCount[0] + g_WeatherParticlesAddedCount[1]; i < WEATHER_PARTICLE_COUNT_MAX; i++)
+            for (i = g_WeatherParticle_ActiveCount[0] + g_WeatherParticle_ActiveCount[1]; i < WEATHER_PARTICLE_COUNT_MAX; i++)
             {
-                g_WeatherParticles[i].stateStep = 0;
+                g_WeatherParticle_Buffer[i].stateStep = 0;
             }
             break;
     }
 
-    g_WeatherParticleVectors1 = g_WeatherParticleVectors0;
+    g_WeatherParticle_Vectors1 = g_WeatherParticle_Vectors0;
 }
 
 bool Particle_CameraMovedCheck(void)
@@ -645,7 +645,7 @@ bool Particle_CameraMovedCheck(void)
 
     dist = SquareRoot0(SQUARE(ABS_DIFF(g_WeatherParticle_Position.vx, g_WeatherParticle_PrevPosition.vx)) +
                        SQUARE(ABS_DIFF(g_WeatherParticle_Position.vz, g_WeatherParticle_PrevPosition.vz)));
-    rotY = ABS_DIFF(g_WeatherParticle_PrevRotationY, g_WeatherParticleVectors0.viewRotation.vy);
+    rotY = ABS_DIFF(g_WeatherParticle_PrevRotationY, g_WeatherParticle_Vectors0.viewRotation.vy);
     if (dist > 10000 || rotY > Q12_ANGLE(45.0f))
     {
         return true;
@@ -654,63 +654,35 @@ bool Particle_CameraMovedCheck(void)
     return false;
 }
 
-// TODO: Refine comments and names, it's still kind of unclear.
-/** @brief Spawns snow particles. Called once when the map overlay is loaded.
- *
- * Spawns and updates snow particles.
- * This avoids having all the snow particles starting in the sky at the same time.
- *
- * The spawn loop works as follows (pseudocode):
- *
- * particlesAdded = 0;
- * toAddPerTick   = 1 or 3;
- *
- * // Perform spawn tick.
- * while (particlesAdded < SNOW_SPAWN_COUNT_MAX)
- * {
- *     // Start at 0 to update all previously added particles by one step.
- *     for (i = 0; i < particlesAdded; i++)
- *     {
- *        updateParticle(i); // These particles will re-add below if they expire.
- *     }
-
- *     // Add new particles.
- *     for (i = 0; i < toAddPerTick; i++)
- *     {
- *         addParticle();
- *         particlesAdded++;
- *     }
- * }
- */
-void Particle_SnowInitialize(s_WeatherParticle* parts)
+void WeatherParticle_SnowInit(s_WeatherParticle* parts)
 {
     #define SNOW_COUNT_MAX       WEATHER_PARTICLE_COUNT_MAX
-    #define SNOW_SPAWN_COUNT_MAX (WEATHER_PARTICLE_COUNT_MAX/2)
+    #define SNOW_SPAWN_COUNT_MAX (WEATHER_PARTICLE_COUNT_MAX / 2)
     #define SNOW_REST_TICKS_MAX  16
 
-    s32         i;
-    s32         j;
-    s16         rand;
-    s32         density;
-    s32         spawnMult;
-    u16         settingsState; // TODO: Rename.
-    u16         snowType;
-    s32         deltaTime;
+    s32                i;
+    s32                j;
+    s16                rand;
+    s32                density;
+    s32                spawnMult;
+    u16                settingsState; // TODO: Rename.
+    u16                snowType;
+    s32                deltaTime;
     s_WeatherParticle* part;
 
     deltaTime = Q12(0.1f / 3.0f);
 
     GsInitCoordinate2(NULL, &g_SysWork.coord_22A8);
 
-    // Reset states.
+    // Reset particle states.
     for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
     {
         part->stateStep = 0;
     }
 
     // Reset counts. NOTE: One is unused.
-    g_WeatherParticlesAddedCount[1] = 0;
-    g_WeatherParticlesAddedCount[0] = 0;
+    g_WeatherParticle_ActiveCount[1] = 0;
+    g_WeatherParticle_ActiveCount[0] = 0;
 
     // Settings byte holds state and snow type. Can be 0-2. 1 enables snow. TODO: Move doc.
     settingsState = (sharedData_800E0CB8_0_s00 & 0xC) >> 2;
@@ -771,19 +743,19 @@ void Particle_SnowInitialize(s_WeatherParticle* parts)
             g_WeatherParticleSpawnCount = 0;
 
             rand                                  = Rng_Rand16();
-            g_WeatherParticlesAddedCount[settingsState] += spawnMult;
+            g_WeatherParticle_ActiveCount[settingsState] += spawnMult;
 
             // Clamp spawn count.
             if (snowType == SnowType_Light || snowType == SnowType_LightWindy)
             {
-                limitRange(g_WeatherParticlesAddedCount[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
+                limitRange(g_WeatherParticle_ActiveCount[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
             }
             else
             {
-                limitRange(g_WeatherParticlesAddedCount[settingsState], 0, SNOW_COUNT_MAX);
+                limitRange(g_WeatherParticle_ActiveCount[settingsState], 0, SNOW_COUNT_MAX);
             }
 
-            for (i = 0, part = parts; i < g_WeatherParticlesAddedCount[settingsState]; i++, part++)
+            for (i = 0, part = parts; i < g_WeatherParticle_ActiveCount[settingsState]; i++, part++)
             {
                 switch (part->stateStep)
                 {
@@ -845,7 +817,7 @@ void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CBFB0
 }
 #endif
 
-bool Particle_Update(s_WeatherParticle* partHead)
+bool WeatherParticle_Update(s_WeatherParticle* partHead)
 {
     #define SNOW_REST_TICKS_UPDATE_MAX 32
 
@@ -884,8 +856,8 @@ bool Particle_Update(s_WeatherParticle* partHead)
 
     GsInitCoordinate2(0, &g_SysWork.coord_22A8);
 
-    g_WeatherParticle_Position.vx = g_WeatherParticleVectors0.viewPosition.vx + Q12_MULT(Math_Sin(g_WeatherParticleVectors0.viewRotation.vy), Q12(3.0));
-    g_WeatherParticle_Position.vz = g_WeatherParticleVectors0.viewPosition.vz + Q12_MULT(Math_Cos(g_WeatherParticleVectors0.viewRotation.vy), Q12(3.0));
+    g_WeatherParticle_Position.vx = g_WeatherParticle_Vectors0.viewPosition.vx + Q12_MULT(Math_Sin(g_WeatherParticle_Vectors0.viewRotation.vy), Q12(3.0));
+    g_WeatherParticle_Position.vz = g_WeatherParticle_Vectors0.viewPosition.vz + Q12_MULT(Math_Cos(g_WeatherParticle_Vectors0.viewRotation.vy), Q12(3.0));
 #if defined(MAP1_S06)
     g_WeatherParticle_Position.vy = Q12(-10.0);
 #else
@@ -1335,7 +1307,7 @@ bool Particle_Update(s_WeatherParticle* partHead)
 
         // Handle particles in this state.
         for (updateCount = updatePrev;
-             updateCount < (updatePrev + g_WeatherParticlesAddedCount[pass]);
+             updateCount < (updatePrev + g_WeatherParticle_ActiveCount[pass]);
              updateCount++, curPart++)
         {
             // Keep only the lower 4 bits.
@@ -1408,10 +1380,8 @@ bool Particle_Update(s_WeatherParticle* partHead)
             }
         }
 
-        updatePrev += g_WeatherParticlesAddedCount[pass];
+        updatePrev += g_WeatherParticle_ActiveCount[pass];
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 
     curPart = partHead;
     updatePrev = 0;
@@ -1420,13 +1390,13 @@ bool Particle_Update(s_WeatherParticle* partHead)
     #if MAP_PARTICLE_HAS_RAIN
         if (pass != 0)
         {
-            sharedData_800E32D0_0_s00 += g_WeatherParticlesAddedCount[pass];
+            sharedData_800E32D0_0_s00 += g_WeatherParticle_ActiveCount[pass];
             limitRange(sharedData_800E32D0_0_s00, 0, 135000);
         }
     #endif
 
         for (updateCount = updatePrev;
-             updateCount < (updatePrev + g_WeatherParticlesAddedCount[pass]);
+             updateCount < (updatePrev + g_WeatherParticle_ActiveCount[pass]);
              updateCount++, curPart++)
         {
             switch (pass)
@@ -1445,16 +1415,13 @@ bool Particle_Update(s_WeatherParticle* partHead)
             }
         }
 
-        updatePrev += g_WeatherParticlesAddedCount[pass];
+        updatePrev += g_WeatherParticle_ActiveCount[pass];
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-    // Likely previous position for next particle system update.
-    // Stores XZ position and Y rotation.
+    // Stores previous parameters.
     g_WeatherParticle_PrevPosition.vx = prevPos.vx;
     g_WeatherParticle_PrevPosition.vz = prevPos.vz;
-    g_WeatherParticle_PrevRotationY   = g_WeatherParticleVectors0.viewRotation.vy;
+    g_WeatherParticle_PrevRotationY   = g_WeatherParticle_Vectors0.viewRotation.vy;
     return false;
 }
 
@@ -1486,7 +1453,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
 
     if (!Game_FlashlightIsOn())
     {
-        g_WeatherParticleVectors0.svec_18.vx = Q12_ANGLE(-90.0f);
+        g_WeatherParticle_Vectors0.svec_18.vx = Q12_ANGLE(-90.0f);
     }
 
     temp_s4 = func_800CC8FC(&sp90, &sp120, &sp50);
@@ -1561,10 +1528,10 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
         { 0x0B, 0x06 },
     };
 
-    temp_s4 = g_WeatherParticleVectors0.field_28 >> 6;
-    temp_s7 = g_WeatherParticleVectors0.field_28 >> 3;
-    temp_a0 = g_WeatherParticleVectors0.field_28 / 20;
-    temp_s5 = g_WeatherParticleVectors0.field_28 / 12;
+    temp_s4 = g_WeatherParticle_Vectors0.field_28 >> 6;
+    temp_s7 = g_WeatherParticle_Vectors0.field_28 >> 3;
+    temp_a0 = g_WeatherParticle_Vectors0.field_28 / 20;
+    temp_s5 = g_WeatherParticle_Vectors0.field_28 / 12;
 
     for (i = 0; i < 6; i++)
     {
@@ -1581,7 +1548,7 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
     }
 
     count = 0;
-    Math_RotMatrixZxyNegGte(&g_WeatherParticleVectors0.svec_18, &mat);
+    Math_RotMatrixZxyNegGte(&g_WeatherParticle_Vectors0.svec_18, &mat);
 
     for (j = 0; j < 18; j++)
     {
@@ -1593,13 +1560,13 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
         unkPos = &arg0[D_800CA7CC[j][0]];
 
-        unkPos->vx = Q8_TO_Q12(offset0.vx) + (g_WeatherParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
-        unkPos->vy = Q8_TO_Q12(offset0.vy) + (g_WeatherParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
-        unkPos->vz = Q8_TO_Q12(offset0.vz) + (g_WeatherParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
+        unkPos->vx = Q8_TO_Q12(offset0.vx) + (g_WeatherParticle_Vectors0.vector_0.vx - PLAYER_CHARA().position.vx);
+        unkPos->vy = Q8_TO_Q12(offset0.vy) + (g_WeatherParticle_Vectors0.vector_0.vy - PLAYER_CHARA().position.vy);
+        unkPos->vz = Q8_TO_Q12(offset0.vz) + (g_WeatherParticle_Vectors0.vector_0.vz - PLAYER_CHARA().position.vz);
 
-        offset0.vx += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
-        offset0.vy += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
-        offset0.vz += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
+        offset0.vx += Q12_TO_Q8(g_WeatherParticle_Vectors0.vector_0.vx - PLAYER_CHARA().position.vx);
+        offset0.vy += Q12_TO_Q8(g_WeatherParticle_Vectors0.vector_0.vy - PLAYER_CHARA().position.vy);
+        offset0.vz += Q12_TO_Q8(g_WeatherParticle_Vectors0.vector_0.vz - PLAYER_CHARA().position.vz);
 
         gte_ldv0(&offset0);
         gte_rtps();
@@ -1612,13 +1579,13 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
         unkPos = &arg0[D_800CA7CC[j][1]];
 
-        unkPos->vx = Q8_TO_Q12(offset1.vx) + (g_WeatherParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
-        unkPos->vy = Q8_TO_Q12(offset1.vy) + (g_WeatherParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
-        unkPos->vz = Q8_TO_Q12(offset1.vz) + (g_WeatherParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
+        unkPos->vx = Q8_TO_Q12(offset1.vx) + (g_WeatherParticle_Vectors0.vector_0.vx - PLAYER_CHARA().position.vx);
+        unkPos->vy = Q8_TO_Q12(offset1.vy) + (g_WeatherParticle_Vectors0.vector_0.vy - PLAYER_CHARA().position.vy);
+        unkPos->vz = Q8_TO_Q12(offset1.vz) + (g_WeatherParticle_Vectors0.vector_0.vz - PLAYER_CHARA().position.vz);
 
-        offset1.vx += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vx - PLAYER_CHARA().position.vx);
-        offset1.vy += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vy - PLAYER_CHARA().position.vy);
-        offset1.vz += Q12_TO_Q8(g_WeatherParticleVectors0.vector_0.vz - PLAYER_CHARA().position.vz);
+        offset1.vx += Q12_TO_Q8(g_WeatherParticle_Vectors0.vector_0.vx - PLAYER_CHARA().position.vx);
+        offset1.vy += Q12_TO_Q8(g_WeatherParticle_Vectors0.vector_0.vy - PLAYER_CHARA().position.vy);
+        offset1.vz += Q12_TO_Q8(g_WeatherParticle_Vectors0.vector_0.vz - PLAYER_CHARA().position.vz);
 
         if ((offset0.vy >= Q8(0.0f) && offset1.vy <  Q8(0.0f)) ||
             (offset0.vy <  Q8(0.0f) && offset1.vy >= Q8(0.0f)))
@@ -3242,7 +3209,7 @@ void Particle_MovementUpdate(s32 pass, s_WeatherParticle* part, u16* rand, q19_1
             {
                 s32 localRand2 = Rng_Rand16();
                 s32 temp       = 12;
-                localPart->movement.vy += ((temp - g_WeatherParticle_PrevPosition.vy) - (g_WeatherParticle_PrevPosition.vy << 1) - (g_WeatherParticlesAddedCount[0] >> 4)) +
+                localPart->movement.vy += ((temp - g_WeatherParticle_PrevPosition.vy) - (g_WeatherParticle_PrevPosition.vy << 1) - (g_WeatherParticle_ActiveCount[0] >> 4)) +
                                              Rng_GenerateIntFromInput(localRand2, -2, 2);
 
                 limitRange(localPart->movement.vy, 5, 1000);
@@ -3304,8 +3271,8 @@ void Particle_MovementUpdate(s32 pass, s_WeatherParticle* part, u16* rand, q19_1
         case 1:
 #if MAP_PARTICLE_HAS_RAIN
 #if !defined(MAP5_S00) && !defined(MAP6_S03)
-            deltaXCase1 = g_WeatherParticleVectors1.viewPosition.vx - g_WeatherParticleVectors0.viewPosition.vx;
-            deltaZCase1 = g_WeatherParticleVectors1.viewPosition.vz - g_WeatherParticleVectors0.viewPosition.vz;
+            deltaXCase1 = g_WeatherParticle_Vectors1.viewPosition.vx - g_WeatherParticle_Vectors0.viewPosition.vx;
+            deltaZCase1 = g_WeatherParticle_Vectors1.viewPosition.vz - g_WeatherParticle_Vectors0.viewPosition.vz;
 
             localPart->position1.vx = localPart->position0.vx;
             localPart->position1.vz = localPart->position0.vz;
@@ -4265,7 +4232,7 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
                     break;
             }
 
-            if (zScreenStart >= 1 && zScreenStart < 0xFF)
+            if (zScreenStart >= 1 && zScreenStart < 255)
             {
                 addPrim(&ot->org[zScreenStart], polyFt3);
                 GsOUT_PACKET_P = (PACKET*)&polyFt3[1];
@@ -4333,9 +4300,9 @@ void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
             break;
 
         case 1:
-            prim->r0 = 0xFF;
-            prim->g0 = 0xFF;
-            prim->b0 = 0xFF;
+            prim->r0 = 255;
+            prim->g0 = 255;
+            prim->b0 = 255;
             break;
 
         case 2:

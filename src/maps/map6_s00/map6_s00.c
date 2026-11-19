@@ -181,7 +181,7 @@ void func_800EB11C(void) // 0x800EB11C
             Game_TurnFlashlightOn();
 
             Particle_EnvironmentSet(2, 127);
-            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
+            WeatherParticle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
             sharedFunc_800D0B18_0_s00(6);
 
             SD_Call(Sfx_Unk1522);
@@ -233,7 +233,7 @@ void func_800EB11C(void) // 0x800EB11C
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 114, false);
             Savegame_EventFlagSet(EventFlag_402);
             Particle_EnvironmentSet(6, 127);
-            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
+            WeatherParticle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
             Savegame_EventFlagSet(EventFlag_414);
             D_800F0044 = Q12(3.4f);
             SysWork_StateStepIncrement(0);
@@ -300,7 +300,7 @@ void func_800EB11C(void) // 0x800EB11C
             Sd_SfxStop(Sfx_Unk1522);
             Sd_SfxStop(Sfx_Unk1599);
             Particle_EnvironmentSet(6, 127);
-            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
+            WeatherParticle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
             break;
     }
 

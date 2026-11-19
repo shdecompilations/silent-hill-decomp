@@ -74,14 +74,14 @@ typedef struct
     s_func_800CC8FC_0 field_0[8];
 } s_func_800CC8FC;
 
-extern s_WeatherParticle g_WeatherParticles[WEATHER_PARTICLE_COUNT_MAX];
+extern s_WeatherParticle g_WeatherParticle_Buffer[WEATHER_PARTICLE_COUNT_MAX];
 
-extern s_WeatherParticleVectors g_WeatherParticleVectors0;
+extern s_WeatherParticleVectors g_WeatherParticle_Vectors0;
 
-extern s_WeatherParticleVectors g_WeatherParticleVectors1;
+extern s_WeatherParticleVectors g_WeatherParticle_Vectors1;
 
 /** Tracks how many total particles have been added. */
-extern s32 g_WeatherParticlesAddedCount[2];
+extern s32 g_WeatherParticle_ActiveCount[2];
 
 /** Tracks how many particles have been added per call. */
 extern u8 g_WeatherParticleSpawnCount;
@@ -115,7 +115,8 @@ extern s16 D_800F23D0; // MAP7_S03 extern, TODO: Might be sharedData?
 extern e_MapIdx g_WeatherParticle_MapIdx0;
 extern e_MapIdx g_WeatherParticle_MapIdx1;
 
-void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3);
+// Two #ifdef'd versions.
+void WeatherParticle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3);
 
 /** @brief Checks if the particle spawn origin has moved significantly since the last tick.
  *
@@ -126,13 +127,40 @@ void Particle_SystemUpdate(s32 unused, e_MapIdx mapIdx, s32 arg3);
  */
 bool Particle_CameraMovedCheck(void);
 
-/** Snow effect init. */
-void Particle_SnowInitialize(s_WeatherParticle* particles);
+// TODO: Refine comments and names, it's still kind of unclear.
+/** @brief Spawns snow particles. Called once when the map overlay is loaded.
+ *
+ * Spawns and updates snow particles.
+ * This avoids having all the snow particles starting in the sky at the same time.
+ *
+ * The spawn loop works as follows (pseudocode):
+ *
+ * particlesAdded = 0;
+ * toAddPerTick   = 1 or 3;
+ *
+ * // Perform spawn tick.
+ * while (particlesAdded < SNOW_SPAWN_COUNT_MAX)
+ * {
+ *     // Start at 0 to update all previously added particles by one step.
+ *     for (i = 0; i < particlesAdded; i++)
+ *     {
+ *        updateParticle(i); // These particles will re-add below if they expire.
+ *     }
+
+ *     // Add new particles.
+ *     for (i = 0; i < toAddPerTick; i++)
+ *     {
+ *         addParticle();
+ *         particlesAdded++;
+ *     }
+ * }
+ */
+void WeatherParticle_SnowInit(s_WeatherParticle* parts);
 
 /** M0S00 only. */
 void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
 
-bool Particle_Update(s_WeatherParticle* partHead);
+bool WeatherParticle_Update(s_WeatherParticle* partHead);
 
 /** M0S00 only. */
 bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);

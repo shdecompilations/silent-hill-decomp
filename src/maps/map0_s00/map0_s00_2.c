@@ -496,7 +496,7 @@ void MapEvent_CutsceneCherylSpotted(void) // 0x800DA5A0
             break;
 
         case 1:
-            Particle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
+            WeatherParticle_SystemUpdate(0, g_SavegamePtr->mapIdx, 0);
             SysWork_StateStepIncrement(0);
 
         case 2:

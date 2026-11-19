@@ -20,6 +20,6 @@ u8 LOADABLE_INVENTORY_ITEMS[] = {
 
 u8 sharedData_800DD584_0_s00 = 0;
 
-s32 sharedData_800DD598_0_s00 = 0;
+q19_12 sharedData_800DD598_0_s00 = Q12_ANGLE(0.0f);
 
 u8 g_Player_PrevWeaponAttack = 255;

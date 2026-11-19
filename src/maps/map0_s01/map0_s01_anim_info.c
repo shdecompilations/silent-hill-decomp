@@ -108,7 +108,7 @@ u8 LOADABLE_INVENTORY_ITEMS[35] = {
 };
 
 u8 sharedData_800DD584_0_s00 = 0;
-s32 g_WeatherParticlesAddedCount[2] = {};
+s32 g_WeatherParticle_ActiveCount[2] = {};
 s8 g_WeatherParticle_CameraMoved = false;
 u8 sharedData_800DD591_0_s00 = 0;
 u8 sharedData_800DD592_0_s00 = 1;

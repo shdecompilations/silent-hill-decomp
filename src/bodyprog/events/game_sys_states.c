@@ -168,7 +168,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         if (g_SavegamePtr->mapIdx != MapIdx_MAP7_S03)
         {
-            g_MapOverlayHdr.particleSystemUpdate(0, g_SavegamePtr->mapIdx, 1);
+            g_MapOverlayHdr.weatherParticleSystemUpdate(0, g_SavegamePtr->mapIdx, 1);
         }
 
         Demo_DemoRandSeedRestore();

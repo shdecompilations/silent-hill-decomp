@@ -37,7 +37,7 @@ D_800CB454                      = 0x800CDAC4;
 //-----------------------------------------------------------
 //--- PA: 0x001F00   VA: 0x800CDAD0   subsegment: c, map3_s03
 //-----------------------------------------------------------
-Particle_SystemUpdate           = 0x800CDAD0; // type:func
+WeatherParticle_SystemUpdate    = 0x800CDAD0; // type:func
 Particle_EnvironmentSet         = 0x800CDC38; // type:func
 sharedFunc_800D0A60_0_s00       = 0x800CDDB8; // type:func
 sharedFunc_800D0B18_0_s00       = 0x800CDE70; // type:func
@@ -229,8 +229,8 @@ sharedData_800DFB6C_0_s00       = 0x800D925C; // type:s32
 sharedData_800DFB70_0_s00       = 0x800D9260; // type:s32
 g_Particle_Buffer               = 0x800D9270; // size:0x1388
 g_Particle_BloodSplats          = 0x800DA600; // size:0x12C
-g_WeatherParticleVectors0       = 0x800DA730; // size:0x2C type:ParticleVectors
-g_WeatherParticleVectors1       = 0x800DA760; // size:0x2C type:ParticleVectors
+g_WeatherParticle_Vectors0      = 0x800DA730; // size:0x2C type:ParticleVectors
+g_WeatherParticle_Vectors1      = 0x800DA760; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00       = 0x800DA78C; // type:s32
 sharedData_800E0CAC_0_s00       = 0x800DA790; // type:s32
 sharedData_800E0CB0_0_s00       = 0x800DA794; // type:u32

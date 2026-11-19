@@ -9,7 +9,7 @@
 //-------------------------------------------------------------
 //--- PA: 0x0020AC   VA: 0x800CB624   subsegment: c, map7_s00_2
 //-------------------------------------------------------------
-Particle_SystemUpdate           = 0x800CB624; // type:func
+WeatherParticle_SystemUpdate    = 0x800CB624; // type:func
 Particle_EnvironmentSet         = 0x800CB78C; // type:func
 sharedFunc_800D0A60_0_s00       = 0x800CB90C; // type:func
 sharedFunc_800D0B18_0_s00       = 0x800CB9C4; // type:func
@@ -134,8 +134,8 @@ sharedData_800DFB6C_0_s00       = 0x800D31E8; // type:s32
 sharedData_800DFB70_0_s00       = 0x800D31EC; // type:s32
 g_Particle_Buffer               = 0x800D31F0; // size:0xFA0
 g_Particle_BloodSplats          = 0x800D4190; // size:0x12C
-g_WeatherParticleVectors0       = 0x800D42C0; // size:0x2C type:ParticleVectors
-g_WeatherParticleVectors1       = 0x800D42F0; // size:0x2C type:ParticleVectors
+g_WeatherParticle_Vectors0      = 0x800D42C0; // size:0x2C type:ParticleVectors
+g_WeatherParticle_Vectors1      = 0x800D42F0; // size:0x2C type:ParticleVectors
 sharedData_800E0CA8_0_s00       = 0x800D431C; // type:s32
 sharedData_800E0CAC_0_s00       = 0x800D4320; // type:s32
 sharedData_800E0CB0_0_s00       = 0x800D4324; // type:u32
