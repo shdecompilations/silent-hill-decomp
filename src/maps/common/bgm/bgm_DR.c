@@ -14,5 +14,5 @@ void Map_RoomBgmInit(bool updateSong)
         bgmFlags |= BgmFlag_Layer6 | BgmFlag_Layer4 | BgmFlag_Layer2;
     }
 
-    Bgm_LayersUpdate(bgmFlags, Q12(0.25f), &D_800DA570);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.25f), &g_BgmDR_LayerLimits0);
 }

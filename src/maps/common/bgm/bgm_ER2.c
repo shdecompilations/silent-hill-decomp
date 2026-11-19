@@ -120,7 +120,7 @@ void Map_BgmLayersUpdate(void)
             break;
 
         case BgmCmd_Track4:
-            bgmLayerLimit = &sharedData_800D2F18_7_s00;
+            bgmLayerLimit = &g_BgmER2_LayerLimits0;
 
             switch (mapRoomIdx)
             {
@@ -180,7 +180,7 @@ void Map_BgmLayersUpdate(void)
 
         case BgmCmd_Track10:
         case BgmCmd_Track15:
-            bgmLayerLimit = &sharedData_800D2F20_7_s00;
+            bgmLayerLimit = &g_BgmER2_LayerLimits1;
 
             switch (mapRoomIdx)
             {
@@ -234,7 +234,7 @@ void Map_BgmLayersUpdate(void)
 
         case BgmCmd_Track14:
         case BgmCmd_Track22:
-            bgmLayerLimit = &sharedData_800D2F74_7_s00;
+            bgmLayerLimit = &g_BgmER2_LayerLimits2;
             bgmFlags      = sharedData_800D2F28_7_s00[mapRoomIdx];
 
             switch (mapRoomIdx)
@@ -462,7 +462,7 @@ void Map_BgmLayersUpdate(void)
             break;
 
         case BgmCmd_Track29:
-            bgmLayerLimit = &sharedData_800D2F7C_7_s00;
+            bgmLayerLimit = &g_BgmER2_LayerLimits3;
             fadeSpeed     = Q12(240.0f);
 
             if (!Savegame_EventFlagGet(EventFlag_576))
@@ -481,7 +481,7 @@ void Map_BgmLayersUpdate(void)
             break;
 
         case BgmCmd_Track40:
-            bgmLayerLimit = &sharedData_800D2F84_7_s00;
+            bgmLayerLimit = &g_BgmER2_LayerLimits4;
             if (Savegame_EventFlagGet(EventFlag_575))
             {
                 fadeSpeed = Q12(0.25f);

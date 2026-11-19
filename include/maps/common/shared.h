@@ -85,6 +85,51 @@ typedef struct
     u8 field_1;
 } s_800F0158;
 
+typedef struct
+{
+    VECTOR3 field_0; // Rotation?
+    s16     field_C;
+    s16     field_E;
+    s8      field_10;
+    u8      field_11;
+    u8      field_12;
+    s8      field_13;
+} s_800E34FC;
+STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
+
+typedef struct
+{
+    VECTOR3  field_0;
+    SVECTOR3 field_C; // 2D position or offset.
+    u8       unk_12[2];
+    u8       field_14;
+    u8       field_15;
+    u8       field_16; // Packed angle?
+} s_800E330C;
+STATIC_ASSERT_SIZEOF(s_800E330C, 24);
+
+typedef struct
+{
+    s32   field_0;
+    s32   field_4;
+    q3_12 field_8; // Y offset.
+    s16   field_A;
+} s_D_800D5A8C;
+STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
+
+typedef struct
+{
+    s32 vx;
+    s32 vy;
+    s16 vz;
+} s_sharedData_800DFB10_0_s01;
+
+typedef struct
+{
+    q19_12 field_0; // Relative anim time?
+    s32    field_4;
+} s_sharedData_800ED2D4_2_s02;
+
 extern s_MapOverlayHdr_94 sharedData_800E30C8_1_s02;
 
 #if defined(MAP_PARTICLE_COUNT_MAX)
@@ -182,15 +227,15 @@ extern CVECTOR g_WorldEnv_RainColor;
 extern q19_12 sharedData_800E2370_0_s01[2]; // Air Screamer floor collision heights?
 
 // Per-room BGM layer limits passed to `Bgm_LayersUpdate`.
-extern s_BgmLayerLimits sharedData_800CFB14_0_s02;
-extern s_BgmLayerLimits sharedData_800CFB1C_0_s02;
-extern s_BgmLayerLimits sharedData_800CFB24_0_s02;
-extern s_BgmLayerLimits sharedData_800CFB2C_0_s02;
-extern s_BgmLayerLimits sharedData_800CFB34_0_s02;
-extern s_BgmLayerLimits sharedData_800CFB3C_0_s02;
-extern s_BgmLayerLimits sharedData_800CFB44_0_s02;
-extern s_BgmLayerLimits sharedData_800CFB4C_0_s02;
-extern s_BgmLayerLimits sharedData_800CFB54_0_s02;
+extern s_BgmLayerLimits g_BgmER_LayerLimits0;
+extern s_BgmLayerLimits g_BgmER_LayerLimits1;
+extern s_BgmLayerLimits g_BgmER_LayerLimits2;
+extern s_BgmLayerLimits g_BgmER_LayerLimits3;
+extern s_BgmLayerLimits g_BgmER_LayerLimits4;
+extern s_BgmLayerLimits g_BgmER_LayerLimits5;
+extern s_BgmLayerLimits g_BgmER_LayerLimits6;
+extern s_BgmLayerLimits g_BgmER_LayerLimits7;
+extern s_BgmLayerLimits g_BgmER_LayerLimits8;
 
 // Cached collision result for Cheryl, Dahlia, and the player?
 extern s_CollisionResult sharedData_800E39BC_0_s00;
@@ -200,57 +245,12 @@ extern s16 sharedData_800DD5A4_0_s00; // Used as index into array of vectors.
 extern s16 sharedData_800E39E0_0_s00;
 extern s16 sharedData_800E39E2_0_s00;
 
-extern s_BgmLayerLimits sharedData_800EB738_6_s04;
-extern s_BgmLayerLimits sharedData_800EB740_6_s04;
-extern s_BgmLayerLimits sharedData_800EB748_6_s04;
-extern VECTOR3          sharedData_800EB750_6_s04;
+extern s_BgmLayerLimits g_BgmAPU_LayerLimits0;
+extern s_BgmLayerLimits g_BgmAPU_LayerLimits1;
+extern s_BgmLayerLimits g_BgmAPU_LayerLimits2;
+extern VECTOR3          g_BgmAPU_LayerLimits3;
 
 extern s16 sharedData_800D5880_1_s05;
-
-typedef struct
-{
-    VECTOR3 field_0; // Rotation?
-    s16     field_C;
-    s16     field_E;
-    s8      field_10;
-    u8      field_11;
-    u8      field_12;
-    s8      field_13;
-} s_800E34FC;
-STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
-
-typedef struct
-{
-    VECTOR3  field_0;
-    SVECTOR3 field_C; // 2D position or offset.
-    u8       unk_12[2];
-    u8       field_14;
-    u8       field_15;
-    u8       field_16; // Packed angle?
-} s_800E330C;
-STATIC_ASSERT_SIZEOF(s_800E330C, 24);
-
-typedef struct
-{
-    s32   field_0;
-    s32   field_4;
-    q3_12 field_8; // Y offset.
-    s16   field_A;
-} s_D_800D5A8C;
-STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
-
-typedef struct
-{
-    s32 vx;
-    s32 vy;
-    s16 vz;
-} s_sharedData_800DFB10_0_s01;
-
-typedef struct
-{
-    q19_12 field_0; // Relative anim time?
-    s32    field_4;
-} s_sharedData_800ED2D4_2_s02;
 
 extern s_MapOverlayHdr_5C sharedData_800D8568_1_s05;
 
@@ -273,7 +273,7 @@ extern s8      sharedData_800D4D18_3_s01;
 
 extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
 
-extern s_BgmLayerLimits sharedData_800D1D14_3_s02;
+extern s_BgmLayerLimits g_BgmHU_LayerLimits0;
 
 /** Room flags? */
 extern u16 sharedData_800D1D1C_3_s02[60];
@@ -282,25 +282,26 @@ extern s_sharedData_800DFB10_0_s01 sharedData_800DFB10_0_s01[];
 
 extern u8 sharedData_800ED430_2_s02[];
 
-extern s_BgmLayerLimits sharedData_800ED43C_2_s02;
+extern s_BgmLayerLimits g_BgmSPR_LayerLimits0;
 
-extern s_BgmLayerLimits sharedData_800EFCFC_6_s00;
+extern s_BgmLayerLimits g_BgmRSU_LayerLimits0;
+
 extern s32 sharedData_800EFD04_6_s00;
 extern u16 sharedData_800EFD08_6_s00[];
 extern u16 sharedData_800EFD34_6_s00[];
 
-extern s_BgmLayerLimits sharedData_800ED418_4_s02;
-extern s32 sharedData_800ED420_4_s02;   // `e_BgmFlags`
-extern s_BgmLayerLimits sharedData_800ED424_4_s02;
-extern u16 sharedData_800ED42C_4_s02[]; // `e_BgmFlags` | Map room index used for access.
-extern s_BgmLayerLimits sharedData_800ED458_4_s02;
+extern s_BgmLayerLimits g_BgmSPU_LayerLimits0;
+extern s32              sharedData_800ED420_4_s02;   // `e_BgmFlags`
+extern s_BgmLayerLimits g_BgmSPU_LayerLimits1;
+extern u16              sharedData_800ED42C_4_s02[]; // `e_BgmFlags` | Map room index used for access.
+extern s_BgmLayerLimits g_BgmSPU_LayerLimits2;
 
-extern s_BgmLayerLimits sharedData_800D2F18_7_s00;
-extern s_BgmLayerLimits sharedData_800D2F20_7_s00;
-extern u16          sharedData_800D2F28_7_s00[38]; // `e_BgmFlags`
-extern s_BgmLayerLimits sharedData_800D2F74_7_s00;
-extern s_BgmLayerLimits sharedData_800D2F7C_7_s00;
-extern s_BgmLayerLimits sharedData_800D2F84_7_s00;
+extern s_BgmLayerLimits g_BgmER2_LayerLimits0;
+extern s_BgmLayerLimits g_BgmER2_LayerLimits1;
+extern u16              sharedData_800D2F28_7_s00[38]; // `e_BgmFlags`
+extern s_BgmLayerLimits g_BgmER2_LayerLimits2;
+extern s_BgmLayerLimits g_BgmER2_LayerLimits3;
+extern s_BgmLayerLimits g_BgmER2_LayerLimits4;
 
 extern s32 sharedData_800E1570_7_s01;
 extern s32 sharedData_800E1574_7_s01;

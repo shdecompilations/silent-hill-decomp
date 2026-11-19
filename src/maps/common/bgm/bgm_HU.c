@@ -25,7 +25,7 @@ void Map_BgmLayersUpdate(void)
     s_BgmLayerLimits  data;
     s32               roomIdx;
 
-    dataPtr = &sharedData_800D1D14_3_s02;
+    dataPtr = &g_BgmHU_LayerLimits0;
     roomIdx = g_SavegamePtr->mapRoomIdx;
 
     if (g_GameWork.bgmIdx == BgmCmd_Track8)

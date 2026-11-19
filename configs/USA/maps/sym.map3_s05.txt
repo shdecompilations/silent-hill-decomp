@@ -171,7 +171,7 @@ g_PuppetNurse_AnimStatus3       = 0x800DA120; // type:u8 size:0x4
 g_PuppetNurse_AnimStatus2       = 0x800DA124; // type:u8 size:0x2
 g_PuppetNurse_AnimStatus4       = 0x800DA128; // type:u8 size:0x4
 MAP_ROOM_IDXS                   = 0x800DA12C; // type:u8
-sharedData_800D1D14_3_s02       = 0x800DA16C; // type:u8 size:8
+g_BgmHU_LayerLimits0            = 0x800DA16C; // type:u8 size:8
 sharedData_800D1D1C_3_s02       = 0x800DA174; // type:u16 size:0x78
 
 //-------------------------------------------------------------

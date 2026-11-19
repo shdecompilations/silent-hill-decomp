@@ -23,7 +23,7 @@ extern s8 D_800DFEF4;
 extern s8 D_800DFEF5;
 extern VECTOR3 D_800DBD10;
 extern u16 D_800DBCE4[22]; // Flags.
-extern s_BgmLayerLimits D_800DBCDC;   // Distances.
+extern s_BgmLayerLimits g_BgmDRU_LayerLimits0;
 
 /** @brief Handles a Health Drink or Handgun Bullets item pickup event. */
 void MapEvent_CommonItemTake(void);

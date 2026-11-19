@@ -164,7 +164,7 @@ sharedData_800DF1F4_0_s00       = 0x800D52A4; // type:s32
 sharedData_800DF1F8_0_s00       = 0x800D52A8; // type:s16
 sharedData_800DF1FA_0_s00       = 0x800D52AA; // type:s16
 MAP_ROOM_IDXS                   = 0x800D52AC; // type:u8
-sharedData_800D1D14_3_s02       = 0x800D52EC; // type:u8 size:8
+g_BgmHU_LayerLimits0            = 0x800D52EC; // type:u8 size:8
 sharedData_800D1D1C_3_s02       = 0x800D52F4; // type:u16 size:0x78
 
 //-------------------------------------------------------------

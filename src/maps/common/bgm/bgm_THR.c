@@ -37,9 +37,9 @@ void Map_RoomBgmInit(bool updateSong)
         fadeSpeed = Q12(0.3f);
     }
 
-    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &D_800DF2F8);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &g_BgmTHR_LayerLimits0);
 #else
-    extern s_BgmLayerLimits sharedData_800F06D4_2_s00;
+    extern s_BgmLayerLimits g_BgmTHR_LayerLimits1;
     s32       bgmFlags;
     s32       mapRoomIdx;
 
@@ -76,10 +76,10 @@ void Map_RoomBgmInit(bool updateSong)
     if (bgmFlags & BgmFlag_Layer4)
     {
         s8 tmp                       = func_800364BC();
-        sharedData_800F06D4_2_s00.limits[3] = tmp;
+        g_BgmTHR_LayerLimits1.limits[3] = tmp;
     }
 
-    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &sharedData_800F06D4_2_s00);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &g_BgmTHR_LayerLimits1);
 #endif
 }
 

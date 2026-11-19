@@ -17,7 +17,7 @@ void Map_RoomBgmInit(bool updateSong)
 
     if (g_GameWork.bgmIdx == BgmCmd_Track13)
     {
-        var_a2 = &sharedData_800ED418_4_s02;
+        var_a2 = &g_BgmSPU_LayerLimits0;
 
         switch (mapRoomIdx)
         {
@@ -82,7 +82,7 @@ void Map_RoomBgmInit(bool updateSong)
     }
     else if (g_GameWork.bgmIdx == BgmCmd_Track33)
     {
-        var_a2 = &sharedData_800ED424_4_s02;
+        var_a2 = &g_BgmSPU_LayerLimits1;
 
         switch (mapRoomIdx)
         {
@@ -154,7 +154,7 @@ void Map_RoomBgmInit(bool updateSong)
     }
     else
     {
-        var_a2 = &sharedData_800ED458_4_s02;
+        var_a2 = &g_BgmSPU_LayerLimits2;
 
         if (!Savegame_EventFlagGet(EventFlag_314))
         {

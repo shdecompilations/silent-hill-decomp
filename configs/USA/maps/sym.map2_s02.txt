@@ -359,7 +359,7 @@ sharedData_800ED2D4_2_s02        = 0x800ED2D4;
 sharedData_800ED314_2_s02        = 0x800ED314;
 MAP_ROOM_IDXS                    = 0x800ED3C4; // type:u8
 sharedData_800ED430_2_s02        = 0x800ED430;
-sharedData_800ED43C_2_s02        = 0x800ED43C; // type:u8 size:8
+g_BgmSPR_LayerLimits0            = 0x800ED43C; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x023ECC   VA: 0x800ED444   subsegment: .data, header

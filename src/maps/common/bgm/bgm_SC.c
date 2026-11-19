@@ -6,13 +6,13 @@
 // BGM events for `MapType_SC` maps.
 // `MAP1_S06` has map-specific BGM.
 
-extern s_BgmLayerLimits sharedData_800DCC4C_1_s00;
+extern s_BgmLayerLimits g_BgmSC_LayerLimits1;
 extern u16 sharedData_800DCC54_1_s00[42]; // Flags.
 
 void Map_RoomBgmInit(bool updateSong)
 {
 #if defined(MAP1_S06)
-    Bgm_LayersUpdate(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), &D_800D71E8);
+    Bgm_LayersUpdate(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), &g_BgmSC_LayerLimits0);
 #else
     u16 bgmFlags;
 
@@ -31,6 +31,6 @@ void Map_RoomBgmInit(bool updateSong)
         bgmFlags = sharedData_800DCC54_1_s00[g_SavegamePtr->mapRoomIdx];
     }
 
-    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &sharedData_800DCC4C_1_s00);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &g_BgmSC_LayerLimits1);
 #endif
 }

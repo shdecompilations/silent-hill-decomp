@@ -28,7 +28,7 @@ void Map_BgmLayersUpdate(void)
     soundCmd = g_GameWork.bgmIdx;
     if (soundCmd == 36)
     {
-        dataPtr = &sharedData_800EB738_6_s04;
+        dataPtr = &g_BgmAPU_LayerLimits0;
         fadeSpeed   = Q12(0.1f);
         if (Savegame_EventFlagGet(EventFlag_465))
         {
@@ -46,7 +46,7 @@ void Map_BgmLayersUpdate(void)
     }
     else if (soundCmd == 39)
     {
-        dataPtr = &sharedData_800EB740_6_s04;
+        dataPtr = &g_BgmAPU_LayerLimits1;
 
         if (Savegame_EventFlagGet(EventFlag_445))
         {
@@ -60,7 +60,7 @@ void Map_BgmLayersUpdate(void)
             }
             else if (Savegame_EventFlagGet(EventFlag_470))
             {
-                sharedData_800EB740_6_s04.limits[1] = 0x80;
+                g_BgmAPU_LayerLimits1.limits[1] = 0x80;
                 fadeSpeed                        = Q12(0.5f);
 
                 if (!Savegame_EventFlagGet(EventFlag_447))
@@ -79,19 +79,19 @@ void Map_BgmLayersUpdate(void)
             }
             else if (Savegame_EventFlagGet(EventFlag_446))
             {
-                sharedData_800EB740_6_s04.limits[1] = 0;
+                g_BgmAPU_LayerLimits1.limits[1] = 0;
                 fadeSpeed                        = Q12(240.0f);
                 bgmFlags                        = 0x101;
             }
             else
             {
-                sharedData_800EB740_6_s04.limits[1] = 0x60;
+                g_BgmAPU_LayerLimits1.limits[1] = 0x60;
                 bgmFlags                        = 0x10A;
             }
         }
         else
         {
-            sharedData_800EB740_6_s04.limits[1] = 0x60;
+            g_BgmAPU_LayerLimits1.limits[1] = 0x60;
 
             if (Savegame_EventFlagGet(EventFlag_443))
             {
@@ -123,14 +123,14 @@ void Map_BgmLayersUpdate(void)
     else
     {
         dist    = Q12(0.0f);
-        dataPtr = &sharedData_800EB748_6_s04;
+        dataPtr = &g_BgmAPU_LayerLimits2;
 
         switch (g_SavegamePtr->mapRoomIdx)
         {
             case 3:
                 bgmFlags = 4;
 
-                dist = Math_Distance2dGet(&PLAYER_CHARA().position, &sharedData_800EB750_6_s04);
+                dist = Math_Distance2dGet(&PLAYER_CHARA().position, &g_BgmAPU_LayerLimits3);
                 if (dist < Q12(10.0f))
                 {
                     dist = Q12(1.0f / 32.0f);
@@ -157,7 +157,7 @@ void Map_BgmLayersUpdate(void)
                 break;
         }
 
-        sharedData_800EB748_6_s04.limits[2] = dist;
+        g_BgmAPU_LayerLimits2.limits[2] = dist;
     }
 
     Bgm_LayersUpdate(bgmFlags, fadeSpeed, dataPtr);

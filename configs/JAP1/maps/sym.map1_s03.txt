@@ -224,7 +224,7 @@ sharedData_800E11A8_1_s02           = 0x800E3A60;
 sharedData_800E11BC_1_s02           = 0x800E3A74;
 LOCKER_DEAD_BODY_ANIM_INFOS         = 0x800E3A88; // type:AnimInfo size:0x80
 MAP_ROOM_IDXS                       = 0x800E3B08; // type:u8
-sharedData_800DCC4C_1_s00           = 0x800E3B40; // type:u8 size:8
+g_BgmSC_LayerLimits1                = 0x800E3B40; // type:u8 size:8
 sharedData_800DCC54_1_s00           = 0x800E3B48; // type:u16 size:0x54
 
 //-------------------------------------------------------------

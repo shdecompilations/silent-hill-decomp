@@ -149,7 +149,7 @@ g_PuppetNurse_AnimStatus2       = 0x800D5AB4; // type:u8 size:0x2
 g_PuppetNurse_AnimStatus4       = 0x800D5AB8; // type:u8 size:0x4
 BLOODSUCKER_ANIM_INFOS          = 0x800D5ABC; // type:AnimInfo
 MAP_ROOM_IDXS                   = 0x800D5C9C; // type:u8
-sharedData_800D1D14_3_s02       = 0x800D5CDC; // type:u8 size:8
+g_BgmHU_LayerLimits0            = 0x800D5CDC; // type:u8 size:8
 sharedData_800D1D1C_3_s02       = 0x800D5CE4; // type:u16 size:0x78
 
 //-------------------------------------------------------------

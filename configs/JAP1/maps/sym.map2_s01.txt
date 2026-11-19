@@ -122,15 +122,15 @@ sharedData_800DF1F8_0_s00       = 0x800D26F0; // type:s16
 sharedData_800DF1FA_0_s00       = 0x800D26F2; // type:s16
 MAP_ROOM_IDXS                   = 0x800D26F4; // type:u8 size:0x1E
 D_800D0152                      = 0x800D2712;
-sharedData_800CFB14_0_s02       = 0x800D2714; // type:u8 size:8
-sharedData_800CFB1C_0_s02       = 0x800D271C; // type:u8 size:8
-sharedData_800CFB24_0_s02       = 0x800D2724; // type:u8 size:8
-sharedData_800CFB2C_0_s02       = 0x800D272C; // type:u8 size:8
-sharedData_800CFB34_0_s02       = 0x800D2734; // type:u8 size:8
-sharedData_800CFB3C_0_s02       = 0x800D273C; // type:u8 size:8
-sharedData_800CFB44_0_s02       = 0x800D2744; // type:u8 size:8
-sharedData_800CFB4C_0_s02       = 0x800D274C; // type:u8 size:8
-sharedData_800CFB54_0_s02       = 0x800D2754; // type:u8 size:8
+g_BgmER_LayerLimits0            = 0x800D2714; // type:u8 size:8
+g_BgmER_LayerLimits1            = 0x800D271C; // type:u8 size:8
+g_BgmER_LayerLimits2            = 0x800D2724; // type:u8 size:8
+g_BgmER_LayerLimits3            = 0x800D272C; // type:u8 size:8
+g_BgmER_LayerLimits4            = 0x800D2734; // type:u8 size:8
+g_BgmER_LayerLimits5            = 0x800D273C; // type:u8 size:8
+g_BgmER_LayerLimits6            = 0x800D2744; // type:u8 size:8
+g_BgmER_LayerLimits7            = 0x800D274C; // type:u8 size:8
+g_BgmER_LayerLimits8            = 0x800D2754; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x006B8C   VA: 0x800D275C   subsegment: .data, header

@@ -32,9 +32,9 @@ void Map_RoomBgmInit(bool updateSong)
             {
                 case 15:
                 case 16:
-                    D_800DBCDC.limits[5] = 0;
-                    D_800DBCDC.limits[6] = 0;
-                    D_800DBCDC.limits[7] = 0;
+                    g_BgmDRU_LayerLimits0.limits[5] = 0;
+                    g_BgmDRU_LayerLimits0.limits[6] = 0;
+                    g_BgmDRU_LayerLimits0.limits[7] = 0;
                     break;
 
                 case 17:
@@ -53,15 +53,15 @@ void Map_RoomBgmInit(bool updateSong)
                         }
                     }
 
-                    D_800DBCDC.limits[5] = dist0;
-                    D_800DBCDC.limits[6] = Q12(0.0f);
-                    D_800DBCDC.limits[7] = Q12(0.0f);
+                    g_BgmDRU_LayerLimits0.limits[5] = dist0;
+                    g_BgmDRU_LayerLimits0.limits[6] = Q12(0.0f);
+                    g_BgmDRU_LayerLimits0.limits[7] = Q12(0.0f);
                     break;
 
                 case 18:
                 case 19:
                 case 20:
-                    D_800DBCDC.limits[5] = Q8(0.313f);
+                    g_BgmDRU_LayerLimits0.limits[5] = Q8(0.313f);
 
                     dist1 = Q12(64.0f) - PLAYER_CHARA().position.vx;
                     if (dist1 < Q12(0.0f))
@@ -77,7 +77,7 @@ void Map_RoomBgmInit(bool updateSong)
                         }
                     }
 
-                    D_800DBCDC.limits[6] = dist1;
+                    g_BgmDRU_LayerLimits0.limits[6] = dist1;
 
                     dist2 = Q12(80.0f) - PLAYER_CHARA().position.vx;
                     if (dist2 < Q12(0.0f))
@@ -93,7 +93,7 @@ void Map_RoomBgmInit(bool updateSong)
                         }
                     }
 
-                    D_800DBCDC.limits[7] = dist2;
+                    g_BgmDRU_LayerLimits0.limits[7] = dist2;
                     break;
             }
         }
@@ -108,5 +108,5 @@ void Map_RoomBgmInit(bool updateSong)
         }
     }
 
-    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &D_800DBCDC);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &g_BgmDRU_LayerLimits0);
 }

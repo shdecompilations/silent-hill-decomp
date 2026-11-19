@@ -60,7 +60,7 @@ extern s_WorldObjectModel g_CommonWorldObjects[6];
 
 extern s32 D_800DA154[];
 
-extern s_BgmLayerLimits D_800DA570;
+extern s_BgmLayerLimits g_BgmDR_LayerLimits0;
 
 extern u16 D_800DA578[];
 

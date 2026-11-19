@@ -219,7 +219,7 @@ sharedData_800E1194_1_s02               = 0x800E3774;
 sharedData_800E11A8_1_s02               = 0x800E3788;
 sharedData_800E11BC_1_s02               = 0x800E379C;
 MAP_ROOM_IDXS                           = 0x800E37B0; // type:u8
-sharedData_800DCC4C_1_s00               = 0x800E37E8; // type:u8 size:8
+g_BgmSC_LayerLimits1                    = 0x800E37E8; // type:u8 size:8
 sharedData_800DCC54_1_s00               = 0x800E37F0; // type:u16 size:0x54
 
 //-------------------------------------------------------------

@@ -372,11 +372,11 @@ sharedData_800ED2D4_2_s02        = 0x800EF8CC;
 sharedData_800ED314_2_s02        = 0x800EF90C;
 MAP_ROOM_IDXS                    = 0x800EF9BC; // type:u8
 sharedData_800ED430_2_s02        = 0x800EFA28;
-sharedData_800ED418_4_s02        = 0x800EFA34; // type:u8 size:8
+g_BgmSPU_LayerLimits0            = 0x800EFA34; // type:u8 size:8
 sharedData_800ED420_4_s02        = 0x800EFA3C; // type:s32
-sharedData_800ED424_4_s02        = 0x800EFA40; // type:u8 size:8
+g_BgmSPU_LayerLimits1            = 0x800EFA40; // type:u8 size:8
 sharedData_800ED42C_4_s02        = 0x800EFA48;
-sharedData_800ED458_4_s02        = 0x800EFA74; // type:u8 size:8
+g_BgmSPU_LayerLimits2            = 0x800EFA74; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x023EAC   VA: 0x800EFA7C   subsegment: .data, header

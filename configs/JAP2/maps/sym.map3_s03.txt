@@ -185,7 +185,7 @@ D_800D5AB6                      = 0x800D8126;
 g_PuppetNurse_AnimStatus4       = 0x800D8128; // type:u8 size:0x4
 BLOODSUCKER_ANIM_INFOS          = 0x800D812C; // type:AnimInfo
 MAP_ROOM_IDXS                   = 0x800D830C; // type:u8
-sharedData_800D1D14_3_s02       = 0x800D834C; // type:u8 size:8
+g_BgmHU_LayerLimits0            = 0x800D834C; // type:u8 size:8
 sharedData_800D1D1C_3_s02       = 0x800D8354; // type:u16 size:0x78
 
 //-------------------------------------------------------------

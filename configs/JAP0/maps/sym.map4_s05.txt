@@ -152,11 +152,11 @@ D_800D7A58                      = 0x800D9F54;
 D_800D7A5C                      = 0x800D9F58;
 MAP_ROOM_IDXS                   = 0x800D9F70; // type:u8
 sharedData_800ED430_2_s02       = 0x800D9FDC;
-sharedData_800ED418_4_s02       = 0x800D9FE8; // type:u8 size:8
+g_BgmSPU_LayerLimits0           = 0x800D9FE8; // type:u8 size:8
 sharedData_800ED420_4_s02       = 0x800D9FF0; // type:s32
-sharedData_800ED424_4_s02       = 0x800D9FF4; // type:u8 size:8
+g_BgmSPU_LayerLimits1           = 0x800D9FF4; // type:u8 size:8
 sharedData_800ED42C_4_s02       = 0x800D9FFC;
-sharedData_800ED458_4_s02       = 0x800DA028; // type:u8 size:8
+g_BgmSPU_LayerLimits2           = 0x800DA028; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x00E588   VA: 0x800DA030   subsegment: .data, header

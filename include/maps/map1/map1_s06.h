@@ -17,7 +17,7 @@
 
 #include "maps/common/shared.h"
 
-extern s_BgmLayerLimits D_800D71E8;
+extern s_BgmLayerLimits g_BgmSC_LayerLimits0;
 
 extern u16 D_800D775C;
 

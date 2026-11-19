@@ -13,7 +13,7 @@ void Map_RoomBgmInit(bool updateSong)
     s_BgmLayerLimits* var_s3;
     u16               bgmFlags;
 
-    var_s3  = &sharedData_800EFCFC_6_s00;
+    var_s3  = &g_BgmRSU_LayerLimits0;
     temp_a2 = g_SavegamePtr->mapRoomIdx;
     var_s1  = Q12(0.2f);
 
@@ -130,7 +130,7 @@ void Map_RoomBgmInit(bool updateSong)
     }
 
     sharedData_800EFD04_6_s00   += g_DeltaTime;
-    sharedData_800EFCFC_6_s00.limits[2] = Q12_MULT_PRECISE(var_s2, (Math_Sin(sharedData_800EFD04_6_s00 / 12) + Q12(3.0f)) / 4);
+    g_BgmRSU_LayerLimits0.limits[2] = Q12_MULT_PRECISE(var_s2, (Math_Sin(sharedData_800EFD04_6_s00 / 12) + Q12(3.0f)) / 4);
 
     Bgm_LayersUpdate(bgmFlags, var_s1, var_s3);
 }

@@ -85,6 +85,6 @@ void Map_RoomBgmInit(bool updateSong)
     temp_v0 = (Math_Sin(D_800EFC7C / 12) + Q12(2.0f)) / 2;
     var_v1  = Q12_MULT_PRECISE(newPosComp, temp_v0);
 
-    D_800EFC74.limits[4] = var_v1 / Q12(0.5f);
-    Bgm_LayersUpdate(bgmFlags, Q12(0.2f), &D_800EFC74);
+    g_BgmRSR_LayerLimits0.limits[4] = var_v1 / Q12(0.5f);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.2f), &g_BgmRSR_LayerLimits0);
 }

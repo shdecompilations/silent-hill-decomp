@@ -109,15 +109,15 @@ sharedData_800DD598_0_s00        = 0x800D1FEC;
 g_Player_PrevWeaponAttack        = 0x800D1FF0; // type:u8
 MAP_ROOM_IDXS                    = 0x800D1FF4; // type:u8 size:0x1E
 D_800CFB12                       = 0x800D2012;
-sharedData_800CFB14_0_s02        = 0x800D2014; // type:u8 size:8
-sharedData_800CFB1C_0_s02        = 0x800D201C; // type:u8 size:8
-sharedData_800CFB24_0_s02        = 0x800D2024; // type:u8 size:8
-sharedData_800CFB2C_0_s02        = 0x800D202C; // type:u8 size:8
-sharedData_800CFB34_0_s02        = 0x800D2034; // type:u8 size:8
-sharedData_800CFB3C_0_s02        = 0x800D203C; // type:u8 size:8
-sharedData_800CFB44_0_s02        = 0x800D2044; // type:u8 size:8
-sharedData_800CFB4C_0_s02        = 0x800D204C; // type:u8 size:8
-sharedData_800CFB54_0_s02        = 0x800D2054; // type:u8 size:8
+g_BgmER_LayerLimits0             = 0x800D2014; // type:u8 size:8
+g_BgmER_LayerLimits1             = 0x800D201C; // type:u8 size:8
+g_BgmER_LayerLimits2             = 0x800D2024; // type:u8 size:8
+g_BgmER_LayerLimits3             = 0x800D202C; // type:u8 size:8
+g_BgmER_LayerLimits4             = 0x800D2034; // type:u8 size:8
+g_BgmER_LayerLimits5             = 0x800D203C; // type:u8 size:8
+g_BgmER_LayerLimits6             = 0x800D2044; // type:u8 size:8
+g_BgmER_LayerLimits7             = 0x800D204C; // type:u8 size:8
+g_BgmER_LayerLimits8             = 0x800D2054; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x0065B4   VA: 0x800D205C   subsegment: .data, header

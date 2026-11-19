@@ -70,7 +70,7 @@ sharedData_800DD598_0_s00       = 0x800CCB0C;
 g_Player_PrevWeaponAttack       = 0x800CCB10; // type:u8
 MAP_ROOM_IDXS                   = 0x800CCB14; // type:u8
 sharedData_800ED430_2_s02       = 0x800CCB80;
-sharedData_800ED43C_2_s02       = 0x800CCB8C; // type:u8 size:8
+g_BgmSPR_LayerLimits0           = 0x800CCB8C; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x00361C   VA: 0x800CCB94   subsegment: .data, header

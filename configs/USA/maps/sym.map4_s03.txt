@@ -118,11 +118,11 @@ g_Player_PrevWeaponAttack       = 0x800DAA40; // type:u8
 TWINFEELER_ANIM_INFOS           = 0x800DAE90; // type:AnimInfo
 MAP_ROOM_IDXS                   = 0x800DB3A4; // type:u8
 sharedData_800ED430_2_s02       = 0x800DB410;
-sharedData_800ED418_4_s02       = 0x800DB41C; // type:u8 size:8
+g_BgmSPU_LayerLimits0           = 0x800DB41C; // type:u8 size:8
 sharedData_800ED420_4_s02       = 0x800DB424; // type:s32
-sharedData_800ED424_4_s02       = 0x800DB428; // type:u8 size:8
+g_BgmSPU_LayerLimits1           = 0x800DB428; // type:u8 size:8
 sharedData_800ED42C_4_s02       = 0x800DB430;
-sharedData_800ED458_4_s02       = 0x800DB45C; // type:u8 size:8
+g_BgmSPU_LayerLimits2           = 0x800DB45C; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x011EEC   VA: 0x800DB464   subsegment: .data, header

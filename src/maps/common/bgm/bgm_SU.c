@@ -6,7 +6,7 @@
 // BGM events for `MapType_SU` maps.
 // `MAP1_S05` has map-specific BGM.
 
-extern s_BgmLayerLimits sharedData_800DCC4C_1_s00;
+extern s_BgmLayerLimits g_BgmSC_LayerLimits1;
 extern u16 sharedData_800DCC54_1_s00[42]; // Flags.
 
 void Map_RoomBgmInit(bool updateSong)
@@ -24,7 +24,7 @@ void Map_RoomBgmInit(bool updateSong)
         }
     }
 
-    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &D_800D5C3C);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &g_BgmSU_LayerLimits0);
 #else
     s32 fadeSpeed;
     s32 roomIdx;
@@ -87,6 +87,6 @@ void Map_RoomBgmInit(bool updateSong)
             break;
     }
 
-    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &sharedData_800DCC4C_1_s00);
+    Bgm_LayersUpdate(bgmFlags, fadeSpeed, &g_BgmSC_LayerLimits1);
 #endif
 }

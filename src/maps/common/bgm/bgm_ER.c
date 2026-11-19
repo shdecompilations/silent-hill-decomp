@@ -14,7 +14,8 @@ void Map_RoomBgmInit(bool updateSong)
 void Map_BgmSongChange(void)
 {
 #if defined(MAP6_S01)
-    if (!Savegame_EventFlagGet(EventFlag_424) || (Savegame_EventFlagGet(EventFlag_425) && !Savegame_EventFlagGet(EventFlag_426)))
+    if (!Savegame_EventFlagGet(EventFlag_424) ||
+        (Savegame_EventFlagGet(EventFlag_425) && !Savegame_EventFlagGet(EventFlag_426)))
     {
         Bgm_SongChange(BgmCmd_Track23);
     }
@@ -47,7 +48,7 @@ void Map_BgmLayersUpdate(void)
     s_BgmLayerLimits* layerLimits;
 
     fadeSpeed   = Q12(0.1f);
-    layerLimits = &sharedData_800CFB14_0_s02;
+    layerLimits = &g_BgmER_LayerLimits0;
 
     switch (g_SavegamePtr->mapRoomIdx)
     {
@@ -62,14 +63,14 @@ void Map_BgmLayersUpdate(void)
         case 3:
         case 4:
             bgmFlags    = WorldEnv_IsFlashlightAllowed() ? BgmFlag_Layer2 : BgmFlag_Layer1;
-            layerLimits = &sharedData_800CFB1C_0_s02;
+            layerLimits = &g_BgmER_LayerLimits1;
             break;
 
         case 10:
         case 12:
         case 13:
             fadeSpeed   = Q12(0.25f);
-            layerLimits = &sharedData_800CFB24_0_s02;
+            layerLimits = &g_BgmER_LayerLimits2;
 
             if (Savegame_EventFlagGet(EventFlag_312))
             {
@@ -99,12 +100,12 @@ void Map_BgmLayersUpdate(void)
             break;
 
         case 17:
-            layerLimits = &sharedData_800CFB2C_0_s02;
+            layerLimits = &g_BgmER_LayerLimits3;
             bgmFlags    = BgmFlag_Layer1 | BgmFlag_MuteAll;
             break;
 
         case 18:
-            layerLimits = (g_GameWork.bgmIdx == BgmCmd_Track7) ? &sharedData_800CFB34_0_s02 : &sharedData_800CFB3C_0_s02;
+            layerLimits = (g_GameWork.bgmIdx == BgmCmd_Track7) ? &g_BgmER_LayerLimits4 : &g_BgmER_LayerLimits5;
 
             if (Savegame_EventFlagGet(EventFlag_379))
             {
@@ -158,7 +159,7 @@ void Map_BgmLayersUpdate(void)
             }
             else
             {
-                layerLimits = &sharedData_800CFB44_0_s02;
+                layerLimits = &g_BgmER_LayerLimits6;
                 bgmFlags    = BgmFlag_Layer1;
             }
             break;
@@ -171,7 +172,7 @@ void Map_BgmLayersUpdate(void)
         case 20:
             if (g_GameWork.bgmIdx == BgmCmd_Track23)
             {
-                layerLimits = &sharedData_800CFB4C_0_s02;
+                layerLimits = &g_BgmER_LayerLimits7;
                 fadeSpeed   = Q12(0.25f);
 
                 if (Savegame_EventFlagGet(EventFlag_423) && !Savegame_EventFlagGet(EventFlag_424))
@@ -190,7 +191,7 @@ void Map_BgmLayersUpdate(void)
             }
             else
             {
-                layerLimits = &sharedData_800CFB54_0_s02;
+                layerLimits = &g_BgmER_LayerLimits8;
                 bgmFlags    = BgmFlag_Layer2 | BgmFlag_Layer3 | BgmFlag_Layer5;
             }
             break;

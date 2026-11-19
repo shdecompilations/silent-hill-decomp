@@ -18,7 +18,7 @@ u8 MAP_ROOM_IDXS[] = {
      0,  0, 13, 18, 19, 17, 16,
 };
 
-s_BgmLayerLimits sharedData_800DCC4C_1_s00 = {
+s_BgmLayerLimits g_BgmSC_LayerLimits1 = {
     { 128, 128, 128, 128, 128, 128, 128, 128 }
 };
 

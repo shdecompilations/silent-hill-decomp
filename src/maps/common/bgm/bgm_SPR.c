@@ -39,8 +39,8 @@ void Map_RoomBgmInit(bool updateSong)
     if (bgmFlags & BgmFlag_Layer4)
     {
         s8 temp_v0 = func_800364BC();
-        sharedData_800ED43C_2_s02.limits[3] = temp_v0;
+        g_BgmSPR_LayerLimits0.limits[3] = temp_v0;
     }
 
-    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &sharedData_800ED43C_2_s02);
+    Bgm_LayersUpdate(bgmFlags, Q12(0.1f), &g_BgmSPR_LayerLimits0);
 }
