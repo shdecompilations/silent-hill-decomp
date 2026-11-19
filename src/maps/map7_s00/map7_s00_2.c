@@ -716,7 +716,6 @@ void Map_WorldObjectsUpdate(void) // 0x800D286C
     VECTOR3 pos;
     s32     i;
 
-
     if (PLAYER_IN_MAP_CHUNK(1, -4))
     {
         for (i = 0; i < ARRAY_SIZE(g_WorldObject0); i++)
@@ -725,7 +724,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D286C
             pos.vy = Q12(0.0f);
             pos.vz = D_800D4370[(i >= 2) ? (i - 2) : i];
 
-            WorldObjects_Add(&g_WorldObject0[i], &pos, &D_800CB61C);
+            WorldObjects_Add(&g_WorldObject0[i], &pos, &SVECTOR3_Zero);
         }
 
         Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, Rng_GenerateUInt(-8, 7));
@@ -742,4 +741,3 @@ void Map_WorldObjectsUpdate(void) // 0x800D286C
     }
 }
 
-const SVECTOR3 D_800CB61C = { 0, 0, 0 };

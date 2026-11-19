@@ -474,8 +474,7 @@ void Map_WorldObjectsInit(void) // 0x800D18DC
 
 void Map_WorldObjectsUpdate(void) // 0x800D1A98
 {
-    static const SVECTOR3 EMPTY_ROT = {};
-    static const VECTOR3  SOUND_POS = VECTOR3(22.5f, -1.5f, 137.0f);
+    #define SOUND_POS Q12_VECTOR3(22.5f, -1.5f, 137.0f)
 
     s32 x;
     s32 tmp;
@@ -486,10 +485,10 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
     {
         if (!Savegame_EventFlagGet(EventFlag_198))
         {
-            WorldObjects_Add(&g_WorldObject0.object, &g_WorldObject0.position, &EMPTY_ROT);
+            WorldObjects_Add(&g_WorldObject0.object, &g_WorldObject0.position, &SVECTOR3_Zero);
         }
-        WorldObjects_Add(&g_WorldObject1[0].object, &g_WorldObject1[0].position, &EMPTY_ROT);
-        WorldObjects_Add(&g_WorldObject1[1].object, &g_WorldObject1[1].position, &EMPTY_ROT);
+        WorldObjects_Add(&g_WorldObject1[0].object, &g_WorldObject1[0].position, &SVECTOR3_Zero);
+        WorldObjects_Add(&g_WorldObject1[1].object, &g_WorldObject1[1].position, &SVECTOR3_Zero);
     }
 
     if (PLAYER_IN_MAP_CHUNK(0, 3))
@@ -532,4 +531,6 @@ void Map_WorldObjectsUpdate(void) // 0x800D1A98
             }
         }
     }
+
+    #undef SOUND_POS
 }

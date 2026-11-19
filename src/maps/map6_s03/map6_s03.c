@@ -209,11 +209,10 @@ void Map_WorldObjectsInit(void) // 0x800D8818
     WorldObject_CommonModelNamesInit();
 }
 
-static const SVECTOR3 D_800CB258 = { 0, 0, 0 };
-static const VECTOR3  D_800CB260 = { Q12(-41.6f), Q12(0.0f), Q12(20.0f) };
-
 void Map_WorldObjectsUpdate(void) // 0x800D89A0
 {
+    #define SOUND_POS Q12_VECTOR3(-41.6f, 0.0f, 20.0f)
+
     s32  temp_s0_2;
     s32  var_v0_2;
     s32  temp_s0;
@@ -249,7 +248,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
         }
 
         temp_s0 = (g_SavegamePtr->eventFlags[13] >> 19) & 0x1;
-        WorldObjects_Add(&g_WorldObject0[temp_s0], &g_WorldObjectPos0, &D_800CB258);
+        WorldObjects_Add(&g_WorldObject0[temp_s0], &g_WorldObjectPos0, &SVECTOR3_Zero);
         if (temp_s0 != 0)
         {
             // @bug? `CollisionTriggerFlag_Unused3` is set but never checked. TODO: Find out what the intent was.
@@ -339,7 +338,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S03_PickupMap))
         {
-            WorldObjects_Add(&g_WorldObject2.object, &g_WorldObject2.position, &D_800CB258);
+            WorldObjects_Add(&g_WorldObject2.object, &g_WorldObject2.position, &SVECTOR3_Zero);
         }
     }
 
@@ -362,7 +361,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
             Chara_SpawnFlagsSet(Chara_HangedScratcher, 9, CharaSpawnFlag_1 | CharaSpawnFlag_2);
             Chara_Spawn(Chara_HangedScratcher, 10, Q12(41.1f), Q12(19.0f), Q12_ANGLE(90.0f), 6u);
             Chara_SpawnFlagsSet(Chara_HangedScratcher, 10, CharaSpawnFlag_1 | CharaSpawnFlag_2);
-            Sfx_WithFlagsPlay(Sfx_Unk1585, &D_800CB260, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+            Sfx_WithFlagsPlay(Sfx_Unk1585, &SOUND_POS, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
         }
     }
 
@@ -389,6 +388,8 @@ void Map_WorldObjectsUpdate(void) // 0x800D89A0
             WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[2]);
         }
     }
+
+    #undef SOUND_POS
 }
 
 void func_800D936C(void) {}

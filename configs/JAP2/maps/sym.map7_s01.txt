@@ -34,9 +34,6 @@ D_800CC6F0                       = 0x800CEB20;
 D_800CC754                       = 0x800CEB84;
 D_800CC788                       = 0x800CEBB8;
 sharedData_800CB094_3_s01        = 0x800CEBC4;
-D_800CC984                       = 0x800CEDB4;
-D_800CC990                       = 0x800CEDC0;
-D_800CC998                       = 0x800CEDC8;
 
 
 

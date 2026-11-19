@@ -1124,20 +1124,18 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
 void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 {
-    static const SVECTOR3 DEFAULT_ROT = {};
-
     s32 i;
 
     if (arg0 == 0)
     {
         for (i = 0; i < ARRAY_SIZE(D_800E23D0); i++)
         {
-            WorldObjects_Add(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
+            WorldObjects_Add(&D_800E23D0[i], &g_CutscenePosition, &SVECTOR3_Zero);
         }
 
         for (i = 0; i < ARRAY_SIZE(D_800E23B0); i++)
         {
-            WorldObjects_Add(&D_800E23B0[i], &g_CutscenePosition, &DEFAULT_ROT);
+            WorldObjects_Add(&D_800E23B0[i], &g_CutscenePosition, &SVECTOR3_Zero);
         }
 
         return;
@@ -1147,7 +1145,7 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
     {
         for (i = 0; i < ARRAY_SIZE(D_800E2450); i++)
         {
-            WorldObjects_Add(&D_800E2450[i], &g_CutscenePosition, &DEFAULT_ROT);
+            WorldObjects_Add(&D_800E2450[i], &g_CutscenePosition, &SVECTOR3_Zero);
         }
 
         return;
@@ -1155,11 +1153,11 @@ void CutsceneObjects_Add(s32 arg0) // 0x800DD2EC
 
     for (i = 0; i < ARRAY_SIZE(D_800E23D0); i++)
     {
-        WorldObjects_Add(&D_800E23D0[i], &g_CutscenePosition, &DEFAULT_ROT);
+        WorldObjects_Add(&D_800E23D0[i], &g_CutscenePosition, &SVECTOR3_Zero);
     }
 
     for (i = 0; i < ARRAY_SIZE(D_800E23F0); i++)
     {
-        WorldObjects_Add(&D_800E23F0[i], &g_CutscenePosition, &DEFAULT_ROT);
+        WorldObjects_Add(&D_800E23F0[i], &g_CutscenePosition, &SVECTOR3_Zero);
     }
 }

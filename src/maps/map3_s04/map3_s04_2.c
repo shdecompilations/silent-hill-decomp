@@ -506,13 +506,11 @@ void Map_WorldObjectsInit(void) // 0x800D3BD0
     WorldObject_CommonModelNamesInit();
 }
 
-// Rodata at the end of this file. TODO: Inline once all users are decompiled.
-extern SVECTOR3 D_800CB35C;
-extern VECTOR3 D_800CB364;
-extern VECTOR3 D_800CB370;
-
 void Map_WorldObjectsUpdate(void) // 0x800D3DA4
 {
+    #define SOUND_POS_0 Q12_VECTOR3(96.0f, -1.2f, 59.8f)
+    #define SOUND_POS_1 Q12_VECTOR3(140.5f, -1.8f, 98.0f)
+
     s32    i;
     q19_12 drZ;
 
@@ -521,7 +519,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
         case MAP_CHUNK_CELL(2, 1):
             if (!Savegame_EventFlagGet(EventFlag_M3S04_PickupPlateOfQueen))
             {
-                WorldObjects_Add(&g_WorldObject_Plate.object, &g_WorldObject_Plate.position, &D_800CB35C);
+                WorldObjects_Add(&g_WorldObject_Plate.object, &g_WorldObject_Plate.position, &SVECTOR3_Zero);
             }
 
             WorldObjects_Add(&g_WorldObject_SavePad.object, &g_WorldObject_SavePad.position, &g_WorldObject_SavePad.rotation);
@@ -540,7 +538,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
 
             for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                WorldObjects_Add(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &D_800CB35C);
+                WorldObjects_Add(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &SVECTOR3_Zero);
             }
             break;
     }
@@ -552,7 +550,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
             if (PLAYER_CHARA().position.vx > Q12(101.5f) &&
                 PLAYER_CHARA().position.vz > Q12(59.0f))
             {
-                Sfx_WithFlagsPlay(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
+                Sfx_WithFlagsPlay(Sfx_Unk1530, &SOUND_POS_0, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
                 Savegame_EventFlagSet(EventFlag_300);
 
                 if (g_SavegamePtr->mapEnemyStates[g_SavegamePtr->mapIdx] & (1 << 2))
@@ -571,7 +569,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
             {
                 if (!Vw_AabbVisibleInScreenCheck(Q12(139.0f), Q12(142.0f), Q12(-3.0f), Q12(0.0f), Q12(98.8f), Q12(99.0f)))
                 {
-                    Sfx_WithFlagsPlay(Sfx_Unk1528, &D_800CB370, 0xFF, SfxFlag_NoDistAtten);
+                    Sfx_WithFlagsPlay(Sfx_Unk1528, &SOUND_POS_1, 0xFF, SfxFlag_NoDistAtten);
                     Savegame_EventFlagSet(EventFlag_316);
                 }
             }
@@ -603,6 +601,9 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
             WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_CommonWorldObjectPoses[1]);
         }
     }
+
+    #undef SOUND_POS_0
+    #undef SOUND_POS_1
 }
 
 void func_800D43B8(void) // 0x800D43B8
@@ -613,9 +614,3 @@ void func_800D43B8(void) // 0x800D43B8
         Chara_SpawnFlagsSet(Chara_PuppetDoctor, 3, CharaSpawnFlag_0);
     }
 }
-
-const SVECTOR3 D_800CB35C = { 0, 0, 0 };
-
-const VECTOR3 D_800CB364 = { Q12(96.0f), Q12(-1.2f), Q12(59.8f) };
-
-const VECTOR3 D_800CB370 = { Q12(140.5f), Q12(-1.8f), Q12(98.0f) };

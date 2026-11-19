@@ -678,8 +678,7 @@ void func_800D236C(void) // 0x800D236C
 
 void func_800D2658(void) // 0x800D2658
 {
-    static const SVECTOR EMPTY_ROT = {};
-    static const VECTOR3 UNK_POS   = { Q12(-23.37f), Q12(-1.25f), Q12(19.28f) };
+    #define UNK_POS Q12_VECTOR3(-23.37f, -1.25f, 19.28f)
 
     s32 temp_a0_4;
     s32 temp_s0;
@@ -788,7 +787,7 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         case 8:
-            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &EMPTY_ROT, &UNK_POS);
+            Vc_SetLookAtMatFromBoneCoord(&g_SysWork.playerBoneCoords[HarryBone_Head], &SVECTOR_Zero, &UNK_POS);
 
             for (i = 0; i < 5; i++)
             {
@@ -857,6 +856,8 @@ void func_800D2658(void) // 0x800D2658
         vcUserCamTarget(&g_Cutscene_CameraPositionTarget, NULL, true);
         vcUserWatchTarget(&g_Cutscene_CameraLookAtTarget, NULL, true);
     }
+
+    #undef UNK_POS
 }
 
 void Map_WorldObjectsInit(void) // 0x800D2E6C

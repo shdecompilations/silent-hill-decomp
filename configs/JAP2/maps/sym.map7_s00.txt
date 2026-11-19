@@ -18,7 +18,6 @@ D_800CAC54                      = 0x800CD2AC;
 D_800CB500                      = 0x800CDAC0;
 D_800CB51C                      = 0x800CDADC;
 jtbl_800CB528                   = 0x800CDAE8;
-D_800CB61C                      = 0x800CDBDC;
 
 
 

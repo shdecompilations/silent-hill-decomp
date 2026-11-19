@@ -8252,8 +8252,6 @@ void func_800E9874(void) // 0x800E9874
 
 void func_800E98EC(void) // 0x800E98EC
 {
-    static const SVECTOR3 DEFAULT_ROT = {}; // .rodata 0x800CD168
-
     s32     i;
     VECTOR3 objPos;
 
@@ -8286,15 +8284,15 @@ void func_800E98EC(void) // 0x800E98EC
 
         if (D_800F4818)
         {
-            WorldObjects_Add(&g_WorldObject_Real, &objPos, &DEFAULT_ROT);
+            WorldObjects_Add(&g_WorldObject_Real, &objPos, &SVECTOR3_Zero);
         }
         if (D_800F4819)
         {
-            WorldObjects_Add(&g_WorldObject_Ura, &objPos, &DEFAULT_ROT);
+            WorldObjects_Add(&g_WorldObject_Ura, &objPos, &SVECTOR3_Zero);
         }
         if (D_800F481A)
         {
-            WorldObjects_Add(&g_WorldObject_Under, &objPos, &DEFAULT_ROT);
+            WorldObjects_Add(&g_WorldObject_Under, &objPos, &SVECTOR3_Zero);
         }
     }
 

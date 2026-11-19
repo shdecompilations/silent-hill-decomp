@@ -21,9 +21,6 @@ D_800CA818                      = 0x800CCE70;
 D_800CB1E0                      = 0x800CD770;
 sharedData_800CB088_3_s01       = 0x800CD838;
 sharedData_800CB094_3_s01       = 0x800CD844;
-D_800CB35C                      = 0x800CD8EC;
-D_800CB364                      = 0x800CD8F4;
-D_800CB370                      = 0x800CD900;
 
 
 

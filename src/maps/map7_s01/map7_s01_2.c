@@ -2205,18 +2205,15 @@ void Map_WorldObjectsInit(void) // 0x800DD368
     WorldObject_CommonModelNamesInit();
 }
 
-// Rodata at the bottom of the file. Inline once all users are decomped.
-extern VECTOR3 D_800CC984;
-extern SVECTOR3 D_800CC990;
-extern VECTOR3 D_800CC998;
-
 void Map_WorldObjectsUpdate(void) // 0x800DDCD4
 {
+    #define SOUND_POS_0 Q12_VECTOR3(-180.8f, -1.0f, -20.0f)
+    #define SOUND_POS_1 Q12_VECTOR3(-63.3f, -1.6f, -139.2f)
+
     s32              npcTimer;
     s32              tmp1;
     s32              tmp2;
     s32              tmp3;
-    s32              temp_v0_5;
     s32              v1;
     s32              i;
     s_WorldObjectModel* objPtr;
@@ -2313,7 +2310,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 }
                 else
                 {
-                    Sfx_WithFlagsPlay(Sfx_Unk1646, &D_800CC984, Q8(0.5f), SfxFlag_None);
+                    Sfx_WithFlagsPlay(Sfx_Unk1646, &SOUND_POS_0, Q8(0.5f), SfxFlag_None);
                     D_800E33A0 = Rng_GenerateInt(Q12(2.0f), Q12(4.5f) - 1);
                 }
             }
@@ -2358,35 +2355,35 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
         case MAP_CHUNK_CELL(0, -1):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupAmuletOfSolomon))
             {
-                WorldObjects_Add(&g_WorldObject_Gofu.object, &g_WorldObject_Gofu.position, &D_800CC990);
+                WorldObjects_Add(&g_WorldObject_Gofu.object, &g_WorldObject_Gofu.position, &SVECTOR3_Zero);
             }
             break;
 
         case MAP_CHUNK_CELL(3, -1):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupBirdCageKey))
             {
-                WorldObjects_Add(&g_WorldObject_Key1.object, &g_WorldObject_Key1.position, &D_800CC990);
+                WorldObjects_Add(&g_WorldObject_Key1.object, &g_WorldObject_Key1.position, &SVECTOR3_Zero);
             }
             break;
 
         case MAP_CHUNK_CELL(-1, -3):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupPliers))
             {
-                WorldObjects_Add(&g_WorldObject_Penchi.object, &g_WorldObject_Penchi.position, &D_800CC990);
+                WorldObjects_Add(&g_WorldObject_Penchi.object, &g_WorldObject_Penchi.position, &SVECTOR3_Zero);
             }
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupScrewdriver))
             {
-                WorldObjects_Add(&g_WorldObject_Driver.object, &g_WorldObject_Driver.position, &D_800CC990);
+                WorldObjects_Add(&g_WorldObject_Driver.object, &g_WorldObject_Driver.position, &SVECTOR3_Zero);
                 break;
             }
             break;
 
         case MAP_CHUNK_CELL(2, -1):
-            WorldObjects_Add(&g_WorldObject_Zukan.object, &g_WorldObject_Zukan.position, &D_800CC990);
+            WorldObjects_Add(&g_WorldObject_Zukan.object, &g_WorldObject_Zukan.position, &SVECTOR3_Zero);
 
             if (Savegame_EventFlagGet(EventFlag_M5S03_SeenSecondNewspaper))
             {
-                WorldObjects_Add(&g_WorldObject_Scrap.object, &g_WorldObject_Scrap.position, &D_800CC990);
+                WorldObjects_Add(&g_WorldObject_Scrap.object, &g_WorldObject_Scrap.position, &SVECTOR3_Zero);
             }
             break;
 
@@ -2417,7 +2414,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                     break;
                 }
 
-                Sfx_WithFlagsPlay(Sfx_Unk1653, &D_800CC998, Q8(0.125f), SfxFlag_None);
+                Sfx_WithFlagsPlay(Sfx_Unk1653, &SOUND_POS_1, Q8(0.125f), SfxFlag_None);
 
                 D_800E2CE8 = Rng_GenerateInt(819, 9010);
             }
@@ -2437,7 +2434,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
                 WorldObjects_Add(&g_WorldObject_Stone0.object, &g_WorldObject_Stone0.position, &g_WorldObject_Stone0.rotation);
             }
 
-            WorldObjects_Add(&g_WorldObject_Kubomi.object, &g_WorldObject_Kubomi.position, &D_800CC990);
+            WorldObjects_Add(&g_WorldObject_Kubomi.object, &g_WorldObject_Kubomi.position, &SVECTOR3_Zero);
             break;
 
         case MAP_CHUNK_CELL(4, -3):
@@ -2448,7 +2445,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
         case MAP_CHUNK_CELL(-3, -2):
             for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                WorldObjects_Add(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &D_800CC990);
+                WorldObjects_Add(&g_WorldObject_Dr[i].object, &g_WorldObject_Dr[i].position, &SVECTOR3_Zero);
             }
             break;
 
@@ -2561,6 +2558,9 @@ void Map_WorldObjectsUpdate(void) // 0x800DDCD4
             WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[7]);
         }
     }
+
+    #undef SOUND_POS_0
+    #undef SOUND_POS_1
 }
 
 void func_800DEDA4(void) // 0x800DEDA4
@@ -2616,9 +2616,3 @@ void func_800DEDA4(void) // 0x800DEDA4
         Chara_SpawnFlagsSet(16, 14, CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_3 | CharaSpawnFlag_4);
     }
 }
-
-const VECTOR3 D_800CC984 = { Q12(-180.8f), Q12(-1.0f), Q12(-20.0f) };
-
-const SVECTOR3 D_800CC990 = { 0, 0, 0 };
-
-const VECTOR3 D_800CC998 = { Q12(-63.3f), Q12(-1.6f), Q12(-139.2f) };
