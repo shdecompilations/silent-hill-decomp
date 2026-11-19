@@ -14,7 +14,7 @@
 
 #include "maps/common/shared.h"
 
-extern s_Pose g_CommonWorldObjectPoses[6];
+extern s_Pose g_CommonWorldObjectPoses[5];
 extern VECTOR3 D_800ED938;
 extern q3_12 D_800F0B2C; // Time.
 extern s_WorldObjectModel   g_CommonWorldObjects[6];

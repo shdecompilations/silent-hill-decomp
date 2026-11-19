@@ -365,7 +365,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             break;
 
         case 4:
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[PaperMapIdx_OldTown]);
             SysWork_StateStepIncrement(0);
 
         case 5:

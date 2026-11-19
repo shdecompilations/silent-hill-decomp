@@ -586,7 +586,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 3:
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[PaperMapIdx_OldTown]);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -794,7 +794,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 8:
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[PaperMapIdx_OldTown]);
             SysWork_StateStepIncrement(0);
 
         case 9:

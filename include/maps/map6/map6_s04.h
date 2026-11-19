@@ -118,7 +118,6 @@ typedef struct
 } s_800EBB58;
 
 extern s_800EBB58 D_800EBB58;
-extern s16        D_800EBB5A;
 
 extern s_800CB69C D_800CB69C;
 

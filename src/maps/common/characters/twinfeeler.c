@@ -656,7 +656,7 @@ void func_800D1AFC(void) // 0x800D1AFC
 
     for (i = 0; i < 5; i++)
     {
-        vec = &D_800E0698.field_258;
+        vec = &D_800E08F0;
 
         sp10.vx = vec->vx;
         sp10.vy = vec->vy;

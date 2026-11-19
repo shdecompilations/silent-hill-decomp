@@ -1633,7 +1633,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     }
     else
     {
-        if (arg2 || ((D_800EBB5A - angle2) << 20) > 0)
+        if (arg2 || ((D_800EBB58.field_2 - angle2) << 20) > 0)
         {
             angle3 = Q12_MULT(Math_Cos(player->rotation.vy - angle1), Q12_ANGLE(22.5f)) + Q12_ANGLE(37.5f);
         }
@@ -1697,7 +1697,7 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
         angle6   = angle5 + Q12_ANGLE(90.0f);
         angle7 = Q12_ANGLE_NORM_S(angle4 - angle6);
 
-        if (((D_800EBB5A - angle2) << 20) > 0)
+        if (((D_800EBB58.field_2 - angle2) << 20) > 0)
         {
             if (((angle7 - Q12_ANGLE(135.0f)) << 20) < 0)
             {

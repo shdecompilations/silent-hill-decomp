@@ -2945,7 +2945,7 @@ g_MapMsg_SelectFlashTimer                    = 0x800A95B8; // type:s16
 //------------------------------------------------------------------
 //--- PA: 0x083F2C   VA: 0x800A95BC   subsegment: .data, events/data
 //------------------------------------------------------------------
-g_PaperMapFileIdxs                           = 0x800A95BC;
+g_PaperMapFileIdxs                           = 0x800A95BC; // size:0x18
 g_PaperMapMarkingFileIdxs                    = 0x800A95D4; // size:0x18
 g_CommonWorldObjectNames                     = 0x800A95EC; // size:0x20
 g_IsLoadingFinished                          = 0x800A960C;
@@ -3174,8 +3174,8 @@ g_Credits_Digits                             = 0x800AF3E4;
 //-------------------------------------------------------------------------
 //--- PA: 0x089D68   VA: 0x800AF3F8   subsegment: .data, items/credits_init
 //-------------------------------------------------------------------------
-g_CreditTextState                            = 0x800AF3F8;
-g_CreditText3dState                          = 0x800AF414;
+g_CreditTextState                            = 0x800AF3F8; // size:0x1C
+g_CreditText3dState                          = 0x800AF414; // size:0x58
 
 //----------------------------------------------------------------------
 //--- PA: 0x089DDC   VA: 0x800AF46C   subsegment: o, libcard/init, .data

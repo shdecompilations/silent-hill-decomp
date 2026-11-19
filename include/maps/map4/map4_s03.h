@@ -58,9 +58,8 @@ typedef struct
     s_800E06A0         field_8[10];
     s_WorldObjectModel objRef_238;
     s8                 unk_254[4];
-    VECTOR3            field_258;
 } s_800E0698;
-STATIC_ASSERT_SIZEOF(s_800E0698, 612);
+STATIC_ASSERT_SIZEOF(s_800E0698, 600);
 
 // Used by Twinfeeler for random spawn locations when resurfacing?
 typedef struct _800E0930

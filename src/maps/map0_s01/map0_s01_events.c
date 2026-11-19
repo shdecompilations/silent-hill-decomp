@@ -782,7 +782,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
     {
         case 0:
             Player_ControlFreeze();
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[PaperMapIdx_OldTown]);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -793,7 +793,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             DrawSync(SyncMode_Wait);
             StoreImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B5, FS_BUFFER_2, &g_PaperMapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[PaperMapIdx_OldTown], FS_BUFFER_2, &g_PaperMapImg);
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks = 1;

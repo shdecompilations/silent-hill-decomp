@@ -729,7 +729,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (Savegame_EventFlagGet(EventFlag_389))
         {
-            D_800D6F8C = 0x3C720; // TODO: `Q12(60.4454f)`? Weird number.
+            g_WorldObject_Movaches.position.vz = Q12(60.4454f);
         }
         else
         {
@@ -762,7 +762,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_HealthDrink0))
         {
-            WorldObjects_Add(&g_WorldObject_HealthDrink, &g_WorldObjectPose_HealthDrink0.position, &g_WorldObjectPose_HealthDrink0.rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &g_WorldObjectPose_HealthDrink0.position, &g_WorldObjectPose_HealthDrink0.rotation);
         }
     }
 
@@ -770,7 +770,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_ShotgunShells))
         {
-            WorldObjects_Add(&g_WorldObject_ShotgunShells, &g_WorldObjectPose_ShotgunShells.position, &g_WorldObjectPose_ShotgunShells.rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[5], &g_WorldObjectPose_ShotgunShells.position, &g_WorldObjectPose_ShotgunShells.rotation);
         }
     }
 
@@ -778,7 +778,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_HealthDrink1))
         {
-            WorldObjects_Add(&g_WorldObject_HealthDrink, &g_WorldObjectPose_HealthDrink1.position, &g_WorldObjectPose_HealthDrink1.rotation);
+            WorldObjects_Add(&g_CommonWorldObjects[1], &g_WorldObjectPose_HealthDrink1.position, &g_WorldObjectPose_HealthDrink1.rotation);
         }
     }
 

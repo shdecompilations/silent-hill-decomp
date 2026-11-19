@@ -51,8 +51,6 @@ extern s16 D_800DD52A;
 
 extern s32 D_800DACEC;
 
-extern s16 D_800DD190;
-
 extern s_WorldObjectPose      g_WorldObject0;
 extern s_WorldObjectPlacement    g_WorldObject_Dr[6];
 extern s_WorldObjectPose      g_WorldObject2;

@@ -171,4 +171,6 @@ sharedData_800D16E4_2_s01       = 0x800D5344; // type:s8
 g_Cutscene_CameraPositionTarget = 0x800D5354;
 g_Cutscene_CameraLookAtTarget   = 0x800D5364;
 g_Cutscene_MapMsgAudioIdx0      = 0x800D5370;
+D_800D5374                      = 0x800D5374; // size:0x30
+D_800D53A4                      = 0x800D53A4; // size:0x150
 g_CommonWorldObjects            = 0x800D54F4; // type:WorldObject_0 size:0xA8

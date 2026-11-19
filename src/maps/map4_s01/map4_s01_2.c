@@ -1078,7 +1078,7 @@ void func_800D3420(void) // 0x800D3420
 
     if (D_800D5AF9)
     {
-        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1540, &Q12_VECTOR3(176.3f, -1.5f, 19.18f), Q8(0.5f) - Q12_MULT_PRECISE(D_800D7F30, 128), Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1540, &Q12_VECTOR3(176.3f, -1.5f, 19.18f), Q8(0.5f) - Q12_MULT_PRECISE(sharedData_800D8568_1_s05.field_10, 128), Q12(16.0f), 0);
     }
 
     if (g_Cutscene_Timer3 >= Q12(0.0f))
@@ -1303,7 +1303,7 @@ void Map_WorldObjectsInit(void) // 0x800D49C4
         WorldObject_D_800D7FF0.position.vz = Q12(62.7466f);
     }
 
-    WorldObject_ModelNameSet(&WorldObject_D_800D8050.object, g_CommonWorldObjectNames[1]);
+    WorldObject_ModelNameSet(&WorldObject_D_800D8050, g_CommonWorldObjectNames[1]);
 
     WorldObject_PoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
     WorldObject_PoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
@@ -1328,7 +1328,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
         }
 
         WorldObjects_Add(&WorldObject_D_800D7FF0.object, &WorldObject_D_800D7FF0.position, &SVECTOR3_Zero);
-        WorldObjects_Add(&WorldObject_D_800D8050.object, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
+        WorldObjects_Add(&WorldObject_D_800D8050, &WorldObject_D_800D8070.position, &WorldObject_D_800D8070.rotation);
 
         if (Savegame_EventFlagGet(EventFlag_313))
         {
@@ -1352,6 +1352,6 @@ void Map_WorldObjectsUpdate(void) // 0x800D4BA4
 
     if (PLAYER_IN_MAP_CHUNK(0, 1))
     {
-        WorldObjects_Add(&WorldObject_D_800D8050.object, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation);
+        WorldObjects_Add(&WorldObject_D_800D8050, &WorldObject_D_800D8090.position, &WorldObject_D_800D8090.rotation);
     }
 }

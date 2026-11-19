@@ -211,7 +211,6 @@ extern u8 sharedData_800DD584_0_s00;
 extern s32 sharedData_800DFB6C_0_s00;
 extern s32 sharedData_800DFB70_0_s00;
 
-extern s32 sharedData_800DD58C_0_s00;
 extern s32 sharedData_800E32CC_0_s00;
 
 extern u16 sharedData_800D21E8_3_s00[];

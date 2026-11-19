@@ -29,7 +29,6 @@ extern s_WorldObjectPose      g_WorldObject6;
 extern s_WorldObjectPose      g_WorldObject7;
 extern s_WorldObjectPose      g_WorldObject8;
 extern s_WorldObjectPose      g_WorldObject9;
-extern s_WorldObjectModel        g_WorldObjectA;
 extern s_Pose      g_WorldObjectAPos;
 extern s_WorldObjectModel        g_CommonWorldObjects[6];
 

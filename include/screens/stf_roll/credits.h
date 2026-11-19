@@ -161,9 +161,9 @@ void Credits_TextDraw(char* str);
 
 void Credits_Text3dPositionSet(s32 arg0, s32 arg1);
 
-/** @brief Sets the current RGB+command color for `D_800AFE2C`.
+/** @brief Sets the current RGB+command color for `g_CreditText3dState` struct.
  *
- * Sets the packed RGB+command color for `D_800AFE10`,
+ * Sets the packed RGB+command color for `g_CreditText3dState`,
  * with the command component hard-set to `GPU_COM_TF4`.
  *
  * @param r Red component.

@@ -177,8 +177,7 @@ LOADABLE_INVENTORY_ITEMS            = 0x800DF3C8; // type:u8 size:0x08
 //--- PA: 0x014060   VA: 0x800DF3D0   subsegment: data
 //----------------------------------------------------
 sharedData_800DD584_0_s00           = 0x800DF3D0; // type:u8
-g_WeatherParticle_ActiveCount       = 0x800DF3D4; // type:s32
-sharedData_800DD58C_0_s00           = 0x800DF3D8; // type:s32
+g_WeatherParticle_ActiveCount       = 0x800DF3D4; // type:s32 size:0x8
 g_WeatherParticle_CameraMoved       = 0x800DF3DC; // type:u8
 sharedData_800DD591_0_s00           = 0x800DF3DD; // type:u8
 sharedData_800DD592_0_s00           = 0x800DF3DE;

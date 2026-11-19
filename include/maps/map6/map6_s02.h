@@ -61,7 +61,7 @@ extern VECTOR3 D_800D3B78[];
 
 extern u16 D_800D3C2C[];
 
-extern s_800D3C4C D_800D3C4C[8];
+extern s_800D3C4C D_800D3C4C[5];
 
 extern s32 D_800D3C84;
 

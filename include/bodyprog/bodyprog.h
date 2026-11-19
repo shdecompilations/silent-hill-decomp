@@ -56,9 +56,6 @@ extern char D_80028544[16];
 
 extern u_Filename D_8002B2CC;
 
-/** Relative file offset for map texture? */
-extern s8 D_800A99B5;
-
 extern s8 D_800C15B4;
 
 extern s8 D_800C39A0;

@@ -616,7 +616,7 @@ void func_800D64E0(void) // 0x800D64E0
 
     if (g_SysWork.sysStateSteps[0] > 10 && g_SysWork.sysStateSteps[0] < 16)
     {
-        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1533, &D_800CB3EC, 0x80 - Q12_MULT_PRECISE(D_800DD190, 0x80), Q12(16.0f), 0);
+        Sfx_WithFalloffAndPitchPlay(Sfx_Unk1533, &D_800CB3EC, 0x80 - Q12_MULT_PRECISE(sharedData_800D8568_1_s05.field_10, 0x80), Q12(16.0f), 0);
     }
 }
 

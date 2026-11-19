@@ -794,7 +794,7 @@ void WeatherParticle_SnowInit(s_WeatherParticle* parts)
         }
     }
 #if MAP_PARTICLE_HAS_RAIN
-    sharedData_800E32CC_0_s00 = sharedData_800DD58C_0_s00;
+    sharedData_800E32CC_0_s00 = g_WeatherParticle_ActiveCount[1];
 #endif
 }
 
@@ -3976,11 +3976,11 @@ void Particle_SoundUpdate(void)
         case MapIdx_MAP4_S02:
             unkValDiv4 = sharedData_800E32CC_0_s00 >> 2; // `sharedData_800E32CC_0_s00 / 4`
 
-            if ((sharedData_800E32CC_0_s00 - sharedData_800DD58C_0_s00) > 15)
+            if ((sharedData_800E32CC_0_s00 - g_WeatherParticle_ActiveCount[1]) > 15)
             {
                 sharedData_800E32CC_0_s00 -= 15;
             }
-            else if ((sharedData_800DD58C_0_s00 - sharedData_800E32CC_0_s00) > 15)
+            else if ((g_WeatherParticle_ActiveCount[1] - sharedData_800E32CC_0_s00) > 15)
             {
                 sharedData_800E32CC_0_s00 += 15;
             }

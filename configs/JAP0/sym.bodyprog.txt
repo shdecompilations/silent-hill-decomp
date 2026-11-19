@@ -2894,8 +2894,7 @@ g_Bgm_ChannelLimits                          = 0x800ABD40;
 //------------------------------------------------------------------
 //--- PA: 0x0871F0   VA: 0x800ABD50   subsegment: .data, events/data
 //------------------------------------------------------------------
-g_PaperMapFileIdxs                           = 0x800ABD50;
-D_800A99B5                                   = 0x800ABD51;
+g_PaperMapFileIdxs                           = 0x800ABD50; // size:0x18
 g_PaperMapMarkingFileIdxs                    = 0x800ABD68; // size:0x18
 g_CommonWorldObjectNames                     = 0x800ABD80; // size:0x20
 D_800A9A04                                   = 0x800ABDA0;
@@ -3185,8 +3184,8 @@ g_Credits_Digits                             = 0x800B21B4;
 //-------------------------------------------------------------------------
 //--- PA: 0x08D668   VA: 0x800B21C8   subsegment: .data, items/credits_init
 //-------------------------------------------------------------------------
-g_CreditTextState                            = 0x800B21C8;
-g_CreditText3dState                          = 0x800B21E4;
+g_CreditTextState                            = 0x800B21C8; // size:0x1C
+g_CreditText3dState                          = 0x800B21E4; // size:0x58
 
 //--------------------------------------------------------------------
 //--- PA: 0x08D6EC   VA: 0x800B224C   subsegment: o, libapi/pad, .data

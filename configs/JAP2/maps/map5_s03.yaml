@@ -67,7 +67,7 @@ segments:
 
       # .data section
       - [0x9A4C, .data, map5_s03_anim_info]
-      - [0x9CE4, data]
+      - [0x9CE8, data]
       - [0xA044, .data, header]
       - [0xA260, .data, map5_s03_2]
       - [0xA368, .data, map_events]

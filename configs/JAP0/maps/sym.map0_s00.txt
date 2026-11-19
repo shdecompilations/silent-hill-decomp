@@ -176,8 +176,7 @@ LOADABLE_INVENTORY_ITEMS            = 0x800DFA6C;
 //--- PA: 0x013FCC   VA: 0x800DFA74   subsegment: data
 //----------------------------------------------------
 sharedData_800DD584_0_s00           = 0x800DFA74;
-g_WeatherParticle_ActiveCount       = 0x800DFA78;
-sharedData_800DD58C_0_s00           = 0x800DFA7C;
+g_WeatherParticle_ActiveCount       = 0x800DFA78; // size:0x8
 g_WeatherParticle_CameraMoved       = 0x800DFA80;
 sharedData_800DD591_0_s00           = 0x800DFA81;
 sharedData_800DD592_0_s00           = 0x800DFA82;

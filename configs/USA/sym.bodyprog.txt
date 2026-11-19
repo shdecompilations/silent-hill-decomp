@@ -2697,7 +2697,7 @@ hack_D_800A99B2_fix                          = 0x800A99B2;
 //------------------------------------------------------------------
 //--- PA: 0x084E54   VA: 0x800A99B4   subsegment: .data, events/data
 //------------------------------------------------------------------
-g_PaperMapFileIdxs                           = 0x800A99B4;
+g_PaperMapFileIdxs                           = 0x800A99B4; // size:0x18
 g_PaperMapMarkingFileIdxs                    = 0x800A99CC; // size:0x18
 g_CommonWorldObjectNames                     = 0x800A99E4; // size:0x20
 g_IsLoadingFinished                          = 0x800A9A0C;
@@ -2950,8 +2950,8 @@ g_Credits_Digits                             = 0x800AFDF4;
 //-------------------------------------------------------------------------
 //--- PA: 0x08B2A8   VA: 0x800AFE08   subsegment: .data, items/credits_init
 //-------------------------------------------------------------------------
-g_CreditTextState                            = 0x800AFE08;
-g_CreditText3dState                          = 0x800AFE24;
+g_CreditTextState                            = 0x800AFE08; // size:0x1C
+g_CreditText3dState                          = 0x800AFE24; // size:0x58
 
 //----------------------------------------------------------------------
 //--- PA: 0x08B31C   VA: 0x800AFE7C   subsegment: o, libcard/init, .data

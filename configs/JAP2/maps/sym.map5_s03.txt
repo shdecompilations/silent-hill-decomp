@@ -128,12 +128,10 @@ HARRY_M5S03_ANIM_INFOS          = 0x800D561C;
 g_MapHeaderTable_38             = 0x800D580C;
 LOADABLE_INVENTORY_ITEMS        = 0x800D588C;
 sharedData_800DD584_0_s00       = 0x800D58AD; // type:u8
-g_WeatherParticle_ActiveCount   = 0x800D58B0; // type:s32
-
+g_WeatherParticle_ActiveCount   = 0x800D58B0; // type:s32 size:0x8
 //----------------------------------------------------
 //--- PA: 0x009CE4   VA: 0x800D58B4   subsegment: data
 //----------------------------------------------------
-D_800D3328                      = 0x800D58B4;
 g_WeatherParticle_CameraMoved   = 0x800D58B8; // type:u8
 sharedData_800DD591_0_s00       = 0x800D58B9; // type:u8
 sharedData_800DD592_0_s00       = 0x800D58BA; // type:u8
@@ -214,15 +212,12 @@ g_Cutscene_CameraPositionTarget = 0x800D94BC;
 g_Cutscene_CameraLookAtTarget   = 0x800D94CC;
 D_800D6F54                      = 0x800D94D8;
 g_Cutscene_Timer                = 0x800D94DC;
-g_WorldObject_Movaches          = 0x800D94EC; // size:0x24
-D_800D6F8C                      = 0x800D9510;
+g_WorldObject_Movaches          = 0x800D94EC; // size:0x28
 g_WorldObject_SavePad           = 0x800D951C; // size:0x18
 D_800D6FB0                      = 0x800D9534;
 g_WorldObjectPose_SavePad       = 0x800D953C; // size:0x28
 D_800D6FE0                      = 0x800D9564;
 g_WorldObject_Mag               = 0x800D956C; // size:0x2C
 D_800D7014                      = 0x800D9598;
-g_CommonWorldObjects            = 0x800D959C; // size:0x18
+g_CommonWorldObjects            = 0x800D959C; // size:0xA8
 D_800D7030                      = 0x800D95B4;
-g_WorldObject_HealthDrink       = 0x800D95B8; // type:WorldObject_0
-g_WorldObject_ShotgunShells     = 0x800D9628; // type:WorldObject_0
