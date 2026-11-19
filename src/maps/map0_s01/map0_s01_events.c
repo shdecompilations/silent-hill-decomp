@@ -981,12 +981,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
     g_Cutscene_Timer = Q12(0.0f);
     D_800E2560 = Q12(0.0f);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[CommonPickupItemId_Ampoule]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
+    WorldObject_CommonModelNamesInit();
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800DCCF4
@@ -1112,7 +1107,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &D_800DE12C.position, &D_800DE12C.rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, D_800DE12C);
         }
     }
 
@@ -1120,7 +1115,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &D_800DE140.position, &D_800DE140.rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, D_800DE140);
         }
     }
 

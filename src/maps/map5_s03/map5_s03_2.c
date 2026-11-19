@@ -711,12 +711,7 @@ void Map_WorldObjectsInit(void) // 0x800D2A04
     WorldObject_PoseInit(&g_WorldObjectPose_SavePad[1], 57.905f, -0.9f, 22.5574f, 0.0f, 17.41f, 0.0f);
     WorldObject_Init(&g_WorldObject_Mag, "MAG_HIDE", 61.1727f, 0.43f, 18.6243f, 0.0f, 60.3f, 0.0f);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
+    WorldObject_CommonModelNamesInit();
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D2B68
@@ -762,7 +757,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_HealthDrink0))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &g_WorldObjectPose_HealthDrink0.position, &g_WorldObjectPose_HealthDrink0.rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink0);
         }
     }
 
@@ -770,7 +765,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_ShotgunShells))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[5], &g_WorldObjectPose_ShotgunShells.position, &g_WorldObjectPose_ShotgunShells.rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_ShotgunShells, g_WorldObjectPose_ShotgunShells);
         }
     }
 
@@ -778,7 +773,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S03_HealthDrink1))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &g_WorldObjectPose_HealthDrink1.position, &g_WorldObjectPose_HealthDrink1.rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink1);
         }
     }
 

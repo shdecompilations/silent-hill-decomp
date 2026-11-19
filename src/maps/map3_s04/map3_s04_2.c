@@ -503,12 +503,7 @@ void Map_WorldObjectsInit(void) // 0x800D3BD0
     WorldObject_PlacementInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
     WorldObject_PlacementInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
+    WorldObject_CommonModelNamesInit();
 }
 
 // Rodata at the end of this file. TODO: Inline once all users are decompiled.
@@ -597,7 +592,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HealthDrink0))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[0]);
         }
     }
 
@@ -605,7 +600,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HandgunBullets))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_CommonWorldObjectPoses[1]);
         }
     }
 }

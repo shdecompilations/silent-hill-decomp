@@ -469,7 +469,7 @@ void Map_WorldObjectsInit(void) // 0x800D18DC
     WorldObject_Init(&g_WorldObject2, g_CommonWorldObjectNames[1], 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
     WorldObject_Init(&g_WorldObject3, "MAP_HIDE", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
     WorldObject_Init(&g_WorldObject4, "MAP2_HID", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
-    WorldObject_Init(&g_WorldObject5, g_CommonWorldObjectNames[2], 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
+    WorldObject_Init(&g_WorldObject5, WorldObject_CommonModelName(CommonPickupItemId_FirstAidKit), 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D1A98

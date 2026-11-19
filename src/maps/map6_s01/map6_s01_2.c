@@ -872,12 +872,7 @@ void Map_WorldObjectsInit(void) // 0x800D2E6C
     WorldObject_Init(&D_800D53A4[5], "GLAS2_HI", -21.4f, -1.4208984375f, 58.77f, 0.0, 180.0f, 0.0f);
     WorldObject_Init(&D_800D53A4[6], "RIGHT_HI", -19.6f, -0.825f, 59.4f, 0.0, 180.0f, 0.0f);
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
+    WorldObject_CommonModelNamesInit();
 }
 
 const s16 D_800CBB5C = 0x1440;
@@ -903,7 +898,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D30DC
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S01_RifleShells))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_RifleShells, g_CommonWorldObjectPoses[0]);
         }
     }
 
@@ -911,7 +906,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D30DC
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S01_HandgunBullets))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_CommonWorldObjectPoses[1]);
         }
     }
 
@@ -919,7 +914,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D30DC
     {
         if (!Savegame_EventFlagGet(EventFlag_M6S01_HealthDrink))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[2]);
         }
     }
 }

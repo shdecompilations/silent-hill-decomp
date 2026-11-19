@@ -882,12 +882,7 @@ void Map_WorldObjectsInit(void) // 0x800D6598
         g_WorldObject_BDoor1.rotation.vy = Q12_ANGLE(-7.5f);
     }
 
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], g_CommonWorldObjectNames[2]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], g_CommonWorldObjectNames[3]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], g_CommonWorldObjectNames[4]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], g_CommonWorldObjectNames[5]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], g_CommonWorldObjectNames[6]);
-    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], g_CommonWorldObjectNames[7]);
+    WorldObject_CommonModelNamesInit();
 }
 
 void Map_WorldObjectsUpdate(void) // 0x800D68FC
@@ -939,7 +934,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink0))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position, &g_CommonWorldObjectPoses[0].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[0]);
         }
     }
 
@@ -947,7 +942,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink1))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[1].position, &g_CommonWorldObjectPoses[1].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[1]);
         }
     }
 
@@ -955,7 +950,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_RifleShells))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[2].position, &g_CommonWorldObjectPoses[2].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_RifleShells, g_CommonWorldObjectPoses[2]);
         }
     }
 
@@ -963,7 +958,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink2))
         {
-            WorldObjects_Add(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[3]);
         }
     }
 }

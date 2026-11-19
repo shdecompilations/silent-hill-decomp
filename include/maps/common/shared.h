@@ -504,4 +504,30 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectPlacement, 40);
     WorldObject_ModelNameSet(&(objPose)->object, (name));         \
 }
 
+/** @brief Model name of common pickup `pickupId` (`e_CommonPickupItemId`).
+ * `g_CommonWorldObjectNames` starts with an unused entry and the save pad, so pickup names begin at index 2.
+ */
+#define WorldObject_CommonModelName(pickupId) \
+    g_CommonWorldObjectNames[(pickupId) + 2]
+
+/** @brief Sets the model name of common pickup `pickupId` in `g_CommonWorldObjects`. */
+#define WorldObject_CommonModelNameSet(pickupId) \
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[pickupId], WorldObject_CommonModelName(pickupId))
+
+/** @brief Draws common pickup `pickupId` (`e_CommonPickupItemId`) at `pose` (`s_Pose`).
+  * Maps can call this multiple times with the same `pickupId` but different `pose`, to add multiples of a common pickup to the map. */
+#define WorldObjects_CommonAdd(pickupId, pose) \
+    WorldObjects_Add(&g_CommonWorldObjects[pickupId], &(pose).position, &(pose).rotation)
+
+/** @brief Sets the model names of every common pickup in `g_CommonWorldObjects`. */
+#define WorldObject_CommonModelNamesInit()                             \
+{                                                                      \
+    WorldObject_CommonModelNameSet(CommonPickupItemId_FirstAidKit);    \
+    WorldObject_CommonModelNameSet(CommonPickupItemId_HealthDrink);    \
+    WorldObject_CommonModelNameSet(CommonPickupItemId_Ampoule);        \
+    WorldObject_CommonModelNameSet(CommonPickupItemId_HandgunBullets); \
+    WorldObject_CommonModelNameSet(CommonPickupItemId_RifleShells);    \
+    WorldObject_CommonModelNameSet(CommonPickupItemId_ShotgunShells);  \
+}
+
 #endif
