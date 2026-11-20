@@ -1,6 +1,9 @@
 #ifndef _MAPS_COMMON_PARTICLE_H
 #define _MAPS_COMMON_PARTICLE_H
 
+// TODO: Temporary include.
+#include "maps/common/shared.h"
+
 #define SNOW_COUNT_LIGHT_MAX 300
 
 #if defined(MAP7_S03)
