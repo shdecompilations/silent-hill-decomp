@@ -1771,7 +1771,7 @@ void func_800DDEC8(void) // 0x800DDEC8
 
     if (!Savegame_EventFlagGet(EventFlag_549))
     {
-        func_800894B8((g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] <= 5) ? 0x90 : 0x60); // Hex?
+        Vibration_RumbleStrength((g_SysWork.sysStateSteps[0] >= 4 && g_SysWork.sysStateSteps[0] <= 5) ? 0x90 : 0x60); // Hex?
     }
 }
 

@@ -1670,11 +1670,11 @@ void func_800EA960(void) // 0x800EA960
     {
         if (g_SysWork.sysStateSteps[0] > 4)
         {
-            func_800894B8(0x90);
+            Vibration_RumbleStrength(0x90);
         }
         else
         {
-            func_800894B8(0x70);
+            Vibration_RumbleStrength(0x70);
         }
     }
 }
@@ -1774,11 +1774,11 @@ void func_800EAD2C(void) // 0x800EAD2C
 
     if (g_SysWork.sysStateSteps[0] > 3)
     {
-        func_800894B8(0x90);
+        Vibration_RumbleStrength(0x90);
     }
     else
     {
-        func_800894B8(0x70);
+        Vibration_RumbleStrength(0x70);
     }
 }
 
@@ -1804,7 +1804,7 @@ void func_800EB090(void) // 0x800EB090
             break;
     }
 
-    func_800894B8(96);
+    Vibration_RumbleStrength(96);
 }
 
 void func_800EB174(void) // 0x800EB174

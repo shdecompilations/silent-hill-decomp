@@ -14,5 +14,5 @@ void AntiModchip_Check(void) // JAP0 0x801E7EB4
     
     // These are normally called at start of `MainLoop`, likely moved here to break things if this code is skipped.
     InitGeom();
-    func_800890B8();
+    Vibration_Init();
 }

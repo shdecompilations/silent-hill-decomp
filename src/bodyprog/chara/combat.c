@@ -594,7 +594,7 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
 
                 if (attacker->model.charaId == Chara_Harry)
                 {
-                    func_800892A4(5);
+                    Vibration_Play(5);
                 }
 
                 hasHit   = Ray_GeomAndCharaTraceGet(&shotTrace, &attacker->attack.origin, &attacker->attack.hitLineVec[0], attacker);
@@ -993,7 +993,7 @@ void Combat_GasWeaponEngineSfxUpdate(bool isChainsaw, q23_8 vol, s32 pitch) // 0
     // `isChainsaw`: `GasWeaponSfx_ChainsawRun`, `!isChainsaw`: `GasWeaponSfx_RockDrillStart`.
     if (Combat_GasWeaponSfxUpdate(GasWeaponSfx_RockDrillStart - chainsaw, vol, pitch))
     {
-        func_80089314(chainsaw);
+        Vibration_GasWeaponEngineUpdate(chainsaw);
     }
 }
 
@@ -1217,11 +1217,11 @@ s32 Combat_HitApply(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* h
             switch (attackType)
             {
                 case AttackInfoType_Strike:
-                    func_800892A4(6);
+                    Vibration_Play(6);
                     break;
 
                 case AttackInfoType_Slash:
-                    func_800892A4(7);
+                    Vibration_Play(7);
                     break;
 
                 case AttackInfoType_Gunshot:

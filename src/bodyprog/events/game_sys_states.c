@@ -88,7 +88,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
             DrawSync(SyncMode_Wait);
             Game_RadioNoiseReset();
             Game_MapRoomIdxUpdate();
-            func_800892A4(1);
+            Vibration_Play(1);
 
             g_IntervalVBlanks = 2;
             g_GameWork.gameStateSteps[0]++;
@@ -203,28 +203,28 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     switch (FP_ROUND_SCALED(player->health, 10, Q12_SHIFT))
     {
         case 0:
-            func_800892A4(17);
+            Vibration_Play(17);
             break;
 
         case 1:
         case 2:
-            func_800892A4(16);
+            Vibration_Play(16);
             break;
 
         case 3:
-            func_800892A4(15);
+            Vibration_Play(15);
             break;
 
         case 4:
-            func_800892A4(14);
+            Vibration_Play(14);
             break;
 
         case 5:
-            func_800892A4(13);
+            Vibration_Play(13);
             break;
 
         case 6:
-            func_800892A4(12);
+            Vibration_Play(12);
             break;
     }
 
@@ -573,14 +573,14 @@ void SysState_Fmv_Update(void) // 0x80039A58
     StoreImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
     DrawSync(SyncMode_Wait);
 
-    func_800892A4(0);
-    func_80089128();
+    Vibration_Play(0);
+    Vibration_Update();
 
     // Start playing movie. File to play is based on file ID `BASE_AUDIO_FILE_IDX - g_MapEventParam`.
     // Blocks until movie has finished playback or user has skipped it.
     open_main(BASE_AUDIO_FILE_IDX - g_MapEventParam, g_FileTable[BASE_AUDIO_FILE_IDX - g_MapEventParam].blockCount);
 
-    func_800892A4(1);
+    Vibration_Play(1);
 
     // Restore copied framebuffer from `IMAGE_BUFFER_0`.
     GsSwapDispBuff();

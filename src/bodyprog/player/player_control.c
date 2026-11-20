@@ -2201,7 +2201,7 @@ void Player_LogicUpdate(s_SubCharacter* player, s_PlayerExtra* extra, GsCOORDINA
                         extra->model.controlState++;
                         Sfx_WithFlagsPlay(Sfx_HarryFallGasp, &player->position, Q8(1.0f / 8.0f), SfxFlag_None);
                         player->properties.player.field_10C = 128;
-                        func_80089470();
+                        Vibration_LandingRumble();
                     }
 
                     if (PLAYER_EXTRA().state == PlayerState_FallForward)
@@ -2718,21 +2718,21 @@ void Player_UpperBodyUpdate(s_SubCharacter* player, s_PlayerExtra* extra) // 0x8
         case PlayerUpperBodyState_LowerBodyStumble:
             if (func_80071620(23, player, 173, stumbleSfxId))
             {
-                func_8008944C();
+                Vibration_StumbleRumble();
             }
             break;
 
         case PlayerUpperBodyState_RunLeftStumble:
             if (func_80071620(39, player, 340, stumbleSfxId))
             {
-                func_8008944C();
+                Vibration_StumbleRumble();
             }
             break;
 
         case PlayerUpperBodyState_SidestepRightStumble:
             if (func_80071620(43, player, 369, stumbleSfxId))
             {
-                func_8008944C();
+                Vibration_StumbleRumble();
             }
             break;
     }
@@ -7102,7 +7102,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
                 PLAYER_PROPS().flags &= ~PlayerFlag_DamageReceived;
             }
 
-            func_80089494();
+            Vibration_EnemyGrabRumble();
             break;
 
         case PlayerState_Unk7:
@@ -7406,7 +7406,7 @@ void Player_ReceiveDamage(s_SubCharacter* player, s_PlayerExtra* extra) // 0x800
             g_Player_IsDead  = true;
         }
 
-        func_800893D0(player->damage.amount);
+        Vibration_DamageRumble(player->damage.amount);
         player->damage.amount = Q12(0.0f);
     }
 

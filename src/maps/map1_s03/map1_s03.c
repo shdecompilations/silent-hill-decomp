@@ -1951,7 +1951,7 @@ void func_800DE828(void) // 0x800DE828
         {
             if (D_800E20EE == 6)
             {
-                func_800892A4(18);
+                Vibration_Play(18);
                 Sfx_WithFlagsPlay(Sfx_Unk1460, &g_WorldObject2.position, Q8_CLAMPED(1.0f), SfxFlag_NoDistAtten);
 
                 D_800E20E8 = Q12_ANGLE(-11.3f);
@@ -2053,7 +2053,7 @@ void func_800DE828(void) // 0x800DE828
                     g_WorldObject1.rotation.vy += D_800E20E8;
                     if (g_WorldObject1.rotation.vy <  Q12_ANGLE(-2.9f))
                     {
-                        func_800892DC(18, 0x60);
+                        Vibration_PlayStrength(18, 0x60);
                         Sfx_WithFlagsPlay(Sfx_Unk1434, &sfxPos, Q8(0.7657f), SfxFlag_NoDistAtten);
 
                         g_WorldObject1.rotation.vy = Q12_ANGLE(-2.9f);

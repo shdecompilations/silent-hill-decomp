@@ -124,7 +124,7 @@ void GameState_Init_Update(void) // 0x80032D1C
 
     MemCard_ElementsUpdate();
     Screen_BackgroundImgDraw(&g_MainImg0);
-    func_80089090(1);
+    Vibration_AnalogModeSet(1);
 }
 
 void MainLoop(void) // 0x80032EE0
@@ -156,7 +156,7 @@ void MainLoop(void) // 0x80032EE0
 #if !VERSION_REGION_IS(NTSCJ)
     InitGeom();
     ItemScreen_TmdGsFCallInit();
-    func_800890B8();
+    Vibration_Init();
 #endif
 
     SD_Init();
@@ -220,7 +220,7 @@ void MainLoop(void) // 0x80032EE0
             Fs_QueueUpdate();
         }
 
-        func_80089128();
+        Vibration_Update();
         shLensFlareDraw();
         DrawSync(SyncMode_Wait);
 

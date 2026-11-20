@@ -307,7 +307,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
     }
     if (Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn))
     {
-        func_800894B8(144);
+        Vibration_RumbleStrength(144);
     }
 }
 
@@ -333,7 +333,7 @@ void func_800D29A4(void) // 0x800D29A4
             break;
     }
 
-    func_800894B8(0x60); // Hex?
+    Vibration_RumbleStrength(0x60); // Hex?
 }
 
 void func_800D2A88(void) // 0x800D2A88

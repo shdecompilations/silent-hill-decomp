@@ -1174,6 +1174,35 @@ Chara_ModelCharaIdClear                      = 0x80088F94; // type:func
 Chara_SpawnFlagsSet                          = 0x80088FF4; // type:func
 Chara_SpawnPositionSet                       = 0x80089034; // type:func
 
+//------------------------------------------------------------
+//--- PA: 0x064530   VA: 0x80089090   subsegment: c, vibration
+//------------------------------------------------------------
+Vibration_AnalogModeSet                      = 0x80089090; // type:func
+Vibration_Init                               = 0x800890B8; // type:func
+Vibration_Update                             = 0x80089128; // type:func
+Vibration_Play                               = 0x800892A4; // type:func
+Vibration_PlayStrength                       = 0x800892DC; // type:func
+Vibration_GasWeaponEngineUpdate              = 0x80089314; // type:func
+Vibration_DamageRumble                       = 0x800893D0; // type:func
+Vibration_StumbleRumble                      = 0x8008944C; // type:func
+Vibration_LandingRumble                      = 0x80089470; // type:func
+Vibration_EnemyGrabRumble                    = 0x80089494; // type:func
+Vibration_RumbleStrength                     = 0x800894B8; // type:func
+Vibration_StrongRumble                       = 0x800894DC; // type:func
+Vibration_Rumble                             = 0x80089500; // type:func
+Vibration_KPadAnalogModeSet                  = 0x80089524; // type:func
+VibScript_Play                               = 0x800895E4; // type:func
+VibScript_EffectUpdate                       = 0x80089644; // type:func
+VibScript_Handler_Command                    = 0x8008973C; // type:func
+VibScript_EffectsClear                       = 0x80089840; // type:func
+VibScript_EffectsRemoveByMask                = 0x8008989C; // type:func
+VibScript_EffectsRemoveByTag                 = 0x8008992C; // type:func
+VibScript_EffectsRemoveById                  = 0x800899BC; // type:func
+VibScript_Handler_Start                      = 0x80089A30; // type:func
+VibScript_Handler_Chain                      = 0x80089BB8; // type:func
+VibScript_Handler_Pulse                      = 0x80089D0C; // type:func
+VibScript_Handler_Waveform                   = 0x80089DF0; // type:func
+
 //---------------------------------------------------------------
 //--- PA: 0x0654F8   VA: 0x8008A058   subsegment: c, chara/combat
 //---------------------------------------------------------------

@@ -794,7 +794,7 @@ void func_800D719C(void) // 0x800D719C
             break;
     }
 
-    func_800894B8(0x60); // Hex?
+    Vibration_RumbleStrength(0x60); // Hex?
 }
 
 void func_800D7280(void) // 0x800D7280

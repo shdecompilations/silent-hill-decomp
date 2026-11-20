@@ -699,11 +699,11 @@ void MapEvent_Boiler0(void) // 0x800D8CF0
 
     if (Savegame_EventFlagGet(EventFlag_73))
     {
-        func_800894B8(112);
+        Vibration_RumbleStrength(112);
     }
     else if (Savegame_EventFlagGet(EventFlag_83))
     {
-        func_800894B8(144);
+        Vibration_RumbleStrength(144);
     }
 }
 
@@ -767,7 +767,7 @@ void MapEvent_Boiler2(void) // 0x800D9148
             break;
     }
 
-    func_800894B8(96);
+    Vibration_RumbleStrength(96);
 }
 
 void MapEvent_TownMapTake(void) // 0x800D922C

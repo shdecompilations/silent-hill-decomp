@@ -194,7 +194,7 @@ void func_800D6774(void) // 0x800D6774
             PLAYER_CHARA().position.vy = surface.floorHeight;
 
             Sfx_WithFlagsPlay(Sfx_Unk1556, &Q12_VECTOR3(119.5f, 0.0f, 141.5f), Q8(0.5f), SfxFlag_None);
-            func_80089470();
+            Vibration_LandingRumble();
             SysWork_StateStepIncrement(0);
             break;
 

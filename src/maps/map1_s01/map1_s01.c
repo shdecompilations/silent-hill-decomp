@@ -897,7 +897,7 @@ void func_800D87C0(void) // 0x800D87C0
             Savegame_EventFlagSet(EventFlag_76);
 
             Event_CharaAnimCmdExecute(CharaAnimCmd_SetState, &PLAYER_CHARA(), 122, false);
-            func_800892DC(18, 96);
+            Vibration_PlayStrength(18, 96);
             Sfx_WithFlagsPlay(Sfx_Unk1437, &Q12_VECTOR3(-59.0f, -0.5f, 18.6f), Q8(0.5f), SfxFlag_None);
             Sfx_WithFlagsPlay(Sfx_Unk1436, &Q12_VECTOR3(-58.8f, -1.2f, 18.8f), Q8(0.5f), SfxFlag_None);
             SysWork_StateStepIncrement(0);

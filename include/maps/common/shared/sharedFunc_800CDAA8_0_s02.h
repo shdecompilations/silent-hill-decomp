@@ -2158,7 +2158,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
                 {
                     if (func_80071620(player->model.anim.status, player, keyframeIdx + 6, Q12(0.4f)) != false)
                     {
-                        func_800892DC(8, 0x30); // Hex?
+                        Vibration_PlayStrength(8, 0x30); // Hex?
                     }
                 }
                 else
@@ -2189,7 +2189,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* player, s_PlayerExtra* extra, GsC
         case PlayerState_Unk150:
             if (func_80071620(player->model.anim.status, player, keyframeIdx + 21, Q12(0.4f)) != false)
             {
-                func_800892DC(8, 0x30); // Hex?
+                Vibration_PlayStrength(8, 0x30); // Hex?
             }
 
             if (keyframeIdx + 8 >= player->model.anim.keyframeIdx)

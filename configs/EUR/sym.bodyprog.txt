@@ -1391,31 +1391,31 @@ Chara_SpawnPositionSet                       = 0x80088C14; // type:func
 //------------------------------------------------------------
 //--- PA: 0x0635E0   VA: 0x80088C70   subsegment: c, vibration
 //------------------------------------------------------------
-func_80089090                                = 0x80088C70; // type:func
-func_800890B8                                = 0x80088C98; // type:func
-func_80089128                                = 0x80088D08; // type:func
-func_800892A4                                = 0x80088E84; // type:func
-func_800892DC                                = 0x80088EBC; // type:func
-func_80089314                                = 0x80088EF4; // type:func
-func_800893D0                                = 0x80088FB0; // type:func
-func_8008944C                                = 0x8008902C; // type:func
-func_80089470                                = 0x80089050; // type:func
-func_80089494                                = 0x80089074; // type:func
-func_800894B8                                = 0x80089098; // type:func
-func_800894DC                                = 0x800890BC; // type:func
-func_80089500                                = 0x800890E0; // type:func
-func_80089524                                = 0x80089104; // type:func
-func_800895E4                                = 0x800891C4; // type:func
-func_80089644                                = 0x80089224; // type:func
-func_8008973C                                = 0x80089320; // type:func
-func_80089840                                = 0x80089424; // type:func
-func_8008989C                                = 0x80089480; // type:func
-func_8008992C                                = 0x80089510; // type:func
-func_800899BC                                = 0x800895A0; // type:func
-func_80089A30                                = 0x80089614; // type:func
-func_80089BB8                                = 0x8008979C; // type:func
-func_80089D0C                                = 0x800898F0; // type:func
-func_80089DF0                                = 0x800899D4; // type:func
+Vibration_AnalogModeSet                      = 0x80088C70; // type:func
+Vibration_Init                               = 0x80088C98; // type:func
+Vibration_Update                             = 0x80088D08; // type:func
+Vibration_Play                               = 0x80088E84; // type:func
+Vibration_PlayStrength                       = 0x80088EBC; // type:func
+Vibration_GasWeaponEngineUpdate              = 0x80088EF4; // type:func
+Vibration_DamageRumble                       = 0x80088FB0; // type:func
+Vibration_StumbleRumble                      = 0x8008902C; // type:func
+Vibration_LandingRumble                      = 0x80089050; // type:func
+Vibration_EnemyGrabRumble                    = 0x80089074; // type:func
+Vibration_RumbleStrength                     = 0x80089098; // type:func
+Vibration_StrongRumble                       = 0x800890BC; // type:func
+Vibration_Rumble                             = 0x800890E0; // type:func
+Vibration_KPadAnalogModeSet                  = 0x80089104; // type:func
+VibScript_Play                               = 0x800891C4; // type:func
+VibScript_EffectUpdate                       = 0x80089224; // type:func
+VibScript_Handler_Command                    = 0x80089320; // type:func
+VibScript_EffectsClear                       = 0x80089424; // type:func
+VibScript_EffectsRemoveByMask                = 0x80089480; // type:func
+VibScript_EffectsRemoveByTag                 = 0x80089510; // type:func
+VibScript_EffectsRemoveById                  = 0x800895A0; // type:func
+VibScript_Handler_Start                      = 0x80089614; // type:func
+VibScript_Handler_Chain                      = 0x8008979C; // type:func
+VibScript_Handler_Pulse                      = 0x800898F0; // type:func
+VibScript_Handler_Waveform                   = 0x800899D4; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x0645AC   VA: 0x80089C3C   subsegment: c, chara/combat

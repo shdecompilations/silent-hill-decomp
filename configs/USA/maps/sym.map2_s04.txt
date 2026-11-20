@@ -9,51 +9,51 @@
 //-----------------------------------------------------------
 //--- PA: 0x001654   VA: 0x800CABCC   subsegment: c, map2_s04
 //-----------------------------------------------------------
-WeatherParticle_SystemUpdate     = 0x800CABCC; // type:func
-Particle_EnvironmentSet          = 0x800CAD34; // type:func
-sharedFunc_800D0A60_0_s00        = 0x800CAEB4; // type:func
-sharedFunc_800D0B18_0_s00        = 0x800CAF6C; // type:func
-Particle_SoundStop               = 0x800CB0D0; // type:func
-Particle_HyperBlasterBeamDraw    = 0x800CB0F0; // type:func
-Particle_BeamDraw                = 0x800CB968; // type:func
-sharedFunc_800CDAA8_0_s02        = 0x800CBD54; // type:func
-sharedFunc_800D1C38_0_s00        = 0x800CC048; // type:func
-Player_CutsceneWeaponUnequip     = 0x800CC474; // type:func
-Player_MatchArmAnimDisable       = 0x800CC4B0; // type:func
-Player_ControlFreeze             = 0x800CC4BC; // type:func
-Player_ControlUnfreeze           = 0x800CC61C; // type:func
-Player_PathWaypointExecute       = 0x800CC7F4; // type:func
-Player_AnimStateSet              = 0x800CC7FC; // type:func
-Player_AnimReset                 = 0x800CC8AC; // type:func
-Player_AnimLock                  = 0x800CC8C4; // type:func
-Player_AnimIsLocked              = 0x800CC8EC; // type:func
-Player_AnimUnlock                = 0x800CC904; // type:func
-Player_AnimPlaybackStateGet      = 0x800CC92C; // type:func
-Player_MoveSpeedIsZero           = 0x800CC9D0; // type:func
-Player_MoveSpeedClear            = 0x800CC9E0; // type:func
-sharedFunc_800D2E6C_0_s00        = 0x800CC9EC; // type:func
-Player_FallBackward              = 0x800CC9F4; // type:func
-Player_Stub_F8                   = 0x800CC9FC; // type:func
-Player_DamageFeetFront           = 0x800CCA04; // type:func
-sharedFunc_800D2E8C_0_s00        = 0x800CCA0C; // type:func
-sharedFunc_800D2E94_0_s00        = 0x800CCA14; // type:func
-sharedFunc_800D2E9C_0_s00        = 0x800CCA1C; // type:func
-Player_PropertyField10DGet       = 0x800CCA24; // type:func
-Player_EmptyWeaponHandSet        = 0x800CCA34; // type:func
-Player_WeaponAttackRestore       = 0x800CCA74; // type:func
-sharedFunc_800D929C_0_s00        = 0x800CCA88; // type:func
-Map_RoomIdxGet                   = 0x800CCA98; // type:func
-Map_RoomBgmInit                  = 0x800CCB30; // type:func
-Map_BgmSongChange                = 0x800CCB64; // type:func
-Map_BgmLayersUpdate              = 0x800CCBE0; // type:func
-GameBoot_LoadScreen_StageString  = 0x800CCE6C; // type:func
-MapEvent_DoorJammed              = 0x800CCE74; // type:func
-MapEvent_DoorLocked              = 0x800CCF08; // type:func
-MapEvent_PoliceChalkboardInspect = 0x800CD088; // type:func
-MapEvent_PaperMapTake            = 0x800CD0D0; // type:func
-MapEvent_ShotgunTake             = 0x800CD0F8; // type:func
-Map_WorldObjectsInit             = 0x800CD124; // type:func
-Map_WorldObjectsUpdate           = 0x800CD2AC; // type:func
+WeatherParticle_SystemUpdate      = 0x800CABCC; // type:func
+Particle_EnvironmentSet           = 0x800CAD34; // type:func
+sharedFunc_800D0A60_0_s00         = 0x800CAEB4; // type:func
+sharedFunc_800D0B18_0_s00         = 0x800CAF6C; // type:func
+Particle_SoundStop                = 0x800CB0D0; // type:func
+Particle_HyperBlasterBeamDraw     = 0x800CB0F0; // type:func
+Particle_BeamDraw                 = 0x800CB968; // type:func
+sharedFunc_800CDAA8_0_s02         = 0x800CBD54; // type:func
+sharedFunc_800D1C38_0_s00         = 0x800CC048; // type:func
+Player_CutsceneWeaponUnequip      = 0x800CC474; // type:func
+Player_MatchArmAnimDisable        = 0x800CC4B0; // type:func
+Player_ControlFreeze              = 0x800CC4BC; // type:func
+Player_ControlUnfreeze            = 0x800CC61C; // type:func
+Player_PathWaypointExecute        = 0x800CC7F4; // type:func
+Player_AnimStateSet               = 0x800CC7FC; // type:func
+Player_AnimReset                  = 0x800CC8AC; // type:func
+Player_AnimLock                   = 0x800CC8C4; // type:func
+Player_AnimIsLocked               = 0x800CC8EC; // type:func
+Player_AnimUnlock                 = 0x800CC904; // type:func
+Player_AnimPlaybackStateGet       = 0x800CC92C; // type:func
+Player_MoveSpeedIsZero            = 0x800CC9D0; // type:func
+Player_MoveSpeedClear             = 0x800CC9E0; // type:func
+sharedFunc_800D2E6C_0_s00         = 0x800CC9EC; // type:func
+Player_FallBackward               = 0x800CC9F4; // type:func
+Player_Stub_F8                    = 0x800CC9FC; // type:func
+Player_DamageFeetFront            = 0x800CCA04; // type:func
+sharedFunc_800D2E8C_0_s00         = 0x800CCA0C; // type:func
+sharedFunc_800D2E94_0_s00         = 0x800CCA14; // type:func
+sharedFunc_800D2E9C_0_s00         = 0x800CCA1C; // type:func
+Player_PropertyField10DGet        = 0x800CCA24; // type:func
+Player_EmptyWeaponHandSet         = 0x800CCA34; // type:func
+Player_WeaponAttackRestore        = 0x800CCA74; // type:func
+sharedFunc_800D929C_0_s00         = 0x800CCA88; // type:func
+Map_RoomIdxGet                    = 0x800CCA98; // type:func
+Map_RoomBgmInit                   = 0x800CCB30; // type:func
+Map_BgmSongChange                 = 0x800CCB64; // type:func
+Map_BgmLayersUpdate               = 0x800CCBE0; // type:func
+GameBoot_LoadScreen_StageString   = 0x800CCE6C; // type:func
+MapEvent_DoorJammed               = 0x800CCE74; // type:func
+MapEvent_DoorLocked               = 0x800CCF08; // type:func
+MapEvent_PoliceChalkboardInspect  = 0x800CD088; // type:func
+MapEvent_PaperMapTake             = 0x800CD0D0; // type:func
+MapEvent_ShotgunTake              = 0x800CD0F8; // type:func
+Map_WorldObjectsInit              = 0x800CD124; // type:func
+Map_WorldObjectsUpdate            = 0x800CD2AC; // type:func
 
 
 
@@ -65,46 +65,46 @@ Map_WorldObjectsUpdate           = 0x800CD2AC; // type:func
 //-------------------------------------------------------------------------
 //--- PA: 0x004564   VA: 0x800CDADC   subsegment: .data, map2_s04_anim_info
 //-------------------------------------------------------------------------
-HARRY_M2S04_ANIM_INFOS           = 0x800CDADC;
-g_MapHeaderTable_38              = 0x800CDBEC;
-LOADABLE_INVENTORY_ITEMS         = 0x800CDC34;
-sharedData_800DD584_0_s00        = 0x800CDC57;
-sharedData_800DD598_0_s00        = 0x800CDC58;
-g_Player_PrevWeaponAttack        = 0x800CDC5C; // type:u8
+HARRY_M2S04_ANIM_INFOS            = 0x800CDADC;
+g_MapHeaderTable_38               = 0x800CDBEC;
+LOADABLE_INVENTORY_ITEMS          = 0x800CDC34;
+sharedData_800DD584_0_s00         = 0x800CDC57;
+sharedData_800DD598_0_s00         = 0x800CDC58;
+g_Player_PrevWeaponAttack         = 0x800CDC5C; // type:u8
 
 //----------------------------------------------------
 //--- PA: 0x0046E8   VA: 0x800CDC60   subsegment: data
 //----------------------------------------------------
-MAP_ROOM_IDXS                    = 0x800CDC60; // type:u8 size:0x1E
-g_BgmER_LayerLimits0             = 0x800CDC80; // type:u8 size:8
-g_BgmER_LayerLimits1             = 0x800CDC88; // type:u8 size:8
-g_BgmER_LayerLimits2             = 0x800CDC90; // type:u8 size:8
-g_BgmER_LayerLimits3             = 0x800CDC98; // type:u8 size:8
-g_BgmER_LayerLimits4             = 0x800CDCA0; // type:u8 size:8
-g_BgmER_LayerLimits5             = 0x800CDCA8; // type:u8 size:8
-g_BgmER_LayerLimits6             = 0x800CDCB0; // type:u8 size:8
-g_BgmER_LayerLimits7             = 0x800CDCB8; // type:u8 size:8
-g_BgmER_LayerLimits8             = 0x800CDCC0; // type:u8 size:8
+MAP_ROOM_IDXS                     = 0x800CDC60; // type:u8 size:0x1E
+g_BgmER_LayerLimits0              = 0x800CDC80; // type:u8 size:8
+g_BgmER_LayerLimits1              = 0x800CDC88; // type:u8 size:8
+g_BgmER_LayerLimits2              = 0x800CDC90; // type:u8 size:8
+g_BgmER_LayerLimits3              = 0x800CDC98; // type:u8 size:8
+g_BgmER_LayerLimits4              = 0x800CDCA0; // type:u8 size:8
+g_BgmER_LayerLimits5              = 0x800CDCA8; // type:u8 size:8
+g_BgmER_LayerLimits6              = 0x800CDCB0; // type:u8 size:8
+g_BgmER_LayerLimits7              = 0x800CDCB8; // type:u8 size:8
+g_BgmER_LayerLimits8              = 0x800CDCC0; // type:u8 size:8
 
 //-------------------------------------------------------------
 //--- PA: 0x004750   VA: 0x800CDCC8   subsegment: .data, header
 //-------------------------------------------------------------
-g_LoadScreenFuncs                = 0x800CDCC8;
-MAP_POINTS                       = 0x800CDCD8;
-g_MapEventFuncs                  = 0x800CDE4C;
+g_LoadScreenFuncs                 = 0x800CDCC8;
+MAP_POINTS                        = 0x800CDCD8;
+g_MapEventFuncs                   = 0x800CDE4C;
 
 //---------------------------------------------------------------
 //--- PA: 0x0048F0   VA: 0x800CDE68   subsegment: .data, map2_s04
 //---------------------------------------------------------------
-MAP_MESSAGES                     = 0x800CDE68; // type:u32 size:0x6C
-MAP_EVENTS                       = 0x800CDED4;
-g_WorldObjectPose_ShotgunShells0 = 0x800CE024; // type:Pose size:0x14
+MAP_MESSAGES                      = 0x800CDE68; // type:u32 size:0x6C
+MAP_EVENTS                        = 0x800CDED4;
+g_WorldObjectPose_ShotgunShells0  = 0x800CE024; // type:Pose size:0x14
 g_WorldObjectPose_HandgunBullets0 = 0x800CE038; // type:Pose size:0x14
 g_WorldObjectPose_HandgunBullets1 = 0x800CE04C; // type:Pose size:0x14
-g_WorldObjectPose_ShotgunShells1 = 0x800CE060; // type:Pose size:0x14
+g_WorldObjectPose_ShotgunShells1  = 0x800CE060; // type:Pose size:0x14
 g_WorldObjectPose_HandgunBullets2 = 0x800CE074; // type:Pose size:0x14
 g_WorldObjectPose_HandgunBullets3 = 0x800CE088; // type:Pose size:0x14
-g_WorldObjectPose_RifleShells    = 0x800CE09C; // type:Pose size:0x14
+g_WorldObjectPose_RifleShells     = 0x800CE09C; // type:Pose size:0x14
 
 
 
@@ -116,27 +116,27 @@ g_WorldObjectPose_RifleShells    = 0x800CE09C; // type:Pose size:0x14
 //--------------------------------------------------------------
 //--- PA: 0x004B38   VA: 0x800CE0B0   subsegment: .bss, map2_s04
 //--------------------------------------------------------------
-g_WeatherParticle_MapIdx0        = 0x800CE0B0;
-g_WeatherParticle_MapIdx1        = 0x800CE0B4;
-g_WeatherParticle_SpeedX         = 0x800CE0B8;
-g_WeatherParticle_SpeedZ         = 0x800CE0BC;
-sharedData_800DFB6C_0_s00        = 0x800CE0C0; // type:s32
-sharedData_800DFB70_0_s00        = 0x800CE0C4; // type:s32
-g_Particle_Buffer                = 0x800CE0D0; // size:0xFA0
-g_Particle_BloodSplats           = 0x800CF070; // size:0x12C
-g_WeatherParticle_Vectors0       = 0x800CF1A0; // size:0x2C type:ParticleVectors
-g_WeatherParticle_Vectors1       = 0x800CF1D0; // size:0x2C type:ParticleVectors
-sharedData_800E0CA8_0_s00        = 0x800CF1FC; // type:s32
-sharedData_800E0CAC_0_s00        = 0x800CF200; // type:s32
-sharedData_800E0CB0_0_s00        = 0x800CF204; // type:u32
-sharedData_800E0CB4_0_s00        = 0x800CF208; // type:u16
-sharedData_800E0CB6_0_s00        = 0x800CF20A; // type:u16
-sharedData_800E0CB8_0_s00        = 0x800CF20C; // type:u16
-sharedData_800E0CBA_0_s00        = 0x800CF20E; // type:s8
-sharedData_800E39D8_0_s00        = 0x800CF210; // type:s32
-g_Player_MoveSpeed               = 0x800CF214; // type:s32
-g_WorldObject_SavePad0           = 0x800CF220; // type:WorldObjectPose size:0x30
-g_WorldObject_Map                = 0x800CF250; // type:WorldObjectPose size:0x30
-g_WorldObject_SavePad1           = 0x800CF290; // type:WorldObjectPose size:0x30
-g_WorldObject_Shotgun            = 0x800CF2C0; // type:WorldObjectPose size:0x30
-g_CommonWorldObjects             = 0x800CF2F0; // size:0xA8
+g_WeatherParticle_MapIdx0         = 0x800CE0B0;
+g_WeatherParticle_MapIdx1         = 0x800CE0B4;
+g_WeatherParticle_SpeedX          = 0x800CE0B8;
+g_WeatherParticle_SpeedZ          = 0x800CE0BC;
+sharedData_800DFB6C_0_s00         = 0x800CE0C0; // type:s32
+sharedData_800DFB70_0_s00         = 0x800CE0C4; // type:s32
+g_Particle_Buffer                 = 0x800CE0D0; // size:0xFA0
+g_Particle_BloodSplats            = 0x800CF070; // size:0x12C
+g_WeatherParticle_Vectors0        = 0x800CF1A0; // size:0x2C type:ParticleVectors
+g_WeatherParticle_Vectors1        = 0x800CF1D0; // size:0x2C type:ParticleVectors
+sharedData_800E0CA8_0_s00         = 0x800CF1FC; // type:s32
+sharedData_800E0CAC_0_s00         = 0x800CF200; // type:s32
+sharedData_800E0CB0_0_s00         = 0x800CF204; // type:u32
+sharedData_800E0CB4_0_s00         = 0x800CF208; // type:u16
+sharedData_800E0CB6_0_s00         = 0x800CF20A; // type:u16
+sharedData_800E0CB8_0_s00         = 0x800CF20C; // type:u16
+sharedData_800E0CBA_0_s00         = 0x800CF20E; // type:s8
+sharedData_800E39D8_0_s00         = 0x800CF210; // type:s32
+g_Player_MoveSpeed                = 0x800CF214; // type:s32
+g_WorldObject_SavePad0            = 0x800CF220; // type:WorldObjectPose size:0x30
+g_WorldObject_Map                 = 0x800CF250; // type:WorldObjectPose size:0x30
+g_WorldObject_SavePad1            = 0x800CF290; // type:WorldObjectPose size:0x30
+g_WorldObject_Shotgun             = 0x800CF2C0; // type:WorldObjectPose size:0x30
+g_CommonWorldObjects              = 0x800CF2F0; // size:0xA8

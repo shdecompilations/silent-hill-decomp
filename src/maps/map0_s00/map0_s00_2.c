@@ -1177,7 +1177,7 @@ void func_800DBE00(void) // 0x800DBE00
     Sd_SfxStop(Sfx_Unk1360);
 
     SD_Call(22);
-    func_800892A4(4);
+    Vibration_Play(4);
 
     SysWork_StateSetNext(SysState_Gameplay);
     PLAYER_CHARA().position.vy = Q12(0.0f);

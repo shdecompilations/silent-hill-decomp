@@ -871,7 +871,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
         PLAYER_PROPS().flags &= ~PlayerFlag_Unk2;
 
         playerChara->health -= playerChara->damage.amount;
-        func_800893D0(playerChara->damage.amount);
+        Vibration_DamageRumble(playerChara->damage.amount);
         playerChara->damage.amount = Q12(0.0f);
     }
 #endif

@@ -51,8 +51,8 @@ bool Fs_QueueChunksLoad(void)
 
 void Fs_QueueWaitForEmpty(void)
 {
-    func_800892A4(0);
-    func_80089128();
+    Vibration_Play(0);
+    Vibration_Update();
 
     while (true)
     {
@@ -65,7 +65,7 @@ void Fs_QueueWaitForEmpty(void)
         Fs_QueueUpdate();
     }
 
-    func_800892A4(1);
+    Vibration_Play(1);
     DrawSync(SyncMode_Wait);
     VSync(SyncMode_Wait);
 }

@@ -136,56 +136,56 @@ typedef struct _VibScriptStep
 STATIC_ASSERT_SIZEOF(s_VibScriptStep, 16);
 
 /** Might retrun `bool`. */
-void func_80089090(s32 arg0);
+void Vibration_AnalogModeSet(bool isAnalog);
 
 // Related to libkpad.
-void func_800890B8(void);
+void Vibration_Init(void);
 
-s32 func_80089128(void);
+s32 Vibration_Update(void);
 
-void func_800892A4(s32 idx);
+void Vibration_Play(s32 idx);
 
-void func_800892DC(s32 idx, u8 arg1);
+void Vibration_PlayStrength(s32 idx, u8 arg1);
 
-void func_80089314(s32 arg0);
+void Vibration_GasWeaponEngineUpdate(s32 arg0);
 
-void func_800893D0(q19_12 arg0);
+void Vibration_DamageRumble(q19_12 arg0);
 
-void func_8008944C(void);
+void Vibration_StumbleRumble(void);
 
-void func_80089470(void);
+void Vibration_LandingRumble(void);
 
-void func_80089494(void);
+void Vibration_EnemyGrabRumble(void);
 
-void func_800894B8(s32 arg0);
+void Vibration_RumbleStrength(s32 arg0);
 
-void func_800894DC(void);
+void Vibration_StrongRumble(void);
 
-void func_80089500(void);
+void Vibration_Rumble(void);
 
 /** Handles initial gamepad init. */
-bool func_80089524(s_KPadWork* kpadWork, s32 padInfoMode);
+bool Vibration_KPadAnalogModeSet(s_KPadWork* kpadWork, bool isAnalog);
 
-s32 func_800895E4(s_KPadWork* kpadWork, s_VibScriptStep* step, u8 arg2);
+s32 VibScript_Play(s_KPadWork* kpadWork, s_VibScriptStep* step, u8 arg2);
 
-bool func_80089644(s_KPadWork* kpadWork, s_KPad_Effect* effect, s32 arg2, u32 arg3);
+bool VibScript_EffectUpdate(s_KPadWork* kpadWork, s_KPad_Effect* effect, s32 arg2, u32 arg3);
 
-bool func_80089A30(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Start(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
-bool func_80089BB8(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Chain(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
-bool func_80089DF0(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Waveform(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
-bool func_8008973C(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Command(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
-void func_80089840(s_KPadWork* kpadWork);
+void VibScript_EffectsClear(s_KPadWork* kpadWork);
 
-void func_8008989C(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32));
+void VibScript_EffectsRemoveByMask(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32));
 
-void func_8008992C(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32));
+void VibScript_EffectsRemoveByTag(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32));
 
-void func_800899BC(s_KPadWork* kpadWork, s32 arg1);
+void VibScript_EffectsRemoveById(s_KPadWork* kpadWork, s32 arg1);
 
-bool func_80089D0C(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Pulse(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
 
 #endif

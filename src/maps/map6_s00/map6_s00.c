@@ -358,7 +358,7 @@ void func_800EB11C(void) // 0x800EB11C
 
     if (g_SysWork.sysStateSteps[0] >= 5 && g_SysWork.sysStateSteps[0] < 10)
     {
-        func_800894DC();
+        Vibration_StrongRumble();
     }
 
     if (g_Cutscene_Timer >= Q12(0.0f))

@@ -484,7 +484,7 @@ void Cybil_AnimStateUpdate(s_SubCharacter* cybil, GsCOORDINATE2* boneCoords)
 
             if (Npc_SfxPlay(cybil->model.anim.status, cybil, 228, Sfx_Unk1699))
             {
-                func_800892A4(6);
+                Vibration_Play(6);
             }
             break;
 

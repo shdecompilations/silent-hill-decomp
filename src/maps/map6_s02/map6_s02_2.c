@@ -754,7 +754,7 @@ void func_800D0500(void) // 0x800D0500
                 func_800D1040(1);
             }
 
-            func_800892A4(10);
+            Vibration_Play(10);
             break;
 
         case 16:

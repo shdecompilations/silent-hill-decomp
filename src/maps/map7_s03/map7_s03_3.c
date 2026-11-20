@@ -6606,7 +6606,7 @@ void func_800E62CC(void) // 0x800E62CC
 
     if (g_SysWork.sysStateSteps[0] >= 12)
     {
-        func_80089500();
+        Vibration_Rumble();
     }
 
     switch (g_SysWork.sysStateSteps[0])
@@ -7086,7 +7086,7 @@ void func_800E7380(void) // 0x800E7380
 
     if (g_SysWork.sysStateSteps[0] >= 6 && g_SysWork.sysStateSteps[0] < 10)
     {
-        func_80089500();
+        Vibration_Rumble();
     }
 
     switch (g_SysWork.sysStateSteps[0])
@@ -7267,7 +7267,7 @@ void func_800E787C(void) // 0x800E787C
 
     if (g_SysWork.sysStateSteps[0] >= 1 && g_SysWork.sysStateSteps[0] < 14)
     {
-        func_80089500();
+        Vibration_Rumble();
     }
 
     switch (g_SysWork.sysStateSteps[0])
@@ -7674,7 +7674,7 @@ void func_800E86BC(void) // 0x800E86BC
 
     if (g_SysWork.sysStateSteps[0] >= 1 && g_SysWork.sysStateSteps[0] < 6)
     {
-        func_80089500();
+        Vibration_Rumble();
     }
 
     switch (g_SysWork.sysStateSteps[0])

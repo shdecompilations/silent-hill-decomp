@@ -97,8 +97,8 @@ void Game_WarmBoot(void) // 0x80034264
     Screen_RectInterlacedClear(0, SCREEN_FRAMEBUFFER_Y_INTERLACED, 512, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
 #endif
 
-    func_800892A4(4);
-    func_80089128();
+    Vibration_Play(4);
+    Vibration_Update();
     SD_Call(19);
 
     while (Sd_AudioStreamingCheck() != AudioStreamingState_None)
