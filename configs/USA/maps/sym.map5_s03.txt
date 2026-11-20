@@ -145,9 +145,9 @@ MAP_EVENTS                      = 0x800D39B4;
 //----------------------------------------------------
 //--- PA: 0x00A664   VA: 0x800D3BDC   subsegment: data
 //----------------------------------------------------
-g_WorldObjectPose_HealthDrink0  = 0x800D3BFC; // type:WorldObjectPose size:0x14
-g_WorldObjectPose_ShotgunShells = 0x800D3C10; // type:WorldObjectPose size:0x14
-g_WorldObjectPose_HealthDrink1  = 0x800D3C24; // type:WorldObjectPose size:0x14
+g_WorldObjectPose_HealthDrink0  = 0x800D3BFC; // type:Pose size:0x14
+g_WorldObjectPose_ShotgunShells = 0x800D3C10; // type:Pose size:0x14
+g_WorldObjectPose_HealthDrink1  = 0x800D3C24; // type:Pose size:0x14
 g_WeatherParticle_MapIdx0       = 0x800D3C38;
 g_WeatherParticle_MapIdx1       = 0x800D3C3C;
 g_WeatherParticle_SpeedX        = 0x800D3C48; // type:s32

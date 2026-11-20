@@ -37,7 +37,38 @@ extern s16 g_Gfx_LockTimFileIdxs[8]; // 0x800F1A14
 
 extern s32 D_800F1A24;
 
-extern s_Pose  g_CommonWorldObjectPoses[32]; // 0x800F1A28
+extern s_Pose  g_WorldObjectPose_FirstAidKit0;
+extern s_Pose  g_WorldObjectPose_HandgunBullets0;
+extern s_Pose  g_WorldObjectPose_HandgunBullets1;
+extern s_Pose  g_WorldObjectPose_HealthDrink0;
+extern s_Pose  g_WorldObjectPose_HandgunBullets2;
+extern s_Pose  g_WorldObjectPose_ShotgunShells0;
+extern s_Pose  g_WorldObjectPose_HealthDrink1;
+extern s_Pose  g_WorldObjectPose_HandgunBullets3;
+extern s_Pose  g_WorldObjectPose_HandgunBullets4;
+extern s_Pose  g_WorldObjectPose_HandgunBullets5;
+extern s_Pose  g_WorldObjectPose_HandgunBullets6;
+extern s_Pose  g_WorldObjectPose_HandgunBullets7;
+extern s_Pose  g_WorldObjectPose_HandgunBullets8;
+extern s_Pose  g_WorldObjectPose_HealthDrink2;
+extern s_Pose  g_WorldObjectPose_HealthDrink3;
+extern s_Pose  g_WorldObjectPose_HealthDrink4;
+extern s_Pose  g_WorldObjectPose_HandgunBullets9;
+extern s_Pose  g_WorldObjectPose_HealthDrink5;
+extern s_Pose  g_WorldObjectPose_HandgunBullets10;
+extern s_Pose  g_WorldObjectPose_HealthDrink6;
+extern s_Pose  g_WorldObjectPose_HealthDrink7;
+extern s_Pose  g_WorldObjectPose_HealthDrink8;
+extern s_Pose  g_WorldObjectPose_HealthDrink9;
+extern s_Pose  g_WorldObjectPose_HealthDrink10;
+extern s_Pose  g_WorldObjectPose_HealthDrink11;
+extern s_Pose  g_WorldObjectPose_ShotgunShells1;
+extern s_Pose  g_WorldObjectPose_FirstAidKit1;
+extern s_Pose  g_WorldObjectPose_HandgunBullets11;
+extern s_Pose  g_WorldObjectPose_HandgunBullets12;
+extern s_Pose  g_WorldObjectPose_HandgunBullets13;
+extern s_Pose  g_WorldObjectPose_HandgunBullets14;
+extern s_Pose  g_WorldObjectPose_FirstAidKit2;
 
 extern s_MapPoint2d D_800F1CAC[3][32];
 

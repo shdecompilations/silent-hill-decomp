@@ -42,7 +42,17 @@ extern s32 D_800E1EE4;
 
 extern u16 D_800E1EE8;
 
-extern s_Pose g_CommonWorldObjectPoses[11]; // 0x800E1EEC
+extern s_Pose g_WorldObjectPose_Ampoule0;
+extern s_Pose g_WorldObjectPose_ShotgunShells0;
+extern s_Pose g_WorldObjectPose_ShotgunShells1;
+extern s_Pose g_WorldObjectPose_FirstAidKit0;
+extern s_Pose g_WorldObjectPose_HandgunBullets0;
+extern s_Pose g_WorldObjectPose_HandgunBullets1;
+extern s_Pose g_WorldObjectPose_HandgunBullets2;
+extern s_Pose g_WorldObjectPose_Ampoule1;
+extern s_Pose g_WorldObjectPose_HealthDrink0;
+extern s_Pose g_WorldObjectPose_FirstAidKit1;
+extern s_Pose g_WorldObjectPose_HealthDrink1;
 
 extern s32 D_800E1FD4;
 

@@ -142,7 +142,14 @@ extern s_Pose      g_WorldObject_UnkPose1;
 extern s_WorldObjectPose      g_WorldObject_Diary;
 extern s_WorldObjectPlacement g_WorldObject_Kubomi;
 extern s_WorldObjectModel        g_CommonWorldObjects[6];
-extern s_Pose         g_CommonWorldObjectPoses[8];
+extern s_Pose         g_WorldObjectPose_RifleShells;
+extern s_Pose         g_WorldObjectPose_HandgunBullets0;
+extern s_Pose         g_WorldObjectPose_HealthDrink0;
+extern s_Pose         g_WorldObjectPose_HandgunBullets1;
+extern s_Pose         g_WorldObjectPose_ShotgunShells;
+extern s_Pose         g_WorldObjectPose_FirstAidKit;
+extern s_Pose         g_WorldObjectPose_HandgunBullets2;
+extern s_Pose         g_WorldObjectPose_HealthDrink1;
 
 extern u8 D_800E9DE8[26][2];
 extern u8 D_800EA4AC[5];

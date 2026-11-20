@@ -119,7 +119,7 @@ MAP_MESSAGES                    = 0x800D02FC; // type:u32 size:0xB0
 MAP_EVENTS                      = 0x800D03AC;
 g_Cutscene_MapMsgAudioCmds      = 0x800D04FC; // type:u16 size:0x28
 g_Cutscene_Timer                = 0x800D0524; // type:s32
-g_CommonWorldObjectPoses        = 0x800D0528; // type:Pose size:0x14
+g_WorldObjectPose_HealthDrink   = 0x800D0528; // type:Pose size:0x14
 
 
 
@@ -156,7 +156,7 @@ sharedData_800E39D8_0_s00       = 0x800D16D8; // type:s32
 g_Player_MoveSpeed              = 0x800D16DC; // type:s32
 sharedData_800D16E0_2_s01       = 0x800D16E0; // type:s32
 sharedData_800D16E4_2_s01       = 0x800D16E4; // type:s8
-g_WorldObject_Key               = 0x800D16EC; // type:WorldObjectDesc size:0x30
-g_WorldObject_Item              = 0x800D171C; // type:WorldObjectDesc size:0x30
-g_WorldObject_SavePad           = 0x800D174C; // type:WorldObjectDesc size:0x30
-g_CommonWorldObjects            = 0x800D178C; // type:WorldObject_0 size:0xA8
+g_WorldObject_Key               = 0x800D16EC; // type:WorldObjectPose size:0x30
+g_WorldObject_Item              = 0x800D171C; // type:WorldObjectPose size:0x30
+g_WorldObject_SavePad           = 0x800D174C; // type:WorldObjectPose size:0x30
+g_CommonWorldObjects            = 0x800D178C; // type:WorldObjectModel size:0xA8

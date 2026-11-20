@@ -147,4 +147,4 @@ sharedData_800D3150_3_s02       = 0x800D4E04; // type:s32
 g_Cutscene_CameraPositionTarget = 0x800D4E0C;
 g_Cutscene_CameraLookAtTarget   = 0x800D4E1C;
 g_Cutscene_Timer                = 0x800D4E28;
-g_WorldObject_SavePad           = 0x800D4E3C; // type:WorldObjectDesc size:0x30
+g_WorldObject_SavePad           = 0x800D4E3C; // type:WorldObjectPose size:0x30

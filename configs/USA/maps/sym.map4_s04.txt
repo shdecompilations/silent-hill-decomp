@@ -169,5 +169,5 @@ sharedData_800D6BB8_3_s04       = 0x800D6ED4; // type:s32
 g_Cutscene_CameraPositionTarget = 0x800D6ED8;
 g_Cutscene_CameraLookAtTarget   = 0x800D6EE8;
 g_Cutscene_Timer                = 0x800D6EF4;
-g_WorldObject0                  = 0x800D6F08; // type:WorldObjectDescNoRot size:0x28
-g_WorldObjectSavepad            = 0x800D6F38; // type:WorldObjectDesc size:0x30
+g_WorldObject0                  = 0x800D6F08; // type:WorldObjectPlacement size:0x28
+g_WorldObjectSavepad            = 0x800D6F38; // type:WorldObjectPose size:0x30

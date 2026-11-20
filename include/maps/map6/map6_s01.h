@@ -55,7 +55,9 @@ extern u8      g_Cutscene_MapMsgAudioIdx0;
 extern s_WorldObjectPose  D_800D5374;
 extern s_WorldObjectPose  D_800D53A4[7];
 extern s_WorldObjectModel g_CommonWorldObjects[6];
-extern s_Pose  g_CommonWorldObjectPoses[3]; // 0x800D4128
+extern s_Pose  g_WorldObjectPose_RifleShells;
+extern s_Pose  g_WorldObjectPose_HandgunBullets;
+extern s_Pose  g_WorldObjectPose_HealthDrink;
 
 /** @brief Handles a Health Drink, Handgun Bullets, or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);

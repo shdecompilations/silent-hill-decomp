@@ -188,7 +188,9 @@ extern SVECTOR3           g_WorldObject_UnkRot;
 extern s_WorldObjectPose  g_WorldObject_SavePad;
 extern s_WorldObjectModel g_CommonWorldObjects[6];
 extern s_WorldObjectModel D_800E08D0;
-extern s_Pose  g_CommonWorldObjectPoses[3]; // 0x800DB930
+extern s_Pose  g_WorldObjectPose_FirstAidKit;
+extern s_Pose  g_WorldObjectPose_RifleShells0;
+extern s_Pose  g_WorldObjectPose_RifleShells1;
 extern VECTOR3 D_800DB7C8;
 extern SVECTOR D_800DB924;
 

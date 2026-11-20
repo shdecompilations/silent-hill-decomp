@@ -29,7 +29,7 @@ extern s_WorldObjectPose      g_WorldObject6;
 extern s_WorldObjectPose      g_WorldObject7;
 extern s_WorldObjectPose      g_WorldObject8;
 extern s_WorldObjectPose      g_WorldObject9;
-extern s_Pose      g_WorldObjectAPos;
+extern s_Pose      g_WorldObjectPose_HealthDrink;
 extern s_WorldObjectModel        g_CommonWorldObjects[6];
 
 extern VECTOR3 D_800D4CE4; // Used by `func_800D2E54` only. For some reason it's not in RODATA.

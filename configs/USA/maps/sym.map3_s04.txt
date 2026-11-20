@@ -188,7 +188,8 @@ MAP_EVENTS                      = 0x800D5720;
 //--- PA: 0x00C424   VA: 0x800D599C   subsegment: data
 //----------------------------------------------------
 sharedData_800D4CD4_3_s01       = 0x800D59DC;
-g_CommonWorldObjectPoses        = 0x800D59E8; // type:WorldObjectPos size:0x28
+g_WorldObjectPose_HealthDrink0  = 0x800D59E8; // type:Pose size:0x14
+g_WorldObjectPose_HandgunBullets = 0x800D59FC; // type:Pose size:0x14
 g_WeatherParticle_MapIdx0       = 0x800D5A10;
 g_WeatherParticle_MapIdx1       = 0x800D5A14; // type:s32
 g_Cutscene_CameraPositionTarget = 0x800D5A20;
@@ -216,7 +217,7 @@ sharedData_800E0CBA_0_s00       = 0x800D6BAE; // type:s8
 sharedData_800E39D8_0_s00       = 0x800D6BB0; // type:s32
 g_Player_MoveSpeed              = 0x800D6BB4; // type:s32
 sharedData_800D6BB8_3_s04       = 0x800D6BB8; // type:s32
-g_WorldObject_Dr                = 0x800D6BC0; // type:WorldObjectDescNoRot size:0xF0
-g_WorldObject_Plate             = 0x800D6CB0; // type:WorldObjectDescNoRot size:0x28
-g_WorldObject_SavePad           = 0x800D6CE0; // type:WorldObjectDesc size:0x30
-g_CommonWorldObjects            = 0x800D6D10; // type:WorldObject0 size:0xA8
+g_WorldObject_Dr                = 0x800D6BC0; // type:WorldObjectPlacement size:0xF0
+g_WorldObject_Plate             = 0x800D6CB0; // type:WorldObjectPlacement size:0x28
+g_WorldObject_SavePad           = 0x800D6CE0; // type:WorldObjectPose size:0x30
+g_CommonWorldObjects            = 0x800D6D10; // type:WorldObjectModel size:0xA8

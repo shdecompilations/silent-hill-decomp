@@ -143,7 +143,9 @@ MAP_EVENTS                      = 0x800DB654;
 //----------------------------------------------------
 //--- PA: 0x012250   VA: 0x800DB7C8   subsegment: data
 //----------------------------------------------------
-g_CommonWorldObjectPoses        = 0x800DB930; // type:WorldObjectPose size:0x3C
+g_WorldObjectPose_FirstAidKit   = 0x800DB930; // type:Pose size:0x14
+g_WorldObjectPose_RifleShells0  = 0x800DB944; // type:Pose size:0x14
+g_WorldObjectPose_RifleShells1  = 0x800DB958; // type:Pose size:0x14
 g_WeatherParticle_MapIdx0       = 0x800DB970;
 g_WeatherParticle_MapIdx1       = 0x800DB974;
 g_WeatherParticle_SpeedX        = 0x800DB9E4; // type:s32
@@ -174,13 +176,13 @@ sharedData_800E32D0_0_s00       = 0x800DF544; // type:s32
 sharedData_800E32D4_0_s00       = 0x800DF548; // type:u16
 sharedData_800E39D8_0_s00       = 0x800DF54C; // type:s32
 g_Player_MoveSpeed              = 0x800DF550; // type:s32
-g_WorldObject_Fence             = 0x800E04F0; // type:WorldObjectDesc size:0x30
-g_WorldObject_Mal5_21           = 0x800E0520; // type:WorldObjectDesc size:0x30
-g_WorldObject_Mal6              = 0x800E0550; // type:WorldObject_0 size:0x38
+g_WorldObject_Fence             = 0x800E04F0; // type:WorldObjectPose size:0x30
+g_WorldObject_Mal5_21           = 0x800E0520; // type:WorldObjectPose size:0x30
+g_WorldObject_Mal6              = 0x800E0550; // type:WorldObjectModel size:0x38
 g_WorldObject_UnkPos            = 0x800E0590; // type:VECTOR3 size:0xC
 g_WorldObject_UnkRot            = 0x800E05A0; // type:SVECTOR3 size:0x8
-g_WorldObject_SavePad           = 0x800E05B0; // type:WorldObjectDesc size:0x30
-g_CommonWorldObjects            = 0x800E05F0; // type:WorldObject_0 size:0xA8
+g_WorldObject_SavePad           = 0x800E05B0; // type:WorldObjectPose size:0x30
+g_CommonWorldObjects            = 0x800E05F0; // type:WorldObjectModel size:0xA8
 D_800E0698                      = 0x800E0698; // type:D_800E0698 size:0x258
 D_800E08F0                      = 0x800E08F0; // size:0xC
 D_800E0930                      = 0x800E0930; // type:D_800E0930 size:0x54

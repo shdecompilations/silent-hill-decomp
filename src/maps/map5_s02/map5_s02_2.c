@@ -937,7 +937,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[0]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink0);
         }
     }
 
@@ -945,7 +945,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[1]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink1);
         }
     }
 
@@ -953,7 +953,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_RifleShells))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_RifleShells, g_CommonWorldObjectPoses[2]);
+            WorldObjects_CommonAdd(CommonPickupItemId_RifleShells, g_WorldObjectPose_RifleShells);
         }
     }
 
@@ -961,7 +961,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D68FC
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S02_HealthDrink2))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[3]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink2);
         }
     }
 }

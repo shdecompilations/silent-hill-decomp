@@ -1682,7 +1682,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_Ampoule0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_Ampoule, g_CommonWorldObjectPoses[0]);
+            WorldObjects_CommonAdd(CommonPickupItemId_Ampoule, g_WorldObjectPose_Ampoule0);
         }
     }
 
@@ -1690,7 +1690,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_ShotgunShells0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_ShotgunShells, g_CommonWorldObjectPoses[1]);
+            WorldObjects_CommonAdd(CommonPickupItemId_ShotgunShells, g_WorldObjectPose_ShotgunShells0);
         }
     }
 
@@ -1698,7 +1698,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_ShotgunShells1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_ShotgunShells, g_CommonWorldObjectPoses[2]);
+            WorldObjects_CommonAdd(CommonPickupItemId_ShotgunShells, g_WorldObjectPose_ShotgunShells1);
         }
     }
 
@@ -1706,7 +1706,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_FirstAidKit0))
         {
-            WorldObjects_Add(g_CommonWorldObjects, &g_CommonWorldObjectPoses[3].position, &g_CommonWorldObjectPoses[3].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_FirstAidKit, g_WorldObjectPose_FirstAidKit0);
         }
     }
 
@@ -1714,7 +1714,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_HandgunBullets0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_CommonWorldObjectPoses[4]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_WorldObjectPose_HandgunBullets0);
         }
     }
 
@@ -1722,7 +1722,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_HandgunBullets1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_CommonWorldObjectPoses[5]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_WorldObjectPose_HandgunBullets1);
         }
     }
 
@@ -1730,7 +1730,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_HandgunBullets2))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_CommonWorldObjectPoses[6]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_WorldObjectPose_HandgunBullets2);
         }
     }
 
@@ -1738,7 +1738,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_Ampoule1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_Ampoule, g_CommonWorldObjectPoses[7]);
+            WorldObjects_CommonAdd(CommonPickupItemId_Ampoule, g_WorldObjectPose_Ampoule1);
         }
     }
 
@@ -1746,7 +1746,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_HealthDrink0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[8]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink0);
         }
     }
 
@@ -1754,7 +1754,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_FirstAidKit1))
         {
-            WorldObjects_Add(g_CommonWorldObjects, &g_CommonWorldObjectPoses[9].position, &g_CommonWorldObjectPoses[9].rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_FirstAidKit, g_WorldObjectPose_FirstAidKit1);
         }
     }
 
@@ -1762,7 +1762,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_HealthDrink1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[10]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink1);
         }
     }
 }

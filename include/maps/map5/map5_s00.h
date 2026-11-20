@@ -66,14 +66,14 @@ extern u16 D_800DA578[];
 
 extern VECTOR3 D_800CB0CC;
 
-extern s_Pose D_800DAAD0;
-extern s_Pose D_800DAAE4;
-extern s_Pose D_800DAAF8;
-extern s_Pose D_800DAB0C;
-extern s_Pose D_800DAB20;
-extern s_Pose D_800DAB34;
-extern s_Pose D_800DAB48;
-extern s_Pose D_800DAB5C;
+extern s_Pose g_WorldObjectPose_ShotgunShells;
+extern s_Pose g_WorldObjectPose_HealthDrink0;
+extern s_Pose g_WorldObjectPose_HandgunBullets0;
+extern s_Pose g_WorldObjectPose_RifleShells;
+extern s_Pose g_WorldObjectPose_FirstAidKit0;
+extern s_Pose g_WorldObjectPose_FirstAidKit1;
+extern s_Pose g_WorldObjectPose_HealthDrink1;
+extern s_Pose g_WorldObjectPose_HandgunBullets1;
 
 void func_800CB0D8(void);
 

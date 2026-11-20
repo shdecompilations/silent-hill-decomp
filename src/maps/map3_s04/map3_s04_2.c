@@ -592,7 +592,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HealthDrink0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[0]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink0);
         }
     }
 
@@ -600,7 +600,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D3DA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S04_HandgunBullets))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_CommonWorldObjectPoses[1]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_WorldObjectPose_HandgunBullets);
         }
     }
 

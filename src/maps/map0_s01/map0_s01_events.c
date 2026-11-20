@@ -1108,7 +1108,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, D_800DE12C);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink0);
         }
     }
 
@@ -1116,7 +1116,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S01_HealthDrink1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, D_800DE140);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink1);
         }
     }
 

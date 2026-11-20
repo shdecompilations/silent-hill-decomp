@@ -60,7 +60,10 @@ extern s_WorldObjectModel        g_WorldObject5;
 extern s_WorldObjectModel        g_WorldObject6;
 extern s_WorldObjectPose      g_WorldObject7;
 extern s_WorldObjectModel   g_CommonWorldObjects[6];
-extern s_Pose g_CommonWorldObjectPoses[4];
+extern s_Pose g_WorldObjectPose_Ampoule;
+extern s_Pose g_WorldObjectPose_HealthDrink;
+extern s_Pose g_WorldObjectPose_HandgunBullets;
+extern s_Pose g_WorldObjectPose_ShotgunShells;
 extern VECTOR3 D_800DACD4;
 
 void func_800D57E8(void);

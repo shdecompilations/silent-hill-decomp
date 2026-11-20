@@ -549,9 +549,7 @@ u8                 D_800D177C;
 s8                 __pad_bss_800D177D[15];
 s_WorldObjectModel g_CommonWorldObjects[6];
 
-s_Pose g_CommonWorldObjectPoses[] = {
-    { { Q12(15.5f), Q12(-1.12f), Q12(25.25f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) } },
-};
+s_Pose g_WorldObjectPose_HealthDrink = { { Q12(15.5f), Q12(-1.12f), Q12(25.25f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) } };
 
 void Map_WorldObjectsInit(void)
 {
@@ -615,7 +613,7 @@ void Map_WorldObjectsUpdate(void) // 0x800CF938
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S01_HealthDrink))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_CommonWorldObjectPoses[0]);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink);
         }
     }
 }

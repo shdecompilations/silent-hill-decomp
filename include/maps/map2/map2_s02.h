@@ -14,7 +14,11 @@
 
 #include "maps/common/shared.h"
 
-extern s_Pose g_CommonWorldObjectPoses[5];
+extern s_Pose g_WorldObjectPose_HealthDrink0;
+extern s_Pose g_WorldObjectPose_HealthDrink1;
+extern s_Pose g_WorldObjectPose_HandgunBullets0;
+extern s_Pose g_WorldObjectPose_HandgunBullets1;
+extern s_Pose g_WorldObjectPose_HealthDrink2;
 extern VECTOR3 D_800ED938;
 extern q3_12 D_800F0B2C; // Time.
 extern s_WorldObjectModel   g_CommonWorldObjects[6];

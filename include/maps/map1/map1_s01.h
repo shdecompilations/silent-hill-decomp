@@ -33,7 +33,11 @@ extern s8 g_PianoKeys[11];
 
 extern s8 g_PianoKeySequence[5];
 
-extern s_Pose g_CommonWorldObjectPoses[5];
+extern s_Pose g_WorldObjectPose_HandgunBullets0;
+extern s_Pose g_WorldObjectPose_FirstAidKit;
+extern s_Pose g_WorldObjectPose_HealthDrink;
+extern s_Pose g_WorldObjectPose_HandgunBullets1;
+extern s_Pose g_WorldObjectPose_HandgunBullets2;
 
 extern s32 D_800DD57C;
 

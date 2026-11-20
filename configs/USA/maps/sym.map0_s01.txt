@@ -295,6 +295,8 @@ MAP_EVENTS                        = 0x800DDFB8;
 //--- PA: 0x014B54   VA: 0x800DE0CC   subsegment: data
 //----------------------------------------------------
 g_Cutscene_MapMsgAudioCmds        = 0x800DE0CC; // type:s16
+g_WorldObjectPose_HealthDrink0    = 0x800DE12C; // type:Pose size:0x14
+g_WorldObjectPose_HealthDrink1    = 0x800DE140; // type:Pose size:0x14
 g_WeatherParticle_MapIdx0         = 0x800DE160;
 g_WeatherParticle_MapIdx1         = 0x800DE164;
 sharedData_800DE170_0_s01         = 0x800DE170; // type:VECTOR3 size:0xC

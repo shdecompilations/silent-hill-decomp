@@ -27,7 +27,11 @@ extern s32 D_800F0358;
 extern s_WorldObjectModel   g_CommonWorldObjects[6]; // D_800F3E70
 extern s_WorldObjectPlacement g_WorldObject0; // D_800F3E10
 extern s_WorldObjectPose g_WorldObject1; // D_800F3E40
-extern s_Pose  g_CommonWorldObjectPoses[5]; // 0x800F018C
+extern s_Pose  g_WorldObjectPose_RifleShells0;
+extern s_Pose  g_WorldObjectPose_HandgunBullets;
+extern s_Pose  g_WorldObjectPose_FirstAidKit;
+extern s_Pose  g_WorldObjectPose_HealthDrink;
+extern s_Pose  g_WorldObjectPose_RifleShells1;
 
 extern u16 D_800F0174;
 extern s_FsImageDesc D_800F0178;

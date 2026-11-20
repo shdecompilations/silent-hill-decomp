@@ -539,7 +539,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D2E54
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S01_HealthDrink))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectAPos);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink);
         }
     }
 }

@@ -1319,7 +1319,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_ShotgunShells))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_ShotgunShells, D_800DAAD0);
+            WorldObjects_CommonAdd(CommonPickupItemId_ShotgunShells, g_WorldObjectPose_ShotgunShells);
         }
     }
 
@@ -1327,7 +1327,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_HealthDrink0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, D_800DAAE4);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink0);
         }
     }
 
@@ -1335,7 +1335,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_HandgunBullets0))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, D_800DAAF8);
+            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_WorldObjectPose_HandgunBullets0);
         }
     }
 
@@ -1343,7 +1343,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_RifleShells))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_RifleShells, D_800DAB0C);
+            WorldObjects_CommonAdd(CommonPickupItemId_RifleShells, g_WorldObjectPose_RifleShells);
         }
     }
 
@@ -1351,7 +1351,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_FirstAidKit0))
         {
-            WorldObjects_Add(g_CommonWorldObjects, &D_800DAB20.position, &D_800DAB20.rotation);
+            WorldObjects_CommonAdd(CommonPickupItemId_FirstAidKit, g_WorldObjectPose_FirstAidKit0);
         }
     }
 
@@ -1359,7 +1359,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_FirstAidKit1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_FirstAidKit, D_800DAB34);
+            WorldObjects_CommonAdd(CommonPickupItemId_FirstAidKit, g_WorldObjectPose_FirstAidKit1);
         }
     }
 
@@ -1367,7 +1367,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_HealthDrink1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, D_800DAB48);
+            WorldObjects_CommonAdd(CommonPickupItemId_HealthDrink, g_WorldObjectPose_HealthDrink1);
         }
     }
 
@@ -1375,7 +1375,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D84D8
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S00_HandgunBullets1))
         {
-            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, D_800DAB5C);
+            WorldObjects_CommonAdd(CommonPickupItemId_HandgunBullets, g_WorldObjectPose_HandgunBullets1);
         }
     }
 }

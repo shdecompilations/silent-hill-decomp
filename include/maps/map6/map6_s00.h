@@ -62,7 +62,9 @@ extern s_WorldObjectPlacement g_WorldObject_DrOpen1;
 extern s_WorldObjectPlacement g_WorldObject_DrOpen2;
 extern s_WorldObjectPlacement g_WorldObject_DrClose;
 extern s_WorldObjectModel     g_CommonWorldObjects[6];
-extern s_Pose      g_CommonWorldObjectPoses[3];
+extern s_Pose      g_WorldObjectPose_HealthDrink;
+extern s_Pose      g_WorldObjectPose_ShotgunShells;
+extern s_Pose      g_WorldObjectPose_FirstAidKit;
 
 /** @brief Handles a First Aid Kit, Health Drink, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);

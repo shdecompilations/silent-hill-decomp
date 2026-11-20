@@ -135,7 +135,14 @@ extern s_WorldObjectModel        g_WorldObject_SavePad;
 extern s_Pose      g_WorldObject_UnkPose0;
 extern s_WorldObjectPose      g_WorldObject_Diary;
 extern s_WorldObjectModel        g_CommonWorldObjects[6];
-extern s_Pose      g_CommonWorldObjectPoses[8]; // 0x800E15C8
+extern s_Pose      g_WorldObjectPose_RifleShells;
+extern s_Pose      g_WorldObjectPose_HandgunBullets0;
+extern s_Pose      g_WorldObjectPose_HealthDrink0;
+extern s_Pose      g_WorldObjectPose_HandgunBullets1;
+extern s_Pose      g_WorldObjectPose_ShotgunShells;
+extern s_Pose      g_WorldObjectPose_FirstAidKit;
+extern s_Pose      g_WorldObjectPose_HandgunBullets2;
+extern s_Pose      g_WorldObjectPose_HealthDrink1;
 
 extern s32 D_800E33A0;
 extern s16 D_800E33A4;

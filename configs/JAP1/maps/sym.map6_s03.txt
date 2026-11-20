@@ -229,7 +229,9 @@ MAP_EVENTS                         = 0x800DE414;
 //----------------------------------------------------
 //--- PA: 0x012904   VA: 0x800DE4D4   subsegment: data
 //----------------------------------------------------
-g_CommonWorldObjectPoses           = 0x800DE4D4; // type:WorldObjectPose size:0x3C
+g_WorldObjectPose_HealthDrink0     = 0x800DE4D4; // type:Pose size:0x14
+g_WorldObjectPose_HandgunBullets   = 0x800DE4E8; // type:Pose size:0x14
+g_WorldObjectPose_HealthDrink1     = 0x800DE4FC; // type:Pose size:0x14
 g_WeatherParticle_MapIdx0          = 0x800DE510;
 g_WeatherParticle_MapIdx1          = 0x800DE514;
 g_WeatherParticle_SpeedX           = 0x800DE518; // type:s32
@@ -271,16 +273,16 @@ sharedData_800E3A24_0_s00          = 0x800E2448; // type:s32
 sharedData_800E3A28_0_s00          = 0x800E244C; // type:s32
 sharedData_800E3A2C_0_s00          = 0x800E2450; // type:s32
 sharedData_800DE28C_5_s00          = 0x800E2454;
-g_WorldObject0                     = 0x800E2460; // type:WorldObject_0 size:0x38
+g_WorldObject0                     = 0x800E2460; // type:WorldObjectModel size:0x38
 D_800DFEA8                         = 0x800E2498;
 g_WorldObjectPos0                  = 0x800E24A0; // type:VECTOR3 size:0xC
 D_800DFEBC                         = 0x800E24AC;
-g_WorldObject1                     = 0x800E24B0; // type:WorldObjectDesc size:0x30
+g_WorldObject1                     = 0x800E24B0; // type:WorldObjectPose size:0x30
 D_800DFEF0                         = 0x800E24E0;
 D_800DFEF2                         = 0x800E24E2;
 D_800DFEF4                         = 0x800E24E4;
 D_800DFEF5                         = 0x800E24E5;
-g_WorldObject2                     = 0x800E24F0; // type:WorldObjectDescNoRot size:0x28
+g_WorldObject2                     = 0x800E24F0; // type:WorldObjectPlacement size:0x28
 D_800DFF28                         = 0x800E2518;
-g_CommonWorldObjects               = 0x800E2520; // type:WorldObject_0 size:0xA8
+g_CommonWorldObjects               = 0x800E2520; // type:WorldObjectModel size:0xA8
 D_800DFFD8                         = 0x800E25C8;

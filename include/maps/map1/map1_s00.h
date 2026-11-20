@@ -26,7 +26,11 @@ extern s_MapPoint2d MAP_POINTS[]; // 0x800DCCB8
 
 extern s32 D_800DD718;
 
-extern s_Pose           g_CommonWorldObjectPoses[5]; // 0x800DD71C
+extern s_Pose           g_WorldObjectPose_HandgunBullets0;
+extern s_Pose           g_WorldObjectPose_HandgunBullets1;
+extern s_Pose           g_WorldObjectPose_HandgunBullets2;
+extern s_Pose           g_WorldObjectPose_HealthDrink;
+extern s_Pose           g_WorldObjectPose_FirstAidKit;
 
 extern s_WorldObjectPlacement g_WorldObject0; // 0x800E0EF0
 

@@ -62,7 +62,11 @@ extern u8                     D_800D8490;
 extern s_WorldObjectPose      g_WorldObject_Blood1;
 extern s_WorldObjectPlacement g_WorldObject_Blood2;
 extern s_WorldObjectModel     g_CommonWorldObjects[6];
-extern s_Pose      g_CommonWorldObjectPoses[5];
+extern s_Pose      g_WorldObjectPose_FirstAidKit0;
+extern s_Pose      g_WorldObjectPose_HealthDrink;
+extern s_Pose      g_WorldObjectPose_HandgunBullets;
+extern s_Pose      g_WorldObjectPose_FirstAidKit1;
+extern s_Pose      g_WorldObjectPose_ShotgunShells;
 
 void func_800D151C(void);
 

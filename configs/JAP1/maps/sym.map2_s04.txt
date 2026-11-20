@@ -118,7 +118,13 @@ g_MapEventFuncs                  = 0x800D044C;
 //---------------------------------------------------------------
 MAP_MESSAGES                     = 0x800D0468; // type:u32 size:0x68
 MAP_EVENTS                       = 0x800D04D0;
-g_CommonWorldObjectPoses         = 0x800D0620; // type:Pose size:0x8C
+g_WorldObjectPose_ShotgunShells0 = 0x800D0620; // type:Pose size:0x14
+g_WorldObjectPose_HandgunBullets0 = 0x800D0634; // type:Pose size:0x14
+g_WorldObjectPose_HandgunBullets1 = 0x800D0648; // type:Pose size:0x14
+g_WorldObjectPose_ShotgunShells1 = 0x800D065C; // type:Pose size:0x14
+g_WorldObjectPose_HandgunBullets2 = 0x800D0670; // type:Pose size:0x14
+g_WorldObjectPose_HandgunBullets3 = 0x800D0684; // type:Pose size:0x14
+g_WorldObjectPose_RifleShells    = 0x800D0698; // type:Pose size:0x14
 
 
 
@@ -149,10 +155,10 @@ sharedData_800E0CB8_0_s00        = 0x800D1808; // type:u16
 sharedData_800E0CBA_0_s00        = 0x800D180A; // type:s8
 sharedData_800E39D8_0_s00        = 0x800D180C; // type:s32
 g_Player_MoveSpeed               = 0x800D1810; // type:s32
-g_WorldObject_SavePad0           = 0x800D181C; // type:WorldObjectDesc size:0x30
-g_WorldObject_Map                = 0x800D184C; // type:WorldObjectDesc size:0x30
+g_WorldObject_SavePad0           = 0x800D181C; // type:WorldObjectPose size:0x30
+g_WorldObject_Map                = 0x800D184C; // type:WorldObjectPose size:0x30
 D_800CF280                       = 0x800D187C;
-g_WorldObject_SavePad1           = 0x800D188C; // type:WorldObjectDesc size:0x30
-g_WorldObject_Shotgun            = 0x800D18BC; // type:WorldObjectDesc size:0x30
+g_WorldObject_SavePad1           = 0x800D188C; // type:WorldObjectPose size:0x30
+g_WorldObject_Shotgun            = 0x800D18BC; // type:WorldObjectPose size:0x30
 g_CommonWorldObjects             = 0x800D18EC; // size:0xA8
 D_800CF398                       = 0x800D1994;

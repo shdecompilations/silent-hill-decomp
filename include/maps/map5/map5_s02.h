@@ -66,7 +66,10 @@ extern s_WorldObjectModel   g_WorldObject_Drug;
 extern s_Pose g_WorldObject_UnkPose1[3];
 extern s_WorldObjectPose g_WorldObject_Obj00;
 extern s_WorldObjectModel   g_CommonWorldObjects[6];
-extern s_Pose  g_CommonWorldObjectPoses[4]; // 0x800D949C
+extern s_Pose  g_WorldObjectPose_HealthDrink0;
+extern s_Pose  g_WorldObjectPose_HealthDrink1;
+extern s_Pose  g_WorldObjectPose_RifleShells;
+extern s_Pose  g_WorldObjectPose_HealthDrink2;
 
 void func_800D45B4(s32 arg0);
 

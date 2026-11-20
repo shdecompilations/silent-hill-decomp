@@ -10,7 +10,9 @@
 
 #include "maps/common/shared.h"
 
-extern s_Pose                 g_CommonWorldObjectPoses[3];
+extern s_Pose                 g_WorldObjectPose_HealthDrink0;
+extern s_Pose                 g_WorldObjectPose_HandgunBullets;
+extern s_Pose                 g_WorldObjectPose_HealthDrink1;
 extern s_WorldObjectModel     g_WorldObject0[2];
 extern VECTOR3                g_WorldObjectPos0;
 extern s_WorldObjectPose      g_WorldObject1;

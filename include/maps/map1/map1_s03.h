@@ -42,7 +42,16 @@ extern s_FsImageDesc D_800E2004;
 extern VECTOR3 D_800E200C;
 extern s16 D_800E2018;
 extern q19_12 D_800E201C; // Time.
-extern s_Pose  g_CommonWorldObjectPoses[10]; // 0x800E2020
+extern s_Pose  g_WorldObjectPose_ShotgunShells0;
+extern s_Pose  g_WorldObjectPose_HandgunBullets0;
+extern s_Pose  g_WorldObjectPose_HealthDrink0;
+extern s_Pose  g_WorldObjectPose_HandgunBullets1;
+extern s_Pose  g_WorldObjectPose_HandgunBullets2;
+extern s_Pose  g_WorldObjectPose_ShotgunShells1;
+extern s_Pose  g_WorldObjectPose_HandgunBullets3;
+extern s_Pose  g_WorldObjectPose_HealthDrink1;
+extern s_Pose  g_WorldObjectPose_HealthDrink2;
+extern s_Pose  g_WorldObjectPose_FirstAidKit;
 extern s32 D_800E20E8; // Angle.
 extern s16 D_800E20EC;
 extern u8 D_800E20EE;
