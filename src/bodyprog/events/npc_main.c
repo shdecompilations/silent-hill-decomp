@@ -65,14 +65,14 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
     s32                groupCharaId1;
     s32                npcIdx;
     s32                i;
-    s32*               ovlEnemiesStatePtr;
+    s32*               mapEnemyStates;
     s_SpawnInfo*       curCharaSpawn;
     s_SubCharacter*    chara;
-    VECTOR3*           pos;
+    VECTOR3*           curSpawnPos;
 
-    npcIdx             = 0;
-    curCharaSpawn      = g_MapOverlayHdr.charaSpawnInfos[0];
-    ovlEnemiesStatePtr = &g_SavegamePtr->mapEnemyStates[g_SavegamePtr->mapIdx];
+    npcIdx         = 0;
+    curCharaSpawn  = &g_MapOverlayHdr.charaSpawnInfos[0][0];
+    mapEnemyStates = &g_SavegamePtr->mapEnemyStates[g_SavegamePtr->mapIdx];
 
     if (cond == false)
     {
@@ -87,6 +87,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
     groupCharaId0 = g_MapOverlayHdr.charaGroupIds[0];
     groupCharaId1 = g_MapOverlayHdr.charaGroupIds[1];
 
+    // Run through character spawns. TODO: Demagic 32, the size of `g_MapOverlayHdr.charaSpawnInfos`.
     for (i = 0; i < 32 && g_VBlanks < 4; i++, curCharaSpawn++)
     {
         if (g_SysWork.npcFlags == GET_NPC_FLAG(g_SysWork.npcFlagId))
@@ -94,48 +95,66 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
             break;
         }
 
-        pos = (VECTOR3*)curCharaSpawn;
-
-        if (!(g_SysWork.sysFlags & SysFlag_NoEnemySpawn) &&
-            HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
-            curCharaSpawn->flags != CharaSpawnFlag_None &&
-            g_SavegamePtr->gameDifficulty >= curCharaSpawn->gameDifficultyMin &&
-            func_8008F914(curCharaSpawn->positionX, curCharaSpawn->positionZ) &&
-            !Math_Distance2dCheck(&PLAYER_CHARA().position, pos, Q12(22.0f)) &&
-            (!cond || Math_Distance2dCheck(&PLAYER_CHARA().position, pos, Q12(20.0f))))
+        // Check spawn flags.
+        if ((g_SysWork.sysFlags & SysFlag_NoEnemySpawn) ||
+            !HAS_FLAG(mapEnemyStates, i)                ||
+             HAS_FLAG(g_SysWork.field_228C, i)          ||
+            curCharaSpawn->flags == CharaSpawnFlag_None)
         {
-            while (HAS_FLAG(&g_SysWork.npcFlags, npcIdx))
-            {
-                npcIdx++;
-            }
-
-            bzero(&NPC_CHARA(npcIdx), sizeof(s_SubCharacter));
-
-            if (curCharaSpawn->charaId > Chara_None)
-            {
-                NPC_CHARA(npcIdx).model.charaId = curCharaSpawn->charaId;
-            }
-            else
-            {
-                NPC_CHARA(npcIdx).model.charaId = (i < 16) ? groupCharaId0 : groupCharaId1;
-            }
-
-            NPC_CHARA(npcIdx).attackingNpcIdx    = i;
-            NPC_CHARA(npcIdx).model.controlState = 0;
-            NPC_CHARA(npcIdx).model.stateStep    = curCharaSpawn->flags;
-            NPC_CHARA(npcIdx).position.vx        = curCharaSpawn->positionX;
-            NPC_CHARA(npcIdx).position.vz        = curCharaSpawn->positionZ;
-
-            Collision_SurfaceGet(&surface, curCharaSpawn->positionX, curCharaSpawn->positionZ);
-            NPC_CHARA(npcIdx).position.vy = surface.floorHeight;
-            NPC_CHARA(npcIdx).rotation.vy = Q8_TO_Q12(curCharaSpawn->rotationY);
-
-            SET_FLAG(&g_SysWork.npcFlags, npcIdx);
-            SET_FLAG(g_SysWork.field_228C, i);
-
-            chara                    = &NPC_CHARA(npcIdx);
-            chara->model.anim.flags |= AnimFlag_Visible;
+            continue;
         }
+
+        // Check minimum game difficulty.
+        if (g_SavegamePtr->gameDifficulty < curCharaSpawn->gameDifficultyMin)
+        {
+            continue;
+        }
+
+        // Check proximity to player.
+        curSpawnPos = (VECTOR3*)curCharaSpawn;
+        if (!Demo_ActiveChunkProximityCheck(curCharaSpawn->positionX, curCharaSpawn->positionZ) ||
+            Math_Distance2dCheck(&PLAYER_CHARA().position, curSpawnPos, Q12(22.0f))             ||
+            (cond && !Math_Distance2dCheck(&PLAYER_CHARA().position, curSpawnPos, Q12(20.0f))))
+        {
+            continue;
+        }
+
+        while (HAS_FLAG(&g_SysWork.npcFlags, npcIdx))
+        {
+            npcIdx++;
+        }
+
+        // Clear NPC slot.
+        bzero(&NPC_CHARA(npcIdx), sizeof(s_SubCharacter));
+
+        // Set character ID.
+        if (curCharaSpawn->charaId > Chara_None)
+        {
+            NPC_CHARA(npcIdx).model.charaId = curCharaSpawn->charaId;
+        }
+        else
+        {
+            NPC_CHARA(npcIdx).model.charaId = (i < ARRAY_SIZE(g_MapOverlayHdr.charaSpawnInfos[0])) ? groupCharaId0 :
+                                                                                                     groupCharaId1;
+        }
+
+        // Set states.
+        NPC_CHARA(npcIdx).attackingNpcIdx    = i;
+        NPC_CHARA(npcIdx).model.controlState = 0;
+        NPC_CHARA(npcIdx).model.stateStep    = curCharaSpawn->flags;
+
+        // Set position.
+        NPC_CHARA(npcIdx).position.vx = curCharaSpawn->positionX;
+        NPC_CHARA(npcIdx).position.vz = curCharaSpawn->positionZ;
+        Collision_SurfaceGet(&surface, curCharaSpawn->positionX, curCharaSpawn->positionZ);
+        NPC_CHARA(npcIdx).position.vy = surface.floorHeight;
+        NPC_CHARA(npcIdx).rotation.vy = Q8_TO_Q12(curCharaSpawn->rotationY);
+
+        // Set flags.
+        SET_FLAG(&g_SysWork.npcFlags, npcIdx);
+        SET_FLAG(g_SysWork.field_228C, i);
+        chara                    = &NPC_CHARA(npcIdx);
+        chara->model.anim.flags |= AnimFlag_Visible;
     }
 
     #undef GET_NPC_FLAG

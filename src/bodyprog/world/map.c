@@ -1079,7 +1079,7 @@ bool WorldMap_NextChunkLoadCheck(void) // 0x80043830
     return false;
 }
 
-bool WorldMap_CloseChunkEdgeCheck(q19_12 posX, q19_12 posZ) // 0x8004393C
+bool WorldMap_ActiveChunkProximityCheck(q19_12 posX, q19_12 posZ) // 0x8004393C
 {
     s32 chunkX;
     s32 chunkZ;

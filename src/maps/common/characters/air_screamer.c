@@ -9916,7 +9916,7 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
         airScreamer->position.vz           = newPosZ;
         airScreamerProps.targetPosition.vy = airScreamer->position.vy;
 
-        if (func_8008F914(newPosX, newPosZ) && Collision_FloorTypeGet(newPosX, newPosZ) != FloorType_Default &&
+        if (Demo_ActiveChunkProximityCheck(newPosX, newPosZ) && Collision_FloorTypeGet(newPosX, newPosZ) != FloorType_Default &&
             sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition, NULL))
         {
             break;
@@ -10004,7 +10004,7 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
         curPosY = Collision_FloorHeightGet(curPosX, curPosZ) - Q12(2.0f);
 
         if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
-            !func_8008F914(curPosX, curPosZ) || Collision_FloorTypeGet(curPosX, curPosZ) == FloorType_Default)
+            !Demo_ActiveChunkProximityCheck(curPosX, curPosZ) || Collision_FloorTypeGet(curPosX, curPosZ) == FloorType_Default)
         {
             continue;
         }
@@ -10069,7 +10069,7 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
         curPosY = Collision_FloorHeightGet(curPosX, curPosZ) - Q12(2.0f);
 
         if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
-            !func_8008F914(curPosX, curPosZ) || Collision_FloorTypeGet(curPosX, curPosZ) == FloorType_Default)
+            !Demo_ActiveChunkProximityCheck(curPosX, curPosZ) || Collision_FloorTypeGet(curPosX, curPosZ) == FloorType_Default)
         {
             continue;
         }

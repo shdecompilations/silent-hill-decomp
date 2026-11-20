@@ -46,15 +46,15 @@ void Chara_BonesInit(s32 modelAnimsIdx);
  * @param posX Z spawn position.
  * @param rotY Y spawn rotation.
  * @param stateStep Character model state step to set.
- * @return @unused Spawned NPC slot index.
+ * @return Spawned NPC slot index.
  */
 s32 Chara_Spawn(enum _CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep);
 
 /** @brief Clears character ID in a character model.
  *
  * @param chara Character to update.
- * @param unused0 @unused
- * @param unused1 @unused
+ * @param unused0 Always passed as 0.
+ * @param unused1 Always passed as 0.
  */
 void Chara_ModelCharaIdClear(struct _SubCharacter* chara, s32 unused0, s32 unused1);
 

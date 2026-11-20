@@ -193,8 +193,14 @@ bool WorldMap_ActiveModelsLoadStateCheck(void);
  */
 bool WorldMap_NextChunkLoadCheck(void);
 
-/** Checks if a position is within the current map chunk. */
-bool WorldMap_CloseChunkEdgeCheck(q19_12 posX, q19_12 posZ);
+/** @brief Checks if a position is inside the active map chunk, accounting for differences between interior and
+ * exterior chunk handling.
+ *
+ * @param posX X position.
+ * @param posZ Z position.
+ * @return `true` if the position is inside the active chunk, `false` otherwise.
+ */
+bool WorldMap_ActiveChunkProximityCheck(q19_12 posX, q19_12 posZ);
 
 void WorldMap_ChunksDraw(GsOT* ot, s32 otShift);
 

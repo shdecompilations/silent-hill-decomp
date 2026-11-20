@@ -251,7 +251,7 @@ void PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                         nurse->model.stateStep    = 0;
                     }
 
-                    if (!nurse->health)
+                    if (nurse->health == Q12(0.0f))
                     {
                         Savegame_EnemyStateUpdate(nurse);
                     }
@@ -270,7 +270,7 @@ void PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 break;
 
             case 1:
-                if (nurse->health)
+                if (nurse->health != Q12(0.0f))
                 {
                     PuppetNurse_SfxPlay(nurse, 1);
                     nurse->health = Q12(0.0f);

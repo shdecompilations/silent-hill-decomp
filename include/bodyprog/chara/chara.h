@@ -150,7 +150,7 @@ typedef struct _SubCharacter
     /* 0x3C */ q3_12             headingAngle;
     /* 0x3E */ s16               flags;           /** `e_CharaFlags` */
     /* 0x40 */ s8                attackingNpcIdx; // Maybe a union? In player: Index of the NPC attacking the player. Spawn flags for NPCs, but only sometimes?
-                                                  // In NPCs: Unknown. `Game_NpcRoomInitSpawn` sugests it indicates the NPC index in `s_Savegame::mapEnemyStates`.
+                                                  // In NPCs: Unknown. `Game_NpcRoomInitSpawn` suggests it indicates the NPC index in `s_Savegame::mapEnemyStates`.
     /* 0x41 */ s8                attackReceived;  // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
                // 2 bytes of padding.
     /* 0x44 */ s_CharaAttack     attack;

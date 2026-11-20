@@ -133,6 +133,6 @@ bool Demo_PresentIntervalUpdate(void);
 
 bool Demo_GameRandSeedSet(void);
 
-bool func_8008F914(s32 posX, s32 posZ);
+bool Demo_ActiveChunkProximityCheck(s32 posX, s32 posZ);
 
 #endif

@@ -607,7 +607,7 @@ WorldMap_FreeChunkGet                        = 0x800435E4; // type:func
 WorldMap_ChunkLoadStart                      = 0x800436D8; // type:func
 WorldMap_ActiveModelsLoadStateCheck          = 0x80043740; // type:func
 WorldMap_NextChunkLoadCheck                  = 0x80043830; // type:func
-WorldMap_CloseChunkEdgeCheck                 = 0x8004393C;
+WorldMap_ActiveChunkProximityCheck           = 0x8004393C;
 WorldMap_ChunksDraw                          = 0x80043A24;
 WorldMap_ChunkPositionMatchCheck             = 0x80043B34; // type:func
 WorldMap_TextureLoadedCheck                  = 0x80043B70; // type:func
@@ -1257,6 +1257,7 @@ Demo_Update                                  = 0x8008F5D8; // type:func
 Demo_ControllerDataUpdate                    = 0x8008F7CC; // type:func
 Demo_PresentIntervalUpdate                   = 0x8008F87C; // type:func
 Demo_GameRandSeedSet                         = 0x8008F8A8; // type:func
+Demo_ActiveChunkProximityCheck               = 0x8008F914; // type:func
 
 //----------------------------------------------------------------
 //--- PA: 0x06ADEC   VA: 0x8008F94C   subsegment: c, items/ranking

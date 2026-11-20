@@ -417,10 +417,10 @@ typedef struct _BloodSplat
 typedef struct _SpawnInfo
 {
     /* 0x0   */ q19_12 positionX;
-    /* 0x4   */ s8     charaId; /** `e_CharaId` */
+    /* 0x4   */ s8     charaId;               /** `e_CharaId` */
     /* 0x5   */ q0_8   rotationY;
     /* 0x6   */ s8     flags;                 /** `e_SpawnFlags` | Copied to `stateStep` in `s_Model`, with `controlState = 0`. */
-    /* 0x7+0 */ s32    gameDifficultyMin : 4; /** `e_GameDifficulty` | Minimum difficulty required for successful spawn. */
+    /* 0x7+0 */ s32    gameDifficultyMin : 4; /** `e_GameDifficulty` | Minimum difficulty required to spawn. */
     /* 0x8   */ q19_12 positionZ;
 } s_SpawnInfo;
 STATIC_ASSERT_SIZEOF(s_SpawnInfo, 12);

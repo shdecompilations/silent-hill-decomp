@@ -1,6 +1,12 @@
 #ifndef _BODYPROG_EVENTS_NPCMAIN_H
 #define _BODYPROG_EVENTS_NPCMAIN_H
 
+/** @brief Marks an enemy character as incapable of respawning.
+ * The game difficulty must be set to easy or normal. On higher difficulties, the flag has a 0.6 probability of
+ * being set.
+ *
+ * @param chara Character to mark as incapable of respawning.
+ */
 void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
 
 /** @brief Updates character's damage flag to reflect if damage was taken.

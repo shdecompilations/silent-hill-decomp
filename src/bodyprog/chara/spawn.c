@@ -1,7 +1,5 @@
 #include "bodyprog/game.h"
-#include "inline_no_dmpsx.h"
 
-#include <psyq/libpad.h>
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
@@ -9,10 +7,7 @@
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/game_boot/chara_anim.h"
-#include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/screen/draw.h"
-#include "bodyprog/sound/sd_call.h"
 #include "main/fs_queue.h"
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* boneCoords, s8 forceFree,
@@ -45,7 +40,6 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
     s32                activeSpawnFlags;
     s_SubCharacter*    chara;
 
-    // TODO: Weird code, check.
     if (charaId <= CHARA_LAST_ENEMY_ID && spawnFlags < (1 << 6))
     {
         activeSpawnFlags = CharaSpawnFlag_0 | CharaSpawnFlag_1 | CharaSpawnFlag_2 | CharaSpawnFlag_3 | CharaSpawnFlag_4;
@@ -109,14 +103,16 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
         // Set registered NPC flag.
         SET_FLAG(&g_SysWork.npcFlags, i);
 
-        // Set NPC default control state and start position.
+        // Set default control state.
         NPC_CHARA(i).model.controlState = 0;
         NPC_CHARA(i).model.stateStep    = stateStep;
-        NPC_CHARA(i).position.vx        = posX;
+        
+        // Set default start position.
+        NPC_CHARA(i).position.vx = posX;
         Collision_SurfaceGet(&surface, posX, posZ);
-        NPC_CHARA(i).position.vy        = surface.floorHeight;
-        NPC_CHARA(i).position.vz        = posZ;
-        NPC_CHARA(i).rotation.vy        = rotY;
+        NPC_CHARA(i).position.vy = surface.floorHeight;
+        NPC_CHARA(i).position.vz = posZ;
+        NPC_CHARA(i).rotation.vy = rotY;
 
         // Set visible.
         chara                    = &NPC_CHARA(i);
@@ -129,13 +125,14 @@ s32 Chara_Spawn(e_CharaId charaId, s32 spawnFlags, q19_12 posX, q19_12 posZ, q3_
     return ARRAY_SIZE(g_SysWork.npcs);
 }
 
-void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unuse1) // 0x80088F94
+void Chara_ModelCharaIdClear(s_SubCharacter* chara, s32 unused0, s32 unused1) // 0x80088F94
 {
     if (chara == NULL)
     {
         return;
     }
 
+    // Clear enemy character flag.
     if (chara->model.charaId <= CHARA_LAST_ENEMY_ID)
     {
         CLEAR_FLAG(g_SysWork.field_228C, chara->attackingNpcIdx);

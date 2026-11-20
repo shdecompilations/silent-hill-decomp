@@ -439,11 +439,11 @@ bool Demo_GameRandSeedSet(void) // 0x8008F8A8
     }
 }
 
-bool func_8008F914(s32 posX, s32 posZ)
+bool Demo_ActiveChunkProximityCheck(s32 posX, s32 posZ)
 {
     if (g_SysWork.sysFlags & SysFlag_DemoActive)
     {
-        return WorldMap_CloseChunkEdgeCheck(posX, posZ);
+        return WorldMap_ActiveChunkProximityCheck(posX, posZ);
     }
 
     return true;
