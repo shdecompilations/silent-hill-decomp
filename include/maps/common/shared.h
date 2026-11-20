@@ -92,29 +92,6 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3 field_0; // Rotation?
-    s16     field_C;
-    s16     field_E;
-    s8      field_10;
-    u8      field_11;
-    u8      field_12;
-    s8      field_13;
-} s_800E34FC;
-STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
-
-typedef struct
-{
-    VECTOR3  field_0;
-    SVECTOR3 field_C; // 2D position or offset.
-    u8       unk_12[2];
-    u8       field_14;
-    u8       field_15;
-    u8       field_16; // Packed angle?
-} s_800E330C;
-STATIC_ASSERT_SIZEOF(s_800E330C, 24);
-
-typedef struct
-{
     s32   field_0;
     s32   field_4;
     q3_12 field_8; // Y offset.
@@ -257,10 +234,6 @@ extern VECTOR3          g_BgmAPU_LayerLimits3;
 extern s16 sharedData_800D5880_1_s05;
 
 extern s_MapOverlayHdr_5C sharedData_800D8568_1_s05;
-
-extern s_800E330C sharedData_800E330C_0_s00[20];
-
-extern s_800E34FC sharedData_800E34FC_0_s00[60];
 
 extern const char* MAP_MESSAGES[];
 

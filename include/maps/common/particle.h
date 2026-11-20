@@ -1,9 +1,6 @@
 #ifndef _MAPS_COMMON_PARTICLE_H
 #define _MAPS_COMMON_PARTICLE_H
 
-// TODO: Temporary include.
-#include "maps/common/shared.h"
-
 #define SNOW_COUNT_LIGHT_MAX 300
 
 #if defined(MAP7_S03)
@@ -76,6 +73,33 @@ typedef struct
 {
     s_func_800CC8FC_0 field_0[8];
 } s_func_800CC8FC;
+
+typedef struct
+{
+    VECTOR3 field_0; // Rotation?
+    s16     field_C;
+    s16     field_E;
+    s8      field_10;
+    u8      field_11;
+    u8      field_12;
+    s8      field_13;
+} s_800E34FC;
+STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
+
+typedef struct
+{
+    VECTOR3  field_0;
+    SVECTOR3 field_C; // 2D position or offset.
+    u8       unk_12[2];
+    u8       field_14;
+    u8       field_15;
+    u8       field_16; // Packed angle?
+} s_800E330C;
+STATIC_ASSERT_SIZEOF(s_800E330C, 24);
+
+extern s_800E330C sharedData_800E330C_0_s00[20];
+
+extern s_800E34FC sharedData_800E34FC_0_s00[60];
 
 extern s_WeatherParticle g_WeatherParticle_Buffer[WEATHER_PARTICLE_COUNT_MAX];
 
