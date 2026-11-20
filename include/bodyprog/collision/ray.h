@@ -1,8 +1,12 @@
 #ifndef _BODYPROG_COLLISION_RAY_H
 #define _BODYPROG_COLLISION_RAY_H
 
-#include "bodyprog/chara/chara.h"
-#include "bodyprog/formats/ipd.h"
+struct _IpdCollisionData;
+struct _IpdCylinder;
+struct _IpdPolygon;
+struct _IpdShapeAlloc;
+struct _IpdSurface;
+struct _SubCharacter;
 
 // Used by `func_8006E490` and `func_8006E150`.
 typedef enum _OrientationFlags
@@ -67,7 +71,7 @@ typedef struct _RayQuery
     /* 0x18 */ s8               unk_18[4];
     /* 0x1C */ q7_8             floorHeight;
     /* 0x1E */ s8               __pad_1E[2];
-    /* 0x20 */ s_SubCharacter*  character;
+    /* 0x20 */ struct _SubCharacter*  character;
     /* 0x24 */ q7_8             offsetX;
     /* 0x26 */ q7_8             offsetZ;
     /* 0x28 */ s32              floorType; /** `e_FloorType` */
@@ -85,7 +89,7 @@ typedef struct _RayQuery
     /* 0x5E */ s16              field_5E;
     /* 0x60 */ s16              field_60;
     /* 0x62 */ s8               __pad_62[2];
-    /* 0x64 */ s_SubCharacter** collidableCharas;
+    /* 0x64 */ struct _SubCharacter** collidableCharas;
     /* 0x68 */ s32              collidableCharaCount; /** `collidableCharas` array size. */
     /* 0x6C */ s_RayQuery_6C    field_6C;
     /* 0x7C */ s32              cellCountX;
@@ -103,7 +107,7 @@ typedef struct _RayTrace
     /* 0x1  */ u8              floorType;  /** `e_FloorType` */
     /* 0x2  */ s8              __pad_2[2];
     /* 0x4  */ VECTOR3         target;     /** Q19.12 */
-    /* 0x10 */ s_SubCharacter* character;
+    /* 0x10 */ struct _SubCharacter* character;
     /* 0x14 */ q19_12          hitDistance;
     /* 0x18 */ q19_12          floorHeight;
     /* 0x1C */ q3_12           headingAngle;
@@ -127,7 +131,7 @@ bool Ray_GeomTraceGet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* to)
  * @return `true` if the ray hit an obstacle, `false` otherwise.
  */
 bool Ray_GeomAndCharaTraceGet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset,
-                              const s_SubCharacter* excludedChara);
+                              const struct _SubCharacter* excludedChara);
 
 /** @brief Sets a missed collision ray trace.
  *
@@ -148,33 +152,33 @@ void Ray_MissSet(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset, 
  * @return `true` if there is an obstacle, `false` otherwise.
  */
 bool Ray_GeomAndCharaTraceGetAlt(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset,
-                                 s_SubCharacter* excludedChara);
+                                 struct _SubCharacter* excludedChara);
 
 bool func_8006DC18(s_RayTrace* trace, const VECTOR3* from, const VECTOR3* offset);
 
 bool Ray_TraceSetup(s_RayQuery* query, bool ignoreFloors, q7_8 radiusOffset, const VECTOR3* from, const VECTOR3* offset,
                     q19_12 unusedX, q19_12 unusedZ,
-                    s_SubCharacter** collCharas, s32 collCharaCount);
+                    struct _SubCharacter** collCharas, s32 collCharaCount);
 
 bool Ray_TraceRun(s_RayTrace* trace, s_RayQuery* query);
 
 // Fills `query` with info.
-void func_8006E0AC(s_RayQuery* query, const s_IpdCollisionData* collData);
+void func_8006E0AC(s_RayQuery* query, const struct _IpdCollisionData* collData);
 
 void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
-void func_8006E53C(s_RayQuery* query, s_IpdShapeAlloc* shapeAlloc, s_IpdCollisionData* collData);
+void func_8006E53C(s_RayQuery* query, struct _IpdShapeAlloc* shapeAlloc, struct _IpdCollisionData* collData);
 
-void func_8006E78C(s_RayQuery* query, s_IpdPolygon* polygon, SVECTOR3* splitVerts, s_IpdSurface* surfaces, bool hasSurface);
+void func_8006E78C(s_RayQuery* query, struct _IpdPolygon* polygon, SVECTOR3* splitVerts, struct _IpdSurface* surfaces, bool hasSurface);
 
-void func_8006EB8C(s_RayQuery* query, s_IpdCylinder* cylinder);
+void func_8006EB8C(s_RayQuery* query, struct _IpdCylinder* cylinder);
 
 // Fills ray hit data?
-void func_8006EE0C(s_RayQuery_6C* arg0, bool ignoreFloors, const s_SubCharacter* chara);
+void func_8006EE0C(s_RayQuery_6C* arg0, bool ignoreFloors, const struct _SubCharacter* chara);
 
 // Sets hit character ray query?
-void func_8006EEB8(s_RayQuery* query, s_SubCharacter* chara);
+void func_8006EEB8(s_RayQuery* query, struct _SubCharacter* chara);
 
 #endif

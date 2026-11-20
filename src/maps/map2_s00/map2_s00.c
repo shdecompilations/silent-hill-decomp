@@ -4,10 +4,11 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/data.h"
-#include "bodyprog/world/effects.h"
+#include "bodyprog/formats/dms.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
+#include "bodyprog/world/effects.h"
 #include "main/rng.h"
 #include "maps/map2/map2_s00.h"
 #include "maps/common/particle.h"

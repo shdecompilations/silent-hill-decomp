@@ -1,8 +1,6 @@
 #ifndef _BODYPROG_CHARA_DMS_H
 #define _BODYPROG_CHARA_DMS_H
 
-#include "bodyprog/formats/dms.h"
-
 /** @brief DMS cutscene segment states. */
 typedef enum _DmsSegmentState
 {

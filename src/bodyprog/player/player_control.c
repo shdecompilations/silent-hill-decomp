@@ -7,21 +7,18 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/player/player_control.h"
 #include "bodyprog/chara/bone.h"
+#include "bodyprog/collision/ray.h"
 #include "bodyprog/events/npc_main.h"
-#include "bodyprog/world/effects.h"
 #include "bodyprog/items/item_screens.h"
-#include "bodyprog/screen/data.h"
-#include "bodyprog/screen/draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "bodyprog/player/weapon_anim_data.h"
+#include "bodyprog/screen/data.h"
+#include "bodyprog/screen/draw.h"
 #include "bodyprog/sound/sd_call.h"
 #include "bodyprog/sys/joy.h"
+#include "bodyprog/world/effects.h"
 #include "main/rng.h"
-
-// ========================================
-// GLOBAL VARIABLES
-// ========================================
 
 // Collision box top extent + Y offset. TODO: Use a struct?
 static q3_12 g_Harry_FallForwardAnimBoxOffsets[][2] = {

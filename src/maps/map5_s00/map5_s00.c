@@ -5,6 +5,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/data.h"
+#include "bodyprog/formats/dms.h"
 #include "bodyprog/gfx/env_effects.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"

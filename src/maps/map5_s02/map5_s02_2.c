@@ -1,14 +1,17 @@
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/data.h"
-#include "bodyprog/world/effects.h"
+#include "bodyprog/formats/dms.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
+#include "bodyprog/world/effects.h"
 #include "main/rng.h"
 #include "maps/map5/map5_s02.h"
 #include "maps/common/characters/kaufmann.h"
-#include "inline_no_dmpsx.h"
-#include <psyq/gtemac.h>
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/stalker.h"

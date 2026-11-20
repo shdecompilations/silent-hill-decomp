@@ -1,8 +1,9 @@
 #ifndef _BODYPROG_MAP_TERRAIN_H
 #define _BODYPROG_MAP_TERRAIN_H
 
-#include "bodyprog/formats/ipd.h"
-#include "bodyprog/formats/lm.h"
+struct _IpdCollisionData;
+struct _IpdHeader;
+struct _LmHeader;
 
 #define ACTIVE_CHUNK_COUNT_MAX            4
 #define ACTIVE_CHUNK_TEXTURE_COUNT_MAX    10
@@ -32,15 +33,15 @@ typedef enum _WorldMapLoadState
 /** @brief Map chunk. */
 typedef struct _MapChunk
 {
-    /* 0x0  */ s_IpdHeader* ipdHdr;
-    /* 0x4  */ s32          queueIdx;
-    /* 0x8  */ s16          chunkX;
-    /* 0xA  */ s16          chunkZ;
-    /* 0xC  */ q19_12       paddedDistanceToEdge;
-    /* 0x10 */ q19_12       projPaddedDistanceToEdge;
-    /* 0x14 */ u8           materialCount;
+    /* 0x0  */ struct _IpdHeader* ipdHdr;
+    /* 0x4  */ s32                queueIdx;
+    /* 0x8  */ s16                chunkX;
+    /* 0xA  */ s16                chunkZ;
+    /* 0xC  */ q19_12             paddedDistanceToEdge;
+    /* 0x10 */ q19_12             projPaddedDistanceToEdge;
+    /* 0x14 */ u8                 materialCount;
              // 3 bytes of padding.
-    /* 0x18 */ s32          outsideCount;
+    /* 0x18 */ s32                outsideCount;
 } s_MapChunk;
 STATIC_ASSERT_SIZEOF(s_MapChunk, 28);
 
@@ -74,32 +75,32 @@ STATIC_ASSERT_SIZEOF(s_ChunkTextures, 328);
 /** @brief Global PLM model. */
 typedef struct _GlobalPlm
 {
-    /* 0x0 */ s_LmHeader* lmHdr; // TODO: Should be an array according to `WorldMap_ChunkPropertiesSet` call?
-    /* 0x4 */ s32         fileIdx;
-    /* 0x8 */ s32         queueIdx;
+    /* 0x0 */ struct _LmHeader* lmHdr; // TODO: Should be an array according to `WorldMap_ChunkPropertiesSet` call?
+    /* 0x4 */ s32               fileIdx;
+    /* 0x8 */ s32               queueIdx;
 } s_GlobalPlm;
 
 /** @brief World map workspace. */
 typedef struct _WorldMapWork
 {
-    /* 0x0   */ s_IpdCollisionData collisionData; // Default chunk collision data?
-    /* 0x134 */ s32                textureFileIdx;
-    /* 0x138 */ s_GlobalPlm        globalPlm;
-    /* 0x144 */ char               mapTag[4];
-    /* 0x148 */ s32                mapTagSize;
-    /* 0x14C */ s32                ipdFileIdx;
-    /* 0x150 */ s_IpdHeader*       chunkBuffer;
-    /* 0x154 */ s32                chunkBufferSize;
-    /* 0x158 */ s32                activeChunkCount;
-    /* 0x15C */ s_MapChunk         activeChunks[ACTIVE_CHUNK_COUNT_MAX];
-    /* 0x1CC */ s_ChunkColumn      chunksGrid[19];
-    /* 0x42C */ s_ChunkColumn*     chunksGridCenter; // TODO: All access to this variable relies on hacks.
-    /* 0x430 */ s_ChunkTextures    chunkTextures;
-    /* 0x578 */ q19_12             positionX;
-    /* 0x57C */ q19_12             positionZ;
-    /* 0x580 */ s32                chunkX;
-    /* 0x584 */ s32                chunkZ;
-    /* 0x588 */ bool               isExterior;
+    /* 0x0   */ struct _IpdCollisionData collisionData; // Default chunk collision data?
+    /* 0x134 */ s32                      textureFileIdx;
+    /* 0x138 */ s_GlobalPlm              globalPlm;
+    /* 0x144 */ char                     mapTag[4];
+    /* 0x148 */ s32                      mapTagSize;
+    /* 0x14C */ s32                      ipdFileIdx;
+    /* 0x150 */ struct _IpdHeader*       chunkBuffer;
+    /* 0x154 */ s32                      chunkBufferSize;
+    /* 0x158 */ s32                      activeChunkCount;
+    /* 0x15C */ s_MapChunk               activeChunks[ACTIVE_CHUNK_COUNT_MAX];
+    /* 0x1CC */ s_ChunkColumn            chunksGrid[19];
+    /* 0x42C */ s_ChunkColumn*           chunksGridCenter; // TODO: All access to this variable relies on hacks.
+    /* 0x430 */ s_ChunkTextures          chunkTextures;
+    /* 0x578 */ q19_12                   positionX;
+    /* 0x57C */ q19_12                   positionZ;
+    /* 0x580 */ s32                      chunkX;
+    /* 0x584 */ s32                      chunkZ;
+    /* 0x588 */ bool                     isExterior;
 } s_WorldMapWork;
 STATIC_ASSERT_SIZEOF(s_WorldMapWork, 1420);
 

@@ -1,8 +1,13 @@
 #ifndef _MAPS_COMMON_SHARED_H
 #define _MAPS_COMMON_SHARED_H
 
+struct _RayTrace;
+
+// TODO: Forward decls.
+
 #include "bodyprog/game.h"
 
+#include "bodyprog/collision/ray.h"
 #include "bodyprog/events/bgm_update.h"
 #include "bodyprog/game_boot/game_boot.h"
 #include "bodyprog/screen/background.h"

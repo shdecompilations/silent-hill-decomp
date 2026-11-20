@@ -1,7 +1,8 @@
 #ifndef _BODYPROG_COLLISION_CHARA_H
 #define _BODYPROG_COLLISION_CHARA_H
 
-#include "bodyprog/chara/chara.h"
+struct _CharaKeyframe;
+struct _SubCharacter;
 
 /** @brief Character collision cylinder. TODO: Too similar to `s_CharaCylinder` */
 typedef struct _CharaCollisionCylinder
@@ -12,7 +13,6 @@ typedef struct _CharaCollisionCylinder
     /* 0x10 */ q3_12   radius;
     /* 0x14 */ s8      state;        /** `e_CharaCollisionState` */
 } s_CharaCollisionCylinder;
-STATIC_ASSERT_SIZEOF(s_CharaCollisionCylinder, 20);
 
 /** @brief Character collision query. */
 typedef struct _CharaCollisionQuery
@@ -46,7 +46,7 @@ typedef struct _CharaCollisionDeltas
 bool func_80070320(void);
 
 /** TODO: Return type uncertain. */
-q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
+q19_12 func_80070360(struct _SubCharacter* chara, q19_12 someDist, q3_12 arg2);
 
 /** @brief Sets a character's interpolated collision shapes for the active animation frame.
  *
@@ -54,7 +54,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
  * @param keyframe0 First keyframe.
  * @param keyframe1 Second keyframe.
  */
-void Collision_CharaCollisionSet(s_SubCharacter* chara, s_CharaKeyframe* keyframe0, s_CharaKeyframe* keyframe1);
+void Collision_CharaCollisionSet(struct _SubCharacter* chara, struct _CharaKeyframe* keyframe0, struct _CharaKeyframe* keyframe1);
 
 /** @brief Sets the scale of a character's model bone.
  *

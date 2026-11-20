@@ -1,3 +1,7 @@
+#include <psyq/gtemac.h>
+
+#include "inline_no_dmpsx.h"
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound/sd_call.h"
@@ -5,8 +9,6 @@
 #include "maps/map4/map4_s02.h"
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
-#include "inline_no_dmpsx.h"
-#include <psyq/gtemac.h>
 #include "bodyprog/player/player.h"
 #include "maps/common/characters/air_screamer.h"
 #include "maps/common/characters/groaner.h"

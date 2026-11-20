@@ -1,6 +1,7 @@
 #ifndef _BODYPROG_CHARA_CHARA_H
 #define _BODYPROG_CHARA_CHARA_H
 
+// TODO: Use forward decls here.
 #include "bodyprog/chara/anim.h"
 #include "bodyprog/chara/collision.h"
 #include "bodyprog/chara/combat.h"

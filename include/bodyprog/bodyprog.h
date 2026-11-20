@@ -15,6 +15,7 @@
 #include "bodyprog/events/events_util.h"
 #include "bodyprog/events/game_sys_states.h"
 #include "bodyprog/events/title.h"
+#include "bodyprog/formats/dms.h" // Needed here ATM for some maps.
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/formats/lm.h"
 #include "bodyprog/formats/model.h"

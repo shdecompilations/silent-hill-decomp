@@ -7,6 +7,9 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/utils.h"
+#include "bodyprog/chara/chara.h"
+#include "bodyprog/collision/chara.h"
+#include "bodyprog/collision/ray.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"

@@ -1,8 +1,8 @@
 #ifndef _BODYPROG_FORMATS_IPD_H
 #define _BODYPROG_FORMATS_IPD_H
 
-#include "bodyprog/formats/lm.h"
-#include "bodyprog/formats/model.h"
+struct _LmHeader;
+struct _ModelHeader;
 
 /** @brief GLOSSARY OF TERMS
  *
@@ -110,17 +110,17 @@ typedef struct _IpdCollisionData
 /** @brief IPD model info. */
 typedef struct _IpdModelInfo
 {
-    /* 0x0 */ u8             isExternal; /** `true` if loaded from `BG/*_GLB.PLM` file, otherwise from `s_IpdHeader::lmHdr`. */ 
-    /* 0x1 */ s8             __pad_1[3];
-    /* 0x4 */ u_Filename     name;
-    /* 0xC */ s_ModelHeader* modelHdr;
+    /* 0x0 */ u8                   isExternal; /** `true` if loaded from `BG/*_GLB.PLM` file, otherwise from `s_IpdHeader::lmHdr`. */ 
+    /* 0x1 */ s8                   __pad_1[3];
+    /* 0x4 */ u_Filename           name;
+    /* 0xC */ struct _ModelHeader* modelHdr;
 } s_IpdModelInfo;
 
 /** @brief IPD transformed model instance. */
 typedef struct _IpdModelInstance
 {
-    /* 0x0 */ s_ModelHeader* modelHdr;
-    /* 0x4 */ MATRIX         transformMat; /** Translation is relative to the chunk. */
+    /* 0x0 */ struct _ModelHeader* modelHdr;
+    /* 0x4 */ MATRIX               transformMat; /** Translation is relative to the chunk. */
 } s_IpdModelInstance;
 
 /** @brief IPD transformed billboard sprite instance. */
@@ -164,7 +164,7 @@ typedef struct _IpdHeader
     /* 0x1  */ u8                 isLoaded;         /** `bool` */
     /* 0x3  */ s8                 chunkX;           /** } Position in chunk grid. */
     /* 0x3  */ s8                 chunkZ;           /** } */
-    /* 0x4  */ s_LmHeader*        lmHdr;
+    /* 0x4  */ struct _LmHeader*  lmHdr;
     /* 0x8  */ u8                 modelInfoCount;   /** `modelInfos` array size. */
     /* 0x9  */ u8                 modelBufferCount; /** `modelBuffers` array size. */
     /* 0xA  */ u8                 modelOrderSize;   /** `modelOrder` array size. */

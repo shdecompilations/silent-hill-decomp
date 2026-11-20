@@ -1,6 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/data.h"
+#include "bodyprog/formats/dms.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sys/warm_boot.h"
 #include "bodyprog/world/effects.h"

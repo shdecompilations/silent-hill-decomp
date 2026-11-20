@@ -3,9 +3,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
 #include "bodyprog/events/data.h"
-#include "bodyprog/world/effects.h"
+#include "bodyprog/formats/dms.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
+#include "bodyprog/world/effects.h"
 #include "main/rng.h"
 
 // TODO: .bss is emitted in order of first declaration, right now our headers

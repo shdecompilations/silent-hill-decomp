@@ -6,7 +6,9 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/collision/ray.h"
+#include "bodyprog/chara/chara.h"
 #include "bodyprog/collision/collision.h"
+#include "bodyprog/formats/ipd.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 

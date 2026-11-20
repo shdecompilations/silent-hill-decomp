@@ -1,14 +1,15 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/data.h"
+#include "bodyprog/formats/dms.h"
 #include "bodyprog/map/terrain.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player/player.h"
 #include "main/rng.h"
-#include "maps/map3/map3_s03.h"
-#include "maps/common/particle.h"
 #include "maps/common/characters/bloodsucker.h"
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/puppet_nurse.h"
+#include "maps/common/particle.h"
+#include "maps/map3/map3_s03.h"
 
 #include "../src/maps/common/particles/particle.c"
 

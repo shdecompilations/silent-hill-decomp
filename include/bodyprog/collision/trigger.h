@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_COLLISION_TRIGGER_H
 #define _BODYPROG_COLLISION_TRIGGER_H
 
-#include "bodyprog/collision/chara.h"
+struct _CharaCollisionCylinder;
 
 /** @brief Collision trigger flags. */
 typedef enum _CollisionTriggerFlags
@@ -88,7 +88,7 @@ bool Collision_TriggerIntersectGet(s_CollisionTriggerIntersect* intersect, const
  * @return Trigger ceiling height, or `DEFAULT_CEILING_HEIGHT` if no ceiling exists.
  */
 q19_12 Collision_TriggerCeilingHeightGet(VECTOR3* moveOffset,
-                                         const s_CharaCollisionCylinder* cylinder, q19_12 cylinderRadius, q19_12 cylinderTopExtent);
+                                         const struct _CharaCollisionCylinder* cylinder, q19_12 cylinderRadius, q19_12 cylinderTopExtent);
 
 /** @brief Gets the offset from a world position to the edge of a collision trigger.
  * If the position is inside the trigger, the offset is (0, 0).

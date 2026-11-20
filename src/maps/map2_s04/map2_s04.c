@@ -1,7 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/events/data.h"
-#include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/world/effects.h"
 #include "main/rng.h"
 
 // TODO: .bss is emitted in order of first declaration, right now our headers

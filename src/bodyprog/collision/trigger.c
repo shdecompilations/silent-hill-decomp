@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/collision/trigger.h"
+#include "bodyprog/collision/chara.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/view/vw_main.h"

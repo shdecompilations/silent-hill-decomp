@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/formats/dms.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 

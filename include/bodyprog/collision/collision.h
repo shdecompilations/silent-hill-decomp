@@ -1,10 +1,9 @@
 #ifndef _BODYPROG_COLLISION_COLLISION_H
 #define _BODYPROG_COLLISION_COLLISION_H
 
+// TODO: Use forward decls here.
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/collision/chara.h"
-#include "bodyprog/collision/los.h"
-#include "bodyprog/collision/ray.h"
 #include "bodyprog/collision/trigger.h"
 #include "bodyprog/formats/ipd.h"
 #include "bodyprog/map/map.h"

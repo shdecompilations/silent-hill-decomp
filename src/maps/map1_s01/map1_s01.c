@@ -4,6 +4,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/chara/dms.h"
+#include "bodyprog/collision/ray.h"
 #include "bodyprog/events/data.h"
 #include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
