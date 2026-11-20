@@ -59,7 +59,7 @@ typedef enum _VibScriptCommand
     VibScriptCommand_ClearAll     = 4,
     VibScriptCommand_RemoveByMask = 5, // Removes effects for which the `callback_C(mask, arg_6)` returns non-zero.
     VibScriptCommand_RemoveByTag  = 6, // Same as above, tested against the effect tag instead of its mask.
-    VibScriptCommand_RemoveById   = 7  // Removes effects with an id equal to `value_8`.
+    VibScriptCommand_RemoveById   = 7  // Removes effects with an id equal to `id_8`.
 } e_VibScriptCommand;
 
 /** @brief One step of a vibration script. Scripts are chains of steps linked through `next_0`.
@@ -69,7 +69,7 @@ typedef enum _VibScriptCommand
  */
 typedef struct _VibScriptStep
 {
-    struct _VibScriptStep* next_0; // Step to run once this one completes, `NULL` ends the script.
+    const struct _VibScriptStep* next_0; // Step to run once this one completes, `NULL` ends the script.
 
     union
     {
@@ -91,12 +91,12 @@ typedef struct _VibScriptStep
         // `VibScriptOp_Chain`
         struct
         {
-            u8                opcode_4;
-            u8                unk_5      : 7;
-            u32               hasTag_5_7 : 1; // Copy `tag_6` to the effect.
-            u16               tag_6;
-            struct _VibScriptStep* spawned_8;      // Script for the second effect, which gets the id of the first.
-            u32               priority_C;
+            u8                           opcode_4;
+            u8                           unk_5      : 7;
+            u32                          hasTag_5_7 : 1; // Copy `tag_6` to the effect.
+            u16                          tag_6;
+            const struct _VibScriptStep* spawned_8; // Script for the second effect, which gets the id of the first.
+            u32                          priority_C;
         } chain;
 
         // `VibScriptOp_Waveform`
@@ -118,8 +118,8 @@ typedef struct _VibScriptStep
             u8  opcode_4;
             u8  command_5; // `e_VibScriptCommand`.
             u16 arg_6;
-            s32 value_8;
-            u32 callback_C; // `s32 (*)(u16, s32)`.
+            s32 id_8;
+            s32 (*callback_C)(u16 value, s32 arg); // Removal test, `value` is the effect mask or tag.
         } command;
 
         // `VibScriptOp_Pulse`
@@ -143,13 +143,13 @@ void Vibration_Init(void);
 
 s32 Vibration_Update(void);
 
-void Vibration_Play(s32 idx);
+void Vibration_Play(s32 scriptIdx);
 
-void Vibration_PlayStrength(s32 idx, u8 arg1);
+void Vibration_PlayStrength(s32 scriptIdx, u8 strength);
 
-void Vibration_GasWeaponEngineUpdate(s32 arg0);
+void Vibration_GasWeaponEngineUpdate(bool isChainsaw);
 
-void Vibration_DamageRumble(q19_12 arg0);
+void Vibration_DamageRumble(q19_12 damage);
 
 void Vibration_StumbleRumble(void);
 
@@ -157,7 +157,7 @@ void Vibration_LandingRumble(void);
 
 void Vibration_EnemyGrabRumble(void);
 
-void Vibration_RumbleStrength(s32 arg0);
+void Vibration_RumbleStrength(s32 strength);
 
 void Vibration_StrongRumble(void);
 
@@ -166,26 +166,26 @@ void Vibration_Rumble(void);
 /** Handles initial gamepad init. */
 bool Vibration_KPadAnalogModeSet(s_KPadWork* kpadWork, bool isAnalog);
 
-s32 VibScript_Play(s_KPadWork* kpadWork, s_VibScriptStep* step, u8 arg2);
+s32 VibScript_Play(s_KPadWork* kpadWork, const s_VibScriptStep* step, u8 strength);
 
-bool VibScript_EffectUpdate(s_KPadWork* kpadWork, s_KPad_Effect* effect, s32 arg2, u32 arg3);
+bool VibScript_EffectUpdate(s_KPadWork* kpadWork, s_KPad_Effect* effect, u16 mask, u32 ticks);
 
-bool VibScript_Handler_Start(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Start(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* strength);
 
-bool VibScript_Handler_Chain(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Chain(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* strength);
 
-bool VibScript_Handler_Waveform(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Waveform(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* ticksLeft);
 
-bool VibScript_Handler_Command(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Command(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* strength);
 
 void VibScript_EffectsClear(s_KPadWork* kpadWork);
 
-void VibScript_EffectsRemoveByMask(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32));
+void VibScript_EffectsRemoveByMask(s_KPadWork* kpadWork, u16 arg, s32 (*testFunc)(u16 mask, s32 arg));
 
-void VibScript_EffectsRemoveByTag(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32));
+void VibScript_EffectsRemoveByTag(s_KPadWork* kpadWork, u16 arg, s32 (*testFunc)(u16 tag, s32 arg));
 
-void VibScript_EffectsRemoveById(s_KPadWork* kpadWork, s32 arg1);
+void VibScript_EffectsRemoveById(s_KPadWork* kpadWork, s32 id);
 
-bool VibScript_Handler_Pulse(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3);
+bool VibScript_Handler_Pulse(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* strength);
 
 #endif

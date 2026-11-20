@@ -87,8 +87,6 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 
 void Game_WarmBoot(void) // 0x80034264
 {
-    e_GameState prevState;
-
     DrawSync(SyncMode_Wait);
 
 #if VERSION_REGION_IS(PAL)

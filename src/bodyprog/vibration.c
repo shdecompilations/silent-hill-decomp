@@ -8,13 +8,13 @@
 #include "bodyprog/math/math.h"
 #include "main/fs_queue.h"
 
-// TODO: Move to `bodyprog/libkpad`.
+// TODO: Move to `bodyprog/libkpad` or `bodyprog/sys`.
 
 u8 D_800AFD04 = 0;
 u8 D_800AFD05 = 0;
 // 2 bytes of padding.
 
-bool (*g_VibScript_StepHandlers[])(s_KPadWork* arg0, s_KPad_Effect* arg1, s_VibScriptStep* ptr, u32* arg3) =
+bool (*g_VibScript_StepHandlers[])(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* param) =
 {
     VibScript_Handler_Start,
     VibScript_Handler_Chain,
@@ -102,144 +102,125 @@ void Vibration_Init(void) // 0x800890B8
 
 s32 Vibration_Update(void) // 0x80089128
 {
-    s_KPad_Handler* temp_s0;
-    s32             var_s3;
-    s32             var_s5;
-    s32             var_s6;
-    s_KPad_Effect*  temp_v0;
-    s_KPad_Effect*  var_s0;
-    s_KPad_Effect*  temp_s1;
-    s_KPadWork*     var_s2;
+    s_KPad_Handler* handlers;
+    s32             vblanks;
+    s32             effectCount;
+    u16             mask;
+    s_KPad_Effect*  head;
+    s_KPad_Effect*  curr;
+    s_KPad_Effect*  next;
+    s_KPadWork*     kpadWork;
 
-    var_s2 = &g_SysWork.kpad;
+    kpadWork = &g_SysWork.kpad;
+    handlers = g_SysWork.kpadHandlers;
 
-    temp_s0 = g_SysWork.kpadHandlers;
-
-    if (!var_s2->status_0.isInit_0_16)
+    if (!kpadWork->status_0.isInit_0_16)
     {
         Vibration_Init();
     }
 
     if (g_GameWork.config.vibrationEnabled)
     {
-        KPad_VibrationEnable(var_s2);
-        var_s2->status_0.strength_0_8 = 128; // Full strength.
+        KPad_VibrationEnable(kpadWork);
+        kpadWork->status_0.strength_0_8 = 128; // Full strength.
     }
     else
     {
-        KPad_VibrationDisable(var_s2);
-        var_s2->status_0.strength_0_8 = 0;
+        KPad_VibrationDisable(kpadWork);
+        kpadWork->status_0.strength_0_8 = 0;
     }
 
     if (PadChkVsync())
     {
-        KPad_ActuatorSetup(var_s2, KPad_DeviceDetect(var_s2, temp_s0), temp_s0);
+        KPad_ActuatorSetup(kpadWork, KPad_DeviceDetect(kpadWork, handlers), handlers);
     }
 
-    var_s5 = 0;
+    effectCount = 0;
 
-    var_s2->channels_C[0].strength_4 = 0;
-    var_s2->channels_C[1].strength_4 = 0;
+    kpadWork->channels_C[0].strength_4 = 0;
+    kpadWork->channels_C[1].strength_4 = 0;
 
-    temp_v0 = KPad_EffectListHeadGet(var_s2);
-    var_s0  = KPad_EffectNextGet(temp_v0);
+    head = KPad_EffectListHeadGet(kpadWork);
+    curr = KPad_EffectNextGet(head);
 
-    if (!var_s2->status_0.isPaused_0_17)
+    vblanks = !kpadWork->status_0.isPaused_0_17 ? g_VBlanks : 0;
+
+    mask = 0xFFFF;
+
+    for (; curr != head; curr = next, effectCount++)
     {
-        var_s3 = g_VBlanks;
-    }
-    else
-    {
-        var_s3 = 0;
-    }
+        next = KPad_EffectNextGet(curr);
 
-    var_s6 = 0xFFFF;
-
-    for (; var_s0 != temp_v0; var_s5++)
-    {
-        temp_s1 = KPad_EffectNextGet(var_s0);
-
-        if (!VibScript_EffectUpdate(var_s2, var_s0, var_s6 & 0xFFFF, var_s3))
+        if (!VibScript_EffectUpdate(kpadWork, curr, mask, vblanks))
         {
-            KPad_EffectRemove(var_s2, var_s0);
+            KPad_EffectRemove(kpadWork, curr);
         }
-
-        var_s0 = temp_s1;
     }
 
-    KPad_ActuatorDataUpdate(var_s2);
+    KPad_ActuatorDataUpdate(kpadWork);
 
-    return var_s5;
+    return effectCount;
 }
 
-void Vibration_Play(s32 idx) // 0x800892A4
+void Vibration_Play(s32 scriptIdx) // 0x800892A4
 {
-    VibScript_Play(&g_SysWork.kpad, &g_VibScript_Steps[idx], 0x80);
+    VibScript_Play(&g_SysWork.kpad, &g_VibScript_Steps[scriptIdx], 0x80);
 }
 
-void Vibration_PlayStrength(s32 idx, u8 arg1) // 0x800892DC
+void Vibration_PlayStrength(s32 scriptIdx, u8 strength) // 0x800892DC
 {
-    VibScript_Play(&g_SysWork.kpad, &g_VibScript_Steps[idx], arg1);
+    VibScript_Play(&g_SysWork.kpad, &g_VibScript_Steps[scriptIdx], strength);
 }
 
-void Vibration_GasWeaponEngineUpdate(s32 arg0) // 0x80089314
+void Vibration_GasWeaponEngineUpdate(bool isChainsaw) // 0x80089314
 {
-    s32 var0;
-    s32 var1;
-
-#if VERSION_REGION_IS(PAL)
-    var0        = 20;
-#else
-    var0        = 24;
-#endif
+    s32 interval;
+    s32 step;
 
     D_800AFD05 += g_VBlanks;
 
-    if (arg0 != 0)
-    {
 #if VERSION_REGION_IS(PAL)
-        var0 = 5;
+    interval = isChainsaw ? 5 : 20;
 #else
-        var0 = 6;
+    interval = isChainsaw ? 6 : 24;
 #endif
-    }
 
-    if ((s32)D_800AFD05 >= var0)
+    if (D_800AFD05 >= interval)
     {
-        var0 = Rng_RandQ12();
-        if (arg0 != 0)
+        step = Rng_RandQ12();
+        if (isChainsaw)
         {
-            var1 = ((var0 * 16) >> 12) + 20;
+            step = Q12_MULT(step, 16) + 20;
         }
         else
         {
-            var1 = ((var0 * 20) >> 12) + 60;
+            step = Q12_MULT(step, 20) + 60;
         }
 
-        D_800AFD04 = (D_800AFD04 + var1) & 0x7F;
+        D_800AFD04 = (D_800AFD04 + step) & 0x7F;
     }
 
     Vibration_PlayStrength(21, D_800AFD04 + 32);
 }
 
-void Vibration_DamageRumble(q19_12 arg0) // 0x800893D0
+void Vibration_DamageRumble(q19_12 damage) // 0x800893D0
 {
-    u32 var;
+    u8 strength;
 
-    if (arg0 > Q12(25.0f))
+    if (damage > Q12(25.0f))
     {
-        var = 200;
+        strength = 200;
     }
-    else if (arg0 < Q12(5.0f))
+    else if (damage < Q12(5.0f))
     {
-        var = 100;
+        strength = 100;
     }
     else
     {
-        var = ((arg0 + Q12(15.0f)) / Q12(5.0f)) * 25;
+        strength = ((damage + Q12(15.0f)) / Q12(5.0f)) * 25;
     }
 
-    Vibration_PlayStrength(10, var);
+    Vibration_PlayStrength(10, strength);
 }
 
 void Vibration_StumbleRumble(void) // 0x8008944C
@@ -257,9 +238,9 @@ void Vibration_EnemyGrabRumble(void) // 0x80089494
     Vibration_PlayStrength(9, 0xA0);
 }
 
-void Vibration_RumbleStrength(s32 arg0) // 0x800894B8
+void Vibration_RumbleStrength(s32 strength) // 0x800894B8
 {
-    Vibration_PlayStrength(9, arg0);
+    Vibration_PlayStrength(9, strength);
 }
 
 void Vibration_StrongRumble(void) // 0x800894DC
@@ -298,69 +279,59 @@ bool Vibration_KPadAnalogModeSet(s_KPadWork* kpadWork, bool isAnalog) // 0x80089
     return cond;
 }
 
-s32 VibScript_Play(s_KPadWork* kpadWork, s_VibScriptStep* step, u8 arg2) // 0x800895E4
+s32 VibScript_Play(s_KPadWork* kpadWork, const s_VibScriptStep* step, u8 strength) // 0x800895E4
 {
-    u32 sp10;
+    u32 localStrength;
 
-    sp10 = arg2;
+    localStrength = strength;
 
     if (step == NULL)
     {
         return 0;
     }
 
-    return g_VibScript_StepHandlers[step->data_4.opcode_4](kpadWork, 0, step, &sp10);
+    return g_VibScript_StepHandlers[step->data_4.opcode_4](kpadWork, 0, step, &localStrength);
 }
 
-bool VibScript_EffectUpdate(s_KPadWork* kpadWork, s_KPad_Effect* effect, s32 arg2, u32 arg3) // 0x80089644
+bool VibScript_EffectUpdate(s_KPadWork* kpadWork, s_KPad_Effect* effect, u16 mask, u32 ticks) // 0x80089644
 {
-    u32              var1;
-    s_KPad_Channel*  ptr0;
-    s_VibScriptStep* ptr1;
+    const s_VibScriptStep* step;
 
 #if VERSION_REGION_IS(PAL)
-    arg3 *= 6;
+    ticks *= 6;
 #else
-    arg3 *= 5;
+    ticks *= 5;
 #endif
 
     effect->output_18       = 0;
     effect->hasOutput_14_31 = 0;
+
     while (true)
     {
-        ptr1 = effect->step_10;
-        if (!ptr1)
-        {
-            break;
-        }
-
-        if (g_VibScript_StepHandlers[ptr1->data_4.opcode_4](kpadWork, effect, ptr1, &arg3) == 0)
+        step = effect->step_10;
+        if (step == NULL || !g_VibScript_StepHandlers[step->data_4.opcode_4](kpadWork, effect, step, &ticks))
         {
             break;
         }
     }
 
-    if (effect->hasOutput_14_31 && (arg2 & effect->mask_1E))
+    if (effect->hasOutput_14_31 && (mask & effect->mask_1E))
     {
-        var1 = effect->output_18;
-        ptr0 = &kpadWork->channels_C[effect->channel_14_24];
-        if (ptr0->strength_4 < var1)
+        s_KPad_Channel* channel;
+
+        channel = &kpadWork->channels_C[effect->channel_14_24];
+        if (channel->strength_4 < effect->output_18)
         {
-            ptr0->strength_4 = var1;
+            channel->strength_4 = effect->output_18;
         }
     }
 
     return effect->step_10 != NULL;
 }
 
-bool VibScript_Handler_Command(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3)
+bool VibScript_Handler_Command(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* strength) // 0x8008973C
 {
-    if (!kpadWork || effect)
-    {
-        return false;
-    }
-
-    if (step == NULL || step->data_4.command.opcode_4 != VibScriptOp_Command)
+    if (kpadWork == NULL || effect != NULL || step == NULL || step->data_4.command.opcode_4 != VibScriptOp_Command)
     {
         return false;
     }
@@ -396,7 +367,7 @@ bool VibScript_Handler_Command(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_Vi
             break;
 
         case VibScriptCommand_RemoveById:
-            VibScript_EffectsRemoveById(kpadWork, step->data_4.command.value_8);
+            VibScript_EffectsRemoveById(kpadWork, step->data_4.command.id_8);
             break;
     }
 
@@ -425,7 +396,7 @@ void VibScript_EffectsClear(s_KPadWork* kpadWork) // 0x80089840
     }
 }
 
-void VibScript_EffectsRemoveByMask(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008989C
+void VibScript_EffectsRemoveByMask(s_KPadWork* kpadWork, u16 arg, s32 (*testFunc)(u16 mask, s32 arg)) // 0x8008989C
 {
     s_KPad_Effect* next;
     s_KPad_Effect* head;
@@ -443,7 +414,7 @@ void VibScript_EffectsRemoveByMask(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u
     {
         next = curr->links_0.next_0;
 
-        if (arg2(curr->mask_1E, arg1) != 0)
+        if (testFunc(curr->mask_1E, arg) != 0)
         {
             KPad_EffectRemove(kpadWork, curr);
         }
@@ -452,7 +423,7 @@ void VibScript_EffectsRemoveByMask(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u
     }
 }
 
-void VibScript_EffectsRemoveByTag(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8008992C
+void VibScript_EffectsRemoveByTag(s_KPadWork* kpadWork, u16 arg, s32 (*testFunc)(u16 tag, s32 arg)) // 0x8008992C
 {
     s_KPad_Effect* next;
     s_KPad_Effect* head;
@@ -470,7 +441,7 @@ void VibScript_EffectsRemoveByTag(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u1
     {
         next = curr->links_0.next_0;
 
-        if (arg2(curr->tag_1C, arg1) != 0)
+        if (testFunc(curr->tag_1C, arg) != 0)
         {
             KPad_EffectRemove(kpadWork, curr);
         }
@@ -479,7 +450,7 @@ void VibScript_EffectsRemoveByTag(s_KPadWork* kpadWork, u16 arg1, s32 (*arg2)(u1
     }
 }
 
-void VibScript_EffectsRemoveById(s_KPadWork* kpadWork, s32 effect) // 0x800899BC
+void VibScript_EffectsRemoveById(s_KPadWork* kpadWork, s32 id) // 0x800899BC
 {
     s_KPad_Effect* next;
     s_KPad_Effect* head;
@@ -497,7 +468,7 @@ void VibScript_EffectsRemoveById(s_KPadWork* kpadWork, s32 effect) // 0x800899BC
     {
         next = curr->links_0.next_0;
 
-        if (curr->id_C == effect)
+        if (curr->id_C == id)
         {
             KPad_EffectRemove(kpadWork, curr);
         }
@@ -506,96 +477,85 @@ void VibScript_EffectsRemoveById(s_KPadWork* kpadWork, s32 effect) // 0x800899BC
     }
 }
 
-bool VibScript_Handler_Start(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3) // 0x80089A30
+bool VibScript_Handler_Start(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* strength) // 0x80089A30
 {
-    s32            temp_s3;
-    s_KPad_Effect* next;
-    s_KPad_Effect* head;
-    s_KPad_Effect* current;
-    s_KPad_Effect* ptr;
+    s32 id;
 
-    ptr = effect;
-
-    if (kpadWork == NULL)
+    if (kpadWork == NULL || step == NULL || step->data_4.opcode_4 != VibScriptOp_Start)
     {
         return false;
     }
 
-    if (step == NULL)
-    {
-        return false;
-    }
-
-    if (step->data_4.opcode_4 != VibScriptOp_Start)
-    {
-        return false;
-    }
-
-    temp_s3 = step->data_4.start.id_8;
+    id = step->data_4.start.id_8;
 
     if (step->data_4.start.skipIfActive_5_5 || step->data_4.start.replaceActive_5_6)
     {
-        current = kpadWork->effects_18.next_0;
-        head    = KPAD_EFFECTS_HEAD(kpadWork);
+        s_KPad_Effect* curr;
+        s_KPad_Effect* head;
+
+        curr = kpadWork->effects_18.next_0;
+        head = KPAD_EFFECTS_HEAD(kpadWork);
 
         if (step->data_4.start.skipIfActive_5_5)
         {
-            while (current != head)
+            while (curr != head)
             {
-                if (current->id_C == temp_s3)
+                if (curr->id_C == id)
                 {
-                    if (ptr != NULL)
+                    if (effect != NULL)
                     {
-                        ptr->step_10 = NULL;
+                        effect->step_10 = NULL;
                     }
 
                     return false;
                 }
 
-                current = current->links_0.next_0;
+                curr = curr->links_0.next_0;
             }
         }
         else
         {
-            while (current != head)
+            s_KPad_Effect* next;
+
+            while (curr != head)
             {
-                next = current->links_0.next_0;
-                if ((ptr == NULL || current != ptr) && current->id_C == temp_s3)
+                next = curr->links_0.next_0;
+                if ((effect == NULL || curr != effect) && curr->id_C == id)
                 {
-                    KPad_EffectRemove(kpadWork, current);
+                    KPad_EffectRemove(kpadWork, curr);
                 }
-                current = next;
+                curr = next;
             }
         }
     }
 
-    if (ptr == NULL)
+    if (effect == NULL)
     {
-        ptr = KPad_EffectAdd(kpadWork, step->data_4.start.priority_C);
-        if (ptr == NULL)
+        effect = KPad_EffectAdd(kpadWork, step->data_4.start.priority_C);
+        if (effect == NULL)
         {
             return false;
         }
-        ptr->strength_14_16 = *arg3;
+        effect->strength_14_16 = *strength;
     }
 
-    ptr->step_10   = step->next_0;
-    ptr->elapsed_14_0 = 0;
-    ptr->id_C    = temp_s3;
+    effect->step_10      = step->next_0;
+    effect->elapsed_14_0 = 0;
+    effect->id_C         = id;
 
     if (step->data_4.start.hasTag_5_7)
     {
-        ptr->tag_1C = step->data_4.start.tag_6;
+        effect->tag_1C = step->data_4.start.tag_6;
     }
 
     return true;
 }
 
-bool VibScript_Handler_Chain(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3) // 0x80089BB8
+bool VibScript_Handler_Chain(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* strength) // 0x80089BB8
 {
-    s_KPad_Effect* temp_a0;
-    s_KPad_Effect* temp_v0;
-    u32            var_s1;
+    s_KPad_Effect* neighbor;
+    s_KPad_Effect* spawned;
+    u32            priority;
 
     if (kpadWork == NULL || step == NULL)
     {
@@ -609,28 +569,25 @@ bool VibScript_Handler_Chain(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibS
 
     if (effect == NULL)
     {
-        var_s1 = step->data_4.chain.priority_C;
-        effect   = KPad_EffectAdd(kpadWork, var_s1);
+        priority = step->data_4.chain.priority_C;
+        effect   = KPad_EffectAdd(kpadWork, priority);
         if (effect == NULL)
         {
             return false;
         }
-        effect->strength_14_16 = *arg3;
+        effect->strength_14_16 = *strength;
+    }
+    else if (effect->step_10 != step)
+    {
+        effect->step_10 = NULL;
+        return false;
     }
     else
     {
-        if (effect->step_10 != step)
-        {
-            effect->step_10 = NULL;
-            return false;
-        }
-        else
-        {
-            var_s1 = effect->priority_8;
-        }
+        priority = effect->priority_8;
     }
 
-    effect->step_10   = step->next_0;
+    effect->step_10      = step->next_0;
     effect->elapsed_14_0 = 0;
 
     if (step->data_4.chain.hasTag_5_7)
@@ -638,87 +595,65 @@ bool VibScript_Handler_Chain(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibS
         effect->tag_1C = step->data_4.chain.tag_6;
     }
 
-    temp_v0 = KPad_EffectAdd(kpadWork, var_s1);
-    if (temp_v0 != NULL)
+    spawned = KPad_EffectAdd(kpadWork, priority);
+    if (spawned != NULL)
     {
-        temp_a0                                 = temp_v0->links_0.next_0;
-        temp_a0->links_0.prev_4                 = temp_v0->links_0.prev_4;
-        temp_a0->links_0.prev_4->links_0.next_0 = temp_a0;
+        // Unlink from the position `KPad_EffectAdd` chose.
+        neighbor                                 = spawned->links_0.next_0;
+        neighbor->links_0.prev_4                 = spawned->links_0.prev_4;
+        neighbor->links_0.prev_4->links_0.next_0 = neighbor;
 
-        temp_a0                 = effect->links_0.next_0;
-        temp_v0->links_0.prev_4 = effect;
-        temp_v0->links_0.next_0 = temp_a0;
-        temp_a0->links_0.prev_4 = temp_v0;
+        // Relink directly after `effect`.
+        neighbor                 = effect->links_0.next_0;
+        spawned->links_0.prev_4  = effect;
+        spawned->links_0.next_0  = neighbor;
+        neighbor->links_0.prev_4 = spawned;
+        effect->links_0.next_0   = spawned;
 
-        effect->links_0.next_0 = temp_v0;
-
-        temp_v0->step_10    = step->data_4.chain.spawned_8;
-        temp_v0->elapsed_14_0  = 0;
-        temp_v0->id_C     = effect->id_C;
-        temp_v0->strength_14_16 = effect->strength_14_16;
-        temp_v0->tag_1C    = effect->tag_1C;
+        spawned->step_10        = step->data_4.chain.spawned_8;
+        spawned->elapsed_14_0   = 0;
+        spawned->id_C           = effect->id_C;
+        spawned->strength_14_16 = effect->strength_14_16;
+        spawned->tag_1C         = effect->tag_1C;
     }
 
     return true;
 }
 
-bool VibScript_Handler_Pulse(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3) // 0x80089D0C
+bool VibScript_Handler_Pulse(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* strength) // 0x80089D0C
 {
-    if (kpadWork == NULL || step == NULL)
+    if (kpadWork == NULL || step == NULL || step->data_4.pulse.opcode_4 != VibScriptOp_Pulse)
     {
         return false;
     }
 
-    if (step->data_4.pulse.opcode_4 == VibScriptOp_Pulse)
+    if (effect != NULL)
     {
-        if (effect != NULL)
-        {
-            effect->channel_14_24 = step->data_4.pulse.channel_5 & 0x7F;
-            effect->mask_1E    = step->data_4.pulse.mask_6;
-            effect->step_10    = step->next_0;
-            effect->hasOutput_14_31 = 1;
-            effect->output_18    = effect->strength_14_16 << 24;
-            return false;
-        }
-        else
-        {
-            effect = KPad_EffectAdd(kpadWork, step->data_4.pulse.priority_C);
-            if (effect != NULL)
-            {
-                effect->step_10    = step;
-                effect->strength_14_16 = *arg3;
-                effect->id_C     = step->data_4.pulse.id_8;
-                return true;
-            }
-        }
+        effect->channel_14_24   = step->data_4.pulse.channel_5 & 0x7F;
+        effect->mask_1E         = step->data_4.pulse.mask_6;
+        effect->step_10         = step->next_0;
+        effect->hasOutput_14_31 = 1;
+        effect->output_18       = effect->strength_14_16 << 24;
+        return false;
     }
 
-    return false;
+    effect = KPad_EffectAdd(kpadWork, step->data_4.pulse.priority_C);
+    if (effect == NULL)
+    {
+        return false;
+    }
+
+    effect->step_10        = step;
+    effect->strength_14_16 = *strength;
+    effect->id_C           = step->data_4.pulse.id_8;
+    return true;
 }
 
-bool VibScript_Handler_Waveform(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_VibScriptStep* step, u32* arg3) // 0x80089DF0
+bool VibScript_Handler_Waveform(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* ticksLeft) // 0x80089DF0
 {
-    u32 temp_a0;
-    s32 temp_a0_2;
-    u32 temp_lo;
-    u8* temp_t5;
-    s32 var_a1_2;
-    u32 var_t1;
-    u32 var_t3;
-    u32 temp_t6;
-    u32 temp_v1_3;
-    u32 var_t0;
-    u32 temp_t2;
-    u32 temp_t4;
-    u32 var_a1;
-    u32 var_a2;
-    u32 var_t7;
-    u32 temp_s0;
-    s32 temp;
-    s32 temp2;
-    u32 temp3;
-    u32 temp4;
-    u64 temp5;
+    u32 ticks;
+    u32 elapsed;
+    u32 duration;
 
     if (step == NULL || effect == NULL || step->data_4.opcode_4 != VibScriptOp_Waveform)
     {
@@ -731,111 +666,128 @@ bool VibScript_Handler_Waveform(s_KPadWork* kpadWork, s_KPad_Effect* effect, s_V
         return false;
     }
 
-    temp_t6 = effect->elapsed_14_0;
+    elapsed = effect->elapsed_14_0;
 
     if (!effect->hasOutput_14_31)
     {
+        u32 output;
+        u32 strength;
+        u8* samples;
+        u32 ticksPerSample;
+        u32 bytesPerSample;
+        s32 interpolate;
+        u32 sampleIdx;
+        u32 nextIdx;
+        u32 frac;
+        u32 sample;
+        u32 nextSample;
+        u64 scaled;
+
         effect->hasOutput_14_31 = 1;
 
-        temp_s0   = effect->strength_14_16;
-        var_t1    = step->data_4.waveform.channel_5 & 0x7F;
-        temp_t5   = step->data_4.waveform.samples_8;
-        temp_t4   = step->data_4.waveform.ticksPerSample_C_16;
-        var_a1    = step->data_4.waveform.bytesPerSample_C_28;
-        temp_a0_2 = step->data_4.waveform.interpolate_C_31;
+        strength       = effect->strength_14_16;
+        nextSample     = step->data_4.waveform.channel_5 & 0x7F; // @hack Channel, held in `nextSample` for a match.
+        samples        = step->data_4.waveform.samples_8;
+        ticksPerSample = step->data_4.waveform.ticksPerSample_C_16;
+        bytesPerSample = step->data_4.waveform.bytesPerSample_C_28;
+        interpolate    = step->data_4.waveform.interpolate_C_31;
 
-        effect->channel_14_24 = var_t1;
-        effect->mask_1E    = step->data_4.waveform.mask_6;
+        effect->channel_14_24 = nextSample;
+        effect->mask_1E       = step->data_4.waveform.mask_6;
 
-        if (temp_t4 == 0)
+        if (ticksPerSample == 0)
         {
-            var_t0 = temp_t6;
-            var_t7 = 0;
+            sampleIdx = elapsed;
+            frac      = 0;
         }
         else
         {
-            var_t0 = (temp_t6 / temp_t4);
-            var_t7 = temp_t6 % temp_t4;
+            sampleIdx = elapsed / ticksPerSample;
+            frac      = elapsed % ticksPerSample;
         }
 
-        if (temp_a0_2 == 0)
+        if (!interpolate)
         {
-            var_t7 = 0;
+            frac = 0;
         }
 
-        if (var_a1 == 0)
+        if (bytesPerSample == 0)
         {
-            temp_t2 = var_t0 + 1;
-            temp    = (temp_t5[var_t0 >> 3] >> (var_t0 & 7));
-            var_t3  = temp & 1;
-            var_t3  = -var_t3;
-
-            temp2  = temp_t5[temp_t2 >> 3] >> (temp_t2 & 7);
-            var_t1 = temp2 & 1;
-            var_t1 = -var_t1;
+            nextIdx    = sampleIdx + 1;
+            sample     = (samples[sampleIdx >> 3] >> (sampleIdx & 7)) & 1;
+            sample     = -sample;
+            nextSample = (samples[nextIdx >> 3] >> (nextIdx & 7)) & 1;
+            nextSample = -nextSample;
         }
         else
         {
-            if (var_a1 >= 5)
+            u32 i;
+            s32 shift;
+
+            if (bytesPerSample >= 5)
             {
-                var_a1 = 4;
+                bytesPerSample = 4;
             }
 
-            var_t0 = var_t0 * var_a1;
+            sampleIdx = sampleIdx * bytesPerSample;
 
-            var_t3 = 0;
-            var_t1 = 0;
+            sample     = 0;
+            nextSample = 0;
 
-            for (var_a2 = var_a1, var_a1_2 = 0x18, temp_t2 = var_t0 + var_a2; var_a2 != 0;
-                 var_a2--, var_a1_2 -= 8, var_t0++, temp_t2++)
+            for (i = bytesPerSample, shift = 24, nextIdx = sampleIdx + i; i != 0;
+                 i--, shift -= 8, sampleIdx++, nextIdx++)
             {
-                var_t3 += temp_t5[var_t0] << var_a1_2;
-                var_t1 += temp_t5[temp_t2] << var_a1_2;
+                sample     += samples[sampleIdx] << shift;
+                nextSample += samples[nextIdx] << shift;
             }
         }
 
-        if (var_t7 == 0)
+        if (frac == 0)
         {
-            temp_a0 = var_t3;
+            output = sample;
         }
         else
         {
-            temp_lo = ((UINT_MAX / temp_t4) + 1) * var_t7;
-            temp3   = (var_t3 * (u64)-temp_lo) >> 32;
-            temp4   = (var_t1 * (u64)temp_lo) >> 32;
-            temp_a0 = temp4 + temp3;
+            u32 weight;
+            u32 sampleWeighted;
+            u32 nextSampleWeighted;
+
+            weight             = ((UINT_MAX / ticksPerSample) + 1) * frac;
+            sampleWeighted     = (sample * (u64)-weight) >> 32;
+            nextSampleWeighted = (nextSample * (u64)weight) >> 32;
+            output             = nextSampleWeighted + sampleWeighted;
         }
 
-        temp5 = (u64)temp_a0 * temp_s0 >> 7;
+        scaled = (u64)output * strength >> 7;
 
-        if (temp5 > UINT_MAX)
+        if (scaled > UINT_MAX)
         {
-            temp_a0 = UINT_MAX;
+            output = UINT_MAX;
         }
         else
         {
-            temp_a0 = temp5;
+            output = scaled;
         }
 
-        effect->output_18 = temp_a0;
+        effect->output_18 = output;
     }
 
-    temp_a0   = *arg3;
-    temp_v1_3 = step->data_4.waveform.duration_C_0;
-    temp_t6   = temp_t6 + temp_a0;
+    ticks    = *ticksLeft;
+    duration = step->data_4.waveform.duration_C_0;
+    elapsed += ticks;
 
-    if (temp_t6 >= temp_v1_3)
+    if (elapsed >= duration)
     {
-        effect->step_10   = step->next_0;
+        effect->step_10      = step->next_0;
         effect->elapsed_14_0 = 0;
-        temp_a0          = temp_t6 - temp_v1_3;
-        *arg3            = temp_a0;
+        ticks                = elapsed - duration;
+        *ticksLeft           = ticks;
 
         return true;
     }
 
-    effect->elapsed_14_0 = temp_t6;
-    *arg3            = 0;
+    effect->elapsed_14_0 = elapsed;
+    *ticksLeft           = 0;
 
     return false;
 }

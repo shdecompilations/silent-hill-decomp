@@ -61,17 +61,18 @@ STATIC_ASSERT_SIZEOF(s_KPad_EffectList, 8);
  */
 typedef struct _KPad_Effect
 {
-    s_KPad_EffectList      links_0;
-    s32                    priority_8;
-    s32                    id_C;
-    struct _VibScriptStep* step_10;
-    u32                    elapsed_14_0    : 16; // Ticks spent in the current step.
-    u32                    strength_14_16  : 8;  // Level the effect was started with, `0x80` is 1.0.
-    u32                    channel_14_24   : 7;
-    u32                    hasOutput_14_31 : 1;  // `output_18` is valid and gets applied to the channel.
-    u32                    output_18;
-    u16                    tag_1C;
-    u16                    mask_1E;
+    s_KPad_EffectList            links_0;
+    s32                          priority_8;
+    s32                          id_C;
+    // Non-libkpad data follows, library may have reserved 16 bytes for users of library to attach data to the effect.
+    const struct _VibScriptStep* step_10;
+    u32                          elapsed_14_0    : 16; // Ticks spent in the current step.
+    u32                          strength_14_16  : 8;  // Level the effect was started with, `0x80` is 1.0.
+    u32                          channel_14_24   : 7;
+    u32                          hasOutput_14_31 : 1;  // `output_18` is valid and gets applied to the channel.
+    u32                          output_18;
+    u16                          tag_1C;
+    u16                          mask_1E;
 } s_KPad_Effect;
 STATIC_ASSERT_SIZEOF(s_KPad_Effect, 32);
 

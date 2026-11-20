@@ -71,9 +71,6 @@ static void (*g_GameStateUpdateFuncs[])(void) = {
 
 void GameState_Init_Update(void) // 0x80032D1C
 {
-    s32 gameState;
-    s32 VabAudioTaskId;
-
     switch (g_GameWork.gameStateSteps[0])
     {
         case 0:
@@ -88,10 +85,10 @@ void GameState_Init_Update(void) // 0x80032D1C
         case 1:
             if (Sd_AudioStreamingCheck() == AudioStreamingState_None)
             {
-                VabAudioTaskId = g_baseVabAudiosTaskId[g_GameWork.gameStateSteps[1]];
-                if (VabAudioTaskId != 0)
+                s32 vabAudioTaskId = g_baseVabAudiosTaskId[g_GameWork.gameStateSteps[1]];
+                if (vabAudioTaskId != 0)
                 {
-                    SD_Call(VabAudioTaskId);
+                    SD_Call(vabAudioTaskId);
                     g_GameWork.gameStateSteps[1]++;
                 }
                 else
@@ -221,6 +218,7 @@ void MainLoop(void) // 0x80032EE0
         }
 
         Vibration_Update();
+        
         shLensFlareDraw();
         DrawSync(SyncMode_Wait);
 
