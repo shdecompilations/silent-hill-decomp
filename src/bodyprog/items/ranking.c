@@ -416,7 +416,7 @@ void Ranking_PrepareSavegame() // 0x800904F4
         g_SavegamePtr->pickedUpSpecialItemCount = 8;
         if (g_Ranking_Score == 100)
         {
-            g_SavegamePtr->currentEndingFlags      |= GameEndingFlag_5;
+            g_SavegamePtr->currentEndingFlags      |= GameEndingFlag_PerfectScore;
             g_SavegamePtr->pickedUpSpecialItemCount = 16;
         }
     }

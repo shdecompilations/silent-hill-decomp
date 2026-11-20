@@ -691,7 +691,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     // - A specific camera related flag is disabled.
     // - All enemies are dead.
     if (!(g_MapEventData->transitionFlags & AreaTransitionFlag_UnfreezeWorld) &&
-        !(g_SysWork.sysFlags & SysFlag_5))
+        !(g_SysWork.sysFlags & SysFlag_NoEventWorldFreeze))
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
         {

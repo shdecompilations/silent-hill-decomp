@@ -889,7 +889,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     all_min_dist    = ENEMY_DIST_MAX;
     active_min_dist = ENEMY_DIST_MAX;
 
-    if (g_SysWork.sysFlags & SysFlag_5) // `sh2jms->player.battle(ShBattleInfo).status & (1 << 4)` in SH2.
+    if (g_SysWork.sysFlags & SysFlag_NoEventWorldFreeze) // `sh2jms->player.battle(ShBattleInfo).status & (1 << 4)` in SH2.
     {
         w_p->nearest_enemy         = NULL;
         w_p->nearest_enemy_xz_dist = ENEMY_DIST_MAX;

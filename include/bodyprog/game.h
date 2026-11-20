@@ -71,18 +71,20 @@
 /** @brief System flags. */
 typedef enum _SysFlags
 {
-    SysFlag_None           = 0,
-    SysFlag_0              = 1 << 0, /** @unused */
-    SysFlag_DemoActive     = 1 << 1,
-    SysFlag_2              = 1 << 2, /** @unused */
-    SysFlag_CutsceneActive = 1 << 3,
-    SysFlag_NoEnemySpawn   = 1 << 4,
-    SysFlag_5              = 1 << 5, // Set during cafe cutscene. Something to prevent cutscene softlocks when an enemy is around??
-    SysFlag_SetCameraRail  = 1 << 6,
-    SysFlag_MenuActive     = 1 << 7,
-    SysFlag_DoWarmReset    = 1 << 8,
-    SysFlag_9              = 1 << 9, // @unused? Set during cafe cutscene along with `SysFlag_5` and never checked.
-    SysFlag_LoadActive     = 1 << 10
+    SysFlag_None               = 0,
+    SysFlag_0                  = 1 << 0, /** @unused */
+    SysFlag_DemoActive         = 1 << 1,
+    SysFlag_2                  = 1 << 2, /** @unused */
+    SysFlag_CutsceneActive     = 1 << 3,
+    SysFlag_NoEnemySpawn       = 1 << 4,
+    SysFlag_NoEventWorldFreeze = 1 << 5, /** Prevents map messages/item pickups from freezing the world while enemies are alive, and stops the camera from tracking the nearest enemy.
+                                          * Only set by map0_s01 event with the cafe Air Screamer.
+                                          */
+    SysFlag_SetCameraRail      = 1 << 6,
+    SysFlag_MenuActive         = 1 << 7,
+    SysFlag_DoWarmReset        = 1 << 8,
+    SysFlag_9                  = 1 << 9, /** @unused Set and cleared along with `SysFlag_NoEventWorldFreeze`, never checked. */
+    SysFlag_LoadActive         = 1 << 10
 } e_SysFlags;
 
 /** @brief System process flags. */
@@ -188,7 +190,7 @@ typedef enum _GameEndingFlags
     GameEndingFlag_Ufo      = 1 << 4,
 
     // TODO: The following are only used in `currentEndingFlags`.
-    GameEndingFlag_5        = 1 << 5, // Unknown purpose, `Ranking_PrepareSavegame` sets `g_SavegamePtr->currentEndingFlags |= 1 << 5`, nothing checks it?
+    GameEndingFlag_PerfectScore = 1 << 5, // `Ranking_PrepareSavegame` sets this when `g_Ranking_Score == 100` but nothing checks it?
     GameEndingFlag_6        = 1 << 6, // Set the first time ranking has been seen?
     GameEndingFlag_7        = 1 << 7  // Set if ranking has been seen and ending was UFO?
 } e_GameEndingFlags;

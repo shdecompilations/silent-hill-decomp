@@ -807,7 +807,7 @@ void Event_DisplayMapMsgWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) /
 {
     s32 i;
 
-    if (!(g_SysWork.sysFlags & SysFlag_5))
+    if (!(g_SysWork.sysFlags & SysFlag_NoEventWorldFreeze))
     {
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
@@ -1037,7 +1037,7 @@ void Event_ItemTake(e_InvItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx,
     s32 i            = itemId;
     s32 mapMsgIdxCpy = mapMsgIdx;
 
-    if (!(g_SysWork.sysFlags & SysFlag_5))
+    if (!(g_SysWork.sysFlags & SysFlag_NoEventWorldFreeze))
     {
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs); i++)
