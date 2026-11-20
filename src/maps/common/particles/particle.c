@@ -1,12 +1,12 @@
 #include "inline_no_dmpsx.h"
 
 #include "bodyprog/bodyprog.h"
+#include "maps/common/particle.h"
 #include "bodyprog/events/data.h"
 #include "bodyprog/world/effects.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/common/shared.h"
-#include "maps/common/particle.h"
 
 // TODO: Find why removing these includes causes mismatch.
 #if defined(MAP0_S00)

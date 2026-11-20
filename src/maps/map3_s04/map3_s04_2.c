@@ -10,9 +10,10 @@
 #include "main/rng.h"
 #include "maps/map3/map3_s04.h"
 #include "maps/common/characters/lisa.h"
-#include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/puppet_nurse.h"
+#include "maps/common/particle.h"
+#include "maps/common/shared.h"
 
 #include "../src/maps/common/particles/particle.c"
 
