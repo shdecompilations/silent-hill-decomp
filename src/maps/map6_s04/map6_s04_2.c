@@ -857,7 +857,7 @@ bool func_800DFBB0(s_800ED848* arg0) // 0x800DFBB0
             if (*arg0->field_4C > Q12(118.0f))
             {
                 Sfx_WithFlagsPlay(Sfx_Unk1637, NULL, 0xFF, SfxFlag_Mono | SfxFlag_NoDistAtten);
-                Vibration_Play(8);
+                Vibration_Play(VibScriptIdx_Unk8);
 
                 D_800EBB4C = 10;
                 D_800EBB50 = Q12(3.0f);
@@ -2813,7 +2813,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             D_800EBAA8 = true;
 
-            Vibration_Play(8);
+            Vibration_Play(VibScriptIdx_Unk8);
             SysWork_StateStepIncrement(0);
 
         case 9:

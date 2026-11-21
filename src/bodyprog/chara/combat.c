@@ -594,7 +594,7 @@ s32 Combat_AttackUpdate(s_SubCharacter* attacker) // 0x8008A3E0
 
                 if (attacker->model.charaId == Chara_Harry)
                 {
-                    Vibration_Play(5);
+                    Vibration_Play(VibScriptIdx_Gunshot);
                 }
 
                 hasHit   = Ray_GeomAndCharaTraceGet(&shotTrace, &attacker->attack.origin, &attacker->attack.hitLineVec[0], attacker);
@@ -1217,11 +1217,11 @@ s32 Combat_HitApply(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* h
             switch (attackType)
             {
                 case AttackInfoType_Strike:
-                    Vibration_Play(6);
+                    Vibration_Play(VibScriptIdx_StrikeHit);
                     break;
 
                 case AttackInfoType_Slash:
-                    Vibration_Play(7);
+                    Vibration_Play(VibScriptIdx_SlashHit);
                     break;
 
                 case AttackInfoType_Gunshot:

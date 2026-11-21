@@ -16,7 +16,7 @@
     { next, { .start = { VibScriptOp_Start, 0, skipIfActive, 0, 0, 0, id, 0 } } }
 
 #define VIBSCRIPT_STEP_EMPTY() \
-    VIBSCRIPT_STEP_START(0, 0, NULL)
+    { NULL, { .start = { VibScriptOp_Start, 0, 0, 0, 0, 0, 0, 0 } } }
 
 #define VIBSCRIPT_STEP_CHAIN(spawned, next) \
     { next, { .chain = { VibScriptOp_Chain, 0, 0, 0, spawned, 0 } } }
@@ -38,6 +38,37 @@
 
 #define VIBSCRIPT_BITS8(b0, b1, b2, b3, b4, b5, b6, b7) \
     ((b0) | ((b1) << 1) | ((b2) << 2) | ((b3) << 3) | ((b4) << 4) | ((b5) << 5) | ((b6) << 6) | ((b7) << 7))
+
+/** @brief Script entry points in `g_VibScript_Steps`, passed to `Vibration_Play`. 
+  * Indices past 21 are waveforms game code doesn't refer to directly. */
+typedef enum _VibScriptIdx
+{
+    // Commands
+    VibScriptIdx_Pause                  = 0,
+    VibScriptIdx_Resume                 = 1,
+    VibScriptIdx_Disable                = 2,
+    VibScriptIdx_Enable                 = 3,
+    VibScriptIdx_ClearAll               = 4,
+    
+    // Scripts
+    VibScriptIdx_Gunshot                = 5,  /** Harry firing a gun. */
+    VibScriptIdx_StrikeHit              = 6,  /** Harry attacking with Strike attacks. */
+    VibScriptIdx_SlashHit               = 7,  /** Harry attacking with Slash attacks. */
+    VibScriptIdx_Unk8                   = 8,
+    VibScriptIdx_Rumble                 = 9,  /** Used by `Vibration_*Rumble` functions. */
+    VibScriptIdx_Damage                 = 10, /** Used by `Vibration_DamageRumble`. */
+    VibScriptIdx_Unk11                  = 11,
+    VibScriptIdx_HeartbeatHealthUnder60 = 12, /** Heartbeat rumble, speeds up as health drops, all share same effect ID for some reason (maybe makes it easier to turn off with single ID?) */
+    VibScriptIdx_HeartbeatHealthUnder50 = 13,
+    VibScriptIdx_HeartbeatHealthUnder40 = 14,
+    VibScriptIdx_HeartbeatHealthUnder30 = 15,
+    VibScriptIdx_HeartbeatHealthUnder20 = 16,
+    VibScriptIdx_HeartbeatHealthZero    = 17,
+    VibScriptIdx_Unk18                  = 18,
+    VibScriptIdx_Stumble                = 19, /** Used by `Vibration_StumbleRumble` / `Vibration_LandingRumble`. */
+    VibScriptIdx_Unk20                  = 20,
+    VibScriptIdx_GasWeaponEngine        = 21  /** Used by `Vibration_GasWeaponEngineUpdate`. */
+} e_VibScriptIdx;
 
 /** @brief Step opcodes, index into the handler table `g_VibScript_StepHandlers`. */
 typedef enum _VibScriptOp
@@ -143,9 +174,9 @@ void Vibration_Init(void);
 
 s32 Vibration_Update(void);
 
-void Vibration_Play(s32 scriptIdx);
+void Vibration_Play(e_VibScriptIdx scriptIdx);
 
-void Vibration_PlayStrength(s32 scriptIdx, u8 strength);
+void Vibration_PlayStrength(e_VibScriptIdx scriptIdx, u8 strength);
 
 void Vibration_GasWeaponEngineUpdate(bool isChainsaw);
 

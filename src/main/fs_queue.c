@@ -51,7 +51,7 @@ bool Fs_QueueChunksLoad(void)
 
 void Fs_QueueWaitForEmpty(void)
 {
-    Vibration_Play(0);
+    Vibration_Play(VibScriptIdx_Pause);
     Vibration_Update();
 
     while (true)
@@ -65,7 +65,7 @@ void Fs_QueueWaitForEmpty(void)
         Fs_QueueUpdate();
     }
 
-    Vibration_Play(1);
+    Vibration_Play(VibScriptIdx_Resume);
     DrawSync(SyncMode_Wait);
     VSync(SyncMode_Wait);
 }

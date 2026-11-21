@@ -95,7 +95,7 @@ void Game_WarmBoot(void) // 0x80034264
     Screen_RectInterlacedClear(0, SCREEN_FRAMEBUFFER_Y_INTERLACED, 512, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
 #endif
 
-    Vibration_Play(4);
+    Vibration_Play(VibScriptIdx_ClearAll);
     Vibration_Update();
     SD_Call(19);
 

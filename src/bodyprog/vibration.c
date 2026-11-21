@@ -23,34 +23,34 @@ bool (*g_VibScript_StepHandlers[])(s_KPadWork* kpadWork, s_KPad_Effect* effect, 
     VibScript_Handler_Pulse
 };
 
-/** @brief Vibration scripts: each entry is a step, `Vibration_Play` starts the script at an index. */
+/** @brief Vibration scripts: each entry is a step, `Vibration_Play` starts the script at an `e_VibScriptIdx`. */
 const s_VibScriptStep g_VibScript_Steps[] =
 {
-    // System commands.
-    /*  0 */ VIBSCRIPT_STEP_COMMAND(Pause, NULL),
-    /*  1 */ VIBSCRIPT_STEP_COMMAND(Resume, NULL),
-    /*  2 */ VIBSCRIPT_STEP_COMMAND(Disable, NULL),
-    /*  3 */ VIBSCRIPT_STEP_COMMAND(Enable, NULL),
-    /*  4 */ VIBSCRIPT_STEP_COMMAND(ClearAll, NULL),
+    // Commands
+    /* Pause                  */ VIBSCRIPT_STEP_COMMAND(Pause, NULL),
+    /* Resume                 */ VIBSCRIPT_STEP_COMMAND(Resume, NULL),
+    /* Disable                */ VIBSCRIPT_STEP_COMMAND(Disable, NULL),
+    /* Enable                 */ VIBSCRIPT_STEP_COMMAND(Enable, NULL),
+    /* ClearAll               */ VIBSCRIPT_STEP_COMMAND(ClearAll, NULL),
 
-    // Vibration chain entrypoints.
-    /*  5 */ VIBSCRIPT_STEP_START(0, 5, &g_VibScript_Steps[22]),
-    /*  6 */ VIBSCRIPT_STEP_START(1, 6, &g_VibScript_Steps[25]),
-    /*  7 */ VIBSCRIPT_STEP_START(1, 7, &g_VibScript_Steps[26]),
-    /*  8 */ VIBSCRIPT_STEP_START(1, 8, &g_VibScript_Steps[27]),
-    /*  9 */ VIBSCRIPT_STEP_START(1, 9, &g_VibScript_Steps[23]),
-    /* 10 */ VIBSCRIPT_STEP_START(1, 10, &g_VibScript_Steps[24]),
-    /* 11 */ VIBSCRIPT_STEP_CHAIN(&g_VibScript_Steps[6], &g_VibScript_Steps[5]),
-    /* 12 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[31]),
-    /* 13 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[34]),
-    /* 14 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[37]),
-    /* 15 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[40]),
-    /* 16 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[43]),
-    /* 17 */ VIBSCRIPT_STEP_START(1, 12, &g_VibScript_Steps[46]),
-    /* 18 */ VIBSCRIPT_STEP_START(1, 18, &g_VibScript_Steps[28]),
-    /* 19 */ VIBSCRIPT_STEP_START(1, 19, &g_VibScript_Steps[29]),
-    /* 20 */ VIBSCRIPT_STEP_PULSE(0, NO_VALUE, 20, -255, NULL),
-    /* 21 */ VIBSCRIPT_STEP_PULSE(1, NO_VALUE, 21, -255, NULL),
+    // Scripts
+    /* Gunshot                */ VIBSCRIPT_STEP_START(0, VibScriptIdx_Gunshot, &g_VibScript_Steps[22]),
+    /* StrikeHit              */ VIBSCRIPT_STEP_START(1, VibScriptIdx_StrikeHit, &g_VibScript_Steps[25]),
+    /* SlashHit               */ VIBSCRIPT_STEP_START(1, VibScriptIdx_SlashHit, &g_VibScript_Steps[26]),
+    /* Unk8                   */ VIBSCRIPT_STEP_START(1, VibScriptIdx_Unk8, &g_VibScript_Steps[27]),
+    /* Rumble                 */ VIBSCRIPT_STEP_START(1, VibScriptIdx_Rumble, &g_VibScript_Steps[23]),
+    /* Damage                 */ VIBSCRIPT_STEP_START(1, VibScriptIdx_Damage, &g_VibScript_Steps[24]),
+    /* Unk11                  */ VIBSCRIPT_STEP_CHAIN(&g_VibScript_Steps[VibScriptIdx_StrikeHit], &g_VibScript_Steps[VibScriptIdx_Gunshot]),
+    /* HeartbeatHealthUnder60 */ VIBSCRIPT_STEP_START(1, VibScriptIdx_HeartbeatHealthUnder60, &g_VibScript_Steps[31]),
+    /* HeartbeatHealthUnder50 */ VIBSCRIPT_STEP_START(1, VibScriptIdx_HeartbeatHealthUnder60, &g_VibScript_Steps[34]),
+    /* HeartbeatHealthUnder40 */ VIBSCRIPT_STEP_START(1, VibScriptIdx_HeartbeatHealthUnder60, &g_VibScript_Steps[37]),
+    /* HeartbeatHealthUnder30 */ VIBSCRIPT_STEP_START(1, VibScriptIdx_HeartbeatHealthUnder60, &g_VibScript_Steps[40]),
+    /* HeartbeatHealthUnder20 */ VIBSCRIPT_STEP_START(1, VibScriptIdx_HeartbeatHealthUnder60, &g_VibScript_Steps[43]),
+    /* HeartbeatHealthZero    */ VIBSCRIPT_STEP_START(1, VibScriptIdx_HeartbeatHealthUnder60, &g_VibScript_Steps[46]),
+    /* Unk18                  */ VIBSCRIPT_STEP_START(1, VibScriptIdx_Unk18, &g_VibScript_Steps[28]),
+    /* Stumble                */ VIBSCRIPT_STEP_START(1, VibScriptIdx_Stumble, &g_VibScript_Steps[29]),
+    /* Unk20                  */ VIBSCRIPT_STEP_PULSE(0, NO_VALUE, VibScriptIdx_Unk20, -255, NULL),
+    /* GasWeaponEngine        */ VIBSCRIPT_STEP_PULSE(1, NO_VALUE, VibScriptIdx_GasWeaponEngine, -255, NULL),
 
     // Waveforms for channel 1 (variable speed motor), one byte per sample.
     /* 22 */ VIBSCRIPT_STEP_WAVEFORM(1, NO_VALUE, 45,  9,  1, 0, VIBSCRIPT_SAMPLES_U8(0xA8, 0xE0, 0xE0, 0xC4, 0xA8, 0x54, 0, 0, 0, 0, 0, 0), NULL),
@@ -162,12 +162,12 @@ s32 Vibration_Update(void) // 0x80089128
     return effectCount;
 }
 
-void Vibration_Play(s32 scriptIdx) // 0x800892A4
+void Vibration_Play(e_VibScriptIdx scriptIdx) // 0x800892A4
 {
     VibScript_Play(&g_SysWork.kpad, &g_VibScript_Steps[scriptIdx], 0x80);
 }
 
-void Vibration_PlayStrength(s32 scriptIdx, u8 strength) // 0x800892DC
+void Vibration_PlayStrength(e_VibScriptIdx scriptIdx, u8 strength) // 0x800892DC
 {
     VibScript_Play(&g_SysWork.kpad, &g_VibScript_Steps[scriptIdx], strength);
 }
@@ -200,7 +200,7 @@ void Vibration_GasWeaponEngineUpdate(bool isChainsaw) // 0x80089314
         D_800AFD04 = (D_800AFD04 + step) & 0x7F;
     }
 
-    Vibration_PlayStrength(21, D_800AFD04 + 32);
+    Vibration_PlayStrength(VibScriptIdx_GasWeaponEngine, D_800AFD04 + 32);
 }
 
 void Vibration_DamageRumble(q19_12 damage) // 0x800893D0
@@ -220,37 +220,37 @@ void Vibration_DamageRumble(q19_12 damage) // 0x800893D0
         strength = ((damage + Q12(15.0f)) / Q12(5.0f)) * 25;
     }
 
-    Vibration_PlayStrength(10, strength);
+    Vibration_PlayStrength(VibScriptIdx_Damage, strength);
 }
 
 void Vibration_StumbleRumble(void) // 0x8008944C
 {
-    Vibration_PlayStrength(19, 0xA0);
+    Vibration_PlayStrength(VibScriptIdx_Stumble, 0xA0);
 }
 
 void Vibration_LandingRumble(void) // 0x80089470
 {
-    Vibration_PlayStrength(19, 0xA0);
+    Vibration_PlayStrength(VibScriptIdx_Stumble, 0xA0);
 }
 
 void Vibration_EnemyGrabRumble(void) // 0x80089494
 {
-    Vibration_PlayStrength(9, 0xA0);
+    Vibration_PlayStrength(VibScriptIdx_Rumble, 0xA0);
 }
 
 void Vibration_RumbleStrength(s32 strength) // 0x800894B8
 {
-    Vibration_PlayStrength(9, strength);
+    Vibration_PlayStrength(VibScriptIdx_Rumble, strength);
 }
 
 void Vibration_StrongRumble(void) // 0x800894DC
 {
-    Vibration_PlayStrength(9, 0xE0);
+    Vibration_PlayStrength(VibScriptIdx_Rumble, 0xE0);
 }
 
 void Vibration_Rumble(void) // 0x80089500
 {
-    Vibration_PlayStrength(9, 0xA0);
+    Vibration_PlayStrength(VibScriptIdx_Rumble, 0xA0);
 }
 
 bool Vibration_KPadAnalogModeSet(s_KPadWork* kpadWork, bool isAnalog) // 0x80089524
