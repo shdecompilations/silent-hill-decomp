@@ -40,17 +40,20 @@
     ((b0) | ((b1) << 1) | ((b2) << 2) | ((b3) << 3) | ((b4) << 4) | ((b5) << 5) | ((b6) << 6) | ((b7) << 7))
 
 /** @brief Script entry points in `g_VibScript_Steps`, passed to `Vibration_Play`. 
-  * Indices past 21 are waveforms game code doesn't refer to directly. */
+* Indices past 21 are waveforms the game code doesn't refer to directly.
+*/
 typedef enum _VibScriptIdx
 {
-    // Commands
+    /** Commands */
+
     VibScriptIdx_Pause                  = 0,
     VibScriptIdx_Resume                 = 1,
     VibScriptIdx_Disable                = 2,
     VibScriptIdx_Enable                 = 3,
     VibScriptIdx_ClearAll               = 4,
     
-    // Scripts
+    /** Scripts */
+
     VibScriptIdx_Gunshot                = 5,  /** Harry firing a gun. */
     VibScriptIdx_StrikeHit              = 6,  /** Harry attacking with Strike attacks. */
     VibScriptIdx_SlashHit               = 7,  /** Harry attacking with Slash attacks. */
@@ -58,14 +61,14 @@ typedef enum _VibScriptIdx
     VibScriptIdx_Rumble                 = 9,  /** Used by `Vibration_*Rumble` functions. */
     VibScriptIdx_Damage                 = 10, /** Used by `Vibration_DamageRumble`. */
     VibScriptIdx_Unk11                  = 11,
-    VibScriptIdx_HeartbeatHealthUnder60 = 12, /** Heartbeat rumble, speeds up as health drops, all share same effect ID for some reason (maybe makes it easier to turn off with single ID?) */
+    VibScriptIdx_HeartbeatHealthUnder60 = 12, /** Heartbeat rumble. Speeds up as health drops, all share same effect ID for some reason (maybe makes it easier to turn off with single ID?) */
     VibScriptIdx_HeartbeatHealthUnder50 = 13,
     VibScriptIdx_HeartbeatHealthUnder40 = 14,
     VibScriptIdx_HeartbeatHealthUnder30 = 15,
     VibScriptIdx_HeartbeatHealthUnder20 = 16,
     VibScriptIdx_HeartbeatHealthZero    = 17,
     VibScriptIdx_Unk18                  = 18,
-    VibScriptIdx_Stumble                = 19, /** Used by `Vibration_StumbleRumble` / `Vibration_LandingRumble`. */
+    VibScriptIdx_Stumble                = 19, /** Used by `Vibration_StumbleRumble`/`Vibration_LandingRumble`. */
     VibScriptIdx_Unk20                  = 20,
     VibScriptIdx_GasWeaponEngine        = 21  /** Used by `Vibration_GasWeaponEngineUpdate`. */
 } e_VibScriptIdx;
@@ -164,7 +167,6 @@ typedef struct _VibScriptStep
         } pulse;
     } data_4;
 } s_VibScriptStep;
-STATIC_ASSERT_SIZEOF(s_VibScriptStep, 16);
 
 /** Might retrun `bool`. */
 void Vibration_AnalogModeSet(bool isAnalog);

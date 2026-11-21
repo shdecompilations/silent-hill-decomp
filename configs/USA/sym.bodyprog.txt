@@ -556,9 +556,9 @@ vcSetRefPosAndCamPosAngByPad                 = 0x800406D4; // type:func
 Vc_StereoBalanceGet                          = 0x80040A64; // type:func
 nullsub_80040B6C                             = 0x80040B6C; // type:func
 
-//-----------------------------------------------------------------
-//--- PA: 0x01C014   VA: 0x80040B74   subsegment: c, world/lighting
-//-----------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x01C014   VA: 0x80040B74   subsegment: c, world/light_overlap
+//----------------------------------------------------------------------
 WorldGfx_CharaModelAssignedCheck             = 0x80040B74; // type:func
 WorldEnvRender_LightOverlapInit              = 0x80040BAC; // type:func
 WorldEnvRender_WorldLightTintParamSet        = 0x80040E7C; // type:func
@@ -3409,9 +3409,9 @@ g_CollisionTriggerFlags                      = 0x800BCE14;
 __pad_800BCE14                               = 0x800BCE16;
 g_WorldGfxWork                               = 0x800BCE18; // type:u8 size:0x2DBC
 
-//--------------------------------------------------------------------
-//--- PA: 0x09B090   VA: 0x800BFBF0   subsegment: .bss, world/lighting
-//--------------------------------------------------------------------
+//-------------------------------------------------------------------------
+//--- PA: 0x09B090   VA: 0x800BFBF0   subsegment: .bss, world/light_overlap
+//-------------------------------------------------------------------------
 g_LightOverlapPrims                          = 0x800BFBF0; // size:0x1420
 
 //---------------------------------------------------------------

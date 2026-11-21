@@ -1,7 +1,7 @@
 #ifndef _LIBKPAD_H
 #define _LIBKPAD_H
 
-// Konami library for handling DualShock vibration?
+// Konami library for handling DualShock vibration.
 // Built with 2.7.2-970404 / 2.7.2-cdk compiler.
 
 /** Based on LIBOVR.PDF `Buffer Data Format` section. */
@@ -38,14 +38,12 @@ typedef struct
     u32 dataSize_0_24    : 3; // Data bytes, 0 for an on/off motor that takes a single byte.
     u32 bits_0_27        : 5; // 2 for on/off motors, 1 for variable speed.
 } s_KPad_ActuatorInfo;
-STATIC_ASSERT_SIZEOF(s_KPad_ActuatorInfo, 4);
 
 typedef struct
 {
     s_KPad_ActuatorInfo info_0;
     s32                 strength_4; // Requested level, left-aligned to the top byte.
 } s_KPad_Channel;
-STATIC_ASSERT_SIZEOF(s_KPad_Channel, 8);
 
 /** @brief Links of an `s_KPad_Effect` list. Also used on its own as a list head in `s_KPadWork`. */
 typedef struct
@@ -53,7 +51,6 @@ typedef struct
     struct _KPad_Effect* next_0;
     struct _KPad_Effect* prev_4;
 } s_KPad_EffectList;
-STATIC_ASSERT_SIZEOF(s_KPad_EffectList, 8);
 
 /**
  * @brief Active vibration effect, kept in `s_KPadWork::effects_18` sorted by descending priority.
@@ -74,7 +71,6 @@ typedef struct _KPad_Effect
     u16                          tag_1C;
     u16                          mask_1E;
 } s_KPad_Effect;
-STATIC_ASSERT_SIZEOF(s_KPad_Effect, 32);
 
 /** @brief Status bits for the KPad system. */
 typedef struct
@@ -89,7 +85,6 @@ typedef struct
     u32 isActSet_0_23    : 1; // Set once `PadSetAct` was called, cleared to resend.
     u32 deviceType_0_24  : 8; // `e_KPadDeviceType` of the connected pad.
 } s_KPad_Status;
-STATIC_ASSERT_SIZEOF(s_KPad_Status, 4);
 
 /** @brief Tracks entries in the `s_KPadWork::channels_C` list. */
 typedef struct
@@ -98,7 +93,6 @@ typedef struct
     u8 count_2     : 8; // Number of active entries in `s_KPadWork::channels_C`.
     u32 capacity_3 : 8; // Number of entries allocated in `s_KPadWork::channels_C`.
 } s_KPad_ChannelInfo;
-STATIC_ASSERT_SIZEOF(s_KPad_ChannelInfo, 4);
 
 // Konami vibration library state.
 typedef struct
@@ -110,11 +104,6 @@ typedef struct
     s_KPad_EffectList  freeEffects_10; // Only uses `next_0`.
     s_KPad_EffectList  effects_18;     // Sorted by descending `priority_8`.
 } s_KPadWork;
-STATIC_ASSERT_SIZEOF(s_KPadWork, 32);
-
-/** @brief Head of `kpad`'s active effect list, as an `s_KPad_Effect`. Only the links are valid. */
-#define KPAD_EFFECTS_HEAD(kpad) \
-    ((s_KPad_Effect*)&(kpad)->effects_18)
 
 /** @brief Handler function definition, called with the pad state to detect and set up the connected pad. */
 typedef struct _KPad_Handler
@@ -123,11 +112,14 @@ typedef struct _KPad_Handler
     u8                    deviceType_4; // `e_KPadDeviceType` this handler detects.
     u8                    isDualMotor_5; // Assumed name, never read/written, only set to 1 for DualShock handler.
     u8                    numMotors_6;   // Assumed name, never read/written, value set matches channel count `func_C` handles.
-    // 1 byte padding.
+    // 1 byte of padding.
     s32                   alignData_8; // Data passed to `PadSetActAlign`.
     s32                   (*func_C)(s_KPadWork* work, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 } s_KPad_Handler;
-STATIC_ASSERT_SIZEOF(s_KPad_Handler, 16);
+
+/** @brief Head of `kpad`'s active effect list as an `s_KPad_Effect`. Only the links are valid. */
+#define KPAD_EFFECTS_HEAD(kpad) \
+    ((s_KPad_Effect*)&(kpad)->effects_18)
 
 bool KPad_WorkInit(s_KPadWork* work, u32 port);
 

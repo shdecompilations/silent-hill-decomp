@@ -44,7 +44,7 @@
 #include "bodyprog/text/map_msg.h"
 #include "bodyprog/view/vw_system.h"
 #include "bodyprog/world/draw.h"
-#include "bodyprog/world/lighting.h"
+#include "bodyprog/world/light_overlap.h"
 #include "bodyprog/world/map.h"
 #include "main/fs_queue.h"
 

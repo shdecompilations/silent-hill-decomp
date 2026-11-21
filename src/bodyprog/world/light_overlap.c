@@ -4,12 +4,14 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/world/light_overlap.h"
+#include "bodyprog/chara/chara.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
 #include "bodyprog/math/math.h"
 #include "main/fs_queue.h"
 
-/** @note This code (except the first function) is used to handle an overlapping lighting system.
+/** @note This code (except the first function) is used to handle an overlapping light.
  *
  * This system is used only at one specific moment in the game. The
  * only time this system is active is when an environment preset from 
@@ -20,18 +22,13 @@
  * This system replaces or overlaps the ambient and volumetric 
  * lighting of the flashlight, but does not affect the color 
  * of the light applied to surfaces.
- *
- * TODO: Filename is misleading atm, since this seems to be a full-screen overlay instead.
  */
-
-// ========================================
-// CHARACTERS
-// ========================================
 
 bool WorldGfx_CharaModelAssignedCheck(e_CharaId charaId) // 0x80040B74
 {
     s32 i;
 
+    // Run through character models.
     for (i = 0; i < ARRAY_SIZE(g_WorldGfxWork.charaModels); i++)
     {
         if (g_WorldGfxWork.charaModels[i].charaId == charaId)
@@ -42,10 +39,6 @@ bool WorldGfx_CharaModelAssignedCheck(e_CharaId charaId) // 0x80040B74
 
     return false;
 }
-
-// ========================================
-// WORLD RENDERING
-// ========================================
 
 static s_LightOverlapPrims g_LightOverlapPrims[2];
 
@@ -61,7 +54,7 @@ void WorldEnvRender_LightOverlapInit(void) // 0x80040BAC
     s32                  bufferIdx;
     s32*                 edgeXy;
 
-    // Screen border points, starting at the right edge midpoint and running in the same direction as the ring
+    // Screen border points starting at the right edge midpoint and running in the same direction as the ring
     // points, so edge quad N joins ring point N to border point N. Point 16 closes the loop.
     for (i = 0; i < ARRAY_SIZE(edgePoints); i++)
     {
@@ -319,7 +312,8 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
     angXyCos = Math_Cos(scr_l_ang_xy);
     angXySin = Math_Sin(scr_l_ang_xy);
 
-    // Shift each ring along the light's screen direction by sin(angle z), so the spot stretches when the beam is seen side-on.
+    // Shift each ring along the light's screen direction by `sin(angle z)`
+    // so the spot stretches when the beam is seen side-on.
     for (i = 0; i < ARRAY_SIZE(ringRadii); i++)
     {
         s32 centerScale;
