@@ -9,7 +9,7 @@
 #include "bodyprog/math/math.h"
 #include "main/fs_queue.h"
 
-/** @note This code (except the first and possibly second functions) is used to handle an overlapping lighting system.
+/** @note This code (except the first function) is used to handle an overlapping lighting system.
  *
  * This system is used only at one specific moment in the game. The
  * only time this system is active is when an environment preset from 
@@ -21,14 +21,14 @@
  * lighting of the flashlight, but does not affect the color 
  * of the light applied to surfaces.
  *
- * The second function is used as an initialization process for 2D graphics, likely related to this same system.
+ * TODO: Filename is misleading atm, since this seems to be a full-screen overlay instead.
  */
 
 // ========================================
 // CHARACTERS
 // ========================================
 
-bool Chara_ModelLoadedCheck(e_CharaId charaId) // 0x80040B74
+bool WorldGfx_CharaModelAssignedCheck(e_CharaId charaId) // 0x80040B74
 {
     s32 i;
 
@@ -47,144 +47,126 @@ bool Chara_ModelLoadedCheck(e_CharaId charaId) // 0x80040B74
 // WORLD RENDERING
 // ========================================
 
-static PACKET g_Map_GfxPackets[2][0xA10];
+static s_LightOverlapPrims g_LightOverlapPrims[2];
 
-void func_80040BAC(void) // 0x80040BAC
+void WorldEnvRender_LightOverlapInit(void) // 0x80040BAC
 {
-    DVECTOR   posTable[17];
-    POLY_G4*  poly_g4;
-    POLY_F4*  poly_f4;
-    PACKET*   packet;
-    POLY_G3*  poly_g3;
-    DR_TPAGE* page;
-    s32       i;
-    s32       k;
-    s32       j;
-    s32*      ptr;
+    DVECTOR              edgePoints[17];
+    POLY_G4*             ring;
+    POLY_F4*             edge;
+    s_LightOverlapPrims* prims;
+    POLY_G3*             fan;
+    s32                  i;
+    s32                  ringIdx;
+    s32                  bufferIdx;
+    s32*                 edgeXy;
 
-    for (i = 0; i < ARRAY_SIZE(posTable); i++)
+    // Screen border points, starting at the right edge midpoint and running in the same direction as the ring
+    // points, so edge quad N joins ring point N to border point N. Point 16 closes the loop.
+    for (i = 0; i < ARRAY_SIZE(edgePoints); i++)
     {
         if (i < 2)
         {
-            posTable[i].vx = g_GameWork.gsScreenWidth / 2;
-            posTable[i].vy = (g_GameWork.gsScreenHeight / 4) * i;
+            edgePoints[i].vx = g_GameWork.gsScreenWidth / 2;
+            edgePoints[i].vy = (g_GameWork.gsScreenHeight / 4) * i;
         }
         else if (i < 6)
         {
-            posTable[i].vx = (g_GameWork.gsScreenWidth / 2) - (((g_GameWork.gsScreenWidth / 2) >> 1) * (i - 2));
-            posTable[i].vy = g_GameWork.gsScreenHeight / 2;
+            edgePoints[i].vx = (g_GameWork.gsScreenWidth / 2) - (((g_GameWork.gsScreenWidth / 2) >> 1) * (i - 2));
+            edgePoints[i].vy = g_GameWork.gsScreenHeight / 2;
         }
         else if (i < 10)
         {
-            posTable[i].vx = -g_GameWork.gsScreenWidth / 2;
-            posTable[i].vy = (g_GameWork.gsScreenHeight / 2) - (((g_GameWork.gsScreenHeight / 2) >> 1) * (i - 6));
+            edgePoints[i].vx = -g_GameWork.gsScreenWidth / 2;
+            edgePoints[i].vy = (g_GameWork.gsScreenHeight / 2) - (((g_GameWork.gsScreenHeight / 2) >> 1) * (i - 6));
         }
         else if (i < 14)
         {
-            posTable[i].vx = (-g_GameWork.gsScreenWidth / 2) + ((g_GameWork.gsScreenWidth / 4) * (i - 10));
-            posTable[i].vy = -g_GameWork.gsScreenHeight / 2;
+            edgePoints[i].vx = (-g_GameWork.gsScreenWidth / 2) + ((g_GameWork.gsScreenWidth / 4) * (i - 10));
+            edgePoints[i].vy = -g_GameWork.gsScreenHeight / 2;
         }
         else
         {
-            posTable[i].vx = g_GameWork.gsScreenWidth / 2;
-            posTable[i].vy = (-g_GameWork.gsScreenHeight / 2) + ((g_GameWork.gsScreenHeight / 4) * (i - 14));
+            edgePoints[i].vx = g_GameWork.gsScreenWidth / 2;
+            edgePoints[i].vy = (-g_GameWork.gsScreenHeight / 2) + ((g_GameWork.gsScreenHeight / 4) * (i - 14));
         }
     }
 
-    for (j = 0, ptr = (s32*)posTable, packet = g_Map_GfxPackets[0]; j < 2; j++,
-        packet += (sizeof(DR_TPAGE) * 2)       +
-                  ((sizeof(POLY_G4) * 16) * 3) +
-                  (sizeof(POLY_G3) * 16)       +
-                  (sizeof(POLY_F4) * 16))
+    for (bufferIdx = 0, edgeXy = (s32*)edgePoints, prims = g_LightOverlapPrims; bufferIdx < 2; bufferIdx++, prims++)
     {
-        page = (DR_TPAGE*)packet;
+        SetDrawTPage(&prims->tpages[0], 1, 1, getTPageN(0, BlendMode_Subtractive, 0, 0));
+        SetDrawTPage(&prims->tpages[1], 1, 1, getTPageN(0, BlendMode_Additive, 0, 0));
 
-        SetDrawTPage(page, 1, 1, 0x40);
-        page++;
-        SetDrawTPage(page, 1, 1, 0x20);
+        fan  = prims->fan;
+        edge = prims->edge;
 
-        poly_g3 = (POLY_G3*)(packet + sizeof(DR_TPAGE) * 2);
-        poly_f4 = (POLY_F4*)(packet + (sizeof(DR_TPAGE) * 2)       +
-                                      ((sizeof(POLY_G4) * 16) * 3) +
-                                      (sizeof(POLY_G3) * 16));
-
-        for (i = 0; i < 16; i++, poly_g3++, poly_f4++)
+        for (i = 0; i < 16; i++, fan++, edge++)
         {
-            SetPolyG3(poly_g3);
-            setSemiTrans(poly_g3, true);
-            SetPolyF4(poly_f4);
-            setSemiTrans(poly_f4, true);
+            SetPolyG3(fan);
+            setSemiTrans(fan, true);
+            SetPolyF4(edge);
+            setSemiTrans(edge, true);
 
-            *(s32*)&poly_f4->x2 = ptr[i % 16];
-            *(s32*)&poly_f4->x3 = ptr[(i % 16) + 1];
+            *(s32*)&edge->x2 = edgeXy[i % 16];
+            *(s32*)&edge->x3 = edgeXy[(i % 16) + 1];
         }
 
-        poly_g4 = (POLY_G4*)(packet + (sizeof(DR_TPAGE) * 2) +
-                                      (sizeof(POLY_G3) * 16));
+        ring = prims->rings;
 
-        for (k = 0; k < 3; k++)
+        for (ringIdx = 0; ringIdx < 3; ringIdx++)
         {
-            for (i = 0; i < 16; i++, poly_g4++)
+            for (i = 0; i < 16; i++, ring++)
             {
-                SetPolyG4(poly_g4);
-                setSemiTrans(poly_g4, true);
+                SetPolyG4(ring);
+                setSemiTrans(ring, true);
             }
         }
     }
 }
 
-void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB,
+void WorldEnvRender_WorldLightTintParamSet(u8 lightColorR, u8 lightColorG, u8 lightColorB,
                                            u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x80040E7C
 {
-    u32      colors[4];
-    s32      j;
-    s32      i;
-    s32      k;
-    u32      lightPointColor;
-    POLY_G3* poly_g3;
-    POLY_F4* poly_f4;
-    POLY_G4* poly_g4;
-    PACKET*  packet;
+    u32                  ringColors[4];
+    s32                  i;
+    s32                  bufferIdx;
+    s32                  ringIdx;
+    u32                  lightColor;
+    POLY_G3*             fan;
+    POLY_F4*             edge;
+    POLY_G4*             ring;
+    s_LightOverlapPrims* prims;
 
-    lightPointColor = COLOR_RGB(lightPosR, lightPosG, lightPosB);
+    lightColor = COLOR_RGB(lightColorR, lightColorG, lightColorB);
 
-    packet = g_Map_GfxPackets[0];
+    ringColors[0] = COLOR_RGB(0, 0, 0);
+    ringColors[1] = COLOR_RGB(worldTintR / 3, worldTintG / 3, worldTintB / 3);
+    ringColors[2] = COLOR_RGB((worldTintR * 2) / 3, (worldTintG * 2) / 3, (worldTintB * 2) / 3);
+    ringColors[3] = COLOR_RGB(worldTintR, worldTintG, worldTintB);
 
-    colors[0] = COLOR_RGB(0, 0, 0);
-    colors[1] = COLOR_RGB(worldTintR / 3, worldTintG / 3, worldTintB / 3);
-    colors[2] = COLOR_RGB((worldTintR * 2) / 3, (worldTintG * 2) / 3, (worldTintB * 2) / 3);
-    colors[3] = COLOR_RGB(worldTintR, worldTintG, worldTintB);
-
-    for (i = 0; i < 2; i++,
-        packet += (sizeof(DR_TPAGE) * 2)       +
-                  ((sizeof(POLY_G4) * 16) * 3) +
-                  (sizeof(POLY_G3) * 16)       +
-                  (sizeof(POLY_F4) * 16))
+    for (bufferIdx = 0, prims = g_LightOverlapPrims; bufferIdx < 2; bufferIdx++, prims++)
     {
-        poly_g3 = (POLY_G3*)(packet + (sizeof(DR_TPAGE) * 2));
-        poly_f4 = (POLY_F4*)(packet + (sizeof(DR_TPAGE) * 2)       +
-                                      ((sizeof(POLY_G4) * 16) * 3) +
-                                      (sizeof(POLY_G3) * 16));
+        fan  = prims->fan;
+        edge = prims->edge;
 
-        for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
+        for (i = 0; i < 16; i++, fan++, edge++)
         {
-            *(s32*)&poly_g3->r0 = lightPointColor + (poly_g3->code << 24);
-            *(s32*)&poly_g3->r1 = colors[0];
-            *(s32*)&poly_g3->r2 = colors[0];
-            *(s32*)&poly_f4->r0 = colors[3] + (poly_f4->code << 24);
+            *(s32*)&fan->r0 = lightColor + (fan->code << 24);
+            *(s32*)&fan->r1 = ringColors[0];
+            *(s32*)&fan->r2 = ringColors[0];
+            *(s32*)&edge->r0 = ringColors[3] + (edge->code << 24);
         }
 
-        poly_g4 = (POLY_G4*)(packet + (sizeof(DR_TPAGE) * 2) +
-                                      (sizeof(POLY_G3) * 16));
+        ring = prims->rings;
 
-        for (k = 0; k < 3; k++)
+        for (ringIdx = 0; ringIdx < 3; ringIdx++)
         {
-            for (j = 0; j < 16; j++, poly_g4++)
+            for (i = 0; i < 16; i++, ring++)
             {
-                *(s32*)&poly_g4->r0 = colors[k] + (poly_g4->code << 24);
-                *(s32*)&poly_g4->r1 = colors[k];
-                *(s32*)&poly_g4->r2 = colors[k + 1];
-                *(s32*)&poly_g4->r3 = colors[k + 1];
+                *(s32*)&ring->r0 = ringColors[ringIdx] + (ring->code << 24);
+                *(s32*)&ring->r1 = ringColors[ringIdx];
+                *(s32*)&ring->r2 = ringColors[ringIdx + 1];
+                *(s32*)&ring->r3 = ringColors[ringIdx + 1];
             }
         }
     }
@@ -300,115 +282,116 @@ void WorldEnvRender_LightScreenPositionGet(VECTOR3* scr_l_pos,
 void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q19_12 intensity,
                                           q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z) // 0x800414E0
 {
-    s32      sp10[4];
-    DVECTOR  sp20[4];
-    s32      temp_a1;
-    s32      temp_a3;
-    s32      temp_lo;
-    s32      temp_s0_3;
-    s32      temp_s1;
-    s32      temp_s2;
-    s32      var_s0;
-    s32      var_s1;
+    s32      ringRadii[4];
+    DVECTOR  ringCenters[4];
+    s32      angZSin;
+    s32      angXyCos;
+    s32      angXySin;
+    s32      radius;
+    s32      depthScale;
     s32      i;
     s32      j;
-    s32      var_v1;
-    DVECTOR* var_s1_2;
-    u32*     var_a1_3;
-    u32*     var_t0;
-    u32*     var_t1;
-    DVECTOR* var_t4;
-    POLY_G3* poly_g3;
-    POLY_G4* poly_g4;
-    POLY_F4* poly_f4;
+    u32*     ringXy;
+    DVECTOR* ringPoints;
+    POLY_G3* fan;
+    POLY_G4* ring;
+    POLY_F4* edge;
 
     if (scr_l_pos->vz < Q12(0.25f))
     {
-        var_s1 = Q12(1.0f);
+        depthScale = Q12(1.0f);
     }
     else
     {
-        var_s1 = Q12(1024.0f) / scr_l_pos->vz;
+        depthScale = Q12(1024.0f) / scr_l_pos->vz;
     }
 
-    var_s0 = (Q12_MULT_ALT(intensity, 500) << 10) / scr_l_pos->vz;
-    var_v1 = var_s0 * (Q12(3.0f) - Q12_MULT(var_s1, Math_Cos(scr_l_ang_z)));
-    var_s0 = var_v1 / ((SHRT_MAX / 2) + 1);
+    // Halves in size as the light turns away from the camera, `depthScale` fades that out with distance.
+    radius = (Q12_MULT_ALT(intensity, 500) << 10) / scr_l_pos->vz;
+    radius = (radius * (Q12(3.0f) - Q12_MULT(depthScale, Math_Cos(scr_l_ang_z)))) / Q12(4.0f);
 
-    sp10[0] = (var_s0 * 2) / 10;
-    sp10[1] = (var_s0 * 4) / 10;
-    sp10[2] = (var_s0 * 7) / 10;
-    sp10[3] = var_s0;
+    ringRadii[0] = (radius * 2) / 10;
+    ringRadii[1] = (radius * 4) / 10;
+    ringRadii[2] = (radius * 7) / 10;
+    ringRadii[3] = radius;
 
-    temp_s1 = Math_Sin(scr_l_ang_z);
-    temp_s2 = Math_Cos(scr_l_ang_xy);
-    temp_a3 = Math_Sin(scr_l_ang_xy);
+    angZSin  = Math_Sin(scr_l_ang_z);
+    angXyCos = Math_Cos(scr_l_ang_xy);
+    angXySin = Math_Sin(scr_l_ang_xy);
 
-    for (i = 0; i < ARRAY_SIZE(sp10); i++)
+    // Shift each ring along the light's screen direction by sin(angle z), so the spot stretches when the beam is seen side-on.
+    for (i = 0; i < ARRAY_SIZE(ringRadii); i++)
     {
-        temp_lo = Q12(var_s0 - (sp10[i] >> 1)) / var_s0;
-        sp20[i].vx = scr_l_pos->vx + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(sp10[i], temp_lo), temp_s2), temp_s1);
-        sp20[i].vy = scr_l_pos->vy + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(sp10[i], temp_lo), temp_a3), temp_s1);
+        s32 centerScale;
+
+        centerScale       = Q12(radius - (ringRadii[i] >> 1)) / radius;
+        ringCenters[i].vx = scr_l_pos->vx + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(ringRadii[i], centerScale), angXyCos), angZSin);
+        ringCenters[i].vy = scr_l_pos->vy + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(ringRadii[i], centerScale), angXySin), angZSin);
     }
 
-    var_t4 = PSX_SCRATCH;
-    for (i = 0; i < 4; i++)
+    // 4 rings of 17 points in scratchpad. Point 16 repeats point 0 to close the ring.
+    ringPoints = PSX_SCRATCH;
+    for (i = 0; i < ARRAY_SIZE(ringRadii); i++)
     {
-        var_s1_2 = var_t4 + (i * 17);
-        for (j = 0; j < 17; j++, var_s1_2++)
+        DVECTOR* point;
+
+        point = ringPoints + (i * 17);
+        for (j = 0; j < 17; j++, point++)
         {
-            temp_s0_3 = Math_Cos(j << 8);
-            temp_a1   = Math_Sin(j << 8);
+            s32 pointCos;
+            s32 pointSin;
 
-            var_s1_2->vx = Q12_MULT_ALT(sp10[i], temp_s0_3) + sp20[i].vx;
-            var_s1_2->vx = CLAMP(var_s1_2->vx, Q12(-0.25f), Q12(0.25f) - 1);
+            pointCos = Math_Cos(j * Q12_ANGLE(22.5f));
+            pointSin = Math_Sin(j * Q12_ANGLE(22.5f));
 
-            var_s1_2->vy = Q12_MULT_ALT(sp10[i], temp_a1) + sp20[i].vy;
-            var_s1_2->vy = CLAMP(var_s1_2->vy, Q12(-0.25f), Q12(0.25f) - 1);
+            // Clamped to the GPU's 11-bit signed vertex range.
+            point->vx = Q12_MULT_ALT(ringRadii[i], pointCos) + ringCenters[i].vx;
+            point->vx = CLAMP(point->vx, -1024, 1023);
+
+            point->vy = Q12_MULT_ALT(ringRadii[i], pointSin) + ringCenters[i].vy;
+            point->vy = CLAMP(point->vy, -1024, 1023);
         }
     }
 
-    var_t0 = (u32*)PSX_SCRATCH;
+    ringXy = (u32*)PSX_SCRATCH;
 
-    poly_g3 = (POLY_G3*)&g_Map_GfxPackets[g_ActiveBufferIdx][sizeof(DR_TPAGE) * 2];
-    poly_f4 = (POLY_F4*)&g_Map_GfxPackets[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) +
-                                             ((sizeof(POLY_G4) * 16) * 3) +
-                                             (sizeof(POLY_G3) * 16)];
+    fan  = g_LightOverlapPrims[g_ActiveBufferIdx].fan;
+    edge = g_LightOverlapPrims[g_ActiveBufferIdx].edge;
 
-    for (j = 0; j < 16; j++, poly_g3++, poly_f4++)
+    for (j = 0; j < 16; j++, fan++, edge++)
     {
-        poly_g3->x0         = scr_l_pos->vx;
-        poly_g3->y0         = scr_l_pos->vy;
-        *(s32*)&poly_g3->x1 = var_t0[j];
-        *(s32*)&poly_g3->x2 = var_t0[j + 1];
+        fan->x0         = scr_l_pos->vx;
+        fan->y0         = scr_l_pos->vy;
+        *(s32*)&fan->x1 = ringXy[j];
+        *(s32*)&fan->x2 = ringXy[j + 1];
 
-        addPrim(ot->org, poly_g3);
+        addPrim(&ot->org[0], fan);
 
-        *(s32*)&poly_f4->x0 = var_t0[j + 51];
-        *(s32*)&poly_f4->x1 = var_t0[j + 52];
+        *(s32*)&edge->x0 = ringXy[(3 * 17) + j];
+        *(s32*)&edge->x1 = ringXy[(3 * 17) + j + 1];
 
-        addPrim(&ot->org[1], poly_f4);
+        addPrim(&ot->org[1], edge);
     }
 
-    var_t1  = (u32*)PSX_SCRATCH;
-    poly_g4 = (POLY_G4*)&g_Map_GfxPackets[g_ActiveBufferIdx][(sizeof(DR_TPAGE) * 2) + (sizeof(POLY_G3) * 16)];
+    ring = g_LightOverlapPrims[g_ActiveBufferIdx].rings;
 
     for (i = 0; i < 3; i++)
     {
-        // TODO: var_a1_3 is likely `DVECTOR*`, x0/x1/x2/x3 sets below are copying x/y from it.
-        var_a1_3 = var_t1 + (i * 17);
+        u32* rowXy;
 
-        for (j = 0; j < 16; j++, poly_g4++)
+        rowXy = ringXy + (i * 17);
+
+        for (j = 0; j < 16; j++, ring++)
         {
-            *(s32*)&poly_g4->x0 = var_a1_3[j];
-            *(s32*)&poly_g4->x1 = var_a1_3[j + 1];
-            *(s32*)&poly_g4->x2 = var_a1_3[17 + j];
-            *(s32*)&poly_g4->x3 = var_a1_3[(17 + j) + 1];
+            *(s32*)&ring->x0 = rowXy[j];
+            *(s32*)&ring->x1 = rowXy[j + 1];
+            *(s32*)&ring->x2 = rowXy[17 + j];
+            *(s32*)&ring->x3 = rowXy[(17 + j) + 1];
 
-            addPrim(&ot->org[1], poly_g4);
+            addPrim(&ot->org[1], ring);
         }
     }
 
-    AddPrim(ot->org, &g_Map_GfxPackets[g_ActiveBufferIdx][8]);
-    AddPrim(&ot->org[1], &g_Map_GfxPackets[g_ActiveBufferIdx]);
+    AddPrim(&ot->org[0], &g_LightOverlapPrims[g_ActiveBufferIdx].tpages[1]);
+    AddPrim(&ot->org[1], &g_LightOverlapPrims[g_ActiveBufferIdx].tpages[0]);
 }

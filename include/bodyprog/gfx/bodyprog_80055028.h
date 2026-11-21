@@ -11,7 +11,7 @@ void WorldEnvRender_WorldLightingParamSet(u8 arg0, s32 arg1, u8 arg2, s32 tintR,
 
 void WorldEnvRender_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
 
-void WorldEnvRender_WorldLightTintSet(u32 overlapLighting, u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
+void WorldEnvRender_WorldLightTintSet(u32 overlapLighting, u8 lightColorR, u8 lightColorG, u8 lightColorB, u8 worldTintR, u8 worldTintG, u8 worldTintB);
 
 /** @brief Gets the point light position.
  *

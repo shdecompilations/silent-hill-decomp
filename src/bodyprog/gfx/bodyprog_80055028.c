@@ -48,7 +48,7 @@ s_WorldEnvRenderWork g_WorldEnvRenderWork;
 
 void WorldEnvRender_Init(void) // 0x80055028
 {
-    func_80040BAC();
+    WorldEnvRender_LightOverlapInit();
     shLensFlareInit();
 
     g_WorldEnvRenderWork.lightMode = WorldEnvLightMode_None;
@@ -201,13 +201,13 @@ void WorldEnvRender_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8
     g_WorldEnvRenderWork.fog.color.b  = fogColorB;
 }
 
-void WorldEnvRender_WorldLightTintSet(u32 overlapLighting, u8 lightPosR, u8 lightPosG, u8 lightPosB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x800553E0
+void WorldEnvRender_WorldLightTintSet(u32 overlapLighting, u8 lightColorR, u8 lightColorG, u8 lightColorB, u8 worldTintR, u8 worldTintG, u8 worldTintB) // 0x800553E0
 {
     g_WorldEnvRenderWork.enableTintLightOverlap = overlapLighting;
 
     if (overlapLighting != false)
     {
-        WorldEnvRender_WorldLightTintParamSet(lightPosR, lightPosG, lightPosB, worldTintR, worldTintG, worldTintB);
+        WorldEnvRender_WorldLightTintParamSet(lightColorR, lightColorG, lightColorB, worldTintR, worldTintG, worldTintB);
     }
 }
 

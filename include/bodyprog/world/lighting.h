@@ -1,12 +1,49 @@
 #ifndef _BODYPROG_WORLD_LIGHTING_H
 #define _BODYPROG_WORLD_LIGHTING_H
 
-bool Chara_ModelLoadedCheck(e_CharaId charaId);
+/** @brief Light overlap primitives.
+ *
+ * Drawn as two layers. The additive layer is a glow fan centered on the light's screen position. The subtractive
+ * layer darkens by the world tint. Three gradient rings around the glow, then quads out to the screen edge.
+ */
+typedef struct _LightOverlapPrims
+{
+    /* 0x0   */ DR_TPAGE tpages[2];    /** 0: subtractive layer, 1: additive layer. */
+    /* 0x10  */ POLY_G3  fan[16];      /** Additive glow, light color at the center to black at ring 0. */
+    /* 0x1D0 */ POLY_G4  rings[48];    /** Subtractive gradient, 3 rings of 16: ring N to ring N + 1. */
+    /* 0x890 */ POLY_F4  edge[16];     /** Subtractive full tint from ring 3 to the screen edge. */
+} s_LightOverlapPrims;
+STATIC_ASSERT_SIZEOF(s_LightOverlapPrims, 2576);
 
-/** Related to the screen. Called by `WorldEnvRender_Init`. */
-void func_80040BAC(void);
+/** @brief Checks if a character's model is set in a `g_WorldGfxWork` model slot.
+ *
+ * @note May still return `true` while the model is still being loaded.
+ *
+ * @param charaId Character to check.
+ * @return `true` if a slot holds the character's model, `false` otherwise.
+ */
+bool WorldGfx_CharaModelAssignedCheck(e_CharaId charaId);
 
-void WorldEnvRender_WorldLightTintParamSet(u8 lightPosR, u8 lightPosG, u8 lightPosB,
+/** @brief Sets up the light overlap primitives in both frame buffers.
+ *
+ * Sets the primitive codes, transparency, layer tpages, and the edges screen border corners
+ * Called by `WorldEnvRender_Init`.
+ */
+void WorldEnvRender_LightOverlapInit(void);
+
+/** @brief Sets the light overlap colors in both frame buffers.
+ *
+ * The glow fades from the light color to black, then the subtractive rings step up to the full world tint
+ * in thirds.
+ *
+ * @param lightColorR Glow color at the light's screen position, red.
+ * @param lightColorG Glow color at the light's screen position, green.
+ * @param lightColorB Glow color at the light's screen position, blue.
+ * @param worldTintR World tint subtracted outside the glow, red.
+ * @param worldTintG World tint subtracted outside the glow, green.
+ * @param worldTintB World tint subtracted outside the glow, blue.
+ */
+void WorldEnvRender_WorldLightTintParamSet(u8 lightColorR, u8 lightColorG, u8 lightColorB,
                                            u8 worldTintR, u8 worldTintG, u8 worldTintB);
 
 /** @brief Draws the tint light overlap effect for a light.

@@ -2568,7 +2568,7 @@ void func_800DEDA4(void) // 0x800DEDA4
 {
     if (!Savegame_EventFlagGet(EventFlag_485))
     {
-        if (g_CharaModelAnimsData[1].activeCharaId != Chara_GhostChildAlessa || !Chara_ModelLoadedCheck(Chara_GhostChildAlessa))
+        if (g_CharaModelAnimsData[1].activeCharaId != Chara_GhostChildAlessa || !WorldGfx_CharaModelAssignedCheck(Chara_GhostChildAlessa))
         {
             Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcBoneCoordBuffer, CHARA_FORCE_FREE_ALL, NULL, NULL);
@@ -2577,7 +2577,7 @@ void func_800DEDA4(void) // 0x800DEDA4
     }
     else if (g_CharaModelAnimsData[1].activeCharaId == Chara_PuppetNurse)
     {
-        if (!Chara_ModelLoadedCheck(Chara_PuppetNurse))
+        if (!WorldGfx_CharaModelAssignedCheck(Chara_PuppetNurse))
         {
             g_MapOverlayHdr.charaGroupIds[0] = Chara_PuppetNurse;
 
