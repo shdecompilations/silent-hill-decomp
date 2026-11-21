@@ -3245,8 +3245,8 @@ excl_r_ary                                   = 0x800B21C4; // int[9]
 //----------------------------------------------------------------
 //--- PA: 0x08D688   VA: 0x800B21E8   subsegment: .data, vibration
 //----------------------------------------------------------------
-D_800AFD04                                   = 0x800B21E8;
-D_800AFD05                                   = 0x800B21E9;
+g_Vibration_GasWeaponEngineStrength          = 0x800B21E8; // type:u8 size:0x1
+g_Vibration_GasWeaponEngineTimer             = 0x800B21E9; // type:u8 size:0x1
 g_VibScript_StepHandlers                     = 0x800B21EC;
 
 //-------------------------------------------------------------------

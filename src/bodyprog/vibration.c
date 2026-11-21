@@ -10,8 +10,8 @@
 
 // TODO: Move to `bodyprog/libkpad` or `bodyprog/sys`.
 
-u8 D_800AFD04 = 0;
-u8 D_800AFD05 = 0;
+u8 g_Vibration_GasWeaponEngineStrength = 0;
+u8 g_Vibration_GasWeaponEngineTimer = 0;
 // 2 bytes of padding.
 
 bool (*g_VibScript_StepHandlers[])(s_KPadWork* kpadWork, s_KPad_Effect* effect, const s_VibScriptStep* step, u32* param) =
@@ -177,7 +177,7 @@ void Vibration_GasWeaponEngineUpdate(bool isChainsaw) // 0x80089314
     s32 interval;
     s32 step;
 
-    D_800AFD05 += g_VBlanks;
+    g_Vibration_GasWeaponEngineTimer += g_VBlanks;
 
 #if VERSION_REGION_IS(PAL)
     interval = isChainsaw ? 5 : 20;
@@ -185,7 +185,8 @@ void Vibration_GasWeaponEngineUpdate(bool isChainsaw) // 0x80089314
     interval = isChainsaw ? 6 : 24;
 #endif
 
-    if (D_800AFD05 >= interval)
+    // @bug This timer is never reset? Once it reaches `interval` every frame afterward will change strength?
+    if (g_Vibration_GasWeaponEngineTimer >= interval)
     {
         step = Rng_RandQ12();
         if (isChainsaw)
@@ -197,10 +198,10 @@ void Vibration_GasWeaponEngineUpdate(bool isChainsaw) // 0x80089314
             step = Q12_MULT(step, 20) + 60;
         }
 
-        D_800AFD04 = (D_800AFD04 + step) & 0x7F;
+        g_Vibration_GasWeaponEngineStrength = (u32)(g_Vibration_GasWeaponEngineStrength + step) % 0x80;
     }
 
-    Vibration_PlayStrength(VibScriptIdx_GasWeaponEngine, D_800AFD04 + 32);
+    Vibration_PlayStrength(VibScriptIdx_GasWeaponEngine, g_Vibration_GasWeaponEngineStrength + 32);
 }
 
 void Vibration_DamageRumble(q19_12 damage) // 0x800893D0
