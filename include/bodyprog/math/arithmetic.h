@@ -186,4 +186,13 @@
 #define OVERFLOW_GUARD(x) \
     (((u32)((x) + SHRT_MAX) >= USHRT_MAX) ? 4 : 0)
 
+/** @brief Wraps an index to the range `[0, count - 1]`.
+ *
+ * @param idx Index to wrap.
+ * @param count Number of entries.
+ * @return `idx` wrapped to the range `[0, count - 1]`.
+ */
+#define IDX_WRAP(idx, count) \
+    ((u32)(idx) % (count))
+
 #endif

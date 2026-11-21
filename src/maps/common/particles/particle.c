@@ -3903,7 +3903,7 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
 
         if (sharedData_800E0CA8_0_s00 != 0)
         {
-            sharedData_800E0CAC_0_s00 = (arg0 - 1) % 4u;
+            sharedData_800E0CAC_0_s00 = IDX_WRAP(arg0 - 1, 4);
         }
 
         switch (sharedData_800E0CA8_0_s00)

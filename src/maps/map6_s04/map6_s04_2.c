@@ -3548,7 +3548,7 @@ void func_800E636C(void) // 0x800E636C
         temp_t1 = D_800EBA30;
 
         D_800ED5B6 += Q12_MULT_PRECISE(g_DeltaTime, D_800EBA30);
-        D_800ED5B6  = (Q12_MULT_PRECISE(g_DeltaTime, D_800ED5B4) + D_800ED5B6) & 0xFFF;
+        D_800ED5B6  = Q12_ANGLE_NORM_U(Q12_MULT_PRECISE(g_DeltaTime, D_800ED5B4) + D_800ED5B6);
 
         if (NPC_CHARA(0).properties.monsterCybil.controlState == 1)
         {
@@ -3674,10 +3674,10 @@ void func_800E636C(void) // 0x800E636C
 
         for (i = 0; i < 8; i++)
         {
-            if (Vw_AabbVisibleInScreenCheck(CLAMP_HIGH(sp30[i], sp30[(i + 1) & 0x7]) - Q12(0.2f),
-                                            MAX(sp30[i], sp30[(i + 1) & 0x7]) + Q12(0.2f), Q12(-2.0f), Q12(0.0f),
-                                            CLAMP_HIGH(sp50[i], sp50[(i + 1) & 0x7]) - Q12(0.2f),
-                                            MAX(sp50[i], sp50[(i + 1) & 0x7]) + Q12(0.2f)))
+            if (Vw_AabbVisibleInScreenCheck(CLAMP_HIGH(sp30[i], sp30[IDX_WRAP(i + 1, 8)]) - Q12(0.2f),
+                                            MAX(sp30[i], sp30[IDX_WRAP(i + 1, 8)]) + Q12(0.2f), Q12(-2.0f), Q12(0.0f),
+                                            CLAMP_HIGH(sp50[i], sp50[IDX_WRAP(i + 1, 8)]) - Q12(0.2f),
+                                            MAX(sp50[i], sp50[IDX_WRAP(i + 1, 8)]) + Q12(0.2f)))
             {
                 if (i != 0)
                 {
@@ -3704,10 +3704,10 @@ void func_800E636C(void) // 0x800E636C
 
         for (i = 0; i < 4; i++)
         {
-            if (Vw_AabbVisibleInScreenCheck(CLAMP_HIGH(sp30[i], sp30[(i + 1) & 0x3]) - Q12(0.4f),
-                                            MAX(sp30[i], sp30[(i + 1) & 0x3]) + Q12(0.4f), Q12(-2.0f), Q12(0.0f),
-                                            CLAMP_HIGH(sp50[i], sp50[(i + 1) & 0x3]) - Q12(0.4f),
-                                            MAX(sp50[i], sp50[(i + 1) & 0x3]) + Q12(0.4f)))
+            if (Vw_AabbVisibleInScreenCheck(CLAMP_HIGH(sp30[i], sp30[IDX_WRAP(i + 1, 4)]) - Q12(0.4f),
+                                            MAX(sp30[i], sp30[IDX_WRAP(i + 1, 4)]) + Q12(0.4f), Q12(-2.0f), Q12(0.0f),
+                                            CLAMP_HIGH(sp50[i], sp50[IDX_WRAP(i + 1, 4)]) - Q12(0.4f),
+                                            MAX(sp50[i], sp50[IDX_WRAP(i + 1, 4)]) + Q12(0.4f)))
             {
                 WorldObjects_Add(g_WorldObject4, &D_800ED740, &rot);
                 WorldObjects_Add(&g_WorldObject4[1], &D_800ED740, &rot);

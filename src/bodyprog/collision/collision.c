@@ -356,7 +356,7 @@ void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_1
 
     // Search clockwise from lowest point for wall start.
     for (i = lowestFloorHeightIdx + 1, rightLowestFloorHeightIdx = lowestFloorHeightIdx;
-         i < (lowestFloorHeightIdx + POINT_COUNT) && baseFloorHeight < floorHeights[i & 0xF];
+         i < (lowestFloorHeightIdx + POINT_COUNT) && baseFloorHeight < floorHeights[IDX_WRAP(i, POINT_COUNT)];
          i++)
     {
         rightLowestFloorHeightIdx = i;
@@ -364,7 +364,7 @@ void Collision_WallPush(s_CollisionResult* collResult, const VECTOR3* pos, q19_1
 
     // Search counter-clockwise from lowest point for wall start.
     for (i = lowestFloorHeightIdx - 1, leftLowestFloorHeightIdx = lowestFloorHeightIdx;
-         i < (lowestFloorHeightIdx - POINT_COUNT) && baseFloorHeight < floorHeights[i & 0xF];
+         i < (lowestFloorHeightIdx - POINT_COUNT) && baseFloorHeight < floorHeights[IDX_WRAP(i, POINT_COUNT)];
          i--)
     {
         leftLowestFloorHeightIdx = i;

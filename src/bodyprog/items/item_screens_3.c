@@ -1021,7 +1021,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 
             setXY2(line_g2,
                    new_var, D_800C3B68[j][i].vy,
-                   D_800C3B68[j][(i + 1) & 0x3].vx, D_800C3B68[j][(i + 1) & 0x3].vy);
+                   D_800C3B68[j][IDX_WRAP(i + 1, 4)].vx, D_800C3B68[j][IDX_WRAP(i + 1, 4)].vy);
 
             addPrim(&ot0->org[7], line_g2);
             GsOUT_PACKET_P = (PACKET*)line_g2 + sizeof(LINE_G2);
@@ -1036,7 +1036,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
             setRGB1(line_g2, 0x60 - (0x20 * j), 0x60 - (0x20 * j), 0xFF);
             setXY2(line_g2,
                    D_800C3B68[j][i].vx,             D_800C3B68[j][i].vy + 1,
-                   D_800C3B68[j][(i + 1) & 0x3].vx, D_800C3B68[j][(i + 1) & 0x3].vy + 1);
+                   D_800C3B68[j][IDX_WRAP(i + 1, 4)].vx, D_800C3B68[j][IDX_WRAP(i + 1, 4)].vy + 1);
 
             addPrim(&ot1->org[7], line_g2);
             GsOUT_PACKET_P = (PACKET*)line_g2 + sizeof(LINE_G2);

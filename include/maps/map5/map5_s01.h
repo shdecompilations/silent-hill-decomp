@@ -45,7 +45,7 @@ extern VECTOR3 g_Cutscene_CameraPositionTarget;
 extern VECTOR3 g_Cutscene_CameraLookAtTarget;
 extern q19_12 g_Cutscene_Timer;
 
-extern s32           D_800ED5C8;
+extern u32           D_800ED5C8;
 extern GsF_LIGHT     D_800F1450[][2];
 extern GsCOORDINATE2 D_800F1510;
 extern SVECTOR       D_800F1560;

@@ -412,7 +412,7 @@ void MemCard_Update(void)
         statusPtr->processId = MemCardGameProcessId_None;
         if (statusPtr == &g_MemCardSaveWork.saveWork[1])
         {
-            g_MemCardSaveWork.saveWork[1].deviceId = (g_MemCardSaveWork.saveWork[1].deviceId + 1) & 0x7;
+            g_MemCardSaveWork.saveWork[1].deviceId = (g_MemCardSaveWork.saveWork[1].deviceId + 1) % 8;
         }
     }
 }

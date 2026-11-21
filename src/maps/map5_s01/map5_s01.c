@@ -44,7 +44,7 @@ s16 func_800CD20C(void) // 0x800CD20C
                 Sd_SfxPlay(Sfx_MenuMove, Q7(0.0f), Q7(0.5f));
             }
 
-            D_800ED5C8 &= 0x3;
+            D_800ED5C8 %= 4;
 
             if (Pad_ButtonHeld(ControllerFlag_LStickHighLeft))
             {

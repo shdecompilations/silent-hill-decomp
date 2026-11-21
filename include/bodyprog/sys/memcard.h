@@ -338,7 +338,7 @@ typedef struct _MemCard_DeviceInfo
 typedef struct _MemCard_GameProcess
 {
     /* 0x0  */ s32 processId;         /** `e_MemCardGameProcess` */
-    /* 0x4  */ s32 deviceId;
+    /* 0x4  */ u32 deviceId;
     /* 0x8  */ s32 fileIdx;
     /* 0xC  */ s32 saveIdx;
     /* 0x10 */ s32 processState;      /** States related to specific memory card events. */

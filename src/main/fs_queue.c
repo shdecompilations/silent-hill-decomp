@@ -18,7 +18,7 @@
  * @return Wrapped `idx`.
  */
 #define FSQUEUE_IDX_WRAP(idx) \
-    ((u32)(idx) % FS_QUEUE_LENGTH)
+    IDX_WRAP(idx, FS_QUEUE_LENGTH)
 
 s_FsQueue g_FsQueue;
 

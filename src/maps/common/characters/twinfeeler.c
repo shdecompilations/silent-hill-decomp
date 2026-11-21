@@ -2512,7 +2512,7 @@ s32 func_800D4D80(s32 arg0, s32 arg1) // 0x800D4D80
 
 u32 func_800D4DD8(void) // 0x800D4DD8
 {
-    return ((PLAYER_CHARA().rotation.vy - 256) & 0xFFF) / 0x200;
+    return Q12_ANGLE_NORM_U(PLAYER_CHARA().rotation.vy - Q12_ANGLE(22.5f)) / Q12_ANGLE(45.0f);
 }
 
 u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2) // 0x800D4E00

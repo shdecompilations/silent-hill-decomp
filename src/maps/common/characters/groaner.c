@@ -1828,7 +1828,7 @@ void Groaner_CollisionUpdate(s_SubCharacter* groaner)
 
         case ANIM_STATUS(GroanerAnim_RunForward, true):
             keyframeIdx0 = FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 363;
-            Collision_CharaCollisionSet(groaner, &sharedData_800EF1B0_2_s00[keyframeIdx0], &sharedData_800EF1B0_2_s00[(FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 362) & 0x7]);
+            Collision_CharaCollisionSet(groaner, &sharedData_800EF1B0_2_s00[keyframeIdx0], &sharedData_800EF1B0_2_s00[IDX_WRAP(FP_FROM(groaner->model.anim.time, Q12_SHIFT) - 362, 8)]);
             break;
 
         case ANIM_STATUS(GroanerAnim_StandToJumpAttack, false):

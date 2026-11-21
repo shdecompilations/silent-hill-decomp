@@ -2001,8 +2001,8 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
         setLineF2(line);
         setCodeWord(line, 0x40, (i < 2) ? COLOR_RGBC(240, 240, 240, 0) : COLOR_RGBC(128, 128, 128, 0));
 
-        setXY0Fast(line, (u16)(LINE_BASES[i].vx             - g_GameWorkConst->config.screenPositionX), LINE_BASES[i].vy             - g_GameWorkConst->config.screenPositionY);
-        setXY1Fast(line, (u16)(LINE_BASES[(i + 1) & 0x3].vx - g_GameWorkConst->config.screenPositionX), LINE_BASES[(i + 1) & 0x3].vy - g_GameWorkConst->config.screenPositionY);
+        setXY0Fast(line, (u16)(LINE_BASES[i].vx                  - g_GameWorkConst->config.screenPositionX), LINE_BASES[i].vy                  - g_GameWorkConst->config.screenPositionY);
+        setXY1Fast(line, (u16)(LINE_BASES[IDX_WRAP(i + 1, 4)].vx - g_GameWorkConst->config.screenPositionX), LINE_BASES[IDX_WRAP(i + 1, 4)].vy - g_GameWorkConst->config.screenPositionY);
 
         addPrim((u8*)ot->org + LAYER_40, line);
         GsOUT_PACKET_P = (u8*)line + sizeof(LINE_F2);
