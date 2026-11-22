@@ -9,24 +9,17 @@
 // map .bss, later can hopefully improve order in headers instead.
 extern e_MapIdx                     g_WeatherParticle_MapIdx0;
 extern e_MapIdx                     g_WeatherParticle_MapIdx1;
-extern s32                          __pad_bss_800D5CF0[2];
 extern u8                           sharedData_800D5CF8_1_s05[9];
-extern s8                           __pad_bss_800D5D01[7];
 extern u8                           sharedData_800D5D08_1_s05[9];
 extern u8                           D_800D5D11;
-extern s8                           __pad_bss_800D5D12[2];
 extern s32                          g_WeatherParticle_SpeedX;
 extern s32                          g_WeatherParticle_SpeedZ;
 extern s32                          sharedData_800DFB6C_0_s00;
 extern s32                          sharedData_800DFB70_0_s00;
-extern s32                          __pad_bss_800D5D24;
 extern s_Particle            g_Particle_Buffer[];
 extern s_BloodSplat                 g_Particle_BloodSplats[];
-extern s8                           __pad_bss_800D8564[4];
 extern s_MapOverlayHdr_5C           sharedData_800D8568_1_s05;
-extern s32                          __pad_bss_800D8590[2];
 extern struct _WeatherParticleVectors      g_WeatherParticle_Vectors0;
-extern s32                          __pad_bss_800D85C4;
 extern struct _WeatherParticleVectors      g_WeatherParticle_Vectors1;
 extern s32                          sharedData_800E0CA8_0_s00;
 extern s32                          sharedData_800E0CAC_0_s00;
@@ -35,7 +28,6 @@ extern u16                          sharedData_800E0CB4_0_s00;
 extern u16                          sharedData_800E0CB6_0_s00;
 extern u16                          sharedData_800E0CB8_0_s00;
 extern s8                           sharedData_800E0CBA_0_s00;
-extern s8                           __pad_bss_800D8607;
 extern s32                          sharedData_800E39D8_0_s00;
 extern q19_12                       g_Player_MoveSpeed;
 extern GsCOORDINATE2*               g_SplitHead_BoneCoords;
@@ -44,7 +36,6 @@ extern q3_12                        g_SplitHead_MovementOffsetZ;
 extern VECTOR3                      sharedData_800D8618_1_s05[];
 extern q19_12                       sharedData_800D8684_1_s05;
 extern q19_12                       sharedData_800D8688_1_s05;
-extern s32                          __pad_bss_800D868C[3];
 extern struct _WorldObjectPose      g_WorldObject0;
 extern struct _WorldObjectPose      g_WorldObject1;
 extern s16                          D_800D86F8[2];
@@ -67,16 +58,6 @@ s16               D_800D86F8[2];
 u8                D_800D86FC[2];
 u8                D_800D86FE;
 
-s32 __pad_bss_800D5CF0[2];
-s8  __pad_bss_800D5D01[7];
-s8  __pad_bss_800D5D12[2];
-s32 __pad_bss_800D5D24;
-s8  __pad_bss_800D8564[4];
-s32 __pad_bss_800D8590[2];
-s32 __pad_bss_800D85C4;
-s8  __pad_bss_800D8607;
-s32 __pad_bss_800D868C[3];
-
 #include "../src/maps/common/particles/fire.c"
 
 #include "../src/maps/common/particles/drool.c"
@@ -84,7 +65,6 @@ s32 __pad_bss_800D868C[3];
 #include "../src/maps/common/particles/particle.c"
 
 #include "../src/maps/common/characters/player.c"
-
 
 // TODO: Move this line into separate `Chara_SplitHead` split.
 #include "../src/maps/common/characters/split_head.c" // 0x800CF818

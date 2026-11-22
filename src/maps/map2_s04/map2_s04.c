@@ -14,12 +14,9 @@ extern s32                      g_WeatherParticle_SpeedX;
 extern s32                      g_WeatherParticle_SpeedZ;
 extern s32                      sharedData_800DFB6C_0_s00;
 extern s32                      sharedData_800DFB70_0_s00;
-extern s32                      __pad_bss_800CE0C8[2];
 extern s_Particle        g_Particle_Buffer[];
 extern s_BloodSplat             g_Particle_BloodSplats[];
-extern s8                       __pad_bss_800CF19C[4];
 extern struct _WeatherParticleVectors  g_WeatherParticle_Vectors0;
-extern s32                      __pad_bss_800CF1CC;
 extern struct _WeatherParticleVectors  g_WeatherParticle_Vectors1;
 extern s32                      sharedData_800E0CA8_0_s00;
 extern s32                      sharedData_800E0CAC_0_s00;
@@ -28,14 +25,11 @@ extern u16                      sharedData_800E0CB4_0_s00;
 extern u16                      sharedData_800E0CB6_0_s00;
 extern u16                      sharedData_800E0CB8_0_s00;
 extern s8                       sharedData_800E0CBA_0_s00;
-extern s8                       __pad_bss_800CF20F;
 extern s32                      sharedData_800E39D8_0_s00;
 extern q19_12                   g_Player_MoveSpeed;
-extern s32                      __pad_bss_800CF218[2];
 extern struct _WorldObjectPose  g_WorldObject_SavePad0;
 extern struct _WorldObjectPose  g_WorldObject_Map;
 extern u8                       D_800CF280;
-extern s8                       __pad_bss_800CF281[15];
 extern struct _WorldObjectPose  g_WorldObject_SavePad1;
 extern struct _WorldObjectPose  g_WorldObject_Shotgun;
 extern struct _WorldObjectModel g_CommonWorldObjects[];
@@ -43,12 +37,6 @@ extern struct _WorldObjectModel g_CommonWorldObjects[];
 #include "maps/map2/map2_s04.h"
 #include "maps/common/particle.h"
 #include "maps/common/characters/player.h"
-
-s32 __pad_bss_800CE0C8[2];
-s8  __pad_bss_800CF19C[4];
-s32 __pad_bss_800CF1CC;
-s8  __pad_bss_800CF20F;
-s32 __pad_bss_800CF218[2];
 
 #include "../src/maps/common/particles/particle.c"
 
@@ -172,7 +160,6 @@ void MapEvent_ShotgunTake(void) // 0x800CD0F8
 s_WorldObjectPose  g_WorldObject_SavePad0;
 s_WorldObjectPose  g_WorldObject_Map;
 u8                 D_800CF280;
-s8                 __pad_bss_800CF281[15];
 s_WorldObjectPose  g_WorldObject_SavePad1;
 s_WorldObjectPose  g_WorldObject_Shotgun;
 s_WorldObjectModel g_CommonWorldObjects[6];
@@ -184,7 +171,6 @@ s_Pose g_WorldObjectPose_ShotgunShells1 = { { Q12(-59.33f), Q12(-0.815f), Q12(18
 s_Pose g_WorldObjectPose_HandgunBullets2 = { { Q12(-60.94f), Q12(-0.815f), Q12(21.27f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(108.0f), Q12_ANGLE(0.0f) } };
 s_Pose g_WorldObjectPose_HandgunBullets3 = { { Q12(-102.2f), Q12(-1.4f), Q12(60.86f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(20.0f), Q12_ANGLE(0.0f) } };
 s_Pose g_WorldObjectPose_RifleShells = { { Q12(-98.2f), Q12(-1.4f), Q12(60.9f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(23.0f), Q12_ANGLE(0.0f) } };
-
 
 void Map_WorldObjectsInit(void)
 {

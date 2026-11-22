@@ -101,23 +101,17 @@ static u32 STRING_COLORS_JP[StringColorId_Count] = {
 #if VERSION_REGION_IS(NTSCJ)
 DVECTOR      g_StringPosition;
 s32          g_StringPositionX1; // Copy of `g_StringPosition.vx` as `s32`. It's unclear what for.
-#ifndef PAD_HACK_IGNORE
 s32          __pad_bss_800C5DE0[2];
-#endif
 GsSPRITE     g_MapMsg_GlyphSprite;
 s16          g_GlyphSpritePositionX;
 s16          D_800C391E;
 DVECTOR      g_StringPosition_JP; // Separate string position for the JPN map message functions.
 s32          g_StringPositionX1_JP;
 s_MapMsgLine g_MapMsg_ActiveLine;
-#ifndef PAD_HACK_IGNORE
-s8           __pad_bss_800C5E1A[2];
-#endif
 s32          g_MapMsg_WidthIdx;
 s32          D_800C5E20;
-#ifndef PAD_HACK_IGNORE
-s32          __pad_bss_800C5E24[3];
-#endif
+s32          __pad_bss_800C5E24;
+s32          __pad_bss_800C5E28[2];
 s32          g_MapMsg_Widths[9];
 s32          D_800C3920;
 #elif VERSION_REGION_IS(PAL)
@@ -126,13 +120,8 @@ DVECTOR      D_800C2E9C;
 s32          D_800C2EA0;
 s32          g_StringPositionX1; // Copy of `g_StringPosition.vx` as `s32`. It's unclear what for.
 s_MapMsgLine g_MapMsg_ActiveLine;
-#ifndef PAD_HACK_IGNORE
-s8           __pad_bss_800C2EA9[2];
-#endif
 s32          g_MapMsg_WidthIdx;
-#ifndef PAD_HACK_IGNORE
 s32          __pad_bss_800C2EB0[2];
-#endif
 s32          g_MapMsg_Widths[12];
 GsSPRITE     g_MapMsg_GlyphSprite;
 s16          g_GlyphSpritePositionX;
@@ -141,13 +130,8 @@ s16          D_800C391E;
 DVECTOR      g_StringPosition;
 s32          g_StringPositionX1; // Copy of `g_StringPosition.vx` as `s32`. It's unclear what for.
 s_MapMsgLine g_MapMsg_ActiveLine;
-#ifndef PAD_HACK_IGNORE
-s8           __pad_bss_800C38B2[2];
-#endif
 s32          g_MapMsg_WidthIdx;
-#ifndef PAD_HACK_IGNORE
 s32          __pad_bss_800C38B8[4];
-#endif
 s32          g_MapMsg_Widths[12];
 GsSPRITE     g_MapMsg_GlyphSprite;
 s16          g_GlyphSpritePositionX;

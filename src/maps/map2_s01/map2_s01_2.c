@@ -15,21 +15,16 @@
 // map .bss, later can hopefully improve order in headers instead.
 extern e_MapIdx                  g_WeatherParticle_MapIdx0;
 extern e_MapIdx                  g_WeatherParticle_MapIdx1;
-extern s32                       __pad_bss_800D0544[2];
 extern VECTOR3                   g_CameraPositionTarget;
-extern s32                       __pad_bss_800D0558;
 extern VECTOR3                   g_CameraLookAtTarget;
 extern u8                        g_Cutscene_MapMsgAudioIdx;
-extern s8                        __pad_bss_800D0569[3];
 extern s32                       g_WeatherParticle_SpeedX;
 extern s32                       g_WeatherParticle_SpeedZ;
 extern s32                       sharedData_800DFB6C_0_s00;
 extern s32                       sharedData_800DFB70_0_s00;
 extern s_Particle         g_Particle_Buffer[];
 extern s_BloodSplat              g_Particle_BloodSplats[];
-extern s8                        __pad_bss_800D1648[4];
 extern struct _WeatherParticleVectors   g_WeatherParticle_Vectors0;
-extern s32                       __pad_bss_800D1678;
 extern struct _WeatherParticleVectors   g_WeatherParticle_Vectors1;
 extern s32                       sharedData_800E0CA8_0_s00;
 extern s32                       sharedData_800E0CAC_0_s00;
@@ -38,18 +33,15 @@ extern u16                       sharedData_800E0CB4_0_s00;
 extern u16                       sharedData_800E0CB6_0_s00;
 extern u16                       sharedData_800E0CB8_0_s00;
 extern s8                        sharedData_800E0CBA_0_s00;
-extern s8                        __pad_bss_800D16BB;
 extern struct _CollisionResult   sharedData_800E39BC_0_s00;
 extern s32                       sharedData_800E39D8_0_s00;
 extern q19_12                    g_Player_MoveSpeed;
 extern s32                       sharedData_800D16E0_2_s01;
 extern u8                        sharedData_800D16E4_2_s01;
-extern s8                        __pad_bss_800D16E5[7];
 extern struct _WorldObjectPose   g_WorldObject_Key;
 extern struct _WorldObjectPose   g_WorldObject_Item;
 extern struct _WorldObjectPose   g_WorldObject_SavePad;
 extern u8                        D_800D177C;
-extern s8                        __pad_bss_800D177D[15];
 extern struct _WorldObjectModel  g_CommonWorldObjects[];
 
 #include "maps/map2/map2_s01.h"
@@ -60,14 +52,6 @@ extern struct _WorldObjectModel  g_CommonWorldObjects[];
 VECTOR3 g_CameraPositionTarget;
 VECTOR3 g_CameraLookAtTarget;
 u8      g_Cutscene_MapMsgAudioIdx;
-
-s32 __pad_bss_800D0544[2];
-s32 __pad_bss_800D0558;
-s8  __pad_bss_800D0569[3];
-s8  __pad_bss_800D1648[4];
-s32 __pad_bss_800D1678;
-s8  __pad_bss_800D16BB;
-s8  __pad_bss_800D16E5[7];
 
 #include "../src/maps/common/particles/particle.c"
 
@@ -546,7 +530,6 @@ s_WorldObjectPose  g_WorldObject_Key;
 s_WorldObjectPose  g_WorldObject_Item;
 s_WorldObjectPose  g_WorldObject_SavePad;
 u8                 D_800D177C;
-s8                 __pad_bss_800D177D[15];
 s_WorldObjectModel g_CommonWorldObjects[6];
 
 s_Pose g_WorldObjectPose_HealthDrink = { { Q12(15.5f), Q12(-1.12f), Q12(25.25f) }, { Q12_ANGLE(0.0f), Q12_ANGLE(0.0f), Q12_ANGLE(0.0f) } };

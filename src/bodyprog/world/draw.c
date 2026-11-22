@@ -24,7 +24,7 @@
 
 #ifndef PAD_HACK_IGNORE
     const s32 __pad_rodata_80025524 = 0;
-    s16       __pad_800BCE14;
+    s32       __pad_bss_800BCE10;
 #endif
 
 u16            g_CollisionTriggerFlags;

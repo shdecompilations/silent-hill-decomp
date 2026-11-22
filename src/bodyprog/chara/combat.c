@@ -1565,11 +1565,8 @@ s32 Combat_MeleeHitCheck(s_SubCharacter* attacker, q19_12 yaw, s_AttackInfo* att
 
     static VECTOR3    localHitLinePoints[4]; // Q19.12 | Hit line in attacker-local space. Written but never read.
     static VECTOR3    hitPos;
-    static s32        __pad_bss_800C47C4;
     static VECTOR3    rayPoints[2];          // Line-of-sight ray from the attacker to each candidate.
-    static s32        __pad_bss_800C47E0[2];
     static VECTOR3    otherCenter;
-    static s32        __pad_bss_800C47F4;
     static s_RayTrace rayTrace;
 
     hitLineStartX = attacker->attack.hitLineStart[0].vx;

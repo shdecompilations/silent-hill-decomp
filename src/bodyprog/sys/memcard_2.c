@@ -6,11 +6,6 @@
 #include "bodyprog/sys/memcard.h"
 #include "screens/saveload/saveload.h"
 
-#ifndef PAD_HACK_IGNORE
-    s16 __pad_bss_800BCD2A;
-    s16 __pad_bss_800BCD32;
-#endif
-
 // ========================================
 // GLOBAL VARIABLES
 // ========================================

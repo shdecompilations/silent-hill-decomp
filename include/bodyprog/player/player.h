@@ -421,7 +421,7 @@ extern u8         g_Player_IsDead;              /** `bool` */
  */
 extern u8 g_Player_DisableDamage;
 
-extern u8 __pad_bss_800C4563[13];
+extern s32 __pad_bss_800C4568[2];
 
 extern s_EquippedWeaponInfo g_Player_EquippedWeaponInfo;
 
@@ -447,8 +447,6 @@ extern s_EquippedWeaponInfo g_Player_EquippedWeaponInfo;
  */
 extern u8 g_Player_CutsceneState;
 
-extern u8 __pad_bss_800C457D;
-
 extern u16 g_Player_IsAiming;           /** Determines if the player is aiming a weapon. */
 extern u16 g_Player_IsSteppingLeftTap;  /** `bool` */
 extern u16 g_Player_IsSteppingRightTap; /** `bool` */
@@ -456,8 +454,6 @@ extern u16 g_Player_IsTurningLeft;      /** `bool` */
 extern u16 g_Player_IsTurningRight;     /** `bool` */
 
 extern u8 D_800C4588;
-
-extern s8 __pad_bss_800C4589[7];
 
 /** Player instance of this struct. */
 extern s_CollisionResult g_Player_CollisionResult;
@@ -480,24 +476,17 @@ extern u16 g_Player_IsAttacking;
 /** `bool` */
 extern u16 g_Player_IsShooting;
 
-extern s8 __pad_bss_800C45C2[6];
-
 extern s_800C45C8 D_800C45C8;
 
-extern s8 __pad_bss_800C45E0[8];
-
 /** `bool` */
+extern s32 __pad_bss_800C45E0[2];
 extern u16 g_Player_IsMovingForward;
-
-extern s8 __pad_bss_800C45EA[2];
 
 /** Related to game difficulty, used as max for `player.timer_110`. See `Player_LogicUpdate`. */
 extern q19_12 D_800C45EC;
 
 /** `bool` */
 extern u16 g_Player_IsMovingBackward;
-
-extern s8 __pad_bss_800C45F2[6];
 
 /** XZ player position copy. */
 extern VECTOR3 g_Player_PrevPosition;
@@ -507,11 +496,7 @@ extern u16 g_Player_IsRunning;
 
 extern u8 g_Player_AnimResetRequest; /** `bool` */
 
-extern s8 __pad_bss_800C4607;
-
 extern q19_12 g_Player_HeadingAngle;
-
-extern s32 __pad_bss_800C460C;
 
 /** Displacement offset. */
 extern VECTOR3 D_800C4610;

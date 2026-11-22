@@ -309,12 +309,9 @@ s8         g_Player_PrevAttackReceived;
 u8         g_Player_IsDead;
 u8         g_Player_DisableDamage;
 
-u8 __pad_bss_800C4563[13];
-
+s32 __pad_bss_800C4568[2];
 s_EquippedWeaponInfo g_Player_EquippedWeaponInfo;
 u8                   g_Player_CutsceneState;
-
-u8 __pad_bss_800C457D;
 
 u16        g_Player_IsAiming;
 u16        g_Player_IsSteppingLeftTap;
@@ -323,8 +320,6 @@ u16        g_Player_IsTurningLeft;
 u16        g_Player_IsTurningRight;
 
 u8         D_800C4588;
-
-s8 __pad_bss_800C4589[7];
 
 s_CollisionResult g_Player_CollisionResult;
 
@@ -335,20 +330,15 @@ u16        g_Player_IsHoldAttack;
 u16        g_Player_IsAttacking;
 u16        g_Player_IsShooting;
 
-s8         __pad_bss_800C45C2[6];
 s_800C45C8 D_800C45C8;
-s8         __pad_bss_800C45E0[8];
+s32        __pad_bss_800C45E0[2];
 u16        g_Player_IsMovingForward;
-s8         __pad_bss_800C45EA[2];
 q19_12     D_800C45EC;
 u16        g_Player_IsMovingBackward;
-s8         __pad_bss_800C45F2[6];
 VECTOR3    g_Player_PrevPosition;
 u16        g_Player_IsRunning;
 u8         g_Player_AnimResetRequest;
-s8         __pad_bss_800C4607;
 q19_12     g_Player_HeadingAngle;
-s32        __pad_bss_800C460C;
 VECTOR3    D_800C4610;
 
 q19_12 Player_VariableAnimDurationGet(s_Model* model) // 0x800706E4
@@ -7786,9 +7776,7 @@ void Player_CombatUpdate(s_SubCharacter* player, GsCOORDINATE2* boneCoords) // 0
     VECTOR3*              attackPos1; // Q19.12
     VECTOR3*              attackPos2; // Q19.12
     s_Model*              model;
-    static s32            __pad_bss_800C44D8[2];
     static VECTOR3        attackPos;
-    static s32            __pad_bss_800C44EC;
 
     #define targetNpc NPC_CHARA(g_Player_TargetNpcIdx)
     #define unused    NPC_CHARA(0)

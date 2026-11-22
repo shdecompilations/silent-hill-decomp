@@ -35,8 +35,7 @@ u32  g_Ranking_NoAimingShotPercent;
 s8   g_Ranking_GameDifficulty;
 u8   g_Ranking_ContinueCount;
 
-s8 __pad_bss_800C48D2[14];
-
+s32 __pad_bss_800C48D8[2];
 s_RankingTextColors g_Ranking_TextColors;
 
 struct

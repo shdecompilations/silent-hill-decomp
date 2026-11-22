@@ -92,13 +92,12 @@ u8 D_800AE700[16] = {
     0x48, 0x5E, 0x64, 0x64
 };
 
+s32            __pad_bss_800C42E0[2];
 s_800C42E8     D_800C42E8[24];
 s16            g_Particle_ActiveCount;
-s16            __pad_bss_800C440A;
 GsCOORDINATE2* D_800C440C;
 GsCOORDINATE2* D_800C4410;
 s8             D_800C4414; /** Flags. */
-s8             __pad_bss_800C4415[3];
 s_800C4418     D_800C4418;
 
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
@@ -112,7 +111,6 @@ void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
     s32        i;
     s32        effectTexFlags;
     static u16 loadedEffectTextureFlags;
-    static s16 __pad_bss_800C42DA[7];
 
     D_800A908C.v     = 0;
     D_800A908C.clutY = CLUT_BASE;

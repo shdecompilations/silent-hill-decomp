@@ -409,7 +409,6 @@ extern s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Slot1[MEMCARD_FILE_COUNT_MA
 extern s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Slot2[MEMCARD_FILE_COUNT_MAX];
 extern s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Null[MEMCARD_FILE_COUNT_MAX];
 extern bool g_MemCard_SysAvailibityStatus;
-extern s32 __pad_bss_800B5484;
 extern s_MemCardWork g_MemCardWork;
 extern s_MemCardSaveWork g_MemCardSaveWork;
 extern s32 g_MemCard_PrevSavegameCount;
@@ -419,10 +418,8 @@ extern s32 g_MemCard_PrevSavegameCount;
 // ====================
 
 extern s16 g_MemCard_SavegameCount;
-extern s16 __pad_bss_800BCD2A;
 extern s_SaveScreenElement* g_MemCard_ActiveMemCardSlotSaves;
 extern u8  g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
-extern s16 __pad_bss_800BCD32;
 extern u32 g_MemCard_AllMemCardsStatus;
 extern s8 g_SaveScreen_SaveScreenState;
 extern s8 g_SaveScreen_IsLoadError;
@@ -431,7 +428,6 @@ extern u8 g_Savegame_ElementCount1[MEMCARD_SLOT_COUNT_MAX];
 extern u8 g_Savegame_SelectedElementIdx;
 extern s8 g_SelectedFileIdx;
 extern s8 g_SelectedDeviceId;
-extern s8 __pad_bss_800BCD41[3];
 
 // ==========
 // FUNCTIONS

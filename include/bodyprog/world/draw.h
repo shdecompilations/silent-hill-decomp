@@ -3,9 +3,9 @@
 
 // TODO: Likely multiple splits here.
 
-extern u16 g_CollisionTriggerFlags;
+extern s32 __pad_bss_800BCE10;
 
-extern s16 __pad_800BCE14;
+extern u16 g_CollisionTriggerFlags;
 
 extern s_WorldGfxWork g_WorldGfxWork;
 

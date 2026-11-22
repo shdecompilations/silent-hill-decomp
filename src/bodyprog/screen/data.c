@@ -6,11 +6,8 @@ q19_12 g_ScreenFadeTimestep;
 s32    g_VBlanks;
 s32    g_UncappedVBlanks;
 
-s32 __pad_bss_800B5C3C;
-
 GsOT_TAG g_OtTags0[2][16];
 q19_12   g_DeltaTime;
-s32      __pad_bss_800B5CC4;
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
 
 q19_12 g_GravitySpeed;

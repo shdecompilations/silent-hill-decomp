@@ -153,7 +153,6 @@ extern s_FsImageDesc D_800A90B4;
 
 extern s32      g_VBlanks;
 extern s32      g_UncappedVBlanks;
-extern s32      __pad_bss_800B5C3C;
 extern GsOT_TAG g_OtTags0[2][16];
 
 /** Main gameplay timer. Code pauses gameplay by setting this to `Q12(0.0f)`.
@@ -162,8 +161,6 @@ extern GsOT_TAG g_OtTags0[2][16];
  * Possible original name: `_shDeltaTimePerFrame`
  */
 extern q19_12 g_DeltaTime;
-
-extern s32 __pad_bss_800B5CC4;
 
 extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
 

@@ -8,7 +8,6 @@
 VAB_H        vab_h[SD_VAB_SLOTS];
 u8           sd_vb_malloc_rec[136];
 s16          sd_seq_loop_mode;
-s16          __pad_bss_800C7662;
 s32          sd_tick_mode;
 SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
 

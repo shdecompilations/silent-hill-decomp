@@ -92,7 +92,7 @@ extern s8 g_Ranking_GameDifficulty;
 /** Continue count. */
 extern u8 g_Ranking_ContinueCount;
 
-extern s8 __pad_bss_800C48D2[14];
+extern s32 __pad_bss_800C48D8[2];
 
 extern s_RankingTextColors g_Ranking_TextColors;
 

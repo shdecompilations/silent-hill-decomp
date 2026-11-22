@@ -16,12 +16,9 @@ extern s32                     g_WeatherParticle_SpeedX;
 extern s32                     g_WeatherParticle_SpeedZ;
 extern s32                     sharedData_800DFB6C_0_s00;
 extern s32                     sharedData_800DFB70_0_s00;
-extern s32                     __pad_bss_800D2000;
 extern s_Particle       g_Particle_Buffer[];
 extern s_BloodSplat            g_Particle_BloodSplats[];
-extern s8                      __pad_bss_800D30D0[4];
 extern struct _WeatherParticleVectors g_WeatherParticle_Vectors0;
-extern s32                     __pad_bss_800D3100;
 extern struct _WeatherParticleVectors g_WeatherParticle_Vectors1;
 extern s32                     sharedData_800E0CA8_0_s00;
 extern s32                     sharedData_800E0CAC_0_s00;
@@ -30,11 +27,9 @@ extern u16                     sharedData_800E0CB4_0_s00;
 extern u16                     sharedData_800E0CB6_0_s00;
 extern u16                     sharedData_800E0CB8_0_s00;
 extern s8                      sharedData_800E0CBA_0_s00;
-extern s8                      __pad_bss_800D3143;
 extern s32                     sharedData_800E39D8_0_s00;
 extern q19_12                  g_Player_MoveSpeed;
 extern s8                      sharedData_800E57CC_1_s02;
-extern s8                      __pad_bss_800D314D[3];
 extern s32                     sharedData_800D3150_3_s02;
 extern u8                      D_800D3154;
 
@@ -45,12 +40,6 @@ extern u8                      D_800D3154;
 
 s32 D_800D1FEC;
 u8  D_800D3154;
-
-s32 __pad_bss_800D2000;
-s8  __pad_bss_800D30D0[4];
-s32 __pad_bss_800D3100;
-s8  __pad_bss_800D3143;
-s8  __pad_bss_800D314D[3];
 
 #include "../src/maps/common/particles/particle.c"
 

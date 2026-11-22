@@ -12,8 +12,6 @@
 GsCOORD2PARAM g_ItemScreen_CameraTransform;
 s8            g_ItemScreen_PlayerWeaponAttack;
 
-s8 __pad_bss_800C3951[3];
-
 s32 g_ItemScreen_ViewDistance;
 s32 g_ItemScreen_GeomOffsetX;
 s32 g_ItemScreen_GeomOffsetY;

@@ -15,11 +15,6 @@
 #ifndef PAD_HACK_IGNORE
     const  s32  __pad_rodata_80025BF4 = 0;
     static s32  __pad_bss_800C15EC;
-    static s16  __pad_bss_800C15F2[2];
-    static s32  __pad_bss_800C1674;
-    static s32  __pad_bss_800C1694;
-    static char __pad_bss_800C37C9[3];
-    static char __pad_bss_800C37D1[3];
 #endif
 
 #define CD_ERROR_LIMIT                    600 // Matches value used in beatmania `FSCD.C`.
@@ -1005,7 +1000,6 @@ void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx) // 0x800472BC
 static void Sd_XaPreLoadAudio(void) // 0x80047308
 {
     static u16 xaAudioIdx;
-    static u16 __pad_800C15D2;
     static u32 xaFileOffset;
 
     g_Sd_AudioWork.cdErrorCount++;

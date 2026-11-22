@@ -26,7 +26,7 @@ GsCOORDINATE2 g_ItemScreen_CameraCoord;
 
 SVECTOR3 g_ItemScreen_CameraRotation;
 
-s16 __pad_bss_800C3B3E[5];
+s32 __pad_bss_800C3B40[2];
 
 VbRVIEW g_ItemScreen_CameraView;
 
@@ -55,8 +55,6 @@ s32 g_Inventory_EquippedItemIdx;
 s32 __pad_bss_800C3E38[2];
 
 u8 g_Ranking_ExtraItemFlags;
-
-s8 __pad_bss_800C3E41[7];
 
 GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX];
 
@@ -1867,7 +1865,6 @@ void func_80053898(s32 arg0, s32 arg1) // JPN0 0x80053898
     GsOUT_PACKET_P = &sprt[1];
     Gfx_Primitive2dTextureSet(0, (arg1 & 0x1) ? 256 : 0, 6, 1);
 }
-
 
 void func_800539A0(s32 arg0, s32 arg1) // JPN0 0x800539A0
 {

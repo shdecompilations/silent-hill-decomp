@@ -8,31 +8,27 @@
 #include "main/fs_queue.h"
 #include "bodyprog/sys/memcard.h"
 
-#ifndef PAD_HACK_IGNORE
-    s32 __pad_bss_800B5484;
-#endif
-
 /** @unused Formatting feature.
  * Commonly PS1 features an option to format the PS1. This game also count with a fully working
  * format feature, but there is no way to to naturally trigger it.
  */
 
 // ========================================
-// STATIC VARIABLES
+// GLOBAL VARIABLES
 // ========================================
 
-static s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Slot1[MEMCARD_FILE_COUNT_MAX];
-static s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Slot2[MEMCARD_FILE_COUNT_MAX];
-static s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Null[MEMCARD_FILE_COUNT_MAX];
-
-/** @brief Handles processes related to the save game, access and management of the memory card. */
-static s_MemCardSaveWork g_MemCardSaveWork;
+s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Slot1[MEMCARD_FILE_COUNT_MAX];
+s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Slot2[MEMCARD_FILE_COUNT_MAX];
+s_MemCard_SaveHeader g_MemCard_SaveHeaderInfo_Null[MEMCARD_FILE_COUNT_MAX];
 
 /** @brief Define if the memory card system is currently active or not. */
-static bool               g_MemCard_SysAvailibityStatus;
+bool g_MemCard_SysAvailibityStatus;
 
 /** @brief Handles memory card processes from the console. */
-static s_MemCardWork     g_MemCardWork;
+s_MemCardWork g_MemCardWork;
+
+/** @brief Handles processes related to the save game, access and management of the memory card. */
+s_MemCardSaveWork g_MemCardSaveWork;
 
 u32 g_MemCard_SaveIconTim[48] = {
     0x00000010, 0x00000008, 0x0000002C, 0x00000000,

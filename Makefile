@@ -13,18 +13,6 @@ SKIP_ASM       ?= 0
 # Compiler warning flags, default `-w` disables warnings.
 WARN_FLAGS     ?= -w
 
-# Enables usage of the `COMMON` segment.
-# The compiler can create a segment call `COMMON` intended to handle repetitive
-# global variables declared in files which later becomes simple data that then
-# get assigned into some data segment. This comes as default and can be disabled,
-# however, MASPSX by default do not emit the segment and instead assign data
-# directly into the data segments. The importance of having this segment
-# supported is specially in the way MASPSX handle data order in a different way
-# to how the actual `COMMON` segment handles data order. It is required to have
-# the segment supported in the linker script, even though Splat doesn't natively
-# support it. Additionally, the linker will reorder variables based on their names.
-USE_COMMON     ?= 0
-
 # Fixes Objdiff build feature.
 OBJDIFF_FIX    ?= 0
 
@@ -140,6 +128,7 @@ SILENT_ASSETS   := $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 INSERT_OVLS     := $(PYTHON) $(TOOLS_DIR)/silentassets/insertovl.py
 GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 GET_O_FILES     := $(PYTHON) $(TOOLS_DIR)/get_o_files.py
+PSYLINK_COMMONS := $(PYTHON) $(TOOLS_DIR)/psylink_commons.py
 POSTBUILD       := $(PYTHON) $(TOOLS_DIR)/postbuild.py
 COMPTEST        := $(TOOLS_DIR)/compilationTest.sh
 
@@ -150,14 +139,7 @@ ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR) -Iinclude/psyq -Iinclude/decomp
 DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
 CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc -DVER_${GAME_VERSION}
-ifeq ($(USE_COMMON),1)
-LD_FLAGS_GCSECTIONS := --no-gc-sections
-COMMON_FLAG         := --use-comm-section
-else
-LD_FLAGS_GCSECTIONS :=
-COMMON_FLAG         :=
-endif
-LD_FLAGS            := $(ENDIAN) $(DL_FLAGS) $(OPT_FLAGS) $(LD_FLAGS_GCSECTIONS) -nostdlib --no-check-sections
+LD_FLAGS            := $(ENDIAN) $(DL_FLAGS) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 ifeq ($(GEN_COMP_TU),1)
@@ -173,6 +155,10 @@ INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$
 # Targets that will run tools/postbuild.py after being linked & extracted from ELF.
 TARGET_POSTBUILD := main bodyprog screens/b_konami screens/stf_roll screens/stream screens/option maps/map3_s02 maps/map3_s06 maps/map4_s05 maps/map5_s01 maps/map6_s01 maps/map1_s04 maps/map4_s00 maps/map4_s06 maps/map6_s05 maps/map2_s03
 
+# Targets whose C globals are assembled as COMMON symbols and placed by tools/psylink_commons.py,
+# which writes the linker script used for them into $(BUILD_DIR)/linkers.
+TARGET_COMMONS := bodyprog screens/stf_roll
+
 # Adjusts compiler and assembler flags based on source file location.
 # - Files under main executable paths use -G8; overlay files use -G0.
 # - Enables `--expand-div` for certain `libsd` sources which require it (others can't build with it).
@@ -183,7 +169,7 @@ define FlagsSwitch
     	$(eval DL_FLAGS = -G8), \
     	$(eval DL_FLAGS = -G0))
 
-	$(eval LD_FLAGS = $(ENDIAN) $(DL_FLAGS) $(OPT_FLAGS) $(LD_FLAGS_GCSECTIONS) -nostdlib --no-check-sections)
+	$(eval LD_FLAGS = $(ENDIAN) $(DL_FLAGS) $(OPT_FLAGS) -nostdlib --no-check-sections)
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
 	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 $(WARN_FLAGS) -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
 	
@@ -192,8 +178,11 @@ define FlagsSwitch
 		$(eval ASPSX_VERSION := 2.77))
 
 	$(if $(or $(findstring smf_mid,$(1)), $(findstring smf_io,$(1)),), \
-		$(eval MASPSX_FLAGS = --gnu-as-path mips-linux-gnu-as --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler --expand-div $(AS_FLAGS)), \
-		$(eval MASPSX_FLAGS = --gnu-as-path mips-linux-gnu-as --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler $(AS_FLAGS)))
+		$(eval MASPSX_FLAGS = --gnu-as-path mips-linux-gnu-as --aspsx-version=$(ASPSX_VERSION) --run-assembler --expand-div $(AS_FLAGS)), \
+		$(eval MASPSX_FLAGS = --gnu-as-path mips-linux-gnu-as --aspsx-version=$(ASPSX_VERSION) --run-assembler $(AS_FLAGS)))
+
+	$(if $(filter $(addprefix $(BUILD_DIR)/src/,$(addsuffix /%,$(TARGET_COMMONS))),$(strip $(1))), \
+		$(eval MASPSX_FLAGS += --use-comm-section))
 
 	$(eval _lang := $(word 1,$(subst /, ,$(patsubst $(BUILD_DIR)/lang/%,%,$(filter $(BUILD_DIR)/lang/%,$(1))))))
 	$(eval _path := $(patsubst $(BUILD_DIR)/lang/$(_lang)/%,$(BUILD_DIR)/%,$(strip $(1))))
@@ -261,11 +250,17 @@ ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
 	-$(POSTBUILD) $1
 endif
 
-$2.elf: $(call get_o_files, $1, $(GEN_COMP_TU))
+ifneq (,$(filter $1,$(TARGET_COMMONS)))
+$(BUILD_DIR)/linkers/$1.ld: $(LINKER_DIR)/$1.ld $(TOOLS_DIR)/psylink_commons.py $(filter %.c.o,$(call get_o_files, $1, $(GEN_COMP_TU)))
+	@mkdir -p $$(dir $$@)
+	$(PSYLINK_COMMONS) $(LINKER_DIR)/$1.ld $$@ $$(filter %.c.o,$$^)
+endif
+
+$2.elf: $(call get_o_files, $1, $(GEN_COMP_TU)) $(if $(filter $1,$(TARGET_COMMONS)),$(BUILD_DIR)/linkers/$1.ld)
 	@mkdir -p $(dir $2)
 	$(LD) $(LD_FLAGS) \
 		-Map $2.map \
-		-T $(LINKER_DIR)/$1.ld \
+		-T $(if $(filter $1,$(TARGET_COMMONS)),$(BUILD_DIR)/linkers,$(LINKER_DIR))/$1.ld \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
 		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
 		-T $(CONFIG_DIR)/lib_externs.ld \

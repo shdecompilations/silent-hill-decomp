@@ -3314,7 +3314,6 @@ g_UncappedVBlanks                            = 0x800B5C38; // type:s32
 __pad_bss_800B5C3C                           = 0x800B5C3C;
 g_OtTags0                                    = 0x800B5C40; // type:u32 size:0x80
 g_DeltaTime                                  = 0x800B5CC0; // type:s32 - Q19.12 fixed point, usually 0x44 (0.0166..) or 0x88 (0.033..).
-__pad_bss_800B5CC4                           = 0x800B5CC4;
 g_OtTags1                                    = 0x800B5CC8; // type:u32 size:0x4000
 g_GravitySpeed                               = 0x800B9CC8; // type:s32
 g_TickCount                                  = 0x800B9CCC;

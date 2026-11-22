@@ -283,7 +283,6 @@ STATIC_ASSERT_SIZEOF(SD_SPU_ALLOC, 8);
 extern VAB_H        vab_h[SD_VAB_SLOTS];
 extern u8           sd_vb_malloc_rec[136];
 extern s16          sd_seq_loop_mode;
-extern s16          __pad_bss_800C7662;
 extern s32          sd_tick_mode;
 extern SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
 
@@ -291,7 +290,6 @@ extern SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
 extern s32  __pad_bss_800C7730[2];
 extern MIDI smf_midi[2 * 16];   // 2 devices with 16 channels each?
 extern MIDI smf_midi_sound_off; // Set by `sound_off`, could be `smf_midi[32]`, but game doesn't use offsets for `[32]`?
-extern s32  __pad_bss_800C8314;
 extern PORT smf_port[24];
 extern s32  sd_timer_event;
 

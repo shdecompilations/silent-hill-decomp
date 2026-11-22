@@ -209,7 +209,6 @@ void GameState_PaperMapScreen_Update(void) // 0x80066EB0
     static u8     paperMapIdx;
     static u8     markingIdx;
     static s8     activeMarkingFileIdx;
-    static s8     __pad_bss_800C444B;
     static q19_12 screenPosX;
     static q19_12 screenPosY;
 

@@ -141,8 +141,6 @@ extern GsCOORD2PARAM g_ItemScreen_CameraTransform;
 /** Packed weapon attack. See `WEAPON_ATTACK`. */
 extern s8 g_ItemScreen_PlayerWeaponAttack;
 
-extern s8 __pad_bss_800C3951[3];
-
 extern s32 g_ItemScreen_ViewDistance;
 
 extern s32 g_ItemScreen_GeomOffsetX;
@@ -184,8 +182,6 @@ extern s32 g_Inventory_SelectionBordersDraw;
  */
 extern s32 g_Inventory_PrevSelectionId;
 
-extern s32 __pad_bss_800C39A0[2];
-
 // 3.c
 
 extern GsF_LIGHT g_Items_Lights[7][2];
@@ -201,7 +197,7 @@ extern GsCOORDINATE2 g_ItemScreen_CameraCoord;
  */
 extern SVECTOR3 g_ItemScreen_CameraRotation;
 
-extern s16 __pad_bss_800C3B3E[5];
+extern s32 __pad_bss_800C3B40[2];
 
 extern VbRVIEW g_ItemScreen_CameraView;
 
@@ -238,12 +234,9 @@ extern s32 D_800C3E18[7];
  */
 extern s32 g_Inventory_EquippedItemIdx;
 
-extern s32 __pad_bss_800C3E38[2];
-
 // TODO: Unsure about name, depends on certain extra options being enabled.
+extern s32 __pad_bss_800C3E38[2];
 extern u8 g_Ranking_ExtraItemFlags;
-
-extern s8 __pad_bss_800C3E41[7];
 
 extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX];
 

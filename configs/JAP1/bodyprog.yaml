@@ -493,7 +493,7 @@ segments:
       - [0x9A8E0, .bss, world/effects]
       - [0x9A8F0, .bss, view/vc_util]
       - [0x9A8FC, pad] # Unused
-      - [0x9A90C, .bss, world/draw]
+      - [0x9A908, .bss, world/draw]
       - [0x9D6CC, pad] # Garbage.
       - [0x9D6E8, .bss, world/light_overlap]
       - [0x9EB08, .bss, world/map]

@@ -560,7 +560,7 @@ segments:
       - [0x96D48, .bss, world/effects]
       - [0x96D58, .bss, view/vc_util]
       - [0x96D64,  pad] # Unused
-      - [0x96D74, .bss, world/draw]
+      - [0x96D70, .bss, world/draw]
       - [0x99B34,  pad] # Garbage.
       - [0x99B50, .bss, world/light_overlap]
       - [0x9AF70, .bss, world/map]

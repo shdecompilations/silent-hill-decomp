@@ -240,11 +240,11 @@ typedef struct
     /* 0xC */ u8  field_C;
 } s_800C4418;
 
+extern s32 __pad_bss_800C42E0[2];
+
 extern s_800C42E8 D_800C42E8[24];
 
 extern s16 g_Particle_ActiveCount;
-
-extern s16 __pad_bss_800C440A;
 
 extern GsCOORDINATE2* D_800C440C;
 
