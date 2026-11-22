@@ -350,7 +350,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map3_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map3_s02&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map3_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map3_s02&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map3_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map3_s02&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Green Lion Antique Shop cutscene in the Hospital.</td>
+            <td>Antique Shop cutscene in the Hospital.</td>
         </tr>
         <tr>
             <td>MAP3_S03</td>
@@ -402,7 +402,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map4_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map4_s01&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map4_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map4_s01&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map4_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map4_s01&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Green Lion Antique Shop in Central and Otherworld.</td>
+            <td>Antique Shop in Central and Otherworld.</td>
         </tr>
         <tr>
             <td>MAP4_S02</td>
