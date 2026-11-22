@@ -1,1 +1,1 @@
-v3.8.2 from https://github.com/encounter/objdiff/releases/download/v3.8.2/objdiff-cli-linux-x86_64
+v3.8.3 from https://github.com/encounter/objdiff/releases/download/v3.8.3/objdiff-cli-linux-x86_64
