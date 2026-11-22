@@ -3124,7 +3124,7 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
 
     image = &g_ControllerButtonAtlasImg;
 
-    ot     = &g_OtTags1[g_ActiveBufferIdx][16];
+    ot     = &g_OtTags1[g_ActiveBufferIdx][15];
     packet = GsOUT_PACKET_P;
 
     // Draw button sprites.

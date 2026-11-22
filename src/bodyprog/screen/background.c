@@ -65,7 +65,7 @@ void Screen_BackgroundImgDraw(s_FsImageDesc* image)
     SPRT*     sprt;
     PACKET*   packet;
 
-    ot          = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
+    ot          = (GsOT*)&g_OtTags1[g_ActiveBufferIdx][ORDERING_TABLE_SIZE - 1];
     packet      = GsOUT_PACKET_P;
 #if VERSION_REGION_IS(PAL)
     isInterlaced = g_GameWork.gsScreenHeight > 256;
@@ -241,7 +241,7 @@ bool Screen_BackgroundMotionBlur(s32 vBlanks)
     SPRT*     sprt;
     DR_TPAGE* tPage;
 
-    ot                 = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
+    ot                 = (GsOT*)&g_OtTags1[g_ActiveBufferIdx][ORDERING_TABLE_SIZE - 1];
     sprt               = (SPRT*)GsOUT_PACKET_P;
     interlacingEnabled = GsDISPENV.isinter;
 

@@ -10,9 +10,8 @@ s32 __pad_bss_800B5C3C;
 
 GsOT_TAG g_OtTags0[2][16];
 q19_12   g_DeltaTime;
+s32      __pad_bss_800B5CC4;
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
-
-s32 __pad_bss_800B9CC4;
 
 q19_12 g_GravitySpeed;
 s32    g_TickCount;
@@ -54,8 +53,8 @@ VC_ROAD_DATA vcNullRoadArray[] = {
 };
 
 GsOT g_OrderingTable0[2] = {
-    { 11, &g_OtTags1[0][1], 0, 0, 0 },
-    { 11, &g_OtTags1[1][1], 0, 0, 0 }
+    { 11, &g_OtTags1[0][0], 0, 0, 0 },
+    { 11, &g_OtTags1[1][0], 0, 0, 0 }
 };
 
 GsOT g_OrderingTable1[2] = {

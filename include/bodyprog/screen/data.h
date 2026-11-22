@@ -163,9 +163,9 @@ extern GsOT_TAG g_OtTags0[2][16];
  */
 extern q19_12 g_DeltaTime;
 
-extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
+extern s32 __pad_bss_800B5CC4;
 
-extern s32 __pad_bss_800B9CC4;
+extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
 
 /** Gravity speed for this tick. */
 extern q19_12 g_GravitySpeed;
