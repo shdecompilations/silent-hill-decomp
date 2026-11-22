@@ -251,9 +251,9 @@ ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
 endif
 
 ifneq (,$(filter $1,$(TARGET_COMMONS)))
-$(BUILD_DIR)/linkers/$1.ld: $(LINKER_DIR)/$1.ld $(TOOLS_DIR)/psylink_commons.py $(filter %.c.o,$(call get_o_files, $1, $(GEN_COMP_TU)))
+$(BUILD_DIR)/linkers/$1.ld: $(LINKER_DIR)/$1.ld $(call get_yaml_path,$1) $(TOOLS_DIR)/psylink_commons.py $(filter %.c.o,$(call get_o_files, $1, $(GEN_COMP_TU)))
 	@mkdir -p $$(dir $$@)
-	$(PSYLINK_COMMONS) $(LINKER_DIR)/$1.ld $$@ $$(filter %.c.o,$$^)
+	$(PSYLINK_COMMONS) --yaml $(call get_yaml_path,$1) $(LINKER_DIR)/$1.ld $$@ $$(filter %.c.o,$$^)
 endif
 
 $2.elf: $(call get_o_files, $1, $(GEN_COMP_TU)) $(if $(filter $1,$(TARGET_COMMONS)),$(BUILD_DIR)/linkers/$1.ld)

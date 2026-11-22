@@ -3569,13 +3569,16 @@ g_Bgm_LayersUpdated                          = 0x800BF3B4;
 //------------------------------------------------------------------
 g_MapMsg_Select                              = 0x800BF3D0; // size:2
 g_MapMsg_AudioType                           = 0x800BF3D2; // type:u8
+g_MapMsg_SelectCancelIdx                     = 0x800BF3D3; // type:s8
 
 //----------------------------------------------------------------------------
 //--- PA: 0x09A878   VA: 0x800BF3D8   subsegment: .bss, events/game_sys_states
 //----------------------------------------------------------------------------
 D_800BCD80                                   = 0x800BF3D8;
 g_DeltaTimeCpy                               = 0x800BF3DC; // type:s32
+__pad_bss_800BCD88                           = 0x800BF3E0;
 g_ItemEvents                                 = 0x800BF3E8; // type:s32 size:0x14
+__pad_bss_800BCD98                           = 0x800BF3F0;
 g_RadioNoise                                 = 0x800BF400;
 g_MapPoint                                   = 0x800BF408;
 g_ItemTriggerItemIds                         = 0x800BF418; // type:s32 size:0x14
@@ -3598,8 +3601,9 @@ D_800BCDE8                                   = 0x800BF440;
 vcRefPosSt                                   = 0x800BF450; // type:VECTOR3 size:0xC
 
 //----------------------------------------------------------------
-//--- PA: 0x09A90C   VA: 0x800BF46C   subsegment: .bss, world/draw
+//--- PA: 0x09A908   VA: 0x800BF468   subsegment: .bss, world/draw
 //----------------------------------------------------------------
+__pad_bss_800BCE10                           = 0x800BF468;
 g_CollisionTriggerFlags                      = 0x800BF46C;
 g_WorldGfxWork                               = 0x800BF470; // type:u8 size:0x2DBC
 
@@ -3681,6 +3685,7 @@ VwCrdWsRotMat                                = 0x800C5EE0; // type:MATRIX size:0
 g_StringPosition                             = 0x800C5F00; // type:DVECTOR
 D_800C38AA                                   = 0x800C5F02;
 g_StringPositionX1                           = 0x800C5F04; // type:s32
+__pad_bss_800C5DE0                           = 0x800C5F08;
 g_MapMsg_GlyphSprite                         = 0x800C5F10;
 g_GlyphSpritePositionX                       = 0x800C5F34;
 D_800C391E                                   = 0x800C5F36;
@@ -3690,6 +3695,8 @@ g_MapMsg_ActiveLine                          = 0x800C5F40;
 D_800C5E19                                   = 0x800C5F41;
 g_MapMsg_WidthIdx                            = 0x800C5F44;
 D_800C5E20                                   = 0x800C5F48;
+__pad_bss_800C5E24                           = 0x800C5F4C;
+__pad_bss_800C5E28                           = 0x800C5F50;
 g_MapMsg_Widths                              = 0x800C5F58; // type:s32
 D_800C3920                                   = 0x800C5F7C;
 
@@ -3729,16 +3736,19 @@ D_800C3A88                                   = 0x800C60E0;
 D_800C3AC8                                   = 0x800C6120;
 g_ItemScreen_CameraCoord                     = 0x800C6140;
 g_ItemScreen_CameraRotation                  = 0x800C6190;
+__pad_bss_800C3B40                           = 0x800C6198;
 g_ItemScreen_CameraView                      = 0x800C61A0;
 D_800C3B68                                   = 0x800C61C0;
 D_800C3BA8                                   = 0x800C6200;
 D_800C3BAC                                   = 0x800C6204;
+__pad_bss_800C3BB0                           = 0x800C6208;
 g_Item_MapLoadableItems                      = 0x800C6210;
 g_Items_Transforms                           = 0x800C6240;
 g_Items_ItemsModelData                       = 0x800C63D0;
 D_800C3E08                                   = 0x800C6460;
 D_800C3E18                                   = 0x800C6470;
 g_Inventory_EquippedItemIdx                  = 0x800C648C;
+__pad_bss_800C3E38                           = 0x800C6490;
 g_Ranking_ExtraItemFlags                     = 0x800C6498;
 g_Items_Coords                               = 0x800C64A0;
 
@@ -3768,6 +3778,7 @@ g_Player_RotationDeltaToTargetX              = 0x800C692A;
 //--- PA: 0x0A1DD0   VA: 0x800C6930   subsegment: .bss, gfx/env_effects
 //---------------------------------------------------------------------
 loadedEffectTextureFlags                     = 0x800C6930;
+__pad_bss_800C42E0                           = 0x800C6938;
 D_800C42E8                                   = 0x800C6940;
 g_Particle_ActiveCount                       = 0x800C6A60;
 D_800C440C                                   = 0x800C6A64;
@@ -3812,6 +3823,7 @@ g_Player_HasActionInput                      = 0x800C6BB4;
 g_Player_PrevAttackReceived                  = 0x800C6BB8;
 g_Player_IsDead                              = 0x800C6BB9;
 g_Player_DisableDamage                       = 0x800C6BBA;
+__pad_bss_800C4568                           = 0x800C6BC0;
 g_Player_EquippedWeaponInfo                  = 0x800C6BC8; // size:12
 g_Player_CutsceneState                       = 0x800C6BD4;
 g_Player_IsAiming                            = 0x800C6BD6;
@@ -3830,6 +3842,7 @@ g_Player_IsShooting                          = 0x800C6C18;
 D_800C45C8                                   = 0x800C6C20;
 D_800C45C9                                   = 0x800C6C21;
 D_800C45DC                                   = 0x800C6C34;
+__pad_bss_800C45E0                           = 0x800C6C38;
 g_Player_IsMovingForward                     = 0x800C6C40;
 D_800C45EC                                   = 0x800C6C44;
 g_Player_IsMovingBackward                    = 0x800C6C48;
@@ -3881,6 +3894,7 @@ g_LensFlareWork                              = 0x800C6E70; // size:0x24
 //--------------------------------------------------------------
 g_Demo_DemoFileIdx                           = 0x800C6E98; // type:s32
 g_Demo_PlayFileIdx                           = 0x800C6E9C; // type:s32
+__pad_bss_800C4848                           = 0x800C6EA0;
 g_Demo_OptionsConfigBackup                   = 0x800C6EA8; // type:ShSaveUserConfig size:0x38
 g_Demo_PrevRandSeed                          = 0x800C6EE0;
 g_Demo_RandSeedBackup                        = 0x800C6EE4;
@@ -3918,6 +3932,7 @@ g_Ranking_LongRangeShotPercent               = 0x800C6F20;
 g_Ranking_NoAimingShotPercent                = 0x800C6F24;
 g_Ranking_GameDifficulty                     = 0x800C6F28;
 g_Ranking_ContinueCount                      = 0x800C6F29;
+__pad_bss_800C48D8                           = 0x800C6F30;
 g_Ranking_TextColors                         = 0x800C6F38; // size:0x9
 
 //------------------------------------------------------------------------
@@ -4119,6 +4134,7 @@ sd_spu_alloc                                 = 0x800C9CC0; // size:0x80
 //--- PA: 0x0A51E8   VA: 0x800C9D48   subsegment: .bss, libsd/smf_io
 //------------------------------------------------------------------
 s_attr                                       = 0x800C9D48; // size:0x40
+__pad_bss_800C7730                           = 0x800C9D88;
 smf_midi                                     = 0x800C9D90;
 smf_midi_sound_off                           = 0x800CA910; // guessed name
 smf_port                                     = 0x800CA970;

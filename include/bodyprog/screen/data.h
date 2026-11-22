@@ -144,16 +144,17 @@ extern s_FsImageDesc D_800A90A4;
 extern s_FsImageDesc D_800A90B4;
 
 // ====================
-// GLOBALS (BSS; Hack)
+// GLOBALS (BSS)
 // ====================
-// To match the order of the BSS segment, extern declarations
-// are required in a predetermined order.
-// This is done until a way to replicate `common`
-// segment behavior is found.
 
-extern s32      g_VBlanks;
-extern s32      g_UncappedVBlanks;
 extern GsOT_TAG g_OtTags0[2][16];
+extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
+
+extern s32 g_VBlanks;
+extern s32 g_UncappedVBlanks;
+
+/** Number of ticks since game start. */
+extern s32 g_TickCount;
 
 /** Main gameplay timer. Code pauses gameplay by setting this to `Q12(0.0f)`.
  * Demos override this with the time from a demo file to ensure deos remain in sync.
@@ -162,13 +163,8 @@ extern GsOT_TAG g_OtTags0[2][16];
  */
 extern q19_12 g_DeltaTime;
 
-extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
-
 /** Gravity speed for this tick. */
 extern q19_12 g_GravitySpeed;
-
-/** Number of ticks since game start. */
-extern s32 g_TickCount;
 
 extern s32 g_MainLoop_FrameCount;
 

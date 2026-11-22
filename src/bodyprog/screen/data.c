@@ -2,16 +2,15 @@
 #include "bodyprog/screen/data.h"
 #include "bodyprog/math/math.h"
 
-q19_12 g_ScreenFadeTimestep;
-s32    g_VBlanks;
-s32    g_UncappedVBlanks;
-
 GsOT_TAG g_OtTags0[2][16];
-q19_12   g_DeltaTime;
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
 
-q19_12 g_GravitySpeed;
+s32    g_VBlanks;
+s32    g_UncappedVBlanks;
 s32    g_TickCount;
+q19_12 g_DeltaTime;
+q19_12 g_GravitySpeed;
+q19_12 g_ScreenFadeTimestep;
 
 // SH2 symbols indicate this should be in `vc_main.c`, but the file already has its data segment assigned.
 // It's possible this is part of another split as there is also some inbetween data in

@@ -16,19 +16,20 @@
 # then handles placing them into the linker script, preventing GNU ld from reordering them.
 #
 # In the linker script from splat, after each object's `(.bss)` line, we assign every
-# global of that object an address in declaration order (the order that our decomp/gcc
-# emits them, header externs included). The original names psylink hashed aren't known,
-# so this lets us control order using our declarations in the source instead.
+# global of that object an address, ordered by its original address in the target's
+# symbol files. The original names psylink hashed aren't known, so the symbol files
+# stand in for that order.
 
 import argparse
 import re
 import sys
 
+import yaml
 from elftools.elf.elffile import ELFFile
 
 BSS_LINE = re.compile(r"^(\s*)(\S+\.o)\(\.bss\);\s*$")
 BSS_START_LINE = re.compile(r"^\s*(\w+_BSS_START) = \.;")
-COMM_LINE = re.compile(r"^\s*\.comm\s+([\w.$]+)\s*,\s*(\d+)")
+SYM_LINE = re.compile(r"^\s*(\w+)\s*=\s*0x([0-9A-Fa-f]+)\s*;")
 
 
 def alignment(size):
@@ -50,18 +51,19 @@ def read_object(path):
     return (bss["sh_size"] if bss else 0), commons
 
 
-def declaration_order(path, commons):
-    """Orders an object's COMMON symbols as gcc emitted them in its .c.s."""
-    asm = re.sub(r"\.o$", ".s", path)
-    order = []
-    for line in open(asm):
-        m = COMM_LINE.match(line)
-        if m and m.group(1) in commons and m.group(1) not in order:
-            order.append(m.group(1))
-    missing = set(commons) - set(order)
-    if missing:
-        sys.exit(f"{asm}: no .comm line for {', '.join(sorted(missing))}")
-    return order
+def read_addresses(yaml_path):
+    """Returns {name: [addresses]} from the symbol files a splat yaml lists."""
+    with open(yaml_path) as f:
+        paths = yaml.safe_load(f)["options"]["symbol_addrs_path"]
+    if isinstance(paths, str):
+        paths = [paths]
+    addrs = {}
+    for path in paths:
+        for line in open(path):
+            m = SYM_LINE.match(line)
+            if m:
+                addrs.setdefault(m.group(1), set()).add(int(m.group(2), 16))
+    return addrs
 
 
 def main():
@@ -69,7 +71,11 @@ def main():
     ap.add_argument("input", help="splat linker script")
     ap.add_argument("output")
     ap.add_argument("objects", nargs="+", help="objects assembled with --use-comm-section")
+    ap.add_argument("--yaml", required=True, help="splat yaml whose symbol files give the order")
     args = ap.parse_args()
+
+    addrs = read_addresses(args.yaml)
+    errors = []
 
     placed = set()
     out = []
@@ -91,10 +97,17 @@ def main():
             out.append(f"{indent}. = {bss_start} + ALIGN(. - {bss_start}, 8);\n")
         first = False
         out.append(line)
-        for name in declaration_order(path, commons):
+        for name in commons:
+            if len(addrs.get(name, ())) != 1:
+                why = "no symbol file entry" if name not in addrs else "several addresses"
+                errors.append(f"{path}: `{name}` has {why}")
+        known = [n for n in commons if len(addrs.get(n, ())) == 1]
+        for name in sorted(known, key=lambda n: min(addrs[n])):
             size = commons[name]
             out.append(f"{indent}{name} = ALIGN({alignment(size)}); . = {name} + {size:#x};\n")
             placed.add(name)
+    if errors:
+        sys.exit("\n".join(errors))
     with open(args.output, "w") as f:
         f.writelines(out)
 

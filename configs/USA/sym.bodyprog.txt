@@ -3388,6 +3388,7 @@ g_DeltaTimeCpy                               = 0x800BCD84; // type:s32
 __pad_bss_800BCD88                           = 0x800BCD88;
 g_ItemEvents                                 = 0x800BCD90; // type:s32 size:0x4
 __pad_bss_800BCD94                           = 0x800BCD94; // size:0x14
+__pad_bss_800BCD98                           = 0x800BCD98;
 g_RadioNoise                                 = 0x800BCDA8;
 g_MapPoint                                   = 0x800BCDB0;
 __pad_bss_800BCDD0                           = 0x800BCDBC;
@@ -3397,13 +3398,24 @@ __pad_bss_800BCDD5                           = 0x800BCDD5;
 g_MapEventData                               = 0x800BCDD8; // type:u32
 
 //------------------------------------------------------------------
+//--- PA: 0x098280   VA: 0x800BCDE0   subsegment: .bss, events/title
+//------------------------------------------------------------------
+D_800BCDE0                                   = 0x800BCDE0;
+
+//-------------------------------------------------------------------
+//--- PA: 0x098288   VA: 0x800BCDE8   subsegment: .bss, world/effects
+//-------------------------------------------------------------------
+D_800BCDE8                                   = 0x800BCDE8;
+
+//------------------------------------------------------------------
 //--- PA: 0x098298   VA: 0x800BCDF8   subsegment: .bss, view/vc_util
 //------------------------------------------------------------------
 vcRefPosSt                                   = 0x800BCDF8; // type:VECTOR3 size:0xC
 
 //----------------------------------------------------------------
-//--- PA: 0x0982B4   VA: 0x800BCE14   subsegment: .bss, world/draw
+//--- PA: 0x0982B0   VA: 0x800BCE10   subsegment: .bss, world/draw
 //----------------------------------------------------------------
+__pad_bss_800BCE10                           = 0x800BCE10;
 g_CollisionTriggerFlags                      = 0x800BCE14;
 __pad_800BCE14                               = 0x800BCE16;
 g_WorldGfxWork                               = 0x800BCE18; // type:u8 size:0x2DBC
@@ -3418,6 +3430,11 @@ g_LightOverlapPrims                          = 0x800BFBF0; // size:0x1420
 //---------------------------------------------------------------
 activeChunksCollData.78                      = 0x800C1010;
 g_WorldMapWork                               = 0x800C1020; // type:u8 size:0x58C - size from bzero call
+
+//----------------------------------------------------------------
+//--- PA: 0x09CA50   VA: 0x800C15B0   subsegment: .bss, chara/bone
+//----------------------------------------------------------------
+D_800C15B0                                   = 0x800C15B0;
 
 //-------------------------------------------------------------------
 //--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: .bss, sound/sd_call
@@ -3487,6 +3504,8 @@ __pad_bss_800C38B8                           = 0x800C38B8;
 g_MapMsg_Widths                              = 0x800C38C8; // type:s32
 g_MapMsg_GlyphSprite                         = 0x800C38F8; // size:0x24
 g_GlyphSpritePositionX                       = 0x800C391C;
+D_800C391E                                   = 0x800C391E;
+D_800C3920                                   = 0x800C3920;
 
 //------------------------------------------------------------------
 //--- PA: 0x09EDC8   VA: 0x800C3928   subsegment: .bss, items/camera
@@ -3528,14 +3547,22 @@ g_Inventory_PrevSelectionId                  = 0x800C399C;
 //--- PA: 0x09EE48   VA: 0x800C39A8   subsegment: .bss, items/item_screens_3
 //--------------------------------------------------------------------------
 g_Items_Lights                               = 0x800C39A8;
+D_800C3A88                                   = 0x800C3A88;
+D_800C3AC8                                   = 0x800C3AC8;
 g_ItemScreen_CameraCoord                     = 0x800C3AE8;
 g_ItemScreen_CameraRotation                  = 0x800C3B38;
 __pad_bss_800C3B3E                           = 0x800C3B3E;
+__pad_bss_800C3B40                           = 0x800C3B40;
 g_ItemScreen_CameraView                      = 0x800C3B48;
+D_800C3B68                                   = 0x800C3B68;
+D_800C3BA8                                   = 0x800C3BA8;
+D_800C3BAC                                   = 0x800C3BAC;
 __pad_bss_800C3BB0                           = 0x800C3BB0;
 g_Item_MapLoadableItems                      = 0x800C3BB8;
 g_Items_Transforms                           = 0x800C3BE8;
 g_Items_ItemsModelData                       = 0x800C3D78;
+D_800C3E08                                   = 0x800C3E08;
+D_800C3E18                                   = 0x800C3E18;
 g_Inventory_EquippedItemIdx                  = 0x800C3E34;
 __pad_bss_800C3E38                           = 0x800C3E38;
 g_Ranking_ExtraItemFlags                     = 0x800C3E40;
@@ -3569,8 +3596,13 @@ g_Player_RotationDeltaToTargetX              = 0x800C42D2;
 //---------------------------------------------------------------------
 loadedEffectTextureFlags.46                  = 0x800C42D8;
 __pad_bss_800C42DA.47                        = 0x800C42DA;
+__pad_bss_800C42E0                           = 0x800C42E0;
+D_800C42E8                                   = 0x800C42E8;
 g_Particle_ActiveCount                       = 0x800C4408;
 __pad_bss_800C440A                           = 0x800C440A;
+D_800C440C                                   = 0x800C440C;
+D_800C4410                                   = 0x800C4410;
+D_800C4414                                   = 0x800C4414;
 __pad_bss_800C4415                           = 0x800C4415;
 D_800C4418                                   = 0x800C4418; // size:0xE
 hack_D_800C4426_fix                          = 0x800C4426;
@@ -3608,6 +3640,7 @@ attackPos.106                                = 0x800C44E0;
 __pad_bss_800C44EC.107                       = 0x800C44EC;
 D_800C44F0                                   = 0x800C44F0; // size:0x50
 g_Player_TargetEnemyPosition                 = 0x800C4540; 
+D_800C454C                                   = 0x800C454C;
 g_Player_PrevMoveSpeed                       = 0x800C4550;
 g_Player_RotationToTargetX                   = 0x800C4554;
 g_Player_RotationToTargetY                   = 0x800C4556;
@@ -3617,6 +3650,7 @@ g_Player_PrevAttackReceived                  = 0x800C4560;
 g_Player_IsDead                              = 0x800C4561; 
 g_Player_DisableDamage                       = 0x800C4562; 
 __pad_bss_800C4563                           = 0x800C4563;
+__pad_bss_800C4568                           = 0x800C4568;
 g_Player_EquippedWeaponInfo                  = 0x800C4570; // size:12
 g_Player_CutsceneState                       = 0x800C457C;
 __pad_bss_800C457D                           = 0x800C457D;
@@ -3625,6 +3659,7 @@ g_Player_IsSteppingLeftTap                   = 0x800C4580;
 g_Player_IsSteppingRightTap                  = 0x800C4582; 
 g_Player_IsTurningLeft                       = 0x800C4584; 
 g_Player_IsTurningRight                      = 0x800C4586; 
+D_800C4588                                   = 0x800C4588;
 __pad_bss_800C4589                           = 0x800C4589;
 g_Player_CollisionResult                     = 0x800C4590; // size:0x1c
 g_Player_IsSteppingLeftHold                  = 0x800C45AC; 
@@ -3638,6 +3673,7 @@ D_800C45C8                                   = 0x800C45C8; // size:0x18
 __pad_bss_800C45E0                           = 0x800C45E0;
 g_Player_IsMovingForward                     = 0x800C45E8; 
 __pad_bss_800C45EA                           = 0x800C45EA;
+D_800C45EC                                   = 0x800C45EC;
 g_Player_IsMovingBackward                    = 0x800C45F0; 
 __pad_bss_800C45F2                           = 0x800C45F2;
 g_Player_PrevPosition                        = 0x800C45F8; 
@@ -3725,7 +3761,13 @@ g_Ranking_NoAimingShotPercent                = 0x800C48CC;
 g_Ranking_GameDifficulty                     = 0x800C48D0;
 g_Ranking_ContinueCount                      = 0x800C48D1;
 __pad_bss_800C48D2                           = 0x800C48D2;
+__pad_bss_800C48D8                           = 0x800C48D8;
 g_Ranking_TextColors                         = 0x800C48E0; // size:0x9
+
+//------------------------------------------------------------------------
+//--- PA: 0x09FD90   VA: 0x800C48F0   subsegment: .bss, items/credits_init
+//------------------------------------------------------------------------
+D_800C48F0                                   = 0x800C48F0;
 
 //---------------------------------------------------------------------
 //--- PA: 0x09FD98   VA: 0x800C48F8   subsegment: o, libapi/first, .bss
