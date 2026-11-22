@@ -232,28 +232,28 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map1_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map1_s00&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map1_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map1_s00&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map1_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map1_s00&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>School first floor, courtyard, and basement.</td>
+            <td>School 1st floor, courtyard, and basement.</td>
         </tr>
         <tr>
             <td>MAP1_S01</td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map1_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map1_s01&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map1_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map1_s01&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map1_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map1_s01&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>School second floor.</td>
+            <td>School 2nd floor.</td>
         </tr>
         <tr>
             <td>MAP1_S02</td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map1_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map1_s02&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map1_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map1_s02&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map1_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map1_s02&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>School first floor and courtyard in Otherworld.</td>
+            <td>School 1st floor and courtyard in Otherworld.</td>
         </tr>
         <tr>
             <td>MAP1_S03</td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map1_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map1_s03&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map1_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map1_s03&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map1_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map1_s03&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>School second floor and roof in Otherworld.</td>
+            <td>School 2nd floor and roof in Otherworld.</td>
         </tr>
         <tr>
             <td>MAP1_S04</td>
@@ -274,7 +274,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map1_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map1_s06&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map1_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map1_s06&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map1_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map1_s06&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>School first floor and basement after boss fight.</td>
+            <td>School 1st floor & basement after boss fight.</td>
         </tr>
         <tr>
             <th colspan=5>🏙 MAP2 🏙</th>
@@ -336,7 +336,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map3_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map3_s00&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map3_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map3_s00&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map3_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map3_s00&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Hospital beginning. Ends after meeting Kaufmann.</td>
+            <td>Hospital beginning. Ends once met Kaufmann.</td>
         </tr>
         <tr>
             <td>MAP3_S01</td>
@@ -357,14 +357,14 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map3_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map3_s03&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map3_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map3_s03&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map3_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map3_s03&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Hospital third and second floor in Otherworld.</td>
+            <td>Hospital 3rd and 2nd floor in Otherworld.</td>
         </tr>
         <tr>
             <td>MAP3_S04</td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map3_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map3_s04&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map3_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map3_s04&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map3_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map3_s04&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Hospital first floor in Otherworld.</td>
+            <td>Hospital 1st floor in Otherworld.</td>
         </tr>
         <tr>
             <td>MAP3_S05</td>
@@ -378,7 +378,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map3_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map3_s06&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map3_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map3_s06&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map3_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map3_s06&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Hospital first floor after the Otherworld section.</td>
+            <td>Hospital 1st floor after Otherworld section.</td>
         </tr>
         <tr>
             <th colspan=5>🏙 MAP4 🏙</th>
@@ -423,7 +423,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map4_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map4_s04&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map4_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map4_s04&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map4_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map4_s04&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Hospital First Floor.</td>
+            <td>Hospital 1st floor.</td>
         </tr>
         <tr>
             <td>MAP4_S05</td>
@@ -468,7 +468,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map5_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map5_s02&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map5_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map5_s02&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map5_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map5_s02&measure=fuzzy_match_percent&label=EUR&color=rgb(255,215,0)"/></a></td>
-            <td>Annie's Bar and Indian Runner in Resort Area.</td>
+            <td>Annie's Bar & Indian Runner in Resort Area.</td>
         </tr>
         <tr>
             <td>MAP5_S03</td>
@@ -492,7 +492,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map6_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map6_s00&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map6_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map6_s00&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map6_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map6_s00&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Silent Hill Resort Area in Otherworld.</td>
+            <td>Resort Area in Otherworld.</td>
         </tr>
         <tr>
             <td>MAP6_S01</td>
@@ -513,14 +513,14 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map6_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map6_s03&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map6_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map6_s03&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map6_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map6_s03&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Sewer connecting to Lakeside Amusement Park.</td>
+            <td>Sewer connecting to Amusement Park.</td>
         </tr>
         <tr>
             <td>MAP6_S04</td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map6_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map6_s04&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map6_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map6_s04&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map6_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map6_s04&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Cybil fight and Alessa kidnapping cutscene. </td>
+            <td>Cybil fight and Alessa kidnapping cutscene.</td>
         </tr>
         <tr>
             <td>MAP6_S05</td>
@@ -544,7 +544,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map7_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map7_s00&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map7_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map7_s00&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map7_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map7_s00&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Hospital first floor in Nowhere and Lisa cutscene.</td>
+            <td>Hospital 1st floor in Nowhere.<br/><sub>Contains the cutscene with Lisa.</sub></td>
         </tr>
         <tr>
             <td>MAP7_S01</td>
@@ -558,7 +558,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map7_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map7_s02&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map7_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map7_s02&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map7_s02"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map7_s02&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Unknown parts of Nowhere.<br/><sub>Contains the cutscene where Alessa struggles against Dahlia.</sub></td>
+            <td>Unknown parts of Nowhere.<br/><sub>Contains cutscene where Alessa struggles with Dahlia.</sub></td>
         </tr>
         <tr>
             <td>MAP7_S03</td>
