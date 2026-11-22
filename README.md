@@ -253,7 +253,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map1_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map1_s03&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map1_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map1_s03&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map1_s03"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map1_s03&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>School second floor and school roof in Otherworld.</td>
+            <td>School second floor and roof in Otherworld.</td>
         </tr>
         <tr>
             <td>MAP1_S04</td>
@@ -274,7 +274,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map1_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map1_s06&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map1_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map1_s06&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map1_s06"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map1_s06&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>School first floor and basement after the boss fight.</td>
+            <td>School first floor and basement after boss fight.</td>
         </tr>
         <tr>
             <th colspan=5>🏙 MAP2 🏙</th>
@@ -336,14 +336,14 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map3_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map3_s00&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map3_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map3_s00&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map3_s00"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map3_s00&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Hospital beginning. Ends after meeting with Kaufmann.</td>
+            <td>Hospital beginning. Ends after meeting Kaufmann.</td>
         </tr>
         <tr>
             <td>MAP3_S01</td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map3_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map3_s01&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map3_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map3_s01&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map3_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map3_s01&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Hospital 1st and basement floors after meeting with Kaufmann.</td>
+            <td>Hospital 1st and basement floors.</td>
         </tr>
         <tr>
             <td>MAP3_S02</td>
@@ -402,7 +402,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map4_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map4_s01&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map4_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map4_s01&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map4_s01"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map4_s01&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Green Lion Antique Shop in Central Silent Hill and Otherworld.</td>
+            <td>Green Lion Antique Shop in Central and Otherworld.</td>
         </tr>
         <tr>
             <td>MAP4_S02</td>
@@ -430,7 +430,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map4_s05"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map4_s05&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map4_s05"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map4_s05&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map4_s05"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map4_s05&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Central Silent Hill Floatstinger boss fight in Otherworld.</td>
+            <td>Floatstinger boss fight in Otherworld.</td>
         </tr>
         <tr>
             <td>MAP4_S06</td>
@@ -520,7 +520,7 @@ Due to the limited memory on the PlayStation 1, games often distribute their log
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707?category=map.map6_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLUS-00707.svg?mode=shield&category=map.map6_s04&measure=fuzzy_match_percent&label=USA&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192?category=map.map6_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLPM-86192.svg?mode=shield&category=map.map6_s04&measure=fuzzy_match_percent&label=JAP0&color=rgb(255,215,0)"/></a></td>
             <td align=center><a href="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514?category=map.map6_s04"><img src="https://decomp.dev/shdecompilations/silent-hill-decomp/SLES-01514.svg?mode=shield&category=map.map6_s04&measure=fuzzy_match_percent&label=EUR"/></a></td>
-            <td>Cybil boss fight and cutscene of Dahlia kidnapping Alessa.</td>
+            <td>Cybil fight and Alessa kidnapping cutscene. </td>
         </tr>
         <tr>
             <td>MAP6_S05</td>
