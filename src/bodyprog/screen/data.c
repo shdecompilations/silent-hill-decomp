@@ -1,6 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/view/structs.h"
 
 GsOT_TAG g_OtTags0[2][16];
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
@@ -13,10 +14,7 @@ q19_12 g_DeltaTime;
 q19_12 g_GravitySpeed;
 q19_12 g_ScreenFadeTimestep;
 
-VC_WORK vcWork;
-
-// SH2 symbols indicate this should be in `vc_main.c`, but the file already has its data segment assigned.
-// `vcWork` is in this files .bss as well, so SH1 likely kept the view camera data alongside the screen globals.
+VC_WORK      vcWork;
 VC_ROAD_DATA vcNullRoadArray[] = {
     {
         .lim_sw         = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },

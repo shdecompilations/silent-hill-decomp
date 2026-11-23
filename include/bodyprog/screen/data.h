@@ -1,6 +1,9 @@
 #ifndef _BODYPROG_SCREEN_DATA_H
 #define _BODYPROG_SCREEN_DATA_H
 
+struct _VC_WORK;
+struct _VC_ROAD_DATA;
+
 // =============================
 // SCREEN/FRAMEBUFFER CONSTANTS
 // =============================
@@ -14,7 +17,7 @@
     #define FRAMEBUFFER_HEIGHT_PROGRESSIVE 224
 #endif
 
-#define FRAMEBUFFER_HEIGHT_INTERLACED  (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
+#define FRAMEBUFFER_HEIGHT_INTERLACED (FRAMEBUFFER_HEIGHT_PROGRESSIVE * 2)
 
 /** @brief First VRAM row of the interlaced framebuffer, used as the Y origin when clearing or drawing it. */
 #if VERSION_REGION_IS(PAL)
@@ -96,18 +99,38 @@
 // GLOBALS
 // ========
 
+extern GsOT_TAG g_OtTags0[2][16];
+extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
+extern s32      g_ActiveBufferIdx;
+
+extern s32 g_VBlanks;
+extern s32 g_UncappedVBlanks;
+
+/** Number of ticks since game start. */
+extern s32 g_TickCount;
+
+/** Main gameplay timer. Code pauses gameplay by setting this to `Q12(0.0f)`.
+ * Demos override this with the time from a demo file to ensure deos remain in sync.
+ *
+ * Possible original name: `_shDeltaTimePerFrame`
+ */
+extern q19_12 g_DeltaTime;
+
+extern q19_12 g_GravitySpeed; /** Gravity speed for this tick. */
+
 /** @note This is defined in `draw.c` because there's garbage data between this and the previous variable
  * (`g_Screen_PrevFadeProgressState`). It suggests the variable was defined in a file separate from `fade.c`.
  */
 extern q19_12 g_ScreenFadeTimestep;
-extern s32    g_ActiveBufferIdx;
-extern GsOT   g_OrderingTable0[2];
-extern GsOT   g_OrderingTable1[2];
-extern GsOT   g_OrderingTable2[2];
 
-/** Actual delta time since the previous tick. Unlike `g_DeltaTime`, this value is never overridden by demos or game code. Mostly seems used by UI code. */
-extern q19_12 g_DeltaTimeRaw;
+extern struct _VC_WORK      vcWork;             /** View camera workspace. */
+extern struct _VC_ROAD_DATA vcNullRoadArray[2]; /** Default camera paths. */
 
+extern GsOT g_OrderingTable0[2];
+extern GsOT g_OrderingTable1[2];
+extern GsOT g_OrderingTable2[2];
+
+extern q19_12 g_DeltaTimeRaw; /** Actual delta time since the previous tick. Unlike `g_DeltaTime`, this value is never overridden by demos or game code. Mostly seems used by UI code. */
 extern s32 g_IntervalVBlanks;
 
 extern s_FsImageDesc g_Font16AtlasImg;
@@ -142,30 +165,5 @@ extern s_FsImageDesc g_Font24AtlasImg;
 extern s_FsImageDesc D_800A90A4;
 
 extern s_FsImageDesc D_800A90B4;
-
-// ====================
-// GLOBALS (BSS)
-// ====================
-
-extern GsOT_TAG g_OtTags0[2][16];
-extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
-
-extern s32 g_VBlanks;
-extern s32 g_UncappedVBlanks;
-
-/** Number of ticks since game start. */
-extern s32 g_TickCount;
-
-/** Main gameplay timer. Code pauses gameplay by setting this to `Q12(0.0f)`.
- * Demos override this with the time from a demo file to ensure deos remain in sync.
- *
- * Possible original name: `_shDeltaTimePerFrame`
- */
-extern q19_12 g_DeltaTime;
-
-/** Gravity speed for this tick. */
-extern q19_12 g_GravitySpeed;
-
-extern s32 g_MainLoop_FrameCount;
 
 #endif
