@@ -49,6 +49,9 @@ def _create_config():
                         help="Also create units for splat's raw data/rodata/bss splits, so data not yet "
                              "migrated to C is counted as unmatched.")
     parser.add_argument("--output", type = Path, help="Override the config's output path.")
+    parser.add_argument("--object-overrides", type = Path,
+                        help="With --self-compare, a folder mirroring build/<version>/ whose objects are used "
+                             "instead of the build's where present.")
     args = parser.parse_args()
 
     if not args.config.exists() or args.config.is_dir() or args.config.suffix != ".yaml":
@@ -62,6 +65,9 @@ def _create_config():
 
     global self_compare
     self_compare = args.self_compare
+
+    global object_overrides
+    object_overrides = args.object_overrides
 
     global excluded_name
     excluded_name = RAW_SPLIT_EXCLUDED_NAME if args.include_raw_splits else EXCLUDED_NAME
@@ -186,6 +192,10 @@ def main():
         processed_path = _determine_categories(file, config)
         input_path = Path(processed_path[1]).as_posix()
         if self_compare:
+            if object_overrides:
+                override = object_overrides / file.relative_to(f"build/{game_version}")
+                if override.exists():
+                    file = override
             # Absolute, since this config is written outside the project root.
             file = file.resolve()
             base_path = file.as_posix()

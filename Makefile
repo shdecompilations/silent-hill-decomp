@@ -633,13 +633,25 @@ report:
 # `build` fails on a checksum mismatch, which keeps unmatched C data from counting.
 SELF_REPORT_DIR := $(BUILD_DIR)/objdiff_self
 
+# TARGET_COMMONS objects assembled again without --use-comm-section, for the report only.
+# objdiff doesn't count COMMON symbols, while these copies keep the globals in .bss.
+SELF_REPORT_OBJ_DIR := $(SELF_REPORT_DIR)/objs
+
 report-self:
 	$(MAKE) GAME_VERSION=$(GAME_VERSION) regenerate
 	$(MAKE) GAME_VERSION=$(GAME_VERSION) build
-	mkdir -p $(SELF_REPORT_DIR)
+	$(MAKE) GAME_VERSION=$(GAME_VERSION) report-self-objs
 	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config-retail.yaml $(GAME_VERSION_DIR) \
-		--self-compare --include-raw-splits --output $(SELF_REPORT_DIR)/objdiff.json
+		--self-compare --include-raw-splits --output $(SELF_REPORT_DIR)/objdiff.json \
+		--object-overrides $(SELF_REPORT_OBJ_DIR)
 	$(OBJDIFF) report generate -p $(SELF_REPORT_DIR) > $(BUILD_DIR)/progress.json
+
+report-self-objs: $(patsubst $(BUILD_DIR)/%,$(SELF_REPORT_OBJ_DIR)/%,$(foreach t,$(TARGET_COMMONS),$(filter $(BUILD_DIR)/src/%.c.o,$(call get_o_files,$(t)))))
+
+$(SELF_REPORT_OBJ_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
+	@mkdir -p $(dir $@)
+	$(call FlagsSwitch, $@)
+	$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 
 # Falls back to the target-vs-base report when the build does not match, so a
 # commit that breaks matching still produces a report.
