@@ -4,6 +4,7 @@
 
 GsOT_TAG g_OtTags0[2][16];
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
+s32      g_ActiveBufferIdx;
 
 s32    g_VBlanks;
 s32    g_UncappedVBlanks;
@@ -12,9 +13,10 @@ q19_12 g_DeltaTime;
 q19_12 g_GravitySpeed;
 q19_12 g_ScreenFadeTimestep;
 
+VC_WORK vcWork;
+
 // SH2 symbols indicate this should be in `vc_main.c`, but the file already has its data segment assigned.
-// It's possible this is part of another split as there is also some inbetween data in
-// the bss data segment related to the view camera system.
+// `vcWork` is in this files .bss as well, so SH1 likely kept the view camera data alongside the screen globals.
 VC_ROAD_DATA vcNullRoadArray[] = {
     {
         .lim_sw         = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },

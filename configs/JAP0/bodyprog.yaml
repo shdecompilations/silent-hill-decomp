@@ -490,7 +490,6 @@ segments:
       - [0x935F8, .bss, screen/fade]
       - [0x935FC, pad]
       - [0x93600, .bss, screen/data]
-      - [0x976A0, bss] # `vcWork + g_ActiveBufferIdx` Not possible to set it in a logical
       - [0x97990, .bss, game]
       - [0x9A6D0, bss]
       - [0x9A6E4, pad] # Garbage.
