@@ -55,7 +55,7 @@ void ItemScreen_TmdGsFCallInitTG4(void) // JPN0 0x8004CB90
 }
 #endif
 
-void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* itemRot, s32 unused1) // 0x8004BB4C
+void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* camRot, s32 unused) // 0x8004BB4C
 {
     // Set camera view.
     camView->vr.vz = 10;
@@ -73,10 +73,10 @@ void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* i
     camCoord->coord.t[0] = Q12(0.0f);
     camCoord->coord.t[1] = Q12(0.0f);
 
-    // Clear item rotation.
-    itemRot->vx = Q12_ANGLE(0.0f);
-    itemRot->vy = Q12_ANGLE(0.0f);
-    itemRot->vz = Q12_ANGLE(0.0f);
+    // Clear camera rotation.
+    camRot->vx = Q12_ANGLE(0.0f);
+    camRot->vy = Q12_ANGLE(0.0f);
+    camRot->vz = Q12_ANGLE(0.0f);
 
     // Set camera transform.
     g_ItemScreen_CameraTransform.scale.vz  = Q12(1.0f);
@@ -93,7 +93,7 @@ void ItemScreen_CameraSet(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR3* i
     camCoord->param = &g_ItemScreen_CameraTransform;
 
     // Rotate item.
-    ItemScreen_ItemRotate((SVECTOR*)itemRot, camCoord);
+    ItemScreen_ItemRotate((SVECTOR*)camRot, camCoord);
     vbSetRefView(camView);
 }
 
@@ -106,6 +106,7 @@ void func_8004BBF4(VbRVIEW* camView, GsCOORDINATE2* camCoord, SVECTOR* camRot) /
     prevRotX   = camRot->vx;
     camRot->vx = Q12_ANGLE(0.0f);
     ItemScreen_ItemRotate(camRot, camCoord);
+
     camRot->vx = prevRotX;
     ItemScreen_ItemRotate(camRot, camCoord);
 
@@ -137,7 +138,7 @@ void ItemScreen_ItemRotate(const SVECTOR* itemRot, GsCOORDINATE2* itemCoord) // 
     itemCoord->flg = false;
 }
 
-void func_8004BD74(s32 displayItemIdx, GsDOBJ2* obj, s32 arg2)  // 0x8004BD74
+void ItemScreen_ItemDraw(s32 itemIdx, GsDOBJ2* obj, s32 arg2)  // 0x8004BD74
 {
     MATRIX viewMat;
     MATRIX localToScreenMat;
@@ -152,18 +153,18 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* obj, s32 arg2)  // 0x8004BD74
     {
         for (j = 0; j < 3; j++)
         {
-            viewMat.m[i][j] = Q12(viewMat.m[i][j]) / g_Items_Transforms[displayItemIdx].scale.vx;
+            viewMat.m[i][j] = Q12(viewMat.m[i][j]) / g_Items_Transforms[itemIdx].scale.vx;
         }
     }
 
-    if (arg2 != 3 && displayItemIdx < 7)
+    if (arg2 != 3 && itemIdx < 7)
     {
         for (i = 0; i < 3; i++)
         {
             for (j = 0; j < 3; j++)
             {
                 viewMat.m[i][j] -= Q12_MULT(viewMat.m[i][j],
-                                            Math_Sin(DIV_FAST(g_Items_Coords[displayItemIdx].coord.t[2] + Q8(4.0f), 4)));
+                                            Math_Sin(DIV_FAST(g_Items_Coords[itemIdx].coord.t[2] + Q8(4.0f), 4)));
             }
         }
     }
@@ -183,10 +184,7 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* obj, s32 arg2)  // 0x8004BD74
     }
 }
 
-/** Removing this causes the models of items to appear farther from the camera.
- * `Gfx_Items_ViewPointAdjustment`?
- */
-void func_8004BFE8(void) // 0x8004BFE8
+void ItemScreen_ViewpointAdjust(void) // 0x8004BFE8
 {
     // Save constant rotation matrix in stack.
     PushMatrix();
@@ -203,19 +201,7 @@ void func_8004BFE8(void) // 0x8004BFE8
     g_ItemScreen_PlayerWeaponAttack = PLAYER_COMBAT().weaponAttack;
 }
 
-/** Possible failsafe?
- * Used when exiting the inventory screen or going into options and map menus
- * through the inventory.
- *
- * Removing it doesn't affect the game.
- *
- * @note From a member of the PS Decomp Discord:
- * "[The function] essentially just tries to restore projection/offset settings
- * and the transform matrix to what they were in the main game, but I'm guessing
- * the game sets them at the start of every frame anyway, so it doesn't really
- * achieve anything."
- */
-void func_8004C040(void) // 0x8004C040
+void ItemScreen_CameraReset(void) // 0x8004C040
 {
     // Reset constant rotation matrix from stack.
     PopMatrix();

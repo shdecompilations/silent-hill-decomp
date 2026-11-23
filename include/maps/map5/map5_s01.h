@@ -47,9 +47,9 @@ extern q19_12 g_Cutscene_Timer;
 
 extern u32           D_800ED5C8;
 extern GsF_LIGHT     D_800F1450[][2];
-extern GsCOORDINATE2 D_800F1510;
-extern SVECTOR       D_800F1560;
-extern VbRVIEW       D_800F1570;
+extern GsCOORDINATE2 D_800F1510; // Camera coord.
+extern SVECTOR       D_800F1560; // Camera rotation.
+extern VbRVIEW       D_800F1570; // Camera view.
 extern s8            D_800F1598[];
 extern u8            D_800F159C;
 extern s32           D_800F15A0;

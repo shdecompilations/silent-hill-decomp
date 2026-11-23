@@ -231,7 +231,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             {
                 Screen_Refresh(320, 0);
                 Fs_QueueWaitForEmpty();
-                func_8004C040();
+                ItemScreen_CameraReset();
 
                 D_800AE185 = NO_VALUE;
                 D_800AE186 = NO_VALUE;
@@ -245,7 +245,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
         case 19:
             if (Screen_IsFadeFinished())
             {
-                func_8004C040();
+                ItemScreen_CameraReset();
                 Game_StateSetNext(GameState_PaperMapScreen);
                 return;
             }

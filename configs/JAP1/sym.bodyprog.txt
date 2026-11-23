@@ -981,9 +981,9 @@ ItemScreen_CameraSet                         = 0x8004CC48; // type:func
 func_8004BBF4                                = 0x8004CCF0; // type:func
 GameFs_TmdDataAlloc                          = 0x8004CDB8; // type:func
 ItemScreen_ItemRotate                        = 0x8004CDD8; // type:func
-func_8004BD74                                = 0x8004CE70; // type:func
-func_8004BFE8                                = 0x8004D0E4; // type:func
-func_8004C040                                = 0x8004D13C; // type:func
+ItemScreen_ItemDraw                          = 0x8004CE70; // type:func
+ItemScreen_ViewpointAdjust                   = 0x8004D0E4; // type:func
+ItemScreen_CameraReset                       = 0x8004D13C; // type:func
 
 //--------------------------------------------------------------
 //--- PA: 0x028624   VA: 0x8004D184   subsegment: c, items/utils
@@ -3517,10 +3517,6 @@ g_DeltaTime                                  = 0x800B8318; // type:s32 - Q19.12 
 g_OtTags1                                    = 0x800B8320; // type:u32 size:0x4000
 g_GravitySpeed                               = 0x800BC320; // type:s32
 g_TickCount                                  = 0x800BC324;
-
-//---------------------------------------------------
-//--- PA: 0x0977C8   VA: 0x800BC328   subsegment: bss
-//---------------------------------------------------
 vcWork                                       = 0x800BC328; // type:VC_WORK size:0x2E8
 g_ActiveBufferIdx                            = 0x800BC610;
 

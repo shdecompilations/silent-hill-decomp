@@ -118,7 +118,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack) // 0x8004C088
     PLAYER_EXTRA().disabledAnimBoneFlags = HARRY_LOWER_BODY_BONE_MASK;
 
     Anim_BonesUpdate((s_AnmHeader*)FS_BUFFER_0, g_SysWork.playerBoneCoords, extraModelPtr2->anim.keyframeIdx, extraModelPtr2->anim.keyframeIdx, Q12(1.0f));
-    func_8004C040();
+    ItemScreen_CameraReset();
 }
 
 bool Inventory_GunsAvailableCheck(bool unused) // 0x8004C328

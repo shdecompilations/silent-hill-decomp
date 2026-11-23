@@ -91,7 +91,7 @@ s16 func_800CD20C(void) // 0x800CD20C
         }
 
         GsSetFlatLight(0, &D_800F1450[i][0]);
-        func_8004BD74(i, itemModel, 0);
+        ItemScreen_ItemDraw(i, itemModel, 0);
     }
 
     PopMatrix();

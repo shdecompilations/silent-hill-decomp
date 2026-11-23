@@ -222,10 +222,10 @@ void WorldEnvRender_LightScreenAngleGet(q19_12* scr_l_ang_xy, q19_12* scr_l_ang_
     OuterProduct12(&one_pos, &one_l_vec, &one_op_vec);
     VectorNormal(&one_op_vec, &one_op_vec);
 
-    // Screen-space direction of that plane.
+    // Screen-space plane direction.
     *scr_l_ang_xy = Q12_ANGLE_NORM_U(ratan2(one_op_vec.vy, one_op_vec.vx) - Q12_ANGLE(90.0f));
 
-    // Angle between eye-to-light ray and light direction, measured within that plane.
+    // Angle between eye-to-light ray and light direction measured within plane.
     cos_z.vx = FP_FROM((one_pos.vx * one_l_vec.vx) +
                        (one_pos.vy * one_l_vec.vy) +
                        (one_pos.vz * one_l_vec.vz), Q12_SHIFT);

@@ -551,7 +551,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
             func_800548D8(i);
             GsSetFlatLight(0, &g_Items_Lights[i][0]);
             GsSetFlatLight(1, &g_Items_Lights[i][1]);
-            func_8004BD74(i, curObj, 0);
+            ItemScreen_ItemDraw(i, curObj, 0);
         }
 
         // Equipped item.
@@ -565,7 +565,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
-            func_8004BD74(7, curObj, 0);
+            ItemScreen_ItemDraw(7, curObj, 0);
         }
 
         Gfx_Inventory_ItemDescriptionDraw(selectedItemId);
@@ -1943,7 +1943,7 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
             func_800548D8(i);
             GsSetFlatLight(0, &g_Items_Lights[i][0]);
             GsSetFlatLight(1, &g_Items_Lights[i][1]);
-            func_8004BD74(i, ptr, 3);
+            ItemScreen_ItemDraw(i, ptr, 3);
         }
     }
 }
@@ -3279,7 +3279,7 @@ void Gfx_Items_Draw(void) // 0x80054200
     s32  saveItemsIdx;
     s32  invItemsIdx;
 
-    func_8004BFE8();
+    ItemScreen_ViewpointAdjust();
 
     D_800AE190 = 0;
 
@@ -3670,7 +3670,7 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     func_800548D8(9);
     GsSetFlatLight(0, &D_800C3AC8[0]);
     GsSetFlatLight(1, &D_800C3AC8[1]);
-    func_8004BD74(9, obj, 2);
+    ItemScreen_ItemDraw(9, obj, 2);
     PopMatrix();
 
     return g_Items_PickupAnimState > 0;
