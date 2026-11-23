@@ -1,8 +1,6 @@
 #ifndef _BODYPROG_VIEW_VWMAIN_H
 #define _BODYPROG_VIEW_VWMAIN_H
 
-#include "gpu.h"
-
 void vwInitViewInfo(void);
 
 /** @brief Gets the camera coordinate.

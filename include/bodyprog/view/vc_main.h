@@ -1,13 +1,19 @@
 #ifndef _BODYPROG_VIEW_VCMAIN_H
 #define _BODYPROG_VIEW_VCMAIN_H
 
-#include "gpu.h"
+enum   _VC_AREA_SIZE_TYPE;
+enum   _VC_CAM_CHK_TYPE;
+enum   _VC_CAM_MV_TYPE;
+struct _VC_CAM_MV_PARAM;
+struct _VC_ROAD_DATA;
+struct _VC_WATCH_MV_PARAM;
+struct _VC_WORK;
 
 /** @brief Initializes the camera paths used by the active map.
  *
  * @param vc_road_ary_list Camera paths.
  */
-void vcInitVCSystem(const VC_ROAD_DATA* vc_road_ary_list);
+void vcInitVCSystem(const struct _VC_ROAD_DATA* vc_road_ary_list);
 
 /** @brief Enables the camera system. */
 void vcStartCameraSystem(void);
@@ -50,9 +56,9 @@ void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
 
 q19_12 Vc_LookAtOffsetYMaxSet(q19_12 lookAtOffsetYMax);
 
-void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, bool warp_watch_f);
+void vcUserWatchTarget(VECTOR3* watch_tgt_pos, struct _VC_WATCH_MV_PARAM* watch_prm_p, bool warp_watch_f);
 
-void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp_cam_f);
+void vcUserCamTarget(VECTOR3* cam_tgt_pos, struct _VC_CAM_MV_PARAM* cam_prm_p, bool warp_cam_f);
 
 void vcChangeProjectionValue(q3_12 scr_y);
 
@@ -89,7 +95,7 @@ void vcSetAllNpcDeadTimer(void);
 
 s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang);
 
-VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
+enum _VC_CAM_MV_TYPE vcRetCurCamMvType(struct _VC_WORK* w_p);
 
 /** @brief Checks if a position is inside specific areas of `THR` and `SPR` maps.
   *
@@ -103,27 +109,27 @@ VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
   */
 bool Vc_IsInSelfViewRestrictedZone(q19_12 posX, q19_12 posZ);
 
-bool vcRetThroughDoorCamEndF(VC_WORK* w_p);
+bool vcRetThroughDoorCamEndF(struct _VC_WORK* w_p);
 
-q19_12 vcRetFarWatchRate(bool far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p);
+q19_12 vcRetFarWatchRate(bool far_watch_button_prs_f, enum _VC_CAM_MV_TYPE cur_cam_mv_type, struct _VC_WORK* w_p);
 
-q19_12 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, q19_12 far_watch_rate, VC_WORK* w_p);
+q19_12 vcRetSelfViewEffectRate(enum _VC_CAM_MV_TYPE cur_cam_mv_type, q19_12 far_watch_rate, struct _VC_WORK* w_p);
 
-void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, q19_12 far_watch_rate, bool all_warp_f);
+void vcSetFlagsByCamMvType(enum _VC_CAM_MV_TYPE cam_mv_type, q19_12 far_watch_rate, bool all_warp_f);
 
-void vcPreSetDataInVC_WORK(VC_WORK* w_p, const VC_ROAD_DATA* vc_road_ary_list);
+void vcPreSetDataInVC_WORK(struct _VC_WORK* w_p, const VC_ROAD_DATA* vc_road_ary_list);
 
-void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_TYPE set_cmd_type);
+void vcSetTHROUGH_DOOR_CAM_PARAM_inVC_WORK(struct _VC_WORK* w_p, THROUGH_DOOR_SET_CMD_TYPE set_cmd_type);
 
-void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p);
+void vcSetNearestEnemyDataIVC_WORK(struct _VC_WORK* w_p);
 
-void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, const VC_ROAD_DATA* road_ary_list, q19_12 half_w, s32 unused, bool near_enemy_f);
+void vcSetNearRoadAryByCharaPos(struct _VC_WORK* w_p, const VC_ROAD_DATA* road_ary_list, q19_12 half_w, s32 unused, bool near_enemy_f);
 
 s32  vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 unused);
 
-bool vcSetCurNearRoadInVC_WORK(VC_WORK* w_p);
+bool vcSetCurNearRoadInVC_WORK(struct _VC_WORK* w_p);
 
-s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, VC_WORK* w_p);
+s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, enum _VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, struct _VC_WORK* w_p);
 
 /** @brief Gets the closest camera path collision, outputting the result to `out_nearest_p_addr` and returning the
  * distance to it.
@@ -139,21 +145,21 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_
  * @return Distance to...?
  */
 q19_12 vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr,
-                                  VC_CAM_CHK_TYPE chk_type,VC_ROAD_TYPE rd_type, VECTOR3* pos,
-                                  VC_WORK* w_p, bool chk_only_set_marge_f);
+                                  enum _VC_CAM_CHK_TYPE chk_type,VC_ROAD_TYPE rd_type, VECTOR3* pos,
+                                  struct _VC_WORK* w_p, bool chk_only_set_marge_f);
 
 s32  vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p);
 
-void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size,
+void vcAutoRenewalWatchTgtPosAndAngZ(struct _VC_WORK* w_p, enum _VC_CAM_MV_TYPE cam_mv_type, enum _VC_AREA_SIZE_TYPE cur_rd_area_size,
                                      q19_12 far_watch_rate, s32 self_view_eff_rate);
 
-void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, VC_WORK* w_p,
-                             VC_CAM_MV_TYPE cam_mv_type, VC_AREA_SIZE_TYPE cur_rd_area_size);
+void vcMakeNormalWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, struct _VC_WORK* w_p,
+                             enum _VC_CAM_MV_TYPE cam_mv_type, enum _VC_AREA_SIZE_TYPE cur_rd_area_size);
 
 void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang_z_p, s16 effect_rate,
-                                      VC_WORK* w_p, MATRIX* head_mat, s32 anim_status);
+                                      struct _VC_WORK* w_p, MATRIX* head_mat, s32 anim_status);
 
-void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size);
+void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, struct _VC_WORK* w_p, enum _VC_AREA_SIZE_TYPE cur_rd_area_size);
 
 /** @brief Sets a camera look-at position. This is the top-level function which incorporates all camera sphere parameters.
  *
@@ -166,45 +172,45 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
  */
 void vcSetWatchTgtXzPos(VECTOR3* watch_pos, const VECTOR3* center_pos, const VECTOR3* cam_pos, q19_12 tgt_chara2watch_cir_dist, q19_12 tgt_watch_cir_r, q3_12 watch_cir_ang_y);
 
-void vcSetWatchTgtYParam(VECTOR3* watch_pos, VC_WORK* w_p, s32 cam_mv_type, q19_12 watch_y);
+void vcSetWatchTgtYParam(VECTOR3* watch_pos, struct _VC_WORK* w_p, s32 cam_mv_type, q19_12 watch_y);
 
 void vcAdjustWatchYLimitHighWhenFarView(VECTOR3* watch_pos, VECTOR3* cam_pos, q3_12 sy);
 
-void vcAutoRenewalCamTgtPos(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, VC_CAM_MV_PARAM* cam_mv_prm_p,
-                            VC_ROAD_FLAGS cur_rd_flags, VC_AREA_SIZE_TYPE cur_rd_area_size, q19_12 far_watch_rate);
+void vcAutoRenewalCamTgtPos(struct _VC_WORK* w_p, enum _VC_CAM_MV_TYPE cam_mv_type, struct _VC_CAM_MV_PARAM* cam_mv_prm_p,
+                            VC_ROAD_FLAGS cur_rd_flags, enum _VC_AREA_SIZE_TYPE cur_rd_area_size, q19_12 far_watch_rate);
 
-q19_12 vcRetMaxTgtMvXzLen(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p);
+q19_12 vcRetMaxTgtMvXzLen(struct _VC_WORK* w_p, struct _VC_CAM_MV_PARAM* cam_mv_prm_p);
 
-void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size);
+void vcMakeIdealCamPosByHeadPos(VECTOR3* ideal_pos, struct _VC_WORK* w_p, enum _VC_AREA_SIZE_TYPE cur_rd_area_size);
 
-void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, VC_WORK* w_p);
+void vcMakeIdealCamPosForFixAngCam(VECTOR3* ideal_pos, struct _VC_WORK* w_p);
 
-void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p);
+void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, struct _VC_WORK* w_p);
 
-void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, VC_WORK* w_p, VC_AREA_SIZE_TYPE cur_rd_area_size);
+void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, struct _VC_WORK* w_p, enum _VC_AREA_SIZE_TYPE cur_rd_area_size);
 
 void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(q19_12* x_p, q19_12* z_p, const VC_LIMIT_AREA* lim_p);
 
-void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, VC_WORK* w_p, q19_12 max_tgt_mv_xz_len);
+void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, struct _VC_WORK* w_p, q19_12 max_tgt_mv_xz_len);
 
-void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, VC_WORK* w_p);
+void vcAdjTgtMvVecYByCurNearRoad(VECTOR3* tgt_mv_vec, struct _VC_WORK* w_p);
 
-void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3*  tgt_mv_vec, VC_WORK* w_p, q19_12 max_tgt_mv_xz_len, VC_AREA_SIZE_TYPE cur_rd_area_size);
+void vcCamTgtMvVecIsFlipedFromCharaFront(VECTOR3*  tgt_mv_vec, struct _VC_WORK* w_p, q19_12 max_tgt_mv_xz_len, enum _VC_AREA_SIZE_TYPE cur_rd_area_size);
 
 q19_12 vcFlipFromCamExclusionArea(q3_12* flip_ang_y_p, q19_12* old_cam_excl_area_r_p,
                                   VECTOR3* in_pos, VECTOR3* chara_pos, s16 chara_eye_ang_y,
-                                  VC_AREA_SIZE_TYPE cur_rd_area_size);
+                                  enum _VC_AREA_SIZE_TYPE cur_rd_area_size);
 
-void vcGetUseWatchAndCamMvParam(VC_WATCH_MV_PARAM** watch_mv_prm_pp, VC_CAM_MV_PARAM** cam_mv_prm_pp, q19_12 self_view_eff_rate, VC_WORK* w_p);
+void vcGetUseWatchAndCamMvParam(struct _VC_WATCH_MV_PARAM** watch_mv_prm_pp, struct _VC_CAM_MV_PARAM** cam_mv_prm_pp, q19_12 self_view_eff_rate, struct _VC_WORK* w_p);
 
-void vcRenewalCamData(VC_WORK* w_p, VC_CAM_MV_PARAM* cam_mv_prm_p);
+void vcRenewalCamData(struct _VC_WORK* w_p, struct _VC_CAM_MV_PARAM* cam_mv_prm_p);
 
-void vcRenewalCamMatAng(VC_WORK* w_p, VC_WATCH_MV_PARAM* watch_mv_prm_p, VC_CAM_MV_TYPE cam_mv_type,
+void vcRenewalCamMatAng(struct _VC_WORK* w_p, struct _VC_WATCH_MV_PARAM* watch_mv_prm_p, enum _VC_CAM_MV_TYPE cam_mv_type,
                         bool visible_chara_f);
 
-void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, VC_CAM_MV_TYPE cam_mv_type, VC_WORK* w_p);
+void vcMakeNewBaseCamAng(SVECTOR* new_base_ang, enum _VC_CAM_MV_TYPE cam_mv_type, struct _VC_WORK* w_p);
 
-void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, SVECTOR* new_base_cam_ang);
+void vcRenewalBaseCamAngAndAdjustOfsCamAng(struct _VC_WORK* w_p, SVECTOR* new_base_cam_ang);
 
 /** @brief Computes the camera's rotation.
  *
@@ -212,21 +218,21 @@ void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, SVECTOR* new_base_cam_a
  * @param base_matT Base transformation matrix.
  * @param w_p Camera workspace.
  */
-void vcMakeOfsCamTgtAng(SVECTOR* ofs_tgt_ang, MATRIX* base_matT, VC_WORK* w_p);
+void vcMakeOfsCamTgtAng(SVECTOR* ofs_tgt_ang, MATRIX* base_matT, struct _VC_WORK* w_p);
 
 void vcMakeOfsCam2CharaBottomAndTopAngByBaseMatT(SVECTOR* ofs_cam2chara_btm_ang, SVECTOR* ofs_cam2chara_top_ang,
                                                  MATRIX* base_matT, VECTOR3* cam_pos, VECTOR3* chara_pos,
                                                  s32 chara_bottom_y, s32 chara_top_y);
 
-void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_ang, SVECTOR* ofs_cam2chara_top_ang, VC_WORK* w_p);
+void vcAdjCamOfsAngByCharaInScreen(SVECTOR* cam_ang, SVECTOR* ofs_cam2chara_btm_ang, SVECTOR* ofs_cam2chara_top_ang, struct _VC_WORK* w_p);
 
 void vcAdjCamOfsAngByOfsAngSpd(SVECTOR* ofs_ang, SVECTOR* ofs_ang_spd, SVECTOR* ofs_tgt_ang,
-                               VC_WATCH_MV_PARAM* prm_p);
+                               struct _VC_WATCH_MV_PARAM* prm_p);
 
 void vcMakeCamMatAndCamAngByBaseAngAndOfsAng(SVECTOR* cam_mat_ang, MATRIX* cam_mat,
                                              SVECTOR* base_cam_ang, SVECTOR* ofs_cam_ang, VECTOR3* cam_pos);
 
-void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
+void vcSetDataToVwSystem(struct _VC_WORK* w_p, enum _VC_CAM_MV_TYPE cam_mv_type);
 
 s32 vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, q19_12 vcSelfViewTimer);
 

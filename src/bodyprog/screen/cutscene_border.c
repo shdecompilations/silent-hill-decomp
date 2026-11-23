@@ -6,9 +6,7 @@
 #include "main/fs_queue.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
-#include "bodyprog/view/structs.h"
-#include "bodyprog/view/vc_main.h"
-#include "bodyprog/view/vc_util.h"
+#include "bodyprog/view/vw_system.h"
 #include "bodyprog/math/math.h"
 
 // ========================================

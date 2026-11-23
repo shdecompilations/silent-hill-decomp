@@ -1,8 +1,6 @@
 #ifndef _BODYPROG_VIEW_VWSYSTEM_H
 #define _BODYPROG_VIEW_VWSYSTEM_H
 
-#include "gpu.h"
-
 #include "bodyprog/screen/data.h"
 #include "bodyprog/view/enums.h"
 #include "bodyprog/view/structs.h"

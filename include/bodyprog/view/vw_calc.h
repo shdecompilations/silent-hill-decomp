@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_VIEW_VW_CALC_H
 #define _BODYPROG_VIEW_VW_CALC_H
 
-#include "gpu.h"
+struct _CameraScreenRegionFlags;
 
 void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, q19_12 tgt_r,
                                     q19_12 accel, q19_12 total_max_spd, q19_12 dec_forwd_lim_spd, q19_12 dec_accel_side);
@@ -122,7 +122,7 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat,
  * @param regionFlags 3x3 screen region occupancy flags.
  * @return `true` if geometry spans the visible region, `false` otherwise.
  */
-bool Vw_ScreenRegionSpanCheck(s_CameraScreenRegionFlags* regionFlags);
+bool Vw_ScreenRegionSpanCheck(struct _CameraScreenRegionFlags* regionFlags);
 
 /** @brief Converts a rotation to a direction vector with a given length.
  *

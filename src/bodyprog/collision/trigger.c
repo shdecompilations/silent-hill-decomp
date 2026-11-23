@@ -5,7 +5,7 @@
 #include "bodyprog/collision/chara.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/view/vw_main.h"
+#include "bodyprog/view/vw_system.h"
 
 #define DEFAULT_TRIGGER_HEIGHT (SHRT_MIN * 2)
 

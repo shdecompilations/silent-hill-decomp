@@ -6,7 +6,7 @@
 #include "bodyprog/formats/model.h"
 #include "bodyprog/gfx/world_object.h"
 #include "bodyprog/map/map.h"
-#include "bodyprog/view/structs.h"
+#include "bodyprog/view/vw_system.h"
 
 /** @brief World GFX workspace. */
 typedef struct _WorldGfxWork

@@ -5,7 +5,7 @@
 #include "bodyprog/chara/chara.h"
 #include "bodyprog/collision/collision.h"
 #include "bodyprog/formats/anm.h"
-#include "bodyprog/view/structs.h"
+#include "bodyprog/view/vw_system.h"
 
 #define CAMERA_PATH_COUNT_MAX       100
 #define COLLISION_TRIGGER_COUNT_MAX 200

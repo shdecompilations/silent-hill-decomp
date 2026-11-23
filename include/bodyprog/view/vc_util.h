@@ -1,9 +1,8 @@
 #ifndef _BODYPROG_VIEW_VCUTIL_H
 #define _BODYPROG_VIEW_VCUTIL_H
 
-#include "gpu.h"
-
 struct _MapOverlayHdr;
+struct _SysWork;
 
 #define MIN_OFFSET(x, neg, pos) \
     ((((x) + (-neg)) <= ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
@@ -89,7 +88,7 @@ void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_1
  * @param up_f Move up.
  * @param down_f Move down.
  */
-void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
+void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, struct _SysWork* sys_p,
                                    bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f);
 
 /** @brief Sets a reference camera position according to analog stick input.
@@ -97,7 +96,7 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p,
  * @param ref_pos Reference position.
  * @param sys_p System work.
  */
-void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p);
+void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, struct _SysWork* sys_p);
 
 /** @brief Computes the stereo sound balance based on the relative position to the camera.
  *

@@ -277,9 +277,9 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
 {
     s32      ringRadii[4];
     DVECTOR  ringCenters[4];
-    s32      angZSin;
-    s32      angXyCos;
-    s32      angXySin;
+    q19_12   angleZSin;
+    q19_12   angleXyCos;
+    q19_12   angleXySin;
     s32      radius;
     s32      depthScale;
     s32      i;
@@ -308,19 +308,19 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
     ringRadii[2] = (radius * 7) / 10;
     ringRadii[3] = radius;
 
-    angZSin  = Math_Sin(scr_l_ang_z);
-    angXyCos = Math_Cos(scr_l_ang_xy);
-    angXySin = Math_Sin(scr_l_ang_xy);
+    angleZSin  = Math_Sin(scr_l_ang_z);
+    angleXyCos = Math_Cos(scr_l_ang_xy);
+    angleXySin = Math_Sin(scr_l_ang_xy);
 
     // Shift each ring along the light's screen direction by `sin(angle z)`
     // so the spot stretches when the beam is seen side-on.
     for (i = 0; i < ARRAY_SIZE(ringRadii); i++)
     {
-        s32 centerScale;
+        q19_12 centerScale;
 
         centerScale       = Q12(radius - (ringRadii[i] >> 1)) / radius;
-        ringCenters[i].vx = scr_l_pos->vx + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(ringRadii[i], centerScale), angXyCos), angZSin);
-        ringCenters[i].vy = scr_l_pos->vy + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(ringRadii[i], centerScale), angXySin), angZSin);
+        ringCenters[i].vx = scr_l_pos->vx + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(ringRadii[i], centerScale), angleXyCos), angleZSin);
+        ringCenters[i].vy = scr_l_pos->vy + Q12_MULT_ALT(Q12_MULT_ALT(Q12_MULT_ALT(ringRadii[i], centerScale), angleXySin), angleZSin);
     }
 
     // 4 rings of 17 points in scratchpad. Point 16 repeats point 0 to close the ring.
@@ -332,8 +332,8 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
         point = ringPoints + (i * 17);
         for (j = 0; j < 17; j++, point++)
         {
-            s32 pointCos;
-            s32 pointSin;
+            q19_12 pointCos;
+            q19_12 pointSin;
 
             pointCos = Math_Cos(j * Q12_ANGLE(22.5f));
             pointSin = Math_Sin(j * Q12_ANGLE(22.5f));
@@ -358,12 +358,10 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
         fan->y0         = scr_l_pos->vy;
         *(s32*)&fan->x1 = ringXy[j];
         *(s32*)&fan->x2 = ringXy[j + 1];
-
         addPrim(&ot->org[0], fan);
 
         *(s32*)&edge->x0 = ringXy[(3 * 17) + j];
         *(s32*)&edge->x1 = ringXy[(3 * 17) + j + 1];
-
         addPrim(&ot->org[1], edge);
     }
 
@@ -381,7 +379,6 @@ void WorldEnvRender_LightOverlapPolysDraw(GsOT* ot, const VECTOR3* scr_l_pos, q1
             *(s32*)&ring->x1 = rowXy[j + 1];
             *(s32*)&ring->x2 = rowXy[17 + j];
             *(s32*)&ring->x3 = rowXy[(17 + j) + 1];
-
             addPrim(&ot->org[1], ring);
         }
     }
