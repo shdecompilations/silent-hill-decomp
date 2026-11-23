@@ -260,11 +260,11 @@ s32 Math_PreservedSignSubtract(s32 val, s32 subtractor);
 
 void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg3);
 
-/** Called by `func_8008074C` which is @unused. */
-bool func_800806AC(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ);
+/** @unused Called by `func_8008074C`. Something that checked if the player was above a valid floor? */
+bool func_800806AC(s32 floorTypeFlags, q19_12 posX, q19_12 posY, q19_12 posZ);
 
-/** @unused */
-bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ);
+/** @unused Something that checked if the player was above a valid floor? */
+bool func_8008074C(s32 floorTypeFlags, q19_12 posX, q19_12 posY, q19_12 posZ);
 
 /** @brief Fills `g_CollisionPointCache` with collision data at a given 2D position.
  *

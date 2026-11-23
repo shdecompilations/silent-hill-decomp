@@ -131,7 +131,7 @@ extern GsOT g_OrderingTable1[2];
 extern GsOT g_OrderingTable2[2];
 
 extern q19_12 g_DeltaTimeRaw; /** Actual delta time since the previous tick. Unlike `g_DeltaTime`, this value is never overridden by demos or game code. Mostly seems used by UI code. */
-extern s32 g_IntervalVBlanks;
+extern s32    g_IntervalVBlanks;
 
 extern s_FsImageDesc g_Font16AtlasImg;
 extern s_FsImageDesc g_KonamiLogoImg;

@@ -3,6 +3,7 @@
 
 #include "gpu.h"
 
+#include "bodyprog/screen/data.h"
 #include "bodyprog/view/enums.h"
 #include "bodyprog/view/structs.h"
 #include "bodyprog/view/vc_main.h"

@@ -54,15 +54,16 @@ void Map_RoomBgmInit(bool updateSong)
                     }
 
                     g_BgmDRU_LayerLimits0.limits[5] = dist0;
-                    g_BgmDRU_LayerLimits0.limits[6] = Q12(0.0f);
-                    g_BgmDRU_LayerLimits0.limits[7] = Q12(0.0f);
+                    g_BgmDRU_LayerLimits0.limits[6] = 0;
+                    g_BgmDRU_LayerLimits0.limits[7] = 0;
                     break;
 
                 case 18:
                 case 19:
                 case 20:
-                    g_BgmDRU_LayerLimits0.limits[5] = Q8(0.313f);
+                    g_BgmDRU_LayerLimits0.limits[5] = 80;
 
+                    // TODO: Not Q12?
                     dist1 = Q12(64.0f) - PLAYER_CHARA().position.vx;
                     if (dist1 < Q12(0.0f))
                     {

@@ -71,7 +71,7 @@ extern q4_12 g_Player_RotationDeltaToTargetX;
 
 extern q3_12 D_800C4454;
 
-extern s_CollisionSurface D_800C4620;
+extern s_CollisionSurface D_800C4620; /** Used in `func_800806AC`, which goes unused. */
 
 extern s16 SQRT[100];
 

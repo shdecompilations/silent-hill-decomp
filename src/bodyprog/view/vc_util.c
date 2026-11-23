@@ -9,7 +9,7 @@
 
 #define V_BLANKS_MULT 11
 
-VECTOR3 vcRefPosSt; /** Q19.12 | View camera reference position start. */
+static VECTOR3 vcRefPosSt; /** Q19.12 | View camera reference position start. */
 
 void vcInitCamera(s_MapOverlayHdr* map_overlay_ptr, const VECTOR3* chr_pos) // 0x8004004C
 {

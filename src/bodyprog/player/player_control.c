@@ -9232,42 +9232,43 @@ void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg
     }
 }
 
-bool func_800806AC(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x800806AC
+bool func_800806AC(s32 floorTypeFlags, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x800806AC
 {
-    bool result;
+    bool isAboveFloor;
+
     //static s_CollisionSurface D_800C4620; // TODO: Doesn't match.
 
-    result = arg0 != 0;
-    if (!result)
+    isAboveFloor = floorTypeFlags != 0;
+    if (!isAboveFloor)
     {
-        return result;
+        return isAboveFloor;
     }
 
-    result = arg0 == NO_VALUE;
-    if (result)
+    isAboveFloor = floorTypeFlags == NO_VALUE;
+    if (isAboveFloor)
     {
-        return result;
+        return isAboveFloor;
     }
 
     Collision_SurfaceGet(&D_800C4620, posX, posZ);
 
-    result = posY < D_800C4620.floorHeight;
-    if (result)
+    isAboveFloor = posY < D_800C4620.floorHeight;
+    if (isAboveFloor)
     {
-        result = D_800C4620.floorType != NO_VALUE;
-        if (result)
+        isAboveFloor = D_800C4620.floorType != NO_VALUE;
+        if (isAboveFloor)
         {
-            result = arg0 & (1 << D_800C4620.floorType);
-            return result != false;
+            isAboveFloor = floorTypeFlags & (1 << D_800C4620.floorType);
+            return isAboveFloor != false;
         }
     }
 
-    return result;
+    return isAboveFloor;
 }
 
-bool func_8008074C(s32 arg0, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x8008074C
+bool func_8008074C(s32 floorTypeFlags, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x8008074C
 {
-    return func_800806AC(arg0, posX, INT_MAX + 1, posZ);
+    return func_800806AC(floorTypeFlags, posX, INT_MAX + 1, posZ);
 }
 
 void Collision_PointCacheSet(q19_12 posX, q19_12 posZ) // 0x8008076C

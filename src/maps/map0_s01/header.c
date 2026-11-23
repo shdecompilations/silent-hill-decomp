@@ -7,7 +7,7 @@
 #include "maps/common/characters/player.h"
 #include "maps/common/characters/stalker.h"
 
-extern s_AnimInfo      HARRY_M0S01_ANIM_INFOS[];
+extern s_AnimInfo HARRY_M0S01_ANIM_INFOS[];
 
 void (*g_LoadScreenFuncs[])() = {
     NULL,

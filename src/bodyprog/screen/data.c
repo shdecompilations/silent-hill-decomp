@@ -1,7 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/view/structs.h"
+#include "bodyprog/view/vw_system.h"
 
 GsOT_TAG g_OtTags0[2][16];
 GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
