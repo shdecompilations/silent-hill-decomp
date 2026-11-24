@@ -2,6 +2,7 @@
 #define _BODYPROG_VIEW_VW_CALC_H
 
 struct _CameraScreenRegionFlags;
+struct _VbRVIEW;
 
 void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, q19_12 tgt_r,
                                     q19_12 accel, q19_12 total_max_spd, q19_12 dec_forwd_lim_spd, q19_12 dec_accel_side);
@@ -52,7 +53,7 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
  *
  * @param rview Reference view to set.
  */
-void vbSetRefView(VbRVIEW* rview);
+void vbSetRefView(struct _VbRVIEW* rview);
 
 /** @brief Computes the world-space transformation matrix of a given coord node in a hierarchy.
  *

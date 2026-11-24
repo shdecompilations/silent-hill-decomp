@@ -5,6 +5,8 @@ enum   _VC_AREA_SIZE_TYPE;
 enum   _VC_CAM_CHK_TYPE;
 enum   _VC_CAM_MV_TYPE;
 struct _VC_CAM_MV_PARAM;
+struct _VC_LIMIT_AREA;
+struct _VC_NEAR_ROAD_DATA;
 struct _VC_ROAD_DATA;
 struct _VC_WATCH_MV_PARAM;
 struct _VC_WORK;
@@ -129,7 +131,7 @@ s32  vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 unused);
 
 bool vcSetCurNearRoadInVC_WORK(struct _VC_WORK* w_p);
 
-s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, enum _VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, struct _VC_WORK* w_p);
+s32 vcGetBestNewCurNearRoad(struct _VC_NEAR_ROAD_DATA** new_cur_pp, enum _VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, struct _VC_WORK* w_p);
 
 /** @brief Gets the closest camera path collision, outputting the result to `out_nearest_p_addr` and returning the
  * distance to it.
@@ -144,11 +146,11 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, enum _VC_CAM_CHK_TYP
  * @param chk_only_set_marge_f
  * @return Distance to...?
  */
-q19_12 vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr,
+q19_12 vcGetNearestNEAR_ROAD_DATA(struct _VC_NEAR_ROAD_DATA** out_nearest_p_addr,
                                   enum _VC_CAM_CHK_TYPE chk_type,VC_ROAD_TYPE rd_type, VECTOR3* pos,
                                   struct _VC_WORK* w_p, bool chk_only_set_marge_f);
 
-s32  vcAdvantageDistOfOldCurRoad(VC_NEAR_ROAD_DATA* old_cur_p);
+s32  vcAdvantageDistOfOldCurRoad(struct _VC_NEAR_ROAD_DATA* old_cur_p);
 
 void vcAutoRenewalWatchTgtPosAndAngZ(struct _VC_WORK* w_p, enum _VC_CAM_MV_TYPE cam_mv_type, enum _VC_AREA_SIZE_TYPE cur_rd_area_size,
                                      q19_12 far_watch_rate, s32 self_view_eff_rate);
@@ -189,7 +191,7 @@ void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, struct _VC_WORK* w_p
 
 void vcMakeIdealCamPosUseVC_ROAD_DATA(VECTOR3* ideal_pos, struct _VC_WORK* w_p, enum _VC_AREA_SIZE_TYPE cur_rd_area_size);
 
-void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(q19_12* x_p, q19_12* z_p, const VC_LIMIT_AREA* lim_p);
+void vcAdjustXzInLimAreaUsingMIN_IN_ROAD_DIST(q19_12* x_p, q19_12* z_p, const struct _VC_LIMIT_AREA* lim_p);
 
 void vcMakeBasicCamTgtMvVec(VECTOR3* tgt_mv_vec, VECTOR3* ideal_pos, struct _VC_WORK* w_p, q19_12 max_tgt_mv_xz_len);
 

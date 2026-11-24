@@ -73,15 +73,6 @@ typedef struct _Pose
     /* 0xC */ SVECTOR3 rotation; /** Q19.12 */
 } s_Pose;
 
-/** @brief Polygon normal. */
-typedef struct _Normal
-{
-    /* 0x0 */ s8 nx;
-    /* 0x1 */ s8 ny;
-    /* 0x2 */ s8 nz;
-    /* 0x3 */ u8 count;
-} s_Normal;
-
 /** @brief 8-character string usually used for filenames. Can be compared via the `u32` field. */
 typedef union _Filename
 {

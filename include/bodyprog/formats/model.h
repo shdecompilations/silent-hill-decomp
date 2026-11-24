@@ -9,6 +9,15 @@ typedef enum _ModelFlags
     ModelFlag_31   = 1 << 31 // Related to some kind of bone reset?
 } e_ModelFlags;
 
+/** @brief Polygon normal. */
+typedef struct _Normal
+{
+    /* 0x0 */ s8 nx;
+    /* 0x1 */ s8 ny;
+    /* 0x2 */ s8 nz;
+    /* 0x3 */ u8 count;
+} s_Normal;
+
 /** @brief Geometry primitive. */
 typedef struct _Primitive
 {

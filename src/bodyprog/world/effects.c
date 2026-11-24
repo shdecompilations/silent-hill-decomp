@@ -5,13 +5,14 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/world/effects.h"
-#include "bodyprog/sys/memcard.h"
+#include "bodyprog/gfx/bodyprog_80055028.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
-#include "bodyprog/text/text_draw.h"
-#include "bodyprog/math/math.h"
 #include "bodyprog/sound/sd_call.h"
+#include "bodyprog/sys/memcard.h"
+#include "bodyprog/text/text_draw.h"
+#include "bodyprog/world/effects.h"
 #include "main/fs_queue.h"
 #include "main/rng.h"
 

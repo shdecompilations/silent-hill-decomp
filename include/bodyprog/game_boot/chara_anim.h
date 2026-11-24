@@ -1,8 +1,9 @@
 #ifndef _BODYPROG_GAMEBOOT_CHARAANIM_H
 #define _BODYPROG_GAMEBOOT_CHARAANIM_H
 
-#include "bodyprog/chara/chara.h"
-#include "bodyprog/formats/anm.h"
+enum   _CharaId;
+struct _AnmHeader;
+struct _AnimInfo;
 
 // ========
 // STRUCTS
@@ -11,14 +12,14 @@
 /** @brief Character model animation data. */
 typedef struct _CharaAnimData
 {
-    /* 0x0  */ s8             allocCharaId;  /** `e_CharaId` */
-    /* 0x1  */ s8             activeCharaId; /** `e_CharaId` */
+    /* 0x0  */ s8                 allocCharaId;  /** `enum _CharaId` */
+    /* 0x1  */ s8                 activeCharaId; /** `enum _CharaId` */
                // 2 bytes of padding.
-    /* 0x4  */ s32            allocAddr; // TODO: Should be `s_AnmHeader*` but doesn't match.
-    /* 0x8  */ s_AnmHeader*   activeAnmHdr;
-    /* 0xC  */ s32            allocSize;
-    /* 0x10 */ s32            activeSize;
-    /* 0x14 */ GsCOORDINATE2* boneCoords;
+    /* 0x4  */ s32                allocAddr; // TODO: Should be `struct _AnmHeader*` but doesn't match.
+    /* 0x8  */ struct _AnmHeader* activeAnmHdr;
+    /* 0xC  */ s32                allocSize;
+    /* 0x10 */ s32                activeSize;
+    /* 0x14 */ GsCOORDINATE2*     boneCoords;
 } s_CharaAnimData;
 
 // ========
@@ -37,7 +38,7 @@ extern s_CharaAnimData g_CharaModelAnimsData[CHARA_GROUP_COUNT];
 #endif
 
 /** @brief Player load screen run anim info. */
-extern s_AnimInfo g_PlayerLoadScreenAnimInfo;
+extern struct _AnimInfo g_PlayerLoadScreenAnimInfo;
 
 // ==========
 // FUNCTIONS
@@ -58,7 +59,7 @@ extern s_AnimInfo g_PlayerLoadScreenAnimInfo;
  * @param anmHdr Character animation data.
  * @param boneCoords Character bone coords.
  */
-void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Fs_CharaAnimDataAlloc(s32 animDataIdx, enum _CharaId charaId, struct _AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 /** @brief Assigns character animation data to a free slot and initializes character model bones.
  * Called by `Fs_QueuePostLoadAnm`.
@@ -68,7 +69,7 @@ void Fs_CharaAnimDataAlloc(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmH
  * @param anmHdr Character animation data.
  * @param boneCoords Character bone coords.
  */
-void Fs_CharaAnimDataUpdate(s32 animDataIdx, e_CharaId charaId, s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
+void Fs_CharaAnimDataUpdate(s32 animDataIdx, enum _CharaId charaId, struct _AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
 
 /** @brief Dynamically allocates where the next character animation data bone coords should be stored in
  * `g_SysWork.npcBoneCoordBuffer` based on the space consumed by the current character.
