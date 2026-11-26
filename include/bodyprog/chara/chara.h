@@ -14,8 +14,7 @@
 #define NPC_COUNT_MAX        6
 #define NPC_BONE_COUNT_MAX   10 * NPC_COUNT_MAX
 #define CHARA_GROUP_COUNT    4                  /** While up to 6 NPCs and a player can exist in the game world, only 4 different character
-                                                 * types (including the player) can be loaded at a time.
-                                                 */
+                                                 * types (including the player) can be loaded at a time. */
 #define CHARA_FORCE_FREE_ALL 0xFF               /** `Chara_Load` can force free already loaded models to make room for new ones. */
 #define CHARA_LAST_ENEMY_ID  Chara_MonsterCybil /** `e_CharaId` of the last common enemy character. */
 
@@ -37,7 +36,7 @@
 #define PLAYER_COMBAT() (g_SysWork.playerCombat)
 
 /** @brief Returns the `s_SubCharacter` instance for a given NPC index. */
-#define NPC_CHARA(index) (g_SysWork.npcs[(index)])
+#define NPC_CHARA(idx) (g_SysWork.npcs[idx])
 
 /** @brief Character flags. Used by `s_SubCharacter::flags`. */
 typedef enum _CharaFlags
@@ -312,35 +311,35 @@ static inline void Chara_AnimStateReset(s_SubCharacter* chara)
     chara->collision.cylinder.innerRadius = __temp2;                               \
 }
 
-/** @brief Lowers a character's move speed toward a target speed, without going below it.
+/** @brief Reduces a character's move speed toward a target speed without going below it.
  *
  * @param chara Character to update.
  * @param speed Speed change per second (Q*.12).
  * @param limit Lowest move speed (Q*.12).
  */
 #define Chara_MoveSpeedDecrease(chara, speed, limit) \
-    chara->moveSpeed = MAX(chara->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, speed), (limit))
+    chara->moveSpeed = MAX(chara->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, speed), limit)
 
-/** @brief Moves a character's move speed toward a target speed, without overshooting.
+/** @brief Moves a character's move speed toward a target speed without overshooting.
  *
  * @param chara Character to update.
  * @param speed Speed change per second (Q*.12).
  * @param limit Target move speed (Q*.12).
  */
-#define Chara_MoveSpeedUpdate(chara, speed, limit)                                                   \
-{                                                                                                    \
-    q19_12 newMoveSpeed;                                                                             \
-                                                                                                     \
-    if (chara->moveSpeed > (limit))                                                                  \
-    {                                                                                                \
-        newMoveSpeed = MAX(chara->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, speed), (limit));        \
-    }                                                                                                \
-    else                                                                                             \
-    {                                                                                                \
-        newMoveSpeed = CLAMP_HIGH(Q12_MULT_PRECISE(g_DeltaTime, speed) + chara->moveSpeed, (limit)); \
-    }                                                                                                \
-                                                                                                     \
-    chara->moveSpeed = newMoveSpeed;                                                                 \
+#define Chara_MoveSpeedUpdate(chara, speed, limit)                                                 \
+{                                                                                                  \
+    q19_12 newMoveSpeed;                                                                           \
+                                                                                                   \
+    if (chara->moveSpeed > (limit))                                                                \
+    {                                                                                              \
+        newMoveSpeed = MAX(chara->moveSpeed - Q12_MULT_PRECISE(g_DeltaTime, speed), limit);        \
+    }                                                                                              \
+    else                                                                                           \
+    {                                                                                              \
+        newMoveSpeed = CLAMP_HIGH(Q12_MULT_PRECISE(g_DeltaTime, speed) + chara->moveSpeed, limit); \
+    }                                                                                              \
+                                                                                                   \
+    chara->moveSpeed = newMoveSpeed;                                                               \
 }
 
 #endif

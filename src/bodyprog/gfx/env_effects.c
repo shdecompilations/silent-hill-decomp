@@ -6,14 +6,16 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/chara/chara.h"
+#include "bodyprog/collision/collision.h"
 #include "bodyprog/gfx/env_effects.h"
-#include "bodyprog/world/effects.h"
+#include "bodyprog/items/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/player/player.h"
 #include "bodyprog/screen/data.h"
 #include "bodyprog/screen/draw.h"
-#include "bodyprog/items/item_screens.h"
-#include "bodyprog/player/player.h"
 #include "bodyprog/sound/sd_call.h"
+#include "bodyprog/world/effects.h"
 #include "main/rng.h"
 
 // Draw areas, and the draw offset at the centre of each.
@@ -103,7 +105,7 @@ s_800C4418     D_800C4418;
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {
 #if VERSION_REGION_IS(PAL)
-    #define CLUT_BASE 0x1B0
+    #define CLUT_BASE 432
 #else
     #define CLUT_BASE 0
 #endif

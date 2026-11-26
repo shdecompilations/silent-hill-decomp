@@ -5,9 +5,13 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/formats/lm.h"
+#include "bodyprog/formats/model.h"
+#include "bodyprog/formats/texture.h"
 #include "bodyprog/gfx/lens_flare.h"
-#include "bodyprog/screen/data.h"
+#include "bodyprog/map/map.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/screen/data.h"
 #include "main/fs_queue.h"
 
 // VRAM position of the CLUT rows used by `func_8008E5B4` and `func_8008E794`.
@@ -58,7 +62,8 @@ void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZ
     // Draw lens flare.
     if (!g_LensFlareWork.flare_inhibit_f)
     {
-        WorldEnvRender_LightScreenInfoGet(&g_LensFlareWork.scr_l_pos, &g_LensFlareWork.scr_l_ang_xy, &g_LensFlareWork.scr_l_ang_z, rot, pos);
+        WorldEnvRender_LightScreenInfoGet(&g_LensFlareWork.scr_l_pos, &g_LensFlareWork.scr_l_ang_xy, &g_LensFlareWork.scr_l_ang_z,
+                                          rot, pos);
 
         proj = ReadGeomScreen();
         if (g_LensFlareWork.scr_l_pos.vz > DIV_FAST(proj, 2))

@@ -1,6 +1,9 @@
 #ifndef _BODYPROG_BODYPROG80056D8C_H
 #define _BODYPROG_BODYPROG80056D8C_H
 
+struct _MeshHeader;
+struct _ModelInfo;
+
 /** @brief Struct used by many functions involved with GTE. Kept at `PSX_SCRATCH_ADDR` (possibly only temporarily). */
 typedef struct _GteScratchData
 {
@@ -94,33 +97,33 @@ typedef struct
 void Gfx_FogOverlayQuadDraw(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, GsOT* ot, s32 otShift);
 
 /** Draws 3D IPD chunk models? */
-void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 otShift, MATRIX* viewMat, MATRIX* worldMat, u16 clutY);
+void func_80057090(struct _ModelInfo* modelInfo, GsOT* otTag, s32 otShift, MATRIX* viewMat, MATRIX* worldMat, u16 clutY);
 
 s32 func_800571D0(u32 arg0);
 
 void WorldEnvRender_LightTransform(MATRIX* worldMat, q19_12 alpha, SVECTOR* arg2, VECTOR3* arg3);
 
-void func_80057344(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* mat);
+void func_80057344(struct _ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* mat);
 
-void func_800574D4(s_MeshHeader* meshHdr, s_GteScratchData* scratchData);
+void func_800574D4(struct _MeshHeader* meshHdr, s_GteScratchData* scratchData);
 
-void func_8005759C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertOffset, s32 normalOffset);
+void func_8005759C(struct _MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 vertOffset, s32 normalOffset);
 
-void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
+void func_80057658(struct _MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* arg3, SVECTOR* arg4);
 
-void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
+void func_80057A3C(struct _MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
-void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
+void func_80057B7C(struct _MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
 /** Main quad drawing func? */
-void Gfx_MeshDraw(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
+void Gfx_MeshDraw(struct _MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* viewMat, s32 otShift, GsOT_TAG* tag);
+void func_80059D50(s32 arg0, struct _ModelInfo* modelInfo, MATRIX* viewMat, s32 otShift, GsOT_TAG* tag);
 
-void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 otShift, GsOT_TAG* tag);
+void func_80059E34(u32 arg0, struct _MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 otShift, GsOT_TAG* tag);
 
-void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* viewMat);
+void func_8005A21C(struct _ModelInfo* modelInfo, GsOT_TAG* otTag, s32 otShift, MATRIX* viewMat);
 
 /** @brief Computes a fog-shaded version of `D_800C4190` color using `arg1` as the distance factor?
  *  Stores the result at 0x3D8 into `arg0`.
@@ -132,10 +135,10 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha);
 /** `scratchData` is unused. */
 void func_8005A838(s_GteScratchData* scratchData, q19_12 scale);
 
-void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* viewMat);
+void func_8005A900(struct _MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* viewMat);
 
-u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
+u8 func_8005AA08(struct _MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
 
-void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool otShift);
+void func_8005AC50(struct _MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, bool otShift);
 
 #endif

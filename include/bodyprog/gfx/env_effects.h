@@ -1,6 +1,9 @@
 #ifndef _BODYPROG_GFX_ENVEFFECTS_H
 #define _BODYPROG_GFX_ENVEFFECTS_H
 
+struct _CollisionSurface;
+struct _SubCharacter;
+
 typedef enum _EffectTextureFlags
 {
     EffectTextureFlag_None         = 0,
@@ -84,8 +87,8 @@ typedef struct
                     DVECTOR field_0[4];
                     s32     raw_0[4];
     /* 0xFC  */ } u_field_FC; // Q3.12 | Positions or offsets.
-    /* 0x10C */ q19_12  field_10C[4]; // X offsets?
-    /* 0x11C */ q19_12  field_11C[4]; // Z offsets?
+    /* 0x10C */ q19_12 field_10C[4]; // X offsets?
+    /* 0x11C */ q19_12 field_11C[4]; // Z offsets?
 } s_func_8005E89C;
 
 typedef struct
@@ -278,17 +281,17 @@ void func_8005E89C(void);
 s32 func_8005F55C(s32 arg0);
 
 /** Checks `floorType`. */
-bool func_8005F680(s_CollisionSurface* surface);
+bool func_8005F680(struct _CollisionSurface* surface);
 
 /** Related to camera collision? */
-void func_8005F6B0(s_SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3);
+void func_8005F6B0(struct _SubCharacter* chara, VECTOR3* pos, s32 arg2, s32 arg3);
 
 bool func_80060044(POLY_FT4** poly, s32 idx);
 
 bool func_800611C0(POLY_FT4** poly, s32 idx);
 
 /** Spawns blood effect? */
-void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3);
+void func_800622B8(s32 unused, struct _SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_800625F4(VECTOR3* arg0, q3_12 angle, s32 arg2, s32 arg3);
 

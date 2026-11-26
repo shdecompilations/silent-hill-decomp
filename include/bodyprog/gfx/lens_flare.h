@@ -1,6 +1,9 @@
 #ifndef _BODYPROG_GFX_LENSFLARE_H
 #define _BODYPROG_GFX_LENSFLARE_H
 
+struct _LmHeader;
+struct _WaterZone;
+
 /** @brief Lens flare workspace.
  *
  * @note Field names are taken from SH2, which has an anonymous struct that matches almost exactly.
@@ -46,7 +49,7 @@ void LensFlare_WaterShimmerEnable(void);
  * @param pos Light position.
  * @param waterZones Reference water zones.
  */
-void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, s_WaterZone* waterZones);
+void shLensFlareExec(q3_12 light_intensity, SVECTOR* rot, VECTOR3* pos, struct _WaterZone* waterZones);
 
 // Named from SH2 symbols.
 void shLensFlareSetLightSeed(VECTOR3* scr_l_pos, q3_12 scr_l_ang_z);
@@ -78,7 +81,7 @@ void shLensFlareEffect_Draw(bool center_visible_f, q19_12 now_l_eff_rate,
                             VECTOR3* scr_l_pos, q19_12 scr_l_ang_xy, q19_12 scr_l_ang_z);
 
 // Sets material flags?
-void func_8008E4EC(s_LmHeader* lmHdr);
+void func_8008E4EC(struct _LmHeader* lmHdr);
 
 /** @brief Gets the water zone at a given position for a water shimmer effect.
  *
@@ -87,7 +90,7 @@ void func_8008E4EC(s_LmHeader* lmHdr);
  * @param waterZones Water zones to query.
  * @return Water zone at the given position.
  */
-s_WaterZone* LensFlare_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones);
+struct _WaterZone* LensFlare_WaterZoneGet(q27_4 posX, q27_4 posZ, struct _WaterZone* waterZones);
 
 void func_8008E5B4(void);
 
